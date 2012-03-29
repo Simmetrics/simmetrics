@@ -13,13 +13,18 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <altDeploymentRepository>releases::default::${project.baseUri}/mavenRepo/releases/</altDeploymentRepository>
   </properties>
   
   <distributionManagement>
 	  <repository>
-	      <id>local-project</id>
-	      <url>file://${project.baseUri}/mavenRepo/</url>
+      <id>releases</id>
+      <url>https://bitbucket.org/Nickmancol/simmetrics/raw/tip/mavenRepo/releases/</url>
 	  </repository>
+	  <snapshotRepository>
+	  	<id>snapshots</id>
+      <url>https://bitbucket.org/Nickmancol/simmetrics/raw/tip/mavenRepo/snapshots/</url>
+	  </snapshotRepository>
   </distributionManagement>
 
 	<build>
@@ -58,6 +63,15 @@
       </plugin>
 		</plugins>
   </build>
+	
+	<profiles>
+		<profile>
+			<id>deploy-snapshot</id>
+			<properties>
+				<altDeploymentRepository>snapshots::default::${project.baseUri}/mavenRepo/snapshots</altDeploymentRepository>
+			</properties>
+		</profile>
+	</profiles>
 	
   <dependencies>
     <dependency>

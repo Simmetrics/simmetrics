@@ -16,6 +16,21 @@
     <altDeploymentRepository>releases::default::${project.baseUri}/mavenRepo/releases/</altDeploymentRepository>
   </properties>
   
+  <developers>
+    <developer>
+      <id>@Nickmancol</id>
+      <name>Nicolas Bohorquez Gutierrez</name>
+      <email>nicolas.bg@gmail.com</email>
+      <timezone>America/Bogota</timezone>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:hg:http://bitbucket.org/Nickmancol/simmetrics</connection>
+    <developerConnection>scm:hg:http://bitbucket.org/Nickmancol/simmetrics</developerConnection>
+    <url>http://bitbucket.org/Nickmancol/simmetrics</url>
+  </scm>
+  
   <distributionManagement>
 	  <repository>
       <id>releases</id>

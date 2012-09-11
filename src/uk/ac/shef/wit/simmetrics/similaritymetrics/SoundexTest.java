@@ -49,7 +49,7 @@ import junit.framework.TestCase;
 public class SoundexTest extends TestCase {
 
     //private method to hold metric test cases
-    private AbstractStringMetric metric;
+    private static AbstractStringMetric metric;
 
     /**
      * Sets up the test fixture.
@@ -75,8 +75,10 @@ public class SoundexTest extends TestCase {
     public void testGetSimilarity() {
 
         float result = metric.getSimilarity("Test String1", "Test String2");
-
-        assertEquals(0.9166667f, result);
+        
+        assertEquals(0.9F, result);
+        
     }
+    
 }
 

@@ -39,7 +39,19 @@
 
 package uk.ac.shef.wit.simmetrics;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.*;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.ChapmanLengthDeviation;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.ChapmanMatchingSoundex;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.ChapmanMeanLength;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.EuclideanDistance;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.Levenshtein;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.MongeElkan;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.NeedlemanWunch;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.QGramsDistance;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.SmithWaterman;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.SmithWatermanGotoh;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.SmithWatermanGotohWindowedAffine;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.Soundex;
 
 /**
  * Package: uk.ac.shef.wit.simmetrics
@@ -49,7 +61,13 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.*;
  *
  * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
  */
-public class SimpleExample {
+public final class SimpleExample {
+	
+	private SimpleExample() {
+		/**
+		 * All methods static...
+		 */
+	}
 
     /**
      * runs a simple example.
@@ -62,32 +80,78 @@ public class SimpleExample {
     public static void main(final String[] args) {
 
         //checks for the expected user input
-        if(args.length != 2) {
+   //     if(args.length != 2) {
             //provides usage information to inform the user of the correct way
             // to work
-            usage();
-        } else {
+            //usage();
+     //   } else {
             //gets the two input given by the user
-            String str1 = args[0];
-            String str2 = args[1];
+            final String str1 = "johnathan";
+            final String str2 = "  'g,    -      -,~'''~_,,`,,'.-'I.D.N0,.nahtanhoj                          ";
 
             //creates the single metric to use - in this case the simple
             // Levenshtein is used, this is far from recomended as much better
             // metrics can be employed in most cases, please see the sourceforge
             // SimMetric forums for advice on the best metric to employ in
             // differing situations.
-//            AbstractStringMetric metric = new Levenshtein();
-//            AbstractStringMetric metric = new CosineSimilarity();
-//            AbstractStringMetric metric = new EuclideanDistance();
-            AbstractStringMetric metric = new MongeElkan();
-
-            //this single line performs the similarity test
+            System.out.println(getMatchLikelyhood(str1, str2));
+            AbstractStringMetric metric = new ChapmanLengthDeviation();
             float result = metric.getSimilarity(str1, str2);
+            outputResult(result, metric);
+            metric = new ChapmanMatchingSoundex();
+            result = metric.getSimilarity(str1, str2);
+            outputResult(result, metric);
+            metric = new ChapmanMeanLength(); 
+            result = metric.getSimilarity(str1, str2);
+            outputResult(result, metric);
+            metric = new EuclideanDistance();
+            result = metric.getSimilarity(str1, str2);
+            outputResult(result, metric);
+            metric = new Levenshtein();
+            result = metric.getSimilarity(str1, str2);
+            outputResult(result, metric);
+            metric = new MongeElkan();
+            result = metric.getSimilarity(str1, str2);
+            outputResult(result, metric);
+            metric = new NeedlemanWunch();
+            result = metric.getSimilarity(str1, str2);
+            outputResult(result, metric);
+            metric = new QGramsDistance();
+            result = metric.getSimilarity(str1, str2);
+            outputResult(result, metric);
+            metric = new SmithWatermanGotoh();
+            result = metric.getSimilarity(str1, str2);
+            outputResult(result, metric);
+            metric = new SmithWatermanGotohWindowedAffine();
+            result = metric.getSimilarity(str1, str2);
+            outputResult(result, metric);
+            metric = new SmithWaterman();
+            result = metric.getSimilarity(str1, str2);
+            outputResult(result, metric);
+            metric = new Soundex();
+            result = metric.getSimilarity(str1, str2);
+            outputResult(result, metric);
 
-            //outputs the results
-            outputResult(result, metric, str1, str2);
-        }
+      //  }
     }
+    
+	private static float getMatchLikelyhood(final String str1, final String str2) {
+		AbstractStringMetric metric;
+		float avg = 0F, result = 0F;
+		metric = new SmithWaterman();
+		result = metric.getSimilarity(str1, str2);
+		avg += result;
+		metric = new SmithWatermanGotoh();
+		result = metric.getSimilarity(str1, str2);
+		avg += result;
+		metric = new SmithWatermanGotohWindowedAffine();
+		result = metric.getSimilarity(str1, str2);
+		avg += result;
+		metric = new MongeElkan();
+		result = metric.getSimilarity(str1, str2);
+		avg += result;
+		return (avg / 4.0F) * 100.0F;
+	}
 
     /**
      * outputs the result of the metric test.
@@ -97,15 +161,9 @@ public class SimpleExample {
      * @param str1 the first string with which to compare
      * @param str2 the second string to compare with the first
      */
-    private static void outputResult(final float result, final AbstractStringMetric metric, final String str1, final String str2) {
-        System.out.println("Using Metric " + metric.getShortDescriptionString() + " on strings \"" + str1 + "\" & \"" + str2 + "\" gives a similarity score of " + result);
+    private static void outputResult(final float result, final AbstractStringMetric metric) {
+        System.out.println("Using Metric " + metric.getShortDescriptionString() + " gives a similarity score of " + (result * 100 / 1) + "%");
 
     }
-
-    /**
-     * details the usage of the simple example outputing instructions to the standard output.
-     */
-    private static void usage() {
-        System.out.println("Performs a rudimentary string metric comparison from the arguments given.\n\tArgs:\n\t\t1) String1 to compare\n\t\t2)String2 to compare\n\n\tReturns:\n\t\tA standard output (command line of the similarity metric with the given test strings, for more details of this simple class please see the SimpleExample.java source file)");
-    }
+    
 }

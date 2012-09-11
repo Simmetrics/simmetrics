@@ -63,17 +63,18 @@ public final class OverlapCoefficient extends AbstractStringMetric implements Se
 	/**
      * a constant for calculating the estimated timing cost.
      */
-    private final float ESTIMATEDTIMINGCONST = 1.4e-4f;
+    private static final float EST_TIM_CONST = 1.4e-4f;
 
     /**
      * private tokeniser for tokenisation of the query strings.
      */
-    private final InterfaceTokeniser tokeniser;
+    private InterfaceTokeniser tokeniser;
 
     /**
      * constructor - default (empty).
      */
     public OverlapCoefficient() {
+    	super();
         tokeniser = new TokeniserWhitespace();
     }
 
@@ -83,6 +84,7 @@ public final class OverlapCoefficient extends AbstractStringMetric implements Se
      * @param tokeniserToUse - the tokeniser to use should a different tokeniser be required
      */
     public OverlapCoefficient(final InterfaceTokeniser tokeniserToUse) {
+    	super();
         tokeniser = tokeniserToUse;
     }
 
@@ -112,7 +114,7 @@ public final class OverlapCoefficient extends AbstractStringMetric implements Se
      *
      * @return a div class html section detailing the metric operation.
      */
-    public String getSimilarityExplained(String string1, String string2) {
+    public String getSimilarityExplained(final String string1, final String string2) {
         //todo this should explain the operation of a given comparison
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -130,7 +132,7 @@ public final class OverlapCoefficient extends AbstractStringMetric implements Se
         //0	0.01	0.03	0.05	0.07	0.11	0.14	0.18	0.23	0.27	0.33	0.38	0.46	0.51	0.59	0.67	0.75	0.86	0.94	1.01	1.15	1.22	1.5	1.45	1.93	1.7	2.28	1.95	2.42	2.21	2.99	2.54	3.34	2.86	3.76	3.17	4.06	3.5	4.32	3.9	5.23	4.32	5.34	4.83	6.15	5.07	6.34	5.64	7.29	5.97	8.12	6.55	8.46	7	8.83	7.52	9.71	8.12	10.68	8.46
         final float str1Tokens = tokeniser.tokenizeToArrayList(string1).size();
         final float str2Tokens = tokeniser.tokenizeToArrayList(string2).size();
-        return (str1Tokens * str2Tokens) * ESTIMATEDTIMINGCONST;
+        return (str1Tokens * str2Tokens) * EST_TIM_CONST;
     }
 
     /**
@@ -149,12 +151,12 @@ public final class OverlapCoefficient extends AbstractStringMetric implements Se
         final Set<String> allTokens = new HashSet<String>();
         allTokens.addAll(str1Tokens);
         final int termsInString1 = allTokens.size();
-        final Set<String> secondStringTokens = new HashSet<String>();
-        secondStringTokens.addAll(str2Tokens);
-        final int termsInString2 = secondStringTokens.size();
+        final Set<String> secStrToks = new HashSet<String>();
+        secStrToks.addAll(str2Tokens);
+        final int termsInString2 = secStrToks.size();
 
         //now combine the sets
-        allTokens.addAll(secondStringTokens);
+        allTokens.addAll(secStrToks);
         final int commonTerms = (termsInString1 + termsInString2) - allTokens.size();
 
         //return overlap_coefficient
@@ -168,9 +170,18 @@ public final class OverlapCoefficient extends AbstractStringMetric implements Se
      * @param string2
      * @return returns the score of the similarity measure (un-normalised)
      */
-    public float getUnNormalisedSimilarity(String string1, String string2) {
+    public float getUnNormalisedSimilarity(final String string1, final String string2) {
         return getSimilarity(string1, string2); 
     }
+
+	public InterfaceTokeniser getTokeniser() {
+		return tokeniser;
+	}
+
+	public void setTokeniser(final InterfaceTokeniser tokeniser) {
+		this.tokeniser = tokeniser;
+	}
+	
 }
 
 

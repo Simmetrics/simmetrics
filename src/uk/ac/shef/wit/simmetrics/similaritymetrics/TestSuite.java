@@ -42,6 +42,10 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
 import junit.framework.TestCase;
 import junit.textui.TestRunner;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Administrator
@@ -55,7 +59,7 @@ public class TestSuite extends TestCase {
      * main constructor setting the name of the test case.
      * @param s The name of the test
      */
-    public TestSuite(String s) {
+    public TestSuite(final String s) {
         super(s);
     }
 
@@ -64,6 +68,7 @@ public class TestSuite extends TestCase {
      *
      * Called before every test case method.
      */
+    @Before
     protected void setUp() {
         //create objects for testing
     }
@@ -73,6 +78,7 @@ public class TestSuite extends TestCase {
      *
      * Called after every test case method.
      */
+	@After
     protected void tearDown() {
         // release objects under test here, if necessary
     }
@@ -82,8 +88,8 @@ public class TestSuite extends TestCase {
      *
      * @return Test results of the test
      */
-    static public junit.framework.Test testAllSimilarityMetrics() {
-        junit.framework.TestSuite newSuite = new junit.framework.TestSuite();
+    @Test static public junit.framework.Test testAllSimilarityMetrics() {
+        final junit.framework.TestSuite newSuite = new junit.framework.TestSuite();
         newSuite.addTest(new uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.TestSuite("testAllCostFunctions"));
 
         //test local tests

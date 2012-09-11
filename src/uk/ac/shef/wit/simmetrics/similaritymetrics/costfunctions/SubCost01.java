@@ -58,7 +58,7 @@ final public class SubCost01 extends AbstractSubstitutionCost implements Seriali
      *
      * @return the name of the cost function
      */
-    public final String getShortDescriptionString() {
+    public String getShortDescriptionString() {
         return "SubCost01";
     }
 
@@ -71,12 +71,14 @@ final public class SubCost01 extends AbstractSubstitutionCost implements Seriali
      * @param string2Index - the index within the string2 to test
      * @return the cost of a given subsitution d(i,j) where d(i,j) = 1 if i!=j, 0 if i==j
      */
-    public final float getCost(final String str1, final int string1Index, final String str2, final int string2Index) {
+    public float getCost(final String str1, final int string1Index, final String str2, final int string2Index) {
+    	float res;
         if (str1.charAt(string1Index) == str2.charAt(string2Index)) {
-            return 0.0f;
+        	res = 0.0f;
         } else {
-            return 1.0f;
+        	res = 1.0f;
         }
+        return res;
     }
 
     /**
@@ -84,7 +86,7 @@ final public class SubCost01 extends AbstractSubstitutionCost implements Seriali
      *
      * @return the maximum possible cost
      */
-    public final float getMaxCost() {
+    public float getMaxCost() {
         return 1.0f;
     }
 
@@ -93,7 +95,7 @@ final public class SubCost01 extends AbstractSubstitutionCost implements Seriali
      *
      * @return the minimum possible cost
      */
-    public final float getMinCost() {
+    public float getMinCost() {
         return 0.0f;
     }
 }

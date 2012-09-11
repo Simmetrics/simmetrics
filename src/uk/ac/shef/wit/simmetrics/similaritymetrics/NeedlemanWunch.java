@@ -39,12 +39,11 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractSubstitutionCost;
-import uk.ac.shef.wit.simmetrics.math.MathFuncs;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost01;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
-
 import java.io.Serializable;
+
+import uk.ac.shef.wit.simmetrics.math.MathFuncs;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractSubstitutionCost;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost01;
 
 /**
  * Package: uk.ac.shef.wit.simmetrics.similaritymetrics.needlemanwunch
@@ -62,7 +61,7 @@ public final class NeedlemanWunch extends AbstractStringMetric implements Serial
 	/**
      * a constant for calculating the estimated timing cost.
      */
-    private final float ESTIMATEDTIMINGCONST = 1.842e-4f;
+    private static final float EST_TIM_CONST = 1.842e-4f;
 
     /**
      * the private cost function used in the levenstein distance.
@@ -78,6 +77,7 @@ public final class NeedlemanWunch extends AbstractStringMetric implements Serial
      * constructor - default (empty).
      */
     public NeedlemanWunch() {
+    	super();
         //set the gapCost to a default value
         gapCost = 2.0f;
         //set the default cost func
@@ -90,6 +90,7 @@ public final class NeedlemanWunch extends AbstractStringMetric implements Serial
      * @param costG - the cost of a gap
      */
     public NeedlemanWunch(final float costG) {
+    	super();
         //set the gapCost to a given value
         gapCost = costG;
         //set the cost func to a default function
@@ -103,6 +104,7 @@ public final class NeedlemanWunch extends AbstractStringMetric implements Serial
      * @param costFunc - the cost function to use
      */
     public NeedlemanWunch(final float costG, final AbstractSubstitutionCost costFunc) {
+    	super();
         //set the gapCost to the given value
         gapCost = costG;
         //set the cost func
@@ -115,6 +117,7 @@ public final class NeedlemanWunch extends AbstractStringMetric implements Serial
      * @param costFunc - the cost function to use
      */
     public NeedlemanWunch(final AbstractSubstitutionCost costFunc) {
+    	super();
         //set the gapCost to a default value
         gapCost = 2.0f;
         //set the cost func
@@ -183,7 +186,7 @@ public final class NeedlemanWunch extends AbstractStringMetric implements Serial
      *
      * @return a div class html section detailing the metric operation.
      */
-    public String getSimilarityExplained(String string1, String string2) {
+    public String getSimilarityExplained(final String string1, final String string2) {
         //todo this should explain the operation of a given comparison
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -201,7 +204,7 @@ public final class NeedlemanWunch extends AbstractStringMetric implements Serial
         //0	0.44	1.13	2.45	4.41	7	9.67	13.53	18.45	22.67	27.25	36.5	40.6	47	54.5	62.5	73	83.33	88.67	99	109.5	140.5	148.5	172	172	179.5	219	218	297	250	282	328	297	375	343	375	422	453	453	500	500	547	578	547	579	625	640	656	719	844	781	828	844	875	906	938	969	1000	1250	1078
         final float str1Length = string1.length();
         final float str2Length = string2.length();
-        return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
+        return (str1Length * str2Length) * EST_TIM_CONST;
     }
 
     /**
@@ -250,9 +253,9 @@ public final class NeedlemanWunch extends AbstractStringMetric implements Serial
      * @return the NeedlemanWunch distance for the given strings
      */
     public float getUnNormalisedSimilarity(final String s, final String t) {
-        final float[][] d; // matrix
-        final int n; // length of s
-        final int m; // length of t
+        float[][] d; // matrix
+        int n; // length of s
+        int m; // length of t
         int i; // iterates through s
         int j; // iterates through t
         float cost; // cost

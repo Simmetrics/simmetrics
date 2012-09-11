@@ -118,9 +118,9 @@ public final class ChapmanMatchingSoundex extends MongeElkan implements Serializ
     public float getSimilarityTimingEstimated(final String string1, final String string2) {
         //timed millisecond times with string lengths from 1 + 50 each increment
         //0.08	2.26	8.16	16.92	29	51	67.67	93.67	117	156.5	187.5	234	266	312	375	422	485	547	609	656	766	828	906	1000	1078	1157	1265	1360	1453	1562	1688	1781	1891	2031	2094	2219	2422	2532	2656	2812	2938	3109	3250	3407	3562	3750	3907	4062	4250	4422	4625	4797	4985	5188	5390	5578	5782	5984	6204	6437
-        final float str1Tokens = tokeniser.tokenizeToArrayList(string1).size();
-        final float str2Tokens = tokeniser.tokenizeToArrayList(string2).size();
-        return (tokeniser.tokenizeToArrayList(string1).size() + tokeniser.tokenizeToArrayList(string2).size()) * ((str1Tokens+str2Tokens) * EST_TIM_CONST);
+        final float str1Tokens = getTokeniser().tokenizeToArrayList(string1).size();
+        final float str2Tokens = getTokeniser().tokenizeToArrayList(string2).size();
+        return (getTokeniser().tokenizeToArrayList(string1).size() + getTokeniser().tokenizeToArrayList(string2).size()) * ((str1Tokens+str2Tokens) * EST_TIM_CONST);
     }
 }
 

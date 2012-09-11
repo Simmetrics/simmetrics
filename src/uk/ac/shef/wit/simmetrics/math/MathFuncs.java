@@ -48,6 +48,12 @@ package uk.ac.shef.wit.simmetrics.math;
  * @version 1.1
  */
 final public class MathFuncs {
+	
+	private MathFuncs() {
+		/**
+		 * Static methods...
+		 */
+	}
 
     /**
      * returns the max of three numbers.

@@ -39,14 +39,13 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
+import java.io.Serializable;
+
+import uk.ac.shef.wit.simmetrics.math.MathFuncs;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractAffineGapCost;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractSubstitutionCost;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
-import uk.ac.shef.wit.simmetrics.math.MathFuncs;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AffineGap5_1;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost5_3_Minus3;
-
-import java.io.Serializable;
 
 /**
  * Package: uk.ac.shef.wit.simmetrics.similaritymetrics
@@ -64,12 +63,12 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric imple
 	/**
      * a constant for calculating the estimated timing cost.
      */
-    private final float ESTIMATEDTIMINGCONST = 4.5e-5f;
+    private static final float EST_TIM_CONST = 4.5e-5f;
 
     /**
      * private field for the maximum affine gap window size.
      */
-    private final int windowSize;
+    private int windowSize;
 
     /**
      * the private cost function used in the SmithWatermanGotoh distance.
@@ -85,6 +84,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric imple
      * constructor - default (empty).
      */
     public SmithWatermanGotohWindowedAffine() {
+    	super();
         //set the default gap cost func
         gGapFunc = new AffineGap5_1();
         //set the default cost func
@@ -99,6 +99,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric imple
      * @param gapCostFunc - the gap cost function
      */
     public SmithWatermanGotohWindowedAffine(final AbstractAffineGapCost gapCostFunc) {
+    	super();
         //set the gap cost func
         gGapFunc = gapCostFunc;
         //set the cost func to a default function
@@ -114,6 +115,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric imple
      * @param costFunc    - the cost function to use
      */
     public SmithWatermanGotohWindowedAffine(final AbstractAffineGapCost gapCostFunc, final AbstractSubstitutionCost costFunc) {
+    	super();
         //set the gap cost func
         gGapFunc = gapCostFunc;
         //set the cost func
@@ -128,6 +130,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric imple
      * @param costFunc - the cost function to use
      */
     public SmithWatermanGotohWindowedAffine(final AbstractSubstitutionCost costFunc) {
+    	super();
         //set the gapCost to a default value
         gGapFunc = new AffineGap5_1();
         //set the cost func
@@ -142,6 +145,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric imple
      * @param affineGapWindowSize the size of the affine gap window to use
      */
     public SmithWatermanGotohWindowedAffine(final int affineGapWindowSize) {
+    	super();
         //set the default gap cost func
         gGapFunc = new AffineGap5_1();
         //set the default cost func
@@ -157,6 +161,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric imple
      * @param affineGapWindowSize the size of the affine gap window to use
      */
     public SmithWatermanGotohWindowedAffine(final AbstractAffineGapCost gapCostFunc, final int affineGapWindowSize) {
+    	super();
         //set the gap cost func
         gGapFunc = gapCostFunc;
         //set the cost func to a default function
@@ -173,6 +178,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric imple
      * @param affineGapWindowSize the size of the affine gap window to use
      */
     public SmithWatermanGotohWindowedAffine(final AbstractAffineGapCost gapCostFunc, final AbstractSubstitutionCost costFunc, final int affineGapWindowSize) {
+    	super();
         //set the gap cost func
         gGapFunc = gapCostFunc;
         //set the cost func
@@ -188,6 +194,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric imple
      * @param affineGapWindowSize the size of the affine gap window to use
      */
     public SmithWatermanGotohWindowedAffine(final AbstractSubstitutionCost costFunc, final int affineGapWindowSize) {
+    	super();
         //set the gapCost to a default value
         gGapFunc = new AffineGap5_1();
         //set the cost func
@@ -258,7 +265,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric imple
      *
      * @return a div class html section detailing the metric operation.
      */
-    public String getSimilarityExplained(String string1, String string2) {
+    public String getSimilarityExplained(final String string1, final String string2) {
         //todo this should explain the operation of a given comparison
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -276,7 +283,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric imple
         //0	15.62	62.5	179.5	360	609	891	1297	1640	2125	2688	3297	3984	4766	5485	6437	7313	8312	9391	10500	12704	12938	14359	15704	17266	18844	20360	23547	23845	25688	27656	29532	32048	33891	35844	37938	40251	42610	45001	47407	50142	52266	55314	57970	60782	63814	66470	70376	72767	75861	79283	82564	85814	89408	92658	96283	100080	103283	107518	111033
         final float str1Length = string1.length();
         final float str2Length = string2.length();
-        return ((str1Length * str2Length * windowSize) + (str1Length * str2Length * windowSize)) * ESTIMATEDTIMINGCONST;
+        return ((str1Length * str2Length * windowSize) + (str1Length * str2Length * windowSize)) * EST_TIM_CONST;
     }
 
     /**
@@ -288,10 +295,13 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric imple
      * @return a value between 0-1 of the similarity
      */
     public final float getSimilarity(final String string1, final String string2) {
+    	
         final float smithWatermanGotoh = getUnNormalisedSimilarity(string1, string2);
 
         //normalise into zero to one region from min max possible
         float maxValue = Math.min(string1.length(), string2.length());
+        float ret;
+        
         if (dCostFunc.getMaxCost() > -gGapFunc.getMaxCost()) {
             maxValue *= dCostFunc.getMaxCost();
         } else {
@@ -300,11 +310,14 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric imple
 
         //check for 0 maxLen
         if (maxValue == 0) {
-            return 1.0f; //as both strings identically zero length
+            ret = 1.0f; //as both strings identically zero length
         } else {
             //return actual / possible NeedlemanWunch distance to get 0-1 range
-            return (smithWatermanGotoh / maxValue);
+            ret = (smithWatermanGotoh / maxValue);
         }
+        
+        return ret;
+        
     }
 
     /**
@@ -317,9 +330,9 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric imple
      * @return the Smith-Waterman-Gotoh distance for the two strings given
      */
     public float getUnNormalisedSimilarity(final String s, final String t) {
-        final float[][] d; // matrix
-        final int n; // length of s
-        final int m; // length of t
+        float[][] d; // matrix
+        int n; // length of s
+        int m; // length of t
         int i; // iterates through s
         int j; // iterates through t
         float cost; // cost
@@ -327,6 +340,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric imple
         // check for zero length input
         n = s.length();
         m = t.length();
+        
         if (n == 0) {
             return m;
         }
@@ -339,6 +353,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric imple
 
         //process first row and column first as no need to consider previous rows/columns
         float maxSoFar = 0.0f;
+        
         for (i = 0; i < n; i++) {
             // get the substution cost
             cost = dCostFunc.getCost(s, i, t, 0);
@@ -443,6 +458,15 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric imple
         // return max value within matrix as holds the maximum edit score
         return maxSoFar;
     }
+
+	public int getWindowSize() {
+		return windowSize;
+	}
+
+	public void setWindowSize(int windowSize) {
+		this.windowSize = windowSize;
+	}
+	
 }
 
 

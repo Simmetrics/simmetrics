@@ -63,17 +63,18 @@ public final class DiceSimilarity extends AbstractStringMetric implements Serial
 	/**
      * a constant for calculating the estimated timing cost.
      */
-    private final float ESTIMATEDTIMINGCONST = 0.00000034457142857142857142857142857146f;
+    private static final float EST_TIM_CONST = 0.00000034457142857142857142857142857146f;
 
     /**
      * private tokeniser for tokenisation of the query strings.
      */
-    private final InterfaceTokeniser tokeniser;
+    private InterfaceTokeniser tokeniser;
 
     /**
      * constructor - default (empty).
      */
     public DiceSimilarity() {
+    	super();
         tokeniser = new TokeniserWhitespace();
     }
 
@@ -83,6 +84,7 @@ public final class DiceSimilarity extends AbstractStringMetric implements Serial
      * @param tokeniserToUse - the tokeniser to use should a different tokeniser be required
      */
     public DiceSimilarity(final InterfaceTokeniser tokeniserToUse) {
+    	super();
         tokeniser = tokeniserToUse;
     }
 
@@ -112,7 +114,7 @@ public final class DiceSimilarity extends AbstractStringMetric implements Serial
      *
      * @return a div class html section detailing the metric operation.
      */
-    public String getSimilarityExplained(String string1, String string2) {
+    public String getSimilarityExplained(final String string1, final String string2) {
         //todo this should explain the operation of a given comparison
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -130,7 +132,7 @@ public final class DiceSimilarity extends AbstractStringMetric implements Serial
         //0	0.01	0.03	0.05	0.08	0.1	0.14	0.18	0.22	0.27	0.33	0.38	0.46	0.51	0.6	0.65	0.76	0.83	0.93	1	1.1	1.21	1.31	1.44	1.54	1.65	1.78	1.92	2.06	2.18	2.33	2.51	2.64	2.78	2.99	3.17	3.29	3.5	3.9	5.8	4.14	5.21	4.51	5.8	4.86	6.55	5.34	7	5.8	7	6.34	8.16	6.77	9.23	7	9.67	7.52	10.15	8.46	10.2
         final float str1Length = string1.length();
         final float str2Length = string2.length();
-        return (str1Length + str2Length) * ((str1Length + str2Length) * ESTIMATEDTIMINGCONST);
+        return (str1Length + str2Length) * ((str1Length + str2Length) * EST_TIM_CONST);
     }
 
     /**
@@ -149,12 +151,12 @@ public final class DiceSimilarity extends AbstractStringMetric implements Serial
         final Set<String> allTokens = new HashSet<String>();
         allTokens.addAll(str1Tokens);
         final int termsInString1 = allTokens.size();
-        final Set<String> secondStringTokens = new HashSet<String>();
-        secondStringTokens.addAll(str2Tokens);
-        final int termsInString2 = secondStringTokens.size();
+        final Set<String> secStrToks = new HashSet<String>();
+        secStrToks.addAll(str2Tokens);
+        final int termsInString2 = secStrToks.size();
 
         //now combine the sets
-        allTokens.addAll(secondStringTokens);
+        allTokens.addAll(secStrToks);
         final int commonTerms = (termsInString1 + termsInString2) - allTokens.size();
 
         //return Dices coefficient = (2*Common Terms) / (Number of terms in String1 + Number of terms in String2)
@@ -168,9 +170,18 @@ public final class DiceSimilarity extends AbstractStringMetric implements Serial
      * @param string2
      * @return returns the score of the similarity measure (un-normalised)
      */
-    public float getUnNormalisedSimilarity(String string1, String string2) {
+    public float getUnNormalisedSimilarity(final String string1, final String string2) {
         return getSimilarity(string1, string2);
     }
+
+	public InterfaceTokeniser getTokeniser() {
+		return tokeniser;
+	}
+
+	public void setTokeniser(final InterfaceTokeniser tokeniser) {
+		this.tokeniser = tokeniser;
+	}
+	
 }
 
 

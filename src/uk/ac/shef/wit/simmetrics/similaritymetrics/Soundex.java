@@ -335,5 +335,13 @@ public final class Soundex extends AbstractStringMetric implements Serializable 
 
 		return String.copyValueOf(out);
 	}
+
+	public AbstractStringMetric getIntStrMetr() {
+		return intStrMetr;
+	}
+
+	public void setIntStrMetr(final AbstractStringMetric intStrMetr) {
+		this.intStrMetr = intStrMetr;
+	}
 	
 }

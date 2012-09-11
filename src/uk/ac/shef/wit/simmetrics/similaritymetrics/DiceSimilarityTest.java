@@ -41,42 +41,50 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import junit.framework.TestCase;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * Performs a unit test upon the DiceSimilarity string metric.
- *
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+ * 
+ * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a
+ *         href="mailto:sam@dcs.shef.ac.uk">Email</a>.
  */
 public class DiceSimilarityTest extends TestCase {
 
-    //private method to hold metric test cases
-    private AbstractStringMetric metric;
+	// private method to hold metric test cases
+	private static AbstractStringMetric metric;
 
-    /**
-     * Sets up the test fixture.
-     *
-     * Called before every test case method.
-     */
-    protected void setUp() {
-        metric = new DiceSimilarity();
-    }
+	/**
+	 * Sets up the test fixture.
+	 * 
+	 * Called before every test case method.
+	 */
+	@Before
+	protected void setUp() {
+		metric = new DiceSimilarity();
+	}
 
-    /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     */
-    protected void tearDown() {
-        // release objects under test here, if necessary
-    }
+	/**
+	 * Tears down the test fixture.
+	 * 
+	 * Called after every test case method.
+	 */
+	@After
+	protected void tearDown() {
+		// release objects under test here, if necessary
+	}
 
-    /**
-     * Tests emptying the cart.
-     */
-    public void testGetSimilarity() {
+	/**
+	 * Tests emptying the cart.
+	 */
+	@Test
+	public void testGetSimilarity() {
 
-        float result = metric.getSimilarity("Test String1", "Test String2");
+		final float result = metric.getSimilarity("Test String1",
+				"Test String2");
 
-        assertEquals(0.5f, result);
-    }
+		assertEquals("Tests emptying the cart.", 0.5f, result);
+	}
 }
-

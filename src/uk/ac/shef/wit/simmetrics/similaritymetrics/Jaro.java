@@ -58,13 +58,7 @@ public final class Jaro extends AbstractStringMetric implements Serializable {
 	/**
      * a constant for calculating the estimated timing cost.
      */
-    private final float ESTIMATEDTIMINGCONST = 4.12e-5f;
-
-    /**
-     * constructor - default (empty).
-     */
-    public Jaro() {
-    }
+    private static final float EST_TIM_CONST = 4.12e-5f;
 
     /**
      * returns the string identifier for the metric.
@@ -92,7 +86,7 @@ public final class Jaro extends AbstractStringMetric implements Serializable {
      *
      * @return a div class html section detailing the metric operation.
      */
-    public String getSimilarityExplained(String string1, String string2) {
+    public String getSimilarityExplained(final String string1, final String string2) {
         //todo this should explain the operation of a given comparison
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -110,7 +104,7 @@ public final class Jaro extends AbstractStringMetric implements Serializable {
         //0	0.18	0.35	0.75	1.32	2.01	2.96	3.9	5.07	6.34	8.12	9.23	11.94	12.69	15.69	16.92	20.3	22.56	27.38	27.25	40.8	33.83	40.6	40.6	54.75	46.8	62.5	54.75	73	67.67	78	73	101.5	83.33	117	109.5	117.5	109	125	117.5	140.5	148.5	132.5	156.5	148.5	172	164	179.5	187.5	203	211	203	203	250	235	265	250	282	297	281
         final float str1Length = string1.length();
         final float str2Length = string2.length();
-        return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
+        return (str1Length * str2Length) * EST_TIM_CONST;
     }
 
     /**
@@ -126,8 +120,8 @@ public final class Jaro extends AbstractStringMetric implements Serializable {
         final int halflen = ((Math.min(string1.length(), string2.length())) / 2) + ((Math.min(string1.length(), string2.length())) % 2);
 
         //get common characters
-        final StringBuffer common1 = getCommonCharacters(string1, string2, halflen);
-        final StringBuffer common2 = getCommonCharacters(string2, string1, halflen);
+        final StringBuilder common1 = getCommonCharacters(string1, string2, halflen);
+        final StringBuilder common2 = getCommonCharacters(string2, string1, halflen);
 
         //check for zero in common
         if (common1.length() == 0 || common2.length() == 0) {
@@ -140,11 +134,13 @@ public final class Jaro extends AbstractStringMetric implements Serializable {
         }
 
         //get the number of transpositions
-        int transpositions = 0;
-        for (int i = 0; i < common1.length(); i++) {
-            if (common1.charAt(i) != common2.charAt(i))
-                transpositions++;
-        }
+		int transpositions = 0;
+		for (int i = 0; i < common1.length(); i++) {
+			if (common1.charAt(i) != common2.charAt(i)) {
+				transpositions++;
+			}
+		}
+        
         transpositions /= 2.0f;
 
         //calculate jaro metric
@@ -160,7 +156,7 @@ public final class Jaro extends AbstractStringMetric implements Serializable {
      * @param string2
      * @return returns the score of the similarity measure (un-normalised)
      */
-    public float getUnNormalisedSimilarity(String string1, String string2) {
+    public float getUnNormalisedSimilarity(final String string1, final String string2) {
         //todo should check this is correct (think normal metric is 0-1 scaled but unsure)
         return getSimilarity(string1, string2);
     }
@@ -175,23 +171,23 @@ public final class Jaro extends AbstractStringMetric implements Serializable {
      * @return a string buffer of characters from string1 within string2 if they are of a given
      *         distance seperation from the position in string1
      */
-    private static StringBuffer getCommonCharacters(final String string1, final String string2, final int distanceSep) {
+    private static StringBuilder getCommonCharacters(final String string1, final String string2, final int distanceSep) {
         //create a return buffer of characters
-        final StringBuffer returnCommons = new StringBuffer();
+        final StringBuilder returnCommons = new StringBuilder();
         //create a copy of string2 for processing
-        final StringBuffer copy = new StringBuffer(string2);
+        final StringBuilder copy = new StringBuilder(string2);
         //iterate over string1
         for (int i = 0; i < string1.length(); i++) {
-            final char ch = string1.charAt(i);
+            final char _char = string1.charAt(i);
             //set boolean for quick loop exit if found
             boolean foundIt = false;
             //compare char with range of characters to either side
             for (int j = Math.max(0, i - distanceSep); !foundIt && j < Math.min(i + distanceSep, string2.length() - 1); j++) {
                 //check if found
-                if (copy.charAt(j) == ch) {
+                if (copy.charAt(j) == _char) {
                     foundIt = true;
                     //append character found
-                    returnCommons.append(ch);
+                    returnCommons.append(_char);
                     //alter copied string2 for processing
                     copy.setCharAt(j, (char)0);
                 }

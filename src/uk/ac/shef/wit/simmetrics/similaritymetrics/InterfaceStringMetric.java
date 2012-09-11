@@ -53,14 +53,14 @@ public interface InterfaceStringMetric {
      *
      * @return a string of the string metric name
      */
-    public String getShortDescriptionString();
+    String getShortDescriptionString();
 
     /**
      * returns a long string of the string metric description.
      *
      * @return a long string of the string metric description
      */
-    public String getLongDescriptionString();
+    String getLongDescriptionString();
 
     /**
      * gets the actual time in milliseconds it takes to perform a similarity timing.
@@ -72,7 +72,7 @@ public interface InterfaceStringMetric {
      *
      * @return the actual time in milliseconds taken to perform the similarity measure
      */
-    public long getSimilarityTimingActual(String string1, String string2);
+    long getSimilarityTimingActual(String string1, String string2);
 
     /**
      * gets the estimated time in milliseconds it takes to perform a similarity timing.
@@ -82,7 +82,7 @@ public interface InterfaceStringMetric {
      *
      * @return the estimated time in milliseconds taken to perform the similarity measure
      */
-    public float getSimilarityTimingEstimated(String string1, String string2);
+    float getSimilarityTimingEstimated(String string1, String string2);
 
     /**
      * returns a similarity measure of the string comparison.
@@ -92,7 +92,7 @@ public interface InterfaceStringMetric {
      *
      * @return a float between zero to one (zero = no similarity, one = matching strings)
      */
-    public float getSimilarity(String string1, String string2);
+    float getSimilarity(String string1, String string2);
 
     /**
      * returns a similarity measure of the string comparison.
@@ -102,5 +102,5 @@ public interface InterfaceStringMetric {
      *
      * @return a float between zero to one (zero = no similarity, one = matching strings)
      */
-    public String getSimilarityExplained(String string1, String string2);
+    String getSimilarityExplained(String string1, String string2);
 }

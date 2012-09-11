@@ -63,17 +63,18 @@ public final class EuclideanDistance extends AbstractStringMetric implements Ser
 	/**
      * a constant for calculating the estimated timing cost.
      */
-    private final float ESTIMATEDTIMINGCONST = 7.4457142857142857142857142857146e-5f;
+    private static final float EST_TIM_CONST = 7.4457142857142857142857142857146e-5f;
 
     /**
      * private tokeniser for tokenisation of the query strings.
      */
-    private final InterfaceTokeniser tokeniser;
+    private InterfaceTokeniser tokeniser;
 
     /**
      * constructor - default (empty).
      */
     public EuclideanDistance() {
+    	super();
         tokeniser = new TokeniserWhitespace();
     }
 
@@ -83,6 +84,7 @@ public final class EuclideanDistance extends AbstractStringMetric implements Ser
      * @param tokeniserToUse - the tokeniser to use should a different tokeniser be required
      */
     public EuclideanDistance(final InterfaceTokeniser tokeniserToUse) {
+    	super();
         tokeniser = tokeniserToUse;
     }
 
@@ -112,7 +114,7 @@ public final class EuclideanDistance extends AbstractStringMetric implements Ser
      *
      * @return a div class html section detailing the metric operation.
      */
-    public String getSimilarityExplained(String string1, String string2) {
+    public String getSimilarityExplained(final String string1, final String string2) {
         //todo this should explain the operation of a given comparison
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -130,7 +132,7 @@ public final class EuclideanDistance extends AbstractStringMetric implements Ser
         //0	0.02	0.04	0.08	0.13	0.19	0.26	0.33	0.43	0.53	0.64	0.77	0.9	1.09	1.27	1.39	1.57	1.83	1.93	2.27	2.42	2.82	2.9	3.56	3.44	4.32	3.9	5.51	4.51	6.15	5.34	6.77	5.97	7.81	6.8	8.83	7.52	9.67	8.46	10.68	9.23	11.94	10.2	13.53	11.28	14.5	11.94	15.62	13.53	16.92	14.57	16.92	15.62	20.3	16.92	22.56	16.92	24.33	18.45	24.33
         final float str1Tokens = tokeniser.tokenizeToArrayList(string1).size();
         final float str2Tokens = tokeniser.tokenizeToArrayList(string2).size();
-        return (((str1Tokens + str2Tokens) * str1Tokens) + ((str1Tokens + str2Tokens) * str2Tokens)) * ESTIMATEDTIMINGCONST;
+        return (((str1Tokens + str2Tokens) * str1Tokens) + ((str1Tokens + str2Tokens) * str2Tokens)) * EST_TIM_CONST;
     }
 
     /**
@@ -146,7 +148,7 @@ public final class EuclideanDistance extends AbstractStringMetric implements Ser
     public float getSimilarity(final String string1, final String string2) {
         final ArrayList<String> str1Tokens = tokeniser.tokenizeToArrayList(string1);
         final ArrayList<String> str2Tokens = tokeniser.tokenizeToArrayList(string2);
-        float totalPossible = (float) Math.sqrt((str1Tokens.size()*str1Tokens.size()) + (str2Tokens.size()*str2Tokens.size()));
+        final float totalPossible = (float) Math.sqrt((str1Tokens.size()*str1Tokens.size()) + (str2Tokens.size()*str2Tokens.size()));
         final float totalDistance = getUnNormalisedSimilarity(string1, string2);
         return (totalPossible - totalDistance) / totalPossible;
     }
@@ -158,7 +160,7 @@ public final class EuclideanDistance extends AbstractStringMetric implements Ser
      * @param string2
      * @return returns the score of the similarity measure (un-normalised)
      */
-    public float getUnNormalisedSimilarity(String string1, String string2) {
+    public float getUnNormalisedSimilarity(final String string1, final String string2) {
         final ArrayList<String> str1Tokens = tokeniser.tokenizeToArrayList(string1);
         final ArrayList<String> str2Tokens = tokeniser.tokenizeToArrayList(string2);
 
@@ -223,6 +225,15 @@ public final class EuclideanDistance extends AbstractStringMetric implements Ser
 
         return (float) Math.sqrt(totalDistance);
     }
+
+	public InterfaceTokeniser getTokeniser() {
+		return tokeniser;
+	}
+
+	public void setTokeniser(final InterfaceTokeniser tokeniser) {
+		this.tokeniser = tokeniser;
+	}
+    
 }
 
 

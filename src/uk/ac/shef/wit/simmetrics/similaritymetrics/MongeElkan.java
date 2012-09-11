@@ -61,17 +61,17 @@ public class MongeElkan extends AbstractStringMetric implements Serializable {
 	/**
      * a constant for calculating the estimated timing cost.
      */
-    private final float ESTIMATEDTIMINGCONST = 0.0344f;
+    private static final float EST_TIM_CONST = 0.0344f;
 
     /**
      * private tokeniser for tokenisation of the query strings.
      */
-    final InterfaceTokeniser tokeniser;
+    private InterfaceTokeniser tokeniser;
 
     /**
      * private string metric allowing internal metric to be composed.
      */
-    private final AbstractStringMetric internalStringMetric;
+    private AbstractStringMetric metric = new SmithWatermanGotoh();
 
     /**
      * gets a div class xhtml similarity explaining the operation of the metric.
@@ -81,7 +81,7 @@ public class MongeElkan extends AbstractStringMetric implements Serializable {
      *
      * @return a div class html section detailing the metric operation.
      */
-    public String getSimilarityExplained(String string1, String string2) {
+    public String getSimilarityExplained(final String string1, final String string2) {
         //todo this should explain the operation of a given comparison
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -90,8 +90,8 @@ public class MongeElkan extends AbstractStringMetric implements Serializable {
      * constructor - default (empty).
      */
     public MongeElkan() {
+    	super();
         tokeniser = new TokeniserWhitespace();
-        internalStringMetric = new SmithWatermanGotoh();
     }
 
     /**
@@ -100,8 +100,8 @@ public class MongeElkan extends AbstractStringMetric implements Serializable {
      * @param tokeniserToUse - the tokeniser to use should a different tokeniser be required
      */
     public MongeElkan(final InterfaceTokeniser tokeniserToUse) {
+    	super();
         tokeniser = tokeniserToUse;
-        internalStringMetric = new SmithWatermanGotoh();
     }
 
     /**
@@ -111,8 +111,9 @@ public class MongeElkan extends AbstractStringMetric implements Serializable {
      * @param metricToUse    - the string metric to use
      */
     public MongeElkan(final InterfaceTokeniser tokeniserToUse, final AbstractStringMetric metricToUse) {
+    	super();
         tokeniser = tokeniserToUse;
-        internalStringMetric = metricToUse;
+        metric = metricToUse;
     }
 
     /**
@@ -121,8 +122,9 @@ public class MongeElkan extends AbstractStringMetric implements Serializable {
      * @param metricToUse - the string metric to use
      */
     public MongeElkan(final AbstractStringMetric metricToUse) {
+    	super();
         tokeniser = new TokeniserWhitespace();
-        internalStringMetric = metricToUse;
+        metric = metricToUse;
     }
 
     /**
@@ -156,7 +158,7 @@ public class MongeElkan extends AbstractStringMetric implements Serializable {
         //0	5.97	11.94	27.38	50.75	73	109.5	148	195.5	250	297	375	437	500	594	672	781	875	969	1079	1218	1360	1469	1609	1750	1906	2063	2203	2375	2563	2734	2906	3110	3312	3500	3688	3906	4141	4375	4594	4844	5094	5328	5609	5860	6156	6422	6688	6984	7235	7547	7859	8157	8500	8813	9172	9484	9766	10125	10516
         final float str1Tokens = tokeniser.tokenizeToArrayList(string1).size();
         final float str2Tokens = tokeniser.tokenizeToArrayList(string2).size();
-        return (((str1Tokens + str2Tokens) * str1Tokens) + ((str1Tokens + str2Tokens) * str2Tokens)) * ESTIMATEDTIMINGCONST;
+        return (((str1Tokens + str2Tokens) * str1Tokens) + ((str1Tokens + str2Tokens) * str2Tokens)) * EST_TIM_CONST;
     }
 
     /**
@@ -176,7 +178,7 @@ public class MongeElkan extends AbstractStringMetric implements Serializable {
         for (Object str1Token : str1Tokens) {
             maxFound = 0.0f;
             for (Object str2Token : str2Tokens) {
-                final float found = internalStringMetric.getSimilarity((String) str1Token, (String) str2Token);
+                final float found = metric.getSimilarity((String) str1Token, (String) str2Token);
                 if (found > maxFound) {
                     maxFound = found;
                 }
@@ -193,9 +195,26 @@ public class MongeElkan extends AbstractStringMetric implements Serializable {
      * @param string2
      * @return returns the score of the similarity measure (un-normalised)
      */
-    public float getUnNormalisedSimilarity(String string1, String string2) {
+    public float getUnNormalisedSimilarity(final String string1, final String string2) {
         //todo check this is valid before use mail sam@dcs.shef.ac.uk if problematic
         return getSimilarity(string1, string2);
     }
+
+	public InterfaceTokeniser getTokeniser() {
+		return tokeniser;
+	}
+
+	public void setTokeniser(final InterfaceTokeniser tokeniser) {
+		this.tokeniser = tokeniser;
+	}
+
+	public AbstractStringMetric getMetric() {
+		return metric;
+	}
+
+	public void setMetric(final AbstractStringMetric metric) {
+		this.metric = metric;
+	}
+	
 }
 

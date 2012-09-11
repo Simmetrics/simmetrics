@@ -62,7 +62,7 @@ public final class SmithWaterman extends AbstractStringMetric implements Seriali
 	/**
      * a constant for calculating the estimated timing cost.
      */
-    private final float ESTIMATEDTIMINGCONST = 1.61e-4f;
+    private static final float EST_TIM_CONST = 1.61e-4f;
 
     /**
      * the private cost function used in the levenstein distance.
@@ -78,6 +78,7 @@ public final class SmithWaterman extends AbstractStringMetric implements Seriali
      * constructor - default (empty).
      */
     public SmithWaterman() {
+    	super();
         //set the gapCost to a default value
         gapCost = 0.5f;
         //set the default cost func
@@ -90,6 +91,7 @@ public final class SmithWaterman extends AbstractStringMetric implements Seriali
      * @param costG - the cost of a gap
      */
     public SmithWaterman(final float costG) {
+    	super();
         //set the gapCost to a given value
         gapCost = costG;
         //set the cost func to a default function
@@ -103,6 +105,7 @@ public final class SmithWaterman extends AbstractStringMetric implements Seriali
      * @param costFunc - the cost function to use
      */
     public SmithWaterman(final float costG, final AbstractSubstitutionCost costFunc) {
+    	super();
         //set the gapCost to the given value
         gapCost = costG;
         //set the cost func
@@ -115,6 +118,7 @@ public final class SmithWaterman extends AbstractStringMetric implements Seriali
      * @param costFunc - the cost function to use
      */
     public SmithWaterman(final AbstractSubstitutionCost costFunc) {
+    	super();
         //set the gapCost to a default value
         gapCost = 0.5f;
         //set the cost func
@@ -183,7 +187,7 @@ public final class SmithWaterman extends AbstractStringMetric implements Seriali
      *
      * @return a div class html section detailing the metric operation.
      */
-    public String getSimilarityExplained(String string1, String string2) {
+    public String getSimilarityExplained(final String string1, final String string2) {
         //todo this should explain the operation of a given comparison
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -201,7 +205,7 @@ public final class SmithWaterman extends AbstractStringMetric implements Seriali
         //0	0.58	1.49	3.17	5.97	8.83	12.69	18.45	22.56	31.29	36.5	40.6	58.5	62.5	78.33	78	93.67	101.5	125	125	164	172	187.5	203	235	265	235	328	328	344	343	391	391	453	453	484	547	578	594	625	641	672	718	766	797	812	860	890	907	953	984	1078	1047	1094	1156	1188	1250	1328	1344	1390
         final float str1Length = string1.length();
         final float str2Length = string2.length();
-        return ((str1Length * str2Length) + str1Length + str2Length) * ESTIMATEDTIMINGCONST;
+        return ((str1Length * str2Length) + str1Length + str2Length) * EST_TIM_CONST;
     }
 
     /**
@@ -212,10 +216,13 @@ public final class SmithWaterman extends AbstractStringMetric implements Seriali
      * @return a value between 0-1 of the similarity
      */
     public float getSimilarity(final String string1, final String string2) {
+    	
         final float smithWaterman = getUnNormalisedSimilarity(string1, string2);
 
         //normalise into zero to one region from min max possible
         float maxValue = Math.min(string1.length(), string2.length());
+        float ret;
+        
         if (dCostFunc.getMaxCost() > -gapCost) {
             maxValue *= dCostFunc.getMaxCost();
         } else {
@@ -224,11 +231,12 @@ public final class SmithWaterman extends AbstractStringMetric implements Seriali
 
         //check for 0 maxLen
         if (maxValue == 0) {
-            return 1.0f; //as both strings identically zero length
+            ret = 1.0f; //as both strings identically zero length
         } else {
             //return actual / possible NeedlemanWunch distance to get 0-1 range
-            return (smithWaterman / maxValue);
+            ret = (smithWaterman / maxValue);
         }
+        return ret;
     }
 
     /**
@@ -240,9 +248,9 @@ public final class SmithWaterman extends AbstractStringMetric implements Seriali
      * @return the Smith-Waterman distance for the given strings
      */
     public float getUnNormalisedSimilarity(final String s, final String t) {
-        final float[][] d; // matrix
-        final int n; // length of s
-        final int m; // length of t
+        float[][] d; // matrix
+        int n; // length of s
+        int m; // length of t
         int i; // iterates through s
         int j; // iterates through t
         float cost; // cost
@@ -262,6 +270,7 @@ public final class SmithWaterman extends AbstractStringMetric implements Seriali
 
         //process first row and column first as no need to consider previous rows/columns
         float maxSoFar = 0.0f;
+        
         for (i = 0; i < n; i++) {
             // get the substution cost
             cost = dCostFunc.getCost(s, i, t, 0);
@@ -280,6 +289,7 @@ public final class SmithWaterman extends AbstractStringMetric implements Seriali
                 maxSoFar = d[i][0];
             }
         }
+        
         for (j = 0; j < m; j++) {
             // get the substution cost
             cost = dCostFunc.getCost(s, 0, t, j);
@@ -319,6 +329,8 @@ public final class SmithWaterman extends AbstractStringMetric implements Seriali
 
         // return max value within matrix as holds the maximum edit score
         return maxSoFar;
+        
     }
+    
 }
 

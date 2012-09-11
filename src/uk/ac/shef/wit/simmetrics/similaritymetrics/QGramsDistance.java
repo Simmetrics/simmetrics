@@ -61,17 +61,18 @@ public final class QGramsDistance extends AbstractStringMetric implements Serial
 	/**
      * a constant for calculating the estimated timing cost.
      */
-    private final float ESTIMATEDTIMINGCONST = 1.34e-4f;
+    private static final float EST_TIM_CONST = 1.34e-4f;
 
     /**
      * private tokeniser for tokenisation of the query strings.
      */
-    private final InterfaceTokeniser tokeniser;
+    private InterfaceTokeniser tokeniser;
 
     /**
      * constructor - default (empty).
      */
     public QGramsDistance() {
+    	super();
         tokeniser = new TokeniserQGram3Extended();
     }
 
@@ -81,6 +82,7 @@ public final class QGramsDistance extends AbstractStringMetric implements Serial
      * @param tokeniserToUse - the tokeniser to use should a different tokeniser be required
      */
     public QGramsDistance(final InterfaceTokeniser tokeniserToUse) {
+    	super();
         tokeniser = tokeniserToUse;
     }
 
@@ -110,7 +112,7 @@ public final class QGramsDistance extends AbstractStringMetric implements Serial
      *
      * @return a div class html section detailing the metric operation.
      */
-    public String getSimilarityExplained(String string1, String string2) {
+    public String getSimilarityExplained(final String string1, final String string2) {
         //todo this should explain the operation of a given comparison
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -128,7 +130,7 @@ public final class QGramsDistance extends AbstractStringMetric implements Serial
         //0.01	0.51	1.48	3.08	5.51	7.81	11.94	15.62	20.3	25.38	31.29	36.5	43.8	50.75	62.5	67.67	78	88.67	93.67	117	125	133	148.5	172	171.5	204	218.5	219	219	296	282	281	344	312	360	375	390	422	438	453	484	500	516	562	563	594	625	656	656	703	719	766	765	813	828	875	891	937	953	985
         final float str1Length = string1.length();
         final float str2Length = string2.length();
-        return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
+        return (str1Length * str2Length) * EST_TIM_CONST;
     }
 
     /**
@@ -139,17 +141,23 @@ public final class QGramsDistance extends AbstractStringMetric implements Serial
      * @return a value between 0-1 of the similarity
      */
     public float getSimilarity(final String string1, final String string2) {
+    	
         final ArrayList<String> str1Tokens = tokeniser.tokenizeToArrayList(string1);
         final ArrayList<String> str2Tokens = tokeniser.tokenizeToArrayList(string2);
 
         final int maxQGramsMatching = str1Tokens.size() + str2Tokens.size();
+        
+        float ret;
 
         //return
         if (maxQGramsMatching == 0) {
-            return 0.0f;
+            ret = 0.0f;
         } else {
-            return (maxQGramsMatching - getUnNormalisedSimilarity(string1, string2)) / (float) maxQGramsMatching;
+            ret = (maxQGramsMatching - getUnNormalisedSimilarity(string1, string2)) / (float) maxQGramsMatching;
         }
+        
+        return ret;
+        
     }
 
     /**
@@ -160,7 +168,7 @@ public final class QGramsDistance extends AbstractStringMetric implements Serial
      *
      * @return returns the score of the similarity measure (un-normalised)
      */
-    public float getUnNormalisedSimilarity(String string1, String string2) {
+    public float getUnNormalisedSimilarity(final String string1, final String string2) {
         final ArrayList<String> str1Tokens = tokeniser.tokenizeToArrayList(string1);
         final ArrayList<String> str2Tokens = tokeniser.tokenizeToArrayList(string2);
 
@@ -194,6 +202,15 @@ public final class QGramsDistance extends AbstractStringMetric implements Serial
         //return
         return difference;
     }
+
+	public InterfaceTokeniser getTokeniser() {
+		return tokeniser;
+	}
+
+	public void setTokeniser(final InterfaceTokeniser tokeniser) {
+		this.tokeniser = tokeniser;
+	}
+	
 }
 
 

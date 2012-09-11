@@ -63,17 +63,18 @@ public final class JaccardSimilarity extends AbstractStringMetric implements Ser
 	/**
      * a constant for calculating the estimated timing cost.
      */
-    private final float ESTIMATEDTIMINGCONST = 1.4e-4f;
+    private static final float EST_TIM_CONST = 1.4e-4f;
 
     /**
      * private tokeniser for tokenisation of the query strings.
      */
-    private final InterfaceTokeniser tokeniser;
+    private InterfaceTokeniser tokeniser;
 
     /**
      * constructor - default.
      */
     public JaccardSimilarity() {
+    	super();
         tokeniser = new TokeniserWhitespace();
     }
 
@@ -83,6 +84,7 @@ public final class JaccardSimilarity extends AbstractStringMetric implements Ser
      * @param tokeniserToUse - the tokeniser to use should a different tokeniser be required
      */
     public JaccardSimilarity(final InterfaceTokeniser tokeniserToUse) {
+    	super();
         tokeniser = tokeniserToUse;
     }
 
@@ -112,7 +114,7 @@ public final class JaccardSimilarity extends AbstractStringMetric implements Ser
      *
      * @return a div class html section detailing the metric operation.
      */
-    public String getSimilarityExplained(String string1, String string2) {
+    public String getSimilarityExplained(final String string1, final String string2) {
         //todo this should explain the operation of a given comparison
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -130,7 +132,7 @@ public final class JaccardSimilarity extends AbstractStringMetric implements Ser
         //0	0.02	0.03	0.05	0.07	0.11	0.14	0.18	0.23	0.27	0.34	0.38	0.45	0.51	0.59	0.67	0.75	0.83	0.94	1	1.15	1.22	1.49	1.46	1.93	1.69	2.11	1.95	2.42	2.21	2.87	2.51	3.27	2.86	3.69	3.22	3.9	3.5	4.74	3.9	4.95	4.23	5.49	4.72	5.8	5.21	6.38	5.64	7.25	5.97	7.81	6.55	8.46	7	9.27	7.52	10.15	8.12	10.15	8.46
         final float str1Tokens = tokeniser.tokenizeToArrayList(string1).size();
         final float str2Tokens = tokeniser.tokenizeToArrayList(string2).size();
-        return (str1Tokens * str2Tokens) * ESTIMATEDTIMINGCONST;
+        return (str1Tokens * str2Tokens) * EST_TIM_CONST;
     }
 
     /**
@@ -141,15 +143,15 @@ public final class JaccardSimilarity extends AbstractStringMetric implements Ser
      * @return a value between 0-1 of the similarity
      */
     public float getSimilarity(final String string1, final String string2) {
-/*
-Each instance is represented as a Jaccard vector similarity function. The Jaccard between two vectors X and Y is
-
-(X*Y) / (|X||Y|-(X*Y))
-
-where (X*Y) is the inner product of X and Y, and |X| = (X*X)^1/2, i.e. the Euclidean norm of X.
-
-This can more easily be described as ( |X & Y| ) / ( | X or Y | )
-*/
+		/*
+		Each instance is represented as a Jaccard vector similarity function. The Jaccard between two vectors X and Y is
+		
+		(X*Y) / (|X||Y|-(X*Y))
+		
+		where (X*Y) is the inner product of X and Y, and |X| = (X*X)^1/2, i.e. the Euclidean norm of X.
+		
+		This can more easily be described as ( |X & Y| ) / ( | X or Y | )
+		*/
         //todo this needs checking
         final ArrayList<String> str1Tokens = tokeniser.tokenizeToArrayList(string1);
         final ArrayList<String> str2Tokens = tokeniser.tokenizeToArrayList(string2);
@@ -157,12 +159,12 @@ This can more easily be described as ( |X & Y| ) / ( | X or Y | )
         final Set<String> allTokens = new HashSet<String>();
         allTokens.addAll(str1Tokens);
         final int termsInString1 = allTokens.size();
-        final Set<String> secondStringTokens = new HashSet<String>();
-        secondStringTokens.addAll(str2Tokens);
-        final int termsInString2 = secondStringTokens.size();
+        final Set<String> secStrToks = new HashSet<String>();
+        secStrToks.addAll(str2Tokens);
+        final int termsInString2 = secStrToks.size();
 
         //now combine the sets
-        allTokens.addAll(secondStringTokens);
+        allTokens.addAll(secStrToks);
         final int commonTerms = (termsInString1 + termsInString2) - allTokens.size();
 
         //return JaccardSimilarity
@@ -176,8 +178,17 @@ This can more easily be described as ( |X & Y| ) / ( | X or Y | )
      * @param string2
      * @return returns the score of the similarity measure (un-normalised)
      */
-    public float getUnNormalisedSimilarity(String string1, String string2) {
+    public float getUnNormalisedSimilarity(final String string1, final String string2) {
         return getSimilarity(string1, string2);
     }
+
+	public InterfaceTokeniser getTokeniser() {
+		return tokeniser;
+	}
+
+	public void setTokeniser(final InterfaceTokeniser tokeniser) {
+		this.tokeniser = tokeniser;
+	}
+	
 }
 

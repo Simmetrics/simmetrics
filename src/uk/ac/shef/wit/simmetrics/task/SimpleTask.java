@@ -92,7 +92,7 @@ public class SimpleTask implements InterfaceTask {
      *
      * @return a TaskResult object.
      */
-    public TaskResult RunTask() {
+    public TaskResult runTask() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
@@ -101,7 +101,7 @@ public class SimpleTask implements InterfaceTask {
      *
      * @param path the path of the task definition file
      */
-    public void ParseTask(String path) {
+    public void parseTask(String path) {
         FileLoader.fileToString(new File(path));
 
 

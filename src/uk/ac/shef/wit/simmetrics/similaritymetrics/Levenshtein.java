@@ -61,18 +61,12 @@ public final class Levenshtein extends AbstractStringMetric implements Serializa
 	/**
      * a constant for calculating the estimated timing cost.
      */
-    private final float ESTIMATEDTIMINGCONST = 1.8e-4f;
+    private static final float EST_TIM_CONST = 1.8e-4f;
 
     /**
      * the private cost function used in the levenstein distance.
      */
-    private final AbstractSubstitutionCost dCostFunc = new SubCost01();
-
-    /**
-     * constructor - default (empty).
-     */
-    public Levenshtein() {
-    }
+    private static final AbstractSubstitutionCost COST_FUNC = new SubCost01();
 
     /**
      * returns the string identifier for the metric.
@@ -100,7 +94,7 @@ public final class Levenshtein extends AbstractStringMetric implements Serializa
      *
      * @return a div class html section detailing the metric operation.
      */
-    public String getSimilarityExplained(String string1, String string2) {
+    public String getSimilarityExplained(final String string1, final String string2) {
         //todo this should explain the operation of a given comparison
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -118,7 +112,7 @@ public final class Levenshtein extends AbstractStringMetric implements Serializa
         //0	0.31	1.12	2.4	4.41	6.77	11.28	14.5	24.33	31.29	43.6	51	54.5	67.67	68	78	88.67	101.5	109	117.5	140.5	148.5	156	180	187.5	219	203	250	250	312	297	328	297	359	360	406	453	422	437	469	500	516	578	578	578	609	672	656	688	766	765	781	829	843	875	891	984	954	984	1078
         final float str1Length = string1.length();
         final float str2Length = string2.length();
-        return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
+        return (str1Length * str2Length) * EST_TIM_CONST;
     }
 
     /**
@@ -129,7 +123,7 @@ public final class Levenshtein extends AbstractStringMetric implements Serializa
      * @return a value between 0-1 of the similarity
      */
     public float getSimilarity(final String string1, final String string2) {
-        final float levensteinDistance = getUnNormalisedSimilarity(string1, string2);
+        final float levDist = getUnNormalisedSimilarity(string1, string2);
         //convert into zero to one return
 
         //get the max possible levenstein distance score for string
@@ -143,7 +137,7 @@ public final class Levenshtein extends AbstractStringMetric implements Serializa
             return 1.0f; //as both strings identically zero length
         } else {
             //return actual / possible levenstein distance to get 0-1 range
-            return 1.0f - (levensteinDistance / maxLen);
+            return 1.0f - (levDist / maxLen);
         }
 
     }
@@ -167,28 +161,36 @@ public final class Levenshtein extends AbstractStringMetric implements Serializa
      * @return the levenstein distance between given strings
      */
     public float getUnNormalisedSimilarity(final String s, final String t) {
-        final float[][] d; // matrix
-        final int n; // length of s
-        final int m; // length of t
+    	
+        float[][] d; // matrix
+        
+        int n; // length of s
+        int m; // length of t
+        
         int i; // iterates through s
         int j; // iterates through t
+        
         float cost; // cost
 
         // Step 1
         n = s.length();
         m = t.length();
+        
         if (n == 0) {
             return m;
         }
+        
         if (m == 0) {
             return n;
         }
+        
         d = new float[n + 1][m + 1];
 
         // Step 2
         for (i = 0; i <= n; i++) {
             d[i][0] = i;
         }
+        
         for (j = 0; j <= m; j++) {
             d[0][j] = j;
         }
@@ -198,7 +200,7 @@ public final class Levenshtein extends AbstractStringMetric implements Serializa
             // Step 4
             for (j = 1; j <= m; j++) {
                 // Step 5
-                cost = dCostFunc.getCost(s, i - 1, t, j - 1);
+                cost = COST_FUNC.getCost(s, i - 1, t, j - 1);
 
                 // Step 6
                 d[i][j] = MathFuncs.min3(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);

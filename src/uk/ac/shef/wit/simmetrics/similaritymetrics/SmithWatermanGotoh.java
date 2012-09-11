@@ -62,7 +62,7 @@ public final class SmithWatermanGotoh extends SmithWatermanGotohWindowedAffine i
 	/**
      * a constant for calculating the estimated timing cost.
      */
-    private final float ESTIMATEDTIMINGCONST = 2.2e-5f;
+    private static final float EST_TIME_CONST = 2.2e-5f;
 
     /**
      * constructor - default (empty).
@@ -129,7 +129,7 @@ public final class SmithWatermanGotoh extends SmithWatermanGotohWindowedAffine i
      *
      * @return a div class html section detailing the metric operation.
      */
-    public String getSimilarityExplained(String string1, String string2) {
+    public String getSimilarityExplained(final String string1, final String string2) {
         //todo this should explain the operation of a given comparison
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -147,7 +147,7 @@ public final class SmithWatermanGotoh extends SmithWatermanGotohWindowedAffine i
         //0	11.28	62.5	203	453	875	1516	2468	3641	5203	7219	9516	12359	16000	19610	24187	29329	35203	42360	49531	57735	71376	77094	88516	105751	114875	130314	176516	203174	222626	209501	252440	340127	303002	378033	394768	454737	493534	543316	675364	693333	839599	888396	903865	1014194	1193148	1901926	1356620	1471435	1629765	1771628	1885786	2091056	2282059	2342764	2570659	2696911	2907181	3189467	3283458
         final float str1Length = string1.length();
         final float str2Length = string2.length();
-        return ((str1Length * str2Length * str1Length) + (str1Length * str2Length * str2Length)) * ESTIMATEDTIMINGCONST;
+        return ((str1Length * str2Length * str1Length) + (str1Length * str2Length * str2Length)) * EST_TIME_CONST;
     }
 }
 

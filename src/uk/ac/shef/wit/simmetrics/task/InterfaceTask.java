@@ -55,13 +55,13 @@ public interface InterfaceTask {
      *
      * @return a TaskResult object.
      */
-    public TaskResult RunTask();
+    TaskResult runTask();
 
     /**
      * Parses the task from the given uri.
      * @param path the path of the task definition file
      */
-    public void ParseTask(String path);
+    void parseTask(String path);
 
     /**
      * Returns a string representation of the object. In general, the
@@ -84,5 +84,5 @@ public interface InterfaceTask {
      *
      * @return  a string representation of the object.
      */
-    public String toString();
+    String toString();
 }

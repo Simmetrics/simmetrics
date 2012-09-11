@@ -67,7 +67,7 @@ public final class Soundex extends AbstractStringMetric implements Serializable 
 	/**
 	 * private string metric allowing internal metric to be composed.
 	 */
-	private final transient AbstractStringMetric intStrMetr;
+	private AbstractStringMetric intStrMetr;
 
 	/**
 	 * defines the soundex length in characters e.g. S-2433 is 6 long.
@@ -189,6 +189,18 @@ public final class Soundex extends AbstractStringMetric implements Serializable 
 	public float getUnNormalisedSimilarity(final String string1,
 			final String string2) {
 		return intStrMetr.getUnNormalisedSimilarity(string1, string2);
+	}
+	
+	public AbstractStringMetric getStringMetric() {
+		
+		return intStrMetr;
+		
+	}
+	
+	public void setStringMetric(final AbstractStringMetric _metr) {
+		
+		this.intStrMetr = _metr;
+		
 	}
 
 	private static String clean(final String str) {
@@ -323,5 +335,7 @@ public final class Soundex extends AbstractStringMetric implements Serializable 
 
 		return String.copyValueOf(out);
 	}
+	
+	
 
 }

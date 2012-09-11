@@ -63,17 +63,18 @@ public final class CosineSimilarity extends AbstractStringMetric implements Seri
 	/**
      * a constant for calculating the estimated timing cost.
      */
-    private final float ESTIMATEDTIMINGCONST = 0.00000038337142857142857142857142857142f;
+    private static final float EST_TIM_CONST = 0.00000038337142857142857142857142857142f;
 
     /**
      * private tokeniser for tokenisation of the query strings.
      */
-    private final InterfaceTokeniser tokeniser;
+    private InterfaceTokeniser tokeniser;
 
     /**
      * constructor - default (empty).
      */
     public CosineSimilarity() {
+    	super();
         tokeniser = new TokeniserWhitespace();
     }
 
@@ -83,6 +84,7 @@ public final class CosineSimilarity extends AbstractStringMetric implements Seri
      * @param tokeniserToUse - the tokeniser to use should a different tokeniser be required
      */
     public CosineSimilarity(final InterfaceTokeniser tokeniserToUse) {
+    	super();
         tokeniser = tokeniserToUse;
     }
 
@@ -112,7 +114,7 @@ public final class CosineSimilarity extends AbstractStringMetric implements Seri
      *
      * @return a div class html section detailing the metric operation.
      */
-    public String getSimilarityExplained(String string1, String string2) {
+    public String getSimilarityExplained(final String string1, final String string2) {
         //todo this should explain the operation of a given comparison
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -130,7 +132,7 @@ public final class CosineSimilarity extends AbstractStringMetric implements Seri
         //0	0.02	0.03	0.05	0.08	0.11	0.14	0.18	0.23	0.27	0.33	0.39	0.46	0.52	0.6	0.65	0.76	0.84	0.94	1.01	1.13	1.23	1.49	1.45	1.95	1.67	2.26	1.93	2.6	2.26	2.86	2.54	3.17	2.91	3.76	3.17	3.9	3.5	4.32	3.9	5.1	4.32	5.64	4.83	5.64	5.07	6.34	5.64	7.03	5.97	7.81	6.55	8.12	7	9.23	7.52	9.71	8.12	10.68	8.46
         final float str1Length = string1.length();
         final float str2Length = string2.length();
-        return (str1Length + str2Length) * ((str1Length + str2Length) * ESTIMATEDTIMINGCONST);
+        return (str1Length + str2Length) * ((str1Length + str2Length) * EST_TIM_CONST);
     }
 
     /**
@@ -147,12 +149,12 @@ public final class CosineSimilarity extends AbstractStringMetric implements Seri
         final Set<String> allTokens = new HashSet<String>();
         allTokens.addAll(str1Tokens);
         final int termsInString1 = allTokens.size();
-        final Set<String> secondStringTokens = new HashSet<String>();
-        secondStringTokens.addAll(str2Tokens);
-        final int termsInString2 = secondStringTokens.size();
+        final Set<String> secStrToks = new HashSet<String>();
+        secStrToks.addAll(str2Tokens);
+        final int termsInString2 = secStrToks.size();
 
         //now combine the sets
-        allTokens.addAll(secondStringTokens);
+        allTokens.addAll(secStrToks);
         final int commonTerms = (termsInString1 + termsInString2) - allTokens.size();
 
         //return CosineSimilarity
@@ -166,9 +168,18 @@ public final class CosineSimilarity extends AbstractStringMetric implements Seri
      * @param string2
      * @return returns the score of the similarity measure (un-normalised)
      */
-    public float getUnNormalisedSimilarity(String string1, String string2) {
+    public float getUnNormalisedSimilarity(final String string1, final String string2) {
         return getSimilarity(string1, string2);
     }
+
+	public InterfaceTokeniser getTokeniser() {
+		return tokeniser;
+	}
+
+	public void setTokeniser(final InterfaceTokeniser tokeniser) {
+		this.tokeniser = tokeniser;
+	}
+    
 }
 
 

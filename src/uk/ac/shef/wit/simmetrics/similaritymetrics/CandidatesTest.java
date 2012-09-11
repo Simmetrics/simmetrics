@@ -41,6 +41,10 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import junit.framework.TestCase;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * Performs a unit test upon the Candidates part of the TagLink string metric.
  *
@@ -53,6 +57,7 @@ public class CandidatesTest extends TestCase {
      *
      * Called before every test case method.
      */
+	@Before
     protected void setUp() {
         //setUp before test provided here
     }
@@ -62,6 +67,7 @@ public class CandidatesTest extends TestCase {
      *
      * Called after every test case method.
      */
+	@After
     protected void tearDown() {
         // release objects under test here, if necessary
     }
@@ -69,10 +75,11 @@ public class CandidatesTest extends TestCase {
     /**
      * Tests emptying the cart.
      */
-    public void testGetSimilarity() {
+    @Test public void testGetSimilarity() {
 
         //assert false until this code is perfected.
-        assertTrue(false);
+        assertTrue("Not a valid test yet", false);
+        
     }
 }
 

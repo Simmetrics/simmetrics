@@ -41,6 +41,10 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import junit.framework.TestCase;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * Performs a unit test upon the ChapmanLengthDeviation string metric.
  *
@@ -49,13 +53,14 @@ import junit.framework.TestCase;
 public class ChapmanLengthDeviationTest extends TestCase {
 
     //private method to hold metric test cases
-    private AbstractStringMetric metric;
+    private static AbstractStringMetric metric;
 
     /**
      * Sets up the test fixture.
      *
      * Called before every test case method.
      */
+    @Before
     protected void setUp() {
         metric = new ChapmanLengthDeviation();
     }
@@ -65,6 +70,7 @@ public class ChapmanLengthDeviationTest extends TestCase {
      *
      * Called after every test case method.
      */
+    @After
     protected void tearDown() {
         // release objects under test here, if necessary
     }
@@ -72,11 +78,11 @@ public class ChapmanLengthDeviationTest extends TestCase {
     /**
      * Tests emptying the cart.
      */
-    public void testGetSimilarity() {
+    @Test public void testGetSimilarity() {
 
-        float result = metric.getSimilarity("Test String1", "Test String2");
+        final float result = metric.getSimilarity("Test String1", "Test String2");
 
-        assertEquals(1.0f, result);
+        assertEquals("Chapman Length Deviation Test", 1.0f, result);
     }
 }
 

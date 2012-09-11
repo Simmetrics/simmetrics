@@ -39,6 +39,10 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import junit.framework.TestCase;
 
 /**
@@ -49,13 +53,14 @@ import junit.framework.TestCase;
 public class BlockDistanceTest extends TestCase {
 
     //private method to hold metric test cases
-    private AbstractStringMetric metric;
+    private static AbstractStringMetric metric;
 
     /**
      * Sets up the test fixture.
      *
      * Called before every test case method.
      */
+    @Before
     protected void setUp() {
         metric = new BlockDistance();
     }
@@ -65,6 +70,7 @@ public class BlockDistanceTest extends TestCase {
      *
      * Called after every test case method.
      */
+    @After
     protected void tearDown() {
         // release objects under test here, if necessary
     }
@@ -72,11 +78,12 @@ public class BlockDistanceTest extends TestCase {
     /**
      * Tests emptying the cart.
      */
-    public void testGetSimilarity() {
+    @Test public void testGetSimilarity() {
 
-        float result = metric.getSimilarity("Test String1", "Test String2");
+        final float result = metric.getSimilarity("Test String1", "Test String2");
 
-        assertEquals(0.5f, result);
+        assertEquals("Test Result", 0.5f, result);
     }
+    
 }
 

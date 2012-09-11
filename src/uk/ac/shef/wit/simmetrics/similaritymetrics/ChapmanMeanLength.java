@@ -54,16 +54,10 @@ public final class ChapmanMeanLength extends AbstractStringMetric implements Ser
 
 	private static final long serialVersionUID = 5762784646476243942L;
 
-	/**
-     * constructor - default (empty).
-     */
-    public ChapmanMeanLength() {
-    }
-
     /**
      * defines the internal max string length beyond which 1.0 is always returned.
      */
-    final private static int CHAPMANMEANLENGTHMAXSTRING = 500;
+    final private static int MEAN_MAX = 500;
 
     /**
      * returns the string identifier for the metric.
@@ -104,7 +98,7 @@ public final class ChapmanMeanLength extends AbstractStringMetric implements Ser
      *
      * @return a div class html section detailing the metric operation.
      */
-    public String getSimilarityExplained(String string1, String string2) {
+    public String getSimilarityExplained(final String string1, final String string2) {
         //todo this should explain the operation of a given comparison
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -120,13 +114,15 @@ public final class ChapmanMeanLength extends AbstractStringMetric implements Ser
      * @return a value between 0-1 of the similarity
      */
     public float getSimilarity(final String string1, final String string2) {
-        final float bothLengths = string2.length() + string1.length();
-        if (bothLengths > CHAPMANMEANLENGTHMAXSTRING) {
-            return 1.0f;
+        final float bLength = string2.length() + string1.length();
+        float res;
+        if (bLength > MEAN_MAX) {
+            res = 1.0f;
         } else {
-            final float oneMinusBothScaled = (CHAPMANMEANLENGTHMAXSTRING - bothLengths) / CHAPMANMEANLENGTHMAXSTRING;
-            return 1.0f - (oneMinusBothScaled * oneMinusBothScaled * oneMinusBothScaled * oneMinusBothScaled);
+            final float oneMinbLength = (MEAN_MAX - bLength) / MEAN_MAX;
+            res = 1.0f - (oneMinbLength * oneMinbLength * oneMinbLength * oneMinbLength);
         }
+        return res;
     }
 
     /**
@@ -137,7 +133,7 @@ public final class ChapmanMeanLength extends AbstractStringMetric implements Ser
      *
      * @return returns the score of the similarity measure (un-normalised)
      */
-    public float getUnNormalisedSimilarity(String string1, String string2) {
+    public float getUnNormalisedSimilarity(final String string1, final String string2) {
         return getSimilarity(string1, string2);
     }
 }

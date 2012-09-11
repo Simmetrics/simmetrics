@@ -62,27 +62,30 @@ public final class ChapmanOrderedNameCompoundSimilarity extends AbstractStringMe
 	/**
      * a constant for calculating the estimated timing cost.
      */
-    private final float ESTIMATEDTIMINGCONST = 0.026571428571428571428571428571429f;
+    private static final float EST_TIM_CONST = 0.026571428571428571428571428571429f;
+    
+    private static final float SKEW_AMMOUNT = 1.0f;
 
     /**
      * private tokeniser for tokenisation of the query strings.
      */
-    final InterfaceTokeniser tokeniser;
+    private InterfaceTokeniser tokeniser;
 
     /**
      * private string metric allowing internal metric to be composed.
      */
-    private final AbstractStringMetric internalStringMetric1 = new Soundex();
+    private static final AbstractStringMetric METRIC_1 = new Soundex();
 
     /**
      * private string metric allowing internal metric to be composed.
      */
-    private final AbstractStringMetric internalStringMetric2 = new SmithWaterman();
+    private static final AbstractStringMetric METRIC_2 = new SmithWaterman();
 
     /**
      * constructor - default (empty).
      */
     public ChapmanOrderedNameCompoundSimilarity() {
+    	super();
         tokeniser = new TokeniserWhitespace();
     }
 
@@ -92,6 +95,7 @@ public final class ChapmanOrderedNameCompoundSimilarity extends AbstractStringMe
      * @param tokeniserToUse - the tokeniser to use should a different tokeniser be required
      */
     public ChapmanOrderedNameCompoundSimilarity(final InterfaceTokeniser tokeniserToUse) {
+    	super();
         tokeniser = tokeniserToUse;
     }
 
@@ -121,7 +125,7 @@ public final class ChapmanOrderedNameCompoundSimilarity extends AbstractStringMe
      *
      * @return a div class html section detailing the metric operation.
      */
-    public String getSimilarityExplained(String string1, String string2) {
+    public String getSimilarityExplained(final String string1, final String string2) {
         //todo this should explain the operation of a given comparison
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -139,7 +143,7 @@ public final class ChapmanOrderedNameCompoundSimilarity extends AbstractStringMe
         //0.08	2.26	8.16	16.92	29	51	67.67	93.67	117	156.5	187.5	234	266	312	375	422	485	547	609	656	766	828	906	1000	1078	1157	1265	1360	1453	1562	1688	1781	1891	2031	2094	2219	2422	2532	2656	2812	2938	3109	3250	3407	3562	3750	3907	4062	4250	4422	4625	4797	4985	5188	5390	5578	5782	5984	6204	6437
         final float str1Tokens = tokeniser.tokenizeToArrayList(string1).size();
         final float str2Tokens = tokeniser.tokenizeToArrayList(string2).size();
-        return (tokeniser.tokenizeToArrayList(string1).size() + tokeniser.tokenizeToArrayList(string2).size()) * ((str1Tokens+str2Tokens) * ESTIMATEDTIMINGCONST);
+        return (tokeniser.tokenizeToArrayList(string1).size() + tokeniser.tokenizeToArrayList(string2).size()) * ((str1Tokens+str2Tokens) * EST_TIM_CONST);
     }
 
     /**
@@ -150,25 +154,24 @@ public final class ChapmanOrderedNameCompoundSimilarity extends AbstractStringMe
      * @param string2
      * @return a value between 0-1 of the similarity
      */
-    public final float getSimilarity(final String string1, final String string2) {
+    public float getSimilarity(final String string1, final String string2) {
+    	
         //split the strings into tokens for comparison
         final List<String> str1Tokens = tokeniser.tokenizeToArrayList(string1);
         final List<String> str2Tokens = tokeniser.tokenizeToArrayList(string2);
-        int str1TokenNum = str1Tokens.size();
-        int str2TokenNum = str2Tokens.size();
-        int minTokens = Math.min(str1TokenNum, str2TokenNum);
-
-        float SKEW_AMMOUNT = 1.0f;
+        final int str1TokenNum = str1Tokens.size();
+        final int str2TokenNum = str2Tokens.size();
+        final int minTokens = Math.min(str1TokenNum, str2TokenNum);
 
         float sumMatches = 0.0f;
         for (int i = 1; i <= minTokens; i++) {
-            float strWeightingAdjustment = ((1.0f/minTokens)+(((((minTokens-i)+0.5f)-(minTokens/2.0f))/minTokens)*SKEW_AMMOUNT*(1.0f/minTokens)));
+            final float strWeightAdj = ((1.0f/minTokens)+(((((minTokens-i)+0.5f)-(minTokens/2.0f))/minTokens)*SKEW_AMMOUNT*(1.0f/minTokens)));
             final String sToken = (String) str1Tokens.get(str1TokenNum-i);
             final String tToken = (String) str2Tokens.get(str2TokenNum-i);
 
-            final float found1 = internalStringMetric1.getSimilarity(sToken, tToken);
-            final float found2 = internalStringMetric2.getSimilarity(sToken, tToken);
-            sumMatches += ((0.5f * (found1+found2)) * strWeightingAdjustment);
+            final float found1 = METRIC_1.getSimilarity(sToken, tToken);
+            final float found2 = METRIC_2.getSimilarity(sToken, tToken);
+            sumMatches += ((0.5f * (found1+found2)) * strWeightAdj);
         }
         return sumMatches;
     }
@@ -180,10 +183,18 @@ public final class ChapmanOrderedNameCompoundSimilarity extends AbstractStringMe
      * @param string2
      * @return returns the score of the similarity measure (un-normalised)
      */
-    public float getUnNormalisedSimilarity(String string1, String string2) {
+    public float getUnNormalisedSimilarity(final String string1, final String string2) {
         //todo check this is valid before use mail sam@dcs.shef.ac.uk if problematic
         return getSimilarity(string1, string2);
     }
+
+	public InterfaceTokeniser getTokeniser() {
+		return tokeniser;
+	}
+
+	public void setTokeniser(final InterfaceTokeniser tokeniser) {
+		this.tokeniser = tokeniser;
+	}
 
 }
 

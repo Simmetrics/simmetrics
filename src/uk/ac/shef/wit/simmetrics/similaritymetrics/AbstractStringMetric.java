@@ -39,6 +39,8 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
+import java.util.Arrays;
+
 /**
  * Package: uk.ac.shef.wit.simmetrics.api Description: AbstractStringMetric implements a abstract class for the string metrics. Date: 24-Mar-2004
  * Time: 12:07:10
@@ -71,6 +73,8 @@ public abstract class AbstractStringMetric implements InterfaceStringMetric {
      * @return a div class html section detailing the metric operation.
      */
     public abstract String getSimilarityExplained(String string1, String string2);
+    
+    private transient float[] results;
 
     /**
      * gets the actual time in milliseconds it takes to perform a similarity timing.
@@ -105,12 +109,12 @@ public abstract class AbstractStringMetric implements InterfaceStringMetric {
      * given set of strings to test.
      */
     public final float[] batchCompareSet(final String[] set, final String comparator) {
-        final float[] results = new float[set.length];
+        this.results = new float[set.length];
         for(int strNum=0; strNum<set.length; strNum++) {
             //perform similarity test
             results[strNum] = getSimilarity(set[strNum],comparator);
         }
-        return results;
+        return Arrays.copyOf(this.results, this.results.length);
     }
 
     /**
@@ -125,18 +129,17 @@ public abstract class AbstractStringMetric implements InterfaceStringMetric {
      * the given sets of strings to test.
      */
     public final float[] batchCompareSets(final String[] firstSet, final String[] secondSet) {
-        final float[] results;
         //sets the results to equal the shortest string length should they differ.
         if(firstSet.length <= secondSet.length) {
-            results = new float[firstSet.length];
+            this.results = new float[firstSet.length];
         } else {
-            results = new float[secondSet.length];
+        	this.results = new float[secondSet.length];
         }
         for(int strNum=0; strNum<results.length; strNum++) {
             //perform similarity test
-            results[strNum] = getSimilarity(firstSet[strNum],secondSet[strNum]);
+        	this.results[strNum] = getSimilarity(firstSet[strNum],secondSet[strNum]);
         }
-        return results;
+        return Arrays.copyOf(this.results, this.results.length);
     }
 
     /**

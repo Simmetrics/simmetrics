@@ -54,12 +54,6 @@ public final class ChapmanLengthDeviation extends AbstractStringMetric implement
 
 	private static final long serialVersionUID = 674014662402657882L;
 
-	/**
-     * constructor - default (empty).
-     */
-    public ChapmanLengthDeviation() {
-    }
-
     /**
      * returns the string identifier for the metric.
      *
@@ -86,7 +80,7 @@ public final class ChapmanLengthDeviation extends AbstractStringMetric implement
      *
      * @return a div class html section detailing the metric operation.
      */
-    public String getSimilarityExplained(String string1, String string2) {
+    public String getSimilarityExplained(final String string1, final String string2) {
         //todo this should explain the operation of a given comparison
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -114,11 +108,13 @@ public final class ChapmanLengthDeviation extends AbstractStringMetric implement
      * @return a value between 0-1 of the similarity
      */
     public float getSimilarity(final String string1, final String string2) {
+    	float res;
         if (string1.length() >= string2.length()) {
-            return (float) string2.length() / (float) string1.length();
+            res =  (float) string2.length() / (float) string1.length();
         } else {
-            return (float) string1.length() / (float) string2.length();
+            res =  (float) string1.length() / (float) string2.length();
         }
+        return res;
     }
 
     /**
@@ -128,7 +124,7 @@ public final class ChapmanLengthDeviation extends AbstractStringMetric implement
      * @param string2
      * @return returns the score of the similarity measure (un-normalised)
      */
-    public float getUnNormalisedSimilarity(String string1, String string2) {
+    public float getUnNormalisedSimilarity(final String string1, final String string2) {
         return getSimilarity(string1, string2);
     }
 }

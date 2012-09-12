@@ -147,10 +147,11 @@ public final class TestMetrics {
         //now create each metric in an ArrayList
         final ArrayList<AbstractStringMetric> testMetricArrayList = new ArrayList<AbstractStringMetric>();
         for(String metricString : metricStrings) {
+        	System.out.println(metricString);
             testMetricArrayList.add(MetricHandler.createMetric(metricString));
         }
         //test metrics
-        testMethod(testMetricArrayList, args);
+       // testMethod(testMetricArrayList, args);
     }
 
     /**

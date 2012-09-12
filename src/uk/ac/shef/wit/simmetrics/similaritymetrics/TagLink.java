@@ -334,7 +334,7 @@ public final class TagLink extends AbstractStringMetric implements Serializable 
             buff.append("}\n");
 
             float minStringSize = getMinStringSize(tTokens, uTokens);
-            buff.append("min(|T|,|U|)=").append(minStringSize).append("\n");
+            buff.append("min(|T|,|U|)=").append(minStringSize).append('\n');
 
             buff.append("\nIDF weights:\n");
             buff.append("Ti\tai(Ti)\n");

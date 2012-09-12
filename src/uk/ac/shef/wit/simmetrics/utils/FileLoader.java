@@ -103,7 +103,7 @@ public final class FileLoader {
 
                 if (line.length() != 0) {
                     fileString.append(line);
-                    fileString.append("\n");
+                    fileString.append('\n');
                 }
             }
 

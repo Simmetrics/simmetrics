@@ -5,3 +5,5 @@ SimMetrics is a Similarity Metric Library, e.g. from edit distance's (Levenshtei
 My clone of the project is not compatable with the original Sourceforge version, I changed a bit of the code and converted the project to an Eclipse project for easy import. I'll maintain this clone and add functionality as I see fit, but I will NOT be submitting any of my changes to the authors of the original project - mainly because I don't think the project is actively maintained there.
 
 Original Sourceforge project site: http://sourceforge.net/projects/simmetrics/
+
+NOTE: To move a clone here simply execute: git remote set-url origin git@github.com:Simmetrics/simmetrics.git

@@ -141,22 +141,18 @@ public final class DiceSimilarity extends AbstractStringMetric implements Serial
      * @return a value between 0-1 of the similarity
      */
     public float getSimilarity(final String string1, final String string2) {
-        final ArrayList<String> str1Tokens = tokeniser.tokenizeToArrayList(string1);
-        final ArrayList<String> str2Tokens = tokeniser.tokenizeToArrayList(string2);
+        final Set<String> str1Tokens = tokeniser.tokenizeToSet(string1);
+        final Set<String> str2Tokens = tokeniser.tokenizeToSet(string2);
+       
 
         final Set<String> allTokens = new HashSet<String>();
         allTokens.addAll(str1Tokens);
-        final int termsInString1 = allTokens.size();
-        final Set<String> secondStringTokens = new HashSet<String>();
-        secondStringTokens.addAll(str2Tokens);
-        final int termsInString2 = secondStringTokens.size();
+        allTokens.addAll(str2Tokens);
+        
+        final int commonTerms = (str1Tokens.size() +  str2Tokens.size()) - allTokens.size();
 
-        //now combine the sets
-        allTokens.addAll(secondStringTokens);
-        final int commonTerms = (termsInString1 + termsInString2) - allTokens.size();
-
-        //return Dices coefficient = (2*Common Terms) / (Number of terms in String1 + Number of terms in String2)
-        return (2.0f * commonTerms) / (termsInString1 + termsInString2);
+        //return Dices coefficient = (2*Common Terms) / (Number of distinct  terms in String1 + Number of distinct terms in String2)
+        return (2.0f * commonTerms) / (str1Tokens.size() + str2Tokens.size());
     }
 
     /**

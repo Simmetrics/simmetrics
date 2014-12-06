@@ -76,7 +76,7 @@ public class ChapmanMatchingSoundexTest extends TestCase {
 
         float result = metric.getSimilarity("Test String1", "Test String2");
 
-        assertEquals(1.0f, result);
+        assertEquals(0.955f, result,0.001);
     }
 }
 

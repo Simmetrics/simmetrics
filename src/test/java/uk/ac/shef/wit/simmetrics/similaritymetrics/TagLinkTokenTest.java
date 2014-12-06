@@ -76,7 +76,7 @@ public class TagLinkTokenTest extends TestCase {
 
         float result = metric.getSimilarity("Test String1", "Test String2");
 
-        assertEquals(0.9166667f, result);
+        assertEquals(0.950f, result,0.001);
     }
 }
 

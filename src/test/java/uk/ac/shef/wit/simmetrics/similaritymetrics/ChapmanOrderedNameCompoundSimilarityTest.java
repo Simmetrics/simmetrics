@@ -76,7 +76,7 @@ public class ChapmanOrderedNameCompoundSimilarityTest extends TestCase {
 
         float result = metric.getSimilarity("Test String1", "Test String2");
 
-        assertEquals(0.9553572f, result);
+        assertEquals(0.933f, result,0.001);
     }
 }
 

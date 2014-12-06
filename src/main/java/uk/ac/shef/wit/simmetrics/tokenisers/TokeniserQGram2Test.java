@@ -90,7 +90,7 @@ public class TokeniserQGram2Test  extends TestCase {
     public void testTokeniseToArrayList() {
         ArrayList results = tokeniser.tokenizeToArrayList("12345678");
         assertEquals(7, results.size());
-        assertEquals("ggg12", results.get(0));
+        assertEquals("12", results.get(0));
         assertEquals("23", results.get(1));
         assertEquals("34", results.get(2));
         assertEquals("45", results.get(3));

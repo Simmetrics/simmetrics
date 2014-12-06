@@ -1,11 +1,15 @@
-package org.simmetrics;
+package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.perf4j.LoggingStopWatch;
 import org.perf4j.StopWatch;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.InterfaceStringMetric;
+import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
+import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWordQGram;
 
 /**
  * Implementation taken from "How to Strike a Match"
@@ -14,10 +18,17 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.InterfaceStringMetric;
  *         href="http://www.catalysoft.com/articles/StrikeAMatch.html"
  *         >Catalysoft</a>
  */
-public class SimonWhite implements InterfaceStringMetric {
+public class SimonWhite extends AbstractStringMetric implements Serializable {
+
+	/**
+	 * a constant for calculating the estimated timing cost.
+	 */
+	private final float ESTIMATEDTIMINGCONST = 0.00000034457142857142857142857142857146f;
+
+	private final TokeniserWordQGram tokeniserWordQGram = new TokeniserWordQGram();
 
 	public String getShortDescriptionString() {
-		return "Find out how many adjacent character pairs are contained in both strings";
+		return  "SimonWhite";
 	}
 
 	public String getLongDescriptionString() {
@@ -44,63 +55,40 @@ public class SimonWhite implements InterfaceStringMetric {
 				+ "rounded to the nearest whole number.";
 	}
 
-	public long getSimilarityTimingActual(String string1, String string2) {
-		StopWatch stopWatch = new LoggingStopWatch("getSimilarityTimingActual");
-		this.getSimilarity(string1, string2);
-		stopWatch.stop();
-		return stopWatch.getElapsedTime();
-	}
-
 	public float getSimilarityTimingEstimated(String string1, String string2) {
-		return this.getSimilarityTimingActual(string1, string2);
+		// timed millisecond times with string lengths from 1 + 50 each
+		// increment
+		final float str1Length = string1.length();
+		final float str2Length = string2.length();
+		return (str1Length + str2Length)
+				* ((str1Length + str2Length) * ESTIMATEDTIMINGCONST);
 	}
 
 	public float getSimilarity(String string1, String string2) {
-		ArrayList<String> pairs1 = wordLetterPairs(string1.toUpperCase());
-		ArrayList<String> pairs2 = wordLetterPairs(string2.toUpperCase());
-		int intersection = 0;
+		final ArrayList<String> pairs1 = tokeniserWordQGram
+				.tokenizeToArrayList(string1);
+		final ArrayList<String> pairs2 = tokeniserWordQGram
+				.tokenizeToArrayList(string2);
+
 		int union = pairs1.size() + pairs2.size();
-		for (int i = 0; i < pairs1.size(); i++) {
-			Object pair1 = pairs1.get(i);
-			for (int j = 0; j < pairs2.size(); j++) {
-				Object pair2 = pairs2.get(j);
-				if (pair1.equals(pair2)) {
-					intersection++;
-					pairs2.remove(j);
-					break;
-				}
+		int intersection = 0;
+		for (String pair : pairs1) {
+			if (pairs2.remove(pair)) {
+				intersection++;
 			}
 		}
+
 		return new Float((2.0 * intersection) / union).floatValue();
+
 	}
 
 	public String getSimilarityExplained(String string1, String string2) {
 		return this.getLongDescriptionString();
 	}
 
-	/** @return an array of adjacent letter pairs contained in the input string */
-	private String[] letterPairs(String str) {
-		int numPairs = str.length() - 1;
-		String[] pairs = new String[numPairs];
-		for (int i = 0; i < numPairs; i++) {
-			pairs[i] = str.substring(i, i + 2);
-		}
-		return pairs;
+	@Override
+	public float getUnNormalisedSimilarity(String string1, String string2) {
+		return getSimilarity(string1, string2);
 	}
 
-	/** @return an ArrayList of 2-character Strings. */
-	private ArrayList<String> wordLetterPairs(String str) {
-		ArrayList<String> allPairs = new ArrayList<String>();
-		// Tokenize the string and put the tokens/words into an array
-		String[] words = str.split("\\s");
-		// For each word
-		for (int w = 0; w < words.length; w++) {
-			// Find the pairs of characters
-			String[] pairsInWord = letterPairs(words[w]);
-			for (int p = 0; p < pairsInWord.length; p++) {
-				allPairs.add(pairsInWord[p]);
-			}
-		}
-		return allPairs;
-	}
 }

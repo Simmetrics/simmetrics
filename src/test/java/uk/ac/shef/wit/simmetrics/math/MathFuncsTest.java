@@ -70,8 +70,7 @@ public class MathFuncsTest extends TestCase {
     /**
      * Tests max3 float.
      */
-    public void max3float() {
-//        Test test = new Test();
+    public void testMax3float() {
         assertEquals(0.3f, MathFuncs.max3(0.1f, 0.2f, 0.3f));
         assertEquals(0.31f, MathFuncs.max3(0.31f, 0.2f, 0.3f));
         assertEquals(0.5f, MathFuncs.max3(0.1f, 0.5f, 0.3f));
@@ -81,7 +80,7 @@ public class MathFuncsTest extends TestCase {
     /**
      * Tests max3 int.
      */
-    public void max3int() {
+    public void testMax3int() {
         assertEquals(5, MathFuncs.max3(-10, 5, 3));
         assertEquals(10, MathFuncs.max3(10, 5, 3));
         assertEquals(13, MathFuncs.max3(-10, 5, 13));
@@ -90,7 +89,7 @@ public class MathFuncsTest extends TestCase {
     /**
      * tests min3 int.
      */
-    public void min3int() {
+    public void testMin3int() {
         assertEquals(-10, MathFuncs.min3(-10, 5, 13));
         assertEquals(-13, MathFuncs.min3(-10, 5, -13));
         assertEquals(5, MathFuncs.min3(10, 5, 13));
@@ -99,7 +98,7 @@ public class MathFuncsTest extends TestCase {
     /**
      * tests min3 float.
      */
-    public void min3float() {
+    public void testMin3float() {
         assertEquals(5.45f, MathFuncs.min3(10.1f, 5.45f, 13.12f));
         assertEquals(0.1f, MathFuncs.min3(0.1f, 5.45f, 13.12f));
         assertEquals(-3.12f, MathFuncs.min3(10.1f, 5.45f, -3.12f));
@@ -108,11 +107,11 @@ public class MathFuncsTest extends TestCase {
     /**
      * tests max4 float.
      */
-    public void max4float() {
+    public void testMax4float() {
         assertEquals(36.9f, MathFuncs.max4(10.1f, 5.45f, -3.12f, 36.9f));
         assertEquals(10.1f, MathFuncs.max4(10.1f, 5.45f, -3.12f, 6.9f));
         assertEquals(-3.12f, MathFuncs.max4(-10.1f, -5.45f, -3.12f, -36.9f));
-        assertEquals(25.4f, MathFuncs.max4(10.1f, 25.45f, -3.12f, 16.9f));
+        assertEquals(25.45f, MathFuncs.max4(10.1f, 25.45f, -3.12f, 16.9f));
     }
 
 }

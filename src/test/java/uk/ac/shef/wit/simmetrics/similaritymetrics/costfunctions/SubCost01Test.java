@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -39,50 +39,24 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
 
-import junit.framework.TestCase;
+public class SubCost01Test extends InterfaceSubstitutionCostTest {
 
-/**
- * Created by IntelliJ IDEA.
- * User: Administrator
- * Date: 24-Nov-2006
- * Time: 10:37:43
- * To change this template use File | Settings | File Templates.
- */
-public class SubCost01Test extends TestCase {
 
-    /**
-     * costfunction tested.
-     */
-    private InterfaceSubstitutionCost costFunction;
+	@Override
+	public InterfaceSubstitutionCost getCost() {
+		return new SubCost01();
+	}
 
-    /**
-     * Sets up the test fixture.
-     *
-     * Called before every test case method.
-     */
-    protected void setUp() {
-        costFunction = new SubCost01();
-    }
-
-    /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     */
-    protected void tearDown() {
-        // release objects under test here, if necessary
-    }
-
-    /**
-     * Tests emptying the cart.
-     */
-    public void testAll() {
-        final String testString1 = "hello world AAAAAAA BBB ABCDEF this is a test";
-        final String testString2 = "jello wrd AAAAAAA BBB ABCDEF this is a test";
-        assertEquals(1.0f, costFunction.getCost(testString1, 0, testString2, 0));
-        assertEquals(0.0f, costFunction.getCost(testString1, 2, testString2, 2));
-        assertEquals(1.0f, costFunction.getCost(testString1, 7, testString2, 7));
-        assertEquals(1.0f, costFunction.getCost(testString1, 10, testString2, 10));
-        assertEquals(1.0f, costFunction.getCost(testString1, 22, testString2, 3));
-    }
+	@Override
+	public T[] getTests() {
+		final String testString1 = "hello world AAAAAAA BBB ABCDEF this is a test";
+		final String testString2 = "jello wrd AAAAAAA BBB ABCDEF this is a test";
+		return new T[] {
+				new T(1.0000f, testString1, 0, testString2, 0),
+				new T(0.0000f, testString1, 2, testString2, 2),
+				new T(1.0000f, testString1, 7, testString2, 7),
+				new T(1.0000f, testString1, 10, testString2, 10),
+				new T(1.0000f, testString1, 22, testString2, 3),
+		};
+	}
 }

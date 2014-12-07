@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -40,46 +40,20 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
 
 /**
- * Package: costfunctions Description: AbstractSubstitutionCost implements a abstract class for substiution costs
- * functions. Date: 24-Mar-2004 Time: 13:34:45
+ * AbstractSubstitutionCost implements a abstract class for substiution costs
+ * functions.
  *
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+ * @author Sam Chapman
  * @version 1.1
  */
 
-//FIXME: This class isn't needed
-public abstract class AbstractSubstitutionCost implements InterfaceSubstitutionCost {
+public abstract class AbstractSubstitutionCost implements
+		InterfaceSubstitutionCost {
 
-    /**
-     * returns the name of the cost function.
-     *
-     * @return the name of the cost function
-     */
-    public abstract String getShortDescriptionString();
+	
+	public String getShortDescriptionString(){
+		return getClass().getSimpleName();
+	}
 
-    /**
-     * get cost between characters.
-     *
-     * @param str1         - the string1 to evaluate the cost
-     * @param string1Index - the index within the string1 to test
-     * @param str2         - the string2 to evaluate the cost
-     * @param string2Index - the index within the string2 to test
-     *
-     * @return the cost of a given subsitution d(i,j)
-     */
-    public abstract float getCost(String str1, int string1Index, String str2, int string2Index);
-
-    /**
-     * returns the maximum possible cost.
-     *
-     * @return the maximum possible cost
-     */
-    public abstract float getMaxCost();
-
-    /**
-     * returns the minimum possible cost.
-     *
-     * @return the minimum possible cost
-     */
-    public abstract float getMinCost();
+	
 }

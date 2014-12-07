@@ -64,8 +64,8 @@ public final class TokeniserWordQGram extends AbstractTokenizer implements
 	 * word tokenizer and {@link TokeniserQGram2}. A string is broken up into
 	 * words by the word tokenizer. For each word q-grams are made.
 	 */
-	public TokeniserWordQGram() {
-		this(new TokeniserWhitespace(), new TokeniserQGram2());
+	public TokeniserWordQGram(TokeniserQGram qGramTokenizer) {
+		this(new TokeniserWhitespace(), qGramTokenizer);
 	}
 
 	/**
@@ -85,7 +85,7 @@ public final class TokeniserWordQGram extends AbstractTokenizer implements
 		this.qGramTokenizer = qGramTokenizer;
 	}
 
-	public final ArrayList<String> tokenizeToArrayList(final String input) {
+	public ArrayList<String> tokenizeToArrayList(final String input) {
 		final ArrayList<String> returnArrayList = new ArrayList<String>(
 				input.length());
 		final ArrayList<String> words = wordTokenizer
@@ -103,6 +103,7 @@ public final class TokeniserWordQGram extends AbstractTokenizer implements
 		return returnArrayList;
 	}
 
+	@Override
 	public Set<String> tokenizeToSet(final String input) {
 
 		// tokenizeToArray is not reused here on purpose. Removing duplicate

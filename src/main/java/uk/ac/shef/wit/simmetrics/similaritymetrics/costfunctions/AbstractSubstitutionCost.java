@@ -46,6 +46,8 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
  * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
  * @version 1.1
  */
+
+//FIXME: This class isn't needed
 public abstract class AbstractSubstitutionCost implements InterfaceSubstitutionCost {
 
     /**

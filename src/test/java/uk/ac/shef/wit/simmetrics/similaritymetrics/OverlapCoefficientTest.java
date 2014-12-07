@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -39,44 +39,49 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import junit.framework.TestCase;
+public class OverlapCoefficientTest extends InterfaceStringMetricTest {
 
-/**
- * Performs a unit test upon the OverlapCoefficient string metric.
- *
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
- */
-public class OverlapCoefficientTest extends TestCase {
+	@Override
+	public InterfaceStringMetric getMetric() {
+		return new OverlapCoefficient();
+	}
 
-    //private method to hold metric test cases
-    private AbstractStringMetric metric;
-
-    /**
-     * Sets up the test fixture.
-     *
-     * Called before every test case method.
-     */
-    protected void setUp() {
-        metric = new OverlapCoefficient();
-    }
-
-    /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     */
-    protected void tearDown() {
-        // release objects under test here, if necessary
-    }
-
-    /**
-     * Tests emptying the cart.
-     */
-    public void testGetSimilarity() {
-
-        float result = metric.getSimilarity("Test String1", "Test String2");
-
-        assertEquals(0.5f, result);
-    }
+	@Override
+	public T[] getTests() {
+		return new T[] {
+				new T(0.5000f, "test string1", "test string2"),
+				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+				new T(0.7500f, "a b c d", "a b c e"),
+				new T(0.0000f, "Healed", "Sealed"),
+				new T(0.0000f, "Healed", "Healthy"),
+				new T(0.0000f, "Healed", "Heard"),
+				new T(0.0000f, "Healed", "Herded"),
+				new T(0.0000f, "Healed", "Help"),
+				new T(0.0000f, "Healed", "Sold"),
+				new T(0.0000f, "Healed", "Help"),
+				new T(0.3333f, "Sam J Chapman", "Samuel John Chapman"),
+				new T(0.5000f, "Sam Chapman", "S Chapman"),
+				new T(0.5000f, "John Smith", "Samuel John Chapman"),
+				new T(0.0000f, "John Smith", "Sam Chapman"),
+				new T(0.0000f, "John Smith", "Sam J Chapman"),
+				new T(0.0000f, "John Smith", "S Chapman"),
+				new T(1.0000f, "Web Database Applications", "Web Database Applications with PHP & MySQL"),
+				new T(1.0000f, "Web Database Applications", "Creating Database Web Applications with PHP and ASP"),
+				new T(1.0000f, "Web Database Applications", "Building Database Applications on the Web Using PHP3"),
+				new T(1.0000f, "Web Database Applications", "Building Web Database Applications with Visual Studio 6"),
+				new T(0.3333f, "Web Database Applications", "Web Application Development With PHP"),
+				new T(1.0000f, "Web Database Applications", "WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
+				new T(0.0000f, "Web Database Applications", "Structural Assessment: The Role of Large and Full-Scale Testing"),
+				new T(0.0000f, "Web Database Applications", "How to Find a Scholarship Online"),
+				new T(0.5000f, "Web Aplications", "Web Database Applications with PHP & MySQL"),
+				new T(0.5000f, "Web Aplications", "Creating Database Web Applications with PHP and ASP"),
+				new T(0.5000f, "Web Aplications", "Building Database Applications on the Web Using PHP3"),
+				new T(0.5000f, "Web Aplications", "Building Web Database Applications with Visual Studio 6"),
+				new T(0.5000f, "Web Aplications", "Web Application Development With PHP"),
+				new T(0.5000f, "Web Aplications", "WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
+				new T(0.0000f, "Web Aplications", "Structural Assessment: The Role of Large and Full-Scale Testing"),
+				new T(0.0000f, "Web Aplications", "How to Find a Scholarship Online"),
+		};
+	}
 }
 

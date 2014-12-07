@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -47,247 +47,148 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
 import java.io.Serializable;
 
 /**
- * Package: uk.ac.shef.wit.simmetrics.similaritymetrics.needlemanwunch
- * Description: needlemanwunch implements a edit distance function
-
- * Date: 24-Mar-2004
- * Time: 12:30:47
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+ * Implements the Needleman-Wunch algorithm providing an edit distance based
+ * similarity measure between two strings
+ * 
+ * @author Sam Chapman
  * @version 1.1
  */
-public final class NeedlemanWunch extends AbstractStringMetric implements Serializable {
+public final class NeedlemanWunch extends AbstractStringMetric implements
+		Serializable {
 
-    /**
-     * a constant for calculating the estimated timing cost.
-     */
-    private final float ESTIMATEDTIMINGCONST = 1.842e-4f;
+	private final float ESTIMATEDTIMINGCONST = 1.842e-4f;
 
-    /**
-     * the private cost function used in the levenstein distance.
-     */
-    private AbstractSubstitutionCost dCostFunc;
+	private final AbstractSubstitutionCost dCostFunc;
 
-    /**
-     * the cost of a gap.
-     */
-    private float gapCost;
+	private final float gapCost;
 
-    /**
-     * constructor - default (empty).
-     */
-    public NeedlemanWunch() {
-        //set the gapCost to a default value
-        gapCost = 2.0f;
-        //set the default cost func
-        dCostFunc = new SubCost01();
-    }
+	public NeedlemanWunch() {
+		this(2.0f, new SubCost01());
+	}
 
-    /**
-     * constructor.
-     *
-     * @param costG - the cost of a gap
-     */
-    public NeedlemanWunch(final float costG) {
-        //set the gapCost to a given value
-        gapCost = costG;
-        //set the cost func to a default function
-        dCostFunc = new SubCost01();
-    }
+	/**
+	 * constructor.
+	 *
+	 * @param costG
+	 *            - the cost of a gap
+	 */
+	public NeedlemanWunch(final float costG) {
+		this(costG, new SubCost01());
+	}
 
-    /**
-     * constructor.
-     *
-     * @param costG    - the cost of a gap
-     * @param costFunc - the cost function to use
-     */
-    public NeedlemanWunch(final float costG, final AbstractSubstitutionCost costFunc) {
-        //set the gapCost to the given value
-        gapCost = costG;
-        //set the cost func
-        dCostFunc = costFunc;
-    }
+	/**
+	 * constructor.
+	 *
+	 * @param costG
+	 *            - the cost of a gap
+	 * @param costFunc
+	 *            - the cost function to use
+	 */
+	public NeedlemanWunch(final float costG,
+			final AbstractSubstitutionCost costFunc) {
+		// set the gapCost to the given value
+		this.gapCost = costG;
+		// set the cost func
+		this.dCostFunc = costFunc;
+	}
 
-    /**
-     * constructor.
-     *
-     * @param costFunc - the cost function to use
-     */
-    public NeedlemanWunch(final AbstractSubstitutionCost costFunc) {
-        //set the gapCost to a default value
-        gapCost = 2.0f;
-        //set the cost func
-        dCostFunc = costFunc;
-    }
+	/**
+	 * constructor.
+	 *
+	 * @param costFunc
+	 *            - the cost function to use
+	 */
+	public NeedlemanWunch(final AbstractSubstitutionCost costFunc) {
+		this(2.0f,costFunc);
+	}
 
-    /**
-     * gets the gap cost for the distance function.
-     *
-     * @return the gap cost for the distance function
-     */
-    public float getGapCost() {
-        return gapCost;
-    }
 
-    /**
-     * sets the gap cost for the distance function.
-     *
-     * @param gapCost the cost of a gap
-     */
-    public void setGapCost(final float gapCost) {
-        this.gapCost = gapCost;
-    }
+	public String getLongDescriptionString() {
+		return "Implements the Needleman-Wunch algorithm providing an edit distance based similarity measure between two strings";
+	}
 
-    /**
-     * get the d(i,j) cost function.
-     *
-     * @return AbstractSubstitutionCost cost function used
-     */
-    public AbstractSubstitutionCost getdCostFunc() {
-        return dCostFunc;
-    }
+	public float getSimilarityTimingEstimated(final String string1,
+			final String string2) {
 
-    /**
-     * sets the d(i,j) cost function used .
-     *
-     * @param dCostFunc - the cost function to use
-     */
-    public void setdCostFunc(final AbstractSubstitutionCost dCostFunc) {
-        this.dCostFunc = dCostFunc;
-    }
+		final float str1Length = string1.length();
+		final float str2Length = string2.length();
+		return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
+	}
 
-    /**
-     * returns the string identifier for the metric.
-     *
-     * @return the string identifier for the metric
-     */
-    public String getShortDescriptionString() {
-        return "NeedlemanWunch";
-    }
+	public float getSimilarity(final String string1, final String string2) {
+		float needlemanWunch = getUnNormalisedSimilarity(string1, string2);
 
-    /**
-     * returns the long string identifier for the metric.
-     *
-     * @return the long string identifier for the metric
-     */
-    public String getLongDescriptionString() {
-        return "Implements the Needleman-Wunch algorithm providing an edit distance based similarity measure between two strings";
-    }
+		// normalise into zero to one region from min max possible
+		float maxValue = Math.max(string1.length(), string2.length());
+		float minValue = maxValue;
+		if (dCostFunc.getMaxCost() > gapCost) {
+			maxValue *= dCostFunc.getMaxCost();
+		} else {
+			maxValue *= gapCost;
+		}
+		if (dCostFunc.getMinCost() < gapCost) {
+			minValue *= dCostFunc.getMinCost();
+		} else {
+			minValue *= gapCost;
+		}
+		if (minValue < 0.0f) {
+			maxValue -= minValue;
+			needlemanWunch -= minValue;
+		}
 
-    /**
-     * gets a div class xhtml similarity explaining the operation of the metric.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return a div class html section detailing the metric operation.
-     */
-    public String getSimilarityExplained(String string1, String string2) {
-        //todo this should explain the operation of a given comparison
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
+		// check for 0 maxLen
+		if (maxValue == 0) {
+			return 1.0f; // as both strings identically zero length
+		} else {
+			// return actual / possible NeedlemanWunch distance to get 0-1 range
+			return 1.0f - (needlemanWunch / maxValue);
+		}
 
-    /**
-     * gets the estimated time in milliseconds it takes to perform a similarity timing.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return the estimated time in milliseconds taken to perform the similarity measure
-     */
-    public float getSimilarityTimingEstimated(final String string1, final String string2) {
-        //timed millisecond times with string lengths from 1 + 50 each increment
-        //0	0.44	1.13	2.45	4.41	7	9.67	13.53	18.45	22.67	27.25	36.5	40.6	47	54.5	62.5	73	83.33	88.67	99	109.5	140.5	148.5	172	172	179.5	219	218	297	250	282	328	297	375	343	375	422	453	453	500	500	547	578	547	579	625	640	656	719	844	781	828	844	875	906	938	969	1000	1250	1078
-        final float str1Length = string1.length();
-        final float str2Length = string2.length();
-        return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
-    }
+	}
 
-    /**
-     * gets the similarity of the two strings using Needleman Wunch distance.
-     *
-     * @param string1
-     * @param string2
-     * @return a value between 0-1 of the similarity
-     */
-    public float getSimilarity(final String string1, final String string2) {
-        float needlemanWunch = getUnNormalisedSimilarity(string1, string2);
+	public float getUnNormalisedSimilarity(final String s, final String t) {
+		final float[][] d; // matrix
+		final int n; // length of s
+		final int m; // length of t
+		int i; // iterates through s
+		int j; // iterates through t
+		float cost; // cost
 
-        //normalise into zero to one region from min max possible
-        float maxValue = Math.max(string1.length(), string2.length());
-        float minValue = maxValue;
-        if (dCostFunc.getMaxCost() > gapCost) {
-            maxValue *= dCostFunc.getMaxCost();
-        } else {
-            maxValue *= gapCost;
-        }
-        if (dCostFunc.getMinCost() < gapCost) {
-            minValue *= dCostFunc.getMinCost();
-        } else {
-            minValue *= gapCost;
-        }
-        if (minValue < 0.0f) {
-            maxValue -= minValue;
-            needlemanWunch -= minValue;
-        }
+		// check for zero length input
+		n = s.length();
+		m = t.length();
+		if (n == 0) {
+			return m;
+		}
+		if (m == 0) {
+			return n;
+		}
 
-        //check for 0 maxLen
-        if (maxValue == 0) {
-            return 1.0f; //as both strings identically zero length
-        } else {
-            //return actual / possible NeedlemanWunch distance to get 0-1 range
-            return 1.0f - (needlemanWunch / maxValue);
-        }
+		// create matrix (n+1)x(m+1)
+		d = new float[n + 1][m + 1];
 
-    }
+		// put row and column numbers in place
+		for (i = 0; i <= n; i++) {
+			d[i][0] = i;
+		}
+		for (j = 0; j <= m; j++) {
+			d[0][j] = j;
+		}
 
-    /**
-     * implements the NeedlemanWunch distance function.
-     *
-     * @param s
-     * @param t
-     * @return the NeedlemanWunch distance for the given strings
-     */
-    public float getUnNormalisedSimilarity(final String s, final String t) {
-        final float[][] d; // matrix
-        final int n; // length of s
-        final int m; // length of t
-        int i; // iterates through s
-        int j; // iterates through t
-        float cost; // cost
+		// cycle through rest of table filling values from the lowest cost value
+		// of the three part cost function
+		for (i = 1; i <= n; i++) {
+			for (j = 1; j <= m; j++) {
+				// get the substution cost
+				cost = dCostFunc.getCost(s, i - 1, t, j - 1);
 
-        // check for zero length input
-        n = s.length();
-        m = t.length();
-        if (n == 0) {
-            return m;
-        }
-        if (m == 0) {
-            return n;
-        }
+				// find lowest cost at point from three possible
+				d[i][j] = MathFuncs.min3(d[i - 1][j] + gapCost, d[i][j - 1]
+						+ gapCost, d[i - 1][j - 1] + cost);
+			}
+		}
 
-        //create matrix (n+1)x(m+1)
-        d = new float[n + 1][m + 1];
-
-        //put row and column numbers in place
-        for (i = 0; i <= n; i++) {
-            d[i][0] = i;
-        }
-        for (j = 0; j <= m; j++) {
-            d[0][j] = j;
-        }
-
-        // cycle through rest of table filling values from the lowest cost value of the three part cost function
-        for (i = 1; i <= n; i++) {
-            for (j = 1; j <= m; j++) {
-                // get the substution cost
-                cost = dCostFunc.getCost(s, i - 1, t, j - 1);
-
-                // find lowest cost at point from three possible
-                d[i][j] = MathFuncs.min3(d[i - 1][j] + gapCost, d[i][j - 1] + gapCost, d[i - 1][j - 1] + cost);
-            }
-        }
-
-        // return bottom right of matrix as holds the maximum edit score
-        return d[n][m];
-    }
+		// return bottom right of matrix as holds the maximum edit score
+		return d[n][m];
+	}
 }

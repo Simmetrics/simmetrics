@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -42,91 +42,36 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
 import java.io.Serializable;
 
 /**
- * Package: uk.ac.shef.wit.simmetrics.similaritymetrics.ChapmanLengthDeviation
- * Description: ChapmanLengthDeviation implements a metric determined by the difference in string lengths
-
- * Date: 26-Mar-2004
- * Time: 13:53:08
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+ * 
+ * Implements the Chapman Length Deviation algorithm whereby the length
+ * deviation of the input strings is used to determine if the strings are
+ * similar in size. This is the ratio of difference in string lengths.
+ * 
+ * This approach is not intended to be used single handedly but rather alongside
+ * other approaches
+ * 
+ * @author Sam Chapman
  * @version 1.1
  */
-public final class ChapmanLengthDeviation extends AbstractStringMetric implements Serializable {
+public final class ChapmanLengthDeviation extends AbstractStringMetric
+		implements Serializable {
 
-    /**
-     * constructor - default (empty).
-     */
-    public ChapmanLengthDeviation() {
-    }
+	/**
+	 * Constructs a ChapmanLengthDeviation metric
+	 */
+	public ChapmanLengthDeviation() {
+	}
 
-    /**
-     * returns the string identifier for the metric.
-     *
-     * @return the string identifier for the metric
-     */
-    public String getShortDescriptionString() {
-        return "ChapmanLengthDeviation";
-    }
+	public String getLongDescriptionString() {
+		return "Implements the Chapman Length Deviation algorithm whereby the length deviation of the input strings is used to determine if the strings are similar in size - This apporach is not intended to be used single handedly but rather alongside other approaches";
+	}
 
-    /**
-     * returns the long string identifier for the metric.
-     *
-     * @return the long string identifier for the metric
-     */
-    public String getLongDescriptionString() {
-        return "Implements the Chapman Length Deviation algorithm whereby the length deviation of the input strings is used to determine if the strings are similar in size - This apporach is not intended to be used single handedly but rather alongside other approaches";
-    }
+	public float getSimilarity(final String string1, final String string2) {
+		if (string1.length() >= string2.length()) {
+			return (float) string2.length() / (float) string1.length();
+		} else {
+			return (float) string1.length() / (float) string2.length();
+		}
+	}
 
-    /**
-     * gets a div class xhtml similarity explaining the operation of the metric.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return a div class html section detailing the metric operation.
-     */
-    public String getSimilarityExplained(String string1, String string2) {
-        //todo this should explain the operation of a given comparison
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    /**
-     * gets the estimated time in milliseconds it takes to perform a similarity timing.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return the estimated time in milliseconds taken to perform the similarity measure
-     */
-    public float getSimilarityTimingEstimated(final String string1, final String string2) {
-        //return 0 as this similarity metric is near to zero milliseconds and is independent
-        return 0;
-    }
-
-    /**
-     * gets the similarity of the two strings using ChapmanLengthDeviation
-     * <p/>
-     * this is simply a ratio of difference in string lengths between those compared.
-     *
-     * @param string1
-     * @param string2
-     * @return a value between 0-1 of the similarity
-     */
-    public float getSimilarity(final String string1, final String string2) {
-        if (string1.length() >= string2.length()) {
-            return (float) string2.length() / (float) string1.length();
-        } else {
-            return (float) string1.length() / (float) string2.length();
-        }
-    }
-
-    /**
-     * gets the un-normalised similarity measure of the metric for the given strings.
-     *
-     * @param string1
-     * @param string2
-     * @return returns the score of the similarity measure (un-normalised)
-     */
-    public float getUnNormalisedSimilarity(String string1, String string2) {
-        return getSimilarity(string1, string2);
-    }
 }

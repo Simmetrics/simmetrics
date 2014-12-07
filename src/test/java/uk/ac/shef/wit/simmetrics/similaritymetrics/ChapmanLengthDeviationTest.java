@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -39,44 +39,30 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import junit.framework.TestCase;
+public class ChapmanLengthDeviationTest extends InterfaceStringMetricTest {
 
-/**
- * Performs a unit test upon the ChapmanLengthDeviation string metric.
- *
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
- */
-public class ChapmanLengthDeviationTest extends TestCase {
 
-    //private method to hold metric test cases
-    private AbstractStringMetric metric;
+	@Override
+	public InterfaceStringMetric getMetric() {
+		return new ChapmanLengthDeviation();
+	}
 
-    /**
-     * Sets up the test fixture.
-     *
-     * Called before every test case method.
-     */
-    protected void setUp() {
-        metric = new ChapmanLengthDeviation();
-    }
+	@Override
+	public T[] getTests() {
+		return new T[] {
+				new T(1.0000f, "test string1", "test string2"),
+				new T(1.0000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+				new T(1.0000f, "a b c d", "a b c e"),
 
-    /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     */
-    protected void tearDown() {
-        // release objects under test here, if necessary
-    }
+				new T(1.0000f, "Healed","Sealed"),
+				new T(0.8571f,"Healed","Healthy"),
+				new T(0.8333f,"Healed","Heard"),
+				new T(1.0000f,"Healed","Herded"),
+				new T(0.6666f,"Healed","Help"),
+				new T(0.6666f,"Healed","Sold"),
+				new T(0.6666f,"Healed","Help")
 
-    /**
-     * Tests emptying the cart.
-     */
-    public void testGetSimilarity() {
-
-        float result = metric.getSimilarity("Test String1", "Test String2");
-
-        assertEquals(1.0f, result);
-    }
+		};
+	}
 }
 

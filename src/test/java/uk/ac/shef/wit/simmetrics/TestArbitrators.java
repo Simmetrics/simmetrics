@@ -46,6 +46,7 @@ import uk.ac.shef.wit.simmetrics.metrichandlers.MetricHandler;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  *
@@ -124,16 +125,12 @@ public final class TestArbitrators {
      */
     public static void main(final String[] args) {
 
-        ArrayList<String> metricStrings = MetricHandler.GetMetricsAvailable();
+        Set<InterfaceStringMetric> metricStrings = MetricHandler.getMetricsAvailable();
 
-        //now create each metric in an ArrayList
-        final ArrayList<InterfaceStringMetric> testMetricArrayList = new ArrayList<InterfaceStringMetric>();
-        for(String metricString : metricStrings) {
-            testMetricArrayList.add(MetricHandler.createMetric(metricString));
-        }
+    
 
         final InterfaceMetricArbitrator arbitrator = new MeanMetricArbitrator();
-        arbitrator.setArbitrationMetrics(testMetricArrayList);
+        arbitrator.setArbitrationMetrics(new ArrayList<InterfaceStringMetric>(metricStrings));
 
         //test metrics
         testMethod(arbitrator);

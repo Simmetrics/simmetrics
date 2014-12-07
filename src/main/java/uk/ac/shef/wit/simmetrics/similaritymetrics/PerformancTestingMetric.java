@@ -37,5 +37,10 @@ public class PerformancTestingMetric implements InterfaceStringMetric {
 	public String getSimilarityExplained(String string1, String string2) {
 		return metric.getSimilarityExplained(string1, string2);
 	}
+	
+	@Override
+	public String toString() {
+		return metric.toString();
+	}
 
 }

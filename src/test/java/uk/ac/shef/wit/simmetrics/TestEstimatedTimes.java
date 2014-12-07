@@ -154,6 +154,8 @@ public final class TestEstimatedTimes {
                 final String input1 = testString.substring(0,len);
                 while(timeTaken < TESTTIMINGMILLISECONDSPERTEST) {
                     timeTaken += metric.getSimilarityTimingActual(input1, input1);
+                    //FIXME: Incrementing time taken to deal wtih sub 1ms tests.
+                    timeTaken++;
                     iterations++;
                     metricTests++;
                 }

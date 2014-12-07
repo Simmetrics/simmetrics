@@ -49,6 +49,10 @@ public abstract class AbstractStringMetric implements InterfaceStringMetric {
 	public String getShortDescriptionString() {
 		return getClass().getSimpleName();
 	};
+	
+	public String toString() {
+		return getClass().getSimpleName();
+	};
 
 	@Deprecated
 	public String getLongDescriptionString() {

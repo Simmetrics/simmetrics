@@ -44,16 +44,18 @@ import java.util.Set;
 import java.util.ArrayList;
 import java.io.Serializable;
 
+import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
+
 /**
- * A QGram Tokeniser for words. A string is broken up into words by a word
- * tokenizer. For each word q-grams are made.
- * 
+ * A QGram Tokeniser for words. A string is broken up into words by a
+ * {@link InterfaceTokeniser}. For each word q-grams are made by a
+ * {@link TokeniserQGram}.
  * 
  * @author mpkorstanje
  * 
  *
  */
-public final class TokeniserWordQGram extends AbstractTokenizer  {
+public final class TokeniserWordQGram implements InterfaceTokeniser {
 
 	private InterfaceTokeniser wordTokenizer;
 	private TokeniserQGram qGramTokenizer;
@@ -92,17 +94,14 @@ public final class TokeniserWordQGram extends AbstractTokenizer  {
 
 		// for each word
 		for (String word : words) {
-			if (!isWord(word)) {
-				// find all qgrams
-				returnArrayList
-						.addAll(qGramTokenizer.tokenizeToArrayList(word));
-			}
+			// find all qgrams
+			returnArrayList.addAll(qGramTokenizer.tokenizeToArrayList(word));
+
 		}
 
 		return returnArrayList;
 	}
 
-	@Override
 	public Set<String> tokenizeToSet(final String input) {
 
 		// tokenizeToArray is not reused here on purpose. Removing duplicate
@@ -114,12 +113,33 @@ public final class TokeniserWordQGram extends AbstractTokenizer  {
 
 		// for each word
 		for (String word : words) {
-			if (!stopWordHandler.isWord(word)) {
-				// find all qgrams
-				returnSet.addAll(qGramTokenizer.tokenizeToArrayList(word));
-			}
+			// find all qgrams
+			returnSet.addAll(qGramTokenizer.tokenizeToArrayList(word));
 		}
 
 		return returnSet;
+	}
+
+	public String getShortDescriptionString() {
+		return getClass().getSimpleName();
+	}
+
+	/**
+	 * Gets the stop word handler used by the word tokenizer.
+	 * 
+	 * @return the stop word handler used by the word tokenizer
+	 */
+	public InterfaceTermHandler getStopWordHandler() {
+		return wordTokenizer.getStopWordHandler();
+	}
+
+	/**
+	 * Sets the stop word handler on the word tokenizer.
+	 * 
+	 * @param stopWordHandler
+	 *            to set on the word tokenizer
+	 */
+	public void setStopWordHandler(InterfaceTermHandler stopWordHandler) {
+		wordTokenizer.setStopWordHandler(stopWordHandler);
 	}
 }

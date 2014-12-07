@@ -1,6 +1,10 @@
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
 
 /**
  * Basic Q-Gram tokenizer for a variable Q.The Q-Gram is extended beyond the
@@ -9,7 +13,7 @@ import java.util.ArrayList;
  * @author mpkorstanje
  *
  */
-public class TokeniserQGramExtended extends AbstractTokenizer {
+public class TokeniserQGramExtended implements InterfaceTokeniser {
 
 	private final char Q_GRAM_START_PADDING = '#';
 	private final char Q_GRAM_END_PADDING = '#';
@@ -33,8 +37,24 @@ public class TokeniserQGramExtended extends AbstractTokenizer {
 
 	}
 
+	public void setStopWordHandler(InterfaceTermHandler stopWordHandler) {
+		tokenizer.setStopWordHandler(stopWordHandler);
+	}
+
+	public InterfaceTermHandler getStopWordHandler() {
+		return tokenizer.getStopWordHandler();
+	}
+
 	public ArrayList<String> tokenizeToArrayList(String input) {
 		return tokenizer.tokenizeToArrayList(startPadding + input + endPadding);
+	}
+
+	public String getShortDescriptionString() {
+		return getClass().getSimpleName();
+	}
+
+	public Set<String> tokenizeToSet(String input) {
+		return tokenizer.tokenizeToSet(startPadding + input + endPadding);
 	}
 
 }

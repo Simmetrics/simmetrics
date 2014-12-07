@@ -45,50 +45,50 @@ import java.util.Set;
 import java.util.ArrayList;
 
 /**
-
- * @author Sam Chapman 
+ * 
+ * @author Sam Chapman
  * @version 1.1
  */
 public interface InterfaceTokeniser {
 
-    /**
-     * Displays the tokenisation method.
-     *
-     * @return short description string
-     */
+	/**
+	 * Displays the tokenisation method.
+	 *
+	 * @return short description string
+	 */
 	@Deprecated
-    public String getShortDescriptionString();
+	public String getShortDescriptionString();
 
+	/**
+	 * Gets the stop word handler used.
+	 * 
+	 * @return the stop word handler used
+	 */
+	public InterfaceTermHandler getStopWordHandler();
 
+	/**
+	 * Sets the stop word handler used with the handler given.
+	 * 
+	 * @param stopWordHandler
+	 *            the given stop word hanlder
+	 */
+	public void setStopWordHandler(InterfaceTermHandler stopWordHandler);
 
-    /**
-     * gets the stop word handler used.
-     * @return the stop word handler used
-     */
-    public InterfaceTermHandler getStopWordHandler();
+	/**
+	 * Return tokenized version of a string as an ArrayList.
+	 *
+	 * @param input
+	 *
+	 * @return ArrayList tokenized version of a string
+	 */
+	public ArrayList<String> tokenizeToArrayList(String input);
 
-    /**
-     * sets the stop word handler used with the handler given.
-     * @param stopWordHandler the given stop word hanlder
-     */
-    public void setStopWordHandler(InterfaceTermHandler stopWordHandler);
-
-    /**
-     * Return tokenized version of a string as an ArrayList.
-     *
-     * @param input
-     *
-     * @return ArrayList tokenized version of a string
-     */
-    public ArrayList<String> tokenizeToArrayList(String input);
-
-    /**
-     * Return tokenized version of a string as a set.
-     *
-     * @param input
-     *
-     * @return tokenized version of a string as a set
-     */
-    public Set<String> tokenizeToSet(String input);
+	/**
+	 * Return tokenized version of a string as a set.
+	 *
+	 * @param input
+	 *
+	 * @return tokenized version of a string as a set
+	 */
+	public Set<String> tokenizeToSet(String input);
 }
-

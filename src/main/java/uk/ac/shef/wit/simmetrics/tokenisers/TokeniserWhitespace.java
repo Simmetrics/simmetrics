@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -39,111 +39,30 @@
 
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
-import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
-import uk.ac.shef.wit.simmetrics.wordhandlers.DummyStopTermHandler;
-
-import java.util.HashSet;
-import java.util.Set;
 import java.util.ArrayList;
-import java.io.Serializable;
 
 /**
- * Package: uk.ac.shef.wit.simmetrics.tokenisers
- * Description: TokeniserWhitespace implements a simple whitespace tokeniser.
-
- * Date: 31-Mar-2004
- * Time: 15:17:07
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+ * TokeniserWhitespace implements a simple whitespace tokeniser.
+ * 
+ * @author Sam Chapman
  * @version 1.1
  */
-public final class TokeniserWhitespace implements InterfaceTokeniser, Serializable {
+public final class TokeniserWhitespace extends AbstractTokenizer {
 
-    /**
-     * stopWordHandler used by the tokenisation.
-     */
-    private InterfaceTermHandler stopWordHandler = new DummyStopTermHandler();
+	private final String delimiters = "\\s";
 
-    /**
-     * priavte delimitors for white space within a string.
-     */
-    private final String delimiters = "\r\n\t \u00A0";
+	public final ArrayList<String> tokenizeToArrayList(final String input) {
 
-    /**
-     * displays the tokenisation method.
-     *
-     * @return the tokenisation method
-     */
-    public final String getShortDescriptionString() {
-        return "TokeniserWhitespace";
-    }
+		final ArrayList<String> returnArrayList = new ArrayList<String>();
 
-    /**
-     * displays the delimiters used .
-     *
-     * @return the delimiters used
-     */
-    public final String getDelimiters() {
-        return delimiters;
-    }
+		for (String token : input.split(delimiters)) {
+			final String term = token.trim();
+			if (!isWord(term)) {
+				returnArrayList.add(term);
+			}
+		}
 
-    /**
-     * gets the stop word handler used.
-     * @return the stop word handler used
-     */
-    public InterfaceTermHandler getStopWordHandler() {
-        return stopWordHandler;
-    }
+		return returnArrayList;
+	}
 
-    /**
-     * sets the stop word handler used with the handler given.
-     * @param stopWordHandler the given stop word hanlder
-     */
-    public void setStopWordHandler(final InterfaceTermHandler stopWordHandler) {
-        this.stopWordHandler = stopWordHandler;
-    }
-
-    /**
-     * Return tokenized version of a string .
-     *
-     * @param input
-     * @return tokenized version of a string
-     */
-    public final ArrayList<String> tokenizeToArrayList(final String input) {
-        final ArrayList<String> returnVect = new ArrayList<String>();
-        int curPos = 0;
-        while (curPos < input.length()) {
-            final char ch = input.charAt(curPos);
-            if (Character.isWhitespace(ch)) {
-                curPos++;
-            }
-            int nextGapPos = input.length();
-            //check delimitors
-            for (int i = 0; i < delimiters.length(); i++) {
-                final int testPos = input.indexOf(delimiters.charAt(i), curPos);
-                if (testPos < nextGapPos && testPos != -1) {
-                    nextGapPos = testPos;
-                }
-            }
-            //add new token
-            final String term = input.substring(curPos, nextGapPos);
-            if(!stopWordHandler.isWord(term) && !term.trim().equals("")) {
-                returnVect.add(term);
-            }
-            curPos = nextGapPos;
-        }
-
-        return returnVect;
-    }
-
-    /**
-     * Return tokenized set of a string.
-     *
-     * @param input
-     * @return tokenized set of a string
-     */
-    public Set<String> tokenizeToSet(final String input) {
-        final Set<String> returnSet = new HashSet<String>();
-        returnSet.addAll(tokenizeToArrayList(input));
-        return returnSet;
-    }
 }

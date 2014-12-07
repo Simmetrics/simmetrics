@@ -45,8 +45,6 @@ import java.util.ArrayList;
  * TokeniserCSVBasic implements a simple CSV tokeniser. NB(this doesn't consider
  * embedded escaped comma's within the fields)
  * 
- * Date: 31-Mar-2004 Time: 15:17:07
- * 
  * @author Sam Chapman
  * @version 1.1
  */

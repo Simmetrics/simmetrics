@@ -46,7 +46,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
-
+import static java.lang.Math.abs;
 /**
  * Implements the Block distance algorithm whereby vector space block distance
  * between tokens is used to determine a similarity.
@@ -104,7 +104,7 @@ public final class BlockDistance extends AbstractStringMetric implements
 		final float totalPossible = (float) (str1Tokens.size() + str2Tokens
 				.size());
 
-		final float totalDistance = getUnNormalisedSimilarity(string1, string2);
+		final float totalDistance = getInnerUnNormalizedSimilarity(str1Tokens, str2Tokens);
 		return (totalPossible - totalDistance) / totalPossible;
 	}
 
@@ -115,32 +115,33 @@ public final class BlockDistance extends AbstractStringMetric implements
 		final ArrayList<String> str2Tokens = tokeniser
 				.tokenizeToArrayList(string2);
 
-		final Set<Object> allTokens = new HashSet<Object>();
+		return getInnerUnNormalizedSimilarity(str1Tokens, str2Tokens);
+	}
+
+	private float getInnerUnNormalizedSimilarity(
+			final ArrayList<String> str1Tokens,
+			final ArrayList<String> str2Tokens) {
+		final Set<String> allTokens = new HashSet<String>();
 		allTokens.addAll(str1Tokens);
 		allTokens.addAll(str2Tokens);
 
 		int totalDistance = 0;
-		for (Object allToken : allTokens) {
-			final String token = (String) allToken;
+		for (String token : allTokens) {
 			int countInString1 = 0;
 			int countInString2 = 0;
-			for (Object str1Token : str1Tokens) {
-				final String sToken = (String) str1Token;
+			for (String sToken : str1Tokens) {
 				if (sToken.equals(token)) {
 					countInString1++;
 				}
 			}
-			for (Object str2Token : str2Tokens) {
-				final String sToken = (String) str2Token;
+			for (String sToken : str2Tokens) {
 				if (sToken.equals(token)) {
 					countInString2++;
 				}
 			}
-			if (countInString1 > countInString2) {
-				totalDistance += (countInString1 - countInString2);
-			} else {
-				totalDistance += (countInString2 - countInString1);
-			}
+			
+			totalDistance += abs(countInString1 - countInString2);
+
 		}
 		return totalDistance;
 	}

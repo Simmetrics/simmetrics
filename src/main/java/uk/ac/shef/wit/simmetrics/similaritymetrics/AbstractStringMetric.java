@@ -130,12 +130,14 @@ public abstract class AbstractStringMetric implements InterfaceStringMetric {
 	}
 
     /**
-     * gets the un-normalised similarity measure of the metric for the given strings.
+     * Gets the un-normalised similarity measure of the metric for the given strings.
      *
      * @param string1
      * @param string2
      *
      * @return returns the score of the similarity measure (un-normalised)
      */
-    public abstract float getUnNormalisedSimilarity(String string1, String string2);
+    public float getUnNormalisedSimilarity(String string1, String string2){
+    	return getSimilarity(string1, string2);
+    }
 }

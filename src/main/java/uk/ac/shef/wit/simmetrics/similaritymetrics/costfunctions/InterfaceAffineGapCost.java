@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -40,44 +40,48 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
 
 /**
- * Package: costfunctions Description: InterfaceAffineGapCost defines an Interface for AffineGapCost functions to be
- * interchanged. Date: 29-Mar-2004 Time: 16:47:03
+ * InterfaceAffineGapCost defines an Interface for AffineGapCost functions to be
+ * interchanged.
  *
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+ * @author Sam Chapman
  * @version 1.1
  */
 public interface InterfaceAffineGapCost {
 
-    /**
-     * returns the name of the affine gap cost function.
-     *
-     * @return the name of the affine gap cost function
-     */
-    public String getShortDescriptionString();
+	/**
+	 * Returns the name of the affine gap cost function.
+	 *
+	 * @return the name of the affine gap cost function
+	 */
+	@Deprecated
+	public String getShortDescriptionString();
 
-    /**
-     * get cost between characters.
-     *
-     * @param stringToGap         - the string to get the cost of a gap
-     * @param stringIndexStartGap - the index within the string to test a start gap from
-     * @param stringIndexEndGap   - the index within the string to test a end gap to
-     *
-     * @return the cost of a Gap G
-     */
-    public float getCost(String stringToGap, int stringIndexStartGap, int stringIndexEndGap);
+	/**
+	 * Get cost between characters.
+	 *
+	 * @param stringToGap
+	 *            - the string to get the cost of a gap
+	 * @param stringIndexStartGap
+	 *            - the index within the string to test a start gap from
+	 * @param stringIndexEndGap
+	 *            - the index within the string to test a end gap to
+	 *
+	 * @return the cost of a Gap G
+	 */
+	public float getCost(String stringToGap, int stringIndexStartGap,
+			int stringIndexEndGap);
 
-    /**
-     * returns the maximum possible cost.
-     *
-     * @return the maximum possible cost
-     */
-    public float getMaxCost();
+	/**
+	 * Returns the maximum possible cost.
+	 *
+	 * @return the maximum possible cost
+	 */
+	public float getMaxCost();
 
-    /**
-     * returns the minimum possible cost.
-     *
-     * @return the minimum possible cost
-     */
-    public float getMinCost();
+	/**
+	 * Returns the minimum possible cost.
+	 *
+	 * @return the minimum possible cost
+	 */
+	public float getMinCost();
 }
-

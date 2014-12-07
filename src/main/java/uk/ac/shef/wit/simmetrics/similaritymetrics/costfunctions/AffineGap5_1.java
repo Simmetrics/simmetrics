@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -38,61 +38,32 @@
  */
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
+
 import java.io.Serializable;
 
 /**
- * Package: costfunctions
- * Description: AffineGap5_1 implements a affine gap cost function.
-
- * Date: 30-Mar-2004
- * Time: 10:00:20
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+ * AffineGap5_1 implements a affine gap cost function.
+ * 
+ * @author Sam Chapman
  * @version 1.1
  */
-public final class AffineGap5_1 extends AbstractAffineGapCost implements Serializable {
+public final class AffineGap5_1 extends AbstractAffineGapCost implements
+		Serializable {
 
-    /**
-     * returns the name of the cost function.
-     *
-     * @return the name of the cost function
-     */
-    public final String getShortDescriptionString() {
-        return "AffineGap5_1";
-    }
+	public final float getCost(final String stringToGap,
+			final int stringIndexStartGap, final int stringIndexEndGap) {
+		if (stringIndexStartGap >= stringIndexEndGap) {
+			return 0.0f;
+		} else {
+			return 5.0f + ((stringIndexEndGap - 1) - stringIndexStartGap);
+		}
+	}
 
-    /**
-     * get cost between characters.
-     *
-     * @param stringToGap         - the string to get the cost of a gap
-     * @param stringIndexStartGap - the index within the string to test a start gap from
-     * @param stringIndexEndGap   - the index within the string to test a end gap to
-     * @return the cost of a Gap G
-     */
-    public final float getCost(final String stringToGap, final int stringIndexStartGap, final int stringIndexEndGap) {
-        if (stringIndexStartGap >= stringIndexEndGap) {
-            return 0.0f;
-        } else {
-            return 5.0f + ((stringIndexEndGap - 1) - stringIndexStartGap);
-        }
-    }
+	public final float getMaxCost() {
+		return Float.MAX_VALUE;
+	}
 
-    /**
-     * returns the maximum possible cost.
-     *
-     * @return the maximum possible cost
-     */
-    public final float getMaxCost() {
-        return 5.0f;
-    }
-
-    /**
-     * returns the minimum possible cost.
-     *
-     * @return the minimum possible cost
-     */
-    public final float getMinCost() {
-        return 0.0f;
-    }
+	public final float getMinCost() {
+		return 0.0f;
+	}
 }
-
-

@@ -40,20 +40,17 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
 
 /**
- * AbstractSubstitutionCost implements a abstract class for substiution costs
+ * AbstractSubstitutionCost implements a abstract class for substitution costs
  * functions.
  *
- * @author Sam Chapman
- * @version 1.1
+ * @author mpkorstanje
  */
-
+@Deprecated
 public abstract class AbstractSubstitutionCost implements
 		InterfaceSubstitutionCost {
-
-	
-	public String getShortDescriptionString(){
+	@Deprecated
+	public String getShortDescriptionString() {
 		return getClass().getSimpleName();
 	}
 
-	
 }

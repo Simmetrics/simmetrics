@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -39,50 +39,22 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
 
-import junit.framework.TestCase;
+public class AffineGap1_1Over3Test extends InterfaceAffineGapCostTest {
 
-/**
- * Created by IntelliJ IDEA.
- * User: Administrator
- * Date: 24-Nov-2006
- * Time: 10:37:43
- * To change this template use File | Settings | File Templates.
- */
-public class AffineGap1_1Over3Test extends TestCase {
+	@Override
+	public InterfaceAffineGapCost getCost() {
+		return new AffineGap1_1Over3();
+	}
 
-    /**
-     * costfunction tested.
-     */
-    private InterfaceAffineGapCost costFunction;
-
-    /**
-     * Sets up the test fixture.
-     *
-     * Called before every test case method.
-     */
-    protected void setUp() {
-        costFunction = new AffineGap1_1Over3();
-    }
-
-    /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     */
-    protected void tearDown() {
-        // release objects under test here, if necessary
-    }
-
-    /**
-     * Tests emptying the cart.
-     */
-    public void testAll() {
-        final String testString = "hello world AAAAAAA BBB ABCDEF this is a test";
-        assertEquals(2.6666667f, costFunction.getCost(testString, 0, 6));
-        assertEquals(1.0f, costFunction.getCost(testString, 3, 4));
-        assertEquals(2.0f, costFunction.getCost(testString, 13, 17));
-        assertEquals(1.6666667f, costFunction.getCost(testString, 19, 22));
-        assertEquals(2.6666667f, costFunction.getCost(testString, 23, 29));
-        assertEquals(1.0f, costFunction.getCost(testString, 5, 6));
-    }
+	@Override
+	public T[] getTests() {
+		final String testString = "hello world AAAAAAA BBB ABCDEF this is a test";
+		return new T[] { new T(2.6667f, testString, 0, 6),
+				new T(1.0000f, testString, 3, 4),
+				new T(2.0000f, testString, 13, 17),
+				new T(1.6667f, testString, 19, 22),
+				new T(2.6667f, testString, 23, 29),
+				new T(1.0000f, testString, 5, 6),
+		};
+	}
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -39,47 +39,13 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
 
-/**
- * Package: costfunctions
- * Description: AbstractAffineGapCost implements a ...
- * Date: 29-Mar-2004
- * Time: 17:01:36
- *
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
- * @version 1.1
- */
+@Deprecated
 public abstract class AbstractAffineGapCost implements InterfaceAffineGapCost {
 
-    /**
-     * returns the name of the cost function.
-     *
-     * @return the name of the cost function
-     */
-    public abstract String getShortDescriptionString();
+	
+	@Deprecated
+	public String getShortDescriptionString() {
+		return getClass().getSimpleName();
+	}
 
-    /**
-     * get cost between characters.
-     *
-     * @param stringToGap         - the string to get the cost of a gap
-     * @param stringIndexStartGap - the index within the string to test a start gap from
-     * @param stringIndexEndGap   - the index within the string to test a end gap to
-     *
-     * @return the cost of a Gap G
-     */
-    public abstract float getCost(String stringToGap, int stringIndexStartGap, int stringIndexEndGap);
-
-    /**
-     * returns the maximum possible cost.
-     *
-     * @return the maximum possible cost
-     */
-    public abstract float getMaxCost();
-
-    /**
-     * returns the minimum possible cost.
-     *
-     * @return the minimum possible cost
-     */
-    public abstract float getMinCost();
 }
-

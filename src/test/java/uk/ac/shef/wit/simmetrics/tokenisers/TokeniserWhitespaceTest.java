@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -39,59 +39,23 @@
 
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
-import junit.framework.TestCase;
+public class TokeniserWhitespaceTest extends InterfaceTokeniserTest {
 
-import java.util.ArrayList;
+	@Override
+	protected InterfaceTokeniser getTokenizer() {
+		return new TokeniserWhitespace();
+	}
 
-/**
- * Created by IntelliJ IDEA.
- * User: Administrator
- * Date: 23-Nov-2006
- * Time: 12:04:10
- * To change this template use File | Settings | File Templates.
- */
-public class TokeniserWhitespaceTest  extends TestCase {
+	@Override
+	public T[] getTests() {
 
-    /**
-     * internal tokeniser.
-     */
-    private InterfaceTokeniser tokeniser = null;
+		return new T[] { 
+				new T("A B C", "A", "B", "C"),
+				new T("A  B  C", "A", "B", "C"),
+				new T("A\nB", "A", "B"),
+				new T("A\tB", "A", "B"), 
+				new T("A\t\nB", "A", "B"),
 
-    /**
-     * main constructor setting the name of the test case.
-     *
-     * @param s The name of the test
-     */
-    public TokeniserWhitespaceTest(String s) {
-        super(s);
-    }
-
-    /**
-     * Sets up the test fixture.
-     *
-     * Called before every test case method.
-     */
-    protected void setUp() {
-        tokeniser = new TokeniserWhitespace();
-    }
-
-    /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     */
-    protected void tearDown() {
-        // release objects under test here, if necessary
-    }
-
-    /**
-     * Tests emptying the cart.
-     */
-    public void testTokeniseToArrayList() {
-        ArrayList results = tokeniser.tokenizeToArrayList("A B  C");
-        assertEquals(3, results.size());
-        assertEquals("A", results.get(0));
-        assertEquals("B", results.get(1));
-        assertEquals("C", results.get(2));
-    }
+		};
+	}
 }

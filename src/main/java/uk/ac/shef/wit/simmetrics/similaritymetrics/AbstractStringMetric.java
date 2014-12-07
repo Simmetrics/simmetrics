@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -40,124 +40,94 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 /**
- * Package: uk.ac.shef.wit.simmetrics.api Description: AbstractStringMetric implements a abstract class for the string metrics. Date: 24-Mar-2004
- * Time: 12:07:10
  *
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+ * @author Sam Chapman
  * @version 1.1
  */
 public abstract class AbstractStringMetric implements InterfaceStringMetric {
 
-    /**
-     * reports the metric type.
-     *
-     * @return returns a short description of the metric
-     */
-    public abstract String getShortDescriptionString();
+	public String getShortDescriptionString(){
+		return getClass().getSimpleName();
+	};
 
-    /**
-     * reports the metric type.
-     *
-     * @return returns a long description of the metric
-     */
-    public abstract String getLongDescriptionString();
+	public String getLongDescriptionString(){
+		return null;
+	}
 
-    /**
-     * gets a div class xhtml similarity explaining the operation of the metric.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return a div class html section detailing the metric operation.
-     */
-    public abstract String getSimilarityExplained(String string1, String string2);
+	public  String getSimilarityExplained(String string1, String string2){
+		return null;
+	}
 
-    /**
-     * gets the actual time in milliseconds it takes to perform a similarity timing.
-     *
-     * This call takes as long as the similarity metric to perform so should not be done in normal cercumstances.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return the actual time in milliseconds taken to perform the similarity measure
-     */
-    public final long getSimilarityTimingActual(final String string1, final String string2) {
-        //initialise timing
-        final long timeBefore = System.currentTimeMillis();
-        //perform measure
-        getSimilarity(string1, string2);
-        //get time after process
-        final long timeAfter = System.currentTimeMillis();
-        //output time taken
-        return timeAfter - timeBefore;
-    }
+	public final long getSimilarityTimingActual(final String string1,
+			final String string2) {
+		// initialise timing
+		final long timeBefore = System.currentTimeMillis();
+		// perform measure
+		getSimilarity(string1, string2);
+		// get time after process
+		final long timeAfter = System.currentTimeMillis();
+		// output time taken
+		return timeAfter - timeBefore;
+	}
 
-    /**
-     * does a batch comparison of the set of strings with the given
-     * comparator string returning an array of results equal in length
-     * to the size of the given set of strings to test.
-     *
-     * @param set an array of strings to test against the comparator string
-     * @param comparator the comparator string to test the array against
-     *
-     * @return an array of results equal in length to the size of the
-     * given set of strings to test.
-     */
-    public final float[] batchCompareSet(final String[] set, final String comparator) {
-        final float[] results = new float[set.length];
-        for(int strNum=0; strNum<set.length; strNum++) {
-            //perform similarity test
-            results[strNum] = getSimilarity(set[strNum],comparator);
-        }
-        return results;
-    }
+	/**
+	 * does a batch comparison of the set of strings with the given comparator
+	 * string returning an array of results equal in length to the size of the
+	 * given set of strings to test.
+	 *
+	 * @param set
+	 *            an array of strings to test against the comparator string
+	 * @param comparator
+	 *            the comparator string to test the array against
+	 *
+	 * @return an array of results equal in length to the size of the given set
+	 *         of strings to test.
+	 */
+	public final float[] batchCompareSet(final String[] set,
+			final String comparator) {
+		final float[] results = new float[set.length];
+		for (int strNum = 0; strNum < set.length; strNum++) {
+			// perform similarity test
+			results[strNum] = getSimilarity(set[strNum], comparator);
+		}
+		return results;
+	}
 
-    /**
-     * does a batch comparison of one set of strings against another set
-     * of strings returning an array of results equal in length
-     * to the minimum size of the given sets of strings to test.
-     *
-     * @param firstSet an array of strings to test
-     * @param secondSet an array of strings to test the first array against
-     *
-     * @return an array of results equal in length to the minimum size of
-     * the given sets of strings to test.
-     */
-    public final float[] batchCompareSets(final String[] firstSet, final String[] secondSet) {
-        final float[] results;
-        //sets the results to equal the shortest string length should they differ.
-        if(firstSet.length <= secondSet.length) {
-            results = new float[firstSet.length];
-        } else {
-            results = new float[secondSet.length];
-        }
-        for(int strNum=0; strNum<results.length; strNum++) {
-            //perform similarity test
-            results[strNum] = getSimilarity(firstSet[strNum],secondSet[strNum]);
-        }
-        return results;
-    }
+	/**
+	 * does a batch comparison of one set of strings against another set of
+	 * strings returning an array of results equal in length to the minimum size
+	 * of the given sets of strings to test.
+	 *
+	 * @param firstSet
+	 *            an array of strings to test
+	 * @param secondSet
+	 *            an array of strings to test the first array against
+	 *
+	 * @return an array of results equal in length to the minimum size of the
+	 *         given sets of strings to test.
+	 */
+	public final float[] batchCompareSets(final String[] firstSet,
+			final String[] secondSet) {
+		final float[] results;
+		// sets the results to equal the shortest string length should they
+		// differ.
+		if (firstSet.length <= secondSet.length) {
+			results = new float[firstSet.length];
+		} else {
+			results = new float[secondSet.length];
+		}
+		for (int strNum = 0; strNum < results.length; strNum++) {
+			// perform similarity test
+			results[strNum] = getSimilarity(firstSet[strNum], secondSet[strNum]);
+		}
+		return results;
+	}
 
-    /**
-     * gets the estimated time in milliseconds it takes to perform a similarity timing.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return the estimated time in milliseconds taken to perform the similarity measure
-     */
-    public abstract float getSimilarityTimingEstimated(final String string1, final String string2);
 
-    /**
-     * gets the similarity measure of the metric for the given strings.
-     *
-     * @param string1
-     * @param string2
-     *
-     * @return returns a value 0-1 of similarity 1 = similar 0 = not similar
-     */
-    public abstract float getSimilarity(String string1, String string2);
+	public float getSimilarityTimingEstimated(final String string1,
+			final String string2){
+		return Float.MAX_VALUE;
+	}
 
     /**
      * gets the un-normalised similarity measure of the metric for the given strings.

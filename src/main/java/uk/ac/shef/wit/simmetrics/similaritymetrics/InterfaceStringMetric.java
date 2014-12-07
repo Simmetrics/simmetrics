@@ -40,67 +40,84 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 /**
- * Package: n/a Description: AbstractStringMetric implements an interface for the string metrics. Date: 24-Mar-2004
- * Time: 10:57:40
+ * Package: n/a Description: AbstractStringMetric implements an interface for
+ * the string metrics. Date: 24-Mar-2004 Time: 10:57:40
  *
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+ * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a
+ *         href="mailto:sam@dcs.shef.ac.uk">Email</a>.
  * @version 1.1
  */
 public interface InterfaceStringMetric {
 
-    /**
-     * returns a string of the string metric name.
-     *
-     * @return a string of the string metric name
-     */
-    public String getShortDescriptionString();
+	/**
+	 * returns a string of the string metric name.
+	 *
+	 * @return a string of the string metric name
+	 */
+	@Deprecated
+	public String getShortDescriptionString();
 
-    /**
-     * returns a long string of the string metric description.
-     *
-     * @return a long string of the string metric description
-     */
-    public String getLongDescriptionString();
+	/**
+	 * returns a long string of the string metric description.
+	 *
+	 * @return a long string of the string metric description
+	 */
+	@Deprecated
+	public String getLongDescriptionString();
 
-    /**
-     * gets the actual time in milliseconds it takes to perform a similarity timing.
-     *
-     * This call takes as long as the similarity metric to perform so should not be done in normal cercumstances.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return the actual time in milliseconds taken to perform the similarity measure
-     */
-    public long getSimilarityTimingActual(String string1, String string2);
+	/**
+	 * gets the actual time in milliseconds it takes to perform a similarity
+	 * timing.
+	 *
+	 * This call takes as long as the similarity metric to perform so should not
+	 * be done in normal cercumstances.
+	 *
+	 * @param string1
+	 *            string 1
+	 * @param string2
+	 *            string 2
+	 *
+	 * @return the actual time in milliseconds taken to perform the similarity
+	 *         measure
+	 */
+	@Deprecated
+	public long getSimilarityTimingActual(String string1, String string2);
 
-    /**
-     * gets the estimated time in milliseconds it takes to perform a similarity timing.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return the estimated time in milliseconds taken to perform the similarity measure
-     */
-    public float getSimilarityTimingEstimated(String string1, String string2);
+	/**
+	 * gets the estimated time in milliseconds it takes to perform a similarity
+	 * timing.
+	 *
+	 * @param string1
+	 *            string 1
+	 * @param string2
+	 *            string 2
+	 *
+	 * @return the estimated time in milliseconds taken to perform the
+	 *         similarity measure
+	 */
+	@Deprecated
+	public float getSimilarityTimingEstimated(String string1, String string2);
 
-    /**
-     * returns a similarity measure of the string comparison.
-     *
-     * @param string1
-     * @param string2
-     *
-     * @return a float between zero to one (zero = no similarity, one = matching strings)
-     */
-    public float getSimilarity(String string1, String string2);
+	/**
+	 * returns a similarity measure of the string comparison.
+	 *
+	 * @param string1
+	 * @param string2
+	 *
+	 * @return a float between zero to one (zero = no similarity, one = matching
+	 *         strings)
+	 */
+	public float getSimilarity(String string1, String string2);
 
-    /**
-     * returns a similarity measure of the string comparison.
-     *
-     * @param string1
-     * @param string2
-     *
-     * @return a float between zero to one (zero = no similarity, one = matching strings)
-     */
-    public String getSimilarityExplained(String string1, String string2);
+	/**
+	 * returns a similarity measure of the string comparison.
+	 *
+	 * @param string1
+	 * @param string2
+	 *
+	 * @return a float between zero to one (zero = no similarity, one = matching
+	 *         strings)
+	 */
+	@Deprecated
+	public String getSimilarityExplained(String string1, String string2);
 }

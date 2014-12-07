@@ -74,6 +74,7 @@ public final class ChapmanMatchingSoundex extends MongeElkan {
 	public String getLongDescriptionString() {
 		return "Implements the Chapman Matching Soundex algorithm whereby terms are matched and tested against the standard soundex algorithm - this is intended to provide a better rating for lists of proper names.";
 	}
+	@Deprecated
 
 	public float getSimilarityTimingEstimated(final String string1,
 			final String string2) {

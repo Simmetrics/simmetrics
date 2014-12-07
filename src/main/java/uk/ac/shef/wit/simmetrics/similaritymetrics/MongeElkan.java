@@ -102,6 +102,7 @@ public class MongeElkan extends AbstractStringMetric   {
 	public MongeElkan(final AbstractStringMetric metric) {
 		this(new TokeniserWhitespace(), metric);
 	}
+	@Deprecated
 
 	public String getLongDescriptionString() {
 		return "Implements the Monge Elkan algorithm providing an matching style similarity measure between two strings";

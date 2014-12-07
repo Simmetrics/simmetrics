@@ -51,17 +51,22 @@ import static java.lang.Math.pow;
  * @version 1.2
  */
 
-public final class ChapmanMeanLength extends AbstractStringMetric 
-		 {
+public final class ChapmanMeanLength extends AbstractStringMetric {
 
 	/**
 	 * defines the internal max string length beyond which 1.0 is always
 	 * returned.
 	 */
 	final private static int CHAPMANMEANLENGTHMAXSTRING = 500;
-
+	
+	@Deprecated
 	public String getLongDescriptionString() {
 		return "Implements the Chapman Mean Length algorithm provides a similarity measure between two strings from size of the mean length of the vectors - this approach is suppossed to be used to determine which metrics may be best to apply rather than giveing a valid responce itself";
+	}
+	
+	@Override
+	public float getSimilarityTimingEstimated(String string1, String string2) {
+		return 0;
 	}
 
 	public float getSimilarity(final String string1, final String string2) {
@@ -70,10 +75,10 @@ public final class ChapmanMeanLength extends AbstractStringMetric
 			return 1.0f;
 		} else {
 			// FIXME: Integer division? Was this intended?
-			final float oneMinusBothScaled = (CHAPMANMEANLENGTHMAXSTRING - bothLengths) / CHAPMANMEANLENGTHMAXSTRING;
+			final float oneMinusBothScaled = (CHAPMANMEANLENGTHMAXSTRING - bothLengths)
+					/ CHAPMANMEANLENGTHMAXSTRING;
 			return (float) (1.0 - pow(oneMinusBothScaled, 4));
 		}
 	}
-
 
 }

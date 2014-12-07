@@ -1,5 +1,7 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
+import static java.util.Collections.sort;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.ArrayList;
 
@@ -33,8 +35,7 @@ import java.util.ArrayList;
  *
  * @version 1.1
  */
-public final class TagLinkToken extends AbstractStringMetric
-		 {
+public final class TagLinkToken extends AbstractStringMetric {
 	private float matched;
 	private float tr;
 	private float tSize;
@@ -263,10 +264,10 @@ public final class TagLinkToken extends AbstractStringMetric
 	 *            ArrayList
 	 */
 	private void sortList(ArrayList<Candidates> candidateList) {
-		java.util.Collections.sort(candidateList, new java.util.Comparator() {
-			public int compare(Object o1, Object o2) {
-				float scoreT = ((Candidates) o1).getScore();
-				float scoreU = ((Candidates) o2).getScore();
+		sort(candidateList, new Comparator<Candidates>() {
+			public int compare(Candidates o1, Candidates o2) {
+				float scoreT = o1.getScore();
+				float scoreU = o2.getScore();
 				if (scoreU > scoreT) {
 					return 1;
 				}
@@ -334,7 +335,6 @@ public final class TagLinkToken extends AbstractStringMetric
 		tr = treshold;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "[TagLinkToken_Tr_" + tr + "]";
@@ -410,7 +410,5 @@ public final class TagLinkToken extends AbstractStringMetric
 		final float str2Length = string2.length();
 		return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
 	}
-
-
 
 }

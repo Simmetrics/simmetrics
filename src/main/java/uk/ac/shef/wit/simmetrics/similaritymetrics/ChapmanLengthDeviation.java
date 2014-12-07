@@ -51,8 +51,7 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class ChapmanLengthDeviation extends AbstractStringMetric
-		  {
+public final class ChapmanLengthDeviation extends AbstractStringMetric {
 
 	/**
 	 * Constructs a ChapmanLengthDeviation metric
@@ -60,8 +59,14 @@ public final class ChapmanLengthDeviation extends AbstractStringMetric
 	public ChapmanLengthDeviation() {
 	}
 
+	@Deprecated
 	public String getLongDescriptionString() {
 		return "Implements the Chapman Length Deviation algorithm whereby the length deviation of the input strings is used to determine if the strings are similar in size - This apporach is not intended to be used single handedly but rather alongside other approaches";
+	}
+	
+	@Override
+	public float getSimilarityTimingEstimated(String string1, String string2) {
+		return 0;
 	}
 
 	public float getSimilarity(final String string1, final String string2) {

@@ -82,7 +82,7 @@ public final class TagLink extends AbstractStringMetric   {
 	 * private characterBasedStringMetric is the method that meassures
 	 * similarity between tokens.
 	 */
-	private AbstractStringMetric characterBasedStringMetric;
+	private InterfaceStringMetric characterBasedStringMetric;
 	/**
 	 * private DEFAULT_METRIC is the default method that meassures similarity
 	 * between tokens.
@@ -558,6 +558,7 @@ public final class TagLink extends AbstractStringMetric   {
 	 *
 	 * @return the long string identifier for the metric
 	 */
+	@Deprecated
 	public String getLongDescriptionString() {
 		return getShortDescriptionString();
 	}
@@ -566,11 +567,11 @@ public final class TagLink extends AbstractStringMetric   {
 	public String toString() {
 		if (idfMap == null) {
 			return "[TagLink_["
-					+ characterBasedStringMetric.getShortDescriptionString()
+					+ characterBasedStringMetric.toString()
 					+ "]";
 		} else {
 			return "[TagLink_IDF_["
-					+ characterBasedStringMetric.getShortDescriptionString()
+					+ characterBasedStringMetric.toString()
 					+ "]";
 		}
 

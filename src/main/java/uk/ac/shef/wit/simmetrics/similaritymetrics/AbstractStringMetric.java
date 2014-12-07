@@ -128,7 +128,7 @@ public abstract class AbstractStringMetric implements InterfaceStringMetric {
 
 	public float getSimilarityTimingEstimated(final String string1,
 			final String string2) {
-		return Float.MAX_VALUE;
+		return Float.POSITIVE_INFINITY;
 	}
 
 	/**

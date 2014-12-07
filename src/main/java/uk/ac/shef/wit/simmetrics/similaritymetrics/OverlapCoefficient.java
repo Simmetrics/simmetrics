@@ -77,7 +77,7 @@ public final class OverlapCoefficient extends AbstractStringMetric
 	public OverlapCoefficient(final InterfaceTokeniser tokenizer) {
 		this.tokenizer = tokenizer;
 	}
-
+	@Deprecated
 	public String getLongDescriptionString() {
 		return "Implements the Overlap Coefficient algorithm providing a similarity measure between two string where it is determined to what degree a string is a subset of another";
 	}

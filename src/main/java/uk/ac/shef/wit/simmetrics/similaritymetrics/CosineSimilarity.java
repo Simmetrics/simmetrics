@@ -77,7 +77,7 @@ public final class CosineSimilarity extends AbstractStringMetric
 	public CosineSimilarity(final InterfaceTokeniser tokenizer) {
 		this.tokeniser = tokenizer;
 	}
-
+	@Deprecated
 	public String getLongDescriptionString() {
 		return "Implements the Cosine Similarity algorithm providing a similarity measure between two strings from the angular divergence within term based vector space";
 	}

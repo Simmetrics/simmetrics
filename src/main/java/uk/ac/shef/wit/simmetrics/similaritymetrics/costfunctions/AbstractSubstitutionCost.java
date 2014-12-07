@@ -45,7 +45,7 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
  *
  * @author mpkorstanje
  */
-@Deprecated
+
 public abstract class AbstractSubstitutionCost implements
 		InterfaceSubstitutionCost {
 	@Deprecated

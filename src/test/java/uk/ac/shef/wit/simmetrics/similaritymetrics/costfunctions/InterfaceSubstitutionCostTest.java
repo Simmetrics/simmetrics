@@ -73,6 +73,7 @@ public abstract class InterfaceSubstitutionCostTest {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testGetShortDescriptionString() {
 		assertEquals(cost.getClass().getSimpleName(),

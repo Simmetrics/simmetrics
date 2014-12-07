@@ -75,7 +75,7 @@ public final class QGramsDistance extends AbstractStringMetric {
 	public QGramsDistance(final InterfaceTokeniser tokenizer) {
 		this.tokeniser = tokenizer;
 	}
-
+	@Deprecated
 	public String getLongDescriptionString() {
 		return "Implements the Q Grams Distance algorithm providing a similarity measure between two strings using the qGram approach check matching qGrams/possible matching qGrams";
 	}

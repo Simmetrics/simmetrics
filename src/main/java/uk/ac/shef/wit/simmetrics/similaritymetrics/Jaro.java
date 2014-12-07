@@ -56,7 +56,7 @@ public final class Jaro extends AbstractStringMetric   {
 	public String getLongDescriptionString() {
 		return "Implements the Jaro algorithm providing a similarity measure between two strings allowing character transpositions to a degree";
 	}
-
+	@Deprecated
 	public float getSimilarityTimingEstimated(final String string1,
 			final String string2) {
 		

@@ -85,7 +85,7 @@ public final class JaccardSimilarity extends AbstractStringMetric
 	public JaccardSimilarity(final InterfaceTokeniser tokenizer) {
 		this.tokenizer = tokenizer;
 	}
-
+	@Deprecated
 	public String getLongDescriptionString() {
 		return "Implements the Jaccard Similarity algorithm providing a similarity measure between two strings";
 	}

@@ -68,6 +68,7 @@ public abstract class InterfaceAffineGapCostTest {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testGetShortDescriptionString() {
 		assertEquals(cost.getClass().getSimpleName(),

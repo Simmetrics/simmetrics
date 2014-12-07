@@ -78,7 +78,7 @@ public final class DiceSimilarity extends AbstractStringMetric
 	public DiceSimilarity(final InterfaceTokeniser tokeniserToUse) {
 		tokeniser = tokeniserToUse;
 	}
-
+	@Deprecated
 	public String getLongDescriptionString() {
 		return "Implements the DiceSimilarity algorithm providing a similarity measure between two strings using the vector space of present terms";
 	}

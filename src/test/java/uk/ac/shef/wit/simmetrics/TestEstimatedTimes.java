@@ -39,7 +39,6 @@
 
 package uk.ac.shef.wit.simmetrics;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.*;
 
 import java.text.DecimalFormat;
@@ -116,7 +115,7 @@ public final class TestEstimatedTimes {
      * @param metricVector
      * @param args         arguments vector
      */
-    private static void testMethod(final Vector metricVector, final String[] args) {
+    private static void testMethod(final Vector<InterfaceStringMetric> metricVector, final String[] args) {
 
         System.out.println("Usage: testMethod ");
         System.out.println("AS NO INPUT - running defualt test\n");
@@ -124,7 +123,7 @@ public final class TestEstimatedTimes {
         //first detail tests being performed
         System.out.println("Performing Tests with Following Metrics:");
         for (int i = 0; i < metricVector.size(); i++) {
-            System.out.println("m" + (i + 1) + " " + ((AbstractStringMetric) (metricVector.get(i))).getShortDescriptionString());
+            System.out.println("m" + (i + 1) + " " + metricVector.get(i).toString());
         }
         System.out.println();
 
@@ -134,7 +133,7 @@ public final class TestEstimatedTimes {
         int metricTests = 0;
         long totalTime = System.currentTimeMillis();
         for (int i = 0; i < metricVector.size(); i++) {
-            final AbstractStringMetric metric = (AbstractStringMetric) metricVector.get(i);
+            final PerformancTestingMetric metric =  new PerformancTestingMetric(metricVector.get(i));
             System.out.print("m" + (i + 1) + "\t");
             //testing timing
             //generate random string to test
@@ -160,7 +159,7 @@ public final class TestEstimatedTimes {
                 }
                 System.out.print(df.format((float)timeTaken/(float)iterations) + "(" + metric.getSimilarityTimingEstimated(input1, input1)+ ")\t");
             }
-            System.out.print("\t(" + metric.getShortDescriptionString() + ") - testsSoFar = " + metricTests + "\n");
+            System.out.print("\t(" + metric.toString() + ") - testsSoFar = " + metricTests + "\n");
         }
         //output time taken
         totalTime = (System.currentTimeMillis() - totalTime);

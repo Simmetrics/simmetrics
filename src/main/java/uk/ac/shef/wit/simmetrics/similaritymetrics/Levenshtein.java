@@ -56,7 +56,7 @@ public final class Levenshtein extends AbstractStringMetric
 	private final float ESTIMATEDTIMINGCONST = 1.8e-4f;
 
 	private final AbstractSubstitutionCost dCostFunc = new SubCost01();
-
+	@Deprecated
 	public String getLongDescriptionString() {
 		return "Implements the basic Levenshtein algorithm providing a similarity measure between two strings";
 	}

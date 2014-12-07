@@ -60,6 +60,7 @@ public final class JaroWinkler extends AbstractStringMetric {
 
 	private static final float PREFIXADUSTMENTSCALE = 0.1f;
 
+	@Deprecated
 	public String getLongDescriptionString() {
 		return "Implements the Jaro-Winkler algorithm providing a similarity measure between two strings allowing character transpositions to a degree adjusting the weighting for common prefixes";
 	}

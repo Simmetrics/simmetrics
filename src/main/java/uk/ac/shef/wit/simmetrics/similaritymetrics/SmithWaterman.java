@@ -111,7 +111,7 @@ public final class SmithWaterman extends AbstractStringMetric
 		// set the cost func
 		dCostFunc = costFunc;
 	}
-
+	@Deprecated
 	public String getLongDescriptionString() {
 		return "Implements the Smith-Waterman algorithm providing a similarity measure between two string";
 	}

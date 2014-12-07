@@ -51,8 +51,7 @@ import java.util.ArrayList;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class MatchingCoefficient extends AbstractStringMetric 
-		 {
+public final class MatchingCoefficient extends AbstractStringMetric {
 
 	private final float ESTIMATEDTIMINGCONST = 2.0e-4f;
 
@@ -75,7 +74,7 @@ public final class MatchingCoefficient extends AbstractStringMetric
 	public MatchingCoefficient(final InterfaceTokeniser tokenizer) {
 		this.tokenizer = tokenizer;
 	}
-
+	@Deprecated
 	public String getLongDescriptionString() {
 		return "Implements the Matching Coefficient algorithm providing a similarity measure between two strings";
 	}

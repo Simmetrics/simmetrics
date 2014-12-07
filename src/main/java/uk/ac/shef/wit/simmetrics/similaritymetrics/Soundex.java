@@ -77,7 +77,7 @@ public final class Soundex extends AbstractStringMetric   {
 	public Soundex(final AbstractStringMetric metric) {
 		internalStringMetric = metric;
 	}
-
+	@Deprecated
 	public String getLongDescriptionString() {
 		return "Implements the Soundex algorithm providing a similarity measure between two soundex codes";
 	}

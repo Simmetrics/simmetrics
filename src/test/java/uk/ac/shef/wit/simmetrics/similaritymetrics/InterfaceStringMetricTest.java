@@ -65,11 +65,13 @@ public abstract class InterfaceStringMetricTest {
 	
 	
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testGetSimilarityExplained() {
 		assertNull(metric.getSimilarityExplained(null,null));
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testGetShortDescriptionString() {
 		assertEquals(metric.getClass().getSimpleName(),

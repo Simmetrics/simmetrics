@@ -39,8 +39,8 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractAffineGapCost;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractSubstitutionCost;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.InterfaceAffineGapCost;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.InterfaceSubstitutionCost;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AffineGap5_1;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost5_3_Minus3;
@@ -55,18 +55,15 @@ import static uk.ac.shef.wit.simmetrics.utils.Math.max4;
  * @author Sam Chapman
  * @version 1.1
  */
-public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric
-		  {
-
+public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric {
 
 	private final float ESTIMATEDTIMINGCONST = 4.5e-5f;
 
-
 	private final int windowSize;
 
-	private final AbstractSubstitutionCost dCostFunc;
+	private final InterfaceSubstitutionCost dCostFunc;
 
-	private final AbstractAffineGapCost gGapFunc;
+	private final InterfaceAffineGapCost gGapFunc;
 
 	/**
 	 * constructor - default (empty).
@@ -87,7 +84,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric
 	 *            - the gap cost function
 	 */
 	public SmithWatermanGotohWindowedAffine(
-			final AbstractAffineGapCost gapCostFunc) {
+			final InterfaceAffineGapCost gapCostFunc) {
 		// set the gap cost func
 		gGapFunc = gapCostFunc;
 		// set the cost func to a default function
@@ -105,8 +102,8 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric
 	 *            - the cost function to use
 	 */
 	public SmithWatermanGotohWindowedAffine(
-			final AbstractAffineGapCost gapCostFunc,
-			final AbstractSubstitutionCost costFunc) {
+			final InterfaceAffineGapCost gapCostFunc,
+			final InterfaceSubstitutionCost costFunc) {
 		// set the gap cost func
 		gGapFunc = gapCostFunc;
 		// set the cost func
@@ -122,7 +119,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric
 	 *            - the cost function to use
 	 */
 	public SmithWatermanGotohWindowedAffine(
-			final AbstractSubstitutionCost costFunc) {
+			final InterfaceSubstitutionCost costFunc) {
 		// set the gapCost to a default value
 		gGapFunc = new AffineGap5_1();
 		// set the cost func
@@ -155,7 +152,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric
 	 *            the size of the affine gap window to use
 	 */
 	public SmithWatermanGotohWindowedAffine(
-			final AbstractAffineGapCost gapCostFunc,
+			final InterfaceAffineGapCost gapCostFunc,
 			final int affineGapWindowSize) {
 		// set the gap cost func
 		gGapFunc = gapCostFunc;
@@ -176,8 +173,8 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric
 	 *            the size of the affine gap window to use
 	 */
 	public SmithWatermanGotohWindowedAffine(
-			final AbstractAffineGapCost gapCostFunc,
-			final AbstractSubstitutionCost costFunc,
+			final InterfaceAffineGapCost gapCostFunc,
+			final InterfaceSubstitutionCost costFunc,
 			final int affineGapWindowSize) {
 		// set the gap cost func
 		gGapFunc = gapCostFunc;
@@ -196,7 +193,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric
 	 *            the size of the affine gap window to use
 	 */
 	public SmithWatermanGotohWindowedAffine(
-			final AbstractSubstitutionCost costFunc,
+			final InterfaceSubstitutionCost costFunc,
 			final int affineGapWindowSize) {
 		// set the gapCost to a default value
 		gGapFunc = new AffineGap5_1();
@@ -206,6 +203,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric
 		windowSize = affineGapWindowSize;
 	}
 
+	@Deprecated
 	public String getLongDescriptionString() {
 		return "Implements the Smith-Waterman-Gotoh algorithm with a windowed affine gap providing a similarity measure between two string";
 	}

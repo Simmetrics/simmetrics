@@ -45,6 +45,7 @@ import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
+
 import static java.lang.Math.sqrt;
 
 /**
@@ -78,7 +79,7 @@ public final class EuclideanDistance extends AbstractStringMetric
 	public EuclideanDistance(final InterfaceTokeniser tokenizer) {
 		this.tokenizer = tokenizer;
 	}
-
+	@Deprecated
 	public String getLongDescriptionString() {
 		return "Implements the Euclidean Distancey algorithm providing a similarity measure between two stringsusing the vector space of combined terms as the dimensions";
 	}

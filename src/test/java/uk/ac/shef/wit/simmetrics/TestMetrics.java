@@ -40,6 +40,7 @@
 package uk.ac.shef.wit.simmetrics;
 
 import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.PerformancTestingMetric;
 import uk.ac.shef.wit.simmetrics.metrichandlers.MetricHandler;
 
 import java.text.DecimalFormat;
@@ -183,7 +184,7 @@ public final class TestMetrics {
         //first detail tests being performed
         System.out.println("Performing Tests with Following Metrics:");
         for (int i = 0; i < metricVector.size(); i++) {
-            System.out.println("m" + (i + 1) + " " + ((metricVector.get(i))).getShortDescriptionString());
+            System.out.println("m" + (i + 1) + " " + ((metricVector.get(i))).toString());
         }
         System.out.println();
 
@@ -218,7 +219,7 @@ public final class TestMetrics {
         int metricTests = 0;
         long totalTime = System.currentTimeMillis();
         for (int i = 0; i < metricVector.size(); i++) {
-            final AbstractStringMetric metric = metricVector.get(i);
+            final PerformancTestingMetric metric = new PerformancTestingMetric(metricVector.get(i));
             System.out.print("m" + (i + 1) + "\t");
             if(testTimingComplexity) {
                 //testing timing
@@ -272,7 +273,7 @@ public final class TestMetrics {
                 }
                 System.out.print(df.format(result) + " (" + df.format((float)timeTaken/(float)iterations) + ")\t");
             }
-            System.out.print("\t(" + metric.getShortDescriptionString() + ") - testsSoFar = " + metricTests + "\n");
+            System.out.print("\t(" + metric.toString() + ") - testsSoFar = " + metricTests + "\n");
         }
         //output time taken
         totalTime = (System.currentTimeMillis() - totalTime);

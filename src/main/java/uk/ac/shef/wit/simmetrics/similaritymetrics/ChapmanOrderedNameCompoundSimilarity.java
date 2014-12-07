@@ -83,7 +83,7 @@ public final class ChapmanOrderedNameCompoundSimilarity extends
 			final InterfaceTokeniser tokenizer) {
 		this.tokenizer = tokenizer;
 	}
-
+	@Deprecated
 	public String getLongDescriptionString() {
 		return "Implements the Chapman Ordered Name Compound Similarity algorithm whereby terms are matched and tested against the standard soundex algorithm - this is intended to provide a better rating for lists of proper names.";
 	}

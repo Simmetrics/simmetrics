@@ -39,7 +39,7 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractSubstitutionCost;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.InterfaceSubstitutionCost;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost01;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
 import static uk.ac.shef.wit.simmetrics.utils.Math.min3;
@@ -51,12 +51,11 @@ import static uk.ac.shef.wit.simmetrics.utils.Math.min3;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class NeedlemanWunch extends AbstractStringMetric 
-		 {
+public final class NeedlemanWunch extends AbstractStringMetric {
 
 	private final float ESTIMATEDTIMINGCONST = 1.842e-4f;
 
-	private final AbstractSubstitutionCost dCostFunc;
+	private final InterfaceSubstitutionCost dCostFunc;
 
 	private final float gapCost;
 
@@ -83,7 +82,7 @@ public final class NeedlemanWunch extends AbstractStringMetric
 	 *            - the cost function to use
 	 */
 	public NeedlemanWunch(final float costG,
-			final AbstractSubstitutionCost costFunc) {
+			final InterfaceSubstitutionCost costFunc) {
 		// set the gapCost to the given value
 		this.gapCost = costG;
 		// set the cost func
@@ -96,11 +95,11 @@ public final class NeedlemanWunch extends AbstractStringMetric
 	 * @param costFunc
 	 *            - the cost function to use
 	 */
-	public NeedlemanWunch(final AbstractSubstitutionCost costFunc) {
-		this(2.0f,costFunc);
+	public NeedlemanWunch(final InterfaceSubstitutionCost costFunc) {
+		this(2.0f, costFunc);
 	}
 
-
+	@Deprecated
 	public String getLongDescriptionString() {
 		return "Implements the Needleman-Wunch algorithm providing an edit distance based similarity measure between two strings";
 	}
@@ -181,8 +180,8 @@ public final class NeedlemanWunch extends AbstractStringMetric
 				cost = dCostFunc.getCost(s, i - 1, t, j - 1);
 
 				// find lowest cost at point from three possible
-				d[i][j] = min3(d[i - 1][j] + gapCost, d[i][j - 1]
-						+ gapCost, d[i - 1][j - 1] + cost);
+				d[i][j] = min3(d[i - 1][j] + gapCost, d[i][j - 1] + gapCost,
+						d[i - 1][j - 1] + cost);
 			}
 		}
 

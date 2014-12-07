@@ -80,6 +80,7 @@ public final class BlockDistance extends AbstractStringMetric
 	}
 
 	@Override
+	@Deprecated
 	public String getLongDescriptionString() {
 		return "Implements the Block distance algorithm whereby vector space block distance is used to determine a similarity";
 	}

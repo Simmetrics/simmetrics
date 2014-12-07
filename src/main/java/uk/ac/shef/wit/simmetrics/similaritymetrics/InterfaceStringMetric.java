@@ -79,6 +79,8 @@ public interface InterfaceStringMetric {
 	 *
 	 * @return the actual time in milliseconds taken to perform the similarity
 	 *         measure
+	 * 
+	 * @deprecated use {@link PerformancTestingMetric}.
 	 */
 	@Deprecated
 	public long getSimilarityTimingActual(String string1, String string2);
@@ -95,7 +97,6 @@ public interface InterfaceStringMetric {
 	 * @return the estimated time in milliseconds taken to perform the
 	 *         similarity measure
 	 */
-	@Deprecated
 	public float getSimilarityTimingEstimated(String string1, String string2);
 
 	/**

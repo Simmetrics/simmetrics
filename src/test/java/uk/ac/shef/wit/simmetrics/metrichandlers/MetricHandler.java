@@ -80,7 +80,7 @@ public class MetricHandler {
 
         ArrayList<String> outputVect = new ArrayList<String>();
 
-        Class tosubclass = null;
+        Class<?> tosubclass = null;
         try {
             tosubclass = Class.forName("uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric");
         } catch (ClassNotFoundException e) {

@@ -41,10 +41,6 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 
 public class MatchingCoefficientTest extends InterfaceStringMetricTest {
-
-    //private method to hold metric test cases
-    private AbstractStringMetric metric;
-
     
 	@Override
 	public InterfaceStringMetric getMetric() {

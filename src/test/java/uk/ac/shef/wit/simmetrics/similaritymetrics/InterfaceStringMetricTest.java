@@ -67,7 +67,7 @@ public abstract class InterfaceStringMetricTest {
 
 	@Test
 	public void testGetSimilarityExplained() {
-		assertNull(metric.getSimilarityExplained(null, null));
+		assertNull(metric.getSimilarityExplained(null,null));
 	}
 
 	@Test

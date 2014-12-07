@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -39,44 +39,28 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import junit.framework.TestCase;
+public class BlockDistanceTest extends InterfaceStringMetricTest {
 
-/**
- * Performs a unit test upon the BlockDistance string metric.
- *
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
- */
-public class BlockDistanceTest extends TestCase {
+	@Override
+	public InterfaceStringMetric getMetric() {
+		return new BlockDistance();
+	}
 
-    //private method to hold metric test cases
-    private AbstractStringMetric metric;
+	@Override
+	public T[] getTests() {
+		return new T[] {
+				new T(0.5000f, "test string1", "test string2"),
+				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+				new T(0.7500f, "a b c d", "a b c e"),
+				// Adding spaces to words because of whitespace tokenizer.
+				new T(0.8333f, "H e a l e d", "S e a l e d"),
+				new T(0.6153f, "H e a l e d", "H e a l t h y"),
+				new T(0.7272f, "H e a l e d", "H e a r d"),
+				new T(0.6666f, "H e a l e d", "H e r d e d"),
+				new T(0.6000f, "H e a l e d", "H e l p"),
+				new T(0.4000f, "H e a l e d", "S o l d"),
+				new T(0.6000f, "H e a l e d", "H e l p")
 
-    /**
-     * Sets up the test fixture.
-     *
-     * Called before every test case method.
-     */
-    protected void setUp() {
-        metric = new BlockDistance();
-    }
-
-    /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     */
-    protected void tearDown() {
-        // release objects under test here, if necessary
-    }
-
-    /**
-     * Tests emptying the cart.
-     */
-    public void testGetSimilarity() {
-
-        float result = metric.getSimilarity("Test String1", "Test String2");
-
-        assertEquals(0.5f, result);
-    }
+		};
+	}
 }
-

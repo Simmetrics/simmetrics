@@ -52,5 +52,10 @@ public abstract class InterfaceStringMetricTest {
 	public void testGetSimilarityExplained() {
 		assertNull(metric.getSimilarityExplained(null, null));
 	}
+	
+	@Test
+	public void testGetShortDescriptionString() {
+		assertEquals(metric.getClass().getSimpleName(), metric.getShortDescriptionString());
+	}
 
 }

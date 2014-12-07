@@ -39,24 +39,12 @@
 
 package uk.ac.shef.wit.simmetrics.metrichandlers;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.BlockDistance;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.InterfaceStringMetric;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.net.JarURLConnection;
-import java.net.URL;
-import java.util.Enumeration;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.jar.JarFile;
-import java.util.jar.JarEntry;
-import java.util.zip.ZipEntry;
-
 import org.reflections.Reflections;
 
 public class MetricHandler {

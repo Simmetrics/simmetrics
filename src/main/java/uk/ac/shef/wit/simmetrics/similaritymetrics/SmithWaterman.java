@@ -40,9 +40,10 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractSubstitutionCost;
-import uk.ac.shef.wit.simmetrics.math.MathFuncs;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost1_Minus2;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
+import static uk.ac.shef.wit.simmetrics.utils.Math.max3;
+import static uk.ac.shef.wit.simmetrics.utils.Math.max4;
 
 import java.io.Serializable;
 
@@ -184,9 +185,9 @@ public final class SmithWaterman extends AbstractStringMetric implements
 			cost = dCostFunc.getCost(s, i, t, 0);
 
 			if (i == 0) {
-				d[0][0] = MathFuncs.max3(0, -gapCost, cost);
+				d[0][0] = max3(0, -gapCost, cost);
 			} else {
-				d[i][0] = MathFuncs.max3(0, d[i - 1][0] - gapCost, cost);
+				d[i][0] = max3(0, d[i - 1][0] - gapCost, cost);
 			}
 			// update max possible if available
 			if (d[i][0] > maxSoFar) {
@@ -198,9 +199,9 @@ public final class SmithWaterman extends AbstractStringMetric implements
 			cost = dCostFunc.getCost(s, 0, t, j);
 
 			if (j == 0) {
-				d[0][0] = MathFuncs.max3(0, -gapCost, cost);
+				d[0][0] = max3(0, -gapCost, cost);
 			} else {
-				d[0][j] = MathFuncs.max3(0, d[0][j - 1] - gapCost, cost);
+				d[0][j] = max3(0, d[0][j - 1] - gapCost, cost);
 			}
 			// update max possible if available
 			if (d[0][j] > maxSoFar) {
@@ -216,7 +217,7 @@ public final class SmithWaterman extends AbstractStringMetric implements
 				cost = dCostFunc.getCost(s, i, t, j);
 
 				// find lowest cost at point from three possible
-				d[i][j] = MathFuncs.max4(0, d[i - 1][j] - gapCost, d[i][j - 1]
+				d[i][j] = max4(0, d[i - 1][j] - gapCost, d[i][j - 1]
 						- gapCost, d[i - 1][j - 1] + cost);
 				// update max possible if available
 				if (d[i][j] > maxSoFar) {

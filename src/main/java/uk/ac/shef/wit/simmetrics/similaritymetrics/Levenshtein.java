@@ -39,9 +39,9 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.math.MathFuncs;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractSubstitutionCost;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost01;
+import uk.ac.shef.wit.simmetrics.utils.Math;
 
 import java.io.Serializable;
 
@@ -147,7 +147,7 @@ public final class Levenshtein extends AbstractStringMetric implements
 				cost = dCostFunc.getCost(s, i - 1, t, j - 1);
 
 				// Step 6
-				d[i][j] = MathFuncs.min3(d[i - 1][j] + 1, d[i][j - 1] + 1,
+				d[i][j] = Math.min3(d[i - 1][j] + 1, d[i][j - 1] + 1,
 						d[i - 1][j - 1] + cost);
 			}
 		}

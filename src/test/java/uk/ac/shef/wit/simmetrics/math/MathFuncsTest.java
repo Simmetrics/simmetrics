@@ -43,69 +43,71 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import uk.ac.shef.wit.simmetrics.utils.Math;
+
 public class MathFuncsTest {
 
 	@Test
 	public void testMax3float() {
-		assertEquals(0.3f, MathFuncs.max3(0.1f, 0.2f, 0.3f), 0.0);
-		assertEquals(0.31f, MathFuncs.max3(0.31f, 0.2f, 0.3f), 0.0);
-		assertEquals(0.5f, MathFuncs.max3(0.1f, 0.5f, 0.3f), 0.0);
-		assertEquals(0.5f, MathFuncs.max3(-10.1f, 0.5f, -0.3f), 0.0);
+		assertEquals(0.3f, Math.max3(0.1f, 0.2f, 0.3f), 0.0);
+		assertEquals(0.31f, Math.max3(0.31f, 0.2f, 0.3f), 0.0);
+		assertEquals(0.5f, Math.max3(0.1f, 0.5f, 0.3f), 0.0);
+		assertEquals(0.5f, Math.max3(-10.1f, 0.5f, -0.3f), 0.0);
 	}
 
 	@Test
 	public void testMax3int() {
-		assertEquals(5, MathFuncs.max3(-10, 5, 3));
-		assertEquals(10, MathFuncs.max3(10, 5, 3));
-		assertEquals(13, MathFuncs.max3(-10, 5, 13));
+		assertEquals(5, Math.max3(-10, 5, 3));
+		assertEquals(10, Math.max3(10, 5, 3));
+		assertEquals(13, Math.max3(-10, 5, 13));
 	}
 
 	@Test
 	public void testMax4float() {
-		assertEquals(36.9f, MathFuncs.max4(10.1f, 5.45f, -3.12f, 36.9f), 0.0);
-		assertEquals(10.1f, MathFuncs.max4(10.1f, 5.45f, -3.12f, 6.9f), 0.0);
-		assertEquals(-3.12f, MathFuncs.max4(-10.1f, -5.45f, -3.12f, -36.9f),
+		assertEquals(36.9f, Math.max4(10.1f, 5.45f, -3.12f, 36.9f), 0.0);
+		assertEquals(10.1f, Math.max4(10.1f, 5.45f, -3.12f, 6.9f), 0.0);
+		assertEquals(-3.12f, Math.max4(-10.1f, -5.45f, -3.12f, -36.9f),
 				0.0);
-		assertEquals(25.45f, MathFuncs.max4(10.1f, 25.45f, -3.12f, 16.9f), 0.0);
+		assertEquals(25.45f, Math.max4(10.1f, 25.45f, -3.12f, 16.9f), 0.0);
 	}
 
 	@Test
 	public void testMax4int() {
-		assertEquals(5, MathFuncs.max4(-10, 5, 3, 1));
-		assertEquals(10, MathFuncs.max4(10, 5, 3, 1));
-		assertEquals(13, MathFuncs.max4(-10, 5, 13, 1));
-		assertEquals(15, MathFuncs.max4(-10, 5, 3, 15));
+		assertEquals(5, Math.max4(-10, 5, 3, 1));
+		assertEquals(10, Math.max4(10, 5, 3, 1));
+		assertEquals(13, Math.max4(-10, 5, 13, 1));
+		assertEquals(15, Math.max4(-10, 5, 3, 15));
 	}
 
 	@Test
 	public void testMin3float() {
-		assertEquals(5.45f, MathFuncs.min3(10.1f, 5.45f, 13.12f), 0.0);
-		assertEquals(0.1f, MathFuncs.min3(0.1f, 5.45f, 13.12f), 0.0);
-		assertEquals(-3.12f, MathFuncs.min3(10.1f, 5.45f, -3.12f), 0.0);
+		assertEquals(5.45f, Math.min3(10.1f, 5.45f, 13.12f), 0.0);
+		assertEquals(0.1f, Math.min3(0.1f, 5.45f, 13.12f), 0.0);
+		assertEquals(-3.12f, Math.min3(10.1f, 5.45f, -3.12f), 0.0);
 	}
 
 	@Test
 	public void testMin3int() {
-		assertEquals(-10, MathFuncs.min3(-10, 5, 13));
-		assertEquals(-13, MathFuncs.min3(-10, 5, -13));
-		assertEquals(5, MathFuncs.min3(10, 5, 13));
+		assertEquals(-10, Math.min3(-10, 5, 13));
+		assertEquals(-13, Math.min3(-10, 5, -13));
+		assertEquals(5, Math.min3(10, 5, 13));
 	}
 
 	@Test
 	public void testMin4int() {
-		assertEquals(-10, MathFuncs.min4(-10, 5, 3, 1));
-		assertEquals(-5, MathFuncs.min4(10, -5, 13, 1));
-		assertEquals(3, MathFuncs.min4(10, 5, 3, 15));
-		assertEquals(1, MathFuncs.min4(10, 5, 3, 1));
+		assertEquals(-10, Math.min4(-10, 5, 3, 1));
+		assertEquals(-5, Math.min4(10, -5, 13, 1));
+		assertEquals(3, Math.min4(10, 5, 3, 15));
+		assertEquals(1, Math.min4(10, 5, 3, 1));
 
 	}
 
 	@Test
 	public void testMin4float() {
-		assertEquals(-10.1f, MathFuncs.min4(-10.1f, 5.45f, -3.12f, 36.9f), 0.0);
-		assertEquals(-5.45f, MathFuncs.min4(10.1f, -5.45f, -3.12f, 6.9f), 0.0);
-		assertEquals(3.12f, MathFuncs.min4(10.1f, 5.45f, 3.12f, 36.9f),0.0);
-		assertEquals(16.9f, MathFuncs.min4(100.1f, 25.45f, 23.12f, 16.9f), 0.0);
+		assertEquals(-10.1f, Math.min4(-10.1f, 5.45f, -3.12f, 36.9f), 0.0);
+		assertEquals(-5.45f, Math.min4(10.1f, -5.45f, -3.12f, 6.9f), 0.0);
+		assertEquals(3.12f, Math.min4(10.1f, 5.45f, 3.12f, 36.9f),0.0);
+		assertEquals(16.9f, Math.min4(100.1f, 25.45f, 23.12f, 16.9f), 0.0);
 	}
 
 }

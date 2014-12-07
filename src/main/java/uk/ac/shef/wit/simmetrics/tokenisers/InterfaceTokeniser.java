@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -46,27 +46,24 @@ import java.util.Vector;
 import java.util.ArrayList;
 
 /**
- * Package: uk.ac.shef.wit.simmetrics.api
- * Description: InterfaceTokeniser interface for a Tokeniser class.
- * Date: 31-Mar-2004
- * Time: 15:09:09
- *
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+
+ * @author Sam Chapman 
  * @version 1.1
  */
 public interface InterfaceTokeniser {
 
     /**
-     * displays the tokenisation method.
+     * Displays the tokenisation method.
      *
      * @return short description string
      */
+	@Deprecated
     public String getShortDescriptionString();
 
     /**
-     * displays the delimitors used - (if applicable).
+     * Displays the delimiters used - (if applicable).
      *
-     * @return string for the delimitors used - (if applicable) "" otherwise
+     * @return string for the delimiters used - (if applicable) "" otherwise
      */
     public String getDelimiters();
 

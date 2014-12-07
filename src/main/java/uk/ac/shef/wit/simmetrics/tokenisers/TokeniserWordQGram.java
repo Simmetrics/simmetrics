@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -39,132 +39,84 @@
 
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
-import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
-import uk.ac.shef.wit.simmetrics.wordhandlers.DummyStopTermHandler;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
 import java.io.Serializable;
 
 /**
- * Package: uk.ac.shef.wit.simmetrics.tokenisers Description: TokeniserWordQGram
- * implements a QGram Tokeniser for words
+ * A QGram Tokeniser for words. A string is broken up into words by a word
+ * tokenizer. For each word q-grams are made.
+ * 
  * 
  * @author mpkorstanje
  * 
- * @version 1.0
- * 
  *
  */
-public final class TokeniserWordQGram implements InterfaceTokeniser,
+public final class TokeniserWordQGram extends AbstractTokenizer implements
 		Serializable {
 
-	private InterfaceTokeniser tokenizerWord = new TokeniserWhitespace();
-	private InterfaceTokeniser tokenizerQGram = new TokeniserQGram2();
+	private InterfaceTokeniser wordTokenizer;
+	private TokeniserQGram qGramTokenizer;
 
 	/**
-	 * stopWordHandler used by the tokenisation.
+	 * Constructs a TokeniserWordQGram with a {@link TokeniserWhitespace} as a
+	 * word tokenizer and {@link TokeniserQGram2}. A string is broken up into
+	 * words by the word tokenizer. For each word q-grams are made.
 	 */
-	private InterfaceTermHandler stopWordHandler = new DummyStopTermHandler();
-
-	/**
-	 * displays the tokenisation method.
-	 *
-	 * @return the tokenisation method
-	 */
-	public final String getShortDescriptionString() {
-		return "TokeniserWordQGram";
+	public TokeniserWordQGram() {
+		this(new TokeniserWhitespace(), new TokeniserQGram2());
 	}
 
 	/**
-	 * gets the stop word handler used.
+	 * Constructs a TokeniserWordQGram with the given word and q-gram
+	 * tokenizers. A string is broken up into words by the word tokenizer. For
+	 * each word q-grams are made.
 	 * 
-	 * @return the stop word handler used
+	 * @param wordTokenizer
+	 *            word tokenizer to use to split input into words
+	 * @param qGramTokenizer
+	 *            q-gram tokenizer to use to split words into q grams
 	 */
-	public InterfaceTermHandler getStopWordHandler() {
-		return stopWordHandler;
+	public TokeniserWordQGram(InterfaceTokeniser wordTokenizer,
+			TokeniserQGram qGramTokenizer) {
+		super();
+		this.wordTokenizer = wordTokenizer;
+		this.qGramTokenizer = qGramTokenizer;
 	}
 
-	/**
-	 * sets the stop word handler used with the handler given.
-	 * 
-	 * @param stopWordHandler
-	 *            the given stop word hanlder
-	 */
-	public void setStopWordHandler(final InterfaceTermHandler stopWordHandler) {
-		this.stopWordHandler = stopWordHandler;
-	}
-
-	public void setTokenizerQGram(InterfaceTokeniser tokenizerQGram) {
-		this.tokenizerQGram = tokenizerQGram;
-	}
-
-	public InterfaceTokeniser getTokenizerQGram() {
-		return tokenizerQGram;
-	}
-
-	public void setTokenizerWord(InterfaceTokeniser tokenizerWord) {
-		this.tokenizerWord = tokenizerWord;
-	}
-
-	public InterfaceTokeniser getTokenizerWord() {
-		return tokenizerWord;
-	}
-
-	/**
-	 * displays the delimiters used
-	 *
-	 * @return the delimiters used
-	 */
-	public final String getDelimiters() {
-		return tokenizerWord.getDelimiters() + tokenizerQGram.getDelimiters();
-	}
-
-	/**
-	 * Return tokenized version of a string.
-	 *
-	 * @param input
-	 * @return tokenized version of a string
-	 */
 	public final ArrayList<String> tokenizeToArrayList(final String input) {
 		final ArrayList<String> returnArrayList = new ArrayList<String>(
 				input.length());
-		final ArrayList<String> words = tokenizerWord
+		final ArrayList<String> words = wordTokenizer
 				.tokenizeToArrayList(input);
 
 		// for each word
 		for (String word : words) {
-			if (!stopWordHandler.isWord(word)) {
+			if (!isWord(word)) {
 				// find all qgrams
 				returnArrayList
-						.addAll(tokenizerQGram.tokenizeToArrayList(word));
+						.addAll(qGramTokenizer.tokenizeToArrayList(word));
 			}
 		}
 
 		return returnArrayList;
 	}
 
-	/**
-	 * Return tokenized set of a string.
-	 *
-	 * @param input
-	 * @return tokenized version of a string as a set
-	 */
 	public Set<String> tokenizeToSet(final String input) {
 
 		// tokenizeToArray is not reused here on purpose. Removing duplicate
 		// words early means these don't have to be tokenized multiple times.
 		// Increases performance.
 
-		final Set<String> returnSet = new HashSet<String>();
-		final Set<String> words = tokenizerWord.tokenizeToSet(input);
+		final Set<String> returnSet = new HashSet<String>(input.length());
+		final Set<String> words = wordTokenizer.tokenizeToSet(input);
 
 		// for each word
 		for (String word : words) {
 			if (!stopWordHandler.isWord(word)) {
 				// find all qgrams
-				returnSet.addAll(tokenizerQGram.tokenizeToArrayList(word));
+				returnSet.addAll(qGramTokenizer.tokenizeToArrayList(word));
 			}
 		}
 

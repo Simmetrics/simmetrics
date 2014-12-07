@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public abstract class InterfaceStringMetricTest {
 
-	public class T {
+	protected class T {
 		protected final float similarity;
 		protected final String string1;
 		protected final String string2;

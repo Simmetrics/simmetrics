@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -39,64 +39,22 @@
 
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
-import junit.framework.TestCase;
+public class TokeniserCSVBasicTest extends InterfaceTokeniserTest {
 
-import java.util.ArrayList;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Administrator
- * Date: 23-Nov-2006
- * Time: 12:04:10
- * To change this template use File | Settings | File Templates.
- */
-public class TokeniserCSVBasicTest  extends TestCase {
+	@Override
+	protected InterfaceTokeniser getTokenizer() {
+		return new TokeniserCSVBasic();
+	}
+	@Override
+	public T[] getTests() {
 
-    /**
-     * internal tokeniser.
-     */
-    private InterfaceTokeniser tokeniser = null;
+		return new T[] { 
+				new T("1a,2a,3a,4a\n1b,2b,3b,4b", 
+				"1a", "2a", "3a","4a", "1b", "2b", "3b", "4b"),
+				new T("1a,2a,3a,4a\n1a,2a,3a,4a", 
+						"1a", "2a", "3a","4a", "1a", "2a", "3a", "4a")
+		};
+	}
 
-    /**
-     * main constructor setting the name of the test case.
-     *
-     * @param s The name of the test
-     */
-    public TokeniserCSVBasicTest(String s) {
-        super(s);
-    }
-
-    /**
-     * Sets up the test fixture.
-     *
-     * Called before every test case method.
-     */
-    protected void setUp() {
-        tokeniser = new TokeniserCSVBasic();
-    }
-
-    /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     */
-    protected void tearDown() {
-        // release objects under test here, if necessary
-    }
-
-    /**
-     * Tests emptying the cart.
-     */
-    public void testTokeniseToArrayList() {
-        ArrayList results = tokeniser.tokenizeToArrayList("1a,2a,3a,4a\n1b,2b,3b,4b");
-        assertEquals(8, results.size());
-        assertEquals("1a", results.get(0));
-        assertEquals("2a", results.get(1));
-        assertEquals("3a", results.get(2));
-        assertEquals("4a", results.get(3));
-        assertEquals("1b", results.get(4));
-        assertEquals("2b", results.get(5));
-        assertEquals("3b", results.get(6));
-        assertEquals("4b", results.get(7));
-    }
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -42,42 +42,31 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractAffineGapCost;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractSubstitutionCost;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
-import uk.ac.shef.wit.simmetrics.math.MathFuncs;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AffineGap5_1;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost5_3_Minus3;
-
+import static java.lang.Math.max;
+import static uk.ac.shef.wit.simmetrics.utils.Math.max3;
+import static uk.ac.shef.wit.simmetrics.utils.Math.max4;
 import java.io.Serializable;
 
 /**
- * Package: uk.ac.shef.wit.simmetrics.similaritymetrics Description:
- * SmithWatermanGotohWindowedAffine implements the smith waterman with gotoh
- * extension using a windowed affine gap. Date: 23-Apr-2004 Time: 14:25:30
+ * Implements the Smith-Waterman-Gotoh algorithm with a windowed affine gap
+ * providing a similarity measure between two string
  * 
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a
- *         href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+ * @author Sam Chapman
  * @version 1.1
  */
 public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric
 		implements Serializable {
 
-	/**
-	 * a constant for calculating the estimated timing cost.
-	 */
+
 	private final float ESTIMATEDTIMINGCONST = 4.5e-5f;
 
-	/**
-	 * private field for the maximum affine gap window size.
-	 */
+
 	private final int windowSize;
 
-	/**
-	 * the private cost function used in the SmithWatermanGotoh distance.
-	 */
 	private final AbstractSubstitutionCost dCostFunc;
 
-	/**
-	 * the private cost function for affine gaps.
-	 */
 	private final AbstractAffineGapCost gGapFunc;
 
 	/**
@@ -218,13 +207,9 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric
 		windowSize = affineGapWindowSize;
 	}
 
-
-
-
 	public String getLongDescriptionString() {
 		return "Implements the Smith-Waterman-Gotoh algorithm with a windowed affine gap providing a similarity measure between two string";
 	}
-
 
 	public float getSimilarityTimingEstimated(final String string1,
 			final String string2) {
@@ -296,7 +281,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric
 			cost = dCostFunc.getCost(s, i, t, 0);
 
 			if (i == 0) {
-				d[0][0] = Math.max(0, cost);
+				d[0][0] = max(0, cost);
 			} else {
 				float maxGapCost = 0.0f;
 				int windowStart = i - windowSize;
@@ -304,10 +289,10 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric
 					windowStart = 1;
 				}
 				for (int k = windowStart; k < i; k++) {
-					maxGapCost = Math.max(maxGapCost,
+					maxGapCost = max(maxGapCost,
 							d[i - k][0] - gGapFunc.getCost(s, i - k, i));
 				}
-				d[i][0] = MathFuncs.max3(0, maxGapCost, cost);
+				d[i][0] = max3(0, maxGapCost, cost);
 			}
 			// update max possible if available
 			if (d[i][0] > maxSoFar) {
@@ -319,7 +304,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric
 			cost = dCostFunc.getCost(s, 0, t, j);
 
 			if (j == 0) {
-				d[0][0] = Math.max(0, cost);
+				d[0][0] = max(0, cost);
 			} else {
 				float maxGapCost = 0.0f;
 				int windowStart = j - windowSize;
@@ -327,10 +312,10 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric
 					windowStart = 1;
 				}
 				for (int k = windowStart; k < j; k++) {
-					maxGapCost = Math.max(maxGapCost,
+					maxGapCost = max(maxGapCost,
 							d[0][j - k] - gGapFunc.getCost(t, j - k, j));
 				}
-				d[0][j] = MathFuncs.max3(0, maxGapCost, cost);
+				d[0][j] = max3(0, maxGapCost, cost);
 			}
 			// update max possible if available
 			if (d[0][j] > maxSoFar) {
@@ -353,7 +338,7 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric
 					windowStart = 1;
 				}
 				for (int k = windowStart; k < i; k++) {
-					maxGapCost1 = Math.max(maxGapCost1,
+					maxGapCost1 = max(maxGapCost1,
 							d[i - k][j] - gGapFunc.getCost(s, i - k, i));
 				}
 				windowStart = j - windowSize;
@@ -361,11 +346,11 @@ public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric
 					windowStart = 1;
 				}
 				for (int k = windowStart; k < j; k++) {
-					maxGapCost2 = Math.max(maxGapCost2,
+					maxGapCost2 = max(maxGapCost2,
 							d[i][j - k] - gGapFunc.getCost(t, j - k, j));
 				}
-				d[i][j] = MathFuncs.max4(0, maxGapCost1, maxGapCost2,
-						d[i - 1][j - 1] + cost);
+				d[i][j] = max4(0, maxGapCost1, maxGapCost2, d[i - 1][j - 1]
+						+ cost);
 				// update max possible if available
 				if (d[i][j] > maxSoFar) {
 					maxSoFar = d[i][j];

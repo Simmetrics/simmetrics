@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -39,65 +39,22 @@
 
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
-import junit.framework.TestCase;
+public class TokeniserQGram2ExtendedTest extends InterfaceTokeniserTest {
 
-import java.util.ArrayList;
+	@Override
+	protected InterfaceTokeniser getTokenizer() {
+		return new TokeniserQGram2Extended();
+	}
 
-/**
- * Created by IntelliJ IDEA.
- * User: Administrator
- * Date: 23-Nov-2006
- * Time: 12:04:10
- * To change this template use File | Settings | File Templates.
- */
-public class TokeniserQGram2ExtendedTest  extends TestCase {
+	@Override
+	public T[] getTests() {
 
-    /**
-     * internal tokeniser.
-     */
-    private InterfaceTokeniser tokeniser = null;
-
-    /**
-     * main constructor setting the name of the test case.
-     *
-     * @param s The name of the test
-     */
-    public TokeniserQGram2ExtendedTest(String s) {
-        super(s);
-    }
-
-    /**
-     * Sets up the test fixture.
-     *
-     * Called before every test case method.
-     */
-    protected void setUp() {
-        tokeniser = new TokeniserQGram2Extended();
-    }
-
-    /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     */
-    protected void tearDown() {
-        // release objects under test here, if necessary
-    }
-
-    /**
-     * Tests emptying the cart.
-     */
-    public void testTokeniseToArrayList() {
-        ArrayList results = tokeniser.tokenizeToArrayList("12345678");
-        assertEquals(9, results.size());
-        assertEquals("#1", results.get(0));
-        assertEquals("12", results.get(1));
-        assertEquals("23", results.get(2));
-        assertEquals("34", results.get(3));
-        assertEquals("45", results.get(4));
-        assertEquals("56", results.get(5));
-        assertEquals("67", results.get(6));
-        assertEquals("78", results.get(7));
-        assertEquals("8#", results.get(8));
-    }
+		return new T[] {
+				new T("123456789", 
+						"#1", "12", "23", "34", "45", "56", "67", "78", "89","9#"),
+				new T("123456789123456789", 
+						"#1", "12", "23", "34", "45", "56", "67", "78", "89",
+						"91", "12", "23", "34", "45", "56", "67", "78", "89","9#"
+						) };
+	}
 }

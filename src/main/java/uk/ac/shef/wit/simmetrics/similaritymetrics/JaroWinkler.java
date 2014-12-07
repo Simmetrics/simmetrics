@@ -39,8 +39,8 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.math.MathFuncs;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
+import uk.ac.shef.wit.simmetrics.utils.Math;
 
 import java.io.Serializable;
 
@@ -98,7 +98,7 @@ public final class JaroWinkler extends AbstractStringMetric implements
 	 */
 	private static int getPrefixLength(final String string1,
 			final String string2) {
-		final int n = MathFuncs.min3(MINPREFIXTESTLENGTH, string1.length(),
+		final int n = Math.min3(MINPREFIXTESTLENGTH, string1.length(),
 				string2.length());
 		// check for prefix similarity of length n
 		for (int i = 0; i < n; i++) {

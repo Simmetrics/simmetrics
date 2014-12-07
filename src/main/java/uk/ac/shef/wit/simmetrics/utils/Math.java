@@ -37,7 +37,7 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package uk.ac.shef.wit.simmetrics.math;
+package uk.ac.shef.wit.simmetrics.utils;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -48,7 +48,7 @@ import static java.lang.Math.min;
  * @author Sam Chapman
  * @version 1.1
  */
-public abstract class MathFuncs {
+public abstract class Math {
 
 	/**
 	 * Returns the max of three numbers.

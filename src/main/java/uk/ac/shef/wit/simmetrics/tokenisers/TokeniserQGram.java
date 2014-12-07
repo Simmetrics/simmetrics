@@ -39,26 +39,35 @@
 
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
-public class TokeniserWordQGramTest extends InterfaceTokeniserTest {
 
+import java.util.ArrayList;
+import java.io.Serializable;
+
+/**
+ * Basic Q-Gram tokenizer for a variable Q.
+ * 
+ * @author mpkorstanje
+ *
+ */
+public class TokeniserQGram extends AbstractTokenizer implements Serializable {
+
+	private final int q;
 	
-
-	@Override
-	protected InterfaceTokeniser getTokenizer() {
-		return new TokeniserWordQGram();
+	public TokeniserQGram(int q) {
+		this.q = q;
 	}
 
-	@Override
-	public T[] getTests() {
+	public ArrayList<String> tokenizeToArrayList(final String input) {
+		final ArrayList<String> ret = new ArrayList<String>();
 
-		return new T[] {
-				new T("1234 5678 90 a", 
-						"12", "23", "34", 
-						"56","67", "78", 
-						"90"),
-				new T("1234 1234 90 a", 
-						"12", "23", "34",
-						"12", "23", "34", 
-						"90"), };
+		for (int i = 0; i < input.length() - q +1; i++) {
+			final String term = input.substring(i, i + q);
+			if (!isWord(term)) {
+				ret.add(term);
+			}
+		}
+
+		return ret;
 	}
+
 }

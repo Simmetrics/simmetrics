@@ -40,7 +40,6 @@
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Basic Q-Gram tokenizer for a Q of 2.The Q-Gram is extended beyond the length

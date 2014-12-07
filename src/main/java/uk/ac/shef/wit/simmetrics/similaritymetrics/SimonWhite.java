@@ -2,13 +2,6 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.perf4j.LoggingStopWatch;
-import org.perf4j.StopWatch;
-
-import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWordQGram;
 
 /**

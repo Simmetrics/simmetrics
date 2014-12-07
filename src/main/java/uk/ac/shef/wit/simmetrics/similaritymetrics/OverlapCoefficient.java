@@ -44,7 +44,6 @@ import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.ArrayList;
 import java.io.Serializable;
 
 /**

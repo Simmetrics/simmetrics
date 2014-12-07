@@ -42,7 +42,6 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractSubstitutionCost;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost01;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
-import static java.lang.Math.max;
 import static uk.ac.shef.wit.simmetrics.utils.Math.min3;
 
 import java.io.Serializable;

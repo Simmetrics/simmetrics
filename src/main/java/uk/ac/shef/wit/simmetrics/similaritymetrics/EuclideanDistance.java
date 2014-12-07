@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -46,183 +46,98 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
+import static java.lang.Math.sqrt;
 
 /**
- * Package: uk.ac.shef.wit.simmetrics.similaritymetrics.euclideandistance
- * Description: uk.ac.shef.wit.simmetrics.similaritymetrics.euclideandistance implements a
-
- * Date: 05-Apr-2004
- * Time: 11:12:01
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+ * Implements the Euclidean Distance algorithm providing a similarity measure
+ * between two strings using the vector space of combined terms as the
+ * dimensions"
+ *
+ * @author Sam Chapman
  * @version 1.2
  */
-public final class EuclideanDistance extends AbstractStringMetric implements Serializable {
+public final class EuclideanDistance extends AbstractStringMetric implements
+		Serializable {
 
-    /**
-     * a constant for calculating the estimated timing cost.
-     */
-    private final float ESTIMATEDTIMINGCONST = 7.4457142857142857142857142857146e-5f;
+	private final float ESTIMATEDTIMINGCONST = 7.4457142857142857142857142857146e-5f;
 
-    /**
-     * private tokeniser for tokenisation of the query strings.
-     */
-    private final InterfaceTokeniser tokeniser;
+	private final InterfaceTokeniser tokenizer;
 
-    /**
-     * constructor - default (empty).
-     */
-    public EuclideanDistance() {
-        tokeniser = new TokeniserWhitespace();
-    }
+	/**
+	 * Constructs a EuclideanDistance metric with a {@link TokeniserWhitespace}.
+	 */
+	public EuclideanDistance() {
+		this.tokenizer = new TokeniserWhitespace();
+	}
 
-    /**
-     * constructor.
-     *
-     * @param tokeniserToUse - the tokeniser to use should a different tokeniser be required
-     */
-    public EuclideanDistance(final InterfaceTokeniser tokeniserToUse) {
-        tokeniser = tokeniserToUse;
-    }
+	/**
+	 * Constructs a EuclideanDistance metric with the given tokenizer.
+	 *
+	 * @param tokenizer
+	 *            tokenizer to use
+	 */
+	public EuclideanDistance(final InterfaceTokeniser tokenizer) {
+		this.tokenizer = tokenizer;
+	}
 
-    /**
-     * returns the string identifier for the metric.
-     *
-     * @return the string identifier for the metric
-     */
-    public String getShortDescriptionString() {
-        return "EuclideanDistance";
-    }
+	public String getLongDescriptionString() {
+		return "Implements the Euclidean Distancey algorithm providing a similarity measure between two stringsusing the vector space of combined terms as the dimensions";
+	}
 
-    /**
-     * returns the long string identifier for the metric.
-     *
-     * @return the long string identifier for the metric
-     */
-    public String getLongDescriptionString() {
-        return "Implements the Euclidean Distancey algorithm providing a similarity measure between two stringsusing the vector space of combined terms as the dimensions";
-    }
+	public float getSimilarityTimingEstimated(final String string1,
+			final String string2) {
 
-    /**
-     * gets a div class xhtml similarity explaining the operation of the metric.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return a div class html section detailing the metric operation.
-     */
-    public String getSimilarityExplained(String string1, String string2) {
-        //todo this should explain the operation of a given comparison
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
+		final float str1Tokens = tokenizer.tokenizeToArrayList(string1).size();
+		final float str2Tokens = tokenizer.tokenizeToArrayList(string2).size();
+		return (((str1Tokens + str2Tokens) * str1Tokens) + ((str1Tokens + str2Tokens) * str2Tokens))
+				* ESTIMATEDTIMINGCONST;
+	}
 
-    /**
-     * gets the estimated time in milliseconds it takes to perform a similarity timing.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return the estimated time in milliseconds taken to perform the similarity measure
-     */
-    public float getSimilarityTimingEstimated(final String string1, final String string2) {
-        //timed millisecond times with string lengths from 1 + 50 each increment
-        //0	0.02	0.04	0.08	0.13	0.19	0.26	0.33	0.43	0.53	0.64	0.77	0.9	1.09	1.27	1.39	1.57	1.83	1.93	2.27	2.42	2.82	2.9	3.56	3.44	4.32	3.9	5.51	4.51	6.15	5.34	6.77	5.97	7.81	6.8	8.83	7.52	9.67	8.46	10.68	9.23	11.94	10.2	13.53	11.28	14.5	11.94	15.62	13.53	16.92	14.57	16.92	15.62	20.3	16.92	22.56	16.92	24.33	18.45	24.33
-        final float str1Tokens = tokeniser.tokenizeToArrayList(string1).size();
-        final float str2Tokens = tokeniser.tokenizeToArrayList(string2).size();
-        return (((str1Tokens + str2Tokens) * str1Tokens) + ((str1Tokens + str2Tokens) * str2Tokens)) * ESTIMATEDTIMINGCONST;
-    }
+	public float getSimilarity(final String string1, final String string2) {
+		final ArrayList<String> str1Tokens = tokenizer
+				.tokenizeToArrayList(string1);
+		final ArrayList<String> str2Tokens = tokenizer
+				.tokenizeToArrayList(string2);
+		float totalPossible = (float) Math.sqrt((str1Tokens.size() * str1Tokens
+				.size()) + (str2Tokens.size() * str2Tokens.size()));
+		final float totalDistance = getEuclidianDistance(str1Tokens, str2Tokens);
+		return (totalPossible - totalDistance) / totalPossible;
+	}
 
-    /**
-     * gets the similarity of the two strings using EuclideanDistance
-     *
-     * the 0-1 return is calcualted from the maximum possible Euclidean
-     * distance between the strings from the number of terms within them.
-     *
-     * @param string1
-     * @param string2
-     * @return a value between 0-1 of the similarity 1.0 identical
-     */
-    public float getSimilarity(final String string1, final String string2) {
-        final ArrayList<String> str1Tokens = tokeniser.tokenizeToArrayList(string1);
-        final ArrayList<String> str2Tokens = tokeniser.tokenizeToArrayList(string2);
-        float totalPossible = (float) Math.sqrt((str1Tokens.size()*str1Tokens.size()) + (str2Tokens.size()*str2Tokens.size()));
-        final float totalDistance = getUnNormalisedSimilarity(string1, string2);
-        return (totalPossible - totalDistance) / totalPossible;
-    }
+	public float getUnNormalisedSimilarity(String string1, String string2) {
+		final ArrayList<String> str1Tokens = tokenizer
+				.tokenizeToArrayList(string1);
+		final ArrayList<String> str2Tokens = tokenizer
+				.tokenizeToArrayList(string2);
 
-    /**
-     * gets the un-normalised similarity measure of the metric for the given strings.
-     *
-     * @param string1
-     * @param string2
-     * @return returns the score of the similarity measure (un-normalised)
-     */
-    public float getUnNormalisedSimilarity(String string1, String string2) {
-        final ArrayList<String> str1Tokens = tokeniser.tokenizeToArrayList(string1);
-        final ArrayList<String> str2Tokens = tokeniser.tokenizeToArrayList(string2);
+		return getEuclidianDistance(str1Tokens, str2Tokens);
+	}
 
-        final Set<String> allTokens = new HashSet<String>();
-        allTokens.addAll(str1Tokens);
-        allTokens.addAll(str2Tokens);
+	private float getEuclidianDistance(final ArrayList<String> str1Tokens,
+			final ArrayList<String> str2Tokens) {
+		final Set<String> allTokens = new HashSet<String>();
+		allTokens.addAll(str1Tokens);
+		allTokens.addAll(str2Tokens);
 
-        float totalDistance = 0.0f;
-        for (final String token : allTokens) {
-            int countInString1 = 0;
-            int countInString2 = 0;
-            for (final String sToken : str1Tokens) {
-                if (sToken.equals(token)) {
-                    countInString1++;
-                }
-            }
-            for (final String sToken : str2Tokens) {
-                if (sToken.equals(token)) {
-                    countInString2++;
-                }
-            }
+		float totalDistance = 0.0f;
+		for (final String token : allTokens) {
+			int countInString1 = 0;
+			int countInString2 = 0;
+			for (final String sToken : str1Tokens) {
+				if (sToken.equals(token)) {
+					countInString1++;
+				}
+			}
+			for (final String sToken : str2Tokens) {
+				if (sToken.equals(token)) {
+					countInString2++;
+				}
+			}
 
-            totalDistance += ((countInString1 - countInString2) * (countInString1 - countInString2));
-        }
+			totalDistance += ((countInString1 - countInString2) * (countInString1 - countInString2));
+		}
 
-        totalDistance = (float) Math.sqrt(totalDistance);
-        return totalDistance;
-    }
-
-    /**
-     * gets the actual euclidean distance ie not the value between 0-1.
-     *
-     * @param string1
-     * @param string2
-     * @return the actual euclidean distance
-     */
-    public float getEuclidDistance(final String string1, final String string2) {
-        final ArrayList<String> str1Tokens = tokeniser.tokenizeToArrayList(string1);
-        final ArrayList<String> str2Tokens = tokeniser.tokenizeToArrayList(string2);
-
-        final Set<String> allTokens = new HashSet<String>();
-        allTokens.addAll(str1Tokens);
-        allTokens.addAll(str2Tokens);
-
-        float totalDistance = 0.0f;
-        for (final String token : allTokens) {
-            int countInString1 = 0;
-            int countInString2 = 0;
-            for (final String sToken : str1Tokens) {
-                if (sToken.equals(token)) {
-                    countInString1++;
-                }
-            }
-            for (final String sToken : str2Tokens) {
-                if (sToken.equals(token)) {
-                    countInString2++;
-                }
-            }
-
-            totalDistance += ((countInString1 - countInString2) * (countInString1 - countInString2));
-        }
-
-        return (float) Math.sqrt(totalDistance);
-    }
+		totalDistance = (float) sqrt(totalDistance);
+		return totalDistance;
+	}
 }
-
-
-
-

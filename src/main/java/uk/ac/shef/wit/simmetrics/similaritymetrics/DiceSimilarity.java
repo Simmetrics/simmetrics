@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -48,123 +48,66 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 /**
- * Package: uk.ac.shef.wit.simmetrics.similaritymetrics.dicesimilarity
- * Description: uk.ac.shef.wit.simmetrics.similaritymetrics.dicesimilarity implements a
-
- * Date: 05-Apr-2004
- * Time: 10:30:34
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+ * Implements the DiceSimilarity algorithm providing a similarity measure
+ * between two strings using the vector space of presented tokens.
+ * 
+ * Dices coefficient = (2*Common tokens) / (Number of tokens in String1 + Number
+ * of tokens in String2).
+ * 
+ * @author Sam Chapman
  * @version 1.1
  */
-public final class DiceSimilarity extends AbstractStringMetric implements Serializable {
+public final class DiceSimilarity extends AbstractStringMetric implements
+		Serializable {
 
-    /**
-     * a constant for calculating the estimated timing cost.
-     */
-    private final float ESTIMATEDTIMINGCONST = 0.00000034457142857142857142857142857146f;
+	private final float ESTIMATEDTIMINGCONST = 0.00000034457142857142857142857142857146f;
 
-    /**
-     * private tokeniser for tokenisation of the query strings.
-     */
-    private final InterfaceTokeniser tokeniser;
+	private final InterfaceTokeniser tokeniser;
 
-    /**
-     * constructor - default (empty).
-     */
-    public DiceSimilarity() {
-        tokeniser = new TokeniserWhitespace();
-    }
+	/**
+	 * Constructs a DiceSimilarity metric with a {@link TokeniserWhitespace}.
+	 */
+	public DiceSimilarity() {
+		tokeniser = new TokeniserWhitespace();
+	}
 
-    /**
-     * constructor.
-     *
-     * @param tokeniserToUse - the tokeniser to use should a different tokeniser be required
-     */
-    public DiceSimilarity(final InterfaceTokeniser tokeniserToUse) {
-        tokeniser = tokeniserToUse;
-    }
+	/**
+	 * Constructs a DiceSimilarity metric with the given tokenizer.
+	 *
+	 * @param tokeniser
+	 *            tokenizer to use
+	 */
+	public DiceSimilarity(final InterfaceTokeniser tokeniserToUse) {
+		tokeniser = tokeniserToUse;
+	}
 
-    /**
-     * returns the string identifier for the metric.
-     *
-     * @return the string identifier for the metric
-     */
-    public String getShortDescriptionString() {
-        return "DiceSimilarity";
-    }
+	public String getLongDescriptionString() {
+		return "Implements the DiceSimilarity algorithm providing a similarity measure between two strings using the vector space of present terms";
+	}
 
-    /**
-     * returns the long string identifier for the metric.
-     *
-     * @return the long string identifier for the metric
-     */
-    public String getLongDescriptionString() {
-        return "Implements the DiceSimilarity algorithm providing a similarity measure between two strings using the vector space of present terms";
-    }
+	public float getSimilarityTimingEstimated(final String string1,
+			final String string2) {
 
-    /**
-     * gets a div class xhtml similarity explaining the operation of the metric.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return a div class html section detailing the metric operation.
-     */
-    public String getSimilarityExplained(String string1, String string2) {
-        //todo this should explain the operation of a given comparison
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
+		final float str1Length = string1.length();
+		final float str2Length = string2.length();
+		return (str1Length + str2Length)
+				* ((str1Length + str2Length) * ESTIMATEDTIMINGCONST);
+	}
 
-    /**
-     * gets the estimated time in milliseconds it takes to perform a similarity timing.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return the estimated time in milliseconds taken to perform the similarity measure
-     */
-    public float getSimilarityTimingEstimated(final String string1, final String string2) {
-        //timed millisecond times with string lengths from 1 + 50 each increment
-        //0	0.01	0.03	0.05	0.08	0.1	0.14	0.18	0.22	0.27	0.33	0.38	0.46	0.51	0.6	0.65	0.76	0.83	0.93	1	1.1	1.21	1.31	1.44	1.54	1.65	1.78	1.92	2.06	2.18	2.33	2.51	2.64	2.78	2.99	3.17	3.29	3.5	3.9	5.8	4.14	5.21	4.51	5.8	4.86	6.55	5.34	7	5.8	7	6.34	8.16	6.77	9.23	7	9.67	7.52	10.15	8.46	10.2
-        final float str1Length = string1.length();
-        final float str2Length = string2.length();
-        return (str1Length + str2Length) * ((str1Length + str2Length) * ESTIMATEDTIMINGCONST);
-    }
+	public float getSimilarity(final String string1, final String string2) {
+		final Set<String> str1Tokens = tokeniser.tokenizeToSet(string1);
+		final Set<String> str2Tokens = tokeniser.tokenizeToSet(string2);
 
-    /**
-     * gets the similarity of the two strings using DiceSimilarity
-     * <p/>
-     * Dices coefficient = (2*Common Terms) / (Number of terms in String1 + Number of terms in String2).
-     *
-     * @param string1
-     * @param string2
-     * @return a value between 0-1 of the similarity
-     */
-    public float getSimilarity(final String string1, final String string2) {
-        final Set<String> str1Tokens = tokeniser.tokenizeToSet(string1);
-        final Set<String> str2Tokens = tokeniser.tokenizeToSet(string2);
-       
+		final Set<String> allTokens = new HashSet<String>();
+		allTokens.addAll(str1Tokens);
+		allTokens.addAll(str2Tokens);
 
-        final Set<String> allTokens = new HashSet<String>();
-        allTokens.addAll(str1Tokens);
-        allTokens.addAll(str2Tokens);
-        
-        final int commonTerms = (str1Tokens.size() +  str2Tokens.size()) - allTokens.size();
+		final int commonTerms = (str1Tokens.size() + str2Tokens.size())
+				- allTokens.size();
 
-        //return Dices coefficient = (2*Common Terms) / (Number of distinct  terms in String1 + Number of distinct terms in String2)
-        return (2.0f * commonTerms) / (str1Tokens.size() + str2Tokens.size());
-    }
+		// return Dices coefficient = (2*Common Terms) / (Number of distinct
+		// terms in String1 + Number of distinct terms in String2)
+		return (2.0f * commonTerms) / (str1Tokens.size() + str2Tokens.size());
+	}
 
-    /**
-     * gets the un-normalised similarity measure of the metric for the given strings.
-     *
-     * @param string1
-     * @param string2
-     * @return returns the score of the similarity measure (un-normalised)
-     */
-    public float getUnNormalisedSimilarity(String string1, String string2) {
-        return getSimilarity(string1, string2);
-    }
 }
-
-

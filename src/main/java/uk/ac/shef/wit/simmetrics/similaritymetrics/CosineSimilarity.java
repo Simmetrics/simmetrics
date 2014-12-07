@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -48,126 +48,72 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 /**
- * Package: uk.ac.shef.wit.simmetrics.similaritymetrics.cosinesimilarity
- * Description: uk.ac.shef.wit.simmetrics.similaritymetrics.cosinesimilarity implements a
-
- * Date: 05-Apr-2004
- * Time: 10:52:58
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+ * Implements the Cosine Similarity algorithm providing a similarity measure
+ * between two strings from the angular divergence within term based vector
+ * space
+ * 
+ * @author Sam Chapman
  * @version 1.1
  */
-public final class CosineSimilarity extends AbstractStringMetric implements Serializable {
+public final class CosineSimilarity extends AbstractStringMetric implements
+		Serializable {
 
-    /**
-     * a constant for calculating the estimated timing cost.
-     */
-    private final float ESTIMATEDTIMINGCONST = 0.00000038337142857142857142857142857142f;
+	private final float ESTIMATEDTIMINGCONST = 0.00000038337142857142857142857142857142f;
 
-    /**
-     * private tokeniser for tokenisation of the query strings.
-     */
-    private final InterfaceTokeniser tokeniser;
+	private final InterfaceTokeniser tokeniser;
 
-    /**
-     * constructor - default (empty).
-     */
-    public CosineSimilarity() {
-        tokeniser = new TokeniserWhitespace();
-    }
+	/**
+	 * Constructs a CosineSimilarity metric with a {@link TokeniserWhitespace}.
+	 */
+	public CosineSimilarity() {
+		this.tokeniser = new TokeniserWhitespace();
+	}
 
-    /**
-     * constructor.
-     *
-     * @param tokeniserToUse - the tokeniser to use should a different tokeniser be required
-     */
-    public CosineSimilarity(final InterfaceTokeniser tokeniserToUse) {
-        tokeniser = tokeniserToUse;
-    }
+	/**
+	 * Constructs a CosineSimilarity metric with the given tokenizer.
+	 *
+	 * @param tokenizer
+	 *            tokenizer to use
+	 */
+	public CosineSimilarity(final InterfaceTokeniser tokenizer) {
+		this.tokeniser = tokenizer;
+	}
 
-    /**
-     * returns the string identifier for the metric.
-     *
-     * @return the string identifier for the metric
-     */
-    public String getShortDescriptionString() {
-        return "CosineSimilarity";
-    }
+	public String getLongDescriptionString() {
+		return "Implements the Cosine Similarity algorithm providing a similarity measure between two strings from the angular divergence within term based vector space";
+	}
 
-    /**
-     * returns the long string identifier for the metric.
-     *
-     * @return the long string identifier for the metric
-     */
-    public String getLongDescriptionString() {
-        return "Implements the Cosine Similarity algorithm providing a similarity measure between two strings from the angular divergence within term based vector space";
-    }
+	public float getSimilarityTimingEstimated(final String string1,
+			final String string2) {
 
-    /**
-     * gets a div class xhtml similarity explaining the operation of the metric.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return a div class html section detailing the metric operation.
-     */
-    public String getSimilarityExplained(String string1, String string2) {
-        //todo this should explain the operation of a given comparison
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
+		final float str1Length = string1.length();
+		final float str2Length = string2.length();
+		return (str1Length + str2Length)
+				* ((str1Length + str2Length) * ESTIMATEDTIMINGCONST);
+	}
 
-    /**
-     * gets the estimated time in milliseconds it takes to perform a similarity timing.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return the estimated time in milliseconds taken to perform the similarity measure
-     */
-    public float getSimilarityTimingEstimated(final String string1, final String string2) {
-        //timed millisecond times with string lengths from 1 + 50 each increment
-        //0	0.02	0.03	0.05	0.08	0.11	0.14	0.18	0.23	0.27	0.33	0.39	0.46	0.52	0.6	0.65	0.76	0.84	0.94	1.01	1.13	1.23	1.49	1.45	1.95	1.67	2.26	1.93	2.6	2.26	2.86	2.54	3.17	2.91	3.76	3.17	3.9	3.5	4.32	3.9	5.1	4.32	5.64	4.83	5.64	5.07	6.34	5.64	7.03	5.97	7.81	6.55	8.12	7	9.23	7.52	9.71	8.12	10.68	8.46
-        final float str1Length = string1.length();
-        final float str2Length = string2.length();
-        return (str1Length + str2Length) * ((str1Length + str2Length) * ESTIMATEDTIMINGCONST);
-    }
+	public float getSimilarity(final String string1, final String string2) {
+		final ArrayList<String> str1Tokens = tokeniser
+				.tokenizeToArrayList(string1);
+		final ArrayList<String> str2Tokens = tokeniser
+				.tokenizeToArrayList(string2);
 
-    /**
-     * gets the similarity of the two strings using CosineSimilarity.
-     *
-     * @param string1
-     * @param string2
-     * @return a value between 0-1 of the similarity
-     */
-    public float getSimilarity(final String string1, final String string2) {
-        final ArrayList<String> str1Tokens = tokeniser.tokenizeToArrayList(string1);
-        final ArrayList<String> str2Tokens = tokeniser.tokenizeToArrayList(string2);
+		final Set<String> allTokens = new HashSet<String>();
+		allTokens.addAll(str1Tokens);
+		final int termsInString1 = allTokens.size();
+		final Set<String> secondStringTokens = new HashSet<String>();
+		secondStringTokens.addAll(str2Tokens);
+		final int termsInString2 = secondStringTokens.size();
 
-        final Set<String> allTokens = new HashSet<String>();
-        allTokens.addAll(str1Tokens);
-        final int termsInString1 = allTokens.size();
-        final Set<String> secondStringTokens = new HashSet<String>();
-        secondStringTokens.addAll(str2Tokens);
-        final int termsInString2 = secondStringTokens.size();
+		// now combine the sets
+		allTokens.addAll(secondStringTokens);
+		final int commonTerms = (termsInString1 + termsInString2)
+				- allTokens.size();
 
-        //now combine the sets
-        allTokens.addAll(secondStringTokens);
-        final int commonTerms = (termsInString1 + termsInString2) - allTokens.size();
+		// return CosineSimilarity
+		return (float) (commonTerms)
+				/ (float) (Math.pow((float) termsInString1, 0.5f) * Math.pow(
+						(float) termsInString2, 0.5f));
+	}
 
-        //return CosineSimilarity
-        return (float) (commonTerms) / (float) (Math.pow((float) termsInString1, 0.5f) * Math.pow((float) termsInString2, 0.5f));
-    }
-
-    /**
-     * gets the un-normalised similarity measure of the metric for the given strings.
-     *
-     * @param string1
-     * @param string2
-     * @return returns the score of the similarity measure (un-normalised)
-     */
-    public float getUnNormalisedSimilarity(String string1, String string2) {
-        return getSimilarity(string1, string2);
-    }
 }
-
-
-

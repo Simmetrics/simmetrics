@@ -58,7 +58,7 @@ public abstract class InterfaceStringMetricTest {
 	public void generateTest() {
 		for (T t : getTests()) {
 			float actuall = metric.getSimilarity(t.string1, t.string2);
-			String message = String.format("new T(%.4ff, \"%s\",\"%s\"),",actuall, t.string1,t.string2 );
+			String message = String.format("new T(%.4ff, \"%s\", \"%s\"),",actuall, t.string1,t.string2 );
 			System.out.println(message);
 		}
 	}

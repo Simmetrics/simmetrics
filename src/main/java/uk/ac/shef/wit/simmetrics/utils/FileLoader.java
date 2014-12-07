@@ -109,6 +109,8 @@ public final class FileLoader {
 
         } catch (Exception e) {
             //todo should this be empty
+        } finally {
+        	
         }
 
         return fileString;

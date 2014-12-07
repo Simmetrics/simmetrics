@@ -45,7 +45,6 @@ import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
-import java.io.Serializable;
 
 /**
  * Implements the Cosine Similarity algorithm providing a similarity measure
@@ -55,8 +54,8 @@ import java.io.Serializable;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class CosineSimilarity extends AbstractStringMetric implements
-		Serializable {
+public final class CosineSimilarity extends AbstractStringMetric 
+		 {
 
 	private final float ESTIMATEDTIMINGCONST = 0.00000038337142857142857142857142857142f;
 

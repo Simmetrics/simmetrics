@@ -40,7 +40,6 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
-import java.io.Serializable;
 
 /**
  * Implements the Soundex algorithm providing a similarity measure between two
@@ -49,7 +48,7 @@ import java.io.Serializable;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class Soundex extends AbstractStringMetric implements Serializable {
+public final class Soundex extends AbstractStringMetric   {
 
 	private final float ESTIMATEDTIMINGCONST = 0.00052f;
 

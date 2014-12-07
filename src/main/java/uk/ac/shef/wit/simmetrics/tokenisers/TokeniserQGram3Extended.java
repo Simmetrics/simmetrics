@@ -39,8 +39,6 @@
 
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
-import java.io.Serializable;
-
 /**
  * Basic Q-Gram tokenizer for a Q of 3.The Q-Gram is extended beyond the length
  * of the string with padding.

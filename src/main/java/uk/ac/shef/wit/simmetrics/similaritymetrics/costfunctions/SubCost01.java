@@ -39,8 +39,6 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
 
-import java.io.Serializable;
-
 /**
  * SubCost01 implements a substitution cost function where
  * 
@@ -49,8 +47,7 @@ import java.io.Serializable;
  * @author Sam Chapman
  * @version 1.1
  */
-final public class SubCost01 extends AbstractSubstitutionCost implements
-		Serializable {
+final public class SubCost01 extends AbstractSubstitutionCost {
 
 	public final float getCost(final String str1, final int string1Index,
 			final String str2, final int string2Index) {

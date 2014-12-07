@@ -1,7 +1,6 @@
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;

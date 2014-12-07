@@ -39,15 +39,13 @@
 
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
-import java.io.Serializable;
-
 /**
  * Basic Q-Gram tokenizer for a Q of 3 .
  * 
  * @author mpkorstanje
  *
  */
-public final class TokeniserQGram3 extends TokeniserQGram implements InterfaceTokeniser, Serializable {
+public final class TokeniserQGram3 extends TokeniserQGram   {
 
 	private static final int Q = 3;
 

@@ -39,8 +39,6 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import java.io.Serializable;
-
 /**
  * 
  * Implements the Chapman Length Deviation algorithm whereby the length
@@ -54,7 +52,7 @@ import java.io.Serializable;
  * @version 1.1
  */
 public final class ChapmanLengthDeviation extends AbstractStringMetric
-		implements Serializable {
+		  {
 
 	/**
 	 * Constructs a ChapmanLengthDeviation metric

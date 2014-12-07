@@ -39,8 +39,6 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
 
-import java.io.Serializable;
-
 /**
  * SubCost1_Minus2 implements a substitution cost function where d(i,j) = 1 if i
  * does not equal j, -2 if i equals j.
@@ -49,10 +47,8 @@ import java.io.Serializable;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class SubCost1_Minus2 extends AbstractSubstitutionCost implements
-		Serializable {
+public final class SubCost1_Minus2 extends AbstractSubstitutionCost {
 
-	
 	public final float getCost(final String str1, final int string1Index,
 			final String str2, final int string2Index) {
 		// check within range
@@ -73,7 +69,6 @@ public final class SubCost1_Minus2 extends AbstractSubstitutionCost implements
 	public final float getMaxCost() {
 		return 1.0f;
 	}
-
 
 	public final float getMinCost() {
 		return -2.0f;

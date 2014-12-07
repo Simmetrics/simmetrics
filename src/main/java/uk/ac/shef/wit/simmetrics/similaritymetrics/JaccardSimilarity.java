@@ -45,7 +45,6 @@ import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
-import java.io.Serializable;
 
 /**
  * Implements the Jaccard Similarity algorithm providing a similarity measure
@@ -63,8 +62,8 @@ import java.io.Serializable;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class JaccardSimilarity extends AbstractStringMetric implements
-		Serializable {
+public final class JaccardSimilarity extends AbstractStringMetric 
+		 {
 
 	private final float ESTIMATEDTIMINGCONST = 1.4e-4f;
 

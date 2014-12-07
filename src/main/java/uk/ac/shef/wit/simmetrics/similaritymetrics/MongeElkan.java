@@ -42,7 +42,6 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
 import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -52,7 +51,7 @@ import java.util.ArrayList;
  * @author Sam Chapman
  * @version 1.1
  */
-public class MongeElkan extends AbstractStringMetric implements Serializable {
+public class MongeElkan extends AbstractStringMetric   {
 
 	private final float ESTIMATEDTIMINGCONST = 0.0344f;
 

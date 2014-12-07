@@ -42,7 +42,6 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
 import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -52,8 +51,8 @@ import java.util.ArrayList;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class MatchingCoefficient extends AbstractStringMetric implements
-		Serializable {
+public final class MatchingCoefficient extends AbstractStringMetric 
+		 {
 
 	private final float ESTIMATEDTIMINGCONST = 2.0e-4f;
 

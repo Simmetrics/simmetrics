@@ -45,16 +45,14 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
 import static uk.ac.shef.wit.simmetrics.utils.Math.max3;
 import static uk.ac.shef.wit.simmetrics.utils.Math.max4;
 
-import java.io.Serializable;
-
 /**
  * Implements the Smith-Waterman edit distance function
  * 
  * @author Sam Chapman
  * @version 1.1
  */
-public final class SmithWaterman extends AbstractStringMetric implements
-		Serializable {
+public final class SmithWaterman extends AbstractStringMetric 
+	 {
 
 	private final float ESTIMATEDTIMINGCONST = 1.61e-4f;
 

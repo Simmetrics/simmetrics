@@ -1,9 +1,7 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserQGram;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserQGram2;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWordQGram;
 
@@ -40,7 +38,7 @@ import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWordQGram;
  * 
  * @author Simon White
  */
-public class SimonWhite extends AbstractStringMetric implements Serializable {
+public class SimonWhite extends AbstractStringMetric   {
 
 	private final float ESTIMATEDTIMINGCONST = 0.00000034457142857142857142857142857146f;
 

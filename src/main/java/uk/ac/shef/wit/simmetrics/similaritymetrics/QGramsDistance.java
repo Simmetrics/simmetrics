@@ -43,7 +43,6 @@ import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserQGram3Extended;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 
-import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -54,8 +53,7 @@ import java.util.*;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class QGramsDistance extends AbstractStringMetric implements
-		Serializable {
+public final class QGramsDistance extends AbstractStringMetric {
 
 	private final float ESTIMATEDTIMINGCONST = 1.34e-4f;
 

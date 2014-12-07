@@ -1,6 +1,5 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.ArrayList;
 
@@ -34,8 +33,8 @@ import java.util.ArrayList;
  *
  * @version 1.1
  */
-public final class TagLinkToken extends AbstractStringMetric implements
-		Serializable {
+public final class TagLinkToken extends AbstractStringMetric
+		 {
 	private float matched;
 	private float tr;
 	private float tSize;

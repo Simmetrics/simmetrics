@@ -43,8 +43,6 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractSubstit
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost01;
 import uk.ac.shef.wit.simmetrics.utils.Math;
 
-import java.io.Serializable;
-
 /**
  * Implements the basic Levenshtein algorithm providing a similarity measure
  * between two strings
@@ -52,8 +50,8 @@ import java.io.Serializable;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class Levenshtein extends AbstractStringMetric implements
-		Serializable {
+public final class Levenshtein extends AbstractStringMetric 
+		 {
 
 	private final float ESTIMATEDTIMINGCONST = 1.8e-4f;
 

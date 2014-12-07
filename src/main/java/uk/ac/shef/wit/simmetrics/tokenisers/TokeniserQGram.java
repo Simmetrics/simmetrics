@@ -41,7 +41,6 @@ package uk.ac.shef.wit.simmetrics.tokenisers;
 
 
 import java.util.ArrayList;
-import java.io.Serializable;
 
 /**
  * Basic Q-Gram tokenizer for a variable Q.
@@ -49,7 +48,7 @@ import java.io.Serializable;
  * @author mpkorstanje
  *
  */
-public class TokeniserQGram extends AbstractTokenizer implements Serializable {
+public class TokeniserQGram extends AbstractTokenizer  {
 
 	private final int q;
 	

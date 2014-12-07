@@ -47,7 +47,6 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost5_3_Minu
 import static java.lang.Math.max;
 import static uk.ac.shef.wit.simmetrics.utils.Math.max3;
 import static uk.ac.shef.wit.simmetrics.utils.Math.max4;
-import java.io.Serializable;
 
 /**
  * Implements the Smith-Waterman-Gotoh algorithm with a windowed affine gap
@@ -57,7 +56,7 @@ import java.io.Serializable;
  * @version 1.1
  */
 public class SmithWatermanGotohWindowedAffine extends AbstractStringMetric
-		implements Serializable {
+		  {
 
 
 	private final float ESTIMATEDTIMINGCONST = 4.5e-5f;

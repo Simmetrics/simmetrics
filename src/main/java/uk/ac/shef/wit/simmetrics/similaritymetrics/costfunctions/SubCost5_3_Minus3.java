@@ -39,7 +39,6 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -52,8 +51,8 @@ import java.util.Set;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class SubCost5_3_Minus3 extends AbstractSubstitutionCost implements
-		Serializable {
+public final class SubCost5_3_Minus3 extends AbstractSubstitutionCost 
+		 {
 
 	/**
 	 * return score.

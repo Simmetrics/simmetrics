@@ -42,7 +42,6 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
 import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -57,7 +56,7 @@ import java.util.ArrayList;
  * 
  */
 public final class ChapmanOrderedNameCompoundSimilarity extends
-		AbstractStringMetric implements Serializable {
+		AbstractStringMetric   {
 
 	private final float ESTIMATEDTIMINGCONST = 0.026571428571428571428571428571429f;
 

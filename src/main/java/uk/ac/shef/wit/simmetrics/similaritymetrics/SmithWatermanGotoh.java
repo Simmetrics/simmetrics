@@ -44,8 +44,6 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractSubstit
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AffineGap5_1;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost5_3_Minus3;
 
-import java.io.Serializable;
-
 /**
  * Implements the Gotoh extension of the Smith-Waterman method incorporating
  * affine gaps in the strings
@@ -55,7 +53,7 @@ import java.io.Serializable;
  * @version 1.1
  */
 public final class SmithWatermanGotoh extends SmithWatermanGotohWindowedAffine
-		implements Serializable {
+		  {
 
 	private final float ESTIMATEDTIMINGCONST = 2.2e-5f;
 

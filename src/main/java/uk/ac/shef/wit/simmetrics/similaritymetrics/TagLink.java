@@ -67,13 +67,12 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
 import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 
-import java.io.Serializable;
 import java.util.*;
 
 /**
  * TagLink inplements a TagLink String Metric.
  */
-public final class TagLink extends AbstractStringMetric implements Serializable {
+public final class TagLink extends AbstractStringMetric   {
 
 	/**
 	 * private idfMap contains the IDF weights for each token in the dataset.
@@ -501,11 +500,11 @@ public final class TagLink extends AbstractStringMetric implements Serializable 
 	 *            ArrayList of candidates
 	 */
 	private void sortCandidateList(ArrayList<Candidates> list) {
-		java.util.Collections.sort(list, new java.util.Comparator() {
-			public int compare(Object o1, Object o2) {
+		java.util.Collections.sort(list, new java.util.Comparator<Candidates>() {
+			public int compare(Candidates o1, Candidates o2) {
 				// First sort, by score in index
-				float scoreT = ((Candidates) o1).getScore();
-				float scoreU = ((Candidates) o2).getScore();
+				float scoreT =  o1.getScore();
+				float scoreU =  o2.getScore();
 				if (scoreU > scoreT) {
 					return 1;
 				}
@@ -654,7 +653,7 @@ public final class TagLink extends AbstractStringMetric implements Serializable 
 	}
 }
 
-class Candidates implements Serializable {
+class Candidates   {
 	private int tPos, uPos;
 	private float score;
 

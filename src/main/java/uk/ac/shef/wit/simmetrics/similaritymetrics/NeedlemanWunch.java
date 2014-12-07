@@ -44,8 +44,6 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost01;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
 import static uk.ac.shef.wit.simmetrics.utils.Math.min3;
 
-import java.io.Serializable;
-
 /**
  * Implements the Needleman-Wunch algorithm providing an edit distance based
  * similarity measure between two strings
@@ -53,8 +51,8 @@ import java.io.Serializable;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class NeedlemanWunch extends AbstractStringMetric implements
-		Serializable {
+public final class NeedlemanWunch extends AbstractStringMetric 
+		 {
 
 	private final float ESTIMATEDTIMINGCONST = 1.842e-4f;
 

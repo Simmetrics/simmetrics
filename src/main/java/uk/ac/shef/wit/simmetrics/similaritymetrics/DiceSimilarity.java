@@ -44,7 +44,6 @@ import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.io.Serializable;
 
 /**
  * Implements the DiceSimilarity algorithm providing a similarity measure
@@ -56,8 +55,8 @@ import java.io.Serializable;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class DiceSimilarity extends AbstractStringMetric implements
-		Serializable {
+public final class DiceSimilarity extends AbstractStringMetric 
+		 {
 
 	private final float ESTIMATEDTIMINGCONST = 0.00000034457142857142857142857142857146f;
 

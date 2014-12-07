@@ -39,16 +39,13 @@
 
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
-import java.io.Serializable;
-
 /**
  * Basic Q-Gram tokenizer for a Q of 2.The Q-Gram is extended beyond the length
  * of the string with padding.
  * 
  * @author mpkorstanje
  */
-public final class TokeniserQGram2Extended extends TokeniserQGramExtended
-		implements Serializable {
+public final class TokeniserQGram2Extended extends TokeniserQGramExtended {
 
 	private static final int Q = 2;
 

@@ -41,16 +41,14 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
 
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractAffineGapCost;
 
-import java.io.Serializable;
-
 /**
  * AffineGap1_1Over3 implements a Affine Gap cost function.
  * 
  * @author Sam Chapman
  * @version 1.1
  */
-final public class AffineGap1_1Over3 extends AbstractAffineGapCost implements
-		Serializable {
+final public class AffineGap1_1Over3 extends AbstractAffineGapCost
+		 {
 
 	public final float getCost(final String stringToGap,
 			final int stringIndexStartGap, final int stringIndexEndGap) {

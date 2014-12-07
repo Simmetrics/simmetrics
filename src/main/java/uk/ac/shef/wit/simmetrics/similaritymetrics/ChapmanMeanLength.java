@@ -39,7 +39,6 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import java.io.Serializable;
 import static java.lang.Math.pow;
 
 /**
@@ -52,8 +51,8 @@ import static java.lang.Math.pow;
  * @version 1.2
  */
 
-public final class ChapmanMeanLength extends AbstractStringMetric implements
-		Serializable {
+public final class ChapmanMeanLength extends AbstractStringMetric 
+		 {
 
 	/**
 	 * defines the internal max string length beyond which 1.0 is always

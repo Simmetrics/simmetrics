@@ -42,7 +42,6 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
 import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
@@ -56,8 +55,8 @@ import static java.lang.Math.abs;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class BlockDistance extends AbstractStringMetric implements
-		Serializable {
+public final class BlockDistance extends AbstractStringMetric 
+		 {
 
 	private final float ESTIMATEDTIMINGCONST = 6.4457142857142857142857142857146e-5f;
 

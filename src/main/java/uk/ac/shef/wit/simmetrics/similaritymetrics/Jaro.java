@@ -41,8 +41,6 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
 
-import java.io.Serializable;
-
 /**
  * Implements the Jaro algorithm providing a similarity measure between two
  * strings allowing character transpositions to a degree
@@ -50,7 +48,7 @@ import java.io.Serializable;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class Jaro extends AbstractStringMetric implements Serializable {
+public final class Jaro extends AbstractStringMetric   {
 
 
 	private final float ESTIMATEDTIMINGCONST = 4.12e-5f;

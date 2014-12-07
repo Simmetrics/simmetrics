@@ -40,7 +40,6 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
-import java.io.Serializable;
 
 /**
  * Implements the Chapman Matching Soundex algorithm whereby terms are matched
@@ -51,8 +50,7 @@ import java.io.Serializable;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class ChapmanMatchingSoundex extends MongeElkan implements
-		Serializable {
+public final class ChapmanMatchingSoundex extends MongeElkan {
 	private final float ESTIMATEDTIMINGCONST = 0.026571428571428571428571428571429f;
 
 	/**

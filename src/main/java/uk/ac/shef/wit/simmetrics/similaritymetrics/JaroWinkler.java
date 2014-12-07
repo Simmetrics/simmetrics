@@ -42,8 +42,6 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
 import uk.ac.shef.wit.simmetrics.utils.Math;
 
-import java.io.Serializable;
-
 /**
  * Implements the Jaro-Winkler algorithm providing a similarity measure between
  * two strings allowing character transpositions to a degree adjusting the
@@ -52,11 +50,9 @@ import java.io.Serializable;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class JaroWinkler extends AbstractStringMetric implements
-		Serializable {
+public final class JaroWinkler extends AbstractStringMetric {
 
 	private final float ESTIMATEDTIMINGCONST = 4.342e-5f;
-
 
 	private final AbstractStringMetric jaro = new Jaro();
 

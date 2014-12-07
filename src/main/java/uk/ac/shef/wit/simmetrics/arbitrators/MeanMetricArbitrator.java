@@ -41,7 +41,6 @@ package uk.ac.shef.wit.simmetrics.arbitrators;
 
 import uk.ac.shef.wit.simmetrics.similaritymetrics.InterfaceStringMetric;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -53,7 +52,7 @@ import java.util.ArrayList;
  * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
  * @version 1.1
  */
-public final class MeanMetricArbitrator implements InterfaceMetricArbitrator, Serializable  {
+public final class MeanMetricArbitrator implements InterfaceMetricArbitrator  {
 
     /**
      * private vector of InterfaceStringMetric's used in the arbitration. 

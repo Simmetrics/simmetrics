@@ -37,8 +37,7 @@ public abstract class InterfaceTokeniserTest {
 	@SuppressWarnings("deprecation")
 	@Test
 	public void testGetShortDescriptionString() {
-		assertEquals(tokenizer.getClass().getSimpleName(),
-				tokenizer.getShortDescriptionString());
+		assertEquals(tokenizer.toString(),tokenizer.getShortDescriptionString());
 	}
 
 	@Test

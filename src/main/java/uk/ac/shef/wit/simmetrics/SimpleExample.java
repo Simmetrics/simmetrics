@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -42,70 +42,48 @@ package uk.ac.shef.wit.simmetrics;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.*;
 
 /**
- * Package: uk.ac.shef.wit.simmetrics
- * Description: SimpleExample implements a simple example to demonstrate the ease to use a similarity metric.
- * Date: 19-Apr-2004
- * Time: 14:25:11
- *
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+ * SimpleExample implements a simple example to demonstrate the ease to use a
+ * similarity metric.
+ * 
+ * @author Sam Chapman
  */
 public class SimpleExample {
 
-    /**
-     * runs a simple example.
-     *
-     * @param args two strings required for comparison
-     *
-     * @see this.usage() in the same source file
-     * for more details on the usage instructions
-     */
-    public static void main(final String[] args) {
+	/**
+	 * Runs a simple example.
+	 *
+	 * @param args
+	 *            two strings required for comparison
+	 */
+	public static void main(final String[] args) {
 
-        //checks for the expected user input
-        if(args.length != 2) {
-            //provides usage information to inform the user of the correct way
-            // to work
-            usage();
-        } else {
-            //gets the two input given by the user
-            String str1 = args[0];
-            String str2 = args[1];
+		checkInput(args);
 
-            //creates the single metric to use - in this case the simple
-            // Levenshtein is used, this is far from recomended as much better
-            // metrics can be employed in most cases, please see the sourceforge
-            // SimMetric forums for advice on the best metric to employ in
-            // differing situations.
-//            AbstractStringMetric metric = new Levenshtein();
-//            AbstractStringMetric metric = new CosineSimilarity();
-//            AbstractStringMetric metric = new EuclideanDistance();
-            AbstractStringMetric metric = new MongeElkan();
+		// gets the two input given by the user
+		final String str1 = args[0];
+		final String str2 = args[1];
 
-            //this single line performs the similarity test
-            float result = metric.getSimilarity(str1, str2);
+		// InterfaceStringMetric metric = new Levenshtein();
+		InterfaceStringMetric metric = new CosineSimilarity();
+		// InterfaceStringMetric metric = new EuclideanDistance();
+		// InterfaceStringMetric metric = new MongeElkan();
 
-            //outputs the results
-            outputResult(result, metric, str1, str2);
-        }
-    }
+		final float result = metric.getSimilarity(str1, str2);
 
-    /**
-     * outputs the result of the metric test.
-     *
-     * @param result the float result of the metric test
-     * @param metric the metric itself to provide its description in the output
-     * @param str1 the first string with which to compare
-     * @param str2 the second string to compare with the first
-     */
-    private static void outputResult(final float result, final AbstractStringMetric metric, final String str1, final String str2) {
-        System.out.println("Using Metric " + metric.getShortDescriptionString() + " on strings \"" + str1 + "\" & \"" + str2 + "\" gives a similarity score of " + result);
+		String message = "Using metric %s on strings \"%s\" & \"%s\" gives a similarity score of %.4f";
+		message = String.format(message, metric.getClass().getSimpleName(),str1, str2, result);
+		System.out.println(message);
 
-    }
+	}
 
-    /**
-     * details the usage of the simple example outputing instructions to the standard output.
-     */
-    private static void usage() {
-        System.out.println("Performs a rudimentary string metric comparison from the arguments given.\n\tArgs:\n\t\t1) String1 to compare\n\t\t2)String2 to compare\n\n\tReturns:\n\t\tA standard output (command line of the similarity metric with the given test strings, for more details of this simple class please see the SimpleExample.java source file)");
-    }
+	private static void checkInput(final String[] args) {
+		if (args.length != 2) {
+			System.out.println("Performs a rudimentary string metric comparison from the arguments given.");
+			System.out.println(String.format("Check the source of %s for more details.", SimpleExample.class.getName()));
+
+			System.out.print("Usage <string> <string>");
+			System.exit(1);
+		}
+	}
+
 }

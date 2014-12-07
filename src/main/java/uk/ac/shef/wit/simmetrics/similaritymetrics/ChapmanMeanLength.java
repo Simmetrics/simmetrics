@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -40,102 +40,41 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import java.io.Serializable;
+import static java.lang.Math.pow;
 
 /**
- * Package: uk.ac.shef.wit.simmetrics.similaritymetrics.chapmanmeanlength
- * Description: chapmanmeanlength implements a simple mean length metric, i.e. strings of the similar lengths are more similar regardless of the content.
-
- * Date: 26-Mar-2004
- * Time: 14:15:54
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+ * Implements the Chapman Mean Length algorithm provides a similarity measure
+ * between two strings from size of the mean length of the vectors - this
+ * approach is supposed to be used to determine which metrics may be best to
+ * apply rather than giving a valid response itself
+ * 
+ * @author Sam Chapman
  * @version 1.2
  */
-public final class ChapmanMeanLength extends AbstractStringMetric implements Serializable {
 
-    /**
-     * constructor - default (empty).
-     */
-    public ChapmanMeanLength() {
-    }
+public final class ChapmanMeanLength extends AbstractStringMetric implements
+		Serializable {
 
-    /**
-     * defines the internal max string length beyond which 1.0 is always returned.
-     */
-    final private static int CHAPMANMEANLENGTHMAXSTRING = 500;
+	/**
+	 * defines the internal max string length beyond which 1.0 is always
+	 * returned.
+	 */
+	final private static int CHAPMANMEANLENGTHMAXSTRING = 500;
 
-    /**
-     * returns the string identifier for the metric.
-     *
-     * @return the string identifier for the metric
-     */
-    public String getShortDescriptionString() {
-        return "ChapmanMeanLength";
-    }
+	public String getLongDescriptionString() {
+		return "Implements the Chapman Mean Length algorithm provides a similarity measure between two strings from size of the mean length of the vectors - this approach is suppossed to be used to determine which metrics may be best to apply rather than giveing a valid responce itself";
+	}
 
-    /**
-     * returns the long string identifier for the metric.
-     *
-     * @return the long string identifier for the metric
-     */
-    public String getLongDescriptionString() {
-        return "Implements the Chapman Mean Length algorithm provides a similarity measure between two strings from size of the mean length of the vectors - this approach is suppossed to be used to determine which metrics may be best to apply rather than giveing a valid responce itself";
-    }
+	public float getSimilarity(final String string1, final String string2) {
+		final float bothLengths = string2.length() + string1.length();
+		if (bothLengths > CHAPMANMEANLENGTHMAXSTRING) {
+			return 1.0f;
+		} else {
+			// FIXME: Integer division? Was this intended?
+			final float oneMinusBothScaled = (CHAPMANMEANLENGTHMAXSTRING - bothLengths) / CHAPMANMEANLENGTHMAXSTRING;
+			return (float) (1.0 - pow(oneMinusBothScaled, 4));
+		}
+	}
 
-    /**
-     * gets the estimated time in milliseconds it takes to perform a similarity timing.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return the estimated time in milliseconds taken to perform the similarity measure
-     */
-    public float getSimilarityTimingEstimated(final String string1, final String string2) {
-        //return 0 as this similarity metric is near to zero milliseconds and is independent
-        return 0;
-    }
 
-    /**
-     * gets a div class xhtml similarity explaining the operation of the metric.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return a div class html section detailing the metric operation.
-     */
-    public String getSimilarityExplained(String string1, String string2) {
-        //todo this should explain the operation of a given comparison
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    /**
-     * gets the similarity of the two strings using ChapmanMeanLength
-     *
-     * this is simply an average of the string lengths between those compared then scaled.
-     *
-     * @param string1
-     * @param string2
-     *
-     * @return a value between 0-1 of the similarity
-     */
-    public float getSimilarity(final String string1, final String string2) {
-        final float bothLengths = string2.length() + string1.length();
-        if (bothLengths > CHAPMANMEANLENGTHMAXSTRING) {
-            return 1.0f;
-        } else {
-            final float oneMinusBothScaled = (CHAPMANMEANLENGTHMAXSTRING - bothLengths) / CHAPMANMEANLENGTHMAXSTRING;
-            return 1.0f - (oneMinusBothScaled * oneMinusBothScaled * oneMinusBothScaled * oneMinusBothScaled);
-        }
-    }
-
-    /**
-     * gets the un-normalised similarity measure of the metric for the given strings.
-     *
-     * @param string1
-     * @param string2
-     *
-     * @return returns the score of the similarity measure (un-normalised)
-     */
-    public float getUnNormalisedSimilarity(String string1, String string2) {
-        return getSimilarity(string1, string2);
-    }
 }

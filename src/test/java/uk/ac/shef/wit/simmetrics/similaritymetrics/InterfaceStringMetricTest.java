@@ -20,6 +20,7 @@ public abstract class InterfaceStringMetricTest {
 
 	}
 
+
 	private static final float DEFAULT_DELTA = 0.0001f;
 	private float delta;
 
@@ -52,6 +53,17 @@ public abstract class InterfaceStringMetricTest {
 			assertEquals(message, t.similarity, actuall, delta);
 		}
 	}
+	
+	@Test
+	public void generateTest() {
+		for (T t : getTests()) {
+			float actuall = metric.getSimilarity(t.string1, t.string2);
+			String message = String.format("new T(%.4ff, \"%s\",\"%s\"),",actuall, t.string1,t.string2 );
+			System.out.println(message);
+		}
+	}
+	
+	
 
 	@Test
 	public void testGetSimilarityExplained() {

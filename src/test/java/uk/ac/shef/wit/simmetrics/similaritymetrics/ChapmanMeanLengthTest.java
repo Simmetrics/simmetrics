@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -39,44 +39,35 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import junit.framework.TestCase;
 
-/**
- * Performs a unit test upon the ChapmanMeanLength string metric.
- *
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
- */
-public class ChapmanMeanLengthTest extends TestCase {
+public class ChapmanMeanLengthTest extends InterfaceStringMetricTest {
 
-    //private method to hold metric test cases
-    private AbstractStringMetric metric;
+  
+	@Override
+	public InterfaceStringMetric getMetric() {
+		return new ChapmanMeanLength();
+	}
 
-    /**
-     * Sets up the test fixture.
-     *
-     * Called before every test case method.
-     */
-    protected void setUp() {
-        metric = new ChapmanMeanLength();
-    }
-
-    /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     */
-    protected void tearDown() {
-        // release objects under test here, if necessary
-    }
-
-    /**
-     * Tests emptying the cart.
-     */
-    public void testGetSimilarity() {
-
-        float result = metric.getSimilarity("Test String1", "Test String2");
-
-        assertEquals(0.17861295f, result);
-    }
+	@Override
+	public T[] getTests() {
+		return new T[] {
+				new T(0.1786f, "test string1","test string2"),
+				new T(0.2193f, "aaa bbb ccc ddd","aaa bbb ccc eee"),
+				new T(0.1074f, "a b c d","a b c e"),
+				new T(0.0926f, "Healed","Sealed"),
+				new T(0.1000f, "Healed","Healthy"),
+				new T(0.0851f, "Healed","Heard"),
+				new T(0.0926f, "Healed","Herded"),
+				new T(0.0776f, "Healed","Help"),
+				new T(0.0776f, "Healed","Sold"),
+				new T(0.0776f, "Healed","Help"),
+				new T(0.2325f, "Sam J Chapman","Samuel John Chapman"),
+				new T(0.1507f, "Sam Chapman","S Chapman"),
+				new T(0.2126f, "John Smith","Samuel John Chapman"),
+				new T(0.1577f, "John Smith","Sam Chapman"),
+				new T(0.1717f, "John Smith","Sam J Chapman"),
+				new T(0.1436f, "John Smith","S Chapman"),
+		};
+	}
 }
 

@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -39,54 +39,59 @@
 
 package uk.ac.shef.wit.simmetrics.wordhandlers;
 
-import java.io.Serializable;
-
 /**
- * Package: uk.ac.shef.wit.simmetrics.api
- * Description: InterfaceTermHandler defines an interface for stop word handlers.
- * Date: 19-Apr-2004
- * Time: 14:16:47
+ * InterfaceTermHandler defines an interface for stop word handlers.
  * 
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+ * @author Sam Chapman
  * @version 1.1
  */
-public interface InterfaceTermHandler extends Serializable {
+public interface InterfaceTermHandler {
 
-    /**
-     * adds a Word to the intewrface.
-     * @param termToAdd the Word to add
-     */
-    public void addWord(String termToAdd);
+	/**
+	 * Adds a Word to the intewrface.
+	 * 
+	 * @param termToAdd
+	 *            the Word to add
+	 */
+	public void addWord(String termToAdd);
 
-    /**
-     * removes the given word from the list.
-     * @param termToRemove the word term to remove
-     */
-    public void removeWord(String termToRemove);
+	/**
+	 * Removes the given word from the list.
+	 * 
+	 * @param termToRemove
+	 *            the word term to remove
+	 */
+	public void removeWord(String termToRemove);
 
-    /**
-     * gets the short description string of the stop word handler used.
-     * @return a short string details the stop word handler used
-     */
-    public String getShortDescriptionString();
+	/**
+	 * Gets the short description string of the stop word handler used.
+	 * 
+	 * @return a short string details the stop word handler used
+	 */
+	@Deprecated
+	public String getShortDescriptionString();
 
-    /**
-     * gets the number of stopwords in the list.
-     * @return the number of stopwords in the list
-     */
-    public int getNumberOfWords();
+	/**
+	 * Gets the number of stopwords in the list.
+	 * 
+	 * @return the number of stopwords in the list
+	 */
+	public int getNumberOfWords();
 
-    /**
-     * isStopWord determines if a given term is a word or not.
-     * @param termToTest the term to test
-     * @return true if a stopword false otherwise.
-     */
-    public boolean isWord(final String termToTest);
+	/**
+	 * Determines if a given term is a word or not.
+	 * 
+	 * @param termToTest
+	 *            the term to test
+	 * @return true if a stopword false otherwise.
+	 */
+	public boolean isWord(final String termToTest);
 
-    /**
-     * gets the words as an output string buffer.
-     * @return a stringBuffer of the words in the handler
-     */
-    public StringBuffer getWordsAsBuffer();
+	/**
+	 * Gets the words as an output string buffer.
+	 * 
+	 * @return a stringBuffer of the words in the handler
+	 */
+	public StringBuffer getWordsAsBuffer();
 
 }

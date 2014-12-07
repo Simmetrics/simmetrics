@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -40,64 +40,40 @@
 package uk.ac.shef.wit.simmetrics.wordhandlers;
 
 /**
- * Package: uk.ac.shef.wit.simmetrics.wordhandlers
- * Description: DummyStopTermHandler implements a dummy stop word handling function whereby no stopwords are considered.
- * Date: 19-Apr-2004
- * Time: 14:25:11
+ * Implements a dummy stop word handling function whereby no stopwords are
+ * considered.
  * 
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+ * @author Sam Chapman
  * @version 1.1
  */
 public final class DummyStopTermHandler implements InterfaceTermHandler {
 
-    /**
-     * adds a word to the intewrface.
-     * @param termToAdd the word to add
-     */
-    public void addWord(final String termToAdd) {
-        //empty call
-    }
+	public void addWord(final String termToAdd) {
+		// Intentionally does nothing.
+	}
 
-    /**
-     * displays the stopWordHandler method.
-     *
-     * @return the stopWordHandler method
-     */
-    public final String getShortDescriptionString() {
-        return "DummyStopTermHandler";
-    }
+	
+	public final String getShortDescriptionString() {
+		return getClass().getSimpleName();
+	}
 
-    /**
-     * removes the given stopword from the list.
-     * @param termToRemove the stopword term to remove
-     */
-    public void removeWord(final String termToRemove) {
-        //empty call
-    }
+	
+	public void removeWord(final String termToRemove) {
+		// Intentionally does nothing.
+	}
 
-    /**
-     * gets the number of stopwords in the list.
-     * @return the number of stopwords in the list
-     */
-    public int getNumberOfWords() {
-        //always zero
-        return 0;
-    }
+	public int getNumberOfWords() {
+		// Always zero
+		return 0;
+	}
 
-    /**
-     * isStopWord determines if a given term is a stop word or not.
-     * @param termToTest the term to test
-     * @return always returns false.
-     */
-    public boolean isWord(final String termToTest) {
-        return false;
-    }
 
-    /**
-     * gets the stopwords as a stringBuffer.
-     * @return an empty StringBuffer
-     */
-    public StringBuffer getWordsAsBuffer() {
-        return new StringBuffer();
-    }
+	public boolean isWord(final String termToTest) {
+		return false;
+	}
+
+
+	public StringBuffer getWordsAsBuffer() {
+		return new StringBuffer();
+	}
 }

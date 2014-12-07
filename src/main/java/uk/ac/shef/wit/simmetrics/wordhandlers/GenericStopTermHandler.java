@@ -1,4 +1,4 @@
-/**
+/*
  * SimMetrics - SimMetrics is a java library of Similarity or Distance
  * Metrics, e.g. Levenshtein Distance, that provide float based similarity
  * measures between String Data. All metrics return consistant measures
@@ -43,69 +43,43 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Package: uk.ac.shef.wit.simmetrics.wordhandlers
- * Description: GenericStopTermHandler implements a generic stopword handler.
- * Date: 19-Apr-2004 Time: 14:22:00
+ * A generic stopword handler. Date: 19-Apr-2004 Time: 14:22:00
  * 
- * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
+ * @author Sam Chapman
  * @version 1.1
  */
 public final class GenericStopTermHandler implements InterfaceTermHandler {
 
-    /**
-     * the wordset the stopword handler uses.
-     */
-    private final Set<String> wordSet = new HashSet<String>();
+	/**
+	 * The word set the stop word handler uses.
+	 */
+	private final Set<String> wordSet = new HashSet<String>();
 
-    /**
-     * adds a stopWord to the intewrface.
-     * @param termToAdd the stopWord to add
-     */
-    public void addWord(final String termToAdd) {
-        wordSet.add(termToAdd);
-    }
+	public void addWord(final String termToAdd) {
+		wordSet.add(termToAdd);
+	}
 
-    /**
-     * displays the stopWordHandler method.
-     *
-     * @return the stopWordHandler method
-     */
-    public final String getShortDescriptionString() {
-        return "GenericStopTermHandler";
-    }
+	@Deprecated
+	public final String getShortDescriptionString() {
+		return getClass().getSimpleName();
+	}
 
-    /**
-     * removes the given stopword from the list.
-     * @param termToRemove the stopword term to remove
-     */
-    public void removeWord(final String termToRemove) {
-        wordSet.remove(termToRemove);
-    }
+	public void removeWord(final String termToRemove) {
+		wordSet.remove(termToRemove);
+	}
 
-    /**
-     * gets the number of stopwords in the list.
-     * @return the number of stopwords in the list
-     */
-    public int getNumberOfWords() {
-        return wordSet.size();
-    }
+	public int getNumberOfWords() {
+		return wordSet.size();
+	}
 
-    /**
-     * isStopWord determines if a given term is a stop word or not.
-     * @param termToTest the term to test
-     * @return true if a stopword false otherwise.
-     */
-    public boolean isWord(final String termToTest) {
-        return wordSet.contains(termToTest);
-    }
+	public boolean isWord(final String termToTest) {
+		return wordSet.contains(termToTest);
+	}
 
-    /**
-     * gets the stopwords as a stringBuffer.
-     * @return an empty StringBuffer
-     */
-    public StringBuffer getWordsAsBuffer() {
-        final StringBuffer outputBuffer = new StringBuffer();
-        outputBuffer.append(wordSet.toArray().toString());
-        return outputBuffer;
-    }
+
+	public StringBuffer getWordsAsBuffer() {
+		final StringBuffer outputBuffer = new StringBuffer();
+		outputBuffer.append(wordSet.toArray().toString());
+		return outputBuffer;
+	}
 }

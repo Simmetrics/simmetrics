@@ -53,8 +53,7 @@ import java.io.Serializable;
  * 
  *
  */
-public final class TokeniserWordQGram extends AbstractTokenizer implements
-		Serializable {
+public final class TokeniserWordQGram extends AbstractTokenizer  {
 
 	private InterfaceTokeniser wordTokenizer;
 	private TokeniserQGram qGramTokenizer;

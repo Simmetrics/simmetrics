@@ -41,11 +41,6 @@ public abstract class InterfaceTokeniserTest {
 	}
 
 	@Test
-	public void testGetDelimiters() {
-		assertNotNull(tokenizer.getDelimiters());
-	}
-
-	@Test
 	public void testGetStopWordHandler() {
 		assertNotNull(tokenizer.getStopWordHandler());
 	}

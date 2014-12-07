@@ -9,7 +9,6 @@ import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
 public abstract class AbstractTokenizer implements InterfaceTokeniser {
 
 	protected InterfaceTermHandler stopWordHandler = new DummyStopTermHandler();
-	private String delimiters = "";
 
 	public InterfaceTermHandler getStopWordHandler() {
 		return stopWordHandler;
@@ -27,9 +26,7 @@ public abstract class AbstractTokenizer implements InterfaceTokeniser {
 		return getClass().getSimpleName();
 	}
 
-	public final String getDelimiters() {
-		return delimiters;
-	}
+
 
 	protected boolean isWord(String term) {
 		return stopWordHandler.isWord(term);

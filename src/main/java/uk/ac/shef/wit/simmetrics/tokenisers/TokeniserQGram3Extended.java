@@ -48,7 +48,7 @@ import java.io.Serializable;
  * @author mpkorstanje
  */
 public final class TokeniserQGram3Extended extends TokeniserQGramExtended
-		implements Serializable {
+		 {
 
 	private static final int Q = 3;
 

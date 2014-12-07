@@ -59,12 +59,7 @@ public interface InterfaceTokeniser {
 	@Deprecated
     public String getShortDescriptionString();
 
-    /**
-     * Displays the delimiters used - (if applicable).
-     *
-     * @return string for the delimiters used - (if applicable) "" otherwise
-     */
-    public String getDelimiters();
+
 
     /**
      * gets the stop word handler used.

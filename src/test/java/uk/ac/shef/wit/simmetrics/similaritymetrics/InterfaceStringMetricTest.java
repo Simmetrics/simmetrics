@@ -42,8 +42,13 @@ public abstract class InterfaceStringMetricTest {
 	@Test
 	public void testGetSimilarity() {
 		for (T t : getTests()) {
-			String message = String.format("\"%s\" vs \"%s\"", t.string1, t.string2);
+			
 			float actuall = metric.getSimilarity(t.string1, t.string2);
+			assertTrue("Similarity must fall within [0.0 - 1.0] range",
+					0.0f <= actuall && actuall <= 1.0f);
+			
+			String message = String.format("\"%s\" vs \"%s\"", t.string1,
+					t.string2);
 			assertEquals(message, t.similarity, actuall, delta);
 		}
 	}
@@ -52,10 +57,11 @@ public abstract class InterfaceStringMetricTest {
 	public void testGetSimilarityExplained() {
 		assertNull(metric.getSimilarityExplained(null, null));
 	}
-	
+
 	@Test
 	public void testGetShortDescriptionString() {
-		assertEquals(metric.getClass().getSimpleName(), metric.getShortDescriptionString());
+		assertEquals(metric.getClass().getSimpleName(),
+				metric.getShortDescriptionString());
 	}
 
 }

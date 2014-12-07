@@ -45,19 +45,22 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
  * @version 1.1
  */
 public abstract class AbstractStringMetric implements InterfaceStringMetric {
-
-	public String getShortDescriptionString(){
+	@Deprecated
+	public String getShortDescriptionString() {
 		return getClass().getSimpleName();
 	};
 
-	public String getLongDescriptionString(){
+	@Deprecated
+	public String getLongDescriptionString() {
 		return null;
 	}
 
-	public  String getSimilarityExplained(String string1, String string2){
+	@Deprecated
+	public String getSimilarityExplained(String string1, String string2) {
 		return null;
 	}
 
+	@Deprecated
 	public final long getSimilarityTimingActual(final String string1,
 			final String string2) {
 		// initialise timing
@@ -123,21 +126,21 @@ public abstract class AbstractStringMetric implements InterfaceStringMetric {
 		return results;
 	}
 
-
 	public float getSimilarityTimingEstimated(final String string1,
-			final String string2){
+			final String string2) {
 		return Float.MAX_VALUE;
 	}
 
-    /**
-     * Gets the un-normalised similarity measure of the metric for the given strings.
-     *
-     * @param string1
-     * @param string2
-     *
-     * @return returns the score of the similarity measure (un-normalised)
-     */
-    public float getUnNormalisedSimilarity(String string1, String string2){
-    	return getSimilarity(string1, string2);
-    }
+	/**
+	 * Gets the un-normalised similarity measure of the metric for the given
+	 * strings.
+	 *
+	 * @param string1
+	 * @param string2
+	 *
+	 * @return returns the score of the similarity measure (un-normalised)
+	 */
+	public float getUnNormalisedSimilarity(String string1, String string2) {
+		return getSimilarity(string1, string2);
+	}
 }

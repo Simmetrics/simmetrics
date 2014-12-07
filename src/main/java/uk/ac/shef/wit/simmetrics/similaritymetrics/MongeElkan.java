@@ -123,14 +123,6 @@ public class MongeElkan extends AbstractStringMetric implements Serializable {
         internalStringMetric = metricToUse;
     }
 
-    /**
-     * returns the string identifier for the metric.
-     *
-     * @return the string identifier for the metric
-     */
-    public String getShortDescriptionString() {
-        return "MongeElkan";
-    }
 
     /**
      * returns the long string identifier for the metric.

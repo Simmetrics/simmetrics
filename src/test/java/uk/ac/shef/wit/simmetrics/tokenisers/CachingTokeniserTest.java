@@ -52,7 +52,7 @@ import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
 
 public class CachingTokeniserTest extends InterfaceTokeniserTest {
 
-	private class Dummy implements InterfaceTokeniser {
+	private class HitCountingTokenizer implements InterfaceTokeniser {
 
 		private Map<String, Integer> arrayHitCount = new HashMap<String, Integer>();
 		private Map<String, Integer> setHitCount = new HashMap<String, Integer>();
@@ -100,12 +100,12 @@ public class CachingTokeniserTest extends InterfaceTokeniserTest {
 		}
 	}
 
-	private Dummy dummy;
+	private HitCountingTokenizer tokenizer;
 
 	@Override
 	protected InterfaceTokeniser getTokenizer() {
-		dummy = new Dummy();
-		return new CachingTokenizer(dummy);
+		tokenizer = new HitCountingTokenizer();
+		return new CachingTokenizer(tokenizer);
 	}
 
 	@Override
@@ -126,19 +126,15 @@ public class CachingTokeniserTest extends InterfaceTokeniserTest {
 	@Override
 	public void testTokenizeToArrayList() {
 		super.testTokenizeToArrayList();
-
-		Assert.assertEquals(new Integer(1), dummy.arrayHitCount.get("ABC"));
-		Assert.assertEquals(new Integer(2), dummy.arrayHitCount.get("CCC"));
-
-		
+		Assert.assertEquals(new Integer(1), tokenizer.arrayHitCount.get("ABC"));
+		Assert.assertEquals(new Integer(2), tokenizer.arrayHitCount.get("CCC"));
 	}
 
 	@Override
 	public void testTokenizeToSet() {
 		super.testTokenizeToSet();
-		Assert.assertEquals(null, dummy.arrayHitCount.get("ABC"));
-		Assert.assertEquals(new Integer(1), dummy.setHitCount.get("ABC"));
-		Assert.assertEquals(new Integer(2), dummy.setHitCount.get("CCC"));
+		Assert.assertEquals(new Integer(1), tokenizer.setHitCount.get("ABC"));
+		Assert.assertEquals(new Integer(2), tokenizer.setHitCount.get("CCC"));
 
 
 	}

@@ -39,20 +39,22 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
  * SubCost5_3_Minus3 implements a cost function as used in Monge Elkan where by
  * an exact match no match or an approximate match whereby a set of characters
- * are in an approximate range for pairings in {dt} {gj} {lr} {mn} {bpv}
- * {aeiou} {,.}
+ * are in an approximate range for pairings in {dt} {gj} {lr} {mn} {bpv} {aeiou}
+ * {,.}
  * 
  * @author Sam Chapman
  * @version 1.1
  */
-public final class SubCost5_3_Minus3 extends AbstractSubstitutionCost 
-		 {
+public final class SubCost5_3_Minus3 extends AbstractSubstitutionCost {
 
 	/**
 	 * return score.
@@ -72,41 +74,27 @@ public final class SubCost5_3_Minus3 extends AbstractSubstitutionCost
 	/**
 	 * approximate charcater set.
 	 */
-	static private final Set<Character>[] approx;
 
 	/**
 	 * approximate match = +3, for pairings in {dt} {gj} {lr} {mn} {bpv} {aeiou}
 	 * {,.}.
 	 */
-	static {
-		approx = new Set[7];
-		approx[0] = new HashSet<Character>();
-		approx[0].add('d');
-		approx[0].add('t');
-		approx[1] = new HashSet<Character>();
-		approx[1].add('g');
-		approx[1].add('j');
-		approx[2] = new HashSet<Character>();
-		approx[2].add('l');
-		approx[2].add('r');
-		approx[3] = new HashSet<Character>();
-		approx[3].add('m');
-		approx[3].add('n');
-		approx[4] = new HashSet<Character>();
-		approx[4].add('b');
-		approx[4].add('p');
-		approx[4].add('v');
-		approx[5] = new HashSet<Character>();
-		approx[5].add('a');
-		approx[5].add('e');
-		approx[5].add('i');
-		approx[5].add('o');
-		approx[5].add('u');
-		approx[6] = new HashSet<Character>();
-		approx[6].add(',');
-		approx[6].add('.');
-	}
+	private static String[] approximates = new String[] { "dtDT", "gjGJ",
+			"lrLR", "mnMN", "bpvBPV", "aeiouAEIOU", ",." };
+	static private final Set<Set<Character>> approx = buildApprox(approximates);
 
+	private static Set<Set<Character>> buildApprox(String[] approximates) {
+		Set<Set<Character>> approx = new HashSet<Set<Character>>();
+		for (String a : approximates) {
+			List<Character> list = new ArrayList<Character>(a.length());
+			for (char c : a.toCharArray()) {
+				list.add(c);
+			}
+			approx.add(new HashSet<Character>(list));
+		}
+
+		return approx;
+	}
 
 	/**
 	 * get cost between characters where d(i,j) = CHAR_EXACT_MATCH_SCORE if i
@@ -137,10 +125,8 @@ public final class SubCost5_3_Minus3 extends AbstractSubstitutionCost
 			return CHAR_EXACT_MATCH_SCORE;
 		} else {
 			// check for approximate match
-			final Character si = Character.toLowerCase(str1
-					.charAt(string1Index));
-			final Character ti = Character.toLowerCase(str2
-					.charAt(string2Index));
+			final Character si = str1.charAt(string1Index);
+			final Character ti = str2.charAt(string2Index);
 			for (Set<Character> aApprox : approx) {
 				if (aApprox.contains(si) && aApprox.contains(ti))
 					return CHAR_APPROX_MATCH_SCORE;
@@ -148,7 +134,6 @@ public final class SubCost5_3_Minus3 extends AbstractSubstitutionCost
 			return CHAR_MISMATCH_MATCH_SCORE;
 		}
 	}
-
 
 	public final float getMaxCost() {
 		return CHAR_EXACT_MATCH_SCORE;

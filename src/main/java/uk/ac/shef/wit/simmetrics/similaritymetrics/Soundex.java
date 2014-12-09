@@ -40,6 +40,9 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
+import uk.ac.shef.wit.simmetrics.simplifier.CaseSimplifier;
+import uk.ac.shef.wit.simmetrics.simplifier.Simplifier;
+import static uk.ac.shef.wit.simmetrics.utils.Math.clamp;
 
 /**
  * Implements the Soundex algorithm providing a similarity measure between two
@@ -48,23 +51,23 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class Soundex extends AbstractStringMetric   {
+public final class Soundex extends AbstractStringMetric {
 
 	private final float ESTIMATEDTIMINGCONST = 0.00052f;
-
-	private final AbstractStringMetric internalStringMetric;
-
 	/**
 	 * Defines the soundex length in characters e.g. S-2433 is 6 long.
 	 */
 	private final static int SOUNDEXLENGTH = 6;
+	private final AbstractStringMetric metric;
+	private final Simplifier soundexSimplifier = new SoundexSimplifier(
+			SOUNDEXLENGTH);
 
 	/**
 	 * Constructs a Soundex metric with a {@link JaroWinkler} metric to compare
 	 * soundex strings.
 	 */
 	public Soundex() {
-		internalStringMetric = new JaroWinkler();
+		this(new JaroWinkler());
 	}
 
 	/**
@@ -75,8 +78,9 @@ public final class Soundex extends AbstractStringMetric   {
 	 *            the metric used to compare two soundex strings
 	 */
 	public Soundex(final AbstractStringMetric metric) {
-		internalStringMetric = metric;
+		this.metric = metric;
 	}
+
 	@Deprecated
 	public String getLongDescriptionString() {
 		return "Implements the Soundex algorithm providing a similarity measure between two soundex codes";
@@ -88,114 +92,109 @@ public final class Soundex extends AbstractStringMetric   {
 		final float str2Length = string2.length();
 		final String testString = "abcdefghijklmnopq";
 		return ((str1Length + str2Length) * ESTIMATEDTIMINGCONST)
-				+ internalStringMetric.getSimilarityTimingEstimated(
+				+ metric.getSimilarityTimingEstimated(
 						testString.substring(0, SOUNDEXLENGTH),
 						testString.substring(0, SOUNDEXLENGTH));
 	}
 
 	public float getSimilarity(final String string1, final String string2) {
-		final String soundex1 = calcSoundEx(string1, SOUNDEXLENGTH);
-		final String soundex2 = calcSoundEx(string2, SOUNDEXLENGTH);
+		final String soundex1 = soundexSimplifier.simplify(string1);
+		final String soundex2 = soundexSimplifier.simplify(string2);
 		// convert into zero to one return using attached string metric to score
 		// comparison
-		return internalStringMetric.getSimilarity(soundex1, soundex2);
+		return metric.getSimilarity(soundex1, soundex2);
 	}
 
 	public float getUnNormalisedSimilarity(String string1, String string2) {
 		// TODO: Why is soundex not calculated here?
-		return internalStringMetric.getUnNormalisedSimilarity(string1, string2);
+		return metric.getUnNormalisedSimilarity(string1, string2);
 	}
 
-	/**
-	 * calculates a soundex code for a given string/name.
-	 *
-	 * @param wordString
-	 * @param soundExLen
-	 *            - the length of the soundex code to create
-	 * @return a soundex code for a given string/name
-	 */
-	private static String calcSoundEx(String wordString, int soundExLen) {
-		String tmpStr;
-		String wordStr;
-		char curChar;
-		char lastChar;
-		final int wsLen;
-		final char firstLetter;
+	private class SoundexSimplifier implements Simplifier {
 
-		// ensure soundexLen is in a valid range
-		if (soundExLen > 10) {
-			soundExLen = 10;
-		}
-		if (soundExLen < 4) {
-			soundExLen = 4;
+		private int soundExLen;
+
+		public SoundexSimplifier(int soundExLen) {
+			// ensure soundexLen is in a valid range
+			this.soundExLen = clamp(4,soundExLen,10);
 		}
 
-		// check for empty input
-		if (wordString.length() == 0) {
-			return ("");
-		}
-
-		// remove case
-		wordString = wordString.toUpperCase();
-
-		/*
-		 * Clean and tidy
+		/**
+		 * calculates a soundex code for a given string/name.
+		 *
+		 * @param wordString
+		 * @param soundExLen
+		 *            - the length of the soundex code to create
+		 * @return a soundex code for a given string/name
 		 */
-		wordStr = wordString;
-		wordStr = wordStr.replaceAll("[^A-Z]", " "); // rpl non-chars w space
-		wordStr = wordStr.replaceAll("\\s+", ""); // remove spaces
-
-		// check for empty input again the previous clean and tidy could of
-		// shrunk it to zero.
-		if (wordStr.length() == 0) {
-			return ("");
-		}
-
-		/*
-		 * The above improvements may change this first letter
-		 */
-		firstLetter = wordStr.charAt(0);
-
-		// uses the assumption that enough valid characters are in the first 4
-		// times the soundex required length
-		if (wordStr.length() > (SOUNDEXLENGTH * 4) + 1) {
-			wordStr = "-" + wordStr.substring(1, SOUNDEXLENGTH * 4);
-		} else {
-			wordStr = "-" + wordStr.substring(1);
-		}
-		// Begin Classic SoundEx
-		// 1 <- B,P,F,V
-		// 2 <- C,S,K,G,J,Q,X,Z
-		// 3 <- D,T
-		// 4 <- L
-		// 5 <- M,N
-		// 6 <- R
-
-		wordStr = wordStr.replaceAll("[AEIOUWH]", "0");
-		wordStr = wordStr.replaceAll("[BPFV]", "1");
-		wordStr = wordStr.replaceAll("[CSKGJQXZ]", "2");
-		wordStr = wordStr.replaceAll("[DT]", "3");
-		wordStr = wordStr.replaceAll("[L]", "4");
-		wordStr = wordStr.replaceAll("[MN]", "5");
-		wordStr = wordStr.replaceAll("[R]", "6");
-
-		// Remove extra equal adjacent digits
-		wsLen = wordStr.length();
-		lastChar = '-';
-		tmpStr = "-"; /* replacing skipped first character */
-		for (int i = 1; i < wsLen; i++) {
-			curChar = wordStr.charAt(i);
-			if (curChar != lastChar) {
-				tmpStr += curChar;
-				lastChar = curChar;
+		public String simplify(String wordString) {
+			
+			// check for empty input
+			if (wordString.isEmpty()) {
+				return "";
 			}
+
+			/*
+			 * Clean and tidy
+			 */
+			String wordStr = wordString;
+			wordStr = wordStr.replaceAll("[^a-zA-Z]", " "); // rpl non-chars whitespace
+			wordStr = wordStr.replaceAll("\\s+", ""); // remove spaces
+
+			// check for empty input again the previous clean and tidy could of
+			// shrunk it to zero.
+			if (wordStr.isEmpty()) {
+				return "";
+			}
+
+			/*
+			 * The above improvements may change this first letter
+			 */
+			final char firstLetter = wordStr.charAt(0);
+
+			// uses the assumption that enough valid characters are in the first
+			// 4
+			// times the soundex required length
+			if (wordStr.length() > (SOUNDEXLENGTH * 4) + 1) {
+				wordStr = "-" + wordStr.substring(1, SOUNDEXLENGTH * 4);
+			} else {
+				wordStr = "-" + wordStr.substring(1);
+			}
+			// Begin Classic SoundEx
+			// 1 <- B,P,F,V
+			// 2 <- C,S,K,G,J,Q,X,Z
+			// 3 <- D,T
+			// 4 <- L
+			// 5 <- M,N
+			// 6 <- R
+
+			wordStr = wordStr.replaceAll("[AaEeIiOoUuWwHh]", "0");
+			wordStr = wordStr.replaceAll("[BbPpFfVv]", "1");
+			wordStr = wordStr.replaceAll("[CcSsKkGgJjQqXxZz]", "2");
+			wordStr = wordStr.replaceAll("[DdTt]", "3");
+			wordStr = wordStr.replaceAll("[Ll]", "4");
+			wordStr = wordStr.replaceAll("[MmNn]", "5");
+			wordStr = wordStr.replaceAll("[Rr]", "6");
+
+			// Remove extra equal adjacent digits
+			int wsLen = wordStr.length();
+			char lastChar = '-';
+			String tmpStr = "-"; /* replacing skipped first character */
+			for (int i = 1; i < wsLen; i++) {
+				char curChar = wordStr.charAt(i);
+				if (curChar != lastChar) {
+					tmpStr += curChar;
+					lastChar = curChar;
+				}
+			}
+			wordStr = tmpStr;
+			wordStr = wordStr.substring(1); /* Drop first letter code */
+			wordStr = wordStr.replaceAll("0", ""); /* remove zeros */
+			wordStr += "000000000000000000"; /* pad with zeros on right */
+			wordStr = firstLetter + "-" + wordStr; /* Add first letter of word */
+			wordStr = wordStr.substring(0, soundExLen); /* size to taste */
+			return (wordStr);
 		}
-		wordStr = tmpStr;
-		wordStr = wordStr.substring(1); /* Drop first letter code */
-		wordStr = wordStr.replaceAll("0", ""); /* remove zeros */
-		wordStr += "000000000000000000"; /* pad with zeros on right */
-		wordStr = firstLetter + "-" + wordStr; /* Add first letter of word */
-		wordStr = wordStr.substring(0, soundExLen); /* size to taste */
-		return (wordStr);
+
 	}
 }

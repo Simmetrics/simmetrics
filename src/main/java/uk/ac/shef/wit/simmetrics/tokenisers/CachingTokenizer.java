@@ -21,19 +21,20 @@ public class CachingTokenizer implements InterfaceTokeniser {
 	}
 
 	private Cache<String, ArrayList<String>> arrayCache = CacheBuilder
-			.newBuilder().initialCapacity(CACHE_SIZE).maximumSize(CACHE_SIZE).build();
+			.newBuilder().initialCapacity(CACHE_SIZE).maximumSize(CACHE_SIZE)
+			.build();
 
 	private Cache<String, Set<String>> setCache = CacheBuilder.newBuilder()
 			.initialCapacity(CACHE_SIZE).maximumSize(CACHE_SIZE).build();
 
 	@Deprecated
 	public String getShortDescriptionString() {
-		return tokenizer.getShortDescriptionString();
+		return getClass().getSimpleName();
 	}
 
 	@Override
 	public String toString() {
-		return tokenizer.toString();
+		return "CachingTokenizer [" + tokenizer + "]";
 	}
 
 	public InterfaceTermHandler getStopWordHandler() {

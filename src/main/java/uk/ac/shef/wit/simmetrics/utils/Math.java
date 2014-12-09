@@ -150,4 +150,8 @@ public abstract class Math {
 	public static int min4(final int w, final int x, final int y, final int z) {
 		return min(min(w, x), min(y, z));
 	}
+
+	public static int clamp(int lower, int x, int upper) {
+		return min(max(lower,x),upper);
+	}
 }

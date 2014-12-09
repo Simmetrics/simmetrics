@@ -7,6 +7,7 @@ SimMetrics is based on the [SimMetrics Library](http://sourceforge.net/projects/
 
 ## Example ##
 
+TOOD:
 
 ## Refactoring & Redesign ##
 
@@ -33,7 +34,9 @@ On top the provided some algorithms may apply their own simplification again. Th
 
 ### Tokenization ###
 
-Some algorithms use n-grams rather then individual characters to calculate string metrics. Often they are agnostic to the exact tokenization process. Some 
+Tokenization cuts up a string into tokens e.g. `[chilperic, ii, son, of, childeric, ii]`. Tokenization can also be done recursively `[ch,hi,il,il,lp,pe,er,ri,ic, ii, so,on, of, ch,hi,il,ld,de,er,ri,ic, ii]`.
+
+Not all algorithms use tokenization but those that do such as SimonWhite, Dice and Jaccard are agnostic towards the exact method. While it eniterely feasible to let each algorithm implements its own features, there is a shared concern with regards to caching. Tokenization is expensive, being able to set a cache in a common manner allows programatic optimization when neccesary.
 
 ## Reduce Clutter ##
 
@@ -51,12 +54,23 @@ Ideally there is only a single method in the interface.
 
 ## Support Caching ##
 
-Simplification and tokenization are complex and expensive operations. When comparing one string against a collection of strings these two operations are done repeatedly for a single string - a common use case when searching for a match. With a simple caching mechnism this overhead can be reduced.
+Simplification and tokenization are complex and expensive operations. When comparing one string against a collection of strings these two operations are done repeatedly for a single string - a common use case when searching for a match. With a simple caching mechnism this overhead can be reduced. Being able to do this programmatically allows these to be inserted when needed.
 
 ## Easy Configuration ##
 
+# Usage #
 
+TODO: KISS Example.
 
+## Tokenizers ##
+TODO: Configure tokenizer
 
+## Simplifiers ##
+TODO: Configure tokenizer, simplifier.
 
+## Caching ##
+TODO: Configure caching. Show provided caching in `StringMetrics`.
 
+## Performance Testing ##
+
+TODO: Show performance test usage.

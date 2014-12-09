@@ -39,7 +39,7 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
+import org.simmetrics.SimplyfingStringMetric;
 
 /**
  * Implements the Jaro algorithm providing a similarity measure between two
@@ -48,25 +48,20 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class Jaro extends AbstractStringMetric   {
-
+public  class Jaro extends SimplyfingStringMetric {
 
 	private final float ESTIMATEDTIMINGCONST = 4.12e-5f;
 
-	public String getLongDescriptionString() {
-		return "Implements the Jaro algorithm providing a similarity measure between two strings allowing character transpositions to a degree";
-	}
 	@Deprecated
 	public float getSimilarityTimingEstimated(final String string1,
 			final String string2) {
-		
+
 		final float str1Length = string1.length();
 		final float str2Length = string2.length();
 		return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
 	}
 
-	
-	public float getSimilarity(final String string1, final String string2) {
+	protected float compareSimplified(final String string1, final String string2) {
 
 		// get half the length of the string rounded up - (this is the distance
 		// used for acceptable transpositions)
@@ -101,12 +96,6 @@ public final class Jaro extends AbstractStringMetric   {
 		return (common1.length() / ((float) string1.length())
 				+ common2.length() / ((float) string2.length()) + (common1
 				.length() - transpositions) / ((float) common1.length())) / 3.0f;
-	}
-
-	public float getUnNormalisedSimilarity(String string1, String string2) {
-		// TODO: should check this is correct (think normal metric is 0-1 scaled
-		// but unsure)
-		return getSimilarity(string1, string2);
 	}
 
 	/**

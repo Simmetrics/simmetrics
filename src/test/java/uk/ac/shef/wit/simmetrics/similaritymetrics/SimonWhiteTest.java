@@ -1,9 +1,12 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-public class SimonWhiteTest extends InterfaceStringMetricTest {
+import org.simmetrics.TokenizingStringMetricTest;
+import org.simmetrics.TokenizingStringMetric;
+
+public class SimonWhiteTest extends TokenizingStringMetricTest {
 
 	@Override
-	public InterfaceStringMetric getMetric() {
+	public TokenizingStringMetric getMetric() {
 		return new SimonWhite();
 	}
 

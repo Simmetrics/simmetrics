@@ -39,15 +39,18 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
+import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 
 import java.util.ArrayList;
 
+import org.simmetrics.SimplyfingStringMetric;
+import org.simmetrics.TokenizingStringMetric;
+
 /**
- * ChapmanOrderedNameCompoundSimilarity tests similarity upon the
- * most similar in terms of token based names where the later names are valued
- * higher than earlier names. Surnames are less flexible.
+ * ChapmanOrderedNameCompoundSimilarity tests similarity upon the most similar
+ * in terms of token based names where the later names are valued higher than
+ * earlier names. Surnames are less flexible.
  *
  * This is intended to provide a better rating for lists of proper names.
  *
@@ -55,55 +58,47 @@ import java.util.ArrayList;
  * @author Sam Chapman, NLP Group, Sheffield Uni, UK
  * 
  */
-public final class ChapmanOrderedNameCompoundSimilarity extends
-		AbstractStringMetric   {
+public class ChapmanOrderedNameCompoundSimilarity extends
+		TokenizingStringMetric {
 
-	private final float ESTIMATEDTIMINGCONST = 0.026571428571428571428571428571429f;
+	private final SimplyfingStringMetric internalStringMetric1 = new Soundex();
 
-	final InterfaceTokeniser tokenizer;
-
-	private final AbstractStringMetric internalStringMetric1 = new Soundex();
-
-	private final AbstractStringMetric internalStringMetric2 = new SmithWaterman();
+	private final SimplyfingStringMetric internalStringMetric2 = new SmithWaterman();
 
 	/**
-	 * Constructs a ChapmanOrderedNameCompoundSimilarity metric with a {@link TokeniserWhitespace}.
+	 * Constructs a ChapmanOrderedNameCompoundSimilarity metric with a
+	 * {@link TokeniserWhitespace}.
 	 */
 	public ChapmanOrderedNameCompoundSimilarity() {
-		this.tokenizer = new TokeniserWhitespace();
+		this(new TokeniserWhitespace());
 	}
 
 	/**
-	 * Constructs a ChapmanOrderedNameCompoundSimilarity metric with the given tokenizer.
+	 * Constructs a ChapmanOrderedNameCompoundSimilarity metric with the given
+	 * tokenizer.
 	 *
 	 * @param tokeniser
 	 *            tokenizer to use
 	 */
-	public ChapmanOrderedNameCompoundSimilarity(
-			final InterfaceTokeniser tokenizer) {
-		this.tokenizer = tokenizer;
-	}
-	@Deprecated
-	public String getLongDescriptionString() {
-		return "Implements the Chapman Ordered Name Compound Similarity algorithm whereby terms are matched and tested against the standard soundex algorithm - this is intended to provide a better rating for lists of proper names.";
+	public ChapmanOrderedNameCompoundSimilarity(final Tokenizer tokenizer) {
+		super(tokenizer);
 	}
 
-	public float getSimilarityTimingEstimated(final String string1,
+	// TODO:
+	// public float getSimilarityTimingEstimated(final String string1,
+	// final String string2) {
+	//
+	// final float str1Tokens = tokenizeToList(string1).size();
+	// final float str2Tokens = tokenizeToList(string2).size();
+	// return (tokenizeToList(string1).size() + tokenizeToList(string2).size())
+	// * ((str1Tokens + str2Tokens) * ESTIMATEDTIMINGCONST);
+	// }
+
+	protected final float compareSimplified(final String string1,
 			final String string2) {
-
-		final float str1Tokens = tokenizer.tokenizeToArrayList(string1).size();
-		final float str2Tokens = tokenizer.tokenizeToArrayList(string2).size();
-		return (tokenizer.tokenizeToArrayList(string1).size() + tokenizer
-				.tokenizeToArrayList(string2).size())
-				* ((str1Tokens + str2Tokens) * ESTIMATEDTIMINGCONST);
-	}
-
-	public final float getSimilarity(final String string1, final String string2) {
 		// split the strings into tokens for comparison
-		final ArrayList<String> str1Tokens = tokenizer
-				.tokenizeToArrayList(string1);
-		final ArrayList<String> str2Tokens = tokenizer
-				.tokenizeToArrayList(string2);
+		final ArrayList<String> str1Tokens = tokenizeToList(string1);
+		final ArrayList<String> str2Tokens = tokenizeToList(string2);
 		int str1TokenNum = str1Tokens.size();
 		int str2TokenNum = str2Tokens.size();
 		int minTokens = Math.min(str1TokenNum, str2TokenNum);
@@ -117,19 +112,11 @@ public final class ChapmanOrderedNameCompoundSimilarity extends
 			final String sToken = str1Tokens.get(str1TokenNum - i);
 			final String tToken = str2Tokens.get(str2TokenNum - i);
 
-			final float found1 = internalStringMetric1.getSimilarity(sToken,
-					tToken);
-			final float found2 = internalStringMetric2.getSimilarity(sToken,
-					tToken);
+			final float found1 = internalStringMetric1.compare(sToken, tToken);
+			final float found2 = internalStringMetric2.compare(sToken, tToken);
 			sumMatches += ((0.5f * (found1 + found2)) * strWeightingAdjustment);
 		}
 		return sumMatches;
-	}
-
-	public float getUnNormalisedSimilarity(String string1, String string2) {
-		// TODO: check this is valid before use mail sam@dcs.shef.ac.uk if
-		// problematic
-		return getSimilarity(string1, string2);
 	}
 
 }

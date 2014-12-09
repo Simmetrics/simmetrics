@@ -39,11 +39,13 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
+import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import org.simmetrics.TokenizingStringMetric;
 
 /**
  * Implements the Overlap Coefficient algorithm providing a similarity measure
@@ -54,18 +56,14 @@ import java.util.Set;
  * 
  * @author Sam Chapman * @version 1.1
  */
-public final class OverlapCoefficient extends AbstractStringMetric 
-		 {
-
-	private final float ESTIMATEDTIMINGCONST = 1.4e-4f;
-
-	private final InterfaceTokeniser tokenizer;
+public final class OverlapCoefficient extends TokenizingStringMetric {
 
 	/**
-	 * Constructs a OverlapCoefficient metric with a {@link TokeniserWhitespace}.
+	 * Constructs a OverlapCoefficient metric with a {@link TokeniserWhitespace}
+	 * .
 	 */
 	public OverlapCoefficient() {
-		this.tokenizer = new TokeniserWhitespace();
+		this(new TokeniserWhitespace());
 	}
 
 	/**
@@ -74,24 +72,21 @@ public final class OverlapCoefficient extends AbstractStringMetric
 	 * @param tokenizer
 	 *            tokenizer to use
 	 */
-	public OverlapCoefficient(final InterfaceTokeniser tokenizer) {
-		this.tokenizer = tokenizer;
-	}
-	@Deprecated
-	public String getLongDescriptionString() {
-		return "Implements the Overlap Coefficient algorithm providing a similarity measure between two string where it is determined to what degree a string is a subset of another";
+	public OverlapCoefficient(final Tokenizer tokenizer) {
+		super(tokenizer);
 	}
 
-	public float getSimilarityTimingEstimated(final String string1,
-			final String string2) {
-		final float str1Tokens = tokenizer.tokenizeToArrayList(string1).size();
-		final float str2Tokens = tokenizer.tokenizeToArrayList(string2).size();
-		return (str1Tokens * str2Tokens) * ESTIMATEDTIMINGCONST;
-	}
+	// TODO:
+	// public float getSimilarityTimingEstimated(final String string1,
+	// final String string2) {
+	// final float str1Tokens = tokenizeToList(string1).size();
+	// final float str2Tokens = tokenizeToList(string2).size();
+	// return (str1Tokens * str2Tokens) * ESTIMATEDTIMINGCONST;
+	// }
 
-	public float getSimilarity(final String string1, final String string2) {
-		final Set<String> str1Tokens = tokenizer.tokenizeToSet(string1);
-		final Set<String> str2Tokens = tokenizer.tokenizeToSet(string2);
+	protected float compareSimplified(final String string1, final String string2) {
+		final Set<String> str1Tokens = tokenizeToSet(string1);
+		final Set<String> str2Tokens = tokenizeToSet(string2);
 
 		final Set<String> allTokens = new HashSet<String>();
 		allTokens.addAll(str1Tokens);

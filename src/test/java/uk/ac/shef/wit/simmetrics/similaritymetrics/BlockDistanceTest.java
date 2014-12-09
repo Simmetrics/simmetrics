@@ -39,10 +39,13 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-public class BlockDistanceTest extends InterfaceStringMetricTest {
+import org.simmetrics.TokenizingStringMetricTest;
+import org.simmetrics.TokenizingStringMetric;
+
+public class BlockDistanceTest extends TokenizingStringMetricTest {
 
 	@Override
-	public InterfaceStringMetric getMetric() {
+	public TokenizingStringMetric getMetric() {
 		return new BlockDistance();
 	}
 

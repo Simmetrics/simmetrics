@@ -39,8 +39,8 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
-import uk.ac.shef.wit.simmetrics.simplifier.CaseSimplifier;
+import org.simmetrics.SimplyfingStringMetric;
+
 import uk.ac.shef.wit.simmetrics.simplifier.Simplifier;
 import static uk.ac.shef.wit.simmetrics.utils.Math.clamp;
 
@@ -51,14 +51,13 @@ import static uk.ac.shef.wit.simmetrics.utils.Math.clamp;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class Soundex extends AbstractStringMetric {
+public  class Soundex extends SimplyfingStringMetric {
 
-	private final float ESTIMATEDTIMINGCONST = 0.00052f;
 	/**
 	 * Defines the soundex length in characters e.g. S-2433 is 6 long.
 	 */
 	private final static int SOUNDEXLENGTH = 6;
-	private final AbstractStringMetric metric;
+	private final SimplyfingStringMetric metric;
 	private final Simplifier soundexSimplifier = new SoundexSimplifier(
 			SOUNDEXLENGTH);
 
@@ -77,37 +76,28 @@ public final class Soundex extends AbstractStringMetric {
 	 * @param metric
 	 *            the metric used to compare two soundex strings
 	 */
-	public Soundex(final AbstractStringMetric metric) {
+	public Soundex(final SimplyfingStringMetric metric) {
 		this.metric = metric;
 	}
 
-	@Deprecated
-	public String getLongDescriptionString() {
-		return "Implements the Soundex algorithm providing a similarity measure between two soundex codes";
-	}
+	// TODO:
+	// public float getSimilarityTimingEstimated(final String string1,
+	// final String string2) {
+	// final float str1Length = string1.length();
+	// final float str2Length = string2.length();
+	// final String testString = "abcdefghijklmnopq";
+	// return ((str1Length + str2Length) * ESTIMATEDTIMINGCONST)
+	// + metric.getSimilarityTimingEstimated(
+	// testString.substring(0, SOUNDEXLENGTH),
+	// testString.substring(0, SOUNDEXLENGTH));
+	// }
 
-	public float getSimilarityTimingEstimated(final String string1,
-			final String string2) {
-		final float str1Length = string1.length();
-		final float str2Length = string2.length();
-		final String testString = "abcdefghijklmnopq";
-		return ((str1Length + str2Length) * ESTIMATEDTIMINGCONST)
-				+ metric.getSimilarityTimingEstimated(
-						testString.substring(0, SOUNDEXLENGTH),
-						testString.substring(0, SOUNDEXLENGTH));
-	}
-
-	public float getSimilarity(final String string1, final String string2) {
+	protected float compareSimplified(final String string1, final String string2) {
 		final String soundex1 = soundexSimplifier.simplify(string1);
 		final String soundex2 = soundexSimplifier.simplify(string2);
 		// convert into zero to one return using attached string metric to score
 		// comparison
-		return metric.getSimilarity(soundex1, soundex2);
-	}
-
-	public float getUnNormalisedSimilarity(String string1, String string2) {
-		// TODO: Why is soundex not calculated here?
-		return metric.getUnNormalisedSimilarity(string1, string2);
+		return metric.compare(soundex1, soundex2);
 	}
 
 	private class SoundexSimplifier implements Simplifier {
@@ -116,7 +106,7 @@ public final class Soundex extends AbstractStringMetric {
 
 		public SoundexSimplifier(int soundExLen) {
 			// ensure soundexLen is in a valid range
-			this.soundExLen = clamp(4,soundExLen,10);
+			this.soundExLen = clamp(4, soundExLen, 10);
 		}
 
 		/**
@@ -128,7 +118,7 @@ public final class Soundex extends AbstractStringMetric {
 		 * @return a soundex code for a given string/name
 		 */
 		public String simplify(String wordString) {
-			
+
 			// check for empty input
 			if (wordString.isEmpty()) {
 				return "";
@@ -138,7 +128,8 @@ public final class Soundex extends AbstractStringMetric {
 			 * Clean and tidy
 			 */
 			String wordStr = wordString;
-			wordStr = wordStr.replaceAll("[^a-zA-Z]", " "); // rpl non-chars whitespace
+			wordStr = wordStr.replaceAll("[^a-zA-Z]", " "); // rpl non-chars
+															// whitespace
 			wordStr = wordStr.replaceAll("\\s+", ""); // remove spaces
 
 			// check for empty input again the previous clean and tidy could of

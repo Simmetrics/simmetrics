@@ -42,7 +42,7 @@ package uk.ac.shef.wit.simmetrics.tokenisers;
 public class TokeniserQGram2ExtendedTest extends InterfaceTokeniserTest {
 
 	@Override
-	protected InterfaceTokeniser getTokenizer() {
+	protected Tokenizer getTokenizer() {
 		return new TokeniserQGram2Extended();
 	}
 

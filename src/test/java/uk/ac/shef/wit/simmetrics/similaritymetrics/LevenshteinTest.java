@@ -39,11 +39,14 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-public class LevenshteinTest extends InterfaceStringMetricTest {
+import org.simmetrics.SimplyfingStringMetric;
+import org.simmetrics.SimplyfingStringMetricTest;
+
+public class LevenshteinTest extends SimplyfingStringMetricTest {
 
 
 	@Override
-	public InterfaceStringMetric getMetric() {
+	public SimplyfingStringMetric getMetric() {
 		return new Levenshtein();
 	}
 	@Override

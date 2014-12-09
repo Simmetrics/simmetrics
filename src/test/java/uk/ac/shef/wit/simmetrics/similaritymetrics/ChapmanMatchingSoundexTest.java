@@ -39,10 +39,13 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-public class ChapmanMatchingSoundexTest extends InterfaceStringMetricTest {
+import org.simmetrics.TokenizingStringMetricTest;
+import org.simmetrics.TokenizingStringMetric;
+
+public class ChapmanMatchingSoundexTest extends TokenizingStringMetricTest {
 
 	@Override
-	public InterfaceStringMetric getMetric() {
+	public TokenizingStringMetric getMetric() {
 		return new ChapmanMatchingSoundex();
 	}
 

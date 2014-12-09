@@ -44,6 +44,8 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.*;
 import java.text.DecimalFormat;
 import java.util.Vector;
 
+import org.simmetrics.StringMetric;
+
 /**
  *
  * Description: uk.ac.shef.wit.simmetrics.TestEstimatedTimes tests the estimated times of string metrics.
@@ -83,7 +85,7 @@ public final class TestEstimatedTimes {
     public static void main(final String[] args) {
 
         //now do metric tests
-        final Vector<InterfaceStringMetric> testMetricVector = new Vector<InterfaceStringMetric>();
+        final Vector<StringMetric> testMetricVector = new Vector<StringMetric>();
         testMetricVector.add(new Levenshtein());
         testMetricVector.add(new NeedlemanWunch());
         testMetricVector.add(new SmithWaterman());
@@ -115,7 +117,7 @@ public final class TestEstimatedTimes {
      * @param metricVector
      * @param args         arguments vector
      */
-    private static void testMethod(final Vector<InterfaceStringMetric> metricVector, final String[] args) {
+    private static void testMethod(final Vector<StringMetric> metricVector, final String[] args) {
 
         System.out.println("Usage: testMethod ");
         System.out.println("AS NO INPUT - running defualt test\n");
@@ -150,16 +152,14 @@ public final class TestEstimatedTimes {
             //iterate through lengths of string to test
             for(int len=1; len<TESTMAXLENGTHTIMINGTEST; len += TESTMAXLENGTHTIMINGSTEPSIZE) {
                 long timeTaken = 0;
-                int iterations = 0;
                 final String input1 = testString.substring(0,len);
                 while(timeTaken < TESTTIMINGMILLISECONDSPERTEST) {
                     timeTaken += metric.getSimilarityTimingActual(input1, input1);
                     //FIXME: Incrementing time taken to deal wtih sub 1ms tests.
                     timeTaken++;
-                    iterations++;
                     metricTests++;
                 }
-                System.out.print(df.format((float)timeTaken/(float)iterations) + "(" + metric.getSimilarityTimingEstimated(input1, input1)+ ")\t");
+//TODO:                System.out.print(df.format((float)timeTaken/(float)iterations) + "(" + metric.getSimilarityTimingEstimated(input1, input1)+ ")\t");
             }
             System.out.print("\t(" + metric.toString() + ") - testsSoFar = " + metricTests + "\n");
         }

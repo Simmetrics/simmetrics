@@ -52,7 +52,7 @@ public final class TokeniserCSVBasic extends AbstractTokenizer {
 
 	private final String delimiters = "[,\n]";
 
-	public final ArrayList<String> tokenizeToArrayList(final String input) {
+	public final ArrayList<String> tokenizeToList(final String input) {
 		final ArrayList<String> returnArrayList = new ArrayList<String>();
 
 		for (String token : input.split(delimiters)) {

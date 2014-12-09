@@ -39,6 +39,8 @@
 
 package uk.ac.shef.wit.simmetrics;
 
+import org.simmetrics.StringMetric;
+
 import uk.ac.shef.wit.simmetrics.similaritymetrics.*;
 
 /**
@@ -64,11 +66,11 @@ public class SimpleExample {
 		final String str2 = args[1];
 
 		// InterfaceStringMetric metric = new Levenshtein();
-		InterfaceStringMetric metric = new CosineSimilarity();
+		StringMetric metric = new CosineSimilarity();
 		// InterfaceStringMetric metric = new EuclideanDistance();
 		// InterfaceStringMetric metric = new MongeElkan();
 
-		final float result = metric.getSimilarity(str1, str2);
+		final float result = metric.compare(str1, str2);
 
 		String message = "Using metric %s on strings \"%s\" & \"%s\" gives a similarity score of %.4f";
 		message = String.format(message, metric.getClass().getSimpleName(),str1, str2, result);

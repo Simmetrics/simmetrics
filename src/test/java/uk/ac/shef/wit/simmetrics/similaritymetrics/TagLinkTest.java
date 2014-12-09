@@ -39,12 +39,15 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
+import org.simmetrics.SimplyfingStringMetric;
+import org.simmetrics.SimplyfingStringMetricTest;
 
 
-public class TagLinkTest extends InterfaceStringMetricTest {
+
+public class TagLinkTest extends SimplyfingStringMetricTest {
 
 	@Override
-	public InterfaceStringMetric getMetric() {
+	public SimplyfingStringMetric getMetric() {
 		return new TagLink();
 	}
 

@@ -39,10 +39,13 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-public class OverlapCoefficientTest extends InterfaceStringMetricTest {
+import org.simmetrics.TokenizingStringMetricTest;
+import org.simmetrics.TokenizingStringMetric;
+
+public class OverlapCoefficientTest extends TokenizingStringMetricTest {
 
 	@Override
-	public InterfaceStringMetric getMetric() {
+	public TokenizingStringMetric getMetric() {
 		return new OverlapCoefficient();
 	}
 

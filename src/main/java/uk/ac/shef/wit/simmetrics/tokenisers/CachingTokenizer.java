@@ -10,14 +10,18 @@ import com.google.common.cache.CacheBuilder;
 
 import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
 
-public class CachingTokenizer implements InterfaceTokeniser {
+public class CachingTokenizer implements Tokenizer {
 
 	private static final int CACHE_SIZE = 2;
 
-	private final InterfaceTokeniser tokenizer;
+	private final Tokenizer tokenizer;
 
-	public CachingTokenizer(InterfaceTokeniser tokenizer) {
+	public CachingTokenizer(Tokenizer tokenizer) {
 		this.tokenizer = tokenizer;
+	}
+	
+	public Tokenizer getTokenizer() {
+		return tokenizer;
 	}
 
 	private Cache<String, ArrayList<String>> arrayCache = CacheBuilder
@@ -27,14 +31,8 @@ public class CachingTokenizer implements InterfaceTokeniser {
 	private Cache<String, Set<String>> setCache = CacheBuilder.newBuilder()
 			.initialCapacity(CACHE_SIZE).maximumSize(CACHE_SIZE).build();
 
-	@Deprecated
-	public String getShortDescriptionString() {
+	public final String toString() {
 		return getClass().getSimpleName();
-	}
-
-	@Override
-	public String toString() {
-		return "CachingTokenizer [" + tokenizer + "]";
 	}
 
 	public InterfaceTermHandler getStopWordHandler() {
@@ -45,12 +43,12 @@ public class CachingTokenizer implements InterfaceTokeniser {
 		tokenizer.setStopWordHandler(stopWordHandler);
 	}
 
-	public ArrayList<String> tokenizeToArrayList(final String input) {
+	public ArrayList<String> tokenizeToList(final String input) {
 		try {
 			return arrayCache.get(input, new Callable<ArrayList<String>>() {
 
 				public ArrayList<String> call() throws Exception {
-					return tokenizer.tokenizeToArrayList(input);
+					return tokenizer.tokenizeToList(input);
 				}
 			});
 		} catch (ExecutionException e) {

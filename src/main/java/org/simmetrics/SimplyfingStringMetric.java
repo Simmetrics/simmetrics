@@ -37,58 +37,45 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package uk.ac.shef.wit.simmetrics.tokenisers;
+package org.simmetrics;
 
-import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
+import uk.ac.shef.wit.simmetrics.simplifier.PassThroughSimplifier;
+import uk.ac.shef.wit.simmetrics.simplifier.Simplifier;
 
-import java.util.Set;
-import java.util.ArrayList;
+public abstract class SimplyfingStringMetric implements StringMetric, Simplifying {
 
-/**
- * 
- * @author Sam Chapman
- * @version 1.1
- */
-public interface InterfaceTokeniser {
+	public SimplyfingStringMetric(Simplifier simplifier) {
+		this.simplifier = simplifier;
+	}
 
-	/**
-	 * Displays the tokenisation method.
-	 *
-	 * @return short description string
-	 */
-	@Deprecated
-	public String getShortDescriptionString();
+	public SimplyfingStringMetric() {
+		// Empty constructor
+	}
 
-	/**
-	 * Gets the stop word handler used.
-	 * 
-	 * @return the stop word handler used
-	 */
-	public InterfaceTermHandler getStopWordHandler();
+	@Override
+	public String toString() {
+		if (simplifier instanceof PassThroughSimplifier) {
+			return getClass().getSimpleName();
+		}
 
-	/**
-	 * Sets the stop word handler used with the handler given.
-	 * 
-	 * @param stopWordHandler
-	 *            the given stop word hanlder
-	 */
-	public void setStopWordHandler(InterfaceTermHandler stopWordHandler);
+		return getClass().getSimpleName() + " [" + simplifier + "]";
+	}
 
-	/**
-	 * Return tokenized version of a string as an ArrayList.
-	 *
-	 * @param input
-	 *
-	 * @return ArrayList tokenized version of a string
-	 */
-	public ArrayList<String> tokenizeToArrayList(String input);
+	private Simplifier simplifier = new PassThroughSimplifier();
 
-	/**
-	 * Return tokenized version of a string as a set.
-	 *
-	 * @param input
-	 *
-	 * @return tokenized version of a string as a set
-	 */
-	public Set<String> tokenizeToSet(String input);
+	public void setSimplifier(Simplifier simplifier) {
+		this.simplifier = simplifier;
+	}
+
+	public Simplifier getSimplifier() {
+		return simplifier;
+	}
+
+	// TODO: Remove final.
+	public final float compare(String a, String b) {
+		return compareSimplified(simplifier.simplify(a), simplifier.simplify(b));
+	}
+
+	protected abstract float compareSimplified(String a, String b);
+
 }

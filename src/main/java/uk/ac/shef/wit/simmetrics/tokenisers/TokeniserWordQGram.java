@@ -46,16 +46,16 @@ import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
 
 /**
  * A QGram Tokeniser for words. A string is broken up into words by a
- * {@link InterfaceTokeniser}. For each word q-grams are made by a
+ * {@link Tokenizer}. For each word q-grams are made by a
  * {@link TokeniserQGram}.
  * 
  * @author mpkorstanje
  * 
  *
  */
-public final class TokeniserWordQGram implements InterfaceTokeniser {
+public final class TokeniserWordQGram implements Tokenizer {
 
-	private InterfaceTokeniser wordTokenizer;
+	private Tokenizer wordTokenizer;
 	private TokeniserQGram qGramTokenizer;
 
 	/**
@@ -77,23 +77,23 @@ public final class TokeniserWordQGram implements InterfaceTokeniser {
 	 * @param qGramTokenizer
 	 *            q-gram tokenizer to use to split words into q grams
 	 */
-	public TokeniserWordQGram(InterfaceTokeniser wordTokenizer,
+	public TokeniserWordQGram(Tokenizer wordTokenizer,
 			TokeniserQGram qGramTokenizer) {
 		super();
 		this.wordTokenizer = wordTokenizer;
 		this.qGramTokenizer = qGramTokenizer;
 	}
 
-	public ArrayList<String> tokenizeToArrayList(final String input) {
+	public ArrayList<String> tokenizeToList(final String input) {
 		final ArrayList<String> returnArrayList = new ArrayList<String>(
 				input.length());
 		final ArrayList<String> words = wordTokenizer
-				.tokenizeToArrayList(input);
+				.tokenizeToList(input);
 
 		// for each word
 		for (String word : words) {
 			// find all qgrams
-			returnArrayList.addAll(qGramTokenizer.tokenizeToArrayList(word));
+			returnArrayList.addAll(qGramTokenizer.tokenizeToList(word));
 
 		}
 
@@ -112,7 +112,7 @@ public final class TokeniserWordQGram implements InterfaceTokeniser {
 		// for each word
 		for (String word : words) {
 			// find all qgrams
-			returnSet.addAll(qGramTokenizer.tokenizeToArrayList(word));
+			returnSet.addAll(qGramTokenizer.tokenizeToList(word));
 		}
 
 		return returnSet;

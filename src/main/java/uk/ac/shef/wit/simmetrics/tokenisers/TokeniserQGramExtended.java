@@ -12,7 +12,7 @@ import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
  * @author mpkorstanje
  *
  */
-public class TokeniserQGramExtended implements InterfaceTokeniser {
+public class TokeniserQGramExtended implements Tokenizer {
 
 	private final char Q_GRAM_START_PADDING = '#';
 	private final char Q_GRAM_END_PADDING = '#';
@@ -44,8 +44,8 @@ public class TokeniserQGramExtended implements InterfaceTokeniser {
 		return tokenizer.getStopWordHandler();
 	}
 
-	public ArrayList<String> tokenizeToArrayList(String input) {
-		return tokenizer.tokenizeToArrayList(startPadding + input + endPadding);
+	public ArrayList<String> tokenizeToList(String input) {
+		return tokenizer.tokenizeToList(startPadding + input + endPadding);
 	}
 
 	public String getShortDescriptionString() {

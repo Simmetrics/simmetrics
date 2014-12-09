@@ -2,6 +2,8 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import java.util.ArrayList;
 
+import org.simmetrics.TokenizingStringMetric;
+
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserQGram2;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWordQGram;
 
@@ -38,32 +40,32 @@ import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWordQGram;
  * 
  * @author Simon White
  */
-public class SimonWhite extends AbstractStringMetric   {
+public class SimonWhite extends TokenizingStringMetric {
 
-	private final float ESTIMATEDTIMINGCONST = 0.00000034457142857142857142857142857146f;
-
-	private final TokeniserWordQGram tokeniserWordQGram = new TokeniserWordQGram(new TokeniserQGram2());
-
-	public float getSimilarityTimingEstimated(String string1, String string2) {
-
-		final float str1Length = string1.length();
-		final float str2Length = string2.length();
-		return (str1Length + str2Length)
-				* ((str1Length + str2Length) * ESTIMATEDTIMINGCONST);
+	public SimonWhite() {
+		super(new TokeniserWordQGram(new TokeniserQGram2()));
 	}
 
-	public float getSimilarity(String string1, String string2) {
-		final ArrayList<String> pairs1 = tokeniserWordQGram
-				.tokenizeToArrayList(string1);
-		final ArrayList<String> pairs2 = tokeniserWordQGram
-				.tokenizeToArrayList(string2);
+	// TODO
+	// public float getSimilarityTimingEstimated(String string1, String string2)
+	// {
+	//
+	// final float str1Length = string1.length();
+	// final float str2Length = string2.length();
+	// return (str1Length + str2Length)
+	// * ((str1Length + str2Length) * ESTIMATEDTIMINGCONST);
+	// }
+
+	protected float compareSimplified(String string1, String string2) {
+		final ArrayList<String> pairs1 = tokenizeToList(string1);
+		final ArrayList<String> pairs2 = tokenizeToList(string2);
 
 		int union = pairs1.size() + pairs2.size();
-		
-		if(union == 0){
+
+		if (union == 0) {
 			return 0.0f;
 		}
-		
+
 		int intersection = 0;
 		for (String pair : pairs1) {
 			if (pairs2.remove(pair)) {
@@ -73,11 +75,6 @@ public class SimonWhite extends AbstractStringMetric   {
 
 		return new Float((2.0 * intersection) / union).floatValue();
 
-	}
-
-	@Override
-	public float getUnNormalisedSimilarity(String string1, String string2) {
-		return getSimilarity(string1, string2);
 	}
 
 }

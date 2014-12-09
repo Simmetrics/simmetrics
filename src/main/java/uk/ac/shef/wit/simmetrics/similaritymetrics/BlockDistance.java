@@ -39,13 +39,17 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
+import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
+
+import org.simmetrics.TokenizingStringMetric;
+
 import static java.lang.Math.abs;
+
 /**
  * Implements the Block distance algorithm whereby vector space block distance
  * between tokens is used to determine a similarity.
@@ -55,18 +59,13 @@ import static java.lang.Math.abs;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class BlockDistance extends AbstractStringMetric 
-		 {
-
-	private final float ESTIMATEDTIMINGCONST = 6.4457142857142857142857142857146e-5f;
-
-	private final InterfaceTokeniser tokeniser;
+public class BlockDistance extends TokenizingStringMetric {
 
 	/**
 	 * Constructs a BlockDistance metric with a {@link TokeniserWhitespace}.
 	 */
 	public BlockDistance() {
-		this.tokeniser = new TokeniserWhitespace();
+		this(new TokeniserWhitespace());
 	}
 
 	/**
@@ -75,47 +74,32 @@ public final class BlockDistance extends AbstractStringMetric
 	 * @param tokeniser
 	 *            tokenizer to use
 	 */
-	public BlockDistance(final InterfaceTokeniser tokeniser) {
-		this.tokeniser = tokeniser;
+	public BlockDistance(final Tokenizer tokenizer) {
+		super(tokenizer);
 	}
 
-	@Override
-	@Deprecated
-	public String getLongDescriptionString() {
-		return "Implements the Block distance algorithm whereby vector space block distance is used to determine a similarity";
-	}
+	// TODO:
+	// @Override
+	// public float getSimilarityTimingEstimated(final String string1,
+	// final String string2) {
+	//
+	// final float str1Tokens = tokeniser.tokenizeToArrayList(string1).size();
+	// final float str2Tokens = tokeniser.tokenizeToArrayList(string2).size();
+	// return (((str1Tokens + str2Tokens) * str1Tokens) + ((str1Tokens +
+	// str2Tokens) * str2Tokens))
+	// * ESTIMATEDTIMINGCONST;
+	// }
 
-	@Override
-	public float getSimilarityTimingEstimated(final String string1,
-			final String string2) {
-
-		final float str1Tokens = tokeniser.tokenizeToArrayList(string1).size();
-		final float str2Tokens = tokeniser.tokenizeToArrayList(string2).size();
-		return (((str1Tokens + str2Tokens) * str1Tokens) + ((str1Tokens + str2Tokens) * str2Tokens))
-				* ESTIMATEDTIMINGCONST;
-	}
-
-	public float getSimilarity(final String string1, final String string2) {
-		final ArrayList<String> str1Tokens = tokeniser
-				.tokenizeToArrayList(string1);
-		final ArrayList<String> str2Tokens = tokeniser
-				.tokenizeToArrayList(string2);
+	protected float compareSimplified(final String string1, final String string2) {
+		final ArrayList<String> str1Tokens = tokenizeToList(string1);
+		final ArrayList<String> str2Tokens = tokenizeToList(string2);
 
 		final float totalPossible = (float) (str1Tokens.size() + str2Tokens
 				.size());
 
-		final float totalDistance = getInnerUnNormalizedSimilarity(str1Tokens, str2Tokens);
+		final float totalDistance = getInnerUnNormalizedSimilarity(str1Tokens,
+				str2Tokens);
 		return (totalPossible - totalDistance) / totalPossible;
-	}
-
-	public float getUnNormalisedSimilarity(final String string1,
-			final String string2) {
-		final ArrayList<String> str1Tokens = tokeniser
-				.tokenizeToArrayList(string1);
-		final ArrayList<String> str2Tokens = tokeniser
-				.tokenizeToArrayList(string2);
-
-		return getInnerUnNormalizedSimilarity(str1Tokens, str2Tokens);
 	}
 
 	private float getInnerUnNormalizedSimilarity(
@@ -139,10 +123,12 @@ public final class BlockDistance extends AbstractStringMetric
 					countInString2++;
 				}
 			}
-			
+
 			totalDistance += abs(countInString1 - countInString2);
 
 		}
 		return totalDistance;
 	}
+
+
 }

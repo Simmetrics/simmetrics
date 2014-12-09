@@ -39,10 +39,13 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
+import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 
 import java.util.ArrayList;
+
+import org.simmetrics.SimplyfingStringMetric;
+import org.simmetrics.TokenizingStringMetric;
 
 /**
  * Implements the Monge Elkan algorithm providing an matching style similarity
@@ -51,13 +54,9 @@ import java.util.ArrayList;
  * @author Sam Chapman
  * @version 1.1
  */
-public class MongeElkan extends AbstractStringMetric   {
+public class MongeElkan extends TokenizingStringMetric {
 
-	private final float ESTIMATEDTIMINGCONST = 0.0344f;
-
-	final InterfaceTokeniser tokeniser;
-
-	private final AbstractStringMetric internalStringMetric;
+	private final SimplyfingStringMetric metric;
 
 	/**
 	 * Constructs a MongeElkan metric with a {@link TokeniserWhitespace} and
@@ -74,7 +73,7 @@ public class MongeElkan extends AbstractStringMetric   {
 	 * @param tokenizer
 	 *            tokenizer to use
 	 */
-	public MongeElkan(final InterfaceTokeniser tokenizer) {
+	public MongeElkan(final Tokenizer tokenizer) {
 		this(tokenizer, new SmithWatermanGotoh());
 	}
 
@@ -86,10 +85,10 @@ public class MongeElkan extends AbstractStringMetric   {
 	 * @param metric
 	 *            metric to use
 	 */
-	public MongeElkan(final InterfaceTokeniser tokenizer,
-			final AbstractStringMetric metric) {
-		this.tokeniser = tokenizer;
-		this.internalStringMetric = metric;
+	public MongeElkan(final Tokenizer tokenizer,
+			final SimplyfingStringMetric metric) {
+		super(tokenizer);
+		this.metric = metric;
 	}
 
 	/**
@@ -99,37 +98,32 @@ public class MongeElkan extends AbstractStringMetric   {
 	 * @param metric
 	 *            metric to use
 	 */
-	public MongeElkan(final AbstractStringMetric metric) {
+	public MongeElkan(final SimplyfingStringMetric metric) {
 		this(new TokeniserWhitespace(), metric);
 	}
-	@Deprecated
 
-	public String getLongDescriptionString() {
-		return "Implements the Monge Elkan algorithm providing an matching style similarity measure between two strings";
-	}
+	// TODO:
+	// public float getSimilarityTimingEstimated(final String string1,
+	// final String string2) {
+	// final float str1Tokens = tokenizeToList(string1).size();
+	// final float str2Tokens = tokenizeToList(string2).size();
+	// return (((str1Tokens + str2Tokens) * str1Tokens) + ((str1Tokens +
+	// str2Tokens) * str2Tokens))
+	// * ESTIMATEDTIMINGCONST;
+	// }
 
-	public float getSimilarityTimingEstimated(final String string1,
-			final String string2) {
-		final float str1Tokens = tokeniser.tokenizeToArrayList(string1).size();
-		final float str2Tokens = tokeniser.tokenizeToArrayList(string2).size();
-		return (((str1Tokens + str2Tokens) * str1Tokens) + ((str1Tokens + str2Tokens) * str2Tokens))
-				* ESTIMATEDTIMINGCONST;
-	}
-
-	public final float getSimilarity(final String string1, final String string2) {
+	protected float compareSimplified(final String string1, final String string2) {
 		// split the strings into tokens for comparison
-		final ArrayList<String> str1Tokens = tokeniser
-				.tokenizeToArrayList(string1);
-		final ArrayList<String> str2Tokens = tokeniser
-				.tokenizeToArrayList(string2);
+		final ArrayList<String> str1Tokens = tokenizeToList(string1);
+		final ArrayList<String> str2Tokens = tokenizeToList(string2);
 
 		float sumMatches = 0.0f;
 		float maxFound;
 		for (Object str1Token : str1Tokens) {
 			maxFound = 0.0f;
 			for (Object str2Token : str2Tokens) {
-				final float found = internalStringMetric.getSimilarity(
-						(String) str1Token, (String) str2Token);
+				final float found = metric.compare((String) str1Token,
+						(String) str2Token);
 				if (found > maxFound) {
 					maxFound = found;
 				}

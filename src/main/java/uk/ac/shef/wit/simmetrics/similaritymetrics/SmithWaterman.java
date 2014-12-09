@@ -39,9 +39,10 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
+import org.simmetrics.SimplyfingStringMetric;
+
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractSubstitutionCost;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost1_Minus2;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
 import static uk.ac.shef.wit.simmetrics.utils.Math.max3;
 import static uk.ac.shef.wit.simmetrics.utils.Math.max4;
 
@@ -51,10 +52,7 @@ import static uk.ac.shef.wit.simmetrics.utils.Math.max4;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class SmithWaterman extends AbstractStringMetric 
-	 {
-
-	private final float ESTIMATEDTIMINGCONST = 1.61e-4f;
+public  class SmithWaterman extends SimplyfingStringMetric {
 
 	private AbstractSubstitutionCost dCostFunc;
 
@@ -111,21 +109,19 @@ public final class SmithWaterman extends AbstractStringMetric
 		// set the cost func
 		dCostFunc = costFunc;
 	}
-	@Deprecated
-	public String getLongDescriptionString() {
-		return "Implements the Smith-Waterman algorithm providing a similarity measure between two string";
-	}
 
-	public float getSimilarityTimingEstimated(final String string1,
-			final String string2) {
 
-		final float str1Length = string1.length();
-		final float str2Length = string2.length();
-		return ((str1Length * str2Length) + str1Length + str2Length)
-				* ESTIMATEDTIMINGCONST;
-	}
+	// TODO
+	// public float getSimilarityTimingEstimated(final String string1,
+	// final String string2) {
+	//
+	// final float str1Length = string1.length();
+	// final float str2Length = string2.length();
+	// return ((str1Length * str2Length) + str1Length + str2Length)
+	// * ESTIMATEDTIMINGCONST;
+	// }
 
-	public float getSimilarity(final String string1, final String string2) {
+	protected float compareSimplified(final String string1, final String string2) {
 		final float smithWaterman = getUnNormalisedSimilarity(string1, string2);
 
 		// normalise into zero to one region from min max possible
@@ -154,7 +150,7 @@ public final class SmithWaterman extends AbstractStringMetric
 	 * @param t
 	 * @return the Smith-Waterman distance for the given strings
 	 */
-	public float getUnNormalisedSimilarity(final String s, final String t) {
+	private float getUnNormalisedSimilarity(final String s, final String t) {
 		final float[][] d; // matrix
 		final int n; // length of s
 		final int m; // length of t
@@ -215,8 +211,8 @@ public final class SmithWaterman extends AbstractStringMetric
 				cost = dCostFunc.getCost(s, i, t, j);
 
 				// find lowest cost at point from three possible
-				d[i][j] = max4(0, d[i - 1][j] - gapCost, d[i][j - 1]
-						- gapCost, d[i - 1][j - 1] + cost);
+				d[i][j] = max4(0, d[i - 1][j] - gapCost, d[i][j - 1] - gapCost,
+						d[i - 1][j - 1] + cost);
 				// update max possible if available
 				if (d[i][j] > maxSoFar) {
 					maxSoFar = d[i][j];

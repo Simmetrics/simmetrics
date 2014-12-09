@@ -39,9 +39,10 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
+import org.simmetrics.SimplyfingStringMetric;
+
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.InterfaceSubstitutionCost;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost01;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
 import static uk.ac.shef.wit.simmetrics.utils.Math.min3;
 
 /**
@@ -51,9 +52,7 @@ import static uk.ac.shef.wit.simmetrics.utils.Math.min3;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class NeedlemanWunch extends AbstractStringMetric {
-
-	private final float ESTIMATEDTIMINGCONST = 1.842e-4f;
+public class NeedlemanWunch extends SimplyfingStringMetric {
 
 	private final InterfaceSubstitutionCost dCostFunc;
 
@@ -99,20 +98,17 @@ public final class NeedlemanWunch extends AbstractStringMetric {
 		this(2.0f, costFunc);
 	}
 
-	@Deprecated
-	public String getLongDescriptionString() {
-		return "Implements the Needleman-Wunch algorithm providing an edit distance based similarity measure between two strings";
-	}
+	// TODO:
+	//
+	// public float getSimilarityTimingEstimated(final String string1,
+	// final String string2) {
+	//
+	// final float str1Length = string1.length();
+	// final float str2Length = string2.length();
+	// return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
+	// }
 
-	public float getSimilarityTimingEstimated(final String string1,
-			final String string2) {
-
-		final float str1Length = string1.length();
-		final float str2Length = string2.length();
-		return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
-	}
-
-	public float getSimilarity(final String string1, final String string2) {
+	protected float compareSimplified(final String string1, final String string2) {
 		float needlemanWunch = getUnNormalisedSimilarity(string1, string2);
 
 		// normalise into zero to one region from min max possible
@@ -143,7 +139,7 @@ public final class NeedlemanWunch extends AbstractStringMetric {
 
 	}
 
-	public float getUnNormalisedSimilarity(final String s, final String t) {
+	private float getUnNormalisedSimilarity(final String s, final String t) {
 		final float[][] d; // matrix
 		final int n; // length of s
 		final int m; // length of t

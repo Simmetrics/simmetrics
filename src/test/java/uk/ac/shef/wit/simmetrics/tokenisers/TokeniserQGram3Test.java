@@ -44,7 +44,7 @@ public class TokeniserQGram3Test extends InterfaceTokeniserTest {
 
 
 	@Override
-	protected InterfaceTokeniser getTokenizer() {
+	protected Tokenizer getTokenizer() {
 		return new TokeniserQGram3();
 	}
 

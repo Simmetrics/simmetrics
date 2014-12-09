@@ -39,10 +39,12 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
+import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 
 import java.util.ArrayList;
+
+import org.simmetrics.TokenizingStringMetric;
 
 /**
  * Implements the Matching Coefficient algorithm providing a similarity measure
@@ -51,18 +53,16 @@ import java.util.ArrayList;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class MatchingCoefficient extends AbstractStringMetric {
+public class MatchingCoefficient extends TokenizingStringMetric {
 
 	private final float ESTIMATEDTIMINGCONST = 2.0e-4f;
-
-	private final InterfaceTokeniser tokenizer;
 
 	/**
 	 * Constructs a MatchingCoefficient metric with a
 	 * {@link TokeniserWhitespace}.
 	 */
 	public MatchingCoefficient() {
-		this.tokenizer = new TokeniserWhitespace();
+		this(new TokeniserWhitespace());
 	}
 
 	/**
@@ -71,41 +71,26 @@ public final class MatchingCoefficient extends AbstractStringMetric {
 	 * @param tokenizer
 	 *            tokenizer to use
 	 */
-	public MatchingCoefficient(final InterfaceTokeniser tokenizer) {
-		this.tokenizer = tokenizer;
-	}
-	@Deprecated
-	public String getLongDescriptionString() {
-		return "Implements the Matching Coefficient algorithm providing a similarity measure between two strings";
+	public MatchingCoefficient(final Tokenizer tokenizer) {
+		super(tokenizer);
 	}
 
 	public float getSimilarityTimingEstimated(final String string1,
 			final String string2) {
 
-		final float str1Tokens = tokenizer.tokenizeToArrayList(string1).size();
-		final float str2Tokens = tokenizer.tokenizeToArrayList(string2).size();
+		final float str1Tokens = tokenizeToList(string1).size();
+		final float str2Tokens = tokenizeToList(string2).size();
 		return (str2Tokens * str1Tokens) * ESTIMATEDTIMINGCONST;
 	}
 
-	public float getSimilarity(final String string1, final String string2) {
-		final ArrayList<String> str1Tokens = tokenizer
-				.tokenizeToArrayList(string1);
-		final ArrayList<String> str2Tokens = tokenizer
-				.tokenizeToArrayList(string2);
+	protected float compareSimplified(final String string1, final String string2) {
+		final ArrayList<String> str1Tokens = tokenizeToList(string1);
+		final ArrayList<String> str2Tokens = tokenizeToList(string2);
 
 		final int totalPossible = Math
 				.max(str1Tokens.size(), str2Tokens.size());
 		return getInnerUnNormalisedSimilarity(str1Tokens, str2Tokens)
 				/ (float) totalPossible;
-	}
-
-	public float getUnNormalisedSimilarity(String string1, String string2) {
-		final ArrayList<String> str1Tokens = tokenizer
-				.tokenizeToArrayList(string1);
-		final ArrayList<String> str2Tokens = tokenizer
-				.tokenizeToArrayList(string2);
-
-		return getInnerUnNormalisedSimilarity(str1Tokens, str2Tokens);
 	}
 
 	private float getInnerUnNormalisedSimilarity(

@@ -12,9 +12,9 @@ import org.junit.Test;
 
 public abstract class InterfaceTokeniserTest {
 
-	private InterfaceTokeniser tokenizer;
+	private Tokenizer tokenizer;
 
-	protected abstract InterfaceTokeniser getTokenizer();
+	protected abstract Tokenizer getTokenizer();
 
 	public abstract T[] getTests();
 
@@ -34,12 +34,6 @@ public abstract class InterfaceTokeniserTest {
 		tokenizer = getTokenizer();
 	}
 
-	@SuppressWarnings("deprecation")
-	@Test
-	public void testGetShortDescriptionString() {
-		assertEquals(tokenizer.getClass().getSimpleName(),tokenizer.getShortDescriptionString());
-	}
-
 	@Test
 	public void testGetStopWordHandler() {
 		assertNotNull(tokenizer.getStopWordHandler());
@@ -53,7 +47,7 @@ public abstract class InterfaceTokeniserTest {
 	@Test
 	public void testTokenizeToArrayList() {
 		for (T t : getTests()) {
-			ArrayList<String> tokens = tokenizer.tokenizeToArrayList(t.string);
+			ArrayList<String> tokens = tokenizer.tokenizeToList(t.string);
 			String message = String.format("for %s expected: %s found: %s",
 					t.string,
 					Arrays.toString(t.tokens),

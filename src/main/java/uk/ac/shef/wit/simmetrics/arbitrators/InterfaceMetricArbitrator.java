@@ -39,9 +39,9 @@
 
 package uk.ac.shef.wit.simmetrics.arbitrators;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.InterfaceStringMetric;
-
 import java.util.ArrayList;
+
+import org.simmetrics.StringMetric;
 
 /**
  * Package: uk.ac.shef.wit.simmetrics.api
@@ -58,67 +58,33 @@ public interface InterfaceMetricArbitrator {
      * gets the arbitration metrics used.
      * @return a vector of InterfaceStringMetric's used in the arbitration
      */
-    public ArrayList<InterfaceStringMetric> getArbitrationMetrics();
+    public ArrayList<StringMetric> getArbitrationMetrics();
 
     /**
      * set arbitration metrics with those given.
      * @param arbitrationMetrics a vector of InterfaceStringMetric's to be used in the arbitration
      */
-    public void setArbitrationMetrics(ArrayList<InterfaceStringMetric> arbitrationMetrics);
+    public void setArbitrationMetrics(ArrayList<StringMetric> arbitrationMetrics);
 
     /**
      * adds an individual arbitration metric.
      * @param arbitrationMetric an InterfaceStringMetric to add to the arbitrated metrics.
      */
-    public void addArbitrationMetric(InterfaceStringMetric arbitrationMetric);
+    public void addArbitrationMetric(StringMetric arbitrationMetric);
 
     /**
      * adds a vector of InterfaceStringMetric's to those used for arbitration.
      * @param arbitrationMetrics a vectro of InterfaceStringMetric's to added to those used for arbitration.
      */
-    public void addArbitrationMetrics(ArrayList<InterfaceStringMetric> arbitrationMetrics);
+    public void addArbitrationMetrics(ArrayList<StringMetric> arbitrationMetrics);
 
     /**
      * removes all arbitration metrics.
      */
     public void clearArbitrationMetrics();
 
-    /**
-     * returns a string of the MetricArbitrator name.
-     *
-     * @return a string of the MetricArbitrator name
-     */
-    public String getShortDescriptionString();
-
-    /**
-     * returns a long string of the MetricArbitrator description.
-     *
-     * @return a long string of the MetricArbitrator description
-     */
-    public String getLongDescriptionString();
-
-    /**
-     * gets the actual time in milliseconds it takes to perform an Arbitration.
-     *
-     * This call takes as long as the underlying metrics to perform so should not be performed in normal circumstances.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return the actual time in milliseconds taken to perform the MetricArbitrator
-     */
-    public long getArbitrationTimingActual(String string1, String string2);
-
-    /**
-     * gets the estimated time in milliseconds it takes to perform the arbitration.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return the estimated time in milliseconds taken to perform the similarity measure
-     */
-    public float getArbitrationTimingEstimated(String string1, String string2);
-
+   
+  
     /**
      * returns an arbitrated value of similarity.
      *

@@ -56,7 +56,7 @@ public class TokeniserQGram extends AbstractTokenizer  {
 		this.q = q;
 	}
 
-	public ArrayList<String> tokenizeToArrayList(final String input) {
+	public ArrayList<String> tokenizeToList(final String input) {
 		final ArrayList<String> ret = new ArrayList<String>();
 
 		for (int i = 0; i < input.length() - q +1; i++) {

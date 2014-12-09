@@ -3,12 +3,12 @@ package uk.ac.shef.wit.simmetrics.simplifier;
 import java.util.ArrayList;
 import java.util.Set;
 
-import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
+import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
 import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
 
-public class SimplifyingTokenizer implements InterfaceTokeniser {
+public class SimplifyingTokenizer implements Tokenizer {
 
-	private InterfaceTokeniser tokenizer;
+	private Tokenizer tokenizer;
 
 	private Simplifier simplifier;
 
@@ -21,14 +21,14 @@ public class SimplifyingTokenizer implements InterfaceTokeniser {
 		this.simplifier = simplifier;
 	}
 	
-	public void setTokenizer(InterfaceTokeniser tokenizer) {
+	public void setTokenizer(Tokenizer tokenizer) {
 		this.tokenizer = tokenizer;
 	}
 	
 	public Simplifier getSimplifier() {
 		return simplifier;
 	}
-	public InterfaceTokeniser getTokenizer() {
+	public Tokenizer getTokenizer() {
 		return tokenizer;
 	}
 
@@ -45,8 +45,8 @@ public class SimplifyingTokenizer implements InterfaceTokeniser {
 		tokenizer.setStopWordHandler(stopWordHandler);
 	}
 
-	public ArrayList<String> tokenizeToArrayList(String input) {
-		return tokenizer.tokenizeToArrayList(simplifier.simplify(input));
+	public ArrayList<String> tokenizeToList(String input) {
+		return tokenizer.tokenizeToList(simplifier.simplify(input));
 	}
 
 	public Set<String> tokenizeToSet(String input) {

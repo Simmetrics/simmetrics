@@ -39,12 +39,14 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
+import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
+
+import org.simmetrics.TokenizingStringMetric;
 
 /**
  * Implements the Jaccard Similarity algorithm providing a similarity measure
@@ -62,18 +64,13 @@ import java.util.ArrayList;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class JaccardSimilarity extends AbstractStringMetric 
-		 {
-
-	private final float ESTIMATEDTIMINGCONST = 1.4e-4f;
-
-	private final InterfaceTokeniser tokenizer;
+public final class JaccardSimilarity extends TokenizingStringMetric {
 
 	/**
 	 * Constructs a JaccardSimilarity metric with a {@link TokeniserWhitespace}.
 	 */
 	public JaccardSimilarity() {
-		this.tokenizer = new TokeniserWhitespace();
+		this(new TokeniserWhitespace());
 	}
 
 	/**
@@ -82,22 +79,19 @@ public final class JaccardSimilarity extends AbstractStringMetric
 	 * @param tokenizer
 	 *            tokenizer to use
 	 */
-	public JaccardSimilarity(final InterfaceTokeniser tokenizer) {
-		this.tokenizer = tokenizer;
-	}
-	@Deprecated
-	public String getLongDescriptionString() {
-		return "Implements the Jaccard Similarity algorithm providing a similarity measure between two strings";
+	public JaccardSimilarity(final Tokenizer tokenizer) {
+		super(tokenizer);
 	}
 
-	public float getSimilarityTimingEstimated(final String string1,
-			final String string2) {
-		final float str1Tokens = tokenizer.tokenizeToArrayList(string1).size();
-		final float str2Tokens = tokenizer.tokenizeToArrayList(string2).size();
-		return (str1Tokens * str2Tokens) * ESTIMATEDTIMINGCONST;
-	}
+	// TODO:
+	// public float getSimilarityTimingEstimated(final String string1,
+	// final String string2) {
+	// final float str1Tokens = tokenizeToList(string1).size();
+	// final float str2Tokens = tokenizeToList(string2).size();
+	// return (str1Tokens * str2Tokens) * ESTIMATEDTIMINGCONST;
+	// }
 
-	public float getSimilarity(final String string1, final String string2) {
+	protected float compareSimplified(final String string1, final String string2) {
 		/*
 		 * Each instance is represented as a Jaccard vector similarity function.
 		 * The Jaccard between two vectors X and Y is
@@ -110,10 +104,8 @@ public final class JaccardSimilarity extends AbstractStringMetric
 		 * This can more easily be described as ( |X & Y| ) / ( | X or Y | )
 		 */
 		// todo this needs checking
-		final ArrayList<String> str1Tokens = tokenizer
-				.tokenizeToArrayList(string1);
-		final ArrayList<String> str2Tokens = tokenizer
-				.tokenizeToArrayList(string2);
+		final ArrayList<String> str1Tokens = tokenizeToList(string1);
+		final ArrayList<String> str2Tokens = tokenizeToList(string2);
 
 		final Set<String> allTokens = new HashSet<String>();
 		allTokens.addAll(str1Tokens);

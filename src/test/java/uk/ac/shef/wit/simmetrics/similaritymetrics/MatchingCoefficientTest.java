@@ -39,11 +39,14 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
+import org.simmetrics.TokenizingStringMetricTest;
+import org.simmetrics.TokenizingStringMetric;
 
-public class MatchingCoefficientTest extends InterfaceStringMetricTest {
+
+public class MatchingCoefficientTest extends TokenizingStringMetricTest {
     
 	@Override
-	public InterfaceStringMetric getMetric() {
+	public TokenizingStringMetric getMetric() {
 		return new MatchingCoefficient();
 	}
 

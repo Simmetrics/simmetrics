@@ -52,10 +52,7 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost5_3_Minu
  * @author Sam Chapman
  * @version 1.1
  */
-public final class SmithWatermanGotoh extends SmithWatermanGotohWindowedAffine
-		  {
-
-	private final float ESTIMATEDTIMINGCONST = 2.2e-5f;
+public  class SmithWatermanGotoh extends SmithWatermanGotohWindowedAffine {
 
 	/**
 	 * constructor - default (empty).
@@ -102,17 +99,15 @@ public final class SmithWatermanGotoh extends SmithWatermanGotohWindowedAffine
 	}
 
 
-	public String getLongDescriptionString() {
-		return "Implements the Smith-Waterman-Gotoh algorithm providing a similarity measure between two string";
-	}
 
-	public float getSimilarityTimingEstimated(final String string1,
-			final String string2) {
-
-		final float str1Length = string1.length();
-		final float str2Length = string2.length();
-		return ((str1Length * str2Length * str1Length) + (str1Length
-				* str2Length * str2Length))
-				* ESTIMATEDTIMINGCONST;
-	}
+	// TODO:
+	// public float getSimilarityTimingEstimated(final String string1,
+	// final String string2) {
+	//
+	// final float str1Length = string1.length();
+	// final float str2Length = string2.length();
+	// return ((str1Length * str2Length * str1Length) + (str1Length
+	// * str2Length * str2Length))
+	// * ESTIMATEDTIMINGCONST;
+	// }
 }

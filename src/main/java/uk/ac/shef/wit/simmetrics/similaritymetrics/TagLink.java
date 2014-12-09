@@ -64,15 +64,18 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
+import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 
 import java.util.*;
 
+import org.simmetrics.SimplyfingStringMetric;
+import org.simmetrics.StringMetric;
+
 /**
  * TagLink inplements a TagLink String Metric.
  */
-public final class TagLink extends AbstractStringMetric   {
+public class TagLink extends SimplyfingStringMetric   {
 
 	/**
 	 * private idfMap contains the IDF weights for each token in the dataset.
@@ -82,21 +85,16 @@ public final class TagLink extends AbstractStringMetric   {
 	 * private characterBasedStringMetric is the method that meassures
 	 * similarity between tokens.
 	 */
-	private InterfaceStringMetric characterBasedStringMetric;
+	private StringMetric characterBasedStringMetric;
 	/**
 	 * private DEFAULT_METRIC is the default method that meassures similarity
 	 * between tokens.
 	 */
-	private static final AbstractStringMetric DEFAULT_METRIC = new TagLinkToken();
+	private static final TagLinkToken DEFAULT_METRIC = new TagLinkToken();
 	/**
 	 * private tokeniser for tokenisation of the query strings.
 	 */
-	private final InterfaceTokeniser tokeniser;
-
-	/**
-	 * a constant for calculating the estimated timing cost.
-	 */
-	private final float ESTIMATEDTIMINGCONST = 0.0006186370597243490f;
+	private final Tokenizer tokeniser;
 
 	/**
 	 * TagLink default constructor. IDF weights are all equally weighted.
@@ -128,7 +126,7 @@ public final class TagLink extends AbstractStringMetric   {
 	 * @param characterBasedStringMetric
 	 *            CharacterBasedStringMetric
 	 */
-	public TagLink(AbstractStringMetric characterBasedStringMetric) {
+	public TagLink(SimplyfingStringMetric characterBasedStringMetric) {
 		this.characterBasedStringMetric = characterBasedStringMetric;
 		tokeniser = new TokeniserWhitespace();
 		// WARNING FROM AUTHOR OF SIMMETRICS
@@ -186,7 +184,7 @@ public final class TagLink extends AbstractStringMetric   {
 	 *            CharacterBasedStringMetric
 	 */
 	public TagLink(String[] dataSetArray,
-			AbstractStringMetric characterBasedStringMetric) {
+			SimplyfingStringMetric characterBasedStringMetric) {
 		this.characterBasedStringMetric = characterBasedStringMetric;
 		tokeniser = new TokeniserWhitespace();
 		this.idfMap = getIDFMap(dataSetArray);
@@ -229,37 +227,25 @@ public final class TagLink extends AbstractStringMetric   {
 		return Math.min(tSize, uSize);
 	}
 
-	/**
-	 * gets the estimated time in milliseconds it takes to perform a similarity
-	 * timing.
-	 *
-	 * @param string1
-	 *            string 1
-	 * @param string2
-	 *            string 2
-	 * @return the estimated time in milliseconds taken to perform the
-	 *         similarity measure
-	 */
-	public float getSimilarityTimingEstimated(final String string1,
-			final String string2) {
-		final float str1Length = string1.length();
-		final float str2Length = string2.length();
-		return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
-	}
+	//TODO:
+//	/**
+//	 * gets the estimated time in milliseconds it takes to perform a similarity
+//	 * timing.
+//	 *
+//	 * @param string1
+//	 *            string 1
+//	 * @param string2
+//	 *            string 2
+//	 * @return the estimated time in milliseconds taken to perform the
+//	 *         similarity measure
+//	 */
+//	public float getSimilarityTimingEstimated(final String string1,
+//			final String string2) {
+//		final float str1Length = string1.length();
+//		final float str2Length = string2.length();
+//		return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
+//	}
 
-	/**
-	 * gets the un-normalised similarity measure of the metric for the given
-	 * strings.
-	 *
-	 * @param T
-	 *            string T to get unnormalised test from
-	 * @param U
-	 *            string U to get unnormalised test from
-	 * @return returns the score of the similarity measure (un-normalised)
-	 */
-	public float getUnNormalisedSimilarity(String T, String U) {
-		return getSimilarity(T, U);
-	}
 
 	/**
 	 * getSimilarity computes the similarity between a pair of strings T and U.
@@ -270,7 +256,7 @@ public final class TagLink extends AbstractStringMetric   {
 	 *            String
 	 * @return float
 	 */
-	public float getSimilarity(String T, String U) {
+	protected float compareSimplified(String T, String U) {
 
 		// WARNING FROM AUTHOR OF SIMMETRICS
 		// this metric is not recomended for fast processing it has been added
@@ -292,8 +278,8 @@ public final class TagLink extends AbstractStringMetric   {
 		if (T.equals(U)) {
 			return 1.0f;
 		} else {
-			ArrayList<String> tArrayList = tokeniser.tokenizeToArrayList(T);
-			ArrayList<String> uArrayList = tokeniser.tokenizeToArrayList(U);
+			ArrayList<String> tArrayList = tokeniser.tokenizeToList(T);
+			ArrayList<String> uArrayList = tokeniser.tokenizeToList(U);
 			String[] tTokens = tArrayList
 					.toArray(new String[tArrayList.size()]), uTokens = uArrayList
 					.toArray(new String[uArrayList.size()]);
@@ -470,7 +456,7 @@ public final class TagLink extends AbstractStringMetric   {
 				} else {
 					String tTok = tTokens[t], uTok = uTokens[u];
 					float innerScore = characterBasedStringMetric
-							.getSimilarity(tTok, uTok);
+							.compare(tTok, uTok);
 					if (innerScore >= 0.0f) {
 						float matched;
 						if (innerScore == 1.0f) {
@@ -553,15 +539,6 @@ public final class TagLink extends AbstractStringMetric   {
 		return IDFArray;
 	}
 
-	/**
-	 * returns the long string identifier for the metric.
-	 *
-	 * @return the long string identifier for the metric
-	 */
-	@Deprecated
-	public String getLongDescriptionString() {
-		return getShortDescriptionString();
-	}
 
 	@Override
 	public String toString() {
@@ -591,7 +568,7 @@ public final class TagLink extends AbstractStringMetric   {
 			HashMap<String, Float> freqMap = new HashMap<String, Float>();
 			String actualRow = dataSetArray[row];
 			ArrayList<String> tokenArrayList = tokeniser
-					.tokenizeToArrayList(actualRow);
+					.tokenizeToList(actualRow);
 			String[] rowArray = tokenArrayList
 					.toArray(new String[tokenArrayList.size()]);
 			for (String actualToken : rowArray) {

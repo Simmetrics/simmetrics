@@ -39,11 +39,14 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
+import org.simmetrics.SimplyfingStringMetric;
+import org.simmetrics.SimplyfingStringMetricTest;
 
-public class SmithWatermanTest extends InterfaceStringMetricTest {
+
+public class SmithWatermanTest extends SimplyfingStringMetricTest {
 
 	@Override
-	public InterfaceStringMetric getMetric() {
+	public SimplyfingStringMetric getMetric() {
 		return new SmithWaterman();
 	}
 

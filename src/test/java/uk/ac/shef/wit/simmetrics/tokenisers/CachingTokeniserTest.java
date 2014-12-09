@@ -52,7 +52,7 @@ import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
 
 public class CachingTokeniserTest extends InterfaceTokeniserTest {
 
-	private class HitCountingTokenizer implements InterfaceTokeniser {
+	private class HitCountingTokenizer implements Tokenizer {
 
 		private Map<String, Integer> arrayHitCount = new HashMap<String, Integer>();
 		private Map<String, Integer> setHitCount = new HashMap<String, Integer>();
@@ -70,7 +70,7 @@ public class CachingTokeniserTest extends InterfaceTokeniserTest {
 			return s;
 		}
 
-		public ArrayList<String> tokenizeToArrayList(String input) {
+		public ArrayList<String> tokenizeToList(String input) {
 			if (!arrayHitCount.containsKey(input)) {
 				arrayHitCount.put(input, 0);
 			}
@@ -90,10 +90,6 @@ public class CachingTokeniserTest extends InterfaceTokeniserTest {
 			return new DummyStopTermHandler();
 		}
 
-		public String getShortDescriptionString() {
-			return getClass().getSimpleName();
-		}
-
 		@Override
 		public String toString() {
 			return getClass().getSimpleName();
@@ -103,7 +99,7 @@ public class CachingTokeniserTest extends InterfaceTokeniserTest {
 	private HitCountingTokenizer tokenizer;
 
 	@Override
-	protected InterfaceTokeniser getTokenizer() {
+	protected Tokenizer getTokenizer() {
 		tokenizer = new HitCountingTokenizer();
 		return new CachingTokenizer(tokenizer);
 	}

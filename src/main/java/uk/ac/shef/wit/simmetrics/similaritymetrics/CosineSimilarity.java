@@ -39,12 +39,14 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
+import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
+
+import org.simmetrics.TokenizingStringMetric;
 
 /**
  * Implements the Cosine Similarity algorithm providing a similarity measure
@@ -54,18 +56,13 @@ import java.util.ArrayList;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class CosineSimilarity extends AbstractStringMetric 
-		 {
-
-	private final float ESTIMATEDTIMINGCONST = 0.00000038337142857142857142857142857142f;
-
-	private final InterfaceTokeniser tokeniser;
+public  class CosineSimilarity extends TokenizingStringMetric {
 
 	/**
 	 * Constructs a CosineSimilarity metric with a {@link TokeniserWhitespace}.
 	 */
 	public CosineSimilarity() {
-		this.tokeniser = new TokeniserWhitespace();
+		this(new TokeniserWhitespace());
 	}
 
 	/**
@@ -74,28 +71,25 @@ public final class CosineSimilarity extends AbstractStringMetric
 	 * @param tokenizer
 	 *            tokenizer to use
 	 */
-	public CosineSimilarity(final InterfaceTokeniser tokenizer) {
-		this.tokeniser = tokenizer;
-	}
-	@Deprecated
-	public String getLongDescriptionString() {
-		return "Implements the Cosine Similarity algorithm providing a similarity measure between two strings from the angular divergence within term based vector space";
+	public CosineSimilarity(final Tokenizer tokenizer) {
+		super(tokenizer);
 	}
 
-	public float getSimilarityTimingEstimated(final String string1,
-			final String string2) {
+	
 
-		final float str1Length = string1.length();
-		final float str2Length = string2.length();
-		return (str1Length + str2Length)
-				* ((str1Length + str2Length) * ESTIMATEDTIMINGCONST);
-	}
+	// TODO:
+	// public float getSimilarityTimingEstimated(final String string1,
+	// final String string2) {
+	//
+	// final float str1Length = string1.length();
+	// final float str2Length = string2.length();
+	// return (str1Length + str2Length)
+	// * ((str1Length + str2Length) * ESTIMATEDTIMINGCONST);
+	// }
 
-	public float getSimilarity(final String string1, final String string2) {
-		final ArrayList<String> str1Tokens = tokeniser
-				.tokenizeToArrayList(string1);
-		final ArrayList<String> str2Tokens = tokeniser
-				.tokenizeToArrayList(string2);
+	protected float compareSimplified(final String string1, final String string2) {
+		final ArrayList<String> str1Tokens = tokenizeToList(string1);
+		final ArrayList<String> str2Tokens = tokenizeToList(string2);
 
 		final Set<String> allTokens = new HashSet<String>();
 		allTokens.addAll(str1Tokens);

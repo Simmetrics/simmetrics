@@ -39,11 +39,13 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
+import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserQGram3Extended;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 
 import java.util.*;
+
+import org.simmetrics.TokenizingStringMetric;
 
 /**
  * Implements the Q Grams Distance algorithm providing a similarity measure
@@ -53,17 +55,13 @@ import java.util.*;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class QGramsDistance extends AbstractStringMetric {
-
-	private final float ESTIMATEDTIMINGCONST = 1.34e-4f;
-
-	private final InterfaceTokeniser tokeniser;
+public  class QGramsDistance extends TokenizingStringMetric {
 
 	/**
 	 * Constructs a QGramsDistance metric with a {@link TokeniserWhitespace}.
 	 */
 	public QGramsDistance() {
-		this.tokeniser = new TokeniserQGram3Extended();
+		this(new TokeniserQGram3Extended());
 	}
 
 	/**
@@ -72,27 +70,22 @@ public final class QGramsDistance extends AbstractStringMetric {
 	 * @param tokenizer
 	 *            tokenizer to use
 	 */
-	public QGramsDistance(final InterfaceTokeniser tokenizer) {
-		this.tokeniser = tokenizer;
-	}
-	@Deprecated
-	public String getLongDescriptionString() {
-		return "Implements the Q Grams Distance algorithm providing a similarity measure between two strings using the qGram approach check matching qGrams/possible matching qGrams";
+	public QGramsDistance(final Tokenizer tokenizer) {
+		super(tokenizer);
 	}
 
-	public float getSimilarityTimingEstimated(final String string1,
-			final String string2) {
+	// TODO:
+	// public float getSimilarityTimingEstimated(final String string1,
+	// final String string2) {
+	//
+	// final float str1Length = string1.length();
+	// final float str2Length = string2.length();
+	// return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
+	// }
 
-		final float str1Length = string1.length();
-		final float str2Length = string2.length();
-		return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
-	}
-
-	public float getSimilarity(final String string1, final String string2) {
-		final ArrayList<String> str1Tokens = tokeniser
-				.tokenizeToArrayList(string1);
-		final ArrayList<String> str2Tokens = tokeniser
-				.tokenizeToArrayList(string2);
+	protected float compareSimplified(final String string1, final String string2) {
+		final ArrayList<String> str1Tokens = tokenizeToList(string1);
+		final ArrayList<String> str2Tokens = tokenizeToList(string2);
 
 		final int maxQGramsMatching = str1Tokens.size() + str2Tokens.size();
 
@@ -105,14 +98,7 @@ public final class QGramsDistance extends AbstractStringMetric {
 		}
 	}
 
-	public float getUnNormalisedSimilarity(String string1, String string2) {
-		final ArrayList<String> str1Tokens = tokeniser
-				.tokenizeToArrayList(string1);
-		final ArrayList<String> str2Tokens = tokeniser
-				.tokenizeToArrayList(string2);
-
-		return getInnerUnNormalizedSimilarity(str1Tokens, str2Tokens);
-	}
+	
 
 	private float getInnerUnNormalizedSimilarity(
 			final ArrayList<String> str1Tokens,

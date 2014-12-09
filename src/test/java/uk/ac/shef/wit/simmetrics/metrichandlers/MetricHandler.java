@@ -39,13 +39,13 @@
 
 package uk.ac.shef.wit.simmetrics.metrichandlers;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.InterfaceStringMetric;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Set;
+
 import org.reflections.Reflections;
+import org.simmetrics.StringMetric;
 
 public class MetricHandler {
 
@@ -53,16 +53,16 @@ public class MetricHandler {
 	 * Gets the metrics available in the uk.ac.shef.wit.simmetrics package.
 	 *
 	 */
-	public static Set<InterfaceStringMetric> getMetricsAvailable() {
+	public static Set<StringMetric> getMetricsAvailable() {
 		Reflections reflections = new Reflections("uk.ac.shef.wit.simmetrics");
 
-		Set<Class<? extends InterfaceStringMetric>> metrics = reflections
-				.getSubTypesOf(InterfaceStringMetric.class);
+		Set<Class<? extends StringMetric>> metrics = reflections
+				.getSubTypesOf(StringMetric.class);
 
-		Set<InterfaceStringMetric> retSet = new HashSet<InterfaceStringMetric>();
+		Set<StringMetric> retSet = new HashSet<StringMetric>();
 		
-		for (Class<? extends InterfaceStringMetric> m : metrics) {
-			InterfaceStringMetric metric = createMetric(m);
+		for (Class<? extends StringMetric> m : metrics) {
+			StringMetric metric = createMetric(m);
 			if (metric != null)
 				retSet.add(metric);
 		}
@@ -78,12 +78,12 @@ public class MetricHandler {
 	 *            the <code>String</code> name of the metric to create
 	 * @return if a valid name the metric otherwise null
 	 */
-	public static InterfaceStringMetric createMetric(
-			Class<? extends InterfaceStringMetric> metric) {
-		InterfaceStringMetric aplugin = null;
+	public static StringMetric createMetric(
+			Class<? extends StringMetric> metric) {
+		StringMetric aplugin = null;
 
 		try {
-			Constructor<? extends InterfaceStringMetric> constructor = metric
+			Constructor<? extends StringMetric> constructor = metric
 					.getConstructor();
 			return constructor.newInstance();
 		} catch (IllegalAccessException e) {

@@ -39,7 +39,8 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
+import org.simmetrics.SimplyfingStringMetric;
+
 import uk.ac.shef.wit.simmetrics.utils.Math;
 
 /**
@@ -50,32 +51,26 @@ import uk.ac.shef.wit.simmetrics.utils.Math;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class JaroWinkler extends AbstractStringMetric {
+public class JaroWinkler extends SimplyfingStringMetric {
 
-	private final float ESTIMATEDTIMINGCONST = 4.342e-5f;
-
-	private final AbstractStringMetric jaro = new Jaro();
+	private final Jaro jaro = new Jaro();
 
 	private static final int MINPREFIXTESTLENGTH = 6;
 
 	private static final float PREFIXADUSTMENTSCALE = 0.1f;
 
-	@Deprecated
-	public String getLongDescriptionString() {
-		return "Implements the Jaro-Winkler algorithm providing a similarity measure between two strings allowing character transpositions to a degree adjusting the weighting for common prefixes";
-	}
+	// TODO:
+	// public float getSimilarityTimingEstimated(final String string1,
+	// final String string2) {
+	//
+	// final float str1Length = string1.length();
+	// final float str2Length = string2.length();
+	// return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
+	// }
 
-	public float getSimilarityTimingEstimated(final String string1,
-			final String string2) {
-
-		final float str1Length = string1.length();
-		final float str2Length = string2.length();
-		return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
-	}
-
-	public float getSimilarity(final String string1, final String string2) {
+	protected float compareSimplified(final String string1, final String string2) {
 		// gets normal Jaro Score
-		final float dist = jaro.getSimilarity(string1, string2);
+		final float dist = jaro.compare(string1, string2);
 
 		// This extension modifies the weights of poorly matching pairs string1,
 		// string2 which share a common prefix

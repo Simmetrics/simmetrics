@@ -39,12 +39,13 @@
 
 package uk.ac.shef.wit.simmetrics;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.InterfaceStringMetric;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.PerformancTestingMetric;
 import uk.ac.shef.wit.simmetrics.metrichandlers.MetricHandler;
 
 import java.text.DecimalFormat;
 import java.util.Set;
+
+import org.simmetrics.StringMetric;
 
 /**
  * Package: n/a Description: uk.ac.shef.wit.simmetrics.TestMetrics implements a
@@ -133,7 +134,7 @@ public final class TestMetrics {
 	 */
 	public static void main(final String[] args) {
 
-		Set<InterfaceStringMetric> metricStrings = MetricHandler
+		Set<StringMetric> metricStrings = MetricHandler
 				.getMetricsAvailable();
 
 		// test metrics
@@ -159,7 +160,7 @@ public final class TestMetrics {
 	 *            arguments vector
 	 */
 	private static void testMethod(
-			final Set<InterfaceStringMetric> metricVector, final String[] args) {
+			final Set<StringMetric> metricVector, final String[] args) {
 
 		boolean useCmdArgs = false;
 		boolean testTimingComplexity = false;
@@ -207,7 +208,7 @@ public final class TestMetrics {
 		final DecimalFormat df = new DecimalFormat("0.00");
 		int metricTests = 0;
 		long totalTime = System.currentTimeMillis();
-		for (InterfaceStringMetric m : metricVector) {
+		for (StringMetric m : metricVector) {
 			final PerformancTestingMetric metric = new PerformancTestingMetric(m);
 			if (testTimingComplexity) {
 				// testing timing
@@ -241,7 +242,7 @@ public final class TestMetrics {
 			} else if (!useCmdArgs) {
 				// testing default input test
 				for (String[] testCase : testCases) {
-					final float result = metric.getSimilarity(testCase[0],
+					final float result = metric.compare(testCase[0],
 							testCase[1]);
 					metricTests++;
 					long timeTaken = 0;
@@ -260,7 +261,7 @@ public final class TestMetrics {
 				}
 			} else {
 				// testing input strings
-				final float result = metric.getSimilarity(args[0], args[1]);
+				final float result = metric.compare(args[0], args[1]);
 				metricTests++;
 				long timeTaken = 0;
 				int iterations = 0;

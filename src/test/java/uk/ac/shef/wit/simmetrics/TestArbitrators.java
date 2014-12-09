@@ -41,12 +41,13 @@ package uk.ac.shef.wit.simmetrics;
 
 import uk.ac.shef.wit.simmetrics.arbitrators.InterfaceMetricArbitrator;
 import uk.ac.shef.wit.simmetrics.arbitrators.MeanMetricArbitrator;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.*;
 import uk.ac.shef.wit.simmetrics.metrichandlers.MetricHandler;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Set;
+
+import org.simmetrics.StringMetric;
 
 /**
  *
@@ -125,12 +126,12 @@ public final class TestArbitrators {
      */
     public static void main(final String[] args) {
 
-        Set<InterfaceStringMetric> metricStrings = MetricHandler.getMetricsAvailable();
+        Set<StringMetric> metricStrings = MetricHandler.getMetricsAvailable();
 
     
 
         final InterfaceMetricArbitrator arbitrator = new MeanMetricArbitrator();
-        arbitrator.setArbitrationMetrics(new ArrayList<InterfaceStringMetric>(metricStrings));
+        arbitrator.setArbitrationMetrics(new ArrayList<StringMetric>(metricStrings));
 
         //test metrics
         testMethod(arbitrator);
@@ -144,7 +145,7 @@ public final class TestArbitrators {
     private static void testMethod(final InterfaceMetricArbitrator arbitrator) {
 
         //first detail test being performed
-        System.out.println("Performing Arbitrartion with: " + arbitrator.getShortDescriptionString());
+        System.out.println("Performing Arbitrartion with: " + arbitrator.toString());
 
         System.out.println("Using the Following Test Cases:");
         for (int i = 0; i < testCases.length; i++) {

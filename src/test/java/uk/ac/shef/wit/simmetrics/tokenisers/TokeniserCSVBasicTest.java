@@ -43,7 +43,7 @@ public class TokeniserCSVBasicTest extends InterfaceTokeniserTest {
 
 
 	@Override
-	protected InterfaceTokeniser getTokenizer() {
+	protected Tokenizer getTokenizer() {
 		return new TokeniserCSVBasic();
 	}
 	@Override

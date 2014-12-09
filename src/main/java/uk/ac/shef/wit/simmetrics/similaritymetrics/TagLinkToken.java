@@ -1,9 +1,12 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import static java.util.Collections.sort;
+
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.ArrayList;
+
+import org.simmetrics.SimplyfingStringMetric;
 
 /**
  * <p>
@@ -35,7 +38,7 @@ import java.util.ArrayList;
  *
  * @version 1.1
  */
-public final class TagLinkToken extends AbstractStringMetric {
+public class TagLinkToken extends SimplyfingStringMetric {
 	private float matched;
 	private float tr;
 	private float tSize;
@@ -43,11 +46,6 @@ public final class TagLinkToken extends AbstractStringMetric {
 	private static final float DEF_TR = 0.3f;
 	private String sA, sB, tokenT;
 	private int largestIndex;
-
-	/**
-	 * a constant for calculating the estimated timing cost.
-	 */
-	private final float ESTIMATEDTIMINGCONST = 0.0001979638591117920f;
 
 	/**
 	 * TagLinkToken default constructor. Instance of this class with parameter
@@ -69,20 +67,6 @@ public final class TagLinkToken extends AbstractStringMetric {
 	}
 
 	/**
-	 * gets the un-normalised similarity measure of the metric for the given
-	 * strings.
-	 *
-	 * @param T
-	 *            string T from which to test
-	 * @param U
-	 *            string U from which to test
-	 * @return returns the score of the similarity measure (un-normalised)
-	 */
-	public float getUnNormalisedSimilarity(String T, String U) {
-		return getSimilarity(T, U);
-	}
-
-	/**
 	 * getSimilarity return the a strng distance value between 0 and 1 of a pair
 	 * of tokens. Where 1 is the maximum similarity.
 	 *
@@ -92,7 +76,7 @@ public final class TagLinkToken extends AbstractStringMetric {
 	 *            String
 	 * @return float
 	 */
-	public float getSimilarity(String T, String U) {
+	protected float compareSimplified(String T, String U) {
 		float score;
 		if (T.equals(U)) {
 			matched = T.length();
@@ -392,23 +376,25 @@ public final class TagLinkToken extends AbstractStringMetric {
 		}
 		return (round / 1000.00f);
 	}
-
-	/**
-	 * gets the estimated time in milliseconds it takes to perform a similarity
-	 * timing.
-	 *
-	 * @param string1
-	 *            string 1
-	 * @param string2
-	 *            string 2
-	 * @return the estimated time in milliseconds taken to perform the
-	 *         similarity measure
-	 */
-	public float getSimilarityTimingEstimated(final String string1,
-			final String string2) {
-		final float str1Length = string1.length();
-		final float str2Length = string2.length();
-		return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
-	}
+	// TODO:
+	//
+	// /**
+	// * gets the estimated time in milliseconds it takes to perform a
+	// similarity
+	// * timing.
+	// *
+	// * @param string1
+	// * string 1
+	// * @param string2
+	// * string 2
+	// * @return the estimated time in milliseconds taken to perform the
+	// * similarity measure
+	// */
+	// public float getSimilarityTimingEstimated(final String string1,
+	// final String string2) {
+	// final float str1Length = string1.length();
+	// final float str2Length = string2.length();
+	// return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
+	// }
 
 }

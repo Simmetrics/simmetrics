@@ -39,10 +39,13 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-public class CosineSimilarityTest extends InterfaceStringMetricTest {
+import org.simmetrics.TokenizingStringMetricTest;
+import org.simmetrics.TokenizingStringMetric;
+
+public class CosineSimilarityTest extends TokenizingStringMetricTest {
 
 	@Override
-	public InterfaceStringMetric getMetric() {
+	public TokenizingStringMetric getMetric() {
 		return new CosineSimilarity();
 	}
 

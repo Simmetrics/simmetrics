@@ -51,7 +51,7 @@ public final class TokeniserWhitespace extends AbstractTokenizer {
 
 	private final String delimiters = "\\s";
 
-	public final ArrayList<String> tokenizeToArrayList(final String input) {
+	public final ArrayList<String> tokenizeToList(final String input) {
 
 		final ArrayList<String> returnArrayList = new ArrayList<String>();
 

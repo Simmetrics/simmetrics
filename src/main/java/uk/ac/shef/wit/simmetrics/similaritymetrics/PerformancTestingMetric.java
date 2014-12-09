@@ -1,41 +1,25 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import org.perf4j.StopWatch;
+import org.simmetrics.StringMetric;
 
-public class PerformancTestingMetric implements InterfaceStringMetric {
+public class PerformancTestingMetric implements StringMetric {
 
-	private final InterfaceStringMetric metric;
+	private final StringMetric metric;
 
-	public PerformancTestingMetric(InterfaceStringMetric metric) {
+	public PerformancTestingMetric(StringMetric metric) {
 		this.metric = metric;
-	}
-	@Deprecated
-	public String getShortDescriptionString() {
-		return metric.getShortDescriptionString();
-	}
-	@Deprecated
-	public String getLongDescriptionString() {
-		return metric.getLongDescriptionString();
 	}
 
 	public long getSimilarityTimingActual(String string1, String string2) {
 		StopWatch stopWatch = new StopWatch();
-		metric.getSimilarity(string1, string2);
+		metric.compare(string1, string2);
 		return stopWatch.getElapsedTime();
 	}
 
 	
-	public float getSimilarityTimingEstimated(String string1, String string2) {
-		return metric.getSimilarityTimingEstimated(string1, string2);
-	}
-
-	public float getSimilarity(String string1, String string2) {
-		return metric.getSimilarity(string1, string2);
-	}
-
-	@Deprecated
-	public String getSimilarityExplained(String string1, String string2) {
-		return metric.getSimilarityExplained(string1, string2);
+	public float compare(String string1, String string2) {
+		return metric.compare(string1, string2);
 	}
 	
 	@Override

@@ -39,6 +39,8 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
+import org.simmetrics.SimplyfingStringMetric;
+
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractSubstitutionCost;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost01;
 import uk.ac.shef.wit.simmetrics.utils.Math;
@@ -50,26 +52,20 @@ import uk.ac.shef.wit.simmetrics.utils.Math;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class Levenshtein extends AbstractStringMetric 
-		 {
-
-	private final float ESTIMATEDTIMINGCONST = 1.8e-4f;
+public  class Levenshtein extends SimplyfingStringMetric {
 
 	private final AbstractSubstitutionCost dCostFunc = new SubCost01();
-	@Deprecated
-	public String getLongDescriptionString() {
-		return "Implements the basic Levenshtein algorithm providing a similarity measure between two strings";
-	}
 
-	public float getSimilarityTimingEstimated(final String string1,
-			final String string2) {
 
-		final float str1Length = string1.length();
-		final float str2Length = string2.length();
-		return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
-	}
+//	public float getSimilarityTimingEstimated(final String string1,
+//			final String string2) {
+//
+//		final float str1Length = string1.length();
+//		final float str2Length = string2.length();
+//		return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
+//	}
 
-	public float getSimilarity(final String string1, final String string2) {
+	protected float compareSimplified(final String string1, final String string2) {
 		final float levensteinDistance = getUnNormalisedSimilarity(string1,
 				string2);
 		// convert into zero to one return
@@ -90,7 +86,7 @@ public final class Levenshtein extends AbstractStringMetric
 
 	}
 
-	public float getUnNormalisedSimilarity(final String s, final String t) {
+	private float getUnNormalisedSimilarity(final String s, final String t) {
 
 		/*
 		 * The levenstein distance function:

@@ -39,7 +39,7 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
+import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
 
 /**
  * Implements the Chapman Matching Soundex algorithm whereby terms are matched
@@ -50,9 +50,7 @@ import uk.ac.shef.wit.simmetrics.tokenisers.InterfaceTokeniser;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class ChapmanMatchingSoundex extends MongeElkan {
-	private final float ESTIMATEDTIMINGCONST = 0.026571428571428571428571428571429f;
-
+public  class ChapmanMatchingSoundex extends MongeElkan {
 	/**
 	 * Constructs a ChapmanMatchingSoundex metric with a {@link Soundex} metric.
 	 */
@@ -67,22 +65,19 @@ public final class ChapmanMatchingSoundex extends MongeElkan {
 	 * @param tokenizer
 	 *            the tokenizer to use
 	 */
-	public ChapmanMatchingSoundex(final InterfaceTokeniser tokenizer) {
+	public ChapmanMatchingSoundex(final Tokenizer tokenizer) {
 		super(tokenizer, new Soundex());
 	}
 
-	public String getLongDescriptionString() {
-		return "Implements the Chapman Matching Soundex algorithm whereby terms are matched and tested against the standard soundex algorithm - this is intended to provide a better rating for lists of proper names.";
-	}
-	@Deprecated
-
-	public float getSimilarityTimingEstimated(final String string1,
-			final String string2) {
-
-		final float str1Tokens = tokeniser.tokenizeToArrayList(string1).size();
-		final float str2Tokens = tokeniser.tokenizeToArrayList(string2).size();
-		return (tokeniser.tokenizeToArrayList(string1).size() + tokeniser
-				.tokenizeToArrayList(string2).size())
-				* ((str1Tokens + str2Tokens) * ESTIMATEDTIMINGCONST);
-	}
+	// TODO:
+	// @Deprecated
+	// public float getSimilarityTimingEstimated(final String string1,
+	// final String string2) {
+	//
+	// final float str1Tokens = tokeniser.tokenizeToList(string1).size();
+	// final float str2Tokens = tokeniser.tokenizeToList(string2).size();
+	// return (tokeniser.tokenizeToList(string1).size() + tokeniser
+	// .tokenizeToList(string2).size())
+	// * ((str1Tokens + str2Tokens) * ESTIMATEDTIMINGCONST);
+	// }
 }

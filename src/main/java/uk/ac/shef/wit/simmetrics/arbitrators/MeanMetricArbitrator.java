@@ -39,9 +39,9 @@
 
 package uk.ac.shef.wit.simmetrics.arbitrators;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.InterfaceStringMetric;
-
 import java.util.ArrayList;
+
+import org.simmetrics.StringMetric;
 
 /**
  * Package: uk.ac.shef.wit.simmetrics.arbitrators
@@ -57,14 +57,14 @@ public final class MeanMetricArbitrator implements InterfaceMetricArbitrator  {
     /**
      * private vector of InterfaceStringMetric's used in the arbitration. 
      */
-    private ArrayList<InterfaceStringMetric> metricsForArbitration = new ArrayList<InterfaceStringMetric>();
+    private ArrayList<StringMetric> metricsForArbitration = new ArrayList<StringMetric>();
 
     /**
      * gets the arbitration metrics used.
      *
      * @return a vector of InterfaceStringMetric's used in the arbitration
      */
-    public ArrayList<InterfaceStringMetric> getArbitrationMetrics() {
+    public ArrayList<StringMetric> getArbitrationMetrics() {
         return metricsForArbitration;
     }
 
@@ -75,7 +75,7 @@ public final class MeanMetricArbitrator implements InterfaceMetricArbitrator  {
      *
      * NB this does not perform any error checking so make sure the vector contains the correct type.
      */
-    public void setArbitrationMetrics(final ArrayList<InterfaceStringMetric> arbitrationMetrics) {
+    public void setArbitrationMetrics(final ArrayList<StringMetric> arbitrationMetrics) {
         metricsForArbitration = arbitrationMetrics;
     }
 
@@ -84,7 +84,7 @@ public final class MeanMetricArbitrator implements InterfaceMetricArbitrator  {
      *
      * @param arbitrationMetric an InterfaceStringMetric to add to the arbitrated metrics.
      */
-    public void addArbitrationMetric(final InterfaceStringMetric arbitrationMetric) {
+    public void addArbitrationMetric(final StringMetric arbitrationMetric) {
         metricsForArbitration.add(arbitrationMetric);
     }
 
@@ -95,7 +95,7 @@ public final class MeanMetricArbitrator implements InterfaceMetricArbitrator  {
      *
      * NB this does not perform any error checking so make sure the vector contains the correct type.
      */
-    public void addArbitrationMetrics(final ArrayList<InterfaceStringMetric> arbitrationMetrics) {
+    public void addArbitrationMetrics(final ArrayList<StringMetric> arbitrationMetrics) {
         metricsForArbitration.addAll(arbitrationMetrics);
     }
 
@@ -144,22 +144,22 @@ public final class MeanMetricArbitrator implements InterfaceMetricArbitrator  {
         //output time taken
         return timeAfter - timeBefore;
     }
-
-    /**
-     * gets the estimated time in milliseconds it takes to perform the arbitration.
-     *
-     * @param string1 string 1
-     * @param string2 string 2
-     *
-     * @return the estimated time in milliseconds taken to perform the similarity measure
-     */
-    public float getArbitrationTimingEstimated(final String string1, final String string2) {
-        float estimatedTime = 0.0f;
-        for (Object aMetricsForArbitration : metricsForArbitration) {
-            estimatedTime += ((InterfaceStringMetric) aMetricsForArbitration).getSimilarityTimingEstimated(string1, string2);
-        }
-        return estimatedTime;
-    }
+// TODO:
+//    /**
+//     * gets the estimated time in milliseconds it takes to perform the arbitration.
+//     *
+//     * @param string1 string 1
+//     * @param string2 string 2
+//     *
+//     * @return the estimated time in milliseconds taken to perform the similarity measure
+//     */
+//    public float getArbitrationTimingEstimated(final String string1, final String string2) {
+//        float estimatedTime = 0.0f;
+//        for (Object aMetricsForArbitration : metricsForArbitration) {
+//            estimatedTime += ((InterfaceStringMetric) aMetricsForArbitration).getSimilarityTimingEstimated(string1, string2);
+//        }
+//        return estimatedTime;
+//    }
 
     /**
      * returns an arbitrated value of similarity.
@@ -175,7 +175,7 @@ public final class MeanMetricArbitrator implements InterfaceMetricArbitrator  {
             return score;
         } else {
             for (Object aMetricsForArbitration : metricsForArbitration) {
-                score += ((InterfaceStringMetric) aMetricsForArbitration).getSimilarity(string1, string2);
+                score += ((StringMetric) aMetricsForArbitration).compare(string1, string2);
             }
             return score / metricsForArbitration.size();
         }

@@ -40,7 +40,7 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
-import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
+import uk.ac.shef.wit.simmetrics.tokenisers.WhitespaceTokenizer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -59,11 +59,11 @@ import org.simmetrics.TokenizingStringMetric;
 public final class OverlapCoefficient extends TokenizingStringMetric {
 
 	/**
-	 * Constructs a OverlapCoefficient metric with a {@link TokeniserWhitespace}
+	 * Constructs a OverlapCoefficient metric with a {@link WhitespaceTokenizer}
 	 * .
 	 */
 	public OverlapCoefficient() {
-		this(new TokeniserWhitespace());
+		this(new WhitespaceTokenizer());
 	}
 
 	/**

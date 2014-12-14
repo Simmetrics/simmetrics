@@ -40,7 +40,7 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
-import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
+import uk.ac.shef.wit.simmetrics.tokenisers.WhitespaceTokenizer;
 
 import java.util.ArrayList;
 
@@ -59,10 +59,10 @@ public class MatchingCoefficient extends TokenizingStringMetric {
 
 	/**
 	 * Constructs a MatchingCoefficient metric with a
-	 * {@link TokeniserWhitespace}.
+	 * {@link WhitespaceTokenizer}.
 	 */
 	public MatchingCoefficient() {
-		this(new TokeniserWhitespace());
+		this(new WhitespaceTokenizer());
 	}
 
 	/**

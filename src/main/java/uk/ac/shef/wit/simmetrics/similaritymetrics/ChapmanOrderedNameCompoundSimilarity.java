@@ -40,7 +40,7 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
-import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
+import uk.ac.shef.wit.simmetrics.tokenisers.WhitespaceTokenizer;
 
 import java.util.ArrayList;
 
@@ -67,10 +67,10 @@ public class ChapmanOrderedNameCompoundSimilarity extends
 
 	/**
 	 * Constructs a ChapmanOrderedNameCompoundSimilarity metric with a
-	 * {@link TokeniserWhitespace}.
+	 * {@link WhitespaceTokenizer}.
 	 */
 	public ChapmanOrderedNameCompoundSimilarity() {
-		this(new TokeniserWhitespace());
+		this(new WhitespaceTokenizer());
 	}
 
 	/**

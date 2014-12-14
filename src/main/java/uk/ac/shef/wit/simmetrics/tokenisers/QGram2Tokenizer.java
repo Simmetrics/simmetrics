@@ -39,22 +39,18 @@
 
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
-public class TokeniserQGram3ExtendedTest extends InterfaceTokeniserTest {
+/**
+ * Basic Q-Gram tokenizer for a Q of 2 .
+ * 
+ * @author mpkorstanje
+ *
+ */
+public final class QGram2Tokenizer extends QGramTokenizer {
 
-	@Override
-	protected Tokenizer getTokenizer() {
-		return new TokeniserQGram3Extended();
+	private static final int Q = 2;
+
+	public QGram2Tokenizer() {
+		super(Q);
 	}
 
-	@Override
-	public T[] getTests() {
-
-		return new T[] {
-				new T("12345678", 
-						"##1", "#12", "123", "234", "345", "456","567", "678", "78#", "8##"),
-						new T("123123", 
-								"##1", "#12", "123", "231", "312", "123","23#", "3##"),
-								
-		};
-	}
 }

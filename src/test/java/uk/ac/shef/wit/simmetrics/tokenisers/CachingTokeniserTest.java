@@ -50,7 +50,7 @@ import org.junit.Assert;
 import uk.ac.shef.wit.simmetrics.wordhandlers.DummyStopTermHandler;
 import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
 
-public class CachingTokeniserTest extends InterfaceTokeniserTest {
+public class CachingTokeniserTest extends TokeniserTest {
 
 	private class HitCountingTokenizer implements Tokenizer {
 

@@ -39,18 +39,34 @@
 
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
+
+import java.util.ArrayList;
+
 /**
- * Basic Q-Gram tokenizer for a Q of 2 .
+ * Basic Q-Gram tokenizer for a variable Q.
  * 
  * @author mpkorstanje
  *
  */
-public final class TokeniserQGram2 extends TokeniserQGram {
+public class QGramTokenizer extends AbstractTokenizer  {
 
-	private static final int Q = 2;
+	private final int q;
+	
+	public QGramTokenizer(int q) {
+		this.q = q;
+	}
 
-	public TokeniserQGram2() {
-		super(Q);
+	public ArrayList<String> tokenizeToList(final String input) {
+		final ArrayList<String> ret = new ArrayList<String>();
+
+		for (int i = 0; i < input.length() - q +1; i++) {
+			final String term = input.substring(i, i + q);
+			if (!isWord(term)) {
+				ret.add(term);
+			}
+		}
+
+		return ret;
 	}
 
 }

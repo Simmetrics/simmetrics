@@ -65,7 +65,7 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
-import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
+import uk.ac.shef.wit.simmetrics.tokenisers.WhitespaceTokenizer;
 
 import java.util.*;
 
@@ -128,7 +128,7 @@ public class TagLink extends SimplyfingStringMetric   {
 	 */
 	public TagLink(SimplyfingStringMetric characterBasedStringMetric) {
 		this.characterBasedStringMetric = characterBasedStringMetric;
-		tokeniser = new TokeniserWhitespace();
+		tokeniser = new WhitespaceTokenizer();
 		// WARNING FROM AUTHOR OF SIMMETRICS
 		// this metric is not recomended for fast processing it has been added
 		// by a third party into the library and from the source is an extremely
@@ -186,7 +186,7 @@ public class TagLink extends SimplyfingStringMetric   {
 	public TagLink(String[] dataSetArray,
 			SimplyfingStringMetric characterBasedStringMetric) {
 		this.characterBasedStringMetric = characterBasedStringMetric;
-		tokeniser = new TokeniserWhitespace();
+		tokeniser = new WhitespaceTokenizer();
 		this.idfMap = getIDFMap(dataSetArray);
 		// WARNING FROM AUTHOR OF SIMMETRICS
 		// this metric is not recomended for fast processing it has been added

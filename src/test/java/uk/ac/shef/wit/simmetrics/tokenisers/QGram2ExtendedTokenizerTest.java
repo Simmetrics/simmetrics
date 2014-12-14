@@ -39,22 +39,22 @@
 
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
-
-public class TokeniserQGram3Test extends InterfaceTokeniserTest {
-
+public class QGram2ExtendedTokenizerTest extends TokeniserTest {
 
 	@Override
 	protected Tokenizer getTokenizer() {
-		return new TokeniserQGram3();
+		return new QGram2ExtendedTokenizer();
 	}
 
 	@Override
 	public T[] getTests() {
 
 		return new T[] {
-				new T("12345678", "123", "234", "345", "456", "567", "678"),
-				new T("123123", "123", "231", "312", "123"),
-
-		};
+				new T("123456789", 
+						"#1", "12", "23", "34", "45", "56", "67", "78", "89","9#"),
+				new T("123456789123456789", 
+						"#1", "12", "23", "34", "45", "56", "67", "78", "89",
+						"91", "12", "23", "34", "45", "56", "67", "78", "89","9#"
+						) };
 	}
 }

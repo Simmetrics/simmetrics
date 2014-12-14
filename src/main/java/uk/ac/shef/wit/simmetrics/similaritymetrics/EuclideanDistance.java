@@ -40,7 +40,7 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
-import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
+import uk.ac.shef.wit.simmetrics.tokenisers.WhitespaceTokenizer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -63,10 +63,10 @@ public  class EuclideanDistance extends TokenizingStringMetric {
 	private final float ESTIMATEDTIMINGCONST = 7.4457142857142857142857142857146e-5f;
 
 	/**
-	 * Constructs a EuclideanDistance metric with a {@link TokeniserWhitespace}.
+	 * Constructs a EuclideanDistance metric with a {@link WhitespaceTokenizer}.
 	 */
 	public EuclideanDistance() {
-		this(new TokeniserWhitespace());
+		this(new WhitespaceTokenizer());
 	}
 
 	/**

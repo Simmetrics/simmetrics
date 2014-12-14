@@ -39,24 +39,19 @@
 
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
-public class TokeniserWordQGramTest extends InterfaceTokeniserTest {
+/**
+ * Basic Q-Gram tokenizer for a Q of 3.The Q-Gram is extended beyond the length
+ * of the string with padding.
+ * 
+ * @author mpkorstanje
+ */
+public final class QGram3ExtendedTokenizer extends QGramExtendedTokenizer
+		 {
 
-	@Override
-	protected Tokenizer getTokenizer() {
-		return new TokeniserWordQGram(new TokeniserQGram2());
+	private static final int Q = 3;
+
+	public QGram3ExtendedTokenizer() {
+		super(Q);
 	}
 
-	@Override
-	public T[] getTests() {
-
-		return new T[] {
-				new T("1234 5678 90 a", 
-						"12", "23", "34", 
-						"56","67", "78", 
-						"90"),
-				new T("1234 1234 90 a", 
-						"12", "23", "34",
-						"12", "23", "34", 
-						"90"), };
-	}
 }

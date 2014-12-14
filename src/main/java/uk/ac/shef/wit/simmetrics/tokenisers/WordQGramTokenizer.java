@@ -47,24 +47,24 @@ import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
 /**
  * A QGram Tokeniser for words. A string is broken up into words by a
  * {@link Tokenizer}. For each word q-grams are made by a
- * {@link TokeniserQGram}.
+ * {@link QGramTokenizer}.
  * 
  * @author mpkorstanje
  * 
  *
  */
-public final class TokeniserWordQGram implements Tokenizer {
+public final class WordQGramTokenizer implements Tokenizer {
 
 	private Tokenizer wordTokenizer;
-	private TokeniserQGram qGramTokenizer;
+	private QGramTokenizer qGramTokenizer;
 
 	/**
-	 * Constructs a TokeniserWordQGram with a {@link TokeniserWhitespace} as a
-	 * word tokenizer and {@link TokeniserQGram2}. A string is broken up into
+	 * Constructs a TokeniserWordQGram with a {@link WhitespaceTokenizer} as a
+	 * word tokenizer and {@link QGram2Tokenizer}. A string is broken up into
 	 * words by the word tokenizer. For each word q-grams are made.
 	 */
-	public TokeniserWordQGram(TokeniserQGram qGramTokenizer) {
-		this(new TokeniserWhitespace(), qGramTokenizer);
+	public WordQGramTokenizer(QGramTokenizer qGramTokenizer) {
+		this(new WhitespaceTokenizer(), qGramTokenizer);
 	}
 
 	/**
@@ -77,8 +77,8 @@ public final class TokeniserWordQGram implements Tokenizer {
 	 * @param qGramTokenizer
 	 *            q-gram tokenizer to use to split words into q grams
 	 */
-	public TokeniserWordQGram(Tokenizer wordTokenizer,
-			TokeniserQGram qGramTokenizer) {
+	public WordQGramTokenizer(Tokenizer wordTokenizer,
+			QGramTokenizer qGramTokenizer) {
 		super();
 		this.wordTokenizer = wordTokenizer;
 		this.qGramTokenizer = qGramTokenizer;

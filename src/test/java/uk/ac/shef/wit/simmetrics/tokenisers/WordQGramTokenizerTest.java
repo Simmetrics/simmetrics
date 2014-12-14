@@ -39,30 +39,24 @@
 
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
-import java.util.ArrayList;
+public class WordQGramTokenizerTest extends TokeniserTest {
 
-/**
- * TokeniserCSVBasic implements a simple CSV tokeniser. NB(this doesn't consider
- * embedded escaped comma's within the fields)
- * 
- * @author Sam Chapman
- * @version 1.1
- */
-public final class TokeniserCSVBasic extends AbstractTokenizer {
-
-	private final String delimiters = "[,\n]";
-
-	public final ArrayList<String> tokenizeToList(final String input) {
-		final ArrayList<String> returnArrayList = new ArrayList<String>();
-
-		for (String token : input.split(delimiters)) {
-			final String term = token.trim();
-			if (!isWord(term)) {
-				returnArrayList.add(term);
-			}
-		}
-
-		return returnArrayList;
+	@Override
+	protected Tokenizer getTokenizer() {
+		return new WordQGramTokenizer(new QGram2Tokenizer());
 	}
 
+	@Override
+	public T[] getTests() {
+
+		return new T[] {
+				new T("1234 5678 90 a", 
+						"12", "23", "34", 
+						"56","67", "78", 
+						"90"),
+				new T("1234 1234 90 a", 
+						"12", "23", "34",
+						"12", "23", "34", 
+						"90"), };
+	}
 }

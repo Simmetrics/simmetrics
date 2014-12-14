@@ -39,23 +39,29 @@
 
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
-public class TokeniserQGram2Test extends InterfaceTokeniserTest {
+import java.util.ArrayList;
 
-	@Override
-	protected Tokenizer getTokenizer() {
-		return new TokeniserQGram2();
+/**
+ * TokeniserWhitespace implements a simple whitespace tokeniser.
+ * 
+ * @author Sam Chapman
+ * @version 1.1
+ */
+public final class WhitespaceTokenizer extends AbstractTokenizer {
+
+	private final String delimiters = "\\s";
+
+	public final ArrayList<String> tokenizeToList(final String input) {
+
+		final ArrayList<String> returnArrayList = new ArrayList<String>();
+
+		for (String token : input.split(delimiters)) {
+			if (!token.isEmpty() && !isWord(token)) {
+				returnArrayList.add(token);
+			}
+		}
+
+		return returnArrayList;
 	}
 
-	@Override
-	public T[] getTests() {
-
-		return new T[] {
-				new T("123456789",
-						// Expected output
-						"12", "23", "34", "45", "56", "67", "78", "89"),
-				new T("123456789123456789",
-						// Expected output
-						"12", "23", "34", "45", "56", "67", "78", "89", "91",
-						"12", "23", "34", "45", "56", "67", "78", "89") };
-	}
 }

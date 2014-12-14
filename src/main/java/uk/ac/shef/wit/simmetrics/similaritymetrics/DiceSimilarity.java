@@ -40,7 +40,7 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
-import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
+import uk.ac.shef.wit.simmetrics.tokenisers.WhitespaceTokenizer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -60,10 +60,10 @@ import org.simmetrics.TokenizingStringMetric;
 public class DiceSimilarity extends TokenizingStringMetric {
 
 	/**
-	 * Constructs a DiceSimilarity metric with a {@link TokeniserWhitespace}.
+	 * Constructs a DiceSimilarity metric with a {@link WhitespaceTokenizer}.
 	 */
 	public DiceSimilarity() {
-		this(new TokeniserWhitespace());
+		this(new WhitespaceTokenizer());
 	}
 
 	/**

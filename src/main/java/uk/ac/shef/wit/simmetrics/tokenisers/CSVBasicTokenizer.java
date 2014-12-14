@@ -39,18 +39,30 @@
 
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
+import java.util.ArrayList;
+
 /**
- * Basic Q-Gram tokenizer for a Q of 3 .
+ * TokeniserCSVBasic implements a simple CSV tokeniser. NB(this doesn't consider
+ * embedded escaped comma's within the fields)
  * 
- * @author mpkorstanje
- *
+ * @author Sam Chapman
+ * @version 1.1
  */
-public final class TokeniserQGram3 extends TokeniserQGram   {
+public final class CSVBasicTokenizer extends AbstractTokenizer {
 
-	private static final int Q = 3;
+	private final String delimiters = "[,\n]";
 
-	public TokeniserQGram3() {
-		super(Q);
+	public final ArrayList<String> tokenizeToList(final String input) {
+		final ArrayList<String> returnArrayList = new ArrayList<String>();
+
+		for (String token : input.split(delimiters)) {
+			final String term = token.trim();
+			if (!isWord(term)) {
+				returnArrayList.add(term);
+			}
+		}
+
+		return returnArrayList;
 	}
 
 }

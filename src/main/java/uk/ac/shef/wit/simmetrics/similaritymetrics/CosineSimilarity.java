@@ -40,7 +40,7 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
-import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
+import uk.ac.shef.wit.simmetrics.tokenisers.WhitespaceTokenizer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -59,10 +59,10 @@ import org.simmetrics.TokenizingStringMetric;
 public class CosineSimilarity extends TokenizingStringMetric {
 
 	/**
-	 * Constructs a CosineSimilarity metric with a {@link TokeniserWhitespace}.
+	 * Constructs a CosineSimilarity metric with a {@link WhitespaceTokenizer}.
 	 */
 	public CosineSimilarity() {
-		this(new TokeniserWhitespace());
+		this(new WhitespaceTokenizer());
 	}
 
 	/**

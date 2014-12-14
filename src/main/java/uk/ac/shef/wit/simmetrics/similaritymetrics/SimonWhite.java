@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import org.simmetrics.TokenizingStringMetric;
 
-import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserQGram2;
-import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWordQGram;
+import uk.ac.shef.wit.simmetrics.tokenisers.QGram2Tokenizer;
+import uk.ac.shef.wit.simmetrics.tokenisers.WordQGramTokenizer;
 
 /**
  * Implementation taken from <a
@@ -43,7 +43,7 @@ import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWordQGram;
 public class SimonWhite extends TokenizingStringMetric {
 
 	public SimonWhite() {
-		super(new TokeniserWordQGram(new TokeniserQGram2()));
+		super(new WordQGramTokenizer(new QGram2Tokenizer()));
 	}
 
 	// TODO

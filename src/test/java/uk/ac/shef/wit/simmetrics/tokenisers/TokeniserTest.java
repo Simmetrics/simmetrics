@@ -10,7 +10,7 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-public abstract class InterfaceTokeniserTest {
+public abstract class TokeniserTest {
 
 	private Tokenizer tokenizer;
 

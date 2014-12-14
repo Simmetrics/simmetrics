@@ -40,7 +40,7 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
-import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
+import uk.ac.shef.wit.simmetrics.tokenisers.WhitespaceTokenizer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -54,7 +54,7 @@ import static java.lang.Math.abs;
  * Implements the Block distance algorithm whereby vector space block distance
  * between tokens is used to determine a similarity.
  * 
- * Uses the {@link TokeniserWhitespace} by default.
+ * Uses the {@link WhitespaceTokenizer} by default.
  * 
  * @author Sam Chapman
  * @version 1.1
@@ -62,10 +62,10 @@ import static java.lang.Math.abs;
 public class BlockDistance extends TokenizingStringMetric {
 
 	/**
-	 * Constructs a BlockDistance metric with a {@link TokeniserWhitespace}.
+	 * Constructs a BlockDistance metric with a {@link WhitespaceTokenizer}.
 	 */
 	public BlockDistance() {
-		this(new TokeniserWhitespace());
+		this(new WhitespaceTokenizer());
 	}
 
 	/**

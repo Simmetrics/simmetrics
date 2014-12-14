@@ -12,17 +12,17 @@ import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
  * @author mpkorstanje
  *
  */
-public class TokeniserQGramExtended implements Tokenizer {
+public class QGramExtendedTokenizer implements Tokenizer {
 
 	private final char Q_GRAM_START_PADDING = '#';
 	private final char Q_GRAM_END_PADDING = '#';
 
-	private final TokeniserQGram tokenizer;
+	private final QGramTokenizer tokenizer;
 	private final String endPadding;
 	private final String startPadding;
 
-	public TokeniserQGramExtended(int q) {
-		tokenizer = new TokeniserQGram(q);
+	public QGramExtendedTokenizer(int q) {
+		tokenizer = new QGramTokenizer(q);
 
 		String startPadding = "";
 		String endPadding = "";

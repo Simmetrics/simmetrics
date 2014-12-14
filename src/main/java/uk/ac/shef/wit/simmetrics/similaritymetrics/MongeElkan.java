@@ -40,7 +40,7 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
-import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
+import uk.ac.shef.wit.simmetrics.tokenisers.WhitespaceTokenizer;
 
 import java.util.ArrayList;
 
@@ -59,11 +59,11 @@ public class MongeElkan extends TokenizingStringMetric {
 	private final SimplyfingStringMetric metric;
 
 	/**
-	 * Constructs a MongeElkan metric with a {@link TokeniserWhitespace} and
+	 * Constructs a MongeElkan metric with a {@link WhitespaceTokenizer} and
 	 * {@link SmithWatermanGotoh}.
 	 */
 	public MongeElkan() {
-		this(new TokeniserWhitespace(), new SmithWatermanGotoh());
+		this(new WhitespaceTokenizer(), new SmithWatermanGotoh());
 	}
 
 	/**
@@ -92,14 +92,14 @@ public class MongeElkan extends TokenizingStringMetric {
 	}
 
 	/**
-	 * Constructs a MongeElkan metric with a {@link TokeniserWhitespace} and
+	 * Constructs a MongeElkan metric with a {@link WhitespaceTokenizer} and
 	 * given metric.
 	 * 
 	 * @param metric
 	 *            metric to use
 	 */
 	public MongeElkan(final SimplyfingStringMetric metric) {
-		this(new TokeniserWhitespace(), metric);
+		this(new WhitespaceTokenizer(), metric);
 	}
 
 	// TODO:

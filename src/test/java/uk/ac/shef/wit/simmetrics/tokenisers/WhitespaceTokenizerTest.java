@@ -39,19 +39,23 @@
 
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
-/**
- * Basic Q-Gram tokenizer for a Q of 3.The Q-Gram is extended beyond the length
- * of the string with padding.
- * 
- * @author mpkorstanje
- */
-public final class TokeniserQGram3Extended extends TokeniserQGramExtended
-		 {
+public class WhitespaceTokenizerTest extends TokeniserTest {
 
-	private static final int Q = 3;
-
-	public TokeniserQGram3Extended() {
-		super(Q);
+	@Override
+	protected Tokenizer getTokenizer() {
+		return new WhitespaceTokenizer();
 	}
 
+	@Override
+	public T[] getTests() {
+
+		return new T[] { 
+				new T("A B C", "A", "B", "C"),
+				new T("A  B  C", "A", "B", "C"),
+				new T("A\nB", "A", "B"),
+				new T("A\tB", "A", "B"), 
+				new T("A\t\nB", "A", "B"),
+
+		};
+	}
 }

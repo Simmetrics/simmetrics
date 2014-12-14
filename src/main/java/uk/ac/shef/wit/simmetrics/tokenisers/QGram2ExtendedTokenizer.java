@@ -39,22 +39,18 @@
 
 package uk.ac.shef.wit.simmetrics.tokenisers;
 
-public class TokeniserCSVBasicTest extends InterfaceTokeniserTest {
+/**
+ * Basic Q-Gram tokenizer for a Q of 2.The Q-Gram is extended beyond the length
+ * of the string with padding.
+ * 
+ * @author mpkorstanje
+ */
+public final class QGram2ExtendedTokenizer extends QGramExtendedTokenizer {
 
+	private static final int Q = 2;
 
-	@Override
-	protected Tokenizer getTokenizer() {
-		return new TokeniserCSVBasic();
-	}
-	@Override
-	public T[] getTests() {
-
-		return new T[] { 
-				new T("1a,2a,3a,4a\n1b,2b,3b,4b", 
-				"1a", "2a", "3a","4a", "1b", "2b", "3b", "4b"),
-				new T("1a,2a,3a,4a\n1a,2a,3a,4a", 
-						"1a", "2a", "3a","4a", "1a", "2a", "3a", "4a")
-		};
+	public QGram2ExtendedTokenizer() {
+		super(Q);
 	}
 
 }

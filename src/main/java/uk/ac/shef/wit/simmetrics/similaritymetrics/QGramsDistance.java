@@ -40,8 +40,8 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
-import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserQGram3Extended;
-import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
+import uk.ac.shef.wit.simmetrics.tokenisers.QGram3ExtendedTokenizer;
+import uk.ac.shef.wit.simmetrics.tokenisers.WhitespaceTokenizer;
 
 import java.util.*;
 
@@ -58,10 +58,10 @@ import org.simmetrics.TokenizingStringMetric;
 public  class QGramsDistance extends TokenizingStringMetric {
 
 	/**
-	 * Constructs a QGramsDistance metric with a {@link TokeniserWhitespace}.
+	 * Constructs a QGramsDistance metric with a {@link WhitespaceTokenizer}.
 	 */
 	public QGramsDistance() {
-		this(new TokeniserQGram3Extended());
+		this(new QGram3ExtendedTokenizer());
 	}
 
 	/**

@@ -45,7 +45,7 @@ import java.text.DecimalFormat;
 import java.util.Set;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.similaritymetrics.PerformancTestingMetric;
+import org.simmetrics.metrics.PerformancTestingMetric;
 
 /**
  * Package: n/a Description: uk.ac.shef.wit.simmetrics.TestMetrics implements a

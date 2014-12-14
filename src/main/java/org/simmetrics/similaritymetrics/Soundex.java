@@ -42,7 +42,7 @@ package org.simmetrics.similaritymetrics;
 import uk.ac.shef.wit.simmetrics.simplifier.AbstractSimplifier;
 import uk.ac.shef.wit.simmetrics.simplifier.CaseSimplifier;
 import uk.ac.shef.wit.simmetrics.simplifier.CompositeSimplifier;
-import static uk.ac.shef.wit.simmetrics.utils.Math.clamp;
+import static org.simmetrics.utils.Math.clamp;
 
 /**
  * Implements the Soundex algorithm providing a similarity measure between two

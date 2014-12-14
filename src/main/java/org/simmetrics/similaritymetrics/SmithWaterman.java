@@ -43,8 +43,8 @@ import org.simmetrics.SimplyfingStringMetric;
 import org.simmetrics.similaritymetrics.costfunctions.AbstractSubstitutionCost;
 import org.simmetrics.similaritymetrics.costfunctions.SubCost1_Minus2;
 
-import static uk.ac.shef.wit.simmetrics.utils.Math.max3;
-import static uk.ac.shef.wit.simmetrics.utils.Math.max4;
+import static org.simmetrics.utils.Math.max3;
+import static org.simmetrics.utils.Math.max4;
 
 /**
  * Implements the Smith-Waterman edit distance function

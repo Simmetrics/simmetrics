@@ -46,8 +46,8 @@ import org.simmetrics.similaritymetrics.costfunctions.SubCost5_3_Minus3;
 import org.simmetrics.similaritymetrics.costfunctions.SubstitutionCost;
 
 import static java.lang.Math.max;
-import static uk.ac.shef.wit.simmetrics.utils.Math.max3;
-import static uk.ac.shef.wit.simmetrics.utils.Math.max4;
+import static org.simmetrics.utils.Math.max3;
+import static org.simmetrics.utils.Math.max4;
 
 /**
  * Implements the Smith-Waterman-Gotoh algorithm with a windowed affine gap

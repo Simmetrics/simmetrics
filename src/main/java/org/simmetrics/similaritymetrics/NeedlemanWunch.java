@@ -43,7 +43,7 @@ import org.simmetrics.SimplyfingStringMetric;
 import org.simmetrics.similaritymetrics.costfunctions.SubCost01;
 import org.simmetrics.similaritymetrics.costfunctions.SubstitutionCost;
 
-import static uk.ac.shef.wit.simmetrics.utils.Math.min3;
+import static org.simmetrics.utils.Math.min3;
 
 /**
  * Implements the Needleman-Wunch algorithm providing an edit distance based

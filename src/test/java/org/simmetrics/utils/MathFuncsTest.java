@@ -37,13 +37,12 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package uk.ac.shef.wit.simmetrics.utils;
+package org.simmetrics.utils;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-
-import uk.ac.shef.wit.simmetrics.utils.Math;
+import org.simmetrics.utils.Math;
 
 public class MathFuncsTest {
 

@@ -42,8 +42,7 @@ package org.simmetrics.similaritymetrics;
 import org.simmetrics.SimplyfingStringMetric;
 import org.simmetrics.similaritymetrics.costfunctions.AbstractSubstitutionCost;
 import org.simmetrics.similaritymetrics.costfunctions.SubCost01;
-
-import uk.ac.shef.wit.simmetrics.utils.Math;
+import org.simmetrics.utils.Math;
 
 /**
  * Implements the basic Levenshtein algorithm providing a similarity measure

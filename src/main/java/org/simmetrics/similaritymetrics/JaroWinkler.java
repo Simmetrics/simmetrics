@@ -41,7 +41,7 @@ package org.simmetrics.similaritymetrics;
 
 import org.simmetrics.SimplyfingStringMetric;
 
-import static uk.ac.shef.wit.simmetrics.utils.Math.min3;
+import static org.simmetrics.utils.Math.min3;
 
 /**
  * Implements the Jaro-Winkler algorithm providing a similarity measure between

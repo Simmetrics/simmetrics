@@ -4,17 +4,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 import uk.ac.shef.wit.simmetrics.wordhandlers.DummyStopTermHandler;
-import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
+import uk.ac.shef.wit.simmetrics.wordhandlers.TermHandler;
 
 public abstract class AbstractTokenizer implements Tokenizer {
 
-	protected InterfaceTermHandler stopWordHandler = new DummyStopTermHandler();
+	protected TermHandler stopWordHandler = new DummyStopTermHandler();
 
-	public InterfaceTermHandler getStopWordHandler() {
+	public TermHandler getStopWordHandler() {
 		return stopWordHandler;
 	}
 
-	public void setStopWordHandler(final InterfaceTermHandler stopWordHandler) {
+	public void setStopWordHandler(final TermHandler stopWordHandler) {
 		this.stopWordHandler = stopWordHandler;
 	}
 

@@ -40,7 +40,7 @@
 package org.simmetrics.example;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.similaritymetrics.*;
+import org.simmetrics.metrics.*;
 
 /**
  * SimpleExample implements a simple example to demonstrate the ease to use a

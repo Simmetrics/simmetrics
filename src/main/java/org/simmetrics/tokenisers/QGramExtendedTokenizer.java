@@ -3,7 +3,7 @@ package org.simmetrics.tokenisers;
 import java.util.ArrayList;
 import java.util.Set;
 
-import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
+import uk.ac.shef.wit.simmetrics.wordhandlers.TermHandler;
 
 /**
  * Basic Q-Gram tokenizer for a variable Q.The Q-Gram is extended beyond the
@@ -36,11 +36,11 @@ public class QGramExtendedTokenizer extends AbstractTokenizer {
 
 	}
 
-	public void setStopWordHandler(InterfaceTermHandler stopWordHandler) {
+	public void setStopWordHandler(TermHandler stopWordHandler) {
 		tokenizer.setStopWordHandler(stopWordHandler);
 	}
 
-	public InterfaceTermHandler getStopWordHandler() {
+	public TermHandler getStopWordHandler() {
 		return tokenizer.getStopWordHandler();
 	}
 

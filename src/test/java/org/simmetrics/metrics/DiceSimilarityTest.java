@@ -37,11 +37,11 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package org.simmetrics.similaritymetrics;
+package org.simmetrics.metrics;
 
 import org.simmetrics.TokenizingStringMetricTest;
 import org.simmetrics.TokenizingStringMetric;
-import org.simmetrics.similaritymetrics.DiceSimilarity;
+import org.simmetrics.metrics.DiceSimilarity;
 
 
 public class DiceSimilarityTest extends TokenizingStringMetricTest {

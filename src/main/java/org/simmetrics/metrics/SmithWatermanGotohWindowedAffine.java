@@ -37,13 +37,13 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package org.simmetrics.similaritymetrics;
+package org.simmetrics.metrics;
 
 import org.simmetrics.SimplyfingStringMetric;
-import org.simmetrics.similaritymetrics.costfunctions.AffineGap5_1;
-import org.simmetrics.similaritymetrics.costfunctions.AffineGapCost;
-import org.simmetrics.similaritymetrics.costfunctions.SubCost5_3_Minus3;
-import org.simmetrics.similaritymetrics.costfunctions.SubstitutionCost;
+import org.simmetrics.metrics.costfunctions.AffineGap5_1;
+import org.simmetrics.metrics.costfunctions.AffineGapCost;
+import org.simmetrics.metrics.costfunctions.SubCost5_3_Minus3;
+import org.simmetrics.metrics.costfunctions.SubstitutionCost;
 
 import static java.lang.Math.max;
 import static org.simmetrics.utils.Math.max3;

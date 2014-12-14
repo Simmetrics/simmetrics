@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 
 import org.junit.Test;
-import org.simmetrics.similaritymetrics.SimonWhite;
+import org.simmetrics.metrics.SimonWhite;
 
 import uk.ac.shef.wit.simmetrics.simplifier.CaseSimplifier;
 import static org.simmetrics.StringMetrics.*;

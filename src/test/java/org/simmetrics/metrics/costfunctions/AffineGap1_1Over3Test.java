@@ -37,10 +37,10 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package org.simmetrics.similaritymetrics.costfunctions;
+package org.simmetrics.metrics.costfunctions;
 
-import org.simmetrics.similaritymetrics.costfunctions.AffineGap1_1Over3;
-import org.simmetrics.similaritymetrics.costfunctions.AffineGapCost;
+import org.simmetrics.metrics.costfunctions.AffineGap1_1Over3;
+import org.simmetrics.metrics.costfunctions.AffineGapCost;
 
 public class AffineGap1_1Over3Test extends AffineGapCostTest {
 

@@ -1,4 +1,4 @@
-package org.simmetrics.similaritymetrics;
+package org.simmetrics.metrics;
 
 import org.perf4j.StopWatch;
 import org.simmetrics.StringMetric;

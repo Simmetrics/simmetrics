@@ -37,12 +37,12 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package org.simmetrics.similaritymetrics;
+package org.simmetrics.metrics;
 
-import org.simmetrics.similaritymetrics.costfunctions.AbstractAffineGapCost;
-import org.simmetrics.similaritymetrics.costfunctions.AbstractSubstitutionCost;
-import org.simmetrics.similaritymetrics.costfunctions.AffineGap5_1;
-import org.simmetrics.similaritymetrics.costfunctions.SubCost5_3_Minus3;
+import org.simmetrics.metrics.costfunctions.AbstractAffineGapCost;
+import org.simmetrics.metrics.costfunctions.AbstractSubstitutionCost;
+import org.simmetrics.metrics.costfunctions.AffineGap5_1;
+import org.simmetrics.metrics.costfunctions.SubCost5_3_Minus3;
 
 /**
  * Implements the Gotoh extension of the Smith-Waterman method incorporating

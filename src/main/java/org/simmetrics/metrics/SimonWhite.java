@@ -1,4 +1,4 @@
-package org.simmetrics.similaritymetrics;
+package org.simmetrics.metrics;
 
 import java.util.ArrayList;
 

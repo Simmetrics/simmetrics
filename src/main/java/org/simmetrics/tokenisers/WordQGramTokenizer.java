@@ -43,7 +43,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
 
-import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
+import uk.ac.shef.wit.simmetrics.wordhandlers.TermHandler;
 
 /**
  * A QGram Tokeniser for words. A string is broken up into words by a
@@ -123,7 +123,7 @@ public final class WordQGramTokenizer implements Tokenizer {
 	 * 
 	 * @return the stop word handler used by the word tokenizer
 	 */
-	public InterfaceTermHandler getStopWordHandler() {
+	public TermHandler getStopWordHandler() {
 		return wordTokenizer.getStopWordHandler();
 	}
 
@@ -133,7 +133,7 @@ public final class WordQGramTokenizer implements Tokenizer {
 	 * @param stopWordHandler
 	 *            to set on the word tokenizer
 	 */
-	public void setStopWordHandler(InterfaceTermHandler stopWordHandler) {
+	public void setStopWordHandler(TermHandler stopWordHandler) {
 		wordTokenizer.setStopWordHandler(stopWordHandler);
 	}
 

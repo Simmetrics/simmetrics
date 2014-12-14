@@ -37,7 +37,7 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package org.simmetrics.similaritymetrics.costfunctions;
+package org.simmetrics.metrics.costfunctions;
 
 /**
  * SubCost1_Minus2 implements a substitution cost function where d(i,j) = 1 if i

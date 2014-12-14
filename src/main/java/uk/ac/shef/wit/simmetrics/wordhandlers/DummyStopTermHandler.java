@@ -46,7 +46,7 @@ package uk.ac.shef.wit.simmetrics.wordhandlers;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class DummyStopTermHandler implements InterfaceTermHandler {
+public final class DummyStopTermHandler implements TermHandler {
 
 	public void add(final String termToAdd) {
 		// Intentionally does nothing.

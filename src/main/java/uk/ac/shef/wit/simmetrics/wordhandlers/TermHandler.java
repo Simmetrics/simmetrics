@@ -45,7 +45,7 @@ package uk.ac.shef.wit.simmetrics.wordhandlers;
  * @author Sam Chapman
  * @version 1.1
  */
-public interface InterfaceTermHandler {
+public interface TermHandler {
 
 	/**
 	 * Adds a Word to the intewrface.

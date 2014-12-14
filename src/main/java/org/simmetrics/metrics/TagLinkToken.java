@@ -1,4 +1,4 @@
-package org.simmetrics.similaritymetrics;
+package org.simmetrics.metrics;
 
 import static java.util.Collections.sort;
 

@@ -37,11 +37,11 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package org.simmetrics.similaritymetrics;
+package org.simmetrics.metrics;
 
 import org.simmetrics.SimplyfingStringMetric;
-import org.simmetrics.similaritymetrics.costfunctions.SubCost01;
-import org.simmetrics.similaritymetrics.costfunctions.SubstitutionCost;
+import org.simmetrics.metrics.costfunctions.SubCost01;
+import org.simmetrics.metrics.costfunctions.SubstitutionCost;
 
 import static org.simmetrics.utils.Math.min3;
 

@@ -43,7 +43,7 @@ import java.text.DecimalFormat;
 import java.util.Vector;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.similaritymetrics.*;
+import org.simmetrics.metrics.*;
 
 /**
  *

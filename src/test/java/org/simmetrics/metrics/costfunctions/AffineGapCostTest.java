@@ -1,10 +1,10 @@
-package org.simmetrics.similaritymetrics.costfunctions;
+package org.simmetrics.metrics.costfunctions;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.simmetrics.similaritymetrics.costfunctions.AffineGapCost;
+import org.simmetrics.metrics.costfunctions.AffineGapCost;
 
 public abstract class AffineGapCostTest {
 

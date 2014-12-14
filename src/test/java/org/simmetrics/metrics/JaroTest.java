@@ -37,11 +37,11 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package org.simmetrics.similaritymetrics;
+package org.simmetrics.metrics;
 
 import org.simmetrics.SimplyfingStringMetric;
 import org.simmetrics.SimplyfingStringMetricTest;
-import org.simmetrics.similaritymetrics.Jaro;
+import org.simmetrics.metrics.Jaro;
 
 public class JaroTest extends SimplyfingStringMetricTest {
 

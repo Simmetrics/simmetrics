@@ -62,7 +62,7 @@
  * @version 1.1
  */
 
-package org.simmetrics.similaritymetrics;
+package org.simmetrics.metrics;
 
 import java.util.*;
 

@@ -37,10 +37,10 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package org.simmetrics.similaritymetrics.costfunctions;
+package org.simmetrics.metrics.costfunctions;
 
-import org.simmetrics.similaritymetrics.costfunctions.SubCost5_3_Minus3;
-import org.simmetrics.similaritymetrics.costfunctions.SubstitutionCost;
+import org.simmetrics.metrics.costfunctions.SubCost5_3_Minus3;
+import org.simmetrics.metrics.costfunctions.SubstitutionCost;
 
 
 public class SubCost5_3_Minus3Test extends InterfaceSubstitutionCostTest {

@@ -12,13 +12,13 @@ import org.junit.Test;
 import org.simmetrics.tokenisers.Tokenizer;
 
 import uk.ac.shef.wit.simmetrics.wordhandlers.DummyStopTermHandler;
-import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
+import uk.ac.shef.wit.simmetrics.wordhandlers.TermHandler;
 
 public abstract class TokeniserTest {
 
 	private Tokenizer tokenizer;
 	
-	private InterfaceTermHandler handler= new DummyStopTermHandler();
+	private TermHandler handler= new DummyStopTermHandler();
 
 	protected abstract Tokenizer getTokenizer();
 

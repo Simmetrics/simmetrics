@@ -39,7 +39,7 @@
 
 package org.simmetrics.tokenisers;
 
-import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
+import uk.ac.shef.wit.simmetrics.wordhandlers.TermHandler;
 
 import java.util.Set;
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ public interface Tokenizer {
 	 * 
 	 * @return the stop word handler used
 	 */
-	public InterfaceTermHandler getStopWordHandler();
+	public TermHandler getStopWordHandler();
 
 	/**
 	 * Sets the stop word handler used with the handler given.
@@ -64,7 +64,7 @@ public interface Tokenizer {
 	 * @param stopWordHandler
 	 *            the given stop word hanlder
 	 */
-	public void setStopWordHandler(InterfaceTermHandler stopWordHandler);
+	public void setStopWordHandler(TermHandler stopWordHandler);
 
 	/**
 	 * Return tokenized version of a string as an ArrayList.

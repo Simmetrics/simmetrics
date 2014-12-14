@@ -9,7 +9,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
-import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
+import uk.ac.shef.wit.simmetrics.wordhandlers.TermHandler;
 
 public class CachingTokenizer implements Tokenizer {
 
@@ -52,11 +52,11 @@ public class CachingTokenizer implements Tokenizer {
 		return getClass().getSimpleName() + " [" + tokenizer + "]";
 	}
 
-	public InterfaceTermHandler getStopWordHandler() {
+	public TermHandler getStopWordHandler() {
 		return tokenizer.getStopWordHandler();
 	}
 
-	public void setStopWordHandler(InterfaceTermHandler stopWordHandler) {
+	public void setStopWordHandler(TermHandler stopWordHandler) {
 		tokenizer.setStopWordHandler(stopWordHandler);
 	}
 

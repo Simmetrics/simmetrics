@@ -134,8 +134,7 @@ public final class TestMetrics {
 	 */
 	public static void main(final String[] args) {
 
-		Set<StringMetric> metricStrings = MetricHandler
-				.getMetricsAvailable();
+		Set<StringMetric> metricStrings = MetricHandler.getMetricsAvailable();
 
 		// test metrics
 		testMethod(metricStrings, args);
@@ -159,8 +158,8 @@ public final class TestMetrics {
 	 * @param args
 	 *            arguments vector
 	 */
-	private static void testMethod(
-			final Set<StringMetric> metricVector, final String[] args) {
+	private static void testMethod(final Set<StringMetric> metricVector,
+			final String[] args) {
 
 		boolean useCmdArgs = false;
 		boolean testTimingComplexity = false;
@@ -174,7 +173,6 @@ public final class TestMetrics {
 
 		// first detail tests being performed
 		System.out.println("Performing Tests with Following Metrics:");
-		
 
 		// secondly detail test cases being performed
 		if (!useCmdArgs) {
@@ -209,7 +207,8 @@ public final class TestMetrics {
 		int metricTests = 0;
 		long totalTime = System.currentTimeMillis();
 		for (StringMetric m : metricVector) {
-			final PerformancTestingMetric metric = new PerformancTestingMetric(m);
+			final PerformancTestingMetric metric = new PerformancTestingMetric(
+					m);
 			if (testTimingComplexity) {
 				// testing timing
 				// generate random string to test
@@ -217,8 +216,8 @@ public final class TestMetrics {
 				int termLen = 0;
 				for (int len = 1; len < TESTMAXLENGTHTIMINGTEST; len++, termLen++) {
 					if (termLen < TESTMAXLENGTHTIMINGTERMLENGTH) {
-						testString.append((char) (( 'a') + (int) (Math
-								.random() * (((float) 'z') - ((float) 'a')))));
+						testString
+								.append((char) (('a') + (int) (Math.random() * (((float) 'z') - ((float) 'a')))));
 					} else {
 						testString.append(' ');
 						termLen = 0;
@@ -250,7 +249,8 @@ public final class TestMetrics {
 					while (timeTaken < TESTTIMINGMILLISECONDSPERTEST) {
 						timeTaken += metric.getSimilarityTimingActual(
 								testCase[0], testCase[1]);
-						//FIXME: Increment time taken to avoid sub 1 ms tests jamming the system.
+						// FIXME: Increment time taken to avoid sub 1 ms tests
+						// jamming the system.
 						timeTaken++;
 						iterations++;
 						metricTests++;

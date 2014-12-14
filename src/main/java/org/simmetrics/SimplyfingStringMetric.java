@@ -42,12 +42,30 @@ package org.simmetrics;
 import uk.ac.shef.wit.simmetrics.simplifier.PassThroughSimplifier;
 import uk.ac.shef.wit.simmetrics.simplifier.Simplifier;
 
-public abstract class SimplyfingStringMetric implements StringMetric, Simplifying {
+/**
+ * Abstract metric that handles simplification of strings before comparing them.
+ * By default strings are not simplified.
+ * 
+ * @author mpkorstanje
+ *
+ */
+public abstract class SimplyfingStringMetric implements StringMetric,
+		Simplifying {
 
+	/**
+	 * Constructs a metric with the given simplifier. The simplifier is used on
+	 * the strings before they are compared.
+	 * 
+	 * @param simplifier
+	 *            simplifier to use to simplify strings before comparing them
+	 */
 	public SimplyfingStringMetric(Simplifier simplifier) {
 		this.simplifier = simplifier;
 	}
 
+	/**
+	 * Constructs a metric with.
+	 */
 	public SimplyfingStringMetric() {
 		// Empty constructor
 	}
@@ -71,11 +89,22 @@ public abstract class SimplyfingStringMetric implements StringMetric, Simplifyin
 		return simplifier;
 	}
 
-	// TODO: Remove final.
-	public final float compare(String a, String b) {
+	public float compare(String a, String b) {
 		return compareSimplified(simplifier.simplify(a), simplifier.simplify(b));
 	}
 
+	/**
+	 * Measures the similarity between simplified strings a and b. The
+	 * measurement results in a value between 0 and 1. A value of zero indicates
+	 * that the strings are dissimilar, a a value of 1 indicates they are
+	 * similar.
+	 * 
+	 * @param a
+	 *            simplified string a to compare
+	 * @param b
+	 *            simplified string b to compare
+	 * @return a value between 0 and 1 indicating similarity
+	 */
 	protected abstract float compareSimplified(String a, String b);
 
 }

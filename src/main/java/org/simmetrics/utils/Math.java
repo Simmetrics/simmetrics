@@ -51,37 +51,48 @@ import static java.lang.Math.min;
 public abstract class Math {
 
 	/**
-	 * Returns the max of three numbers.
+	 * Returns the maximum of x,y and z.
 	 *
 	 * @param x
+	 *            x-value
 	 * @param y
+	 *            y-value
 	 * @param z
-	 * @return the max of three numbers
+	 *            z-value
+	 * @return the maximum of x,y and z
 	 */
 	public static float max3(final float x, final float y, final float z) {
 		return max(x, max(y, z));
 	}
 
 	/**
-	 * Returns the max of three numbers.
-	 *
+	 * Returns the maximum of x,y and z.
+	 * 
 	 * @param x
+	 *            x-value
 	 * @param y
+	 *            y-value
 	 * @param z
-	 * @return the max of three numbers
+	 *            z-value
+	 * @return the maximum of x,y and z
 	 */
 	public static int max3(final int x, final int y, final int z) {
 		return max(x, max(y, z));
 	}
 
 	/**
-	 * Returns the max of four numbers.
-	 *
+	 * Returns the maximum of w,x,y and z.
+	 * 
 	 * @param w
+	 *            w-value
 	 * @param x
+	 *            x-value
 	 * @param y
+	 *            y-value
 	 * @param z
-	 * @return the max of four numbers
+	 *            z-value
+	 * @return the maximum of w,x,y and z
+	 * 
 	 */
 	public static float max4(final float w, final float x, final float y,
 			final float z) {
@@ -89,69 +100,105 @@ public abstract class Math {
 	}
 
 	/**
-	 * Returns the max of four numbers.
-	 *
+	 * Returns the maximum of w,x,y and z.
+	 * 
 	 * @param w
+	 *            w-value
 	 * @param x
+	 *            x-value
 	 * @param y
+	 *            y-value
 	 * @param z
-	 * @return the max of four numbers
+	 *            z-value
+	 * @return the maximum of w,x,y and z
+	 * 
 	 */
 	public static int max4(final int w, final int x, final int y, final int z) {
 		return max(max(w, x), max(y, z));
 	}
 
 	/**
-	 * Returns the min of three numbers.
-	 *
+	 * Returns the minimum of x,y and z.
+	 * 
 	 * @param x
+	 *            x-value
 	 * @param y
+	 *            y-value
 	 * @param z
-	 * @return the min of three numbers
+	 *            z-value
+	 * @return the minimum of x,y and z
 	 */
 	public static float min3(final float x, final float y, final float z) {
 		return min(x, min(y, z));
 	}
 
 	/**
-	 * Returns the min of three numbers.
-	 *
+	 * Returns the minimum of x,y and z.
+	 * 
 	 * @param x
+	 *            x-value
 	 * @param y
+	 *            y-value
 	 * @param z
-	 * @return the min of three numbers
+	 *            z-value
+	 * @return the minimum of x,y and z
 	 */
 	public static int min3(final int x, final int y, final int z) {
 		return min(x, min(y, z));
 	}
 
 	/**
-	 * Returns the min of four numbers.
-	 *
+	 * Returns the minimum of w,x,y and z.
+	 * 
 	 * @param w
+	 *            w-value
 	 * @param x
+	 *            x-value
 	 * @param y
+	 *            y-value
 	 * @param z
-	 * @return the min of four numbers
+	 *            z-value
+	 * @return the maximum of w,x,y and z
+	 * 
 	 */
-	public static float min4(final float w, final float x, final float y,final float z) {
+	public static float min4(final float w, final float x, final float y,
+			final float z) {
 		return min(min(w, x), min(y, z));
 	}
 
 	/**
-	 * Returns the min of four numbers.
-	 *
+	 * Returns the minimum of w,x,y and z.
+	 * 
 	 * @param w
+	 *            w-value
 	 * @param x
+	 *            x-value
 	 * @param y
+	 *            y-value
 	 * @param z
-	 * @return the min of four numbers
+	 *            z-value
+	 * @return the maximum of w,x,y and z
+	 * 
 	 */
 	public static int min4(final int w, final int x, final int y, final int z) {
 		return min(min(w, x), min(y, z));
 	}
 
+	/**
+	 * Clamps x between the upper and lower bounds. The returned value will be
+	 * no lower then the lower bound and no higher then the upper bound. If x
+	 * falls between the upper and lower bound x is returned.
+	 * 
+	 * 
+	 * @param lower
+	 *            lower bound for x
+	 * @param x
+	 *            x-value
+	 * @param upper
+	 *            upper bound for x
+	 * @return the value of x clamped between the upper and lower bounds.
+	 */
 	public static int clamp(int lower, int x, int upper) {
-		return min(max(lower,x),upper);
+		return min(max(lower, x), upper);
 	}
 }

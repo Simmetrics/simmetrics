@@ -98,7 +98,7 @@ public  class EuclideanDistance extends TokenizingStringMetric {
 
 
 
-	private float getEuclidianDistance(final ArrayList<String> str1Tokens,
+	private static float getEuclidianDistance(final ArrayList<String> str1Tokens,
 			final ArrayList<String> str2Tokens) {
 		final Set<String> allTokens = new HashSet<String>();
 		allTokens.addAll(str1Tokens);

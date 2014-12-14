@@ -89,10 +89,10 @@ public class MatchingCoefficient extends TokenizingStringMetric {
 		final int totalPossible = Math
 				.max(str1Tokens.size(), str2Tokens.size());
 		return getInnerUnNormalisedSimilarity(str1Tokens, str2Tokens)
-				/ (float) totalPossible;
+				/ totalPossible;
 	}
 
-	private float getInnerUnNormalisedSimilarity(
+	private static float getInnerUnNormalisedSimilarity(
 			final ArrayList<String> str1Tokens,
 			final ArrayList<String> str2Tokens) {
 		int totalFound = 0;
@@ -109,6 +109,6 @@ public class MatchingCoefficient extends TokenizingStringMetric {
 				totalFound++;
 			}
 		}
-		return (float) totalFound;
+		return totalFound;
 	}
 }

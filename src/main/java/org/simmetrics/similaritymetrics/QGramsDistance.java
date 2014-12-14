@@ -93,13 +93,13 @@ public  class QGramsDistance extends TokenizingStringMetric {
 			return 0.0f;
 		} else {
 			return (maxQGramsMatching - getInnerUnNormalizedSimilarity(
-					str1Tokens, str2Tokens)) / (float) maxQGramsMatching;
+					str1Tokens, str2Tokens)) / maxQGramsMatching;
 		}
 	}
 
 	
 
-	private float getInnerUnNormalizedSimilarity(
+	private static float getInnerUnNormalizedSimilarity(
 			final ArrayList<String> str1Tokens,
 			final ArrayList<String> str2Tokens) {
 		final Set<String> allTokens = new HashSet<String>();

@@ -39,7 +39,7 @@
 
 package uk.ac.shef.wit.simmetrics;
 
-import uk.ac.shef.wit.simmetrics.arbitrators.InterfaceMetricArbitrator;
+import uk.ac.shef.wit.simmetrics.arbitrators.MetricArbitrator;
 import uk.ac.shef.wit.simmetrics.arbitrators.MeanMetricArbitrator;
 import uk.ac.shef.wit.simmetrics.metrichandlers.MetricHandler;
 
@@ -130,7 +130,7 @@ public final class TestArbitrators {
 
     
 
-        final InterfaceMetricArbitrator arbitrator = new MeanMetricArbitrator();
+        final MetricArbitrator arbitrator = new MeanMetricArbitrator();
         arbitrator.setArbitrationMetrics(new ArrayList<StringMetric>(metricStrings));
 
         //test metrics
@@ -142,7 +142,7 @@ public final class TestArbitrators {
      *
      * @param arbitrator the InterfaceMetricArbitrator to test
      */
-    private static void testMethod(final InterfaceMetricArbitrator arbitrator) {
+    private static void testMethod(final MetricArbitrator arbitrator) {
 
         //first detail test being performed
         System.out.println("Performing Arbitrartion with: " + arbitrator.toString());

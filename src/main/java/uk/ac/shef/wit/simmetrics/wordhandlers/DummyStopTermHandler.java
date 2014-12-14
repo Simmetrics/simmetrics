@@ -48,21 +48,18 @@ package uk.ac.shef.wit.simmetrics.wordhandlers;
  */
 public final class DummyStopTermHandler implements InterfaceTermHandler {
 
-	public void addWord(final String termToAdd) {
+	public void add(final String termToAdd) {
 		// Intentionally does nothing.
 	}
 
-	
-	public final String getShortDescriptionString() {
-		return getClass().getSimpleName();
-	}
+
 
 	
-	public void removeWord(final String termToRemove) {
+	public void remove(final String termToRemove) {
 		// Intentionally does nothing.
 	}
 
-	public int getNumberOfWords() {
+	public int size() {
 		// Always zero
 		return 0;
 	}
@@ -73,7 +70,7 @@ public final class DummyStopTermHandler implements InterfaceTermHandler {
 	}
 
 
-	public StringBuffer getWordsAsBuffer() {
+	public StringBuffer buffer() {
 		return new StringBuffer();
 	}
 }

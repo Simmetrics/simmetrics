@@ -52,7 +52,7 @@ import org.simmetrics.StringMetric;
  * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
  * @version 1.1
  */
-public interface InterfaceMetricArbitrator {
+public interface MetricArbitrator {
 
     /**
      * gets the arbitration metrics used.

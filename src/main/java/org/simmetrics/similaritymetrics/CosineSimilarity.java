@@ -97,7 +97,7 @@ public class CosineSimilarity extends TokenizingStringMetric {
 				- allTokens.size();
 
 		// return CosineSimilarity
-		return (float) (commonTerms)
+		return (commonTerms)
 				/ (float) (pow(str1Tokens.size(), 0.5) * pow(str2Tokens.size(),
 						0.5));
 	}

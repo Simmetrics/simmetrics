@@ -55,7 +55,7 @@ public final class GenericStopTermHandler implements InterfaceTermHandler {
 	 */
 	private final Set<String> wordSet = new HashSet<String>();
 
-	public void addWord(final String termToAdd) {
+	public void add(final String termToAdd) {
 		wordSet.add(termToAdd);
 	}
 
@@ -64,11 +64,11 @@ public final class GenericStopTermHandler implements InterfaceTermHandler {
 		return getClass().getSimpleName();
 	}
 
-	public void removeWord(final String termToRemove) {
+	public void remove(final String termToRemove) {
 		wordSet.remove(termToRemove);
 	}
 
-	public int getNumberOfWords() {
+	public int size() {
 		return wordSet.size();
 	}
 
@@ -77,7 +77,7 @@ public final class GenericStopTermHandler implements InterfaceTermHandler {
 	}
 
 
-	public StringBuffer getWordsAsBuffer() {
+	public StringBuffer buffer() {
 		final StringBuffer outputBuffer = new StringBuffer();
 		outputBuffer.append(wordSet.toArray().toString());
 		return outputBuffer;

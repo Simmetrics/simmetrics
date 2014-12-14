@@ -50,15 +50,24 @@ import org.simmetrics.tokenisers.AbstractTokenizer;
 import org.simmetrics.tokenisers.CachingTokenizer;
 import org.simmetrics.tokenisers.Tokenizer;
 
-import uk.ac.shef.wit.simmetrics.wordhandlers.DummyStopTermHandler;
-import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
-
 public class CachingTokeniserTest extends TokeniserTest {
 
 	private class HitCountingTokenizer extends AbstractTokenizer {
 
+		protected HitCountingTokenizer() {
+			// Private test class
+		}
+
 		private Map<String, Integer> arrayHitCount = new HashMap<String, Integer>();
 		private Map<String, Integer> setHitCount = new HashMap<String, Integer>();
+
+		public Map<String, Integer> getArrayHitCount() {
+			return arrayHitCount;
+		}
+
+		public Map<String, Integer> getSetHitCount() {
+			return setHitCount;
+		}
 
 		@Override
 		public Set<String> tokenizeToSet(String input) {
@@ -86,8 +95,6 @@ public class CachingTokeniserTest extends TokeniserTest {
 			return s;
 		}
 
-
-
 	}
 
 	private HitCountingTokenizer tokenizer;
@@ -101,14 +108,9 @@ public class CachingTokeniserTest extends TokeniserTest {
 	@Override
 	public T[] getTests() {
 
-		return new T[] { 
-				new T("ABC", "ABC"), 
+		return new T[] { new T("ABC", "ABC"), new T("CCC", "CCC"),
+				new T("ABC", "ABC"), new T("EEE", "EEE"), new T("ABC", "ABC"),
 				new T("CCC", "CCC"),
-				new T("ABC", "ABC"),
-				new T("EEE", "EEE"),
-				new T("ABC", "ABC"),
-				new T("CCC", "CCC"),
-
 
 		};
 	}
@@ -116,16 +118,19 @@ public class CachingTokeniserTest extends TokeniserTest {
 	@Override
 	public void testTokenizeToArrayList() {
 		super.testTokenizeToArrayList();
-		Assert.assertEquals(new Integer(1), tokenizer.arrayHitCount.get("ABC"));
-		Assert.assertEquals(new Integer(2), tokenizer.arrayHitCount.get("CCC"));
+		Assert.assertEquals(new Integer(1),
+				tokenizer.getArrayHitCount().get("ABC"));
+		Assert.assertEquals(new Integer(2),
+				tokenizer.getArrayHitCount().get("CCC"));
 	}
 
 	@Override
 	public void testTokenizeToSet() {
 		super.testTokenizeToSet();
-		Assert.assertEquals(new Integer(1), tokenizer.setHitCount.get("ABC"));
-		Assert.assertEquals(new Integer(2), tokenizer.setHitCount.get("CCC"));
-
+		Assert.assertEquals(new Integer(1),
+				tokenizer.getSetHitCount().get("ABC"));
+		Assert.assertEquals(new Integer(2),
+				tokenizer.getSetHitCount().get("CCC"));
 
 	}
 }

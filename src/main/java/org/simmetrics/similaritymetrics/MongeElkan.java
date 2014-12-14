@@ -128,7 +128,7 @@ public class MongeElkan extends TokenizingStringMetric {
 			}
 			sumMatches += maxFound;
 		}
-		return sumMatches / (float) str1Tokens.size();
+		return sumMatches / str1Tokens.size();
 	}
 
 }

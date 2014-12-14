@@ -215,7 +215,7 @@ public class TagLinkToken extends SimplyfingStringMetric {
 			for (int u = Math.max(0, t - bound), flag = 0; u < Math.min(t
 					+ bound + 1, U.length())
 					&& flag == 0; u++) {
-				float tr2 = ((float) Math.abs(t - u));
+				float tr2 = (Math.abs(t - u));
 				if ((lastTr >= 0.0) && (lastTr < tr2)) {
 					flag = 1;
 				} else {
@@ -247,7 +247,7 @@ public class TagLinkToken extends SimplyfingStringMetric {
 	 * @param candidateList
 	 *            ArrayList
 	 */
-	private void sortList(ArrayList<Candidates> candidateList) {
+	private static void sortList(ArrayList<Candidates> candidateList) {
 		sort(candidateList, new Comparator<Candidates>() {
 			public int compare(Candidates o1, Candidates o2) {
 				float scoreT = o1.getScore();
@@ -274,12 +274,12 @@ public class TagLinkToken extends SimplyfingStringMetric {
 	 *            String
 	 * @return float
 	 */
-	private float winkler(float score, String T, String U) {
+	private static float winkler(float score, String T, String U) {
 		score = score + (getPrefix(T, U) * 0.1f * (1.0f - score));
 		return score;
 	}
 
-	private int getPrefix(String T, String U) {
+	private static int getPrefix(String T, String U) {
 		int bound = Math.min(4, Math.min(T.length(), U.length()));
 		int prefix;
 		for (prefix = 0; prefix < bound; prefix++) {
@@ -368,7 +368,7 @@ public class TagLinkToken extends SimplyfingStringMetric {
 	 *            float
 	 * @return float
 	 */
-	private float round(float number) {
+	private static float round(float number) {
 		int round = (int) (number * 1000.00f);
 		float rest = (number * 1000.00f) - round;
 		if (rest >= 0.5) {

@@ -27,7 +27,7 @@ public class CachingSimplifier implements Simplifier {
 
 				@Override
 				public String load(String key) throws Exception {
-					return simplifier.simplify(key);
+					return getSimplifier().simplify(key);
 				}
 
 			});

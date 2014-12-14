@@ -53,7 +53,7 @@ public interface InterfaceTermHandler {
 	 * @param termToAdd
 	 *            the Word to add
 	 */
-	public void addWord(String termToAdd);
+	public void add(String termToAdd);
 
 	/**
 	 * Removes the given word from the list.
@@ -61,22 +61,14 @@ public interface InterfaceTermHandler {
 	 * @param termToRemove
 	 *            the word term to remove
 	 */
-	public void removeWord(String termToRemove);
-
-	/**
-	 * Gets the short description string of the stop word handler used.
-	 * 
-	 * @return a short string details the stop word handler used
-	 */
-	@Deprecated
-	public String getShortDescriptionString();
+	public void remove(String termToRemove);
 
 	/**
 	 * Gets the number of stopwords in the list.
 	 * 
 	 * @return the number of stopwords in the list
 	 */
-	public int getNumberOfWords();
+	public int size();
 
 	/**
 	 * Determines if a given term is a word or not.
@@ -92,6 +84,6 @@ public interface InterfaceTermHandler {
 	 * 
 	 * @return a stringBuffer of the words in the handler
 	 */
-	public StringBuffer getWordsAsBuffer();
+	public StringBuffer buffer();
 
 }

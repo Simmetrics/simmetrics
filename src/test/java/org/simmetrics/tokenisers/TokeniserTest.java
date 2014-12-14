@@ -9,10 +9,8 @@ import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.simmetrics.StringMetric;
 import org.simmetrics.tokenisers.Tokenizer;
 
-import uk.ac.shef.wit.simmetrics.simplifier.PassThroughSimplifier;
 import uk.ac.shef.wit.simmetrics.wordhandlers.DummyStopTermHandler;
 import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
 

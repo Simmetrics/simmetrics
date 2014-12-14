@@ -43,7 +43,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
 
-import uk.ac.shef.wit.simmetrics.wordhandlers.DummyStopTermHandler;
 import uk.ac.shef.wit.simmetrics.wordhandlers.InterfaceTermHandler;
 
 /**

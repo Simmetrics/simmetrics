@@ -215,7 +215,7 @@ public class TagLink extends SimplyfingStringMetric   {
 	 *            String[]
 	 * @return float
 	 */
-	private float getMinStringSize(String[] tTokens, String[] uTokens) {
+	private static float getMinStringSize(String[] tTokens, String[] uTokens) {
 		float tSize = 0, uSize = 0;
 		for (String tToken : tTokens) {
 			tSize += tToken.length();
@@ -484,7 +484,7 @@ public class TagLink extends SimplyfingStringMetric   {
 	 * @param list
 	 *            ArrayList of candidates
 	 */
-	private void sortCandidateList(ArrayList<Candidates> list) {
+	private static void sortCandidateList(ArrayList<Candidates> list) {
 		java.util.Collections.sort(list, new java.util.Comparator<Candidates>() {
 			public int compare(Candidates o1, Candidates o2) {
 				// First sort, by score in index
@@ -605,7 +605,7 @@ public class TagLink extends SimplyfingStringMetric   {
 	 *            Map
 	 * @return float
 	 */
-	private float getFrequency(String word, Map<String, Float> map) {
+	private static float getFrequency(String word, Map<String, Float> map) {
 		Float frequency = map.get(word);
 		if (frequency == null) {
 			return 0;
@@ -620,7 +620,7 @@ public class TagLink extends SimplyfingStringMetric   {
 	 *            float
 	 * @return float
 	 */
-	private float round(float number) {
+	private static float round(float number) {
 		int round = (int) (number * 1000.00f);
 		float rest = (number * 1000.00f) - round;
 		if (rest >= 0.5f) {

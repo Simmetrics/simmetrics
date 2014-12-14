@@ -52,7 +52,7 @@ import org.simmetrics.StringMetric;
  * @author Sam Chapman <a href="http://www.dcs.shef.ac.uk/~sam/">Website</a>, <a href="mailto:sam@dcs.shef.ac.uk">Email</a>.
  * @version 1.1
  */
-public final class MeanMetricArbitrator implements InterfaceMetricArbitrator  {
+public final class MeanMetricArbitrator implements MetricArbitrator  {
 
     /**
      * private vector of InterfaceStringMetric's used in the arbitration. 
@@ -106,23 +106,6 @@ public final class MeanMetricArbitrator implements InterfaceMetricArbitrator  {
         metricsForArbitration.clear();
     }
 
-    /**
-     * returns a string of the MetricArbitrator name.
-     *
-     * @return a string of the MetricArbitrator name
-     */
-    public String getShortDescriptionString() {
-        return "MeanMetricArbitrator";
-    }
-
-    /**
-     * returns a long string of the MetricArbitrator description.
-     *
-     * @return a long string of the MetricArbitrator description
-     */
-    public String getLongDescriptionString() {
-        return "MeanMetricArbitrator gives equal weightings too all metrics and returns an arbitrated score for all";
-    }
 
     /**
      * gets the actual time in milliseconds it takes to perform an Arbitration.

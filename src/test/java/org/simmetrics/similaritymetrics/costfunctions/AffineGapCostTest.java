@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.simmetrics.StringMetric;
 import org.simmetrics.similaritymetrics.costfunctions.AffineGapCost;
 
 public abstract class AffineGapCostTest {

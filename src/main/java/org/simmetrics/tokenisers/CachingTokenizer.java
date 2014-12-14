@@ -1,13 +1,10 @@
 package org.simmetrics.tokenisers;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
-import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -34,7 +31,7 @@ public class CachingTokenizer implements Tokenizer {
 
 				@Override
 				public ArrayList<String> load(String key) throws Exception {
-					return tokenizer.tokenizeToList(key);
+					return getTokenizer().tokenizeToList(key);
 				}
 
 			});
@@ -45,7 +42,7 @@ public class CachingTokenizer implements Tokenizer {
 
 				@Override
 				public Set<String> load(String key) throws Exception {
-					return tokenizer.tokenizeToSet(key);
+					return getTokenizer().tokenizeToSet(key);
 				}
 
 			});

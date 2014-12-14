@@ -93,15 +93,15 @@ public class BlockDistance extends TokenizingStringMetric {
 		final ArrayList<String> str1Tokens = tokenizeToList(string1);
 		final ArrayList<String> str2Tokens = tokenizeToList(string2);
 
-		final float totalPossible = (float) (str1Tokens.size() + str2Tokens
-				.size());
+		final float totalPossible = str1Tokens.size() + str2Tokens
+				.size();
 
 		final float totalDistance = getInnerUnNormalizedSimilarity(str1Tokens,
 				str2Tokens);
 		return (totalPossible - totalDistance) / totalPossible;
 	}
 
-	private float getInnerUnNormalizedSimilarity(
+	private static float getInnerUnNormalizedSimilarity(
 			final ArrayList<String> str1Tokens,
 			final ArrayList<String> str2Tokens) {
 		final Set<String> allTokens = new HashSet<String>();

@@ -76,7 +76,7 @@ public class JaroWinkler extends SimplyfingStringMetric {
 		// string2 which share a common prefix
 		final int prefixLength = getPrefixLength(string1, string2);
 		return dist
-				+ ((float) prefixLength * PREFIXADUSTMENTSCALE * (1.0f - dist));
+				+ (prefixLength * PREFIXADUSTMENTSCALE * (1.0f - dist));
 	}
 
 	/**

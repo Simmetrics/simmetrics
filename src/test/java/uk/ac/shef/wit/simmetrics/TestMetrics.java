@@ -217,7 +217,7 @@ public final class TestMetrics {
 				int termLen = 0;
 				for (int len = 1; len < TESTMAXLENGTHTIMINGTEST; len++, termLen++) {
 					if (termLen < TESTMAXLENGTHTIMINGTERMLENGTH) {
-						testString.append((char) (((int) 'a') + (int) (Math
+						testString.append((char) (( 'a') + (int) (Math
 								.random() * (((float) 'z') - ((float) 'a')))));
 					} else {
 						testString.append(' ');

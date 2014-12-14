@@ -6,8 +6,8 @@ import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.simmetrics.similaritymetrics.SimonWhite;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.SimonWhite;
 import uk.ac.shef.wit.simmetrics.simplifier.CaseSimplifier;
 import static org.simmetrics.StringMetrics.*;
 

@@ -43,7 +43,7 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
 public class AffineGap5_1Test extends InterfaceAffineGapCostTest {
 
 	@Override
-	public InterfaceAffineGapCost getCost() {
+	public AffineGapCost getCost() {
 		return new AffineGap5_1();
 	}
 

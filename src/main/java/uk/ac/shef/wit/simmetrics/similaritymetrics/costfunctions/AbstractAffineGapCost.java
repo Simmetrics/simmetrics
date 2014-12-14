@@ -40,7 +40,7 @@
 package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
 
 
-public abstract class AbstractAffineGapCost implements InterfaceAffineGapCost {
+public abstract class AbstractAffineGapCost implements AffineGapCost {
 
 	
 	@Deprecated

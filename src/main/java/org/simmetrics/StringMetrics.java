@@ -5,10 +5,11 @@ import static java.lang.Math.max;
 
 import java.util.List;
 
+import org.simmetrics.tokenisers.CachingTokenizer;
+import org.simmetrics.tokenisers.Tokenizer;
+
 import uk.ac.shef.wit.simmetrics.simplifier.CachingSimplifier;
 import uk.ac.shef.wit.simmetrics.simplifier.Simplifier;
-import uk.ac.shef.wit.simmetrics.tokenisers.CachingTokenizer;
-import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
 
 public abstract class StringMetrics {
 

@@ -43,7 +43,7 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
 public class SubCost5_3_Minus3Test extends InterfaceSubstitutionCostTest {
 
 	@Override
-	public InterfaceSubstitutionCost getCost() {
+	public SubstitutionCost getCost() {
 		return new SubCost5_3_Minus3();
 	}
 

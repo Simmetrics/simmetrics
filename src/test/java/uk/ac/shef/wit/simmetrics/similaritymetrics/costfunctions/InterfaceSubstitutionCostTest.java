@@ -28,9 +28,9 @@ public abstract class InterfaceSubstitutionCostTest {
 	private static final float DEFAULT_DELTA = 0.0001f;
 	private float delta;
 
-	protected InterfaceSubstitutionCost cost;
+	protected SubstitutionCost cost;
 
-	public abstract InterfaceSubstitutionCost getCost();
+	public abstract SubstitutionCost getCost();
 
 	public abstract T[] getTests();
 

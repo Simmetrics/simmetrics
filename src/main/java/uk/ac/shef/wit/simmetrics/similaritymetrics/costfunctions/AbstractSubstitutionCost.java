@@ -47,7 +47,7 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
  */
 
 public abstract class AbstractSubstitutionCost implements
-		InterfaceSubstitutionCost {
+		SubstitutionCost {
 	@Deprecated
 	public String getShortDescriptionString() {
 		return getClass().getSimpleName();

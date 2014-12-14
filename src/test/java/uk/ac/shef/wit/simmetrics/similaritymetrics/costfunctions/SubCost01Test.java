@@ -43,7 +43,7 @@ public class SubCost01Test extends InterfaceSubstitutionCostTest {
 
 
 	@Override
-	public InterfaceSubstitutionCost getCost() {
+	public SubstitutionCost getCost() {
 		return new SubCost01();
 	}
 

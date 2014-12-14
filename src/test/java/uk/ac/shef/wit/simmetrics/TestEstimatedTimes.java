@@ -39,12 +39,11 @@
 
 package uk.ac.shef.wit.simmetrics;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.*;
-
 import java.text.DecimalFormat;
 import java.util.Vector;
 
 import org.simmetrics.StringMetric;
+import org.simmetrics.similaritymetrics.*;
 
 /**
  *

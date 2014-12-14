@@ -1,6 +1,6 @@
 package org.simmetrics;
 
-import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
+import org.simmetrics.tokenisers.Tokenizer;
 
 public interface Tokenizing {
 

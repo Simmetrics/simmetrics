@@ -24,9 +24,9 @@ public abstract class InterfaceAffineGapCostTest {
 	private static final float DEFAULT_DELTA = 0.0001f;
 	private float delta;
 
-	protected InterfaceAffineGapCost cost;
+	protected AffineGapCost cost;
 
-	public abstract InterfaceAffineGapCost getCost();
+	public abstract AffineGapCost getCost();
 
 	public abstract T[] getTests();
 

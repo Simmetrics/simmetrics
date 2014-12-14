@@ -39,13 +39,13 @@
 
 package uk.ac.shef.wit.simmetrics;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.PerformancTestingMetric;
 import uk.ac.shef.wit.simmetrics.metrichandlers.MetricHandler;
 
 import java.text.DecimalFormat;
 import java.util.Set;
 
 import org.simmetrics.StringMetric;
+import org.simmetrics.similaritymetrics.PerformancTestingMetric;
 
 /**
  * Package: n/a Description: uk.ac.shef.wit.simmetrics.TestMetrics implements a

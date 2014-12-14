@@ -3,8 +3,9 @@ package org.simmetrics;
 import java.util.ArrayList;
 import java.util.Set;
 
+import org.simmetrics.tokenisers.Tokenizer;
+
 import uk.ac.shef.wit.simmetrics.simplifier.PassThroughSimplifier;
-import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
 
 public abstract class TokenizingStringMetric extends SimplyfingStringMetric
 		implements Tokenizing {

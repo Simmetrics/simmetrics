@@ -41,7 +41,7 @@ package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
 import org.simmetrics.SimplyfingStringMetric;
 
-import uk.ac.shef.wit.simmetrics.utils.Math;
+import static uk.ac.shef.wit.simmetrics.utils.Math.min3;
 
 /**
  * Implements the Jaro-Winkler algorithm providing a similarity measure between
@@ -90,7 +90,7 @@ public class JaroWinkler extends SimplyfingStringMetric {
 	 */
 	private static int getPrefixLength(final String string1,
 			final String string2) {
-		final int n = Math.min3(MINPREFIXTESTLENGTH, string1.length(),
+		final int n = min3(MINPREFIXTESTLENGTH, string1.length(),
 				string2.length());
 		// check for prefix similarity of length n
 		for (int i = 0; i < n; i++) {

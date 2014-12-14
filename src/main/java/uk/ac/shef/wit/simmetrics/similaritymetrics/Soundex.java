@@ -39,9 +39,9 @@
 
 package uk.ac.shef.wit.simmetrics.similaritymetrics;
 
-import org.simmetrics.SimplyfingStringMetric;
-
-import uk.ac.shef.wit.simmetrics.simplifier.Simplifier;
+import uk.ac.shef.wit.simmetrics.simplifier.AbstractSimplifier;
+import uk.ac.shef.wit.simmetrics.simplifier.CaseSimplifier;
+import uk.ac.shef.wit.simmetrics.simplifier.CompositeSimplifier;
 import static uk.ac.shef.wit.simmetrics.utils.Math.clamp;
 
 /**
@@ -51,56 +51,30 @@ import static uk.ac.shef.wit.simmetrics.utils.Math.clamp;
  * @author Sam Chapman
  * @version 1.1
  */
-public  class Soundex extends SimplyfingStringMetric {
+public class Soundex extends JaroWinkler {
 
-	/**
-	 * Defines the soundex length in characters e.g. S-2433 is 6 long.
-	 */
-	private final static int SOUNDEXLENGTH = 6;
-	private final SimplyfingStringMetric metric;
-	private final Simplifier soundexSimplifier = new SoundexSimplifier(
-			SOUNDEXLENGTH);
-
-	/**
-	 * Constructs a Soundex metric with a {@link JaroWinkler} metric to compare
-	 * soundex strings.
-	 */
 	public Soundex() {
-		this(new JaroWinkler());
+		setSimplifier(new CompositeSimplifier() {
+			{
+				setSimplifiers(
+						new CaseSimplifier.Lower(),
+						new SoundexSimplifier());
+			}
+
+		});
+
 	}
 
-	/**
-	 * Constructs a Soundex metric with a {@link JaroWinkler} metric to compare
-	 * soundex strings.
-	 * 
-	 * @param metric
-	 *            the metric used to compare two soundex strings
-	 */
-	public Soundex(final SimplyfingStringMetric metric) {
-		this.metric = metric;
-	}
+	private class SoundexSimplifier extends AbstractSimplifier {
 
-	// TODO:
-	// public float getSimilarityTimingEstimated(final String string1,
-	// final String string2) {
-	// final float str1Length = string1.length();
-	// final float str2Length = string2.length();
-	// final String testString = "abcdefghijklmnopq";
-	// return ((str1Length + str2Length) * ESTIMATEDTIMINGCONST)
-	// + metric.getSimilarityTimingEstimated(
-	// testString.substring(0, SOUNDEXLENGTH),
-	// testString.substring(0, SOUNDEXLENGTH));
-	// }
+		/**
+		 * Defines the soundex length in characters e.g. S-2433 is 6 long.
+		 */
+		private final static int SOUNDEXLENGTH = 6;
 
-	protected float compareSimplified(final String string1, final String string2) {
-		final String soundex1 = soundexSimplifier.simplify(string1);
-		final String soundex2 = soundexSimplifier.simplify(string2);
-		// convert into zero to one return using attached string metric to score
-		// comparison
-		return metric.compare(soundex1, soundex2);
-	}
-
-	private class SoundexSimplifier implements Simplifier {
+		public SoundexSimplifier() {
+			this(SOUNDEXLENGTH);
+		}
 
 		private int soundExLen;
 
@@ -128,7 +102,7 @@ public  class Soundex extends SimplyfingStringMetric {
 			 * Clean and tidy
 			 */
 			String wordStr = wordString;
-			wordStr = wordStr.replaceAll("[^a-zA-Z]", " "); // rpl non-chars
+			wordStr = wordStr.replaceAll("[^a-z]", " "); // rpl non-chars
 															// whitespace
 			wordStr = wordStr.replaceAll("\\s+", ""); // remove spaces
 
@@ -159,26 +133,16 @@ public  class Soundex extends SimplyfingStringMetric {
 			// 5 <- M,N
 			// 6 <- R
 
-			wordStr = wordStr.replaceAll("[AaEeIiOoUuWwHh]", "0");
-			wordStr = wordStr.replaceAll("[BbPpFfVv]", "1");
-			wordStr = wordStr.replaceAll("[CcSsKkGgJjQqXxZz]", "2");
-			wordStr = wordStr.replaceAll("[DdTt]", "3");
-			wordStr = wordStr.replaceAll("[Ll]", "4");
-			wordStr = wordStr.replaceAll("[MmNn]", "5");
-			wordStr = wordStr.replaceAll("[Rr]", "6");
+			// Match one or more characters, repeating characters are reduced to
+			// a single digit.
+			wordStr = wordStr.replaceAll("[aeiouwh]+", "0");
+			wordStr = wordStr.replaceAll("[bpfv]+", "1");
+			wordStr = wordStr.replaceAll("[cskgjqxz]+", "2");
+			wordStr = wordStr.replaceAll("[dt]+", "3");
+			wordStr = wordStr.replaceAll("[l]+", "4");
+			wordStr = wordStr.replaceAll("[mn]+", "5");
+			wordStr = wordStr.replaceAll("[r]+", "6");
 
-			// Remove extra equal adjacent digits
-			int wsLen = wordStr.length();
-			char lastChar = '-';
-			String tmpStr = "-"; /* replacing skipped first character */
-			for (int i = 1; i < wsLen; i++) {
-				char curChar = wordStr.charAt(i);
-				if (curChar != lastChar) {
-					tmpStr += curChar;
-					lastChar = curChar;
-				}
-			}
-			wordStr = tmpStr;
 			wordStr = wordStr.substring(1); /* Drop first letter code */
 			wordStr = wordStr.replaceAll("0", ""); /* remove zeros */
 			wordStr += "000000000000000000"; /* pad with zeros on right */

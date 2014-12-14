@@ -140,48 +140,39 @@ public class NeedlemanWunch extends SimplyfingStringMetric {
 	}
 
 	private float getUnNormalisedSimilarity(final String s, final String t) {
-		final float[][] d; // matrix
-		final int n; // length of s
-		final int m; // length of t
-		int i; // iterates through s
-		int j; // iterates through t
-		float cost; // cost
 
-		// check for zero length input
-		n = s.length();
-		m = t.length();
-		if (n == 0) {
-			return m;
+		if (s.isEmpty()) {
+			return t.length();
 		}
-		if (m == 0) {
-			return n;
+		if (t.isEmpty()) {
+			return s.length();
 		}
 
 		// create matrix (n+1)x(m+1)
-		d = new float[n + 1][m + 1];
+		final float[][] d = new float[s.length() + 1][t.length() + 1];
 
 		// put row and column numbers in place
-		for (i = 0; i <= n; i++) {
+		for (int i = 0; i < d.length; i++) {
 			d[i][0] = i;
 		}
-		for (j = 0; j <= m; j++) {
+		for (int j = 0; j < d[0].length; j++) {
 			d[0][j] = j;
 		}
 
 		// cycle through rest of table filling values from the lowest cost value
 		// of the three part cost function
-		for (i = 1; i <= n; i++) {
-			for (j = 1; j <= m; j++) {
+		for (int i = 1; i < d.length; i++) {
+			for (int j = 1; j < d[0].length; j++) {
 				// get the substution cost
-				cost = dCostFunc.getCost(s, i - 1, t, j - 1);
+				float cost = dCostFunc.getCost(s, i-1, t, j-1);
 
 				// find lowest cost at point from three possible
-				d[i][j] = min3(d[i - 1][j] + gapCost, d[i][j - 1] + gapCost,
-						d[i - 1][j - 1] + cost);
+				d[i][j] = min3(d[i-1][j] + gapCost, d[i][j-1] + gapCost, d[i-1][j-1]
+						+ cost);
 			}
 		}
 
 		// return bottom right of matrix as holds the maximum edit score
-		return d[n][m];
+		return d[d.length - 1][d[0].length - 1];
 	}
 }

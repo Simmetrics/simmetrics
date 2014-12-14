@@ -119,11 +119,10 @@ public class MongeElkan extends TokenizingStringMetric {
 
 		float sumMatches = 0.0f;
 		float maxFound;
-		for (Object str1Token : str1Tokens) {
+		for (String str1Token : str1Tokens) {
 			maxFound = 0.0f;
-			for (Object str2Token : str2Tokens) {
-				final float found = metric.compare((String) str1Token,
-						(String) str2Token);
+			for (String str2Token : str2Tokens) {
+				final float found = metric.compare(str1Token, str2Token);
 				if (found > maxFound) {
 					maxFound = found;
 				}

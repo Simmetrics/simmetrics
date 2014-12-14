@@ -44,7 +44,7 @@ import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserWhitespace;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.ArrayList;
+import static java.lang.Math.pow;
 
 import org.simmetrics.TokenizingStringMetric;
 
@@ -56,7 +56,7 @@ import org.simmetrics.TokenizingStringMetric;
  * @author Sam Chapman
  * @version 1.1
  */
-public  class CosineSimilarity extends TokenizingStringMetric {
+public class CosineSimilarity extends TokenizingStringMetric {
 
 	/**
 	 * Constructs a CosineSimilarity metric with a {@link TokeniserWhitespace}.
@@ -75,8 +75,6 @@ public  class CosineSimilarity extends TokenizingStringMetric {
 		super(tokenizer);
 	}
 
-	
-
 	// TODO:
 	// public float getSimilarityTimingEstimated(final String string1,
 	// final String string2) {
@@ -88,25 +86,20 @@ public  class CosineSimilarity extends TokenizingStringMetric {
 	// }
 
 	protected float compareSimplified(final String string1, final String string2) {
-		final ArrayList<String> str1Tokens = tokenizeToList(string1);
-		final ArrayList<String> str2Tokens = tokenizeToList(string2);
+		final Set<String> str1Tokens = tokenizeToSet(string1);
+		final Set<String> str2Tokens = tokenizeToSet(string2);
 
 		final Set<String> allTokens = new HashSet<String>();
 		allTokens.addAll(str1Tokens);
-		final int termsInString1 = allTokens.size();
-		final Set<String> secondStringTokens = new HashSet<String>();
-		secondStringTokens.addAll(str2Tokens);
-		final int termsInString2 = secondStringTokens.size();
+		allTokens.addAll(str2Tokens);
 
-		// now combine the sets
-		allTokens.addAll(secondStringTokens);
-		final int commonTerms = (termsInString1 + termsInString2)
+		final int commonTerms = (str1Tokens.size() + str2Tokens.size())
 				- allTokens.size();
 
 		// return CosineSimilarity
 		return (float) (commonTerms)
-				/ (float) (Math.pow((float) termsInString1, 0.5f) * Math.pow(
-						(float) termsInString2, 0.5f));
+				/ (float) (pow(str1Tokens.size(), 0.5) * pow(str2Tokens.size(),
+						0.5));
 	}
 
 }

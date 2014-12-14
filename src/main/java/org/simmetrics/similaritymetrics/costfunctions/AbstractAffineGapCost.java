@@ -37,27 +37,13 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
+package org.simmetrics.similaritymetrics.costfunctions;
 
-
-public class SubCost5_3_Minus3Test extends InterfaceSubstitutionCostTest {
-
-	@Override
-	public SubstitutionCost getCost() {
-		return new SubCost5_3_Minus3();
-	}
+public abstract class AbstractAffineGapCost implements AffineGapCost {
 
 	@Override
-	public T[] getTests() {
-		final String testString1 = "hello world AAAAAAA BBB ABCDEF this is a test";
-		final String testString2 = "jello wrd AAAAAAA BBB ABCDEF this is a test";
-
-		return new T[] { 
-				new T(-3.0000f, testString1, 0, testString2, 0),
-				new T(5.0000f, testString1, 2, testString2, 2),
-				new T(-3.0000f, testString1, 7, testString2, 7),
-				new T(-3.0000f, testString1, 10, testString2, 10),
-				new T(-3.0000f, testString1, 22, testString2, 3),
- };
+	public String toString() {
+		return getClass().getSimpleName();
 	}
+
 }

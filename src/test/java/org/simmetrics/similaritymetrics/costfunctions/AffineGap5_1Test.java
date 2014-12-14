@@ -37,26 +37,29 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
+package org.simmetrics.similaritymetrics.costfunctions;
 
-public class SubCost01Test extends InterfaceSubstitutionCostTest {
+import org.simmetrics.similaritymetrics.costfunctions.AffineGap5_1;
+import org.simmetrics.similaritymetrics.costfunctions.AffineGapCost;
 
+
+public class AffineGap5_1Test extends AffineGapCostTest {
 
 	@Override
-	public SubstitutionCost getCost() {
-		return new SubCost01();
+	public AffineGapCost getCost() {
+		return new AffineGap5_1();
 	}
 
 	@Override
 	public T[] getTests() {
-		final String testString1 = "hello world AAAAAAA BBB ABCDEF this is a test";
-		final String testString2 = "jello wrd AAAAAAA BBB ABCDEF this is a test";
-		return new T[] {
-				new T(1.0000f, testString1, 0, testString2, 0),
-				new T(0.0000f, testString1, 2, testString2, 2),
-				new T(1.0000f, testString1, 7, testString2, 7),
-				new T(1.0000f, testString1, 10, testString2, 10),
-				new T(1.0000f, testString1, 22, testString2, 3),
+		final String testString = "hello world AAAAAAA BBB ABCDEF this is a test";
+		return new T[] { new T(10.0000f, testString, 0, 6),
+				new T(5.0000f, testString, 3, 4),
+				new T(8.0000f, testString, 13, 17),
+				new T(7.0000f, testString, 19, 22),
+				new T(10.0000f, testString, 23, 29),
+				new T(5.0000f, testString, 5, 6),
+
 		};
 	}
 }

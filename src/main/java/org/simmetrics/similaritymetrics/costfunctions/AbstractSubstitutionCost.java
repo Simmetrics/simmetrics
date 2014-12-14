@@ -37,51 +37,20 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
+package org.simmetrics.similaritymetrics.costfunctions;
 
 /**
- * InterfaceAffineGapCost defines an Interface for AffineGapCost functions to be
- * interchanged.
+ * AbstractSubstitutionCost implements a abstract class for substitution costs
+ * functions.
  *
- * @author Sam Chapman
- * @version 1.1
+ * @author mpkorstanje
  */
-public interface AffineGapCost {
 
-	/**
-	 * Returns the name of the affine gap cost function.
-	 *
-	 * @return the name of the affine gap cost function
-	 */
-	@Deprecated
-	public String getShortDescriptionString();
+public abstract class AbstractSubstitutionCost implements SubstitutionCost {
 
-	/**
-	 * Get cost between characters.
-	 *
-	 * @param stringToGap
-	 *            - the string to get the cost of a gap
-	 * @param stringIndexStartGap
-	 *            - the index within the string to test a start gap from
-	 * @param stringIndexEndGap
-	 *            - the index within the string to test a end gap to
-	 *
-	 * @return the cost of a Gap G
-	 */
-	public float getCost(String stringToGap, int stringIndexStartGap,
-			int stringIndexEndGap);
+	@Override
+	public String toString() {
+		return getClass().getSimpleName();
+	}
 
-	/**
-	 * Returns the maximum possible cost.
-	 *
-	 * @return the maximum possible cost
-	 */
-	public float getMaxCost();
-
-	/**
-	 * Returns the minimum possible cost.
-	 *
-	 * @return the minimum possible cost
-	 */
-	public float getMinCost();
 }

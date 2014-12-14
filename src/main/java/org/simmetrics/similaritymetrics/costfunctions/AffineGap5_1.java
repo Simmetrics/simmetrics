@@ -37,15 +37,31 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
+package org.simmetrics.similaritymetrics.costfunctions;
 
+/**
+ * AffineGap5_1 implements a affine gap cost function.
+ * 
+ * @author Sam Chapman
+ * @version 1.1
+ */
+public final class AffineGap5_1 extends AbstractAffineGapCost 
+		 {
 
-public abstract class AbstractAffineGapCost implements AffineGapCost {
-
-	
-	@Deprecated
-	public String getShortDescriptionString() {
-		return getClass().getSimpleName();
+	public final float getCost(final String stringToGap,
+			final int stringIndexStartGap, final int stringIndexEndGap) {
+		if (stringIndexStartGap >= stringIndexEndGap) {
+			return 0.0f;
+		} else {
+			return 5.0f + ((stringIndexEndGap - 1) - stringIndexStartGap);
+		}
 	}
 
+	public final float getMaxCost() {
+		return Float.MAX_VALUE;
+	}
+
+	public final float getMinCost() {
+		return 0.0f;
+	}
 }

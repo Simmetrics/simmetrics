@@ -1,17 +1,20 @@
-package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
+package org.simmetrics.similaritymetrics.costfunctions;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.simmetrics.StringMetric;
+import org.simmetrics.similaritymetrics.costfunctions.AffineGapCost;
 
-public abstract class InterfaceAffineGapCostTest {
+public abstract class AffineGapCostTest {
 
 	protected class T {
 		protected final float cost;
 		protected final String string;
 		protected final int index1;
 		protected final int index2;
+
 		public T(float cost, String string, int index1, int index2) {
 			super();
 			this.cost = cost;
@@ -47,12 +50,13 @@ public abstract class InterfaceAffineGapCostTest {
 			float actuall = cost.getCost(t.string, t.index1, t.index2);
 
 			String costMessage = "Cost must fall within [%.3f - %.3f] range";
-			costMessage = String.format(costMessage, cost.getMinCost(), cost.getMaxCost());
-			assertTrue(costMessage, cost.getMinCost() <= actuall && actuall <= cost.getMaxCost());
+			costMessage = String.format(costMessage, cost.getMinCost(),
+					cost.getMaxCost());
+			assertTrue(costMessage, cost.getMinCost() <= actuall
+					&& actuall <= cost.getMaxCost());
 
 			String message = String.format("\"%s\" vs \"%s\"",
-					t.string.charAt(t.index1),
-					t.string.charAt(t.index2));
+					t.string.charAt(t.index1), t.string.charAt(t.index2));
 			assertEquals(message, t.cost, actuall, delta);
 		}
 	}
@@ -63,16 +67,26 @@ public abstract class InterfaceAffineGapCostTest {
 			float actuall = cost.getCost(t.string, t.index1, t.index2);
 
 			String message = String.format("new T(%.4ff, testString, %s, %s),",
-					actuall,  t.index1, t.index2);
+					actuall, t.index1, t.index2);
 			System.out.println(message);
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
-	public void testGetShortDescriptionString() {
-		assertEquals(cost.getClass().getSimpleName(),
-				cost.getShortDescriptionString());
+	public void testToString() {
+		assertFalse(
+				"@ indicates toString() was not implemented " + cost.toString(),
+				cost.toString().contains("@"));
+
+		assertToStringContains(cost, cost.getClass().getSimpleName());
+	}
+
+	protected static void assertToStringContains(AffineGapCost metric,
+			String content) {
+		String string = metric.toString();
+		String message = String.format("%s must contain %s ", string, content);
+
+		assertTrue(message, message.contains(content));
 	}
 
 }

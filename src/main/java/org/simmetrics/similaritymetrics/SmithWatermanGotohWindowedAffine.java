@@ -40,11 +40,11 @@
 package org.simmetrics.similaritymetrics;
 
 import org.simmetrics.SimplyfingStringMetric;
+import org.simmetrics.similaritymetrics.costfunctions.AffineGap5_1;
+import org.simmetrics.similaritymetrics.costfunctions.AffineGapCost;
+import org.simmetrics.similaritymetrics.costfunctions.SubCost5_3_Minus3;
+import org.simmetrics.similaritymetrics.costfunctions.SubstitutionCost;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AffineGapCost;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubstitutionCost;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AffineGap5_1;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost5_3_Minus3;
 import static java.lang.Math.max;
 import static uk.ac.shef.wit.simmetrics.utils.Math.max3;
 import static uk.ac.shef.wit.simmetrics.utils.Math.max4;

@@ -37,40 +37,29 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
+package org.simmetrics.similaritymetrics.costfunctions;
 
-/**
- * SubCost1_Minus2 implements a substitution cost function where d(i,j) = 1 if i
- * does not equal j, -2 if i equals j.
- * 
- *
- * @author Sam Chapman
- * @version 1.1
- */
-public final class SubCost1_Minus2 extends AbstractSubstitutionCost {
+import org.simmetrics.similaritymetrics.costfunctions.SubCost01;
+import org.simmetrics.similaritymetrics.costfunctions.SubstitutionCost;
 
-	public final float getCost(final String str1, final int string1Index,
-			final String str2, final int string2Index) {
-		// check within range
-		if (str1.length() <= string1Index || string1Index < 0) {
-			return 0;
-		}
-		if (str2.length() <= string2Index || string2Index < 0) {
-			return 0;
-		}
+public class SubCost01Test extends InterfaceSubstitutionCostTest {
 
-		if (str1.charAt(string1Index) == str2.charAt(string2Index)) {
-			return 1.0f;
-		} else {
-			return -2.0f;
-		}
+
+	@Override
+	public SubstitutionCost getCost() {
+		return new SubCost01();
 	}
 
-	public final float getMaxCost() {
-		return 1.0f;
-	}
-
-	public final float getMinCost() {
-		return -2.0f;
+	@Override
+	public T[] getTests() {
+		final String testString1 = "hello world AAAAAAA BBB ABCDEF this is a test";
+		final String testString2 = "jello wrd AAAAAAA BBB ABCDEF this is a test";
+		return new T[] {
+				new T(1.0000f, testString1, 0, testString2, 0),
+				new T(0.0000f, testString1, 2, testString2, 2),
+				new T(1.0000f, testString1, 7, testString2, 7),
+				new T(1.0000f, testString1, 10, testString2, 10),
+				new T(1.0000f, testString1, 22, testString2, 3),
+		};
 	}
 }

@@ -37,31 +37,40 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
+package org.simmetrics.similaritymetrics.costfunctions;
 
 /**
- * AffineGap5_1 implements a affine gap cost function.
+ * SubCost1_Minus2 implements a substitution cost function where d(i,j) = 1 if i
+ * does not equal j, -2 if i equals j.
  * 
+ *
  * @author Sam Chapman
  * @version 1.1
  */
-public final class AffineGap5_1 extends AbstractAffineGapCost 
-		 {
+public final class SubCost1_Minus2 extends AbstractSubstitutionCost {
 
-	public final float getCost(final String stringToGap,
-			final int stringIndexStartGap, final int stringIndexEndGap) {
-		if (stringIndexStartGap >= stringIndexEndGap) {
-			return 0.0f;
+	public final float getCost(final String str1, final int string1Index,
+			final String str2, final int string2Index) {
+		// check within range
+		if (str1.length() <= string1Index || string1Index < 0) {
+			return 0;
+		}
+		if (str2.length() <= string2Index || string2Index < 0) {
+			return 0;
+		}
+
+		if (str1.charAt(string1Index) == str2.charAt(string2Index)) {
+			return 1.0f;
 		} else {
-			return 5.0f + ((stringIndexEndGap - 1) - stringIndexStartGap);
+			return -2.0f;
 		}
 	}
 
 	public final float getMaxCost() {
-		return Float.MAX_VALUE;
+		return 1.0f;
 	}
 
 	public final float getMinCost() {
-		return 0.0f;
+		return -2.0f;
 	}
 }

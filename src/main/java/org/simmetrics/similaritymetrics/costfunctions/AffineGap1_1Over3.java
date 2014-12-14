@@ -37,52 +37,34 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
+package org.simmetrics.similaritymetrics.costfunctions;
+
+import org.simmetrics.similaritymetrics.costfunctions.AbstractAffineGapCost;
 
 /**
- * InterfaceSubstitutionCost is an interface for a cost function d(i,j).
+ * AffineGap1_1Over3 implements a Affine Gap cost function.
  * 
  * @author Sam Chapman
  * @version 1.1
  */
-public interface SubstitutionCost {
+final public class AffineGap1_1Over3 extends AbstractAffineGapCost
+		 {
 
-	/**
-	 * Returns the name of the cost function.
-	 *
-	 * @return the name of the cost function
-	 */
-	@Deprecated
-	public String getShortDescriptionString();
+	public final float getCost(final String stringToGap,
+			final int stringIndexStartGap, final int stringIndexEndGap) {
+		if (stringIndexStartGap >= stringIndexEndGap) {
+			return 0.0f;
+		} else {
+			return 1.0f + (((stringIndexEndGap - 1) - stringIndexStartGap) * (1.0f / 3.0f));
+		}
+	}
 
-	/**
-	 * Get cost between characters.
-	 *
-	 * @param str1
-	 *            - the string1 to evaluate the cost
-	 * @param string1Index
-	 *            - the index within the string1 to test
-	 * @param str2
-	 *            - the string2 to evaluate the cost
-	 * @param string2Index
-	 *            - the index within the string2 to test
-	 *
-	 * @return the cost of a given substitution d(i,j)
-	 */
-	public float getCost(String str1, int string1Index, String str2,
-			int string2Index);
+	public final float getMaxCost() {
+		return Float.MAX_VALUE;
+	}
 
-	/**
-	 * Returns the maximum possible cost.
-	 *
-	 * @return the maximum possible cost
-	 */
-	public float getMaxCost();
-
-	/**
-	 * Returns the minimum possible cost.
-	 *
-	 * @return the minimum possible cost
-	 */
-	public float getMinCost();
+	
+	public final float getMinCost() {
+		return 0.0f;
+	}
 }

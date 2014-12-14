@@ -37,34 +37,45 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
-
-import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractAffineGapCost;
+package org.simmetrics.similaritymetrics.costfunctions;
 
 /**
- * AffineGap1_1Over3 implements a Affine Gap cost function.
- * 
+ * InterfaceAffineGapCost defines an Interface for AffineGapCost functions to be
+ * interchanged.
+ *
  * @author Sam Chapman
  * @version 1.1
  */
-final public class AffineGap1_1Over3 extends AbstractAffineGapCost
-		 {
+public interface AffineGapCost {
 
-	public final float getCost(final String stringToGap,
-			final int stringIndexStartGap, final int stringIndexEndGap) {
-		if (stringIndexStartGap >= stringIndexEndGap) {
-			return 0.0f;
-		} else {
-			return 1.0f + (((stringIndexEndGap - 1) - stringIndexStartGap) * (1.0f / 3.0f));
-		}
-	}
 
-	public final float getMaxCost() {
-		return Float.MAX_VALUE;
-	}
 
-	
-	public final float getMinCost() {
-		return 0.0f;
-	}
+	/**
+	 * Get cost between characters.
+	 *
+	 * @param stringToGap
+	 *            - the string to get the cost of a gap
+	 * @param stringIndexStartGap
+	 *            - the index within the string to test a start gap from
+	 * @param stringIndexEndGap
+	 *            - the index within the string to test a end gap to
+	 *
+	 * @return the cost of a Gap G
+	 */
+	public float getCost(String stringToGap, int stringIndexStartGap,
+			int stringIndexEndGap);
+
+	/**
+	 * Returns the maximum possible cost.
+	 *
+	 * @return the maximum possible cost
+	 */
+	public float getMaxCost();
+
+	/**
+	 * Returns the minimum possible cost.
+	 *
+	 * @return the minimum possible cost
+	 */
+	public float getMinCost();
 }

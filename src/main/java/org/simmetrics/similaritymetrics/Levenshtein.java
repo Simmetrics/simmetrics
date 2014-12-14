@@ -40,9 +40,9 @@
 package org.simmetrics.similaritymetrics;
 
 import org.simmetrics.SimplyfingStringMetric;
+import org.simmetrics.similaritymetrics.costfunctions.AbstractSubstitutionCost;
+import org.simmetrics.similaritymetrics.costfunctions.SubCost01;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractSubstitutionCost;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost01;
 import uk.ac.shef.wit.simmetrics.utils.Math;
 
 /**

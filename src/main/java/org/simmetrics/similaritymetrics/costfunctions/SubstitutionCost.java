@@ -37,26 +37,44 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
+package org.simmetrics.similaritymetrics.costfunctions;
 
+/**
+ * InterfaceSubstitutionCost is an interface for a cost function d(i,j).
+ * 
+ * @author Sam Chapman
+ * @version 1.1
+ */
+public interface SubstitutionCost {
 
-public class AffineGap5_1Test extends InterfaceAffineGapCostTest {
+	/**
+	 * Get cost between characters.
+	 *
+	 * @param str1
+	 *            - the string1 to evaluate the cost
+	 * @param string1Index
+	 *            - the index within the string1 to test
+	 * @param str2
+	 *            - the string2 to evaluate the cost
+	 * @param string2Index
+	 *            - the index within the string2 to test
+	 *
+	 * @return the cost of a given substitution d(i,j)
+	 */
+	public float getCost(String str1, int string1Index, String str2,
+			int string2Index);
 
-	@Override
-	public AffineGapCost getCost() {
-		return new AffineGap5_1();
-	}
+	/**
+	 * Returns the maximum possible cost.
+	 *
+	 * @return the maximum possible cost
+	 */
+	public float getMaxCost();
 
-	@Override
-	public T[] getTests() {
-		final String testString = "hello world AAAAAAA BBB ABCDEF this is a test";
-		return new T[] { new T(10.0000f, testString, 0, 6),
-				new T(5.0000f, testString, 3, 4),
-				new T(8.0000f, testString, 13, 17),
-				new T(7.0000f, testString, 19, 22),
-				new T(10.0000f, testString, 23, 29),
-				new T(5.0000f, testString, 5, 6),
-
-		};
-	}
+	/**
+	 * Returns the minimum possible cost.
+	 *
+	 * @return the minimum possible cost
+	 */
+	public float getMinCost();
 }

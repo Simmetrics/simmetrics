@@ -39,10 +39,10 @@
 
 package org.simmetrics.similaritymetrics;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractAffineGapCost;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AbstractSubstitutionCost;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.AffineGap5_1;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions.SubCost5_3_Minus3;
+import org.simmetrics.similaritymetrics.costfunctions.AbstractAffineGapCost;
+import org.simmetrics.similaritymetrics.costfunctions.AbstractSubstitutionCost;
+import org.simmetrics.similaritymetrics.costfunctions.AffineGap5_1;
+import org.simmetrics.similaritymetrics.costfunctions.SubCost5_3_Minus3;
 
 /**
  * Implements the Gotoh extension of the Smith-Waterman method incorporating

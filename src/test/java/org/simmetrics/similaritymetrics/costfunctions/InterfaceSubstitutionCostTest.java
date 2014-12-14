@@ -1,9 +1,10 @@
-package uk.ac.shef.wit.simmetrics.similaritymetrics.costfunctions;
+package org.simmetrics.similaritymetrics.costfunctions;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.simmetrics.similaritymetrics.costfunctions.SubstitutionCost;
 
 public abstract class InterfaceSubstitutionCostTest {
 
@@ -52,8 +53,10 @@ public abstract class InterfaceSubstitutionCostTest {
 					t.string2Index);
 
 			String costMessage = "Cost must fall within [%.3f - %.3f] range";
-			costMessage = String.format(costMessage, cost.getMinCost(), cost.getMaxCost());
-			assertTrue(costMessage, cost.getMinCost() <= actuall && actuall <= cost.getMaxCost());
+			costMessage = String.format(costMessage, cost.getMinCost(),
+					cost.getMaxCost());
+			assertTrue(costMessage, cost.getMinCost() <= actuall
+					&& actuall <= cost.getMaxCost());
 
 			String message = String.format("\"%s\" vs \"%s\"",
 					t.string1.charAt(t.string1Index),
@@ -67,17 +70,28 @@ public abstract class InterfaceSubstitutionCostTest {
 		for (T t : getTests()) {
 			float actuall = cost.getCost(t.string1, t.string1Index, t.string2,
 					t.string2Index);
-			String message = String.format("new T(%.4ff, testString1, %s, testString2, %s),",
-					actuall, t.string1Index,  t.string2Index);
+			String message = String.format(
+					"new T(%.4ff, testString1, %s, testString2, %s),", actuall,
+					t.string1Index, t.string2Index);
 			System.out.println(message);
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
-	public void testGetShortDescriptionString() {
-		assertEquals(cost.getClass().getSimpleName(),
-				cost.getShortDescriptionString());
+	public void testToString() {
+		assertFalse(
+				"@ indicates toString() was not implemented " + cost.toString(),
+				cost.toString().contains("@"));
+
+		assertToStringContains(cost, cost.getClass().getSimpleName());
+	}
+
+	protected static void assertToStringContains(SubstitutionCost metric,
+			String content) {
+		String string = metric.toString();
+		String message = String.format("%s must contain %s ", string, content);
+
+		assertTrue(message, message.contains(content));
 	}
 
 }

@@ -5,6 +5,8 @@ import static java.lang.Math.max;
 
 import java.util.List;
 
+import uk.ac.shef.wit.simmetrics.simplifier.CachingSimplifier;
+import uk.ac.shef.wit.simmetrics.simplifier.Simplifier;
 import uk.ac.shef.wit.simmetrics.tokenisers.CachingTokenizer;
 import uk.ac.shef.wit.simmetrics.tokenisers.Tokenizer;
 
@@ -12,7 +14,9 @@ public abstract class StringMetrics {
 
 	private static final void addCache(StringMetric metric) {
 		if (metric instanceof Simplifying) {
-			// TODO:
+			Simplifier simplifier = ((Simplifying) metric).getSimplifier();
+			CachingSimplifier caching = new CachingSimplifier(simplifier);
+			((Simplifying) metric).setSimplifier(caching);
 		}
 
 		if (metric instanceof Tokenizing) {
@@ -25,7 +29,9 @@ public abstract class StringMetrics {
 
 	private static final void removeCache(StringMetric metric) {
 		if (metric instanceof Simplifying) {
-			// TODO:
+			CachingSimplifier simplifier = (CachingSimplifier) ((Simplifying) metric)
+					.getSimplifier();
+			((Simplifying) metric).setSimplifier(simplifier.getSimplifier());
 		}
 
 		if (metric instanceof Tokenizing) {
@@ -54,7 +60,7 @@ public abstract class StringMetrics {
 
 	public static final float[] compareArray(StringMetric metric,
 			final String comparator, final String... set) {
-		
+
 		addCache(metric);
 
 		final float[] results = new float[set.length];

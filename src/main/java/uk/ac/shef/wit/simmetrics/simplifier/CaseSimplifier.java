@@ -2,7 +2,7 @@ package uk.ac.shef.wit.simmetrics.simplifier;
 
 import java.util.Locale;
 
-public abstract class CaseSimplifier implements Simplifier {
+public abstract class CaseSimplifier extends AbstractSimplifier  {
 
 	public static class Lower extends CaseSimplifier {
 

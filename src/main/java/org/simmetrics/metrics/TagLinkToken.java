@@ -376,25 +376,6 @@ public class TagLinkToken extends SimplyfingStringMetric {
 		}
 		return (round / 1000.00f);
 	}
-	// TODO:
-	//
-	// /**
-	// * gets the estimated time in milliseconds it takes to perform a
-	// similarity
-	// * timing.
-	// *
-	// * @param string1
-	// * string 1
-	// * @param string2
-	// * string 2
-	// * @return the estimated time in milliseconds taken to perform the
-	// * similarity measure
-	// */
-	// public float getSimilarityTimingEstimated(final String string1,
-	// final String string2) {
-	// final float str1Length = string1.length();
-	// final float str2Length = string2.length();
-	// return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
-	// }
+	
 
 }

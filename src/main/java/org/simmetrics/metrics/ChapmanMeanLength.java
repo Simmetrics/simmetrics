@@ -61,12 +61,7 @@ public  class ChapmanMeanLength extends SimplyfingStringMetric {
 	 */
 	final private static int CHAPMANMEANLENGTHMAXSTRING = 500;
 
-	// TODO:
-	// @Override
-	// public float getSimilarityTimingEstimated(String string1, String string2)
-	// {
-	// return 0;
-	// }
+
 
 	protected float compareSimplified(final String string1, final String string2) {
 		final float bothLengths = string2.length() + string1.length();

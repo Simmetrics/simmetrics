@@ -127,22 +127,7 @@ public final class MeanMetricArbitrator implements MetricArbitrator  {
         //output time taken
         return timeAfter - timeBefore;
     }
-// TODO:
-//    /**
-//     * gets the estimated time in milliseconds it takes to perform the arbitration.
-//     *
-//     * @param string1 string 1
-//     * @param string2 string 2
-//     *
-//     * @return the estimated time in milliseconds taken to perform the similarity measure
-//     */
-//    public float getArbitrationTimingEstimated(final String string1, final String string2) {
-//        float estimatedTime = 0.0f;
-//        for (Object aMetricsForArbitration : metricsForArbitration) {
-//            estimatedTime += ((InterfaceStringMetric) aMetricsForArbitration).getSimilarityTimingEstimated(string1, string2);
-//        }
-//        return estimatedTime;
-//    }
+
 
     /**
      * returns an arbitrated value of similarity.

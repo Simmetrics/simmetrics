@@ -69,15 +69,5 @@ public  class ChapmanMatchingSoundex extends MongeElkan {
 		super(tokenizer, new Soundex());
 	}
 
-	// TODO:
-	// @Deprecated
-	// public float getSimilarityTimingEstimated(final String string1,
-	// final String string2) {
-	//
-	// final float str1Tokens = tokeniser.tokenizeToList(string1).size();
-	// final float str2Tokens = tokeniser.tokenizeToList(string2).size();
-	// return (tokeniser.tokenizeToList(string1).size() + tokeniser
-	// .tokenizeToList(string2).size())
-	// * ((str1Tokens + str2Tokens) * ESTIMATEDTIMINGCONST);
-	// }
+
 }

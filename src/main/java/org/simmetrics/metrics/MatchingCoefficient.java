@@ -54,7 +54,6 @@ import org.simmetrics.tokenisers.WhitespaceTokenizer;
  */
 public class MatchingCoefficient extends TokenizingStringMetric {
 
-	private final float ESTIMATEDTIMINGCONST = 2.0e-4f;
 
 	/**
 	 * Constructs a MatchingCoefficient metric with a
@@ -74,13 +73,6 @@ public class MatchingCoefficient extends TokenizingStringMetric {
 		super(tokenizer);
 	}
 
-	public float getSimilarityTimingEstimated(final String string1,
-			final String string2) {
-
-		final float str1Tokens = tokenizeToList(string1).size();
-		final float str2Tokens = tokenizeToList(string2).size();
-		return (str2Tokens * str1Tokens) * ESTIMATEDTIMINGCONST;
-	}
 
 	protected float compareSimplified(final String string1, final String string2) {
 		final ArrayList<String> str1Tokens = tokenizeToList(string1);

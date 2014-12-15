@@ -83,15 +83,6 @@ public class ChapmanOrderedNameCompoundSimilarity extends
 		super(tokenizer);
 	}
 
-	// TODO:
-	// public float getSimilarityTimingEstimated(final String string1,
-	// final String string2) {
-	//
-	// final float str1Tokens = tokenizeToList(string1).size();
-	// final float str2Tokens = tokenizeToList(string2).size();
-	// return (tokenizeToList(string1).size() + tokenizeToList(string2).size())
-	// * ((str1Tokens + str2Tokens) * ESTIMATEDTIMINGCONST);
-	// }
 
 	protected final float compareSimplified(final String string1,
 			final String string2) {

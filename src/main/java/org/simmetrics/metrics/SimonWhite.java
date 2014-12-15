@@ -45,15 +45,7 @@ public class SimonWhite extends TokenizingStringMetric {
 		super(new WordQGramTokenizer(new QGram2Tokenizer()));
 	}
 
-	// TODO
-	// public float getSimilarityTimingEstimated(String string1, String string2)
-	// {
-	//
-	// final float str1Length = string1.length();
-	// final float str2Length = string2.length();
-	// return (str1Length + str2Length)
-	// * ((str1Length + str2Length) * ESTIMATEDTIMINGCONST);
-	// }
+
 
 	protected float compareSimplified(String string1, String string2) {
 		final ArrayList<String> pairs1 = tokenizeToList(string1);

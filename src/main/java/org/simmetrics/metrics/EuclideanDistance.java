@@ -78,14 +78,6 @@ public  class EuclideanDistance extends TokenizingStringMetric {
 		super(tokenizer);
 	}
 
-	public float getSimilarityTimingEstimated(final String string1,
-			final String string2) {
-
-		final float str1Tokens = tokenizeToList(string1).size();
-		final float str2Tokens = tokenizeToList(string2).size();
-		return (((str1Tokens + str2Tokens) * str1Tokens) + ((str1Tokens + str2Tokens) * str2Tokens))
-				* ESTIMATEDTIMINGCONST;
-	}
 
 	protected float compareSimplified(final String string1, final String string2) {
 		final ArrayList<String> str1Tokens = tokenizeToList(string1);

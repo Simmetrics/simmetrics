@@ -1,16 +1,17 @@
 package org.simmetrics;
 
 import org.simmetrics.simplifier.CachingSimplifier;
+import org.simmetrics.tokenisers.CachingTokenizer;
 import org.simmetrics.tokenisers.Tokenizer;
 
 /**
  * Interface for metrics that use a {@link Tokenizer} to tokenize strings. These
  * methods can be called by batching-processing systems to inject a
- * {@link CachingSimplifier}s.
+ * {@link CachingTokenizer}s.
  * 
  * 
  * For the benefit of these caching systems, implementations should take care to
- * call the simplifier exactly once for each argument.
+ * call the tokenizer exactly once for each argument.
  * 
  * <pre>
  *  <code>
@@ -24,9 +25,6 @@ import org.simmetrics.tokenisers.Tokenizer;
  * 	}
  * </code>
  * </pre>
- * 
- * @see StringMetrics#compare(StringMetric, String, String...)
- * @see StringMetrics#compare(StringMetric, String, java.util.List)
  * 
  * @author mpkorstanje
  *
@@ -47,5 +45,7 @@ public interface Tokenizing {
 	 *            a non-null tokenizer
 	 */
 	public void setTokenizer(Tokenizer tokenizer);
+
+
 
 }

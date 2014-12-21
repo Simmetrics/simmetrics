@@ -124,4 +124,6 @@ public  class QGramsDistance extends TokenizingStringMetric {
 
 		return difference;
 	}
+
+	
 }

@@ -88,4 +88,6 @@ public abstract class TokenizingStringMetric extends SimplyfingStringMetric
 		return getClass().getSimpleName() + " [" + getSimplifier() + ", "
 				+ tokenizer + "]";
 	}
+	
+
 }

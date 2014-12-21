@@ -11,47 +11,11 @@ import org.simmetrics.tokenisers.Tokenizer;
  * This class consists exclusively of static methods that apply a metric to
  * lists and arrays of strings.
  * 
- * Where applicable all methods will inject a {@link CachingSimplifier}s and
- * {@link CachingTokenizer}s to increase performance. These caches are always
- * removed before the method returns.
- * 
- * Metrics can signal their applicability for cashing by implementing the
- * {@link Tokenizing} and {@link Simplifying} interfaces respectively.
  * 
  * @author mpkorstanje
  *
  */
 public abstract class StringMetrics {
-
-	private static final void addCache(StringMetric metric) {
-		if (metric instanceof Simplifying) {
-			Simplifier simplifier = ((Simplifying) metric).getSimplifier();
-			CachingSimplifier caching = new CachingSimplifier(simplifier);
-			((Simplifying) metric).setSimplifier(caching);
-		}
-
-		if (metric instanceof Tokenizing) {
-			Tokenizer tokenizer = ((Tokenizing) metric).getTokenizer();
-			CachingTokenizer caching = new CachingTokenizer(tokenizer);
-			((Tokenizing) metric).setTokenizer(caching);
-		}
-
-	}
-
-	private static final void removeCache(StringMetric metric) {
-		if (metric instanceof Simplifying) {
-			CachingSimplifier simplifier = (CachingSimplifier) ((Simplifying) metric)
-					.getSimplifier();
-			((Simplifying) metric).setSimplifier(simplifier.getSimplifier());
-		}
-
-		if (metric instanceof Tokenizing) {
-			Tokenizer tokenizer = ((Tokenizing) metric).getTokenizer();
-			((Tokenizing) metric).setTokenizer(((CachingTokenizer) tokenizer)
-					.getTokenizer());
-		}
-
-	}
 
 	/**
 	 * Applies a metric to a string c and a list of strings. Returns an array
@@ -66,19 +30,15 @@ public abstract class StringMetrics {
 	 * @return an array with the similarity value for c and each string in the
 	 *         list
 	 */
-	public static final float[] compare(StringMetric metric,
-			final String c, final List<String> strings) {
+	public static final float[] compare(StringMetric metric, final String c,
+			final List<String> strings) {
 
-		addCache(metric);
 		final float[] results = new float[strings.size()];
 
-		try {
-			int i = 0;
-			for (String s : strings) {
-				results[i++] = metric.compare(c, s);
-			}
-		} finally {
-			removeCache(metric);
+		// Iterate because List.get() may not be efficient (e.g. LinkedList).
+		int i = 0;
+		for (String s : strings) {
+			results[i++] = metric.compare(c, s);
 		}
 
 		return results;
@@ -97,20 +57,15 @@ public abstract class StringMetrics {
 	 * @return an array with the similarity value for c and each string in the
 	 *         list
 	 */
-	public static final float[] compare(StringMetric metric,
-			final String c, final String... strings) {
-
-		addCache(metric);
+	public static final float[] compare(StringMetric metric, final String c,
+			final String... strings) {
 
 		final float[] results = new float[strings.length];
-//		try {
-			for (int i = 0; i < strings.length; i++) {
-				// perform similarity test
-				results[i] = metric.compare(c, strings[i]);
-			}
-//		} finally {
-			removeCache(metric);
-//		}
+		for (int i = 0; i < strings.length; i++) {
+			// perform similarity test
+			results[i] = metric.compare(c, strings[i]);
+		}
+
 		return results;
 	}
 

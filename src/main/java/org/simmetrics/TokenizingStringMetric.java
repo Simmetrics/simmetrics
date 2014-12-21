@@ -3,10 +3,9 @@ package org.simmetrics;
 import java.util.ArrayList;
 import java.util.Set;
 
+import org.simmetrics.simplifier.PassThroughSimplifier;
+import org.simmetrics.simplifier.Simplifier;
 import org.simmetrics.tokenisers.Tokenizer;
-
-import uk.ac.shef.wit.simmetrics.simplifier.PassThroughSimplifier;
-import uk.ac.shef.wit.simmetrics.simplifier.Simplifier;
 
 /**
  * Abstract metric that handles simplification and tokenization of strings

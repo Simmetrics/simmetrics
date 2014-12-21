@@ -6,8 +6,8 @@ import java.util.Arrays;
 
 import org.junit.Test;
 import org.simmetrics.metrics.SimonWhite;
+import org.simmetrics.simplifier.CaseSimplifier;
 
-import uk.ac.shef.wit.simmetrics.simplifier.CaseSimplifier;
 import static org.simmetrics.StringMetrics.*;
 
 public class StringMetricsTest {

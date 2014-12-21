@@ -1,4 +1,4 @@
-package uk.ac.shef.wit.simmetrics.simplifier;
+package org.simmetrics.simplifier;
 
 import java.util.Locale;
 

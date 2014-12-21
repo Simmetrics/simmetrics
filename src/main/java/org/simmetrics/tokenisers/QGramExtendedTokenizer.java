@@ -3,7 +3,7 @@ package org.simmetrics.tokenisers;
 import java.util.ArrayList;
 import java.util.Set;
 
-import uk.ac.shef.wit.simmetrics.wordhandlers.TermHandler;
+import org.simmetrics.wordhandlers.TermHandler;
 
 /**
  * Basic Q-Gram tokenizer for a variable Q.The Q-Gram is extended beyond the

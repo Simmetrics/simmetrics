@@ -37,40 +37,81 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package uk.ac.shef.wit.simmetrics.wordhandlers;
+package org.simmetrics.wordhandlers;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
- * Implements a dummy stop word handling function whereby no stopwords are
- * considered.
+ * A generic stopword handler. Date: 19-Apr-2004 Time: 14:22:00
  * 
  * @author Sam Chapman
  * @version 1.1
  */
-public final class DummyStopTermHandler implements TermHandler {
+public final class GenericStopTermHandler implements TermHandler {
 
-	public void add(final String termToAdd) {
-		// Intentionally does nothing.
-	}
-
-
-
-	
-	public void remove(final String termToRemove) {
-		// Intentionally does nothing.
-	}
+	/**
+	 * The word set the stop word handler uses.
+	 */
+	private final Set<String> wordSet = new HashSet<String>();
 
 	public int size() {
-		// Always zero
-		return 0;
+		return wordSet.size();
 	}
 
+	public boolean isEmpty() {
+		return wordSet.isEmpty();
+	}
+
+	public boolean contains(Object o) {
+		return wordSet.contains(o);
+	}
+
+	public Iterator<String> iterator() {
+		return wordSet.iterator();
+	}
+
+	public Object[] toArray() {
+		return wordSet.toArray();
+	}
+
+	public <T> T[] toArray(T[] a) {
+		return wordSet.toArray(a);
+	}
+
+	public boolean add(String e) {
+		return wordSet.add(e);
+	}
+
+	public boolean remove(Object o) {
+		return wordSet.remove(o);
+	}
+
+	public boolean containsAll(Collection<?> c) {
+		return wordSet.containsAll(c);
+	}
+
+	public boolean addAll(Collection<? extends String> c) {
+		return wordSet.addAll(c);
+	}
+
+	public boolean retainAll(Collection<?> c) {
+		return wordSet.retainAll(c);
+	}
+
+	public boolean removeAll(Collection<?> c) {
+		return wordSet.removeAll(c);
+	}
+
+	public void clear() {
+		wordSet.clear();
+	}
 
 	public boolean isWord(final String termToTest) {
-		return false;
+		return wordSet.contains(termToTest);
 	}
 
 
-	public StringBuffer buffer() {
-		return new StringBuffer();
-	}
 }

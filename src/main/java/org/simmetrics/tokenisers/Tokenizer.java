@@ -39,10 +39,10 @@
 
 package org.simmetrics.tokenisers;
 
-import uk.ac.shef.wit.simmetrics.wordhandlers.TermHandler;
-
 import java.util.Set;
 import java.util.ArrayList;
+
+import org.simmetrics.wordhandlers.TermHandler;
 
 /**
  * 

@@ -5,11 +5,11 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
+import org.simmetrics.wordhandlers.TermHandler;
+
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-
-import uk.ac.shef.wit.simmetrics.wordhandlers.TermHandler;
 
 public class CachingTokenizer implements Tokenizer {
 

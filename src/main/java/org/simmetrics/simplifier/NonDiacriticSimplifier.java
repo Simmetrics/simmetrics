@@ -1,4 +1,4 @@
-package uk.ac.shef.wit.simmetrics.simplifier;
+package org.simmetrics.simplifier;
 
 import java.text.Normalizer;
 import java.util.regex.Pattern;

@@ -43,7 +43,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
 
-import uk.ac.shef.wit.simmetrics.wordhandlers.TermHandler;
+import org.simmetrics.wordhandlers.TermHandler;
 
 /**
  * A QGram Tokeniser for words. A string is broken up into words by a

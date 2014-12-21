@@ -37,7 +37,7 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package uk.ac.shef.wit.simmetrics.wordhandlers;
+package org.simmetrics.wordhandlers;
 
 /**
  * InterfaceTermHandler defines an interface for stop word handlers.
@@ -48,29 +48,6 @@ package uk.ac.shef.wit.simmetrics.wordhandlers;
 public interface TermHandler {
 
 	/**
-	 * Adds a Word to the intewrface.
-	 * 
-	 * @param termToAdd
-	 *            the Word to add
-	 */
-	public void add(String termToAdd);
-
-	/**
-	 * Removes the given word from the list.
-	 * 
-	 * @param termToRemove
-	 *            the word term to remove
-	 */
-	public void remove(String termToRemove);
-
-	/**
-	 * Gets the number of stopwords in the list.
-	 * 
-	 * @return the number of stopwords in the list
-	 */
-	public int size();
-
-	/**
 	 * Determines if a given term is a word or not.
 	 * 
 	 * @param termToTest
@@ -79,11 +56,5 @@ public interface TermHandler {
 	 */
 	public boolean isWord(final String termToTest);
 
-	/**
-	 * Gets the words as an output string buffer.
-	 * 
-	 * @return a stringBuffer of the words in the handler
-	 */
-	public StringBuffer buffer();
 
 }

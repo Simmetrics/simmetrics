@@ -10,9 +10,8 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 import org.simmetrics.tokenisers.Tokenizer;
-
-import uk.ac.shef.wit.simmetrics.wordhandlers.DummyStopTermHandler;
-import uk.ac.shef.wit.simmetrics.wordhandlers.TermHandler;
+import org.simmetrics.wordhandlers.DummyStopTermHandler;
+import org.simmetrics.wordhandlers.TermHandler;
 
 public abstract class TokeniserTest {
 

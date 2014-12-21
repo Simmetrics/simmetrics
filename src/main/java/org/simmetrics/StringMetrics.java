@@ -2,11 +2,10 @@ package org.simmetrics;
 
 import java.util.List;
 
+import org.simmetrics.simplifier.CachingSimplifier;
+import org.simmetrics.simplifier.Simplifier;
 import org.simmetrics.tokenisers.CachingTokenizer;
 import org.simmetrics.tokenisers.Tokenizer;
-
-import uk.ac.shef.wit.simmetrics.simplifier.CachingSimplifier;
-import uk.ac.shef.wit.simmetrics.simplifier.Simplifier;
 
 /**
  * This class consists exclusively of static methods that apply a metric to

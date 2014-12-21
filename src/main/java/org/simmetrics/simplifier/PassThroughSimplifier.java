@@ -1,4 +1,4 @@
-package uk.ac.shef.wit.simmetrics.simplifier;
+package org.simmetrics.simplifier;
 
 public final class PassThroughSimplifier extends AbstractSimplifier{
 

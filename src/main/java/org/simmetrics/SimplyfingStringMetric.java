@@ -39,8 +39,8 @@
 
 package org.simmetrics;
 
-import uk.ac.shef.wit.simmetrics.simplifier.PassThroughSimplifier;
-import uk.ac.shef.wit.simmetrics.simplifier.Simplifier;
+import org.simmetrics.simplifier.PassThroughSimplifier;
+import org.simmetrics.simplifier.Simplifier;
 
 /**
  * Abstract metric that handles simplification of strings before comparing them.

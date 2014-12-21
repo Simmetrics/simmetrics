@@ -1,8 +1,7 @@
 package org.simmetrics;
 
+import org.simmetrics.simplifier.CachingSimplifier;
 import org.simmetrics.tokenisers.Tokenizer;
-
-import uk.ac.shef.wit.simmetrics.simplifier.CachingSimplifier;
 
 /**
  * Interface for metrics that use a {@link Tokenizer} to tokenize strings. These

@@ -5,8 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.simmetrics.SimplyfingStringMetric;
-
-import uk.ac.shef.wit.simmetrics.simplifier.PassThroughSimplifier;
+import org.simmetrics.simplifier.PassThroughSimplifier;
 
 public abstract class SimplyfingStringMetricTest extends StringMetricTest {
 

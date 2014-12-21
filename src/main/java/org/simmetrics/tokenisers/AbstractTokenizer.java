@@ -3,8 +3,8 @@ package org.simmetrics.tokenisers;
 import java.util.HashSet;
 import java.util.Set;
 
-import uk.ac.shef.wit.simmetrics.wordhandlers.DummyStopTermHandler;
-import uk.ac.shef.wit.simmetrics.wordhandlers.TermHandler;
+import org.simmetrics.wordhandlers.DummyStopTermHandler;
+import org.simmetrics.wordhandlers.TermHandler;
 
 public abstract class AbstractTokenizer implements Tokenizer {
 

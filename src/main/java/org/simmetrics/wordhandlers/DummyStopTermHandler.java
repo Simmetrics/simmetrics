@@ -37,49 +37,19 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package uk.ac.shef.wit.simmetrics.wordhandlers;
-
-import java.util.HashSet;
-import java.util.Set;
+package org.simmetrics.wordhandlers;
 
 /**
- * A generic stopword handler. Date: 19-Apr-2004 Time: 14:22:00
+ * Implements a dummy stop word handling function whereby no stopwords are
+ * considered.
  * 
  * @author Sam Chapman
  * @version 1.1
  */
-public final class GenericStopTermHandler implements TermHandler {
-
-	/**
-	 * The word set the stop word handler uses.
-	 */
-	private final Set<String> wordSet = new HashSet<String>();
-
-	public void add(final String termToAdd) {
-		wordSet.add(termToAdd);
-	}
-
-	@Deprecated
-	public final String getShortDescriptionString() {
-		return getClass().getSimpleName();
-	}
-
-	public void remove(final String termToRemove) {
-		wordSet.remove(termToRemove);
-	}
-
-	public int size() {
-		return wordSet.size();
-	}
+public final class DummyStopTermHandler implements TermHandler {
 
 	public boolean isWord(final String termToTest) {
-		return wordSet.contains(termToTest);
+		return false;
 	}
 
-
-	public StringBuffer buffer() {
-		final StringBuffer outputBuffer = new StringBuffer();
-		outputBuffer.append(wordSet.toArray().toString());
-		return outputBuffer;
-	}
 }

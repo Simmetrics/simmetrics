@@ -1,7 +1,7 @@
 package org.simmetrics;
 
-import uk.ac.shef.wit.simmetrics.simplifier.CachingSimplifier;
-import uk.ac.shef.wit.simmetrics.simplifier.Simplifier;
+import org.simmetrics.simplifier.CachingSimplifier;
+import org.simmetrics.simplifier.Simplifier;
 
 /**
  * Interface for metrics that use a {@link Simplifier} to normalize strings.

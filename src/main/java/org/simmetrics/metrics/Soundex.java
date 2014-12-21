@@ -39,9 +39,10 @@
 
 package org.simmetrics.metrics;
 
-import uk.ac.shef.wit.simmetrics.simplifier.AbstractSimplifier;
-import uk.ac.shef.wit.simmetrics.simplifier.CaseSimplifier;
-import uk.ac.shef.wit.simmetrics.simplifier.CompositeSimplifier;
+import org.simmetrics.simplifier.AbstractSimplifier;
+import org.simmetrics.simplifier.CaseSimplifier;
+import org.simmetrics.simplifier.CompositeSimplifier;
+
 import static org.simmetrics.utils.Math.clamp;
 
 /**

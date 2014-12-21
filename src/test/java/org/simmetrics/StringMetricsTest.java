@@ -34,12 +34,12 @@ public class StringMetricsTest {
 	@Test
 	public void testCompareList() {
 		assertArrayEquals(expected,
-				compareList(metric, "Napoleon I", Arrays.asList(names1)), DELTA);
+				compare(metric, "Napoleon I", Arrays.asList(names1)), DELTA);
 	}
 
 	@Test
 	public void testCompareArray() {
-		assertArrayEquals(expected, compareArray(metric, "Napoleon I", names1),
+		assertArrayEquals(expected, compare(metric, "Napoleon I", names1),
 				DELTA);
 
 	}

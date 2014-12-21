@@ -53,7 +53,7 @@ import org.simmetrics.SimplyfingStringMetric;
  * @version 1.2
  */
 
-public  class ChapmanMeanLength extends SimplyfingStringMetric {
+public class ChapmanMeanLength extends SimplyfingStringMetric {
 
 	/**
 	 * defines the internal max string length beyond which 1.0 is always
@@ -61,14 +61,11 @@ public  class ChapmanMeanLength extends SimplyfingStringMetric {
 	 */
 	final private static int CHAPMANMEANLENGTHMAXSTRING = 500;
 
-
-
 	protected float compareSimplified(final String string1, final String string2) {
 		final float bothLengths = string2.length() + string1.length();
 		if (bothLengths > CHAPMANMEANLENGTHMAXSTRING) {
 			return 1.0f;
 		} else {
-			// FIXME: Integer division? Was this intended?
 			final float oneMinusBothScaled = (CHAPMANMEANLENGTHMAXSTRING - bothLengths)
 					/ CHAPMANMEANLENGTHMAXSTRING;
 			return (float) (1.0 - pow(oneMinusBothScaled, 4));

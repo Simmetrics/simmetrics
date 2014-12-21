@@ -22,8 +22,8 @@ import uk.ac.shef.wit.simmetrics.simplifier.Simplifier;
  * </pre>
  * 
  * 
- * @see StringMetrics#compareArray(StringMetric, String, String...)
- * @see StringMetrics#compareList(StringMetric, String, java.util.List)
+ * @see StringMetrics#compare(StringMetric, String, String...)
+ * @see StringMetrics#compare(StringMetric, String, java.util.List)
  * 
  * @author mpkorstanje
  *

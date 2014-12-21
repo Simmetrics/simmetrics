@@ -62,20 +62,20 @@ public abstract class StringMetrics {
 	 *            to compare c with each each value in the list
 	 * @param c
 	 *            string to compare the list against
-	 * @param list
+	 * @param strings
 	 *            to compare c against
 	 * @return an array with the similarity value for c and each string in the
 	 *         list
 	 */
-	public static final float[] compareList(StringMetric metric,
-			final String c, final List<String> list) {
+	public static final float[] compare(StringMetric metric,
+			final String c, final List<String> strings) {
 
 		addCache(metric);
-		final float[] results = new float[list.size()];
+		final float[] results = new float[strings.size()];
 
 		try {
 			int i = 0;
-			for (String s : list) {
+			for (String s : strings) {
 				results[i++] = metric.compare(c, s);
 			}
 		} finally {
@@ -93,25 +93,25 @@ public abstract class StringMetrics {
 	 *            to compare c with each each value in the list
 	 * @param c
 	 *            string to compare the list against
-	 * @param list
+	 * @param strings
 	 *            to compare c against
 	 * @return an array with the similarity value for c and each string in the
 	 *         list
 	 */
-	public static final float[] compareArray(StringMetric metric,
-			final String c, final String... list) {
+	public static final float[] compare(StringMetric metric,
+			final String c, final String... strings) {
 
 		addCache(metric);
 
-		final float[] results = new float[list.length];
-		try {
-			for (int i = 0; i < list.length; i++) {
+		final float[] results = new float[strings.length];
+//		try {
+			for (int i = 0; i < strings.length; i++) {
 				// perform similarity test
-				results[i] = metric.compare(c, list[i]);
+				results[i] = metric.compare(c, strings[i]);
 			}
-		} finally {
+//		} finally {
 			removeCache(metric);
-		}
+//		}
 		return results;
 	}
 

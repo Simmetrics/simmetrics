@@ -5,6 +5,8 @@ import java.util.Set;
 
 import org.simmetrics.wordhandlers.TermHandler;
 
+import com.google.common.base.Strings;
+
 /**
  * Basic Q-Gram tokenizer for a variable Q.The Q-Gram is extended beyond the
  * length of the string with padding.
@@ -14,8 +16,8 @@ import org.simmetrics.wordhandlers.TermHandler;
  */
 public class QGramExtendedTokenizer extends AbstractTokenizer {
 
-	private final char Q_GRAM_START_PADDING = '#';
-	private final char Q_GRAM_END_PADDING = '#';
+	private final String Q_GRAM_START_PADDING = "#";
+	private final String Q_GRAM_END_PADDING = "#";
 
 	private final QGramTokenizer tokenizer;
 	private final String endPadding;
@@ -24,15 +26,8 @@ public class QGramExtendedTokenizer extends AbstractTokenizer {
 	public QGramExtendedTokenizer(int q) {
 		tokenizer = new QGramTokenizer(q);
 
-		String startPadding = "";
-		String endPadding = "";
-		for (int i = 0; i < q - 1; i++) {
-			startPadding += Q_GRAM_START_PADDING;
-			endPadding += Q_GRAM_END_PADDING;
-		}
-
-		this.startPadding = startPadding;
-		this.endPadding = endPadding;
+		this.startPadding = Strings.repeat(Q_GRAM_START_PADDING, q - 1);
+		this.endPadding = Strings.repeat(Q_GRAM_END_PADDING, q - 1);
 
 	}
 
@@ -46,10 +41,6 @@ public class QGramExtendedTokenizer extends AbstractTokenizer {
 
 	public ArrayList<String> tokenizeToList(String input) {
 		return tokenizer.tokenizeToList(startPadding + input + endPadding);
-	}
-
-	public String getShortDescriptionString() {
-		return getClass().getSimpleName();
 	}
 
 	public Set<String> tokenizeToSet(String input) {

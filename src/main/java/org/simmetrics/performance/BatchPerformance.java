@@ -3,13 +3,13 @@ package org.simmetrics.performance;
 import java.util.concurrent.TimeUnit;
 
 import org.perf4j.StopWatch;
-import org.simmetrics.Simplifying;
 import org.simmetrics.StringMetric;
 
 import static org.simmetrics.StringMetrics.compare;
 
-import org.simmetrics.Tokenizing;
 import org.simmetrics.metrics.SimonWhite;
+import org.simmetrics.metrics.Simplifying;
+import org.simmetrics.metrics.Tokenizing;
 import org.simmetrics.simplifier.CachingSimplifier;
 import org.simmetrics.simplifier.Simplifier;
 import org.simmetrics.tokenisers.CachingTokenizer;

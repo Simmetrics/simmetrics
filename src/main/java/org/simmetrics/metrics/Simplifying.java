@@ -1,10 +1,12 @@
-package org.simmetrics;
+package org.simmetrics.metrics;
 
+import org.simmetrics.StringMetric;
+import org.simmetrics.StringMetrics;
 import org.simmetrics.simplifier.CachingSimplifier;
 import org.simmetrics.simplifier.Simplifier;
 
 /**
- * Interface for metrics that use a {@link Simplifier} to normalize strings.
+ * Interface for classes that use a {@link Simplifier} to normalize strings.
  * These methods can be called by batching-processing systems to inject a
  * {@link CachingSimplifier}s.
  * 

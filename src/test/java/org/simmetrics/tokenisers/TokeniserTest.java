@@ -10,15 +10,12 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 import org.simmetrics.tokenisers.Tokenizer;
-import org.simmetrics.wordhandlers.DummyStopTermHandler;
 import org.simmetrics.wordhandlers.TermHandler;
 
 public abstract class TokeniserTest {
 
 	private Tokenizer tokenizer;
 	
-	private TermHandler handler= new DummyStopTermHandler();
-
 	protected abstract Tokenizer getTokenizer();
 
 	public abstract T[] getTests();
@@ -39,16 +36,8 @@ public abstract class TokeniserTest {
 		tokenizer = getTokenizer();
 	}
 
-	@Test
-	public void testGetStopWordHandler() {
-		assertNotNull(tokenizer.getStopWordHandler());
-	}
 
-	@Test
-	public void testSetStopWordHandler() {
-		tokenizer.setStopWordHandler(handler);
-		assertSame(handler, tokenizer.getStopWordHandler());
-	}
+
 
 	@Test
 	public void testTokenizeToArrayList() {

@@ -39,7 +39,6 @@
 
 package org.simmetrics.metrics;
 
-import org.simmetrics.SimplyfingStringMetric;
 import org.simmetrics.metrics.costfunctions.SubCost01;
 import org.simmetrics.metrics.costfunctions.SubstitutionCost;
 

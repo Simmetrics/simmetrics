@@ -41,8 +41,6 @@ package org.simmetrics.metrics;
 
 import static java.lang.Math.pow;
 
-import org.simmetrics.SimplyfingStringMetric;
-
 /**
  * Implements the Chapman Mean Length algorithm provides a similarity measure
  * between two strings from size of the mean length of the vectors - this

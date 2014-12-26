@@ -41,8 +41,6 @@ package org.simmetrics.metrics;
 
 import java.util.ArrayList;
 
-import org.simmetrics.SimplyfingStringMetric;
-import org.simmetrics.TokenizingStringMetric;
 import org.simmetrics.tokenisers.Tokenizer;
 import org.simmetrics.tokenisers.WhitespaceTokenizer;
 

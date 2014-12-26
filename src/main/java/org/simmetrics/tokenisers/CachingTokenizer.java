@@ -5,27 +5,20 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
+import org.simmetrics.metrics.Tokenizing;
 import org.simmetrics.wordhandlers.TermHandler;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
-public class CachingTokenizer implements Tokenizer {
+public class CachingTokenizer implements TokenizingTokenizer {
 
 	private static final int CACHE_SIZE = 2;
 
-	private final Tokenizer tokenizer;
+	private Tokenizer tokenizer;
 
-	public CachingTokenizer(Tokenizer tokenizer) {
-		this.tokenizer = tokenizer;
-	}
-
-	public Tokenizer getTokenizer() {
-		return tokenizer;
-	}
-
-	private LoadingCache<String, ArrayList<String>> arrayCache = CacheBuilder
+	private final LoadingCache<String, ArrayList<String>> arrayCache = CacheBuilder
 			.newBuilder().initialCapacity(CACHE_SIZE).maximumSize(CACHE_SIZE)
 			.build(new CacheLoader<String, ArrayList<String>>() {
 
@@ -36,7 +29,7 @@ public class CachingTokenizer implements Tokenizer {
 
 			});
 
-	private LoadingCache<String, Set<String>> setCache = CacheBuilder
+	private final LoadingCache<String, Set<String>> setCache = CacheBuilder
 			.newBuilder().initialCapacity(CACHE_SIZE).maximumSize(CACHE_SIZE)
 			.build(new CacheLoader<String, Set<String>>() {
 
@@ -46,18 +39,27 @@ public class CachingTokenizer implements Tokenizer {
 				}
 
 			});
-
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + " [" + tokenizer + "]";
+	
+	public CachingTokenizer(Tokenizer tokenizer) {
+		this.tokenizer = tokenizer;
 	}
 
-	public TermHandler getStopWordHandler() {
-		return tokenizer.getStopWordHandler();
+
+	public LoadingCache<String, ArrayList<String>> getArrayCache() {
+		return arrayCache;
+	}
+	
+	public LoadingCache<String, Set<String>> getSetCache() {
+		return setCache;
+	}
+	
+	
+	public Tokenizer getTokenizer() {
+		return tokenizer;
 	}
 
-	public void setStopWordHandler(TermHandler stopWordHandler) {
-		tokenizer.setStopWordHandler(stopWordHandler);
+	public void setTokenizer(Tokenizer tokenizer) {
+		this.tokenizer = tokenizer;
 	}
 
 	public ArrayList<String> tokenizeToList(final String input) {
@@ -81,4 +83,10 @@ public class CachingTokenizer implements Tokenizer {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + " [" + tokenizer + "]";
+	}
+
+	
 }

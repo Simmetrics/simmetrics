@@ -40,7 +40,7 @@
 package org.simmetrics.wordhandlers;
 
 /**
- * InterfaceTermHandler defines an interface for stop word handlers.
+ * A term handler determines if a string 
  * 
  * @author Sam Chapman
  * @version 1.1

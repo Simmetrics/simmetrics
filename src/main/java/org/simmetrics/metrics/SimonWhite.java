@@ -2,7 +2,6 @@ package org.simmetrics.metrics;
 
 import java.util.ArrayList;
 
-import org.simmetrics.TokenizingStringMetric;
 import org.simmetrics.tokenisers.QGram2Tokenizer;
 import org.simmetrics.tokenisers.WordQGramTokenizer;
 

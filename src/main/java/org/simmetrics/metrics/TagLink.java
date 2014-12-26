@@ -66,7 +66,6 @@ package org.simmetrics.metrics;
 
 import java.util.*;
 
-import org.simmetrics.SimplyfingStringMetric;
 import org.simmetrics.StringMetric;
 import org.simmetrics.tokenisers.Tokenizer;
 import org.simmetrics.tokenisers.WhitespaceTokenizer;

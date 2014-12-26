@@ -39,7 +39,6 @@
 
 package org.simmetrics.metrics;
 
-import org.simmetrics.SimplyfingStringMetric;
 
 /**
  * Implements the Jaro algorithm providing a similarity measure between two

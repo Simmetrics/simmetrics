@@ -43,7 +43,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
 
-import org.simmetrics.TokenizingStringMetric;
 import org.simmetrics.tokenisers.Tokenizer;
 import org.simmetrics.tokenisers.WhitespaceTokenizer;
 

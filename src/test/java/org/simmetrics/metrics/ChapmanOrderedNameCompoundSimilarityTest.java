@@ -40,7 +40,6 @@
 package org.simmetrics.metrics;
 
 import org.simmetrics.TokenizingStringMetricTest;
-import org.simmetrics.TokenizingStringMetric;
 import org.simmetrics.metrics.ChapmanOrderedNameCompoundSimilarity;
 
 public class ChapmanOrderedNameCompoundSimilarityTest extends

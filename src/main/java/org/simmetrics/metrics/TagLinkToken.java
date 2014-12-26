@@ -6,8 +6,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-import org.simmetrics.SimplyfingStringMetric;
-
 /**
  * <p>
  * Title:

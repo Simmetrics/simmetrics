@@ -1,7 +1,6 @@
 package org.simmetrics.metrics;
 
 import org.simmetrics.TokenizingStringMetricTest;
-import org.simmetrics.TokenizingStringMetric;
 import org.simmetrics.metrics.SimonWhite;
 
 public class SimonWhiteTest extends TokenizingStringMetricTest {

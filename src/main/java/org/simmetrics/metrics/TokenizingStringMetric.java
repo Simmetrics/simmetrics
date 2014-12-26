@@ -1,4 +1,4 @@
-package org.simmetrics;
+package org.simmetrics.metrics;
 
 import java.util.ArrayList;
 import java.util.Set;

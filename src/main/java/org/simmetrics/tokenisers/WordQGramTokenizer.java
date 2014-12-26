@@ -64,6 +64,15 @@ public final class WordQGramTokenizer implements Tokenizer {
 	 * word tokenizer and {@link QGram2Tokenizer}. A string is broken up into
 	 * words by the word tokenizer. For each word q-grams are made.
 	 */
+	public WordQGramTokenizer() {
+		this(new WhitespaceTokenizer(), new QGram2Tokenizer());
+	}
+
+	/**
+	 * Constructs a TokeniserWordQGram with a {@link WhitespaceTokenizer} as a
+	 * word tokenizer the given q-gram. A string is broken up into words by the
+	 * word tokenizer. For each word q-grams are made.
+	 */
 	public WordQGramTokenizer(QGramTokenizer qGramTokenizer) {
 		this(new WhitespaceTokenizer(), qGramTokenizer);
 	}
@@ -82,6 +91,14 @@ public final class WordQGramTokenizer implements Tokenizer {
 			QGramTokenizer qGramTokenizer) {
 		super();
 		this.wordTokenizer = wordTokenizer;
+		this.qGramTokenizer = qGramTokenizer;
+	}
+
+	public void setWordTokenizer(Tokenizer wordTokenizer) {
+		this.wordTokenizer = wordTokenizer;
+	}
+
+	public void setqGramTokenizer(QGramTokenizer qGramTokenizer) {
 		this.qGramTokenizer = qGramTokenizer;
 	}
 
@@ -116,25 +133,6 @@ public final class WordQGramTokenizer implements Tokenizer {
 		}
 
 		return returnSet;
-	}
-
-	/**
-	 * Gets the stop word handler used by the word tokenizer.
-	 * 
-	 * @return the stop word handler used by the word tokenizer
-	 */
-	public TermHandler getStopWordHandler() {
-		return wordTokenizer.getStopWordHandler();
-	}
-
-	/**
-	 * Sets the stop word handler on the word tokenizer.
-	 * 
-	 * @param stopWordHandler
-	 *            to set on the word tokenizer
-	 */
-	public void setStopWordHandler(TermHandler stopWordHandler) {
-		wordTokenizer.setStopWordHandler(stopWordHandler);
 	}
 
 	public final String toString() {

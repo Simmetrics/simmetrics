@@ -39,8 +39,6 @@
 
 package org.simmetrics.metrics;
 
-import org.simmetrics.SimplyfingStringMetric;
-
 import static org.simmetrics.utils.Math.min3;
 
 /**

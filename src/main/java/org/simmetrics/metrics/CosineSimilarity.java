@@ -44,7 +44,6 @@ import java.util.Set;
 
 import static java.lang.Math.pow;
 
-import org.simmetrics.TokenizingStringMetric;
 import org.simmetrics.tokenisers.Tokenizer;
 import org.simmetrics.tokenisers.WhitespaceTokenizer;
 

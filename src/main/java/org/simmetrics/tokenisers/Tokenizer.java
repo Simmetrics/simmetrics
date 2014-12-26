@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import org.simmetrics.wordhandlers.TermHandler;
 
 /**
+ * A tokenizer divides an input string into tokens. 
  * 
  * @author Sam Chapman
  * @version 1.1
@@ -52,22 +53,8 @@ import org.simmetrics.wordhandlers.TermHandler;
 public interface Tokenizer {
 
 	/**
-	 * Gets the stop word handler used.
-	 * 
-	 * @return the stop word handler used
-	 */
-	public TermHandler getStopWordHandler();
-
-	/**
-	 * Sets the stop word handler used with the handler given.
-	 * 
-	 * @param stopWordHandler
-	 *            the given stop word hanlder
-	 */
-	public void setStopWordHandler(TermHandler stopWordHandler);
-
-	/**
-	 * Return tokenized version of a string as an ArrayList.
+	 * Return tokenized version of a string as a list of tokens. This list can
+	 * be safely modified.
 	 *
 	 * @param input
 	 *
@@ -76,7 +63,8 @@ public interface Tokenizer {
 	public ArrayList<String> tokenizeToList(String input);
 
 	/**
-	 * Return tokenized version of a string as a set.
+	 * Return tokenized version of a string as a set of tokens. This set can be
+	 * safely modified.
 	 *
 	 * @param input
 	 *

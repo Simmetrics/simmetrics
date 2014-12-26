@@ -39,7 +39,6 @@
 
 package org.simmetrics.metrics;
 
-import org.simmetrics.SimplyfingStringMetric;
 import org.simmetrics.metrics.costfunctions.AffineGap5_1;
 import org.simmetrics.metrics.costfunctions.AffineGapCost;
 import org.simmetrics.metrics.costfunctions.SubCost5_3_Minus3;

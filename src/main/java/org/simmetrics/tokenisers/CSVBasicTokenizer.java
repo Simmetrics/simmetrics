@@ -56,10 +56,7 @@ public final class CSVBasicTokenizer extends AbstractTokenizer {
 		final ArrayList<String> returnArrayList = new ArrayList<String>();
 
 		for (String token : input.split(delimiters)) {
-			final String term = token.trim();
-			if (!isWord(term)) {
-				returnArrayList.add(term);
-			}
+			returnArrayList.add(token);
 		}
 
 		return returnArrayList;

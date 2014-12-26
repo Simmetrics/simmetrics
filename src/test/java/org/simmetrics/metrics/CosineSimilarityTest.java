@@ -40,7 +40,6 @@
 package org.simmetrics.metrics;
 
 import org.simmetrics.TokenizingStringMetricTest;
-import org.simmetrics.TokenizingStringMetric;
 import org.simmetrics.metrics.CosineSimilarity;
 
 public class CosineSimilarityTest extends TokenizingStringMetricTest {

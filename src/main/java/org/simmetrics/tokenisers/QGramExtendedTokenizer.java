@@ -31,14 +31,6 @@ public class QGramExtendedTokenizer extends AbstractTokenizer {
 
 	}
 
-	public void setStopWordHandler(TermHandler stopWordHandler) {
-		tokenizer.setStopWordHandler(stopWordHandler);
-	}
-
-	public TermHandler getStopWordHandler() {
-		return tokenizer.getStopWordHandler();
-	}
-
 	public ArrayList<String> tokenizeToList(String input) {
 		return tokenizer.tokenizeToList(startPadding + input + endPadding);
 	}

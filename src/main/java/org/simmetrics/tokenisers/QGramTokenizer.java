@@ -39,7 +39,6 @@
 
 package org.simmetrics.tokenisers;
 
-
 import java.util.ArrayList;
 
 /**
@@ -48,10 +47,10 @@ import java.util.ArrayList;
  * @author mpkorstanje
  *
  */
-public class QGramTokenizer extends AbstractTokenizer  {
+public class QGramTokenizer extends AbstractTokenizer {
 
 	private final int q;
-	
+
 	public QGramTokenizer(int q) {
 		this.q = q;
 	}
@@ -59,11 +58,8 @@ public class QGramTokenizer extends AbstractTokenizer  {
 	public ArrayList<String> tokenizeToList(final String input) {
 		final ArrayList<String> ret = new ArrayList<String>();
 
-		for (int i = 0; i < input.length() - q +1; i++) {
-			final String term = input.substring(i, i + q);
-			if (!isWord(term)) {
-				ret.add(term);
-			}
+		for (int i = 0; i < input.length() - q + 1; i++) {
+			ret.add(input.substring(i, i + q));
 		}
 
 		return ret;

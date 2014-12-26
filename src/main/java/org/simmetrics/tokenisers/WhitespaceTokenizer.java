@@ -56,7 +56,7 @@ public final class WhitespaceTokenizer extends AbstractTokenizer {
 		final ArrayList<String> returnArrayList = new ArrayList<String>();
 
 		for (String token : input.split(delimiters)) {
-			if (!token.isEmpty() && !isWord(token)) {
+			if (!token.isEmpty()) {
 				returnArrayList.add(token);
 			}
 		}

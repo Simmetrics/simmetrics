@@ -37,8 +37,9 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package org.simmetrics;
+package org.simmetrics.metrics;
 
+import org.simmetrics.StringMetric;
 import org.simmetrics.simplifier.PassThroughSimplifier;
 import org.simmetrics.simplifier.Simplifier;
 

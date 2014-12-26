@@ -39,7 +39,6 @@
 
 package org.simmetrics.metrics;
 
-import org.simmetrics.SimplyfingStringMetric;
 
 /**
  * 

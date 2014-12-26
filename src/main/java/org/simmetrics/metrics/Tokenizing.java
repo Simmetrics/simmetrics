@@ -1,4 +1,4 @@
-package org.simmetrics;
+package org.simmetrics.metrics;
 
 import org.simmetrics.simplifier.CachingSimplifier;
 import org.simmetrics.tokenisers.CachingTokenizer;

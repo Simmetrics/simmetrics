@@ -2,7 +2,7 @@ package org.simmetrics;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.simmetrics.TokenizingStringMetric;
+import org.simmetrics.metrics.TokenizingStringMetric;
 
 public abstract class TokenizingStringMetricTest extends
 		SimplyfingStringMetricTest {

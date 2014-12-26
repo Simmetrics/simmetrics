@@ -41,7 +41,6 @@ package org.simmetrics.metrics;
 
 import java.util.*;
 
-import org.simmetrics.TokenizingStringMetric;
 import org.simmetrics.tokenisers.QGram3ExtendedTokenizer;
 import org.simmetrics.tokenisers.Tokenizer;
 import org.simmetrics.tokenisers.WhitespaceTokenizer;

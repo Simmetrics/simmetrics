@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package uk.ac.shef.wit.simmetrics.metrichandlers;
+package org.simmetrics.performance;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -38,7 +38,7 @@ public class MetricHandler {
 	 *
 	 */
 	public static Set<StringMetric> getMetricsAvailable() {
-		Reflections reflections = new Reflections("uk.ac.shef.wit.simmetrics");
+		Reflections reflections = new Reflections("org.simmetrics");
 
 		Set<Class<? extends StringMetric>> metrics = reflections
 				.getSubTypesOf(StringMetric.class);
@@ -66,6 +66,7 @@ public class MetricHandler {
 			Class<? extends StringMetric> metric) {
 		StringMetric aplugin = null;
 
+		
 		try {
 			Constructor<? extends StringMetric> constructor = metric
 					.getConstructor();

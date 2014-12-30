@@ -28,10 +28,12 @@ import java.util.Arrays;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetrics;
 import org.simmetrics.metrics.CosineSimilarity;
+import org.simmetrics.simplifier.CachingSimplifier;
 import org.simmetrics.simplifier.CaseSimplifier;
+import org.simmetrics.tokenisers.CachingTokenizer;
 import org.simmetrics.tokenisers.QGram2Tokenizer;
 
-public class BatchExample {
+public class CacheExample {
 
 	public static void main(String[] args) {
 
@@ -42,6 +44,8 @@ public class BatchExample {
 		CosineSimilarity metric = new CosineSimilarity();
 		metric.setSimplifier(new CaseSimplifier.Lower());
 		metric.setTokenizer(new QGram2Tokenizer());
+		metric.addSimplifier(new CachingSimplifier());
+		metric.addTokenizer(new CachingTokenizer());
 
 		float[] scores = StringMetrics.compare(metric, name, names);
 

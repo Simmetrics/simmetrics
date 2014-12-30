@@ -1,11 +1,38 @@
+/*
+ * SimMetrics - SimMetrics is a java library of Similarity or Distance
+ * Metrics, e.g. Levenshtein Distance, that provide float based similarity
+ * measures between String Data. All metrics return consistent measures
+ * rather than unbounded similarity scores.
+ * 
+ * Copyright (C) 2014  SimMetrics authors
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * 
+ */
+
 package org.simmetrics.metrics;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Set;
 
 import org.simmetrics.simplifier.PassThroughSimplifier;
 import org.simmetrics.simplifier.Simplifier;
 import org.simmetrics.tokenisers.Tokenizer;
+import org.simmetrics.tokenisers.TokenizingTokenizer;
+
 
 /**
  * Abstract metric that handles simplification and tokenization of strings
@@ -54,6 +81,11 @@ public abstract class TokenizingStringMetric extends SimplyfingStringMetric
 		this.tokenizer = tokenizer;
 	}
 
+	public void addTokenizer(TokenizingTokenizer tokenizer) {
+		tokenizer.setTokenizer(this.tokenizer);
+		this.tokenizer = tokenizer;
+	}
+
 	/**
 	 * Returns the a tokenized version of the input string. The resulting list
 	 * contains a list of tokens as found in the string. May contain duplicates
@@ -82,12 +114,11 @@ public abstract class TokenizingStringMetric extends SimplyfingStringMetric
 	@Override
 	public String toString() {
 		if (getSimplifier() instanceof PassThroughSimplifier) {
-			return getClass().getSimpleName();
+			return getClass().getName() + " [" + Objects.toString(tokenizer) + "]";
 		}
 
-		return getClass().getSimpleName() + " [" + getSimplifier() + ", "
-				+ tokenizer + "]";
+		return getClass().getName()+ " [" + getSimplifier() + ", "
+				+ Objects.toString(tokenizer) + "]";
 	}
-	
 
 }

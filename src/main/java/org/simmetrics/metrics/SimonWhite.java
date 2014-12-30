@@ -1,3 +1,26 @@
+/*
+ * SimMetrics - SimMetrics is a java library of Similarity or Distance
+ * Metrics, e.g. Levenshtein Distance, that provide float based similarity
+ * measures between String Data. All metrics return consistent measures
+ * rather than unbounded similarity scores.
+ * 
+ * Copyright (C) 2014  SimMetrics authors
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * 
+ */
 package org.simmetrics.metrics;
 
 import java.util.ArrayList;
@@ -6,8 +29,8 @@ import org.simmetrics.tokenisers.QGram2Tokenizer;
 import org.simmetrics.tokenisers.WordQGramTokenizer;
 
 /**
- * Implementation taken from <a
- * href="http://www.catalysoft.com/articles/StrikeAMatch.html" >How to Strike a
+ * Idea taken from <a
+ * href="http://www.catalysoft.com/articles/StrikeAMatch.html">How to Strike a
  * Match</a>
  * 
  * The intention is that by considering adjacent characters I take account not
@@ -36,15 +59,13 @@ import org.simmetrics.tokenisers.WordQGramTokenizer;
  * will express similarity values as percentages rounded to the nearest whole
  * number.
  * 
- * @author Simon White
+ * @author mpkorstanje
  */
 public class SimonWhite extends TokenizingStringMetric {
 
 	public SimonWhite() {
 		super(new WordQGramTokenizer(new QGram2Tokenizer()));
 	}
-
-
 
 	protected float compareSimplified(String string1, String string2) {
 		final ArrayList<String> pairs1 = tokenizeToList(string1);
@@ -56,6 +77,9 @@ public class SimonWhite extends TokenizingStringMetric {
 			return 0.0f;
 		}
 
+		// Count elements in the list intersection.
+		// Elements are counted only once in both lists.
+		// E.g. the intersection of [ab,ab,ab] and [ab,ab,ac,ad] is [ab,ab].
 		int intersection = 0;
 		for (String pair : pairs1) {
 			if (pairs2.remove(pair)) {
@@ -63,7 +87,7 @@ public class SimonWhite extends TokenizingStringMetric {
 			}
 		}
 
-		return new Float((2.0 * intersection) / union).floatValue();
+		return 2.0f * intersection / union;
 
 	}
 

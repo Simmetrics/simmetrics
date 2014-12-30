@@ -21,20 +21,30 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
+package org.simmetrics.metrics;
 
-package org.simmetrics.tokenisers;
+import org.junit.Before;
+import org.junit.Test;
+import org.simmetrics.metrics.TokenizingStringMetric;
 
-import java.util.HashSet;
-import java.util.Set;
+public abstract class TokenizingStringMetricTest extends
+		SimplyfingStringMetricTest {
 
-public abstract class AbstractTokenizer implements Tokenizer {
+	private TokenizingStringMetric metric;
 
-	public Set<String> tokenizeToSet(final String input) {
-		return new HashSet<String>(tokenizeToList(input));
+	public abstract TokenizingStringMetric getMetric();
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+		metric = getMetric();
 	}
 
-	public String toString() {
-		return getClass().getName();
+	@Test
+	public void testToString() {
+		super.testToString();
+
+		assertToStringContains(metric, metric.getTokenizer().toString());
 	}
 
 }

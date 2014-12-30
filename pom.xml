@@ -4,32 +4,17 @@
 
 	<groupId>org.simmetrics</groupId>
 	<artifactId>simmetrics</artifactId>
-	<version>1.6.3</version>
+	<version>2.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>simmetrics</name>
-	<description>SimMetrics is a Similarity Metric Library, based on previous work by http://sourceforge.net/projects/simmetrics/</description>
+	<description>SimMetrics is a java library of Similarity or Distance Metrics, e.g. Levenshtein Distance, that provide float based similarity measures between String Data. All metrics return consistant measures rather than unbounded similarity scores.</description>
 	<url>https://bitbucket.org/Nickmancol/simmetrics</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<altDeploymentRepository>releases::default::${project.baseUri}/mavenRepo/releases/</altDeploymentRepository>
 	</properties>
-
-	<developers>
-		<developer>
-			<id>@Nickmancol</id>
-			<name>Nicolas Bohorquez Gutierrez</name>
-			<email>nicolas.bg@gmail.com</email>
-			<timezone>America/Bogota</timezone>
-		</developer>
-		<developer>
-			<id>mpkorstanje</id>
-			<name>M.P. Korstanje</name>
-			<email>rien.korstanje@gmail.com</email>
-			<timezone>GTM+1</timezone>
-		</developer>
-	</developers>
 
 	<scm>
 		<connection>scm:hg:http://bitbucket.org/Nickmancol/simmetrics</connection>
@@ -55,13 +40,14 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
+					<source>1.6</source>
+					<target>1.6</target>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.1</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -74,6 +60,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>2.4</version>
 				<executions>
 					<execution>
 						<goals>
@@ -99,6 +86,7 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.8.1</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.perf4j</groupId>

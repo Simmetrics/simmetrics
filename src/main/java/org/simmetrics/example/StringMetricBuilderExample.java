@@ -34,7 +34,7 @@ import org.simmetrics.tokenisers.QGram2Tokenizer;
  * 
  * @author Sam Chapman
  */
-public class StringBuilderExample {
+public class StringMetricBuilderExample {
 
 	/**
 	 * Runs a simple example.
@@ -52,14 +52,12 @@ public class StringBuilderExample {
 
 		StringMetric metric = new StringMetricBuilder()
 				.setMetric(new CosineSimilarity())
-				.setTokeninzer(new QGram2Tokenizer())
-				.build();
+				.setTokeninzer(new QGram2Tokenizer()).build();
 
 		final float result = metric.compare(str1, str2);
 
 		String message = "Using metric %s on strings \"%s\" & \"%s\" gives a similarity score of %.4f";
-		message = String.format(message, metric.getClass().getSimpleName(),
-				str1, str2, result);
+		message = String.format(message, metric, str1, str2, result);
 		System.out.println(message);
 
 	}
@@ -70,7 +68,7 @@ public class StringBuilderExample {
 					.println("Performs a rudimentary string metric comparison from the arguments given.");
 			System.out.println(String.format(
 					"Check the source of %s for more details.",
-					StringBuilderExample.class.getName()));
+					StringMetricBuilderExample.class.getName()));
 
 			System.out.print("Usage <string> <string>");
 			System.exit(1);

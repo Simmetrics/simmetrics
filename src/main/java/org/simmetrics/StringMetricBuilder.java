@@ -69,47 +69,48 @@ public class StringMetricBuilder {
 		}
 	}
 
-	public class TokenListMetricBuilder {
+	public abstract class TokenMetricBuilder<T> {
 
-		private final TokenListMetric metric;
+		protected final T metric;
 
-		private Simplifier simplifier = new PassThroughSimplifier();
+		protected Simplifier simplifier = new PassThroughSimplifier();
 
-		private Tokenizer tokenizer;
+		protected Tokenizer tokenizer;
 
-		private TokenizingTokenizer tokenCache;
+		protected TokenizingTokenizer tokenCache;
 
-		private SimplifyingSimplifier stringCache;
+		protected SimplifyingSimplifier stringCache;
 
-		public TokenListMetricBuilder(TokenListMetric metric) {
+		public TokenMetricBuilder(T metric) {
 			this.metric = metric;
 		}
 
-		public TokenListMetricBuilder setSimplifier(Simplifier simplifier) {
+		public TokenMetricBuilder<T> setSimplifier(Simplifier simplifier) {
 			Preconditions.checkNotNull(simplifier);
 			this.simplifier = simplifier;
 			return this;
 		}
 
-		public TokenListMetricBuilder setTokeninzer(Tokenizer tokenizer) {
+		public TokenMetricBuilder<T> setTokeninzer(Tokenizer tokenizer) {
 			Preconditions.checkNotNull(tokenizer);
 			this.tokenizer = tokenizer;
 			return this;
 		}
 
-		public TokenListMetricBuilder setCache(TokenizingTokenizer cache) {
+		public TokenMetricBuilder<T> setCache(TokenizingTokenizer cache) {
 			Preconditions.checkNotNull(cache);
 			this.tokenCache = cache;
 			return this;
 		}
 
-		public TokenListMetricBuilder setCache(SimplifyingSimplifier cache) {
+		public TokenMetricBuilder<T> setCache(SimplifyingSimplifier cache) {
 			Preconditions.checkNotNull(cache);
 			this.stringCache = cache;
 			return this;
 		}
 
 		public StringMetric build() {
+
 			Preconditions.checkNotNull(tokenizer,
 					"A tokenizer must be set to build a tokenizing metric");
 
@@ -127,69 +128,40 @@ public class StringMetricBuilder {
 				tokenizer = tokenCache;
 			}
 
-			return new CompositeTokenListMetric(metric, simplifier, tokenizer);
+			return build(metric, simplifier, tokenizer);
 
 		}
+
+		protected abstract StringMetric build(T metric,
+				Simplifier simplifier, Tokenizer tokenizer);
 	}
 
-	public class TokenSetMetricBuilder {
+	public class TokenListMetricBuilder extends
+			TokenMetricBuilder<TokenListMetric> {
 
-		private final TokenSetMetric metric;
+		public TokenListMetricBuilder(TokenListMetric metric) {
+			super(metric);
+		}
 
-		private Simplifier simplifier = new PassThroughSimplifier();
+		@Override
+		protected StringMetric build(TokenListMetric metric,
+				Simplifier simplifier, Tokenizer tokenizer) {
+			return new CompositeTokenListMetric(metric, simplifier, tokenizer);
+		}
 
-		private Tokenizer tokenizer;
+	}
 
-		private TokenizingTokenizer tokenCache;
-
-		private SimplifyingSimplifier stringCache;
+	public class TokenSetMetricBuilder extends
+			TokenMetricBuilder<TokenSetMetric> {
 
 		public TokenSetMetricBuilder(TokenSetMetric metric) {
-			this.metric = metric;
+			super(metric);
 		}
 
-		public TokenSetMetricBuilder setSimplifier(Simplifier simplifier) {
-			this.simplifier = simplifier;
-			return this;
-		}
-
-		public TokenSetMetricBuilder setTokeninzer(Tokenizer tokenizer) {
-			this.tokenizer = tokenizer;
-			return this;
-		}
-
-		public TokenSetMetricBuilder setCache(TokenizingTokenizer cache) {
-			Preconditions.checkNotNull(cache);
-			this.tokenCache = cache;
-			return this;
-		}
-
-		public TokenSetMetricBuilder setCache(SimplifyingSimplifier cache) {
-			Preconditions.checkNotNull(cache);
-			this.stringCache = cache;
-			return this;
-		}
-
-		public StringMetric build() {
-			Preconditions.checkNotNull(tokenizer,
-					"A tokenizer must be set to build a tokenizing metric");
-
-			Simplifier simplifier = this.simplifier;
-
-			if (stringCache != null) {
-				stringCache.setSimplifier(simplifier);
-				simplifier = stringCache;
-			}
-
-			Tokenizer tokenizer = this.tokenizer;
-
-			if (tokenCache != null) {
-				tokenCache.setTokenizer(tokenizer);
-				tokenizer = tokenCache;
-			}
-
+		@Override
+		protected StringMetric build(TokenSetMetric metric,
+				Simplifier simplifier, Tokenizer tokenizer) {
 			return new CompositeTokenSetMetric(metric, simplifier, tokenizer);
-
 		}
 
 	}

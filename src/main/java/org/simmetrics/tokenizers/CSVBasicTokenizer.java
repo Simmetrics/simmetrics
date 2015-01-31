@@ -22,20 +22,34 @@
  * 
  */
 
-package org.simmetrics.tokenisers;
+package org.simmetrics.tokenizers;
+
+import java.util.ArrayList;
 
 /**
- * Basic Q-Gram tokenizer for a Q of 2.The Q-Gram is extended beyond the length
- * of the string with padding.
+ * CSVBasicTokenizer implements a simple CSV tokenizer. NB(this doesn't consider
+ * embedded escaped comma's within the fields)
  * 
- * @author mpkorstanje
+ * @author Sam Chapman
+ * @version 1.1
  */
-public final class QGram2ExtendedTokenizer extends QGramExtendedTokenizer {
+public final class CSVBasicTokenizer extends AbstractTokenizer {
 
-	private static final int Q = 2;
+	private final String delimiters = "[,\n]";
 
-	public QGram2ExtendedTokenizer() {
-		super(Q);
+	public final ArrayList<String> tokenizeToList(final String input) {
+		final ArrayList<String> returnArrayList = new ArrayList<>();
+
+		for (String token : input.split(delimiters)) {
+			returnArrayList.add(token);
+		}
+
+		return returnArrayList;
+	}
+
+	@Override
+	public String toString() {
+		return "CSVBasicTokenizer [delimiters=" + delimiters + "]";
 	}
 
 }

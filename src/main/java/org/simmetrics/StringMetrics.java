@@ -43,12 +43,12 @@ import org.simmetrics.metrics.SmithWaterman;
 import org.simmetrics.metrics.SmithWatermanGotoh;
 import org.simmetrics.metrics.SmithWatermanGotohWindowedAffine;
 import org.simmetrics.simplifier.SoundexSimplifier;
-import org.simmetrics.tokenisers.QGram2Tokenizer;
-import org.simmetrics.tokenisers.QGram3ExtendedTokenizer;
-import org.simmetrics.tokenisers.QGramTokenizer;
-import org.simmetrics.tokenisers.Tokenizer;
-import org.simmetrics.tokenisers.WhitespaceTokenizer;
-import org.simmetrics.tokenisers.WordQGramTokenizer;
+import org.simmetrics.tokenizers.QGram2Tokenizer;
+import org.simmetrics.tokenizers.QGram3ExtendedTokenizer;
+import org.simmetrics.tokenizers.QGramTokenizer;
+import org.simmetrics.tokenizers.Tokenizer;
+import org.simmetrics.tokenizers.WhitespaceTokenizer;
+import org.simmetrics.tokenizers.WordQGramTokenizer;
 
 /**
  * This class consists exclusively of static methods that apply a metric to

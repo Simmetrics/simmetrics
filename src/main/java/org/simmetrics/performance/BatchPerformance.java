@@ -30,9 +30,9 @@ import static org.simmetrics.StringMetrics.compare;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.SimonWhite;
-import org.simmetrics.tokenisers.CachingTokenizer;
-import org.simmetrics.tokenisers.QGram2Tokenizer;
-import org.simmetrics.tokenisers.WordQGramTokenizer;
+import org.simmetrics.tokenizers.CachingTokenizer;
+import org.simmetrics.tokenizers.QGram2Tokenizer;
+import org.simmetrics.tokenizers.WordQGramTokenizer;
 
 import com.google.common.base.Stopwatch;
 

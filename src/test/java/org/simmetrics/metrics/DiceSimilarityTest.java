@@ -26,7 +26,7 @@ package org.simmetrics.metrics;
 import org.junit.Test;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.DiceSimilarity;
-import org.simmetrics.tokenisers.WhitespaceTokenizer;
+import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
 public class DiceSimilarityTest extends StringMetricTest {
 

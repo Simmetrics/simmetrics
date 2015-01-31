@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.simmetrics.TokenListMetric;
-import org.simmetrics.tokenisers.WhitespaceTokenizer;
+import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
 import static java.lang.Math.abs;
 

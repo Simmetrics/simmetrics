@@ -22,36 +22,21 @@
  * 
  */
 
-package org.simmetrics.tokenisers;
-
-import java.util.List;
-import java.util.Set;
+package org.simmetrics.tokenizers;
 
 /**
- * A tokenizer divides an input string into tokens. 
+ * Basic Q-Gram tokenizer for a Q of 3.The Q-Gram is extended beyond the length
+ * of the string with padding.
  * 
- * @author Sam Chapman
- * @version 1.1
+ * @author mpkorstanje
  */
-public interface Tokenizer {
+public final class QGram3ExtendedTokenizer extends QGramExtendedTokenizer
+		 {
 
-	/**
-	 * Return tokenized version of a string as a list of tokens. This list can
-	 * be safely modified.
-	 *
-	 * @param input
-	 *
-	 * @return List tokenized version of a string
-	 */
-	public List<String> tokenizeToList(String input);
+	private static final int Q = 3;
 
-	/**
-	 * Return tokenized version of a string as a set of tokens. This set can be
-	 * safely modified.
-	 *
-	 * @param input
-	 *
-	 * @return tokenized version of a string as a set
-	 */
-	public Set<String> tokenizeToSet(String input);
+	public QGram3ExtendedTokenizer() {
+		super(Q);
+	}
+
 }

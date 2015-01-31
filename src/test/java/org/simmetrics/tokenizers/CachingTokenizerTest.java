@@ -21,16 +21,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package org.simmetrics.tokenisers;
+package org.simmetrics.tokenizers;
 
 import java.util.Arrays;
 import java.util.Collections;
-import org.simmetrics.tokenisers.CachingTokenizer;
-import org.simmetrics.tokenisers.Tokenizer;
+
+import org.simmetrics.tokenizers.CachingTokenizer;
+import org.simmetrics.tokenizers.Tokenizer;
 
 import static org.mockito.Mockito.*;
 
-public class CachingTokeniserTest extends TokeniserTest {
+public class CachingTokenizerTest extends TokenizerTest {
 
 	private Tokenizer tokenizer;
 

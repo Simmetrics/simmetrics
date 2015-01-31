@@ -22,7 +22,7 @@
  * 
  */
 
-package org.simmetrics.tokenisers;
+package org.simmetrics.tokenizers;
 
 import org.simmetrics.metrics.Tokenizing;
 

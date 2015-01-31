@@ -23,7 +23,6 @@
  */
 package org.simmetrics.example;
 
-import org.simmetrics.Metrics;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetrics;
 

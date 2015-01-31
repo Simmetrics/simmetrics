@@ -22,30 +22,43 @@
  * 
  */
 
-package org.simmetrics.tokenisers;
+package org.simmetrics.tokenizers;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
- * TokeniserWhitespace implements a simple whitespace tokeniser.
+ * Basic Q-Gram tokenizer for a variable Q.
  * 
- * @author Sam Chapman
- * @version 1.1
+ * @author mpkorstanje
+ *
  */
-public final class CharacterTokenizer extends AbstractTokenizer {
+public class QGramTokenizer extends AbstractTokenizer {
 
-	public final List<String> tokenizeToList(final String input) {
-		List<String> l = new ArrayList<>(input.length());
-		for (char c : input.toCharArray()) {
-			l.add(String.valueOf(c));
-		}
-		return l;
+	private final int q;
+
+	public QGramTokenizer(int q) {
+		this.q = q;
 	}
+	
+	public int getQ() {
+		return q;
+	}
+
+	public ArrayList<String> tokenizeToList(final String input) {
+		final ArrayList<String> ret = new ArrayList<>();
+
+		for (int i = 0; i < input.length() - q + 1; i++) {
+			ret.add(input.substring(i, i + q));
+		}
+
+		return ret;
+	}
+	
+
 
 	@Override
 	public String toString() {
-		return "CharacterTokenizer";
+		return "QGramTokenizer [q=" + q + "]";
 	}
 
 }

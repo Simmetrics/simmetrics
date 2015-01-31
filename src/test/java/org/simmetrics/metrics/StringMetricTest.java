@@ -30,7 +30,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.simmetrics.StringMetric;
-import org.simmetrics.tokenisers.Tokenizer;
+import org.simmetrics.tokenizers.Tokenizer;
 
 public abstract class StringMetricTest {
 

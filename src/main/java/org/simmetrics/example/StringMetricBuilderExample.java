@@ -26,7 +26,7 @@ package org.simmetrics.example;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.*;
-import org.simmetrics.tokenisers.QGram2Tokenizer;
+import org.simmetrics.tokenizers.QGram2Tokenizer;
 
 /**
  * SimpleExample implements a simple example to demonstrate the ease to use a

@@ -22,34 +22,36 @@
  * 
  */
 
-package org.simmetrics.tokenisers;
+package org.simmetrics.tokenizers;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
- * TokeniserCSVBasic implements a simple CSV tokeniser. NB(this doesn't consider
- * embedded escaped comma's within the fields)
+ * A tokenizer divides an input string into tokens. 
  * 
  * @author Sam Chapman
  * @version 1.1
  */
-public final class CSVBasicTokenizer extends AbstractTokenizer {
+public interface Tokenizer {
 
-	private final String delimiters = "[,\n]";
+	/**
+	 * Return tokenized version of a string as a list of tokens. This list can
+	 * be safely modified.
+	 *
+	 * @param input
+	 *
+	 * @return List tokenized version of a string
+	 */
+	public List<String> tokenizeToList(String input);
 
-	public final ArrayList<String> tokenizeToList(final String input) {
-		final ArrayList<String> returnArrayList = new ArrayList<>();
-
-		for (String token : input.split(delimiters)) {
-			returnArrayList.add(token);
-		}
-
-		return returnArrayList;
-	}
-
-	@Override
-	public String toString() {
-		return "CSVBasicTokenizer [delimiters=" + delimiters + "]";
-	}
-
+	/**
+	 * Return tokenized version of a string as a set of tokens. This set can be
+	 * safely modified.
+	 *
+	 * @param input
+	 *
+	 * @return tokenized version of a string as a set
+	 */
+	public Set<String> tokenizeToSet(String input);
 }

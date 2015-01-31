@@ -25,7 +25,7 @@ package org.simmetrics.metrics;
 
 import org.junit.Test;
 import org.simmetrics.StringMetricBuilder;
-import org.simmetrics.tokenisers.WhitespaceTokenizer;
+import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
 public class JaccardSimilarityTest extends StringMetricTest {
 

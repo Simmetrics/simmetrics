@@ -24,8 +24,8 @@
 
 package org.simmetrics.metrics;
 
-import org.simmetrics.tokenisers.CachingTokenizer;
-import org.simmetrics.tokenisers.Tokenizer;
+import org.simmetrics.tokenizers.CachingTokenizer;
+import org.simmetrics.tokenizers.Tokenizer;
 
 /**
  * Interface for metrics that use a {@link Tokenizer} to tokenize strings. These

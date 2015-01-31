@@ -26,8 +26,8 @@ package org.simmetrics.metrics;
 import org.junit.Test;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.BlockDistance;
-import org.simmetrics.tokenisers.CharacterTokenizer;
-import org.simmetrics.tokenisers.WhitespaceTokenizer;
+import org.simmetrics.tokenizers.CharacterTokenizer;
+import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
 public class BlockDistanceTest extends StringMetricTest {
 

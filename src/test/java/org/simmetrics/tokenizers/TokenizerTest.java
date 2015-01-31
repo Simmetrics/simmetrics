@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package org.simmetrics.tokenisers;
+package org.simmetrics.tokenizers;
 
 import static org.junit.Assert.*;
 
@@ -32,9 +32,9 @@ import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.simmetrics.tokenisers.Tokenizer;
+import org.simmetrics.tokenizers.Tokenizer;
 
-public abstract class TokeniserTest {
+public abstract class TokenizerTest {
 
 	private Tokenizer tokenizer;
 

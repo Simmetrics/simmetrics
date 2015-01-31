@@ -21,21 +21,27 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
+package org.simmetrics.tokenizers;
 
-package org.simmetrics.tokenisers;
+import org.simmetrics.tokenizers.QGram2ExtendedTokenizer;
+import org.simmetrics.tokenizers.Tokenizer;
 
-/**
- * Basic Q-Gram tokenizer for a Q of 3 .
- * 
- * @author mpkorstanje
- *
- */
-public final class QGram3Tokenizer extends QGramTokenizer   {
+public class QGram2ExtendedTokenizerTest extends TokenizerTest {
 
-	private static final int Q = 3;
-
-	public QGram3Tokenizer() {
-		super(Q);
+	@Override
+	protected Tokenizer getTokenizer() {
+		return new QGram2ExtendedTokenizer();
 	}
 
+	@Override
+	public T[] getTests() {
+
+		return new T[] {
+				new T("123456789", 
+						"#1", "12", "23", "34", "45", "56", "67", "78", "89","9#"),
+				new T("123456789123456789", 
+						"#1", "12", "23", "34", "45", "56", "67", "78", "89",
+						"91", "12", "23", "34", "45", "56", "67", "78", "89","9#"
+						) };
+	}
 }

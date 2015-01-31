@@ -23,7 +23,7 @@
  */
 
 
-package org.simmetrics.tokenisers;
+package org.simmetrics.tokenizers;
 
 import java.util.ArrayList;
 import java.util.List;

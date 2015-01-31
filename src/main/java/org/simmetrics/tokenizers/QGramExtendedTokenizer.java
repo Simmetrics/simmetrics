@@ -21,17 +21,43 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
+package org.simmetrics.tokenizers;
 
-package org.simmetrics.tokenisers;
-
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Set;
 
-public abstract class AbstractTokenizer implements Tokenizer {
+import com.google.common.base.Strings;
 
-	public Set<String> tokenizeToSet(final String input) {
-		return new HashSet<>(tokenizeToList(input));
+/**
+ * Basic Q-Gram tokenizer for a variable Q.The Q-Gram is extended beyond the
+ * length of the string with padding.
+ * 
+ * @author mpkorstanje
+ *
+ */
+public class QGramExtendedTokenizer extends QGramTokenizer {
+
+	private final String Q_GRAM_START_PADDING = "#";
+	private final String Q_GRAM_END_PADDING = "#";
+
+	private final String endPadding;
+	private final String startPadding;
+
+	public QGramExtendedTokenizer(int q) {
+		super(q);
+		
+		this.startPadding = Strings.repeat(Q_GRAM_START_PADDING, q - 1);
+		this.endPadding = Strings.repeat(Q_GRAM_END_PADDING, q - 1);
+
 	}
 
+	public ArrayList<String> tokenizeToList(String input) {
+		return super.tokenizeToList(startPadding + input + endPadding);
+	}
+
+	@Override
+	public String toString() {
+		return "QGramExtendedTokenizer [q=" + getQ() + "]";
+	}
 
 }

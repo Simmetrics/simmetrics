@@ -21,30 +21,25 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package org.simmetrics.tokenisers;
 
-import org.simmetrics.tokenisers.QGram2Tokenizer;
-import org.simmetrics.tokenisers.Tokenizer;
-import org.simmetrics.tokenisers.WordQGramTokenizer;
+package org.simmetrics.tokenizers;
 
-public class WordQGramTokenizerTest extends TokeniserTest {
+import java.util.ArrayList;
+import java.util.List;
 
-	@Override
-	protected Tokenizer getTokenizer() {
-		return new WordQGramTokenizer(new QGram2Tokenizer());
+public final class CharacterTokenizer extends AbstractTokenizer {
+
+	public final List<String> tokenizeToList(final String input) {
+		List<String> l = new ArrayList<>(input.length());
+		for (char c : input.toCharArray()) {
+			l.add(String.valueOf(c));
+		}
+		return l;
 	}
 
 	@Override
-	public T[] getTests() {
-
-		return new T[] {
-				new T("1234 5678 90 a", 
-						"12", "23", "34", 
-						"56","67", "78", 
-						"90"),
-				new T("1234 1234 90 a", 
-						"12", "23", "34",
-						"12", "23", "34", 
-						"90"), };
+	public String toString() {
+		return "CharacterTokenizer";
 	}
+
 }

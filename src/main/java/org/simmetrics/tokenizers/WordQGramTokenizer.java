@@ -22,7 +22,7 @@
  * 
  */
 
-package org.simmetrics.tokenisers;
+package org.simmetrics.tokenizers;
 
 import java.util.HashSet;
 import java.util.List;
@@ -30,7 +30,7 @@ import java.util.Set;
 import java.util.ArrayList;
 
 /**
- * A QGram Tokeniser for words. A string is broken up into words by a
+ * A QGram tokenizer for words. A string is broken up into words by a
  * {@link Tokenizer}. For each word q-grams are made by a {@link QGramTokenizer}
  * .
  * 
@@ -44,7 +44,7 @@ public final class WordQGramTokenizer implements Tokenizer {
 	private QGramTokenizer qGramTokenizer;
 
 	/**
-	 * Constructs a TokeniserWordQGram with a {@link WhitespaceTokenizer} as a
+	 * Constructs a WordQGramTokenizer with a {@link WhitespaceTokenizer} as a
 	 * word tokenizer and {@link QGram2Tokenizer}. A string is broken up into
 	 * words by the word tokenizer. For each word q-grams are made.
 	 */
@@ -53,7 +53,7 @@ public final class WordQGramTokenizer implements Tokenizer {
 	}
 
 	/**
-	 * Constructs a TokeniserWordQGram with a {@link WhitespaceTokenizer} as a
+	 * Constructs a WordQGramTokenizer with a {@link WhitespaceTokenizer} as a
 	 * word tokenizer the given q-gram. A string is broken up into words by the
 	 * word tokenizer. For each word q-grams are made.
 	 */
@@ -62,7 +62,7 @@ public final class WordQGramTokenizer implements Tokenizer {
 	}
 
 	/**
-	 * Constructs a TokeniserWordQGram with the given word and q-gram
+	 * Constructs a WordQGramTokenizer with the given word and q-gram
 	 * tokenizers. A string is broken up into words by the word tokenizer. For
 	 * each word q-grams are made.
 	 * 

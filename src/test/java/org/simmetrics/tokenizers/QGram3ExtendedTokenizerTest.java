@@ -21,37 +21,27 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
+package org.simmetrics.tokenizers;
 
-package org.simmetrics.tokenisers;
+import org.simmetrics.tokenizers.QGram3ExtendedTokenizer;
+import org.simmetrics.tokenizers.Tokenizer;
 
-import java.util.ArrayList;
-
-/**
- * TokeniserWhitespace implements a simple whitespace tokeniser.
- * 
- * @author Sam Chapman
- * @version 1.1
- */
-public final class WhitespaceTokenizer extends AbstractTokenizer {
+public class QGram3ExtendedTokenizerTest extends TokenizerTest {
 
 	@Override
-	public String toString() {
-		return "WhitespaceTokenizer [" + delimiters + "]";
+	protected Tokenizer getTokenizer() {
+		return new QGram3ExtendedTokenizer();
 	}
 
-	private final String delimiters = "\\s";
+	@Override
+	public T[] getTests() {
 
-	public final ArrayList<String> tokenizeToList(final String input) {
-
-		final ArrayList<String> returnArrayList = new ArrayList<>();
-
-		for (String token : input.split(delimiters)) {
-			if (!token.isEmpty()) {
-				returnArrayList.add(token);
-			}
-		}
-
-		return returnArrayList;
+		return new T[] {
+				new T("12345678", 
+						"##1", "#12", "123", "234", "345", "456","567", "678", "78#", "8##"),
+						new T("123123", 
+								"##1", "#12", "123", "231", "312", "123","23#", "3##"),
+								
+		};
 	}
-
 }

@@ -6,8 +6,8 @@ import org.simmetrics.metrics.CompositeTokenSetMetric;
 import org.simmetrics.metrics.SimplifyingSimplifier;
 import org.simmetrics.simplifier.PassThroughSimplifier;
 import org.simmetrics.simplifier.Simplifier;
-import org.simmetrics.tokenisers.Tokenizer;
-import org.simmetrics.tokenisers.TokenizingTokenizer;
+import org.simmetrics.tokenizers.Tokenizer;
+import org.simmetrics.tokenizers.TokenizingTokenizer;
 
 import com.google.common.base.Preconditions;
 

@@ -31,8 +31,8 @@ import org.simmetrics.StringMetrics;
 import org.simmetrics.metrics.CosineSimilarity;
 import org.simmetrics.simplifier.CachingSimplifier;
 import org.simmetrics.simplifier.CaseSimplifier;
-import org.simmetrics.tokenisers.CachingTokenizer;
-import org.simmetrics.tokenisers.QGram2Tokenizer;
+import org.simmetrics.tokenizers.CachingTokenizer;
+import org.simmetrics.tokenizers.QGram2Tokenizer;
 
 public class CacheExample {
 

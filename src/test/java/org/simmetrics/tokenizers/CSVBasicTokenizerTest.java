@@ -21,44 +21,27 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
+package org.simmetrics.tokenizers;
 
-package org.simmetrics.tokenisers;
+import org.simmetrics.tokenizers.CSVBasicTokenizer;
+import org.simmetrics.tokenizers.Tokenizer;
 
-import java.util.ArrayList;
-
-/**
- * Basic Q-Gram tokenizer for a variable Q.
- * 
- * @author mpkorstanje
- *
- */
-public class QGramTokenizer extends AbstractTokenizer {
-
-	private final int q;
-
-	public QGramTokenizer(int q) {
-		this.q = q;
-	}
-	
-	public int getQ() {
-		return q;
-	}
-
-	public ArrayList<String> tokenizeToList(final String input) {
-		final ArrayList<String> ret = new ArrayList<>();
-
-		for (int i = 0; i < input.length() - q + 1; i++) {
-			ret.add(input.substring(i, i + q));
-		}
-
-		return ret;
-	}
-	
+public class CSVBasicTokenizerTest extends TokenizerTest {
 
 
 	@Override
-	public String toString() {
-		return "QGramTokenizer [q=" + q + "]";
+	protected Tokenizer getTokenizer() {
+		return new CSVBasicTokenizer();
+	}
+	@Override
+	public T[] getTests() {
+
+		return new T[] { 
+				new T("1a,2a,3a,4a\n1b,2b,3b,4b", 
+				"1a", "2a", "3a","4a", "1b", "2b", "3b", "4b"),
+				new T("1a,2a,3a,4a\n1a,2a,3a,4a", 
+						"1a", "2a", "3a","4a", "1a", "2a", "3a", "4a")
+		};
 	}
 
 }

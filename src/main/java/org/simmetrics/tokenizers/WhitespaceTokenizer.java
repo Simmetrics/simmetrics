@@ -21,28 +21,37 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package org.simmetrics.tokenisers;
 
-import org.simmetrics.tokenisers.Tokenizer;
-import org.simmetrics.tokenisers.WhitespaceTokenizer;
+package org.simmetrics.tokenizers;
 
-public class WhitespaceTokenizerTest extends TokeniserTest {
+import java.util.ArrayList;
+
+/**
+ * A simple whitespace tokenizer.
+ * 
+ * @author Sam Chapman
+ * @version 1.1
+ */
+public final class WhitespaceTokenizer extends AbstractTokenizer {
 
 	@Override
-	protected Tokenizer getTokenizer() {
-		return new WhitespaceTokenizer();
+	public String toString() {
+		return "WhitespaceTokenizer [" + delimiters + "]";
 	}
 
-	@Override
-	public T[] getTests() {
+	private final String delimiters = "\\s";
 
-		return new T[] { 
-				new T("A B C", "A", "B", "C"),
-				new T("A  B  C", "A", "B", "C"),
-				new T("A\nB", "A", "B"),
-				new T("A\tB", "A", "B"), 
-				new T("A\t\nB", "A", "B"),
+	public final ArrayList<String> tokenizeToList(final String input) {
 
-		};
+		final ArrayList<String> returnArrayList = new ArrayList<>();
+
+		for (String token : input.split(delimiters)) {
+			if (!token.isEmpty()) {
+				returnArrayList.add(token);
+			}
+		}
+
+		return returnArrayList;
 	}
+
 }

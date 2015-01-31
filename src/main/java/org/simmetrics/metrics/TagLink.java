@@ -27,8 +27,8 @@ package org.simmetrics.metrics;
 import java.util.*;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.tokenisers.Tokenizer;
-import org.simmetrics.tokenisers.WhitespaceTokenizer;
+import org.simmetrics.tokenizers.Tokenizer;
+import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
 /**
  * TagLink inplements a TagLink String Metric.
@@ -40,19 +40,19 @@ public class TagLink implements StringMetric {
 	 */
 	private HashMap<String, Float> idfMap;
 	/**
-	 * private characterBasedStringMetric is the method that meassures
+	 * private characterBasedStringMetric is the method that measures
 	 * similarity between tokens.
 	 */
 	private StringMetric characterBasedStringMetric;
 	/**
-	 * private DEFAULT_METRIC is the default method that meassures similarity
+	 * private DEFAULT_METRIC is the default method that measures similarity
 	 * between tokens.
 	 */
 	private static final TagLinkToken DEFAULT_METRIC = new TagLinkToken();
 	/**
-	 * private tokeniser for tokenisation of the query strings.
+	 * private tokenizer for tokenization of the query strings.
 	 */
-	private final Tokenizer tokeniser;
+	private final Tokenizer tokenizer;
 
 	/**
 	 * TagLink default constructor. IDF weights are all equally weighted.
@@ -86,7 +86,7 @@ public class TagLink implements StringMetric {
 	 */
 	public TagLink(StringMetric characterBasedStringMetric) {
 		this.characterBasedStringMetric = characterBasedStringMetric;
-		tokeniser = new WhitespaceTokenizer();
+		tokenizer = new WhitespaceTokenizer();
 		// WARNING FROM AUTHOR OF SIMMETRICS
 		// this metric is not recomended for fast processing it has been added
 		// by a third party into the library and from the source is an extremely
@@ -144,7 +144,7 @@ public class TagLink implements StringMetric {
 	public TagLink(String[] dataSetArray,
 			StringMetric characterBasedStringMetric) {
 		this.characterBasedStringMetric = characterBasedStringMetric;
-		tokeniser = new WhitespaceTokenizer();
+		tokenizer = new WhitespaceTokenizer();
 		this.idfMap = getIDFMap(dataSetArray);
 		// WARNING FROM AUTHOR OF SIMMETRICS
 		// this metric is not recomended for fast processing it has been added
@@ -216,8 +216,8 @@ public class TagLink implements StringMetric {
 		if (T.equals(U)) {
 			return 1.0f;
 		} else {
-			List<String> tArrayList = tokeniser.tokenizeToList(T);
-			List<String> uArrayList = tokeniser.tokenizeToList(U);
+			List<String> tArrayList = tokenizer.tokenizeToList(T);
+			List<String> uArrayList = tokenizer.tokenizeToList(U);
 			String[] tTokens = tArrayList
 					.toArray(new String[tArrayList.size()]), uTokens = uArrayList
 					.toArray(new String[uArrayList.size()]);
@@ -502,7 +502,7 @@ public class TagLink implements StringMetric {
 			HashMap<String, Object> rowMap = new HashMap<>();
 			HashMap<String, Float> freqMap = new HashMap<>();
 			String actualRow = dataSetArray[row];
-			List<String> tokenArrayList = tokeniser.tokenizeToList(actualRow);
+			List<String> tokenArrayList = tokenizer.tokenizeToList(actualRow);
 			String[] rowArray = tokenArrayList
 					.toArray(new String[tokenArrayList.size()]);
 			for (String actualToken : rowArray) {

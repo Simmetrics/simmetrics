@@ -26,7 +26,7 @@ package org.simmetrics.metrics;
 import org.junit.Test;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.QGramsDistance;
-import org.simmetrics.tokenisers.QGram3ExtendedTokenizer;
+import org.simmetrics.tokenizers.QGram3ExtendedTokenizer;
 
 public class QGramsDistanceTest extends StringMetricTest {
 

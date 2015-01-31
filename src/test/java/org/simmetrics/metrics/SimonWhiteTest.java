@@ -26,8 +26,8 @@ package org.simmetrics.metrics;
 import org.junit.Test;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.SimonWhite;
-import org.simmetrics.tokenisers.QGram2Tokenizer;
-import org.simmetrics.tokenisers.WordQGramTokenizer;
+import org.simmetrics.tokenizers.QGram2Tokenizer;
+import org.simmetrics.tokenizers.WordQGramTokenizer;
 
 public class SimonWhiteTest extends StringMetricTest {
 

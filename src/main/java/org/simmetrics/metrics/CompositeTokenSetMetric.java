@@ -3,7 +3,7 @@ package org.simmetrics.metrics;
 import org.simmetrics.StringMetric;
 import org.simmetrics.TokenSetMetric;
 import org.simmetrics.simplifier.Simplifier;
-import org.simmetrics.tokenisers.Tokenizer;
+import org.simmetrics.tokenizers.Tokenizer;
 
 public final class CompositeTokenSetMetric implements StringMetric {
 

@@ -21,27 +21,21 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package org.simmetrics.tokenisers;
 
-import org.simmetrics.tokenisers.QGram2ExtendedTokenizer;
-import org.simmetrics.tokenisers.Tokenizer;
+package org.simmetrics.tokenizers;
 
-public class QGram2ExtendedTokenizerTest extends TokeniserTest {
+/**
+ * Basic Q-Gram tokenizer for a Q of 2.The Q-Gram is extended beyond the length
+ * of the string with padding.
+ * 
+ * @author mpkorstanje
+ */
+public final class QGram2ExtendedTokenizer extends QGramExtendedTokenizer {
 
-	@Override
-	protected Tokenizer getTokenizer() {
-		return new QGram2ExtendedTokenizer();
+	private static final int Q = 2;
+
+	public QGram2ExtendedTokenizer() {
+		super(Q);
 	}
 
-	@Override
-	public T[] getTests() {
-
-		return new T[] {
-				new T("123456789", 
-						"#1", "12", "23", "34", "45", "56", "67", "78", "89","9#"),
-				new T("123456789123456789", 
-						"#1", "12", "23", "34", "45", "56", "67", "78", "89",
-						"91", "12", "23", "34", "45", "56", "67", "78", "89","9#"
-						) };
-	}
 }

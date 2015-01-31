@@ -21,28 +21,28 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package org.simmetrics.tokenisers;
+package org.simmetrics.tokenizers;
 
-import org.simmetrics.tokenisers.QGram2Tokenizer;
-import org.simmetrics.tokenisers.Tokenizer;
+import org.simmetrics.tokenizers.Tokenizer;
+import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
-public class QGram2TokenizerTest extends TokeniserTest {
+public class WhitespaceTokenizerTest extends TokenizerTest {
 
 	@Override
 	protected Tokenizer getTokenizer() {
-		return new QGram2Tokenizer();
+		return new WhitespaceTokenizer();
 	}
 
 	@Override
 	public T[] getTests() {
 
-		return new T[] {
-				new T("123456789",
-						// Expected output
-						"12", "23", "34", "45", "56", "67", "78", "89"),
-				new T("123456789123456789",
-						// Expected output
-						"12", "23", "34", "45", "56", "67", "78", "89", "91",
-						"12", "23", "34", "45", "56", "67", "78", "89") };
+		return new T[] { 
+				new T("A B C", "A", "B", "C"),
+				new T("A  B  C", "A", "B", "C"),
+				new T("A\nB", "A", "B"),
+				new T("A\tB", "A", "B"), 
+				new T("A\t\nB", "A", "B"),
+
+		};
 	}
 }

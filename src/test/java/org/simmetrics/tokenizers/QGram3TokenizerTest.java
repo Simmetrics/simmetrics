@@ -21,27 +21,27 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package org.simmetrics.tokenisers;
+package org.simmetrics.tokenizers;
 
-import org.simmetrics.tokenisers.CSVBasicTokenizer;
-import org.simmetrics.tokenisers.Tokenizer;
+import org.simmetrics.tokenizers.QGram3Tokenizer;
+import org.simmetrics.tokenizers.Tokenizer;
 
-public class CSVBasicTokenizerTest extends TokeniserTest {
+
+public class QGram3TokenizerTest extends TokenizerTest {
 
 
 	@Override
 	protected Tokenizer getTokenizer() {
-		return new CSVBasicTokenizer();
+		return new QGram3Tokenizer();
 	}
+
 	@Override
 	public T[] getTests() {
 
-		return new T[] { 
-				new T("1a,2a,3a,4a\n1b,2b,3b,4b", 
-				"1a", "2a", "3a","4a", "1b", "2b", "3b", "4b"),
-				new T("1a,2a,3a,4a\n1a,2a,3a,4a", 
-						"1a", "2a", "3a","4a", "1a", "2a", "3a", "4a")
+		return new T[] {
+				new T("12345678", "123", "234", "345", "456", "567", "678"),
+				new T("123123", "123", "231", "312", "123"),
+
 		};
 	}
-
 }

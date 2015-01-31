@@ -26,7 +26,7 @@ package org.simmetrics.metrics;
 import org.junit.Test;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.EuclideanDistance;
-import org.simmetrics.tokenisers.WhitespaceTokenizer;
+import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
 
 public class EuclideanDistanceTest extends StringMetricTest {

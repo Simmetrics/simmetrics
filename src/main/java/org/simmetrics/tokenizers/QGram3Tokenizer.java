@@ -22,20 +22,19 @@
  * 
  */
 
-package org.simmetrics.tokenisers;
+package org.simmetrics.tokenizers;
 
 /**
- * Basic Q-Gram tokenizer for a Q of 3.The Q-Gram is extended beyond the length
- * of the string with padding.
+ * Basic Q-Gram tokenizer for a Q of 3 .
  * 
  * @author mpkorstanje
+ *
  */
-public final class QGram3ExtendedTokenizer extends QGramExtendedTokenizer
-		 {
+public final class QGram3Tokenizer extends QGramTokenizer   {
 
 	private static final int Q = 3;
 
-	public QGram3ExtendedTokenizer() {
+	public QGram3Tokenizer() {
 		super(Q);
 	}
 

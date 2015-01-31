@@ -11,6 +11,14 @@
 	<description>SimMetrics is a java library of Similarity or Distance Metrics, e.g. Levenshtein Distance, that provide float based similarity measures between String Data. All metrics return consistant measures rather than unbounded similarity scores.</description>
 	<url>https://bitbucket.org/Nickmancol/simmetrics</url>
 
+	<licenses>
+		<license>
+			<name>GNU General Public License (GPL)</name>
+			<url>http://www.gnu.org/licenses/gpl.txt</url>
+		</license>
+	</licenses>
+
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<altDeploymentRepository>releases::default::${project.baseUri}/mavenRepo/releases/</altDeploymentRepository>

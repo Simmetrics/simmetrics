@@ -52,7 +52,7 @@ public class StringMetricBuilderExample {
 
 		StringMetric metric = new StringMetricBuilder()
 				.setMetric(new CosineSimilarity())
-				.setTokeninzer(new QGram2Tokenizer()).build();
+				.setTokenizer(new QGram2Tokenizer()).build();
 
 		final float result = metric.compare(str1, str2);
 

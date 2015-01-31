@@ -35,7 +35,7 @@ public class MongeElkanTest extends StringMetricTest {
 		testSimilarity(
 				new StringMetricBuilder()
 						.setMetric(new MongeElkan(new SmithWatermanGotoh()))
-						.setTokeninzer(new WhitespaceTokenizer())
+						.setTokenizer(new WhitespaceTokenizer())
 						.build(),
 				new T[] {
 						new T(0.9286f, "test string1", "test string2"),

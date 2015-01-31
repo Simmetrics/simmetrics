@@ -34,7 +34,7 @@ public class OverlapCoefficientTest extends StringMetricTest {
 	public void test() {
 		testSimilarity(
 				new StringMetricBuilder().setMetric(new OverlapCoefficient())
-						.setTokeninzer(new WhitespaceTokenizer()).build(), new T[] {
+						.setTokenizer(new WhitespaceTokenizer()).build(), new T[] {
 				new T(0.5000f, "test string1", "test string2"),
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.7500f, "a b c d", "a b c e"),

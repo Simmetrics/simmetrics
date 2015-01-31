@@ -35,34 +35,29 @@ import com.google.common.base.Strings;
  * @author mpkorstanje
  *
  */
-public class QGramExtendedTokenizer extends AbstractTokenizer {
+public class QGramExtendedTokenizer extends QGramTokenizer {
 
 	private final String Q_GRAM_START_PADDING = "#";
 	private final String Q_GRAM_END_PADDING = "#";
 
-	private final QGramTokenizer tokenizer;
 	private final String endPadding;
 	private final String startPadding;
 
 	public QGramExtendedTokenizer(int q) {
-		tokenizer = new QGramTokenizer(q);
-
+		super(q);
+		
 		this.startPadding = Strings.repeat(Q_GRAM_START_PADDING, q - 1);
 		this.endPadding = Strings.repeat(Q_GRAM_END_PADDING, q - 1);
 
 	}
 
 	public ArrayList<String> tokenizeToList(String input) {
-		return tokenizer.tokenizeToList(startPadding + input + endPadding);
-	}
-
-	public Set<String> tokenizeToSet(String input) {
-		return tokenizer.tokenizeToSet(startPadding + input + endPadding);
+		return super.tokenizeToList(startPadding + input + endPadding);
 	}
 
 	@Override
 	public String toString() {
-		return "QGramExtendedTokenizer [q=" + tokenizer.getQ() + "]";
+		return "QGramExtendedTokenizer [q=" + getQ() + "]";
 	}
 
 }

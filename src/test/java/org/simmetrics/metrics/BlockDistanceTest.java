@@ -36,7 +36,7 @@ public class BlockDistanceTest extends StringMetricTest {
 		testSimilarity(
 				new StringMetricBuilder()
 						.setMetric(new BlockDistance())
-						.setTokeninzer(new WhitespaceTokenizer())
+						.setTokenizer(new WhitespaceTokenizer())
 						.build(),
 				new T[] {
 						new T(0.5000f, "test string1", "test string2"),
@@ -50,7 +50,7 @@ public class BlockDistanceTest extends StringMetricTest {
 		testSimilarity(
 				new StringMetricBuilder()
 						.setMetric(new BlockDistance())
-						.setTokeninzer(new CharacterTokenizer())
+						.setTokenizer(new CharacterTokenizer())
 						.build(),
 				new T[] {
 						new T(0.8333f, "Healed","Sealed"),

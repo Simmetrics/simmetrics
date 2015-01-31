@@ -25,6 +25,7 @@ package org.simmetrics.example;
 
 import org.simmetrics.Metrics;
 import org.simmetrics.StringMetric;
+import org.simmetrics.StringMetrics;
 
 /**
  * SimpleExample implements a simple example to demonstrate the ease to use a
@@ -48,7 +49,7 @@ public class SimpleExample {
 		final String str1 = args[0];
 		final String str2 = args[1];
 
-		StringMetric metric = Metrics.cosineSimilarity();
+		StringMetric metric = StringMetrics.cosineSimilarity();
 
 		final float result = metric.compare(str1, str2);
 

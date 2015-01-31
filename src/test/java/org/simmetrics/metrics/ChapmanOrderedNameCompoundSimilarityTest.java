@@ -35,7 +35,7 @@ public class ChapmanOrderedNameCompoundSimilarityTest extends StringMetricTest {
 		testSimilarity(
 				new StringMetricBuilder()
 					.setMetric(new ChapmanOrderedNameCompoundSimilarity())
-					.setTokeninzer(new WhitespaceTokenizer())
+					.setTokenizer(new WhitespaceTokenizer())
 					.build(), 
 				new T[] {
 						new T(0.9331f, "test string1", "test string2"),

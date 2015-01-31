@@ -53,6 +53,8 @@ public class QGramTokenizer extends AbstractTokenizer {
 
 		return ret;
 	}
+	
+
 
 	@Override
 	public String toString() {

@@ -39,7 +39,7 @@ public class ChapmanMatchingSoundexTest extends StringMetricTest {
 										.setMetric(new JaroWinkler())
 										.setSimplifier(new SoundexSimplifier())
 										.build()))
-						.setTokeninzer(new WhitespaceTokenizer()).build(),
+						.setTokenizer(new WhitespaceTokenizer()).build(),
 				new T[] { new T(0.9556f, "test string1", "test string2"),
 						new T(0.8833f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 						new T(0.9111f, "a b c d", "a b c e"),

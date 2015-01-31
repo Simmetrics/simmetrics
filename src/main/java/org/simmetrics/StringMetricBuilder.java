@@ -91,7 +91,7 @@ public class StringMetricBuilder {
 			return this;
 		}
 
-		public TokenMetricBuilder<T> setTokeninzer(Tokenizer tokenizer) {
+		public TokenMetricBuilder<T> setTokenizer(Tokenizer tokenizer) {
 			Preconditions.checkNotNull(tokenizer);
 			this.tokenizer = tokenizer;
 			return this;

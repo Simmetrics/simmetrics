@@ -29,7 +29,7 @@ import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetrics;
 import org.simmetrics.metrics.CosineSimilarity;
-import org.simmetrics.simplifier.CaseSimplifier;
+import org.simmetrics.simplifiers.CaseSimplifier;
 import org.simmetrics.tokenizers.QGram2Tokenizer;
 
 public class BatchExample {

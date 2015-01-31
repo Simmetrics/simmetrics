@@ -25,7 +25,7 @@ package org.simmetrics.metrics;
 
 import org.junit.Test;
 import org.simmetrics.StringMetricBuilder;
-import org.simmetrics.simplifier.SoundexSimplifier;
+import org.simmetrics.simplifiers.SoundexSimplifier;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
 public class ChapmanMatchingSoundexTest extends StringMetricTest {

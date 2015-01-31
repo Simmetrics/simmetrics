@@ -25,8 +25,8 @@ package org.simmetrics.metrics;
 
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetrics;
-import org.simmetrics.simplifier.CachingSimplifier;
-import org.simmetrics.simplifier.Simplifier;
+import org.simmetrics.simplifiers.CachingSimplifier;
+import org.simmetrics.simplifiers.Simplifier;
 
 /**
  * Interface for classes that use a {@link Simplifier} to normalize strings.

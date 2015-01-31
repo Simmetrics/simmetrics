@@ -28,7 +28,7 @@ import java.util.List;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.StringMetric;
 import org.simmetrics.TokenListMetric;
-import org.simmetrics.simplifier.SoundexSimplifier;
+import org.simmetrics.simplifiers.SoundexSimplifier;
 
 /**
  * ChapmanOrderedNameCompoundSimilarity tests similarity upon the most similar

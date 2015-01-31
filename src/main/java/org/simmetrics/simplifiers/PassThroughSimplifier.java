@@ -22,58 +22,20 @@
  * 
  */
 
-package org.simmetrics.simplifier;
 
-import java.util.Locale;
+package org.simmetrics.simplifiers;
 
-public abstract class CaseSimplifier implements Simplifier  {
+public final class PassThroughSimplifier implements Simplifier{
 
-	public static class Lower extends CaseSimplifier {
-
-		private final Locale locale;
-
-		public Lower(Locale l) {
-			super();
-			this.locale = l;
-		}
-
-		public Lower() {
-			locale = Locale.getDefault();
-		}
-
-		public String simplify(String s) {
-			return s.toLowerCase(locale);
-		}
-		
-
-		@Override
-		public String toString() {
-			return "Lower [locale=" + locale + "]";
-		}
+	public String simplify(String input) {
+		return input;
 	}
 
-	public static class Upper extends CaseSimplifier {
-
-		private final Locale locale;
-
-		public Upper(Locale l) {
-			super();
-			this.locale = l;
-		}
-
-		public Upper() {
-			locale = Locale.getDefault();
-		}
-
-		public String simplify(String s) {
-			return s.toUpperCase(locale);
-		}
-
-		@Override
-		public String toString() {
-			return "Upper [locale=" + locale + "]";
-		}
-		
-		
+	@Override
+	public String toString() {
+		return "[]";
 	}
+	
+	
+
 }

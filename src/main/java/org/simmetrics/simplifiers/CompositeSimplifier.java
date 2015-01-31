@@ -22,10 +22,30 @@
  * 
  */
 
-package org.simmetrics.simplifier;
+package org.simmetrics.simplifiers;
 
-public interface Simplifier {
+import static com.google.common.base.Joiner.on;
 
-	public String simplify(String input);
+public class CompositeSimplifier implements Simplifier {
+
+	private Simplifier[] simplifiers;
+
+	public void setSimplifiers(Simplifier... simplifiers) {
+		this.simplifiers = simplifiers;
+	}
+
+	public String simplify(String input) {
+		for (Simplifier s : simplifiers) {
+			input = s.simplify(input);
+		}
+
+		return input;
+
+	}
+
+	@Override
+	public String toString() {
+		return on("->").join(simplifiers);
+	}
 
 }

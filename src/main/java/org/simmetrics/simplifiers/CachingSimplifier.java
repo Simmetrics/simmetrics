@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
-package org.simmetrics.simplifier;
+package org.simmetrics.simplifiers;
 
 import java.util.concurrent.ExecutionException;
 

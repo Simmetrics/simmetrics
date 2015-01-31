@@ -23,7 +23,7 @@
  */
 
 
-package org.simmetrics.simplifier;
+package org.simmetrics.simplifiers;
 
 import java.text.Normalizer;
 import java.util.regex.Pattern;

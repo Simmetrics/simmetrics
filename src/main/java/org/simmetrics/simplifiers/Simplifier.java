@@ -22,20 +22,10 @@
  * 
  */
 
+package org.simmetrics.simplifiers;
 
-package org.simmetrics.simplifier;
+public interface Simplifier {
 
-public final class PassThroughSimplifier implements Simplifier{
-
-	public String simplify(String input) {
-		return input;
-	}
-
-	@Override
-	public String toString() {
-		return "[]";
-	}
-	
-	
+	public String simplify(String input);
 
 }

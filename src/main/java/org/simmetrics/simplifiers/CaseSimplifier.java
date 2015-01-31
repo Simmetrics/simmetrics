@@ -22,30 +22,58 @@
  * 
  */
 
-package org.simmetrics.simplifier;
+package org.simmetrics.simplifiers;
 
-import static com.google.common.base.Joiner.on;
+import java.util.Locale;
 
-public class CompositeSimplifier implements Simplifier {
+public abstract class CaseSimplifier implements Simplifier  {
 
-	private Simplifier[] simplifiers;
+	public static class Lower extends CaseSimplifier {
 
-	public void setSimplifiers(Simplifier... simplifiers) {
-		this.simplifiers = simplifiers;
-	}
+		private final Locale locale;
 
-	public String simplify(String input) {
-		for (Simplifier s : simplifiers) {
-			input = s.simplify(input);
+		public Lower(Locale l) {
+			super();
+			this.locale = l;
 		}
 
-		return input;
+		public Lower() {
+			locale = Locale.getDefault();
+		}
 
+		public String simplify(String s) {
+			return s.toLowerCase(locale);
+		}
+		
+
+		@Override
+		public String toString() {
+			return "Lower [locale=" + locale + "]";
+		}
 	}
 
-	@Override
-	public String toString() {
-		return on("->").join(simplifiers);
-	}
+	public static class Upper extends CaseSimplifier {
 
+		private final Locale locale;
+
+		public Upper(Locale l) {
+			super();
+			this.locale = l;
+		}
+
+		public Upper() {
+			locale = Locale.getDefault();
+		}
+
+		public String simplify(String s) {
+			return s.toUpperCase(locale);
+		}
+
+		@Override
+		public String toString() {
+			return "Upper [locale=" + locale + "]";
+		}
+		
+		
+	}
 }

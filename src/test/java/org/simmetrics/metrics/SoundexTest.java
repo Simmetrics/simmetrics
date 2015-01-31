@@ -25,7 +25,7 @@ package org.simmetrics.metrics;
 
 import org.junit.Test;
 import org.simmetrics.StringMetricBuilder;
-import org.simmetrics.simplifier.SoundexSimplifier;
+import org.simmetrics.simplifiers.SoundexSimplifier;
 
 public class SoundexTest extends StringMetricTest {
 

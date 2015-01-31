@@ -42,7 +42,7 @@ import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.metrics.SmithWaterman;
 import org.simmetrics.metrics.SmithWatermanGotoh;
 import org.simmetrics.metrics.SmithWatermanGotohWindowedAffine;
-import org.simmetrics.simplifier.SoundexSimplifier;
+import org.simmetrics.simplifiers.SoundexSimplifier;
 import org.simmetrics.tokenizers.QGram2Tokenizer;
 import org.simmetrics.tokenizers.QGram3ExtendedTokenizer;
 import org.simmetrics.tokenizers.QGramTokenizer;

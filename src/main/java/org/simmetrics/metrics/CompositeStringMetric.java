@@ -25,7 +25,7 @@
 package org.simmetrics.metrics;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.simplifier.Simplifier;
+import org.simmetrics.simplifiers.Simplifier;
 
 public final class CompositeStringMetric implements StringMetric {
 

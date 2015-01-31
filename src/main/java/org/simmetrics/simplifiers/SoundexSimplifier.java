@@ -1,4 +1,4 @@
-package org.simmetrics.simplifier;
+package org.simmetrics.simplifiers;
 
 import static org.simmetrics.utils.Math.clamp;
 

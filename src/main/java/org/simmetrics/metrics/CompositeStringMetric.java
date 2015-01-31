@@ -21,37 +21,30 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
+
 package org.simmetrics.metrics;
 
-import org.simmetrics.tokenisers.Tokenizer;
+import org.simmetrics.StringMetric;
+import org.simmetrics.simplifier.Simplifier;
 
-/**
- * Implements the Chapman Matching Soundex algorithm whereby terms are matched
- * and tested against the standard soundex algorithm - this is intended to
- * provide a better rating for lists of proper names.
- * 
- * 
- * @author Sam Chapman
- * @version 1.1
- */
-public  class ChapmanMatchingSoundex extends MongeElkan {
-	/**
-	 * Constructs a ChapmanMatchingSoundex metric with a {@link Soundex} metric.
-	 */
-	public ChapmanMatchingSoundex() {
-		super(new Soundex());
+public final class CompositeStringMetric implements StringMetric {
+
+	private final Simplifier simplifier;
+
+	private final StringMetric metric;
+
+	public CompositeStringMetric(StringMetric metric, Simplifier simplifier) {
+		this.metric = metric;
+		this.simplifier = simplifier;
 	}
 
-	/**
-	 * Constructs a ChapmanMatchingSoundex metric with a {@link Soundex} metric
-	 * and custom tokenizer.
-	 *
-	 * @param tokenizer
-	 *            the tokenizer to use
-	 */
-	public ChapmanMatchingSoundex(final Tokenizer tokenizer) {
-		super(tokenizer, new Soundex());
+	public float compare(String a, String b) {
+		return metric.compare(simplifier.simplify(a), simplifier.simplify(b));
 	}
 
+	@Override
+	public String toString() {
+		return metric + " [" + simplifier + "]";
+	}
 
 }

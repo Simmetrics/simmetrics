@@ -23,6 +23,7 @@
  */
 package org.simmetrics.metrics;
 
+import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.costfunctions.AbstractSubstitutionCost;
 import org.simmetrics.metrics.costfunctions.SubCost01;
 import org.simmetrics.utils.Math;
@@ -34,20 +35,11 @@ import org.simmetrics.utils.Math;
  * @author Sam Chapman
  * @version 1.1
  */
-public  class Levenshtein extends SimplyfingStringMetric {
+public class Levenshtein implements StringMetric {
 
-	private final AbstractSubstitutionCost dCostFunc = new SubCost01();
+	private final AbstractSubstitutionCost costFunction = new SubCost01();
 
-
-//	public float getSimilarityTimingEstimated(final String string1,
-//			final String string2) {
-//
-//		final float str1Length = string1.length();
-//		final float str2Length = string2.length();
-//		return (str1Length * str2Length) * ESTIMATEDTIMINGCONST;
-//	}
-
-	protected float compareSimplified(final String string1, final String string2) {
+	public float compare(final String string1, final String string2) {
 		final float levensteinDistance = getUnNormalisedSimilarity(string1,
 				string2);
 		// convert into zero to one return
@@ -120,7 +112,7 @@ public  class Levenshtein extends SimplyfingStringMetric {
 			// Step 4
 			for (j = 1; j <= m; j++) {
 				// Step 5
-				cost = dCostFunc.getCost(s, i - 1, t, j - 1);
+				cost = costFunction.getCost(s, i - 1, t, j - 1);
 
 				// Step 6
 				d[i][j] = Math.min3(d[i - 1][j] + 1, d[i][j - 1] + 1,
@@ -130,5 +122,10 @@ public  class Levenshtein extends SimplyfingStringMetric {
 
 		// Step 7
 		return d[n][m];
+	}
+
+	@Override
+	public String toString() {
+		return "Levenshtein [costFunction=" + costFunction + "]";
 	}
 }

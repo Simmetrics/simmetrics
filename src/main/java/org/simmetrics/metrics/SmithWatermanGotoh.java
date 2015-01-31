@@ -83,5 +83,14 @@ public  class SmithWatermanGotoh extends SmithWatermanGotohWindowedAffine {
 		super(new AffineGap5_1(), costFunc, Integer.MAX_VALUE);
 	}
 
+	@Override
+	public String toString() {
+		return "SmithWatermanGotoh [getWindowSize()=" + getWindowSize()
+				+ ", getCostfunction()=" + getCostfunction()
+				+ ", getGapFunction()=" + getGapFunction() + "]";
+	}
+	
+	
+
 
 }

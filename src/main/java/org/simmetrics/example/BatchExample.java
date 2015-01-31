@@ -25,6 +25,7 @@ package org.simmetrics.example;
 
 import java.util.Arrays;
 
+import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetrics;
 import org.simmetrics.metrics.CosineSimilarity;
@@ -39,9 +40,11 @@ public class BatchExample {
 				"Alayna Sawin", "Charmain Scoggin", "Sanora Larkey" };
 		String name = "Gearldine Desanti";
 
-		CosineSimilarity metric = new CosineSimilarity();
-		metric.setSimplifier(new CaseSimplifier.Lower());
-		metric.setTokenizer(new QGram2Tokenizer());
+		StringMetric metric = new StringMetricBuilder()
+				.setMetric(new CosineSimilarity())
+				.setSimplifier(new CaseSimplifier.Lower())
+				.setTokeninzer(new QGram2Tokenizer())
+				.build();
 
 		float[] scores = StringMetrics.compare(metric, name, names);
 

@@ -26,8 +26,7 @@ package org.simmetrics.metrics;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.simmetrics.tokenisers.Tokenizer;
-import org.simmetrics.tokenisers.WhitespaceTokenizer;
+import org.simmetrics.TokenSetMetric;
 
 /**
  * Implements the Overlap Coefficient algorithm providing a similarity measure
@@ -38,32 +37,12 @@ import org.simmetrics.tokenisers.WhitespaceTokenizer;
  * 
  * @author Sam Chapman * @version 1.1
  */
-public final class OverlapCoefficient extends TokenizingStringMetric {
+public final class OverlapCoefficient implements TokenSetMetric {
 
-	/**
-	 * Constructs a OverlapCoefficient metric with a {@link WhitespaceTokenizer}
-	 * .
-	 */
-	public OverlapCoefficient() {
-		this(new WhitespaceTokenizer());
-	}
+	@Override
+	public float compare(Set<String> str1Tokens, Set<String> str2Tokens) {
 
-	/**
-	 * Constructs a OverlapCoefficient metric with the given tokenizer.
-	 *
-	 * @param tokenizer
-	 *            tokenizer to use
-	 */
-	public OverlapCoefficient(final Tokenizer tokenizer) {
-		super(tokenizer);
-	}
-
-
-	protected float compareSimplified(final String string1, final String string2) {
-		final Set<String> str1Tokens = tokenizeToSet(string1);
-		final Set<String> str2Tokens = tokenizeToSet(string2);
-
-		final Set<String> allTokens = new HashSet<String>();
+		final Set<String> allTokens = new HashSet<>();
 		allTokens.addAll(str1Tokens);
 		allTokens.addAll(str2Tokens);
 
@@ -73,5 +52,12 @@ public final class OverlapCoefficient extends TokenizingStringMetric {
 		return (float) (commonTerms)
 				/ (float) Math.min(str1Tokens.size(), str2Tokens.size());
 	}
+
+	@Override
+	public String toString() {
+		return "OverlapCoefficient";
+	}
+	
+	
 
 }

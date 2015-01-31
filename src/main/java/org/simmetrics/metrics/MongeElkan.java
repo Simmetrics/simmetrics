@@ -23,10 +23,10 @@
  */
 package org.simmetrics.metrics;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import org.simmetrics.tokenisers.Tokenizer;
-import org.simmetrics.tokenisers.WhitespaceTokenizer;
+import org.simmetrics.StringMetric;
+import org.simmetrics.TokenListMetric;
 
 /**
  * Implements the Monge Elkan algorithm providing an matching style similarity
@@ -35,28 +35,9 @@ import org.simmetrics.tokenisers.WhitespaceTokenizer;
  * @author Sam Chapman
  * @version 1.1
  */
-public class MongeElkan extends TokenizingStringMetric {
+public class MongeElkan implements TokenListMetric {
 
-	private final SimplyfingStringMetric metric;
-
-	/**
-	 * Constructs a MongeElkan metric with a {@link WhitespaceTokenizer} and
-	 * {@link SmithWatermanGotoh}.
-	 */
-	public MongeElkan() {
-		this(new WhitespaceTokenizer(), new SmithWatermanGotoh());
-	}
-
-	/**
-	 * Constructs a MongeElkan metric with the given tokenizer and
-	 * {@link SmithWatermanGotoh} metric.
-	 *
-	 * @param tokenizer
-	 *            tokenizer to use
-	 */
-	public MongeElkan(final Tokenizer tokenizer) {
-		this(tokenizer, new SmithWatermanGotoh());
-	}
+	private final StringMetric metric;
 
 	/**
 	 * Constructs a MongeElkan metric with the given tokenizer and metric.
@@ -66,28 +47,13 @@ public class MongeElkan extends TokenizingStringMetric {
 	 * @param metric
 	 *            metric to use
 	 */
-	public MongeElkan(final Tokenizer tokenizer,
-			final SimplyfingStringMetric metric) {
-		super(tokenizer);
+	public MongeElkan(final StringMetric metric) {
 		this.metric = metric;
 	}
 
-	/**
-	 * Constructs a MongeElkan metric with a {@link WhitespaceTokenizer} and
-	 * given metric.
-	 * 
-	 * @param metric
-	 *            metric to use
-	 */
-	public MongeElkan(final SimplyfingStringMetric metric) {
-		this(new WhitespaceTokenizer(), metric);
-	}
 
-
-	protected float compareSimplified(final String string1, final String string2) {
-		// split the strings into tokens for comparison
-		final ArrayList<String> str1Tokens = tokenizeToList(string1);
-		final ArrayList<String> str2Tokens = tokenizeToList(string2);
+	@Override
+	public float compare(List<String> str1Tokens, List<String> str2Tokens) {
 
 		float sumMatches = 0.0f;
 		float maxFound;
@@ -104,4 +70,11 @@ public class MongeElkan extends TokenizingStringMetric {
 		return sumMatches / str1Tokens.size();
 	}
 
+
+	@Override
+	public String toString() {
+		return "MongeElkan [metric=" + metric + "]";
+	}
+
+	
 }

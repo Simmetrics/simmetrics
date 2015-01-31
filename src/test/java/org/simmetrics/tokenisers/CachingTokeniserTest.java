@@ -23,76 +23,39 @@
  */
 package org.simmetrics.tokenisers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-import org.junit.Assert;
-import org.simmetrics.tokenisers.AbstractTokenizer;
+import java.util.Arrays;
+import java.util.Collections;
 import org.simmetrics.tokenisers.CachingTokenizer;
 import org.simmetrics.tokenisers.Tokenizer;
 
+import static org.mockito.Mockito.*;
+
 public class CachingTokeniserTest extends TokeniserTest {
 
-	private class HitCountingTokenizer extends AbstractTokenizer {
-
-		protected HitCountingTokenizer() {
-			// Private test class
-		}
-
-		private Map<String, Integer> arrayHitCount = new HashMap<String, Integer>();
-		private Map<String, Integer> setHitCount = new HashMap<String, Integer>();
-
-		public Map<String, Integer> getArrayHitCount() {
-			return arrayHitCount;
-		}
-
-		public Map<String, Integer> getSetHitCount() {
-			return setHitCount;
-		}
-
-		@Override
-		public Set<String> tokenizeToSet(String input) {
-
-			if (!setHitCount.containsKey(input)) {
-				setHitCount.put(input, 0);
-			}
-
-			setHitCount.put(input, setHitCount.get(input) + 1);
-
-			Set<String> s = new HashSet<String>();
-			s.add(input);
-			return s;
-		}
-
-		public ArrayList<String> tokenizeToList(String input) {
-			if (!arrayHitCount.containsKey(input)) {
-				arrayHitCount.put(input, 0);
-			}
-
-			arrayHitCount.put(input, arrayHitCount.get(input) + 1);
-
-			ArrayList<String> s = new ArrayList<String>();
-			s.add(input);
-			return s;
-		}
-
-	}
-
-	private HitCountingTokenizer tokenizer;
+	private Tokenizer tokenizer;
 
 	@Override
 	protected Tokenizer getTokenizer() {
-		tokenizer = new HitCountingTokenizer();
+		
+		tokenizer = mock(Tokenizer.class);
+		
+		when(tokenizer.tokenizeToList("ABC")).thenReturn(Arrays.asList("ABC"));
+		when(tokenizer.tokenizeToList("CCC")).thenReturn(Arrays.asList("CCC"));
+		when(tokenizer.tokenizeToList("EEE")).thenReturn(Arrays.asList("EEE"));
+		
+		when(tokenizer.tokenizeToSet("ABC")).thenReturn(Collections.singleton("ABC"));
+		when(tokenizer.tokenizeToSet("CCC")).thenReturn(Collections.singleton("CCC"));
+		when(tokenizer.tokenizeToSet("EEE")).thenReturn(Collections.singleton("EEE"));
+
+		
 		return new CachingTokenizer(tokenizer);
 	}
 
 	@Override
 	public T[] getTests() {
 
-		return new T[] { new T("ABC", "ABC"), new T("CCC", "CCC"),
+		return new T[] { new T("ABC", "ABC")
+				, new T("CCC", "CCC"),
 				new T("ABC", "ABC"), new T("EEE", "EEE"), new T("ABC", "ABC"),
 				new T("CCC", "CCC"),
 
@@ -102,19 +65,19 @@ public class CachingTokeniserTest extends TokeniserTest {
 	@Override
 	public void testTokenizeToArrayList() {
 		super.testTokenizeToArrayList();
-		Assert.assertEquals(new Integer(1),
-				tokenizer.getArrayHitCount().get("ABC"));
-		Assert.assertEquals(new Integer(2),
-				tokenizer.getArrayHitCount().get("CCC"));
+		
+		 verify(tokenizer, times(1)).tokenizeToList("ABC");
+		 verify(tokenizer, times(2)).tokenizeToList("CCC");
+
+	
 	}
 
 	@Override
 	public void testTokenizeToSet() {
 		super.testTokenizeToSet();
-		Assert.assertEquals(new Integer(1),
-				tokenizer.getSetHitCount().get("ABC"));
-		Assert.assertEquals(new Integer(2),
-				tokenizer.getSetHitCount().get("CCC"));
+
+		 verify(tokenizer, times(1)).tokenizeToSet("ABC");
+		 verify(tokenizer, times(2)).tokenizeToSet("CCC");
 
 	}
 }

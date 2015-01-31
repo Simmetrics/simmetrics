@@ -115,4 +115,6 @@ public abstract class StringMetrics {
 		}
 		return results;
 	}
+	
+	 
 }

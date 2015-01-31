@@ -26,8 +26,7 @@ package org.simmetrics.metrics;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.simmetrics.tokenisers.Tokenizer;
-import org.simmetrics.tokenisers.WhitespaceTokenizer;
+import org.simmetrics.TokenSetMetric;
 
 /**
  * Implements the DiceSimilarity algorithm providing a similarity measure
@@ -39,31 +38,12 @@ import org.simmetrics.tokenisers.WhitespaceTokenizer;
  * @author Sam Chapman
  * @version 1.1
  */
-public class DiceSimilarity extends TokenizingStringMetric {
+public class DiceSimilarity implements TokenSetMetric {
 
-	/**
-	 * Constructs a DiceSimilarity metric with a {@link WhitespaceTokenizer}.
-	 */
-	public DiceSimilarity() {
-		this(new WhitespaceTokenizer());
-	}
+	@Override
+	public float compare(Set<String> str1Tokens, Set<String> str2Tokens) {
 
-	/**
-	 * Constructs a DiceSimilarity metric with the given tokenizer.
-	 *
-	 * @param tokeniser
-	 *            tokenizer to use
-	 */
-	public DiceSimilarity(final Tokenizer tokenizer) {
-		super(tokenizer);
-	}
-
-
-	protected float compareSimplified(final String string1, final String string2) {
-		final Set<String> str1Tokens = tokenizeToSet(string1);
-		final Set<String> str2Tokens = tokenizeToSet(string2);
-
-		final Set<String> allTokens = new HashSet<String>();
+		final Set<String> allTokens = new HashSet<>();
 		allTokens.addAll(str1Tokens);
 		allTokens.addAll(str2Tokens);
 
@@ -73,6 +53,11 @@ public class DiceSimilarity extends TokenizingStringMetric {
 		// return Dices coefficient = (2*Common Terms) / (Number of distinct
 		// terms in String1 + Number of distinct terms in String2)
 		return (2.0f * commonTerms) / (str1Tokens.size() + str2Tokens.size());
+	}
+
+	@Override
+	public String toString() {
+		return "DiceSimilarity";
 	}
 
 }

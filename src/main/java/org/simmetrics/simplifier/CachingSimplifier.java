@@ -23,7 +23,6 @@
  */
 package org.simmetrics.simplifier;
 
-import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import org.simmetrics.metrics.SimplifyingSimplifier;
@@ -76,7 +75,7 @@ public class CachingSimplifier implements SimplifyingSimplifier {
 
 	@Override
 	public String toString() {
-		return getClass().getName() + "[" + Objects.toString(simplifier) + "]";
+		return "CachingSimplifier [" + simplifier + "]";
 	}
 
 }

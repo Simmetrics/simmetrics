@@ -46,5 +46,8 @@ public interface StringMetric {
 	 * @return a value between 0 and 1 indicating similarity
 	 */
 	public float compare(String a, String b);
+	
+	
+	
 
 }

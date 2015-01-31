@@ -23,20 +23,20 @@
  */
 package org.simmetrics.metrics;
 
-import org.simmetrics.metrics.Soundex;
+import org.junit.Test;
+import org.simmetrics.StringMetricBuilder;
+import org.simmetrics.simplifier.SoundexSimplifier;
 
+public class SoundexTest extends StringMetricTest {
 
-public class SoundexTest extends SimplyfingStringMetricTest {
-
-
-	@Override
-	public SimplyfingStringMetric getMetric() {
-		return new Soundex();
-	}
-
-	@Override
-	public T[] getTests() {
-		return new T[] {
+	@Test
+	public void test() {
+		testSimilarity(
+				new StringMetricBuilder()
+				.setMetric(new JaroWinkler())
+				.setSimplifier(new SoundexSimplifier())
+				.build(),
+		 new T[] {
 				new T(0.9556f, "test string1", "test string2"),
 				new T(0.4000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.4000f, "a b c d", "a b c e"),
@@ -70,7 +70,6 @@ public class SoundexTest extends SimplyfingStringMetricTest {
 				new T(0.0000f, "Web Aplications", "Structural Assessment: The Role of Large and Full-Scale Testing"),
 				new T(0.5556f, "Web Aplications", "How to Find a Scholarship Online"),
 
-		};
+		});
 	}
 }
-

@@ -39,15 +39,24 @@ public class QGramTokenizer extends AbstractTokenizer {
 	public QGramTokenizer(int q) {
 		this.q = q;
 	}
+	
+	public int getQ() {
+		return q;
+	}
 
 	public ArrayList<String> tokenizeToList(final String input) {
-		final ArrayList<String> ret = new ArrayList<String>();
+		final ArrayList<String> ret = new ArrayList<>();
 
 		for (int i = 0; i < input.length() - q + 1; i++) {
 			ret.add(input.substring(i, i + q));
 		}
 
 		return ret;
+	}
+
+	@Override
+	public String toString() {
+		return "QGramTokenizer [q=" + q + "]";
 	}
 
 }

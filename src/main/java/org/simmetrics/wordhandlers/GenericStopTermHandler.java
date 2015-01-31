@@ -40,7 +40,7 @@ public final class GenericStopTermHandler implements TermHandler {
 	/**
 	 * The word set the stop word handler uses.
 	 */
-	private final Set<String> wordSet = new HashSet<String>();
+	private final Set<String> wordSet = new HashSet<>();
 
 	public int size() {
 		return wordSet.size();

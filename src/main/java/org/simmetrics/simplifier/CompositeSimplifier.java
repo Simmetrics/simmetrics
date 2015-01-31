@@ -24,7 +24,9 @@
 
 package org.simmetrics.simplifier;
 
-public class CompositeSimplifier extends AbstractSimplifier {
+import static com.google.common.base.Joiner.on;
+
+public class CompositeSimplifier implements Simplifier {
 
 	private Simplifier[] simplifiers;
 
@@ -39,6 +41,11 @@ public class CompositeSimplifier extends AbstractSimplifier {
 
 		return input;
 
+	}
+
+	@Override
+	public String toString() {
+		return on("->").join(simplifiers);
 	}
 
 }

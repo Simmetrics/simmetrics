@@ -23,30 +23,44 @@
  */
 package org.simmetrics.metrics;
 
+import org.junit.Test;
+import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.BlockDistance;
+import org.simmetrics.tokenisers.CharacterTokenizer;
+import org.simmetrics.tokenisers.WhitespaceTokenizer;
 
-public class BlockDistanceTest extends TokenizingStringMetricTest {
+public class BlockDistanceTest extends StringMetricTest {
 
-	@Override
-	public TokenizingStringMetric getMetric() {
-		return new BlockDistance();
+	@Test
+	public void test() {
+		testSimilarity(
+				new StringMetricBuilder()
+						.setMetric(new BlockDistance())
+						.setTokeninzer(new WhitespaceTokenizer())
+						.build(),
+				new T[] {
+						new T(0.5000f, "test string1", "test string2"),
+						new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+						new T(0.7500f, "a b c d", "a b c e"),
+				});
 	}
+	
+	@Test
+	public void test2() {
+		testSimilarity(
+				new StringMetricBuilder()
+						.setMetric(new BlockDistance())
+						.setTokeninzer(new CharacterTokenizer())
+						.build(),
+				new T[] {
+						new T(0.8333f, "Healed","Sealed"),
+						new T(0.6153f,"Healed","Healthy"),
+						new T(0.7272f,"Healed","Heard"),
+						new T(0.6666f,"Healed","Herded"),
+						new T(0.6000f,"Healed","Help"),
+						new T(0.4000f,"Healed","Sold"),
+						new T(0.6000f,"Healed","Help")
 
-	@Override
-	public T[] getTests() {
-		return new T[] {
-				new T(0.5000f, "test string1", "test string2"),
-				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-				new T(0.7500f, "a b c d", "a b c e"),
-				// Adding spaces to words because of whitespace tokenizer.
-				new T(0.8333f, "H e a l e d", "S e a l e d"),
-				new T(0.6153f, "H e a l e d", "H e a l t h y"),
-				new T(0.7272f, "H e a l e d", "H e a r d"),
-				new T(0.6666f, "H e a l e d", "H e r d e d"),
-				new T(0.6000f, "H e a l e d", "H e l p"),
-				new T(0.4000f, "H e a l e d", "S o l d"),
-				new T(0.6000f, "H e a l e d", "H e l p")
-
-		};
+				});
 	}
 }

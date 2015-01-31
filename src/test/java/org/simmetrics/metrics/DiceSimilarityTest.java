@@ -23,19 +23,19 @@
  */
 package org.simmetrics.metrics;
 
+import org.junit.Test;
+import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.DiceSimilarity;
+import org.simmetrics.tokenisers.WhitespaceTokenizer;
 
+public class DiceSimilarityTest extends StringMetricTest {
 
-public class DiceSimilarityTest extends TokenizingStringMetricTest {
-
-	@Override
-	public TokenizingStringMetric getMetric() {
-		return new DiceSimilarity();
-	}
-
-	@Override
-	public T[] getTests() {
-		return new T[] {
+	@Test
+	public void test() {
+		testSimilarity(
+				new StringMetricBuilder().setMetric(new DiceSimilarity())
+						.setTokeninzer(new WhitespaceTokenizer()).build(),
+				new T[] {
 				new T(0.5000f, "test string1","test string2"),
 				new T(0.7500f, "aaa bbb ccc ddd","aaa bbb ccc eee"),
 				new T(0.7500f, "a b c d","a b c e"),
@@ -68,7 +68,6 @@ public class DiceSimilarityTest extends TokenizingStringMetricTest {
 				new T(0.1429f, "Web Aplications","WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
 				new T(0.0000f, "Web Aplications","Structural Assessment: The Role of Large and Full-Scale Testing"),
 				new T(0.0000f, "Web Aplications","How to Find a Scholarship Online"),
-		};
+		});
 	}
 }
-

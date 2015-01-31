@@ -23,18 +23,17 @@
  */
 package org.simmetrics.metrics;
 
+import org.junit.Test;
 import org.simmetrics.metrics.SmithWatermanGotoh;
 
-public class SmithWatermanGotohTest extends SimplyfingStringMetricTest {
+public class SmithWatermanGotohTest extends StringMetricTest {
 
-	@Override
-	public SimplyfingStringMetric getMetric() {
-		return new SmithWatermanGotoh();
-	}
 
-	@Override
-	public T[] getTests() {
-		return new T[] {
+	@Test
+	public void test() {
+		testSimilarity(
+				new SmithWatermanGotoh(),
+				new T[] {
 				new T(0.9167f, "test string1", "test string2"),
 				new T(0.8000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.8571f, "a b c d", "a b c e"),
@@ -67,8 +66,7 @@ public class SmithWatermanGotohTest extends SimplyfingStringMetricTest {
 				new T(0.7467f, "Web Aplications", "WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
 				new T(0.1867f, "Web Aplications", "Structural Assessment: The Role of Large and Full-Scale Testing"),
 				new T(0.2800f, "Web Aplications", "How to Find a Scholarship Online"),
-
-		};
+		});
 	}
 }
 

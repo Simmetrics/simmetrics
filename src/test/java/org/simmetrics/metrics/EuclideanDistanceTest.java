@@ -23,21 +23,19 @@
  */
 package org.simmetrics.metrics;
 
+import org.junit.Test;
+import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.EuclideanDistance;
+import org.simmetrics.tokenisers.WhitespaceTokenizer;
 
 
-public class EuclideanDistanceTest extends TokenizingStringMetricTest {
+public class EuclideanDistanceTest extends StringMetricTest {
 
- 
-
-	@Override
-	public TokenizingStringMetric getMetric() {
-		return new EuclideanDistance();
-	}
-
-	@Override
-	public T[] getTests() {
-		return new T[] {
+	@Test
+	public void test() {
+		testSimilarity(
+				new StringMetricBuilder().setMetric(new EuclideanDistance())
+						.setTokeninzer(new WhitespaceTokenizer()).build(), new T[] {
 				new T(0.5000f, "test string1","test string2"),
 				new T(0.7500f, "aaa bbb ccc ddd","aaa bbb ccc eee"),
 				new T(0.7500f, "a b c d","a b c e"),
@@ -70,7 +68,7 @@ public class EuclideanDistanceTest extends TokenizingStringMetricTest {
 				new T(0.7259f, "Web Aplications","WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
 				new T(0.6403f, "Web Aplications","Structural Assessment: The Role of Large and Full-Scale Testing"),
 				new T(0.5528f, "Web Aplications","How to Find a Scholarship Online"),
-		};
+		});
 	}
 }
 

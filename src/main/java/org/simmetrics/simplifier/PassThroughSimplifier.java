@@ -25,10 +25,17 @@
 
 package org.simmetrics.simplifier;
 
-public final class PassThroughSimplifier extends AbstractSimplifier{
+public final class PassThroughSimplifier implements Simplifier{
 
 	public String simplify(String input) {
 		return input;
 	}
+
+	@Override
+	public String toString() {
+		return "[]";
+	}
+	
+	
 
 }

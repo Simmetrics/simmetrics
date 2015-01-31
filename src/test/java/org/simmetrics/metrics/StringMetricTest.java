@@ -30,6 +30,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.simmetrics.StringMetric;
+import org.simmetrics.tokenisers.Tokenizer;
 
 public abstract class StringMetricTest {
 
@@ -49,19 +50,8 @@ public abstract class StringMetricTest {
 	static final float DEFAULT_DELTA = 0.0001f;
 	protected float delta;
 
-	private StringMetric metric;
-
-	public StringMetricTest() {
-		super();
-	}
-
-	public abstract StringMetric getMetric();
-
-	public abstract T[] getTests();
-
 	@Before
 	public void setUp() throws Exception {
-		metric = getMetric();
 		delta = getDelta();
 	}
 
@@ -69,9 +59,10 @@ public abstract class StringMetricTest {
 		return DEFAULT_DELTA;
 	}
 
-	@Test
-	public void testGetSimilarity() {
-		for (T t : getTests()) {
+	public void testSimilarity(StringMetric metric, T[] tests) {
+		testToString(metric);
+		
+		for (T t : tests) {
 
 			float actuall = metric.compare(t.string1, t.string2);
 			assertTrue("Similarity must fall within [0.0 - 1.0] range",
@@ -83,31 +74,31 @@ public abstract class StringMetricTest {
 		}
 	}
 
-	@Test
-	public void generateTest() {
-		for (T t : getTests()) {
+	public void testToString(StringMetric metric) {
+		assertFalse(
+				"@ indicates toString() was not implemented "
+						+ metric.toString(),
+						metric.toString().contains("@"));
+
+		assertToStringContains(metric, metric.getClass().getSimpleName());
+	}
+	
+
+	protected static void assertToStringContains(StringMetric tokenizer,
+			String content) {
+		String string = tokenizer.toString();
+		String message = String.format("%s must contain %s ", string, content);
+
+		assertTrue(message, message.contains(content));
+	}
+	
+	public void generateTest(StringMetric metric, T[] tests) {
+		for (T t : tests) {
 			float actuall = metric.compare(t.string1, t.string2);
 			String message = String.format("new T(%.4ff, \"%s\", \"%s\"),",
 					actuall, t.string1, t.string2);
 			System.out.println(message);
 		}
-	}
-
-	@Test
-	public void testToString() {
-		assertFalse(
-				"@ indicates toString() was not implemented "
-						+ metric.toString(), metric.toString().contains("@"));
-
-		assertToStringContains(metric, metric.getClass().getSimpleName());
-	}
-
-	protected static void assertToStringContains(StringMetric metric,
-			String content) {
-		String string = metric.toString();
-		String message = String.format("%s must contain %s ", string, content);
-
-		assertTrue(message, message.contains(content));
 	}
 
 }

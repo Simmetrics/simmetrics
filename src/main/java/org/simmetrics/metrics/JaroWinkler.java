@@ -25,6 +25,8 @@ package org.simmetrics.metrics;
 
 import static org.simmetrics.utils.Math.min3;
 
+import org.simmetrics.StringMetric;
+
 /**
  * Implements the Jaro-Winkler algorithm providing a similarity measure between
  * two strings allowing character transpositions to a degree adjusting the
@@ -33,7 +35,7 @@ import static org.simmetrics.utils.Math.min3;
  * @author Sam Chapman
  * @version 1.1
  */
-public class JaroWinkler extends SimplyfingStringMetric {
+public class JaroWinkler implements StringMetric {
 
 	private final Jaro jaro = new Jaro();
 
@@ -41,16 +43,14 @@ public class JaroWinkler extends SimplyfingStringMetric {
 
 	private static final float PREFIXADUSTMENTSCALE = 0.1f;
 
-
-	protected float compareSimplified(final String string1, final String string2) {
+	public float compare(final String string1, final String string2) {
 		// gets normal Jaro Score
 		final float dist = jaro.compare(string1, string2);
 
 		// This extension modifies the weights of poorly matching pairs string1,
 		// string2 which share a common prefix
 		final int prefixLength = getPrefixLength(string1, string2);
-		return dist
-				+ (prefixLength * PREFIXADUSTMENTSCALE * (1.0f - dist));
+		return dist + (prefixLength * PREFIXADUSTMENTSCALE * (1.0f - dist));
 	}
 
 	/**
@@ -75,5 +75,10 @@ public class JaroWinkler extends SimplyfingStringMetric {
 			}
 		}
 		return n; // first n characters are the same
+	}
+
+	@Override
+	public String toString() {
+		return "JaroWinkler";
 	}
 }

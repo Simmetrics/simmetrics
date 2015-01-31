@@ -38,13 +38,18 @@ public final class CSVBasicTokenizer extends AbstractTokenizer {
 	private final String delimiters = "[,\n]";
 
 	public final ArrayList<String> tokenizeToList(final String input) {
-		final ArrayList<String> returnArrayList = new ArrayList<String>();
+		final ArrayList<String> returnArrayList = new ArrayList<>();
 
 		for (String token : input.split(delimiters)) {
 			returnArrayList.add(token);
 		}
 
 		return returnArrayList;
+	}
+
+	@Override
+	public String toString() {
+		return "CSVBasicTokenizer [delimiters=" + delimiters + "]";
 	}
 
 }

@@ -24,9 +24,9 @@
 package org.simmetrics.metrics;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import org.simmetrics.tokenisers.QGram2Tokenizer;
-import org.simmetrics.tokenisers.WordQGramTokenizer;
+import org.simmetrics.TokenListMetric;
 
 /**
  * Idea taken from <a
@@ -61,16 +61,11 @@ import org.simmetrics.tokenisers.WordQGramTokenizer;
  * 
  * @author mpkorstanje
  */
-public class SimonWhite extends TokenizingStringMetric {
+public class SimonWhite implements TokenListMetric {
 
-	public SimonWhite() {
-		super(new WordQGramTokenizer(new QGram2Tokenizer()));
-	}
+	public float compare(List<String> pairs1, List<String> b) {
 
-	protected float compareSimplified(String string1, String string2) {
-		final ArrayList<String> pairs1 = tokenizeToList(string1);
-		final ArrayList<String> pairs2 = tokenizeToList(string2);
-
+		ArrayList<String> pairs2 = new ArrayList<>(b);
 		int union = pairs1.size() + pairs2.size();
 
 		if (union == 0) {
@@ -89,6 +84,11 @@ public class SimonWhite extends TokenizingStringMetric {
 
 		return 2.0f * intersection / union;
 
+	}
+
+	@Override
+	public String toString() {
+		return "SimonWhite";
 	}
 
 }

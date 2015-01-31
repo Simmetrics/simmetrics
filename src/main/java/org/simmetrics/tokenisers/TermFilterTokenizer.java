@@ -35,7 +35,7 @@ import com.google.common.base.Predicate;
 
 import static com.google.common.collect.Collections2.filter;
 
-public class TermFilterTokenizer extends AbstractTokenizer implements TokenizingTokenizer{
+public class TermFilterTokenizer extends AbstractTokenizer {
 
 	private Tokenizer tokenizer = new WhitespaceTokenizer();
 
@@ -65,13 +65,13 @@ public class TermFilterTokenizer extends AbstractTokenizer implements Tokenizing
 	};
 
 	public ArrayList<String> tokenizeToList(String input) {
-		return new ArrayList<String>(filter(tokenizer.tokenizeToList(input),
+		return new ArrayList<>(filter(tokenizer.tokenizeToList(input),
 				isWord));
 	}
 
 	@Override
 	public Set<String> tokenizeToSet(String input) {
-		return new HashSet<String>(filter(tokenizer.tokenizeToSet(input),
+		return new HashSet<>(filter(tokenizer.tokenizeToSet(input),
 				isWord));
 	}
 

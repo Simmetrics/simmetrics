@@ -27,12 +27,17 @@ import java.util.concurrent.TimeUnit;
 
 import static org.simmetrics.StringMetrics.compare;
 
+import org.simmetrics.StringMetric;
+import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.tokenisers.CachingTokenizer;
+import org.simmetrics.tokenisers.QGram2Tokenizer;
+import org.simmetrics.tokenisers.WordQGramTokenizer;
+
 import com.google.common.base.Stopwatch;
 
 public class BatchPerformance {
-	private static final int TEST_REPEATS = 100000;
+	private static final int TEST_REPEATS = 200000;
 
 	private static final String name = "Captain Jack Sparrow";
 
@@ -75,8 +80,10 @@ public class BatchPerformance {
 	}
 
 	private static void testCompareUncached() {
-
-		SimonWhite metric = new SimonWhite();
+		StringMetric metric = new StringMetricBuilder()
+				.setMetric(new SimonWhite())
+				.setTokeninzer(new WordQGramTokenizer(new QGram2Tokenizer()))
+				.build();
 
 		Stopwatch sw = Stopwatch.createStarted();
 		for (int n = 0; n < TEST_REPEATS; n++) {
@@ -94,13 +101,12 @@ public class BatchPerformance {
 	}
 
 	private static void testCompareCached() {
-
-		SimonWhite metric = new SimonWhite() {
-			{
-				addTokenizer(new CachingTokenizer());
-			}
-
-		};
+			
+		
+		StringMetric metric = new StringMetricBuilder()
+				.setMetric(new SimonWhite())
+				.setTokeninzer(new WordQGramTokenizer(new QGram2Tokenizer()))
+				.setCache(new CachingTokenizer()).build();
 
 		Stopwatch sw = Stopwatch.createStarted();
 		for (int n = 0; n < TEST_REPEATS; n++) {

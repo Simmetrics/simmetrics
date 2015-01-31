@@ -26,6 +26,7 @@
 package org.simmetrics.tokenisers;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
@@ -40,12 +41,12 @@ public class CachingTokenizer implements TokenizingTokenizer {
 
 	private Tokenizer tokenizer;
 
-	private final LoadingCache<String, ArrayList<String>> arrayCache = CacheBuilder
+	private final LoadingCache<String, List<String>> arrayCache = CacheBuilder
 			.newBuilder().initialCapacity(CACHE_SIZE).maximumSize(CACHE_SIZE)
-			.build(new CacheLoader<String, ArrayList<String>>() {
+			.build(new CacheLoader<String, List<String>>() {
 
 				@Override
-				public ArrayList<String> load(String key) throws Exception {
+				public List<String> load(String key) throws Exception {
 					return getTokenizer().tokenizeToList(key);
 				}
 
@@ -70,7 +71,7 @@ public class CachingTokenizer implements TokenizingTokenizer {
 		this.tokenizer = tokenizer;
 	}
 
-	public LoadingCache<String, ArrayList<String>> getArrayCache() {
+	public LoadingCache<String, List<String>> getArrayCache() {
 		return arrayCache;
 	}
 
@@ -86,12 +87,12 @@ public class CachingTokenizer implements TokenizingTokenizer {
 		this.tokenizer = tokenizer;
 	}
 
-	public ArrayList<String> tokenizeToList(final String input) {
+	public List<String> tokenizeToList(final String input) {
 
 		try {
 			// Return copy of list to preserve state of cached version. Callers
 			// may modify the list.
-			return new ArrayList<String>(arrayCache.get(input));
+			return new ArrayList<>(arrayCache.get(input));
 		} catch (ExecutionException e) {
 			throw new IllegalStateException(e);
 		}
@@ -101,7 +102,7 @@ public class CachingTokenizer implements TokenizingTokenizer {
 		try {
 			// Return copy of set to preserve state of cached set. Callers
 			// may modify the set.
-			return new HashSet<String>(setCache.get(input));
+			return new HashSet<>(setCache.get(input));
 		} catch (ExecutionException e) {
 			throw new IllegalStateException(e);
 		}
@@ -109,7 +110,7 @@ public class CachingTokenizer implements TokenizingTokenizer {
 
 	@Override
 	public String toString() {
-		return getClass().getName() + " [" + tokenizer + "]";
+		return "CachingTokenizer [" + tokenizer + "]";
 	}
 
 }

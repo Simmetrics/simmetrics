@@ -24,10 +24,10 @@
 package org.simmetrics.metrics;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.ArrayList;
 
-import org.simmetrics.tokenisers.Tokenizer;
+import org.simmetrics.TokenListMetric;
 import org.simmetrics.tokenisers.WhitespaceTokenizer;
 
 import static java.lang.Math.abs;
@@ -41,33 +41,12 @@ import static java.lang.Math.abs;
  * @author Sam Chapman
  * @version 1.1
  */
-public class BlockDistance extends TokenizingStringMetric {
+public class BlockDistance implements TokenListMetric {
 
-	/**
-	 * Constructs a BlockDistance metric with a {@link WhitespaceTokenizer}.
-	 */
-	public BlockDistance() {
-		this(new WhitespaceTokenizer());
-	}
+	@Override
+	public float compare(List<String> str1Tokens, List<String> str2Tokens) {
 
-	/**
-	 * Constructs a BlockDistance metric with the given tokenizer.
-	 *
-	 * @param tokeniser
-	 *            tokenizer to use
-	 */
-	public BlockDistance(final Tokenizer tokenizer) {
-		super(tokenizer);
-	}
-
-
-
-	protected float compareSimplified(final String string1, final String string2) {
-		final ArrayList<String> str1Tokens = tokenizeToList(string1);
-		final ArrayList<String> str2Tokens = tokenizeToList(string2);
-
-		final float totalPossible = str1Tokens.size() + str2Tokens
-				.size();
+		final float totalPossible = str1Tokens.size() + str2Tokens.size();
 
 		final float totalDistance = getInnerUnNormalizedSimilarity(str1Tokens,
 				str2Tokens);
@@ -75,9 +54,8 @@ public class BlockDistance extends TokenizingStringMetric {
 	}
 
 	private static float getInnerUnNormalizedSimilarity(
-			final ArrayList<String> str1Tokens,
-			final ArrayList<String> str2Tokens) {
-		final Set<String> allTokens = new HashSet<String>();
+			final List<String> str1Tokens, final List<String> str2Tokens) {
+		final Set<String> allTokens = new HashSet<>();
 		allTokens.addAll(str1Tokens);
 		allTokens.addAll(str2Tokens);
 
@@ -102,5 +80,9 @@ public class BlockDistance extends TokenizingStringMetric {
 		return totalDistance;
 	}
 
+	@Override
+	public String toString() {
+		return "BlockDistance";
+	}
 
 }

@@ -33,7 +33,7 @@ import org.simmetrics.tokenisers.WhitespaceTokenizer;
 /**
  * TagLink inplements a TagLink String Metric.
  */
-public class TagLink extends SimplyfingStringMetric   {
+public class TagLink implements StringMetric {
 
 	/**
 	 * private idfMap contains the IDF weights for each token in the dataset.
@@ -84,7 +84,7 @@ public class TagLink extends SimplyfingStringMetric   {
 	 * @param characterBasedStringMetric
 	 *            CharacterBasedStringMetric
 	 */
-	public TagLink(SimplyfingStringMetric characterBasedStringMetric) {
+	public TagLink(StringMetric characterBasedStringMetric) {
 		this.characterBasedStringMetric = characterBasedStringMetric;
 		tokeniser = new WhitespaceTokenizer();
 		// WARNING FROM AUTHOR OF SIMMETRICS
@@ -142,7 +142,7 @@ public class TagLink extends SimplyfingStringMetric   {
 	 *            CharacterBasedStringMetric
 	 */
 	public TagLink(String[] dataSetArray,
-			SimplyfingStringMetric characterBasedStringMetric) {
+			StringMetric characterBasedStringMetric) {
 		this.characterBasedStringMetric = characterBasedStringMetric;
 		tokeniser = new WhitespaceTokenizer();
 		this.idfMap = getIDFMap(dataSetArray);
@@ -185,9 +185,6 @@ public class TagLink extends SimplyfingStringMetric   {
 		return Math.min(tSize, uSize);
 	}
 
-
-
-
 	/**
 	 * getSimilarity computes the similarity between a pair of strings T and U.
 	 *
@@ -197,7 +194,7 @@ public class TagLink extends SimplyfingStringMetric   {
 	 *            String
 	 * @return float
 	 */
-	protected float compareSimplified(String T, String U) {
+	public float compare(String T, String U) {
 
 		// WARNING FROM AUTHOR OF SIMMETRICS
 		// this metric is not recomended for fast processing it has been added
@@ -219,8 +216,8 @@ public class TagLink extends SimplyfingStringMetric   {
 		if (T.equals(U)) {
 			return 1.0f;
 		} else {
-			ArrayList<String> tArrayList = tokeniser.tokenizeToList(T);
-			ArrayList<String> uArrayList = tokeniser.tokenizeToList(U);
+			List<String> tArrayList = tokeniser.tokenizeToList(T);
+			List<String> uArrayList = tokeniser.tokenizeToList(U);
 			String[] tTokens = tArrayList
 					.toArray(new String[tArrayList.size()]), uTokens = uArrayList
 					.toArray(new String[uArrayList.size()]);
@@ -249,8 +246,8 @@ public class TagLink extends SimplyfingStringMetric   {
 				uTokens, tIdfArray, uIdfArray);
 		sortCandidateList(candidateList);
 		float scoreValue = 0.0f;
-		HashMap<Integer, Object> tMap = new HashMap<Integer, Object>();
-		HashMap<Integer, Object> uMap = new HashMap<Integer, Object>();
+		HashMap<Integer, Object> tMap = new HashMap<>();
+		HashMap<Integer, Object> uMap = new HashMap<>();
 		for (Object aCandidateList : candidateList) {
 			Candidates actualCandidates = (Candidates) aCandidateList;
 			Integer tPos = actualCandidates.getTPos();
@@ -386,7 +383,7 @@ public class TagLink extends SimplyfingStringMetric   {
 	 */
 	private ArrayList<Candidates> obtainCandidateList(String[] tTokens,
 			String[] uTokens, float[] tIdfArray, float[] uIdfArray) {
-		ArrayList<Candidates> candidateList = new ArrayList<Candidates>();
+		ArrayList<Candidates> candidateList = new ArrayList<>();
 		float minStringSize = getMinStringSize(tTokens, uTokens);
 		for (int t = 0; t < tTokens.length; t++) {
 			int lastTr = -1;
@@ -396,8 +393,8 @@ public class TagLink extends SimplyfingStringMetric   {
 					flag = 1;
 				} else {
 					String tTok = tTokens[t], uTok = uTokens[u];
-					float innerScore = characterBasedStringMetric
-							.compare(tTok, uTok);
+					float innerScore = characterBasedStringMetric.compare(tTok,
+							uTok);
 					if (innerScore >= 0.0f) {
 						float matched;
 						if (innerScore == 1.0f) {
@@ -427,20 +424,21 @@ public class TagLink extends SimplyfingStringMetric   {
 	 *            ArrayList of candidates
 	 */
 	private static void sortCandidateList(ArrayList<Candidates> list) {
-		java.util.Collections.sort(list, new java.util.Comparator<Candidates>() {
-			public int compare(Candidates o1, Candidates o2) {
-				// First sort, by score in index
-				float scoreT =  o1.getScore();
-				float scoreU =  o2.getScore();
-				if (scoreU > scoreT) {
-					return 1;
-				}
-				if (scoreU < scoreT) {
-					return -1;
-				}
-				return 0;
-			}
-		});
+		java.util.Collections.sort(list,
+				new java.util.Comparator<Candidates>() {
+					public int compare(Candidates o1, Candidates o2) {
+						// First sort, by score in index
+						float scoreT = o1.getScore();
+						float scoreU = o2.getScore();
+						if (scoreU > scoreT) {
+							return 1;
+						}
+						if (scoreU < scoreT) {
+							return -1;
+						}
+						return 0;
+					}
+				});
 	}
 
 	/**
@@ -480,16 +478,12 @@ public class TagLink extends SimplyfingStringMetric   {
 		return IDFArray;
 	}
 
-
 	@Override
 	public String toString() {
 		if (idfMap == null) {
-			return "[TagLink_["
-					+ characterBasedStringMetric.toString()
-					+ "]";
+			return "[TagLink_[" + characterBasedStringMetric.toString() + "]";
 		} else {
-			return "[TagLink_IDF_["
-					+ characterBasedStringMetric.toString()
+			return "[TagLink_IDF_[" + characterBasedStringMetric.toString()
 					+ "]";
 		}
 
@@ -503,13 +497,12 @@ public class TagLink extends SimplyfingStringMetric   {
 	 */
 	private HashMap<String, Float> getIDFMap(String[] dataSetArray) {
 		float N = dataSetArray.length;
-		HashMap<String, Float> idfMap = new HashMap<String, Float>();
+		HashMap<String, Float> idfMap = new HashMap<>();
 		for (int row = 0; row < N; row++) {
-			HashMap<String, Object> rowMap = new HashMap<String, Object>();
-			HashMap<String, Float> freqMap = new HashMap<String, Float>();
+			HashMap<String, Object> rowMap = new HashMap<>();
+			HashMap<String, Float> freqMap = new HashMap<>();
 			String actualRow = dataSetArray[row];
-			ArrayList<String> tokenArrayList = tokeniser
-					.tokenizeToList(actualRow);
+			List<String> tokenArrayList = tokeniser.tokenizeToList(actualRow);
 			String[] rowArray = tokenArrayList
 					.toArray(new String[tokenArrayList.size()]);
 			for (String actualToken : rowArray) {
@@ -572,7 +565,7 @@ public class TagLink extends SimplyfingStringMetric   {
 	}
 }
 
-class Candidates   {
+class Candidates {
 	private int tPos, uPos;
 	private float score;
 

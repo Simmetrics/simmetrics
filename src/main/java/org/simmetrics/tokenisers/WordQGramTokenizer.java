@@ -25,6 +25,7 @@
 package org.simmetrics.tokenisers;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.ArrayList;
 
@@ -86,9 +87,9 @@ public final class WordQGramTokenizer implements Tokenizer {
 	}
 
 	public ArrayList<String> tokenizeToList(final String input) {
-		final ArrayList<String> returnArrayList = new ArrayList<String>(
+		final ArrayList<String> returnArrayList = new ArrayList<>(
 				input.length());
-		final ArrayList<String> words = wordTokenizer.tokenizeToList(input);
+		final List<String> words = wordTokenizer.tokenizeToList(input);
 
 		// for each word
 		for (String word : words) {
@@ -106,7 +107,7 @@ public final class WordQGramTokenizer implements Tokenizer {
 		// words early means these don't have to be tokenized multiple times.
 		// Increases performance.
 
-		final Set<String> returnSet = new HashSet<String>(input.length());
+		final Set<String> returnSet = new HashSet<>(input.length());
 		final Set<String> words = wordTokenizer.tokenizeToSet(input);
 
 		// for each word

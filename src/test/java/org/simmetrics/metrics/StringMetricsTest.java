@@ -28,14 +28,16 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 
 import org.junit.Test;
+import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.SimonWhite;
-import org.simmetrics.simplifier.CaseSimplifier;
+import org.simmetrics.tokenisers.QGram2Tokenizer;
+import org.simmetrics.tokenisers.WordQGramTokenizer;
 
 import static org.simmetrics.StringMetrics.*;
 
 public class StringMetricsTest {
-	
+
 	private static final float DELTA = 0.001f;
 	private final String[] names1 = new String[] {
 			"Louis Philippe, le Roi Citoyen", "Charles X", "Louis XVIII",
@@ -44,11 +46,11 @@ public class StringMetricsTest {
 	private final float[] expected = new float[] { 0.071f, 0.153f, 0.000f,
 			0.933f, 1.000f };
 
-	private StringMetric metric = new SimonWhite() {
-		{
-			setSimplifier(new CaseSimplifier.Lower());
-		}
-	};
+	private StringMetric metric = 
+			new StringMetricBuilder()
+				.setMetric(new SimonWhite())
+				.setTokeninzer(new WordQGramTokenizer(new QGram2Tokenizer()))
+				.build();
 
 	@Test
 	public void testCompareList() {

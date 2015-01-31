@@ -24,34 +24,28 @@
 
 package org.simmetrics.tokenisers;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
- * A tokenizer divides an input string into tokens. 
+ * TokeniserWhitespace implements a simple whitespace tokeniser.
  * 
  * @author Sam Chapman
  * @version 1.1
  */
-public interface Tokenizer {
+public final class CharacterTokenizer extends AbstractTokenizer {
 
-	/**
-	 * Return tokenized version of a string as a list of tokens. This list can
-	 * be safely modified.
-	 *
-	 * @param input
-	 *
-	 * @return List tokenized version of a string
-	 */
-	public List<String> tokenizeToList(String input);
+	public final List<String> tokenizeToList(final String input) {
+		List<String> l = new ArrayList<>(input.length());
+		for (char c : input.toCharArray()) {
+			l.add(String.valueOf(c));
+		}
+		return l;
+	}
 
-	/**
-	 * Return tokenized version of a string as a set of tokens. This set can be
-	 * safely modified.
-	 *
-	 * @param input
-	 *
-	 * @return tokenized version of a string as a set
-	 */
-	public Set<String> tokenizeToSet(String input);
+	@Override
+	public String toString() {
+		return "CharacterTokenizer";
+	}
+
 }

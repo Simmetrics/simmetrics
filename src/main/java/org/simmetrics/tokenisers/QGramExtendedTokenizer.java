@@ -60,4 +60,9 @@ public class QGramExtendedTokenizer extends AbstractTokenizer {
 		return tokenizer.tokenizeToSet(startPadding + input + endPadding);
 	}
 
+	@Override
+	public String toString() {
+		return "QGramExtendedTokenizer [q=" + tokenizer.getQ() + "]";
+	}
+
 }

@@ -25,10 +25,8 @@ package org.simmetrics.metrics;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.ArrayList;
 
-import org.simmetrics.tokenisers.Tokenizer;
-import org.simmetrics.tokenisers.WhitespaceTokenizer;
+import org.simmetrics.TokenSetMetric;
 
 /**
  * Implements the Jaccard Similarity algorithm providing a similarity measure
@@ -46,55 +44,25 @@ import org.simmetrics.tokenisers.WhitespaceTokenizer;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class JaccardSimilarity extends TokenizingStringMetric {
+public final class JaccardSimilarity implements TokenSetMetric {
 
-	/**
-	 * Constructs a JaccardSimilarity metric with a {@link WhitespaceTokenizer}.
-	 */
-	public JaccardSimilarity() {
-		this(new WhitespaceTokenizer());
-	}
+	@Override
+	public float compare(Set<String> str1Tokens, Set<String> str2Tokens) {
 
-	/**
-	 * Constructs a CosineSimilarity metric with the given tokenizer.
-	 *
-	 * @param tokenizer
-	 *            tokenizer to use
-	 */
-	public JaccardSimilarity(final Tokenizer tokenizer) {
-		super(tokenizer);
-	}
-
-	protected float compareSimplified(final String string1, final String string2) {
-		/*
-		 * Each instance is represented as a Jaccard vector similarity function.
-		 * The Jaccard between two vectors X and Y is
-		 * 
-		 * (X*Y) / (|X||Y|-(X*Y))
-		 * 
-		 * where (X*Y) is the inner product of X and Y, and |X| = (X*X)^1/2,
-		 * i.e. the Euclidean norm of X.
-		 * 
-		 * This can more easily be described as ( |X & Y| ) / ( | X or Y | )
-		 */
-		// todo this needs checking
-		final ArrayList<String> str1Tokens = tokenizeToList(string1);
-		final ArrayList<String> str2Tokens = tokenizeToList(string2);
-
-		final Set<String> allTokens = new HashSet<String>();
+		final Set<String> allTokens = new HashSet<>();
 		allTokens.addAll(str1Tokens);
-		final int termsInString1 = allTokens.size();
-		final Set<String> secondStringTokens = new HashSet<String>();
-		secondStringTokens.addAll(str2Tokens);
-		final int termsInString2 = secondStringTokens.size();
+		allTokens.addAll(str2Tokens);
 
-		// now combine the sets
-		allTokens.addAll(secondStringTokens);
-		final int commonTerms = (termsInString1 + termsInString2)
+		final int commonTerms = (str1Tokens.size() + str2Tokens.size())
 				- allTokens.size();
 
 		// return JaccardSimilarity
 		return (float) (commonTerms) / (float) (allTokens.size());
+	}
+
+	@Override
+	public String toString() {
+		return "JaccardSimilarity";
 	}
 
 }

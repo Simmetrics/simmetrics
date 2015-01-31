@@ -28,7 +28,7 @@ package org.simmetrics.simplifier;
 import java.text.Normalizer;
 import java.util.regex.Pattern;
 
-public class NonDiacriticSimplifier extends AbstractSimplifier {
+public class NonDiacriticSimplifier implements Simplifier {
 
 	public String simplify(String input) {
 		return DIACRITICS_AND_FRIENDS.matcher(

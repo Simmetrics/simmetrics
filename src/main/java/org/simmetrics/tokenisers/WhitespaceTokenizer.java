@@ -34,11 +34,16 @@ import java.util.ArrayList;
  */
 public final class WhitespaceTokenizer extends AbstractTokenizer {
 
+	@Override
+	public String toString() {
+		return "WhitespaceTokenizer [" + delimiters + "]";
+	}
+
 	private final String delimiters = "\\s";
 
 	public final ArrayList<String> tokenizeToList(final String input) {
 
-		final ArrayList<String> returnArrayList = new ArrayList<String>();
+		final ArrayList<String> returnArrayList = new ArrayList<>();
 
 		for (String token : input.split(delimiters)) {
 			if (!token.isEmpty()) {

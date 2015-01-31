@@ -30,11 +30,8 @@ import java.util.Set;
 public abstract class AbstractTokenizer implements Tokenizer {
 
 	public Set<String> tokenizeToSet(final String input) {
-		return new HashSet<String>(tokenizeToList(input));
+		return new HashSet<>(tokenizeToList(input));
 	}
 
-	public String toString() {
-		return getClass().getName();
-	}
 
 }

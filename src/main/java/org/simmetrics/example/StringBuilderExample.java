@@ -23,8 +23,10 @@
  */
 package org.simmetrics.example;
 
-import org.simmetrics.Metrics;
 import org.simmetrics.StringMetric;
+import org.simmetrics.StringMetricBuilder;
+import org.simmetrics.metrics.*;
+import org.simmetrics.tokenisers.QGram2Tokenizer;
 
 /**
  * SimpleExample implements a simple example to demonstrate the ease to use a
@@ -32,7 +34,7 @@ import org.simmetrics.StringMetric;
  * 
  * @author Sam Chapman
  */
-public class SimpleExample {
+public class StringBuilderExample {
 
 	/**
 	 * Runs a simple example.
@@ -48,7 +50,10 @@ public class SimpleExample {
 		final String str1 = args[0];
 		final String str2 = args[1];
 
-		StringMetric metric = Metrics.cosineSimilarity();
+		StringMetric metric = new StringMetricBuilder()
+				.setMetric(new CosineSimilarity())
+				.setTokeninzer(new QGram2Tokenizer())
+				.build();
 
 		final float result = metric.compare(str1, str2);
 
@@ -65,7 +70,7 @@ public class SimpleExample {
 					.println("Performs a rudimentary string metric comparison from the arguments given.");
 			System.out.println(String.format(
 					"Check the source of %s for more details.",
-					SimpleExample.class.getName()));
+					StringBuilderExample.class.getName()));
 
 			System.out.print("Usage <string> <string>");
 			System.exit(1);

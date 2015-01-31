@@ -23,18 +23,19 @@
  */
 package org.simmetrics.metrics;
 
+import org.junit.Test;
+import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.QGramsDistance;
+import org.simmetrics.tokenisers.QGram3ExtendedTokenizer;
 
-public class QGramsDistanceTest extends TokenizingStringMetricTest {
+public class QGramsDistanceTest extends StringMetricTest {
 
-	@Override
-	public TokenizingStringMetric getMetric() {
-		return new QGramsDistance();
-	}
 
-	@Override
-	public T[] getTests() {
-		return new T[] {
+	@Test
+	public void test() {
+		testSimilarity(
+				new StringMetricBuilder().setMetric(new QGramsDistance())
+						.setTokeninzer(new QGram3ExtendedTokenizer()).build(), new T[] {
 				new T(0.7857f, "test string1", "test string2"),
 				new T(0.7059f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.6667f, "a b c d", "a b c e"),
@@ -67,7 +68,7 @@ public class QGramsDistanceTest extends TokenizingStringMetricTest {
 				new T(0.2453f, "Web Aplications", "WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
 				new T(0.0000f, "Web Aplications", "Structural Assessment: The Role of Large and Full-Scale Testing"),
 				new T(0.0000f, "Web Aplications", "How to Find a Scholarship Online"),
-		};
+		});
 	}
 
 }

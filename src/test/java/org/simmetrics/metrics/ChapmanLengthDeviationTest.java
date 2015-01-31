@@ -23,19 +23,16 @@
  */
 package org.simmetrics.metrics;
 
+import org.junit.Test;
 import org.simmetrics.metrics.ChapmanLengthDeviation;
 
 
-public class ChapmanLengthDeviationTest extends SimplyfingStringMetricTest {
+public class ChapmanLengthDeviationTest extends StringMetricTest {
 
-	@Override
-	public SimplyfingStringMetric getMetric() {
-		return new ChapmanLengthDeviation();
-	}
-
-	@Override
-	public T[] getTests() {
-		return new T[] {
+	@Test
+	public void test() {
+		testSimilarity(new ChapmanLengthDeviation(),
+				new T[] {
 				new T(1.0000f, "test string1","test string2"),
 				new T(1.0000f, "aaa bbb ccc ddd","aaa bbb ccc eee"),
 				new T(1.0000f, "a b c d","a b c e"),
@@ -52,6 +49,6 @@ public class ChapmanLengthDeviationTest extends SimplyfingStringMetricTest {
 				new T(0.9091f, "John Smith","Sam Chapman"),
 				new T(0.7692f, "John Smith","Sam J Chapman"),
 				new T(0.9000f, "John Smith","S Chapman"),
-		};
+		});
 	}
 }

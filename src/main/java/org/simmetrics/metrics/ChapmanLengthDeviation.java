@@ -23,6 +23,8 @@
  */
 package org.simmetrics.metrics;
 
+import org.simmetrics.StringMetric;
+
 
 /**
  * 
@@ -36,14 +38,21 @@ package org.simmetrics.metrics;
  * @author Sam Chapman
  * @version 1.1
  */
-public class ChapmanLengthDeviation extends SimplyfingStringMetric {
+public class ChapmanLengthDeviation implements StringMetric {
 
-	protected float compareSimplified(final String string1, final String string2) {
+	public float compare(final String string1, final String string2) {
 		if (string1.length() >= string2.length()) {
 			return (float) string2.length() / (float) string1.length();
 		} else {
 			return (float) string1.length() / (float) string2.length();
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "ChapmanLengthDeviation";
+	}
+	
+	
 
 }

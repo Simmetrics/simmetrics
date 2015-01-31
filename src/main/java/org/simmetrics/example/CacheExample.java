@@ -26,6 +26,7 @@ package org.simmetrics.example;
 import java.util.Arrays;
 
 import org.simmetrics.StringMetric;
+import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.StringMetrics;
 import org.simmetrics.metrics.CosineSimilarity;
 import org.simmetrics.simplifier.CachingSimplifier;
@@ -41,11 +42,13 @@ public class CacheExample {
 				"Alayna Sawin", "Charmain Scoggin", "Sanora Larkey" };
 		String name = "Gearldine Desanti";
 
-		CosineSimilarity metric = new CosineSimilarity();
-		metric.setSimplifier(new CaseSimplifier.Lower());
-		metric.setTokenizer(new QGram2Tokenizer());
-		metric.addSimplifier(new CachingSimplifier());
-		metric.addTokenizer(new CachingTokenizer());
+		StringMetric metric = new StringMetricBuilder()
+				.setMetric(new CosineSimilarity())
+				.setSimplifier(new CaseSimplifier.Lower())
+				.setTokeninzer(new QGram2Tokenizer())
+				.setCache(new CachingTokenizer())
+				.setCache(new CachingSimplifier())
+				.build();
 
 		float[] scores = StringMetrics.compare(metric, name, names);
 

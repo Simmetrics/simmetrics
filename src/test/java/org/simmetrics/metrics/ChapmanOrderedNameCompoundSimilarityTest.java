@@ -23,35 +23,38 @@
  */
 package org.simmetrics.metrics;
 
+import org.junit.Test;
+import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.ChapmanOrderedNameCompoundSimilarity;
+import org.simmetrics.tokenisers.WhitespaceTokenizer;
 
-public class ChapmanOrderedNameCompoundSimilarityTest extends
-		TokenizingStringMetricTest {
+public class ChapmanOrderedNameCompoundSimilarityTest extends StringMetricTest {
 
-	@Override
-	public TokenizingStringMetric getMetric() {
-		return new ChapmanOrderedNameCompoundSimilarity();
-	}
+	@Test
+	public void test() {
+		testSimilarity(
+				new StringMetricBuilder()
+					.setMetric(new ChapmanOrderedNameCompoundSimilarity())
+					.setTokeninzer(new WhitespaceTokenizer())
+					.build(), 
+				new T[] {
+						new T(0.9331f, "test string1", "test string2"),
+						new T(0.6417f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+						new T(0.7753f, "a b c d", "a b c e"),
+						new T(0.8056f, "Healed", "Sealed"),
+						new T(0.5333f, "Healed", "Healthy"),
+						new T(0.7111f, "Healed", "Heard"),
+						new T(0.2667f, "Healed", "Herded"),
+						new T(0.7347f, "Healed", "Help"),
+						new T(0.5764f, "Healed", "Sold"),
+						new T(0.7347f, "Healed", "Help"),
+						new T(0.7790f, "Sam J Chapman", "Samuel John Chapman"),
+						new T(0.8361f, "Sam Chapman", "S Chapman"),
+						new T(0.4292f, "John Smith", "Samuel John Chapman"),
+						new T(0.2083f, "John Smith", "Sam Chapman"),
+						new T(0.2875f, "John Smith", "Sam J Chapman"),
+						new T(0.0625f, "John Smith", "S Chapman"),
 
-	@Override
-	public T[] getTests() {
-		return new T[] { new T(0.9331f, "test string1", "test string2"),
-				new T(0.6417f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-				new T(0.7753f, "a b c d", "a b c e"),
-				new T(0.8056f, "Healed", "Sealed"),
-				new T(0.5333f, "Healed", "Healthy"),
-				new T(0.7111f, "Healed", "Heard"),
-				new T(0.2667f, "Healed", "Herded"),
-				new T(0.7347f, "Healed", "Help"),
-				new T(0.5764f, "Healed", "Sold"),
-				new T(0.7347f, "Healed", "Help"),
-				new T(0.7790f, "Sam J Chapman", "Samuel John Chapman"),
-				new T(0.8361f, "Sam Chapman", "S Chapman"),
-				new T(0.4292f, "John Smith", "Samuel John Chapman"),
-				new T(0.2083f, "John Smith", "Sam Chapman"),
-				new T(0.2875f, "John Smith", "Sam J Chapman"),
-				new T(0.0625f, "John Smith", "S Chapman"),
-
-		};
+				});
 	}
 }

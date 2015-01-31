@@ -68,13 +68,13 @@ public final class SubCost5_3_Minus3 extends AbstractSubstitutionCost {
 	static private final Set<Set<Character>> approx = buildApprox(approximates);
 
 	private static Set<Set<Character>> buildApprox(String[] approximates) {
-		Set<Set<Character>> approx = new HashSet<Set<Character>>();
+		Set<Set<Character>> approx = new HashSet<>();
 		for (String a : approximates) {
-			List<Character> list = new ArrayList<Character>(a.length());
+			List<Character> list = new ArrayList<>(a.length());
 			for (char c : a.toCharArray()) {
 				list.add(c);
 			}
-			approx.add(new HashSet<Character>(list));
+			approx.add(new HashSet<>(list));
 		}
 
 		return approx;

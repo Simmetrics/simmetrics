@@ -30,6 +30,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.ArrayList;
 
+import org.simmetrics.StringMetric;
+
 /**
  * <p>
  * Title:
@@ -60,7 +62,7 @@ import java.util.ArrayList;
  *
  * @version 1.1
  */
-public class TagLinkToken extends SimplyfingStringMetric {
+public class TagLinkToken implements StringMetric {
 	private float matched;
 	private float tr;
 	private float tSize;
@@ -98,7 +100,7 @@ public class TagLinkToken extends SimplyfingStringMetric {
 	 *            String
 	 * @return float
 	 */
-	protected float compareSimplified(String T, String U) {
+	public float compare(String T, String U) {
 		float score;
 		if (T.equals(U)) {
 			matched = T.length();
@@ -198,8 +200,8 @@ public class TagLinkToken extends SimplyfingStringMetric {
 		matched = 0;
 		largestIndex = -1;
 		float scoreValue = 0;
-		HashMap<Integer, Object> tMap = new HashMap<Integer, Object>();
-		HashMap<Integer, Object> uMap = new HashMap<Integer, Object>();
+		HashMap<Integer, Object> tMap = new HashMap<>();
+		HashMap<Integer, Object> uMap = new HashMap<>();
 		for (Object aCandidateList : candidateList) {
 			Candidates actualCandidates = (Candidates) aCandidateList;
 			Integer actualTPos = actualCandidates.getTPos(), actualUPos = actualCandidates
@@ -229,7 +231,7 @@ public class TagLinkToken extends SimplyfingStringMetric {
 	 * @return ArrayList
 	 */
 	private ArrayList<Candidates> algorithm1(String T, String U) {
-		ArrayList<Candidates> candidateList = new ArrayList<Candidates>();
+		ArrayList<Candidates> candidateList = new ArrayList<>();
 		int bound = (int) (1.0 / tr);
 		for (int t = 0; t < T.length(); t++) {
 			char chT = T.charAt(t);
@@ -398,6 +400,8 @@ public class TagLinkToken extends SimplyfingStringMetric {
 		}
 		return (round / 1000.00f);
 	}
+
+	
 	
 
 }

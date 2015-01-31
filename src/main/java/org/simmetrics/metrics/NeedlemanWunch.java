@@ -23,6 +23,7 @@
  */
 package org.simmetrics.metrics;
 
+import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.costfunctions.SubCost01;
 import org.simmetrics.metrics.costfunctions.SubstitutionCost;
 
@@ -35,9 +36,9 @@ import static org.simmetrics.utils.Math.min3;
  * @author Sam Chapman
  * @version 1.1
  */
-public class NeedlemanWunch extends SimplyfingStringMetric {
+public class NeedlemanWunch implements StringMetric {
 
-	private final SubstitutionCost dCostFunc;
+	private final SubstitutionCost costFunction;
 
 	private final float gapCost;
 
@@ -63,12 +64,11 @@ public class NeedlemanWunch extends SimplyfingStringMetric {
 	 * @param costFunc
 	 *            - the cost function to use
 	 */
-	public NeedlemanWunch(final float costG,
-			final SubstitutionCost costFunc) {
+	public NeedlemanWunch(final float costG, final SubstitutionCost costFunc) {
 		// set the gapCost to the given value
 		this.gapCost = costG;
 		// set the cost func
-		this.dCostFunc = costFunc;
+		this.costFunction = costFunc;
 	}
 
 	/**
@@ -81,21 +81,21 @@ public class NeedlemanWunch extends SimplyfingStringMetric {
 		this(2.0f, costFunc);
 	}
 
+	@Override
+	public float compare(String string1, String string2) {
 
-
-	protected float compareSimplified(final String string1, final String string2) {
 		float needlemanWunch = getUnNormalisedSimilarity(string1, string2);
 
 		// normalise into zero to one region from min max possible
 		float maxValue = Math.max(string1.length(), string2.length());
 		float minValue = maxValue;
-		if (dCostFunc.getMaxCost() > gapCost) {
-			maxValue *= dCostFunc.getMaxCost();
+		if (costFunction.getMaxCost() > gapCost) {
+			maxValue *= costFunction.getMaxCost();
 		} else {
 			maxValue *= gapCost;
 		}
-		if (dCostFunc.getMinCost() < gapCost) {
-			minValue *= dCostFunc.getMinCost();
+		if (costFunction.getMinCost() < gapCost) {
+			minValue *= costFunction.getMinCost();
 		} else {
 			minValue *= gapCost;
 		}
@@ -139,15 +139,22 @@ public class NeedlemanWunch extends SimplyfingStringMetric {
 		for (int i = 1; i < d.length; i++) {
 			for (int j = 1; j < d[0].length; j++) {
 				// get the substution cost
-				float cost = dCostFunc.getCost(s, i-1, t, j-1);
+				float cost = costFunction.getCost(s, i - 1, t, j - 1);
 
 				// find lowest cost at point from three possible
-				d[i][j] = min3(d[i-1][j] + gapCost, d[i][j-1] + gapCost, d[i-1][j-1]
-						+ cost);
+				d[i][j] = min3(d[i - 1][j] + gapCost, d[i][j - 1] + gapCost,
+						d[i - 1][j - 1] + cost);
 			}
 		}
 
 		// return bottom right of matrix as holds the maximum edit score
 		return d[d.length - 1][d[0].length - 1];
 	}
+
+	@Override
+	public String toString() {
+		return "NeedlemanWunch [costFunction=" + costFunction + ", gapCost="
+				+ gapCost + "]";
+	}
+
 }

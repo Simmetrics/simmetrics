@@ -23,18 +23,16 @@
  */
 package org.simmetrics.metrics;
 
+import org.junit.Test;
 import org.simmetrics.metrics.Levenshtein;
 
-public class LevenshteinTest extends SimplyfingStringMetricTest {
+public class LevenshteinTest extends StringMetricTest {
 
 
-	@Override
-	public SimplyfingStringMetric getMetric() {
-		return new Levenshtein();
-	}
-	@Override
-	public T[] getTests() {
-		return new T[] {
+	@Test
+	public void test() {
+		testSimilarity(
+				new Levenshtein(), new T[] {
 				new T(0.9167f, "test string1", "test string2"),
 				new T(0.8000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.8571f, "a b c d", "a b c e"),
@@ -67,7 +65,7 @@ public class LevenshteinTest extends SimplyfingStringMetricTest {
 				new T(0.1724f, "Web Aplications", "WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
 				new T(0.1111f, "Web Aplications", "Structural Assessment: The Role of Large and Full-Scale Testing"),
 				new T(0.1875f, "Web Aplications", "How to Find a Scholarship Online"),
-		};
+		});
 	}
 }
 

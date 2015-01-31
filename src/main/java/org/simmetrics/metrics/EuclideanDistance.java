@@ -24,11 +24,10 @@
 package org.simmetrics.metrics;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.ArrayList;
 
-import org.simmetrics.tokenisers.Tokenizer;
-import org.simmetrics.tokenisers.WhitespaceTokenizer;
+import org.simmetrics.TokenListMetric;
 
 import static java.lang.Math.sqrt;
 
@@ -40,42 +39,20 @@ import static java.lang.Math.sqrt;
  * @author Sam Chapman
  * @version 1.2
  */
-public  class EuclideanDistance extends TokenizingStringMetric {
+public class EuclideanDistance implements TokenListMetric {
 
-	private final float ESTIMATEDTIMINGCONST = 7.4457142857142857142857142857146e-5f;
+	@Override
+	public float compare(List<String> str1Tokens, List<String> str2Tokens) {
 
-	/**
-	 * Constructs a EuclideanDistance metric with a {@link WhitespaceTokenizer}.
-	 */
-	public EuclideanDistance() {
-		this(new WhitespaceTokenizer());
-	}
-
-	/**
-	 * Constructs a EuclideanDistance metric with the given tokenizer.
-	 *
-	 * @param tokenizer
-	 *            tokenizer to use
-	 */
-	public EuclideanDistance(final Tokenizer tokenizer) {
-		super(tokenizer);
-	}
-
-
-	protected float compareSimplified(final String string1, final String string2) {
-		final ArrayList<String> str1Tokens = tokenizeToList(string1);
-		final ArrayList<String> str2Tokens = tokenizeToList(string2);
 		float totalPossible = (float) Math.sqrt((str1Tokens.size() * str1Tokens
 				.size()) + (str2Tokens.size() * str2Tokens.size()));
 		final float totalDistance = getEuclidianDistance(str1Tokens, str2Tokens);
 		return (totalPossible - totalDistance) / totalPossible;
 	}
 
-
-
-	private static float getEuclidianDistance(final ArrayList<String> str1Tokens,
-			final ArrayList<String> str2Tokens) {
-		final Set<String> allTokens = new HashSet<String>();
+	private static float getEuclidianDistance(final List<String> str1Tokens,
+			final List<String> str2Tokens) {
+		final Set<String> allTokens = new HashSet<>();
 		allTokens.addAll(str1Tokens);
 		allTokens.addAll(str2Tokens);
 
@@ -100,4 +77,10 @@ public  class EuclideanDistance extends TokenizingStringMetric {
 		totalDistance = (float) sqrt(totalDistance);
 		return totalDistance;
 	}
+
+	@Override
+	public String toString() {
+		return "EuclideanDistance";
+	}
+
 }

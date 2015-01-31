@@ -24,6 +24,7 @@
 
 package org.simmetrics.metrics;
 
+import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.costfunctions.AbstractSubstitutionCost;
 import org.simmetrics.metrics.costfunctions.SubCost1_Minus2;
 
@@ -36,9 +37,15 @@ import static org.simmetrics.utils.Math.max4;
  * @author Sam Chapman
  * @version 1.1
  */
-public  class SmithWaterman extends SimplyfingStringMetric {
+public class SmithWaterman implements StringMetric {
 
-	private AbstractSubstitutionCost dCostFunc;
+	private AbstractSubstitutionCost costFunction;
+
+	@Override
+	public String toString() {
+		return "SmithWaterman [costFunction=" + costFunction + ", gapCost="
+				+ gapCost + "]";
+	}
 
 	private float gapCost;
 
@@ -49,7 +56,7 @@ public  class SmithWaterman extends SimplyfingStringMetric {
 		// set the gapCost to a default value
 		gapCost = 0.5f;
 		// set the default cost func
-		dCostFunc = new SubCost1_Minus2();
+		costFunction = new SubCost1_Minus2();
 	}
 
 	/**
@@ -62,7 +69,7 @@ public  class SmithWaterman extends SimplyfingStringMetric {
 		// set the gapCost to a given value
 		gapCost = costG;
 		// set the cost func to a default function
-		dCostFunc = new SubCost1_Minus2();
+		costFunction = new SubCost1_Minus2();
 	}
 
 	/**
@@ -78,7 +85,7 @@ public  class SmithWaterman extends SimplyfingStringMetric {
 		// set the gapCost to the given value
 		gapCost = costG;
 		// set the cost func
-		dCostFunc = costFunc;
+		costFunction = costFunc;
 	}
 
 	/**
@@ -91,18 +98,16 @@ public  class SmithWaterman extends SimplyfingStringMetric {
 		// set the gapCost to a default value
 		gapCost = 0.5f;
 		// set the cost func
-		dCostFunc = costFunc;
+		costFunction = costFunc;
 	}
 
-
-
-	protected float compareSimplified(final String string1, final String string2) {
+	public float compare(final String string1, final String string2) {
 		final float smithWaterman = getUnNormalisedSimilarity(string1, string2);
 
 		// normalise into zero to one region from min max possible
 		float maxValue = Math.min(string1.length(), string2.length());
-		if (dCostFunc.getMaxCost() > -gapCost) {
-			maxValue *= dCostFunc.getMaxCost();
+		if (costFunction.getMaxCost() > -gapCost) {
+			maxValue *= costFunction.getMaxCost();
 		} else {
 			maxValue *= -gapCost;
 		}
@@ -151,7 +156,7 @@ public  class SmithWaterman extends SimplyfingStringMetric {
 		float maxSoFar = 0.0f;
 		for (i = 0; i < n; i++) {
 			// get the substution cost
-			cost = dCostFunc.getCost(s, i, t, 0);
+			cost = costFunction.getCost(s, i, t, 0);
 
 			if (i == 0) {
 				d[0][0] = max3(0, -gapCost, cost);
@@ -165,7 +170,7 @@ public  class SmithWaterman extends SimplyfingStringMetric {
 		}
 		for (j = 0; j < m; j++) {
 			// get the substution cost
-			cost = dCostFunc.getCost(s, 0, t, j);
+			cost = costFunction.getCost(s, 0, t, j);
 
 			if (j == 0) {
 				d[0][0] = max3(0, -gapCost, cost);
@@ -183,7 +188,7 @@ public  class SmithWaterman extends SimplyfingStringMetric {
 		for (i = 1; i < n; i++) {
 			for (j = 1; j < m; j++) {
 				// get the substution cost
-				cost = dCostFunc.getCost(s, i, t, j);
+				cost = costFunction.getCost(s, i, t, j);
 
 				// find lowest cost at point from three possible
 				d[i][j] = max4(0, d[i - 1][j] - gapCost, d[i][j - 1] - gapCost,

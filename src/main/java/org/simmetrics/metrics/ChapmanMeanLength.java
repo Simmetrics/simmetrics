@@ -25,6 +25,8 @@ package org.simmetrics.metrics;
 
 import static java.lang.Math.pow;
 
+import org.simmetrics.StringMetric;
+
 /**
  * Implements the Chapman Mean Length algorithm provides a similarity measure
  * between two strings from size of the mean length of the vectors - this
@@ -35,7 +37,7 @@ import static java.lang.Math.pow;
  * @version 1.2
  */
 
-public class ChapmanMeanLength extends SimplyfingStringMetric {
+public class ChapmanMeanLength implements StringMetric {
 
 	/**
 	 * defines the internal max string length beyond which 1.0 is always
@@ -43,7 +45,7 @@ public class ChapmanMeanLength extends SimplyfingStringMetric {
 	 */
 	final private static int CHAPMANMEANLENGTHMAXSTRING = 500;
 
-	protected float compareSimplified(final String string1, final String string2) {
+	public float compare(final String string1, final String string2) {
 		final float bothLengths = string2.length() + string1.length();
 		if (bothLengths > CHAPMANMEANLENGTHMAXSTRING) {
 			return 1.0f;
@@ -53,5 +55,12 @@ public class ChapmanMeanLength extends SimplyfingStringMetric {
 			return (float) (1.0 - pow(oneMinusBothScaled, 4));
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "ChapmanMeanLength";
+	}
+	
+	
 
 }

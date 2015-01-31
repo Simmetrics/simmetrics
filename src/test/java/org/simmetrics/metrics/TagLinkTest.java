@@ -23,20 +23,20 @@
  */
 package org.simmetrics.metrics;
 
+import org.junit.Test;
 import org.simmetrics.metrics.TagLink;
 
 
 
-public class TagLinkTest extends SimplyfingStringMetricTest {
+public class TagLinkTest extends StringMetricTest {
 
-	@Override
-	public SimplyfingStringMetric getMetric() {
-		return new TagLink();
-	}
+	
 
-	@Override
-	public T[] getTests() {
-		return new T[] {
+	@Test
+	public void test() {
+		testSimilarity(
+				new TagLink(),
+				new T[] {
 				new T(0.9097f, "test string1", "test string2"),
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.7500f, "a b c d", "a b c e"),
@@ -69,7 +69,7 @@ public class TagLinkTest extends SimplyfingStringMetricTest {
 				new T(0.5874f, "Web Aplications", "WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
 				new T(0.0922f, "Web Aplications", "Structural Assessment: The Role of Large and Full-Scale Testing"),
 				new T(0.0587f, "Web Aplications", "How to Find a Scholarship Online"),
-		};
+		});
 	}
 }
 

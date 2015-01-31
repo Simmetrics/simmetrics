@@ -23,6 +23,8 @@
  */
 package org.simmetrics.metrics;
 
+import org.simmetrics.StringMetric;
+
 
 /**
  * Implements the Jaro algorithm providing a similarity measure between two
@@ -31,10 +33,10 @@ package org.simmetrics.metrics;
  * @author Sam Chapman
  * @version 1.1
  */
-public  class Jaro extends SimplyfingStringMetric {
+public  class Jaro implements StringMetric {
 
 
-	protected float compareSimplified(final String string1, final String string2) {
+	public float compare(final String string1, final String string2) {
 
 		// get half the length of the string rounded up - (this is the distance
 		// used for acceptable transpositions)
@@ -107,4 +109,9 @@ public  class Jaro extends SimplyfingStringMetric {
 		}
 		return returnCommons;
 	}
+	@Override
+	public String toString() {
+		return "Jaro";
+	}
+
 }

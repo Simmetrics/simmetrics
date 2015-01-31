@@ -25,9 +25,7 @@ package org.simmetrics.metrics;
 
 import java.util.*;
 
-import org.simmetrics.tokenisers.QGram3ExtendedTokenizer;
-import org.simmetrics.tokenisers.Tokenizer;
-import org.simmetrics.tokenisers.WhitespaceTokenizer;
+import org.simmetrics.TokenListMetric;
 
 /**
  * Implements the Q Grams Distance algorithm providing a similarity measure
@@ -37,30 +35,13 @@ import org.simmetrics.tokenisers.WhitespaceTokenizer;
  * @author Sam Chapman
  * @version 1.1
  */
-public  class QGramsDistance extends TokenizingStringMetric {
+public  class QGramsDistance implements TokenListMetric {
 
-	/**
-	 * Constructs a QGramsDistance metric with a {@link WhitespaceTokenizer}.
-	 */
-	public QGramsDistance() {
-		this(new QGram3ExtendedTokenizer());
-	}
 
-	/**
-	 * Constructs a QGramsDistance metric with the given tokenizer.
-	 *
-	 * @param tokenizer
-	 *            tokenizer to use
-	 */
-	public QGramsDistance(final Tokenizer tokenizer) {
-		super(tokenizer);
-	}
 
-	
+	@Override
+	public float compare(List<String> str1Tokens, List<String> str2Tokens) {
 
-	protected float compareSimplified(final String string1, final String string2) {
-		final ArrayList<String> str1Tokens = tokenizeToList(string1);
-		final ArrayList<String> str2Tokens = tokenizeToList(string2);
 
 		final int maxQGramsMatching = str1Tokens.size() + str2Tokens.size();
 
@@ -76,9 +57,9 @@ public  class QGramsDistance extends TokenizingStringMetric {
 	
 
 	private static float getInnerUnNormalizedSimilarity(
-			final ArrayList<String> str1Tokens,
-			final ArrayList<String> str2Tokens) {
-		final Set<String> allTokens = new HashSet<String>();
+			final List<String> str1Tokens,
+			final List<String> str2Tokens) {
+		final Set<String> allTokens = new HashSet<>();
 		allTokens.addAll(str1Tokens);
 		allTokens.addAll(str2Tokens);
 
@@ -107,6 +88,15 @@ public  class QGramsDistance extends TokenizingStringMetric {
 
 		return difference;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "QGramsDistance";
+	}
+
+
 
 	
 }

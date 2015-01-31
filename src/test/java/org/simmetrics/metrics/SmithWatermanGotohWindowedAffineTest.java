@@ -23,18 +23,16 @@
  */
 package org.simmetrics.metrics;
 
+import org.junit.Test;
 import org.simmetrics.metrics.SmithWatermanGotohWindowedAffine;
 
-public class SmithWatermanGotohWindowedAffineTest extends SimplyfingStringMetricTest {
+public class SmithWatermanGotohWindowedAffineTest extends StringMetricTest {
 
-	@Override
-	public SimplyfingStringMetric getMetric() {
-		return new SmithWatermanGotohWindowedAffine();
-	}
-
-	@Override
-	public T[] getTests() {
-		return new T[] {
+	@Test
+	public void test() {
+		testSimilarity(
+				new SmithWatermanGotohWindowedAffine(),
+				new T[] {
 				new T(0.9167f, "test string1", "test string2"),
 				new T(0.8000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.8571f, "a b c d", "a b c e"),
@@ -68,7 +66,7 @@ public class SmithWatermanGotohWindowedAffineTest extends SimplyfingStringMetric
 				new T(0.1867f, "Web Aplications", "Structural Assessment: The Role of Large and Full-Scale Testing"),
 				new T(0.2800f, "Web Aplications", "How to Find a Scholarship Online"),
 
-		};
+		});
 	}
 }
 

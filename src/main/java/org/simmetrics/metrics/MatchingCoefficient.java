@@ -23,10 +23,9 @@
  */
 package org.simmetrics.metrics;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import org.simmetrics.tokenisers.Tokenizer;
-import org.simmetrics.tokenisers.WhitespaceTokenizer;
+import org.simmetrics.TokenListMetric;
 
 /**
  * Implements the Matching Coefficient algorithm providing a similarity measure
@@ -35,31 +34,9 @@ import org.simmetrics.tokenisers.WhitespaceTokenizer;
  * @author Sam Chapman
  * @version 1.1
  */
-public class MatchingCoefficient extends TokenizingStringMetric {
-
-
-	/**
-	 * Constructs a MatchingCoefficient metric with a
-	 * {@link WhitespaceTokenizer}.
-	 */
-	public MatchingCoefficient() {
-		this(new WhitespaceTokenizer());
-	}
-
-	/**
-	 * Constructs a MatchingCoefficient metric with the given tokenizer.
-	 *
-	 * @param tokenizer
-	 *            tokenizer to use
-	 */
-	public MatchingCoefficient(final Tokenizer tokenizer) {
-		super(tokenizer);
-	}
-
-
-	protected float compareSimplified(final String string1, final String string2) {
-		final ArrayList<String> str1Tokens = tokenizeToList(string1);
-		final ArrayList<String> str2Tokens = tokenizeToList(string2);
+public class MatchingCoefficient implements TokenListMetric {
+	@Override
+	public float compare(List<String> str1Tokens, List<String> str2Tokens) {
 
 		final int totalPossible = Math
 				.max(str1Tokens.size(), str2Tokens.size());
@@ -68,14 +45,13 @@ public class MatchingCoefficient extends TokenizingStringMetric {
 	}
 
 	private static float getInnerUnNormalisedSimilarity(
-			final ArrayList<String> str1Tokens,
-			final ArrayList<String> str2Tokens) {
+			final List<String> str1Tokens, final List<String> str2Tokens) {
 		int totalFound = 0;
 		for (Object str1Token : str1Tokens) {
 			final String sToken = (String) str1Token;
 			boolean found = false;
-			for (Object str2Token : str2Tokens) {
-				final String tToken = (String) str2Token;
+			for (String str2Token : str2Tokens) {
+				final String tToken = str2Token;
 				if (sToken.equals(tToken)) {
 					found = true;
 				}
@@ -86,4 +62,12 @@ public class MatchingCoefficient extends TokenizingStringMetric {
 		}
 		return totalFound;
 	}
+
+	@Override
+	public String toString() {
+		return "MatchingCoefficient";
+	}
+	
+	
+
 }

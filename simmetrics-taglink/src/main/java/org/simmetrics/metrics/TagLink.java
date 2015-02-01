@@ -57,22 +57,8 @@ public class TagLink implements StringMetric {
 	 */
 	public TagLink() {
 		this(DEFAULT_METRIC);
-		// WARNING FROM AUTHOR OF SIMMETRICS
-		// this metric is not recomended for fast processing it has been added
-		// by a third party into the library and from the source is an extremely
-		// unoptermised process the library author does not recomend its usage
-		// if you do take the time to perfect this code I will gladly update its
-		// source - thanks Sam
 
-		// System.out.println("WARNING - this metric is not recomended for fast processing it has been added \n"
-		// +
-		// " by a third party into the library and from the source is an extremely \n"
-		// +
-		// " unoptermised process the library author does not recomend its usage \n"
-		// +
-		// " if you do take the time to perfect this code I will gladly update its\n"
-		// +
-		// " source - thanks Sam");
+
 	}
 
 	/**
@@ -84,22 +70,7 @@ public class TagLink implements StringMetric {
 	public TagLink(StringMetric characterBasedStringMetric) {
 		this.characterBasedStringMetric = characterBasedStringMetric;
 		tokenizer = new WhitespaceTokenizer();
-		// WARNING FROM AUTHOR OF SIMMETRICS
-		// this metric is not recomended for fast processing it has been added
-		// by a third party into the library and from the source is an extremely
-		// unoptermised process the library author does not recomend its usage
-		// if you do take the time to perfect this code I will gladly update its
-		// source - thanks Sam
 
-		// System.out.println("WARNING - this metric is not recomended for fast processing it has been added \n"
-		// +
-		// " by a third party into the library and from the source is an extremely \n"
-		// +
-		// " unoptermised process the library author does not recomend its usage \n"
-		// +
-		// " if you do take the time to perfect this code I will gladly update its\n"
-		// +
-		// " source - thanks Sam");
 	}
 
 	/**
@@ -111,22 +82,7 @@ public class TagLink implements StringMetric {
 	 */
 	public TagLink(String[] dataSetArray) {
 		this(dataSetArray, DEFAULT_METRIC);
-		// WARNING FROM AUTHOR OF SIMMETRICS
-		// this metric is not recomended for fast processing it has been added
-		// by a third party into the library and from the source is an extremely
-		// unoptermised process the library author does not recomend its usage
-		// if you do take the time to perfect this code I will gladly update its
-		// source - thanks Sam
 
-		// System.out.println("WARNING - this metric is not recomended for fast processing it has been added \n"
-		// +
-		// " by a third party into the library and from the source is an extremely \n"
-		// +
-		// " unoptermised process the library author does not recomend its usage \n"
-		// +
-		// " if you do take the time to perfect this code I will gladly update its\n"
-		// +
-		// " source - thanks Sam");
 	}
 
 	/**
@@ -143,22 +99,7 @@ public class TagLink implements StringMetric {
 		this.characterBasedStringMetric = characterBasedStringMetric;
 		tokenizer = new WhitespaceTokenizer();
 		this.idfMap = getIDFMap(dataSetArray);
-		// WARNING FROM AUTHOR OF SIMMETRICS
-		// this metric is not recomended for fast processing it has been added
-		// by a third party into the library and from the source is an extremely
-		// unoptermised process the library author does not recomend its usage
-		// if you do take the time to perfect this code I will gladly update its
-		// source - thanks Sam
 
-		// System.out.println("WARNING - this metric is not recomended for fast processing it has been added \n"
-		// +
-		// " by a third party into the library and from the source is an extremely \n"
-		// +
-		// " unoptermised process the library author does not recomend its usage \n"
-		// +
-		// " if you do take the time to perfect this code I will gladly update its\n"
-		// +
-		// " source - thanks Sam");
 	}
 
 	/**
@@ -192,23 +133,6 @@ public class TagLink implements StringMetric {
 	 * @return float
 	 */
 	public float compare(String T, String U) {
-
-		// WARNING FROM AUTHOR OF SIMMETRICS
-		// this metric is not recomended for fast processing it has been added
-		// by a third party into the library and from the source is an extremely
-		// unoptermised process the library author does not recomend its usage
-		// if you do take the time to perfect this code I will gladly update its
-		// source - thanks Sam
-
-		// System.out.println("WARNING - this metric is not recomended for fast processing it has been added \n"
-		// +
-		// " by a third party into the library and from the source is an extremely \n"
-		// +
-		// " unoptermised process the library author does not recomend its usage \n"
-		// +
-		// " if you do take the time to perfect this code I will gladly update its\n"
-		// +
-		// " source - thanks Sam");
 
 		if (T.equals(U)) {
 			return 1.0f;

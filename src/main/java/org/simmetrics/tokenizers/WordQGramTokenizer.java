@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -51,8 +52,11 @@ public final class WordQGramTokenizer implements Tokenizer {
 
 	/**
 	 * Constructs a WordQGramTokenizer with a {@link WhitespaceTokenizer} as a
-	 * word tokenizer the given q-gram. A string is broken up into words by the
-	 * word tokenizer. For each word q-grams are made.
+	 * word tokenizer the given q-gram tokenizer. A string is broken up into
+	 * words by the word tokenizer. For each word q-grams are made.
+	 * 
+	 * @param qGramTokenizer
+	 *            q-gram tokenizer to use to split words into q grams
 	 */
 	public WordQGramTokenizer(QGramTokenizer qGramTokenizer) {
 		this(new WhitespaceTokenizer(), qGramTokenizer);

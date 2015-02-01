@@ -21,8 +21,6 @@
 package org.simmetrics.tokenizers;
 
 import java.util.ArrayList;
-import java.util.Set;
-
 import com.google.common.base.Strings;
 
 /**

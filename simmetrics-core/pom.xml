@@ -8,8 +8,9 @@
 	</parent>
 
 	<artifactId>simmetrics-core</artifactId>
-	<name>SimMetrics Core</name>
+	<name>Core</name>
 	<packaging>jar</packaging>
+
 
 	<dependencies>
 		<dependency>

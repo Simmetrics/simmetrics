@@ -92,5 +92,6 @@
 
 	<modules>
 		<module>simmetrics-core</module>
+		<module>simmetrics-taglink</module>
 	</modules>
 </project>

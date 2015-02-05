@@ -34,9 +34,10 @@ import static java.lang.Math.abs;
  * between tokens is used to determine a similarity.
  * 
  * 
- * 
  * @author Sam Chapman
  * @version 1.1
+ * @param <T>
+ *            type of token
  */
 public class BlockDistance<T> implements ListMetric<T> {
 

@@ -23,7 +23,7 @@ package org.simmetrics.metrics;
 import org.junit.Test;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.BlockDistance;
-import org.simmetrics.tokenizers.CharacterTokenizer;
+import org.simmetrics.tokenizers.QGram1Tokenizer;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
 public class BlockDistanceTest extends StringMetricTest {
@@ -47,7 +47,7 @@ public class BlockDistanceTest extends StringMetricTest {
 		testSimilarity(
 				new StringMetricBuilder()
 						.setMetric(new BlockDistance())
-						.setTokenizer(new CharacterTokenizer())
+						.setTokenizer(new QGram1Tokenizer())
 						.build(),
 				new T[] {
 						new T(0.8333f, "Healed","Sealed"),

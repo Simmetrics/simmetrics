@@ -19,13 +19,20 @@
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.simmetrics;
+package org.simmetrics.tokenizers;
 
-import java.util.List;
+/**
+ * Basic Q-Gram tokenizer for a Q of 1.
+ * 
+ * @author mpkorstanje
+ *
+ */
+public final class QGram1Tokenizer extends QGramTokenizer {
 
-public interface TokenListMetric {
-	
-	public float compare(List<String> a, List<String> b);
+	private static final int Q = 1;
 
+	public QGram1Tokenizer() {
+		super(Q);
+	}
 
 }

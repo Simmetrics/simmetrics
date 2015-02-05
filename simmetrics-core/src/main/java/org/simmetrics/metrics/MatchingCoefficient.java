@@ -22,7 +22,7 @@ package org.simmetrics.metrics;
 
 import java.util.List;
 
-import org.simmetrics.TokenListMetric;
+import org.simmetrics.ListMetric;
 
 /**
  * Implements the Matching Coefficient algorithm providing a similarity measure
@@ -31,9 +31,9 @@ import org.simmetrics.TokenListMetric;
  * @author Sam Chapman
  * @version 1.1
  */
-public class MatchingCoefficient implements TokenListMetric {
+public class MatchingCoefficient implements ListMetric<Object> {
 	@Override
-	public float compare(List<String> str1Tokens, List<String> str2Tokens) {
+	public float compare(List<Object> str1Tokens, List<Object> str2Tokens) {
 
 		final int totalPossible = Math
 				.max(str1Tokens.size(), str2Tokens.size());
@@ -42,14 +42,12 @@ public class MatchingCoefficient implements TokenListMetric {
 	}
 
 	private static float getInnerUnNormalisedSimilarity(
-			final List<String> str1Tokens, final List<String> str2Tokens) {
+			final List<Object> str1Tokens, final List<Object> str2Tokens) {
 		int totalFound = 0;
 		for (Object str1Token : str1Tokens) {
-			final String sToken = (String) str1Token;
 			boolean found = false;
-			for (String str2Token : str2Tokens) {
-				final String tToken = str2Token;
-				if (sToken.equals(tToken)) {
+			for (Object str2Token : str2Tokens) {
+				if (str1Token.equals(str2Token)) {
 					found = true;
 				}
 			}

@@ -23,7 +23,7 @@ package org.simmetrics.metrics;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.simmetrics.TokenSetMetric;
+import org.simmetrics.SetMetric;
 
 /**
  * Implements the Jaccard Similarity algorithm providing a similarity measure
@@ -41,12 +41,12 @@ import org.simmetrics.TokenSetMetric;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class JaccardSimilarity implements TokenSetMetric {
+public final class JaccardSimilarity implements SetMetric<Object> {
 
 	@Override
-	public float compare(Set<String> str1Tokens, Set<String> str2Tokens) {
+	public float compare(Set<Object> str1Tokens, Set<Object> str2Tokens) {
 
-		final Set<String> allTokens = new HashSet<>();
+		final Set<Object> allTokens = new HashSet<>();
 		allTokens.addAll(str1Tokens);
 		allTokens.addAll(str2Tokens);
 

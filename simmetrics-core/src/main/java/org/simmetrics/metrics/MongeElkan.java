@@ -23,7 +23,7 @@ package org.simmetrics.metrics;
 import java.util.List;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.TokenListMetric;
+import org.simmetrics.ListMetric;
 
 /**
  * Implements the Monge Elkan algorithm providing an matching style similarity
@@ -32,7 +32,7 @@ import org.simmetrics.TokenListMetric;
  * @author Sam Chapman
  * @version 1.1
  */
-public class MongeElkan implements TokenListMetric {
+public class MongeElkan implements ListMetric<String> {
 
 	private final StringMetric metric;
 

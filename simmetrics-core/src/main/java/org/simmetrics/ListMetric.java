@@ -21,11 +21,11 @@
 
 package org.simmetrics;
 
-import java.util.Set;
+import java.util.List;
 
-public interface TokenSetMetric {
+public interface ListMetric<T> {
 	
-	public float compare(Set<String> a, Set<String> b);
+	public float compare(List<T> a, List<T> b);
 
 
 }

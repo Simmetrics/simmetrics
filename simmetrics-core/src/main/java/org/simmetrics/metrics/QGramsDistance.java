@@ -22,7 +22,7 @@ package org.simmetrics.metrics;
 
 import java.util.*;
 
-import org.simmetrics.TokenListMetric;
+import org.simmetrics.ListMetric;
 
 /**
  * Implements the Q Grams Distance algorithm providing a similarity measure
@@ -32,12 +32,11 @@ import org.simmetrics.TokenListMetric;
  * @author Sam Chapman
  * @version 1.1
  */
-public  class QGramsDistance implements TokenListMetric {
-
+public  class QGramsDistance implements ListMetric<Object> {
 
 
 	@Override
-	public float compare(List<String> str1Tokens, List<String> str2Tokens) {
+	public float compare(List<Object> str1Tokens, List<Object> str2Tokens) {
 
 
 		final int maxQGramsMatching = str1Tokens.size() + str2Tokens.size();
@@ -54,24 +53,24 @@ public  class QGramsDistance implements TokenListMetric {
 	
 
 	private static float getInnerUnNormalizedSimilarity(
-			final List<String> str1Tokens,
-			final List<String> str2Tokens) {
-		final Set<String> allTokens = new HashSet<>();
+			final List<Object> str1Tokens,
+			final List<Object> str2Tokens) {
+		final Set<Object> allTokens = new HashSet<>();
 		allTokens.addAll(str1Tokens);
 		allTokens.addAll(str2Tokens);
 
-		final Iterator<String> allTokensIt = allTokens.iterator();
+		final Iterator<Object> allTokensIt = allTokens.iterator();
 		int difference = 0;
 		while (allTokensIt.hasNext()) {
-			final String token = allTokensIt.next();
+			final Object token = allTokensIt.next();
 			int matchingQGrams1 = 0;
-			for (String str1Token : str1Tokens) {
+			for (Object str1Token : str1Tokens) {
 				if (str1Token.equals(token)) {
 					matchingQGrams1++;
 				}
 			}
 			int matchingQGrams2 = 0;
-			for (String str2Token : str2Tokens) {
+			for (Object str2Token : str2Tokens) {
 				if (str2Token.equals(token)) {
 					matchingQGrams2++;
 				}

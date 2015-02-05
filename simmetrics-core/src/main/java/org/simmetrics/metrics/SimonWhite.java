@@ -23,7 +23,7 @@ package org.simmetrics.metrics;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.simmetrics.TokenListMetric;
+import org.simmetrics.ListMetric;
 
 /**
  * Idea taken from <a
@@ -58,11 +58,12 @@ import org.simmetrics.TokenListMetric;
  * 
  * @author mpkorstanje
  */
-public class SimonWhite implements TokenListMetric {
+public class SimonWhite implements ListMetric<Object> {
 
-	public float compare(List<String> pairs1, List<String> b) {
+	@Override
+	public float compare(List<Object> pairs1, List<Object> b) {
 
-		ArrayList<String> pairs2 = new ArrayList<>(b);
+		ArrayList<Object> pairs2 = new ArrayList<>(b);
 		int union = pairs1.size() + pairs2.size();
 
 		if (union == 0) {
@@ -73,7 +74,7 @@ public class SimonWhite implements TokenListMetric {
 		// Elements are counted only once in both lists.
 		// E.g. the intersection of [ab,ab,ab] and [ab,ab,ac,ad] is [ab,ab].
 		int intersection = 0;
-		for (String pair : pairs1) {
+		for (Object pair : pairs1) {
 			if (pairs2.remove(pair)) {
 				intersection++;
 			}

@@ -42,6 +42,7 @@ public class ChapmanMeanLength implements StringMetric {
 	 */
 	final private static int CHAPMANMEANLENGTHMAXSTRING = 500;
 
+	@Override
 	public float compare(final String string1, final String string2) {
 		final float bothLengths = string2.length() + string1.length();
 		if (bothLengths > CHAPMANMEANLENGTHMAXSTRING) {

@@ -18,36 +18,14 @@
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.simmetrics.metrics;
 
-import org.simmetrics.StringMetric;
-import org.simmetrics.SetMetric;
-import org.simmetrics.simplifiers.Simplifier;
-import org.simmetrics.tokenizers.Tokenizer;
+package org.simmetrics;
 
-public final class CompositeTokenSetMetric implements StringMetric {
+import java.util.Set;
 
-	private final SetMetric metric;
-	private final Simplifier simplifier;
-	private final Tokenizer tokenizer;
+public interface SetMetric<T> {
+	
+	public float compare(Set<T> a, Set<T> b);
 
-	public CompositeTokenSetMetric(SetMetric metric,
-			Simplifier simplifier, Tokenizer tokenizer) {
-		super();
-		this.metric = metric;
-		this.simplifier = simplifier;
-		this.tokenizer = tokenizer;
-	}
-
-	@Override
-	public float compare(String a, String b) {
-		return metric.compare(tokenizer.tokenizeToSet(simplifier.simplify(a)),
-				tokenizer.tokenizeToSet(simplifier.simplify(b)));
-	}
-
-	@Override
-	public String toString() {
-		return metric +" [" + simplifier + " -> " + tokenizer + "]";
-	}
 
 }

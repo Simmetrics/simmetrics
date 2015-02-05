@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -21,7 +22,8 @@
 
 package org.simmetrics.tokenizers;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A simple whitespace tokenizer.
@@ -36,20 +38,11 @@ public final class WhitespaceTokenizer extends AbstractTokenizer {
 		return "WhitespaceTokenizer [" + delimiters + "]";
 	}
 
-	private final String delimiters = "\\s";
+	private final String delimiters = "\\s+";
 
 	@Override
-	public final ArrayList<String> tokenizeToList(final String input) {
-
-		final ArrayList<String> returnArrayList = new ArrayList<>();
-
-		for (String token : input.split(delimiters)) {
-			if (!token.isEmpty() && !token.matches(delimiters)) {
-				returnArrayList.add(token);
-			}
-		}
-
-		return returnArrayList;
+	public final List<String> tokenizeToList(final String input) {
+		return Arrays.asList(input.split(delimiters));
 	}
 
 }

@@ -33,24 +33,23 @@ import static java.lang.Math.pow;
  * space
  * 
  * @author Sam Chapman
- * @version 1.1
+ * @param <T>
+ *            type of the token
  */
 public class CosineSimilarity<T> implements SetMetric<T> {
 
 	@Override
-	public float compare(Set<T> str1Tokens, Set<T> str2Tokens) {
+	public float compare(Set<T> a, Set<T> b) {
 
-		final Set<Object> allTokens = new HashSet<>();
-		allTokens.addAll(str1Tokens);
-		allTokens.addAll(str2Tokens);
+		final Set<Object> all = new HashSet<>();
+		all.addAll(a);
+		all.addAll(b);
 
-		final int commonTerms = (str1Tokens.size() + str2Tokens.size())
-				- allTokens.size();
+		final int commonTerms = (a.size() + b.size())
+				- all.size();
 
-		// return CosineSimilarity
 		return (commonTerms)
-				/ (float) (pow(str1Tokens.size(), 0.5) * pow(str2Tokens.size(),
-						0.5));
+				/ (float) (pow(a.size(), 0.5) * pow(b.size(),0.5));
 	}
 
 	@Override

@@ -20,7 +20,7 @@
  */
 package org.simmetrics.metrics;
 
-import java.util.Collections;
+import static java.util.Collections.frequency;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,14 +35,17 @@ import static java.lang.Math.sqrt;
  * dimensions"
  *
  * @author Sam Chapman
- * @version 1.2
+ * @param <T>
+ *            type of the token
+ * 
  */
 public class EuclideanDistance<T> implements ListMetric<T> {
 
 	@Override
 	public float compare(List<T> a, List<T> b) {
 
-		float totalPossible = (float) Math.sqrt((a.size() * a.size()) + (b.size() * b.size()));
+		float totalPossible = (float) Math.sqrt((a.size() * a.size())
+				+ (b.size() * b.size()));
 		final float totalDistance = getEuclidianDistance(a, b);
 		return (totalPossible - totalDistance) / totalPossible;
 	}
@@ -55,8 +58,8 @@ public class EuclideanDistance<T> implements ListMetric<T> {
 
 		float totalDistance = 0.0f;
 		for (final T token : all) {
-			int frequencyInA = Collections.frequency(a, token);
-			int frequencyInB = Collections.frequency(b, token);
+			int frequencyInA = frequency(a, token);
+			int frequencyInB = frequency(b, token);
 
 			totalDistance += ((frequencyInA - frequencyInB) * (frequencyInA - frequencyInB));
 		}

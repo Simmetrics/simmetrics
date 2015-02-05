@@ -26,37 +26,36 @@ import java.util.List;
 import org.simmetrics.ListMetric;
 
 /**
- * Idea taken from <a
+ * Measures the similarity between two lists. Idea taken from <a
  * href="http://www.catalysoft.com/articles/StrikeAMatch.html">How to Strike a
- * Match</a>
+ * Match</a>.
  * 
- * The intention is that by considering adjacent characters I take account not
- * only of the characters, but also of the character ordering in the original
- * string, since each character pair contains a little information about the
- * original ordering." Let me explain the algorithm by comparing the two strings
- * 'France' and 'French'. First, I map them both to their upper case characters
- * (making the algorithm insensitive to case differences), then split them up
- * into their character pairs:" FRANCE: {FR, RA, AN, NC, CE}" FRENCH: {FR, RE,
- * EN, NC, CH}" Then I work out which character pairs are in both strings. In
- * this case the intersection is {FR, NC}. Now, I would like to express my
- * finding as a numeric metric that reflects the size of the intersection
- * relative to the sizes of the original strings. If pairs(x) is the function
- * that generates the pairs of adjacent letters in a string, then my numeric
- * metric of similarity is:" The similarity between two strings s1 and s2 is
- * twice the number of character pairs that are common to both strings divided
- * by the sum of the number of character pairs in the two strings. (The vertical
- * bars in the formula mean ?size of?.) Note that the formula rates completely
- * dissimilar strings with a similarity value of 0, since the size of the
- * letter-pair intersection in the numerator of the fraction will be zero. On
- * the other hand, if you compare a (non-empty) string to itself, then the
- * similarity is 1. For our comparison of 'FRANCE' and 'FRENCH', the metric is
- * computed as follows:" Given that the values of the metric always lie between
- * 0 and 1, it is also very natural to express these values as percentages. For
- * example, the similarity between 'FRANCE' and 'FRENCH' is 40%. From now on, I
- * will express similarity values as percentages rounded to the nearest whole
- * number.
+ * <p>
+ * <code>
+ * similarity(a,b) = 2 * |(a A b)|  / (|a| + |b|)
+ * </code>
+ * 
+ * <p>
+ * The A operation takes the list intersection of <code>a</code> and
+ * <code>b</code>. This is a list <code>c</code> such that each element in has a
+ * 1-to-1 relation to an element in both <code>a</code> and <code>b</code>. E.g.
+ * the list intersection of <code>[ab,ab,ab,ac]</code> and
+ * <code>[ab,ab,ad]</code> is <code>[ab,ab]</code>.
+ * 
+ * <p>
+ * This metric is very similar to Dice's coefficient however Simon White used
+ * the list intersection rather then the set intersection to prevent list of
+ * duplicates from scoring a perfect match against a list with single elements.
+ * E.g. 'GGGGG' should not be identical to 'GG'.
+ * 
+ * 
+ * 
+ * @see DiceSimilarity
  * 
  * @author mpkorstanje
+ * @param <T>
+ *            type of the token
+ * 
  */
 public class SimonWhite<T> implements ListMetric<T> {
 

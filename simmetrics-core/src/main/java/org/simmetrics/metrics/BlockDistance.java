@@ -20,7 +20,7 @@
  */
 package org.simmetrics.metrics;
 
-import java.util.Collections;
+import static java.util.Collections.frequency;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,10 +33,13 @@ import static java.lang.Math.abs;
  * Implements the Block distance algorithm whereby vector space block distance
  * between tokens is used to determine a similarity.
  * 
+ * Also known as L1 Distance or City block distance.
  * 
  * 
  * @author Sam Chapman
  * @version 1.1
+ * @param <T>
+ *            type of token
  */
 public class BlockDistance<T> implements ListMetric<T> {
 
@@ -61,8 +64,8 @@ public class BlockDistance<T> implements ListMetric<T> {
 
 		int totalDistance = 0;
 		for (T token : all) {
-			int frequencyInA = Collections.frequency(a, token);
-			int frequencyInB = Collections.frequency(b, token);
+			int frequencyInA = frequency(a, token);
+			int frequencyInB = frequency(b, token);
 
 			totalDistance += abs(frequencyInA - frequencyInB);
 		}

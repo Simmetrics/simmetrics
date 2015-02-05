@@ -32,7 +32,10 @@ import org.simmetrics.SetMetric;
  * 
  * overlap_coefficient(q,r) = (|q & r|) / min{|q|, |r|}.
  * 
- * @author Sam Chapman * @version 1.1
+ * @author Sam Chapman
+ * 
+ * @param <T>
+ *            type of the token
  */
 public final class OverlapCoefficient<T> implements SetMetric<T> {
 
@@ -54,7 +57,5 @@ public final class OverlapCoefficient<T> implements SetMetric<T> {
 	public String toString() {
 		return "OverlapCoefficient";
 	}
-	
-	
 
 }

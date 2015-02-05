@@ -37,10 +37,8 @@ public class MongeElkan implements ListMetric<String> {
 	private final StringMetric metric;
 
 	/**
-	 * Constructs a MongeElkan metric with the given tokenizer and metric.
-	 *
-	 * @param tokenizer
-	 *            tokenizer to use
+	 * Constructs a MongeElkan metric with metric.
+	 * 
 	 * @param metric
 	 *            metric to use
 	 */
@@ -48,15 +46,14 @@ public class MongeElkan implements ListMetric<String> {
 		this.metric = metric;
 	}
 
-
 	@Override
-	public float compare(List<String> str1Tokens, List<String> str2Tokens) {
+	public float compare(List<String> a, List<String> b) {
 
 		float sumMatches = 0.0f;
 		float maxFound;
-		for (String str1Token : str1Tokens) {
+		for (String str1Token : a) {
 			maxFound = 0.0f;
-			for (String str2Token : str2Tokens) {
+			for (String str2Token : b) {
 				final float found = metric.compare(str1Token, str2Token);
 				if (found > maxFound) {
 					maxFound = found;
@@ -64,14 +61,12 @@ public class MongeElkan implements ListMetric<String> {
 			}
 			sumMatches += maxFound;
 		}
-		return sumMatches / str1Tokens.size();
+		return sumMatches / a.size();
 	}
-
 
 	@Override
 	public String toString() {
 		return "MongeElkan [metric=" + metric + "]";
 	}
 
-	
 }

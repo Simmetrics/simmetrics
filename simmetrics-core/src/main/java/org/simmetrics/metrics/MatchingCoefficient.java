@@ -29,14 +29,16 @@ import org.simmetrics.ListMetric;
  * between two strings
  * 
  * @author Sam Chapman
- * @version 1.1
+ * 
+ * @param <T>
+ *            type of the token
+ * 
  */
 public class MatchingCoefficient<T> implements ListMetric<T> {
 	@Override
 	public float compare(List<T> str1Tokens, List<T> str2Tokens) {
 
-		final int totalPossible = Math
-				.max(str1Tokens.size(), str2Tokens.size());
+		final int totalPossible = Math.max(str1Tokens.size(), str2Tokens.size());
 		return getInnerUnNormalisedSimilarity(str1Tokens, str2Tokens)
 				/ totalPossible;
 	}
@@ -62,7 +64,5 @@ public class MatchingCoefficient<T> implements ListMetric<T> {
 	public String toString() {
 		return "MatchingCoefficient";
 	}
-	
-	
 
 }

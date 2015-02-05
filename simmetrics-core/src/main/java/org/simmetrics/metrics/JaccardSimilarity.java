@@ -39,7 +39,10 @@ import org.simmetrics.SetMetric;
  * 
  * 
  * @author Sam Chapman
- * @version 1.1
+ * 
+ * @param <T>
+ *            type of the token
+ * 
  */
 public final class JaccardSimilarity<T> implements SetMetric<T> {
 

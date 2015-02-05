@@ -86,7 +86,7 @@ public abstract class StringMetricTest {
 
 	@Test
 	public void testEmptyStrings() {
-		testSimilarity(metric, new T(1.0f, "", ""));
+		testSimilarity(metric, new T(1.0f, "", "")); 
 	}
 
 

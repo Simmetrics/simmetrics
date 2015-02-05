@@ -49,6 +49,14 @@ public class MongeElkan implements ListMetric<String> {
 	@Override
 	public float compare(List<String> a, List<String> b) {
 
+		if (a.isEmpty() && b.isEmpty()) {
+			return 1.0f;
+		}
+		
+		if (a.isEmpty() || b.isEmpty()) {
+			return 0.0f;
+		}
+		
 		float sumMatches = 0.0f;
 		float maxFound;
 		for (String str1Token : a) {

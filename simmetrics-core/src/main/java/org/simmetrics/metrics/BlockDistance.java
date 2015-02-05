@@ -46,16 +46,20 @@ public class BlockDistance<T> implements ListMetric<T> {
 	public float compare(List<T> a, List<T> b) {
 
 		if (a.isEmpty() && b.isEmpty()) {
+			return 1.0f;
+		}
+		
+		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
 
 		final float totalPossible = a.size() + b.size();
 
-		return (totalPossible - getInnerUnNormalizedSimilarity(a, b))
+		return (totalPossible - distance(a, b))
 				/ totalPossible;
 	}
 
-	private static <T> float getInnerUnNormalizedSimilarity(final List<T> a,
+	public float distance(final List<T> a,
 			final List<T> b) {
 		final Set<T> all = new HashSet<>();
 		all.addAll(a);

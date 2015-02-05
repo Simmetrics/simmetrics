@@ -47,17 +47,26 @@ import org.simmetrics.SetMetric;
 public final class JaccardSimilarity<T> implements SetMetric<T> {
 
 	@Override
-	public float compare(Set<T> str1Tokens, Set<T> str2Tokens) {
+	public float compare(Set<T> a, Set<T> b) {
 
-		final Set<T> allTokens = new HashSet<>();
-		allTokens.addAll(str1Tokens);
-		allTokens.addAll(str2Tokens);
 
-		final int commonTerms = (str1Tokens.size() + str2Tokens.size())
-				- allTokens.size();
+		if (a.isEmpty() && b.isEmpty()) {
+			return 1.0f;
+		}
+		
+		if (a.isEmpty() || b.isEmpty()) {
+			return 0.0f;
+		}
+		
+		final Set<T> all = new HashSet<>();
+		all.addAll(a);
+		all.addAll(b);
+
+		final int common = (a.size() + b.size())
+				- all.size();
 
 		// return JaccardSimilarity
-		return (float) (commonTerms) / (float) (allTokens.size());
+		return (float) (common) / (float) (all.size());
 	}
 
 	@Override

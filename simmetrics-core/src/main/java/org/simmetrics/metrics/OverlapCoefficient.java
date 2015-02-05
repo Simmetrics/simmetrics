@@ -40,17 +40,27 @@ import org.simmetrics.SetMetric;
 public final class OverlapCoefficient<T> implements SetMetric<T> {
 
 	@Override
-	public float compare(Set<T> str1Tokens, Set<T> str2Tokens) {
+	public float compare(Set<T> a, Set<T> b) {
 
+		if(a.isEmpty() && b.isEmpty()){
+			return 1.0f;
+		}
+		
+		if(a.isEmpty() || b.isEmpty()){
+			return 0.0f;
+		}
+		
+		
+		
 		final Set<T> allTokens = new HashSet<>();
-		allTokens.addAll(str1Tokens);
-		allTokens.addAll(str2Tokens);
+		allTokens.addAll(a);
+		allTokens.addAll(b);
 
 		// overlap_coefficient(q,r) = ( | q & r | ) / min{ | q | , | r | }.
-		final int commonTerms = (str1Tokens.size() + str2Tokens.size())
+		final int commonTerms = (a.size() + b.size())
 				- allTokens.size();
 		return (float) (commonTerms)
-				/ (float) Math.min(str1Tokens.size(), str2Tokens.size());
+				/ (float) Math.min(a.size(), b.size());
 	}
 
 	@Override

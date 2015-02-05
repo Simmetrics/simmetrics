@@ -44,6 +44,14 @@ public class EuclideanDistance<T> implements ListMetric<T> {
 	@Override
 	public float compare(List<T> a, List<T> b) {
 
+		if (a.isEmpty() && b.isEmpty()) {
+			return 1.0f;
+		}
+		
+		if (a.isEmpty() || b.isEmpty()) {
+			return 0.0f;
+		}
+		
 		float totalPossible = (float) Math.sqrt((a.size() * a.size())
 				+ (b.size() * b.size()));
 		final float totalDistance = getEuclidianDistance(a, b);

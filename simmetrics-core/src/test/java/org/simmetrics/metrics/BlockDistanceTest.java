@@ -21,6 +21,7 @@
 package org.simmetrics.metrics;
 
 import org.junit.Test;
+import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.BlockDistance;
 import org.simmetrics.tokenizers.QGram1Tokenizer;
@@ -29,35 +30,33 @@ import org.simmetrics.tokenizers.WhitespaceTokenizer;
 public class BlockDistanceTest extends StringMetricTest {
 
 	@Test
-	public void test() {
-		testSimilarity(
-				new StringMetricBuilder()
-						.setMetric(new BlockDistance<String>())
-						.setTokenizer(new WhitespaceTokenizer())
-						.build(),
-				new T[] {
-						new T(0.5000f, "test string1", "test string2"),
-						new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-						new T(0.7500f, "a b c d", "a b c e"),
-				});
-	}
-	
-	@Test
 	public void test2() {
 		testSimilarity(
-				new StringMetricBuilder()
-						.setMetric(new BlockDistance<String>())
+				new StringMetricBuilder().setMetric(new BlockDistance<String>())
 						.setTokenizer(new QGram1Tokenizer())
 						.build(),
-				new T[] {
-						new T(0.8333f, "Healed","Sealed"),
-						new T(0.6153f,"Healed","Healthy"),
-						new T(0.7272f,"Healed","Heard"),
-						new T(0.6666f,"Healed","Herded"),
-						new T(0.6000f,"Healed","Help"),
-						new T(0.4000f,"Healed","Sold"),
-						new T(0.6000f,"Healed","Help")
+				new T[] { new T(0.8333f, "Healed", "Sealed"),
+						new T(0.6153f, "Healed", "Healthy"),
+						new T(0.7272f, "Healed", "Heard"),
+						new T(0.6666f, "Healed", "Herded"),
+						new T(0.6000f, "Healed", "Help"),
+						new T(0.4000f, "Healed", "Sold"),
+						new T(0.6000f, "Healed", "Help")
 
 				});
+	}
+
+	@Override
+	protected StringMetric getMetric() {
+		return new StringMetricBuilder().setMetric(new BlockDistance<String>())
+				.setTokenizer(new WhitespaceTokenizer())
+				.build();
+	}
+
+	@Override
+	protected T[] getTests() {
+		return new T[] { new T(0.5000f, "test string1", "test string2"),
+				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+				new T(0.7500f, "a b c d", "a b c e"), };
 	}
 }

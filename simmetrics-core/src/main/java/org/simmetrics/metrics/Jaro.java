@@ -35,7 +35,16 @@ public  class Jaro implements StringMetric {
 
 	@Override
 	public float compare(final String string1, final String string2) {
-
+		
+		if (string1.isEmpty() && string2.isEmpty()) {
+			return 1.0f;
+		}
+		
+		if (string1.isEmpty() || string2.isEmpty()) {
+			return 0.0f;
+		}
+		
+		
 		// get half the length of the string rounded up - (this is the distance
 		// used for acceptable transpositions)
 		final int halflen = ((Math.min(string1.length(), string2.length())) / 2)

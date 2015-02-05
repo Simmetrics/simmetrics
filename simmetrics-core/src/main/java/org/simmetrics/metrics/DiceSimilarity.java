@@ -41,11 +41,19 @@ public class DiceSimilarity<T> implements SetMetric<T> {
 	@Override
 	public float compare(Set<T> a, Set<T> b) {
 
+		if (a.isEmpty() && b.isEmpty()) {
+			return 1.0f;
+		}
+
+		if (a.isEmpty() || b.isEmpty()) {
+			return 0.0f;
+		}
+
 		final Set<T> all = new HashSet<>();
 		all.addAll(a);
 		all.addAll(b);
 
-		final int commonTerms = (a.size() + b.size()) - all.size();
+		final int commonTerms = a.size() + b.size() - all.size();
 
 		// return Dices coefficient = (2*Common Terms) / (Number of distinct
 		// terms in String1 + Number of distinct terms in String2)

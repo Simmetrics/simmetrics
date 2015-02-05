@@ -62,6 +62,10 @@ public class SimonWhite<T> implements ListMetric<T> {
 	@Override
 	public float compare(List<T> a, List<T> b) {
 
+		if (a.isEmpty() && b.isEmpty()) {
+			return 1.0f;
+		}
+		
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}

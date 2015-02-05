@@ -41,6 +41,14 @@ public class CosineSimilarity<T> implements SetMetric<T> {
 	@Override
 	public float compare(Set<T> a, Set<T> b) {
 
+		if (a.isEmpty() && b.isEmpty()) {
+			return 1.0f;
+		}
+		
+		if (a.isEmpty() || b.isEmpty()) {
+			return 0.0f;
+		}
+		
 		final Set<Object> all = new HashSet<>();
 		all.addAll(a);
 		all.addAll(b);

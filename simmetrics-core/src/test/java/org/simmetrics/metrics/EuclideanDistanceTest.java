@@ -20,52 +20,87 @@
  */
 package org.simmetrics.metrics;
 
-import org.junit.Test;
+import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.EuclideanDistance;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
-
 public class EuclideanDistanceTest extends StringMetricTest {
 
-	@Test
-	public void test() {
-		testSimilarity(
-				new StringMetricBuilder().setMetric(new EuclideanDistance<String>())
-						.setTokenizer(new WhitespaceTokenizer()).build(), new T[] {
-				new T(0.5000f, "test string1","test string2"),
-				new T(0.7500f, "aaa bbb ccc ddd","aaa bbb ccc eee"),
-				new T(0.7500f, "a b c d","a b c e"),
-				new T(0.0000f, "Healed","Sealed"),
-				new T(0.0000f, "Healed","Healthy"),
-				new T(0.0000f, "Healed","Heard"),
-				new T(0.0000f, "Healed","Herded"),
-				new T(0.0000f, "Healed","Help"),
-				new T(0.0000f, "Healed","Sold"),
-				new T(0.0000f, "Healed","Help"),
-				new T(0.5286f, "Sam J Chapman","Samuel John Chapman"),
-				new T(0.5000f, "Sam Chapman","S Chapman"),
-				new T(0.5196f, "John Smith","Samuel John Chapman"),
-				new T(0.2929f, "John Smith","Sam Chapman"),
-				new T(0.3798f, "John Smith","Sam J Chapman"),
-				new T(0.2929f, "John Smith","S Chapman"),
-				new T(0.7374f, "Web Database Applications","Web Database Applications with PHP & MySQL"),
-				new T(0.7383f, "Web Database Applications","Creating Database Web Applications with PHP and ASP"),
-				new T(0.7383f, "Web Database Applications","Building Database Applications on the Web Using PHP3"),
-				new T(0.7383f, "Web Database Applications","Building Web Database Applications with Visual Studio 6"),
-				new T(0.5799f, "Web Database Applications","Web Application Development With PHP"),
-				new T(0.7630f, "Web Database Applications","WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
-				new T(0.6349f, "Web Database Applications","Structural Assessment: The Role of Large and Full-Scale Testing"),
-				new T(0.5528f, "Web Database Applications","How to Find a Scholarship Online"),
-				new T(0.6366f, "Web Aplications","Web Database Applications with PHP & MySQL"),
-				new T(0.6570f, "Web Aplications","Creating Database Web Applications with PHP and ASP"),
-				new T(0.6570f, "Web Aplications","Building Database Applications on the Web Using PHP3"),
-				new T(0.6570f, "Web Aplications","Building Web Database Applications with Visual Studio 6"),
-				new T(0.5848f, "Web Aplications","Web Application Development With PHP"),
-				new T(0.7259f, "Web Aplications","WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
-				new T(0.6403f, "Web Aplications","Structural Assessment: The Role of Large and Full-Scale Testing"),
-				new T(0.5528f, "Web Aplications","How to Find a Scholarship Online"),
-		});
+	@Override
+	protected StringMetric getMetric() {
+		return new StringMetricBuilder().setMetric(
+				new EuclideanDistance<String>())
+				.setTokenizer(new WhitespaceTokenizer())
+				.build();
+	}
+
+	@Override
+	protected T[] getTests() {
+		return new T[] {
+				new T(0.5000f, "test string1", "test string2"),
+				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+				new T(0.7500f, "a b c d", "a b c e"),
+				new T(0.0000f, "Healed", "Sealed"),
+				new T(0.0000f, "Healed", "Healthy"),
+				new T(0.0000f, "Healed", "Heard"),
+				new T(0.0000f, "Healed", "Herded"),
+				new T(0.0000f, "Healed", "Help"),
+				new T(0.0000f, "Healed", "Sold"),
+				new T(0.0000f, "Healed", "Help"),
+				new T(0.5286f, "Sam J Chapman", "Samuel John Chapman"),
+				new T(0.5000f, "Sam Chapman", "S Chapman"),
+				new T(0.5196f, "John Smith", "Samuel John Chapman"),
+				new T(0.2929f, "John Smith", "Sam Chapman"),
+				new T(0.3798f, "John Smith", "Sam J Chapman"),
+				new T(0.2929f, "John Smith", "S Chapman"),
+				new T(0.7374f,
+						"Web Database Applications",
+						"Web Database Applications with PHP & MySQL"),
+				new T(0.7383f,
+						"Web Database Applications",
+						"Creating Database Web Applications with PHP and ASP"),
+				new T(0.7383f,
+						"Web Database Applications",
+						"Building Database Applications on the Web Using PHP3"),
+				new T(0.7383f,
+						"Web Database Applications",
+						"Building Web Database Applications with Visual Studio 6"),
+				new T(0.5799f,
+						"Web Database Applications",
+						"Web Application Development With PHP"),
+				new T(0.7630f,
+						"Web Database Applications",
+						"WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
+				new T(0.6349f,
+						"Web Database Applications",
+						"Structural Assessment: The Role of Large and Full-Scale Testing"),
+				new T(0.5528f,
+						"Web Database Applications",
+						"How to Find a Scholarship Online"),
+				new T(0.6366f,
+						"Web Aplications",
+						"Web Database Applications with PHP & MySQL"),
+				new T(0.6570f,
+						"Web Aplications",
+						"Creating Database Web Applications with PHP and ASP"),
+				new T(0.6570f,
+						"Web Aplications",
+						"Building Database Applications on the Web Using PHP3"),
+				new T(0.6570f,
+						"Web Aplications",
+						"Building Web Database Applications with Visual Studio 6"),
+				new T(0.5848f,
+						"Web Aplications",
+						"Web Application Development With PHP"),
+				new T(0.7259f,
+						"Web Aplications",
+						"WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
+				new T(0.6403f,
+						"Web Aplications",
+						"Structural Assessment: The Role of Large and Full-Scale Testing"),
+				new T(0.5528f,
+						"Web Aplications",
+						"How to Find a Scholarship Online"), };
 	}
 }
-

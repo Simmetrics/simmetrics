@@ -58,12 +58,12 @@ import org.simmetrics.ListMetric;
  * 
  * @author mpkorstanje
  */
-public class SimonWhite implements ListMetric<Object> {
+public class SimonWhite<T> implements ListMetric<T> {
 
 	@Override
-	public float compare(List<Object> pairs1, List<Object> b) {
+	public float compare(List<T> pairs1, List<T> b) {
 
-		ArrayList<Object> pairs2 = new ArrayList<>(b);
+		List<T> pairs2 = new ArrayList<>(b);
 		int union = pairs1.size() + pairs2.size();
 
 		if (union == 0) {
@@ -74,7 +74,7 @@ public class SimonWhite implements ListMetric<Object> {
 		// Elements are counted only once in both lists.
 		// E.g. the intersection of [ab,ab,ab] and [ab,ab,ac,ad] is [ab,ab].
 		int intersection = 0;
-		for (Object pair : pairs1) {
+		for (T pair : pairs1) {
 			if (pairs2.remove(pair)) {
 				intersection++;
 			}

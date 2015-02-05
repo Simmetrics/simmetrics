@@ -45,7 +45,7 @@ public class StringMetricsTest {
 
 	private StringMetric metric = 
 			new StringMetricBuilder()
-				.setMetric(new SimonWhite())
+				.setMetric(new SimonWhite<String>())
 				.setTokenizer(new WordQGramTokenizer(new QGram2Tokenizer()))
 				.build();
 

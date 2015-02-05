@@ -76,14 +76,17 @@ public class CachingTokenizer implements TokenizingTokenizer {
 		return setCache;
 	}
 
+	@Override
 	public Tokenizer getTokenizer() {
 		return tokenizer;
 	}
 
+	@Override
 	public void setTokenizer(Tokenizer tokenizer) {
 		this.tokenizer = tokenizer;
 	}
 
+	@Override
 	public List<String> tokenizeToList(final String input) {
 
 		try {
@@ -95,6 +98,7 @@ public class CachingTokenizer implements TokenizingTokenizer {
 		}
 	}
 
+	@Override
 	public Set<String> tokenizeToSet(final String input) {
 		try {
 			// Return copy of set to preserve state of cached set. Callers

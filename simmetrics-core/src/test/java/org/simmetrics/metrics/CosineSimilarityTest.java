@@ -30,7 +30,7 @@ public class CosineSimilarityTest extends StringMetricTest {
 	@Test
 	public void test() {
 		testSimilarity(
-				new StringMetricBuilder().setMetric(new CosineSimilarity())
+				new StringMetricBuilder().setMetric(new CosineSimilarity<String>())
 						.setTokenizer(new WhitespaceTokenizer()).build(),
 				new T[] {
 						new T(0.5000f, "test string1", "test string2"),

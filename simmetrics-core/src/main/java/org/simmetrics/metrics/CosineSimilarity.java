@@ -35,10 +35,10 @@ import static java.lang.Math.pow;
  * @author Sam Chapman
  * @version 1.1
  */
-public class CosineSimilarity implements SetMetric<Object> {
+public class CosineSimilarity<T> implements SetMetric<T> {
 
 	@Override
-	public float compare(Set<Object> str1Tokens, Set<Object> str2Tokens) {
+	public float compare(Set<T> str1Tokens, Set<T> str2Tokens) {
 
 		final Set<Object> allTokens = new HashSet<>();
 		allTokens.addAll(str1Tokens);

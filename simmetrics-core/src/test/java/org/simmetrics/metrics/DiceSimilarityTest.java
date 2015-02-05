@@ -30,7 +30,7 @@ public class DiceSimilarityTest extends StringMetricTest {
 	@Test
 	public void test() {
 		testSimilarity(
-				new StringMetricBuilder().setMetric(new DiceSimilarity())
+				new StringMetricBuilder().setMetric(new DiceSimilarity<String>())
 						.setTokenizer(new WhitespaceTokenizer()).build(),
 				new T[] {
 				new T(0.5000f, "test string1","test string2"),

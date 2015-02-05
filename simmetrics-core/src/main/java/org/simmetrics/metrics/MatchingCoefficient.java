@@ -31,9 +31,9 @@ import org.simmetrics.ListMetric;
  * @author Sam Chapman
  * @version 1.1
  */
-public class MatchingCoefficient implements ListMetric<Object> {
+public class MatchingCoefficient<T> implements ListMetric<T> {
 	@Override
-	public float compare(List<Object> str1Tokens, List<Object> str2Tokens) {
+	public float compare(List<T> str1Tokens, List<T> str2Tokens) {
 
 		final int totalPossible = Math
 				.max(str1Tokens.size(), str2Tokens.size());
@@ -41,8 +41,8 @@ public class MatchingCoefficient implements ListMetric<Object> {
 				/ totalPossible;
 	}
 
-	private static float getInnerUnNormalisedSimilarity(
-			final List<Object> str1Tokens, final List<Object> str2Tokens) {
+	private static <T> float getInnerUnNormalisedSimilarity(
+			final List<T> str1Tokens, final List<T> str2Tokens) {
 		int totalFound = 0;
 		for (Object str1Token : str1Tokens) {
 			boolean found = false;

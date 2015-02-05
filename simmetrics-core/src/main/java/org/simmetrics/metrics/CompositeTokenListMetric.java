@@ -28,11 +28,11 @@ import org.simmetrics.tokenizers.Tokenizer;
 
 public final class CompositeTokenListMetric implements StringMetric {
 
-	private final ListMetric metric;
+	private final ListMetric<String> metric;
 	private final Simplifier simplifier;
 	private final Tokenizer tokenizer;
 
-	public CompositeTokenListMetric(ListMetric metric,
+	public CompositeTokenListMetric(ListMetric<String> metric,
 			Simplifier simplifier, Tokenizer tokenizer) {
 		super();
 		this.metric = metric;

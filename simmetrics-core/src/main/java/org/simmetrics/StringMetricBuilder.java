@@ -37,12 +37,12 @@ public class StringMetricBuilder {
 		return new SimplyfingMetricBuilder(metric);
 	}
 
-	public TokenListMetricBuilder setMetric(ListMetric<? super String> metric) {
+	public TokenListMetricBuilder setMetric(ListMetric<String> metric) {
 		return new TokenListMetricBuilder(metric);
 
 	}
 
-	public TokenSetMetricBuilder setMetric(SetMetric<? super String> metric) {
+	public TokenSetMetricBuilder setMetric(SetMetric<String> metric) {
 		return new TokenSetMetricBuilder(metric);
 
 	}
@@ -131,7 +131,8 @@ public class StringMetricBuilder {
 
 		public StringMetric build() {
 
-			Preconditions.checkNotNull(tokenizer,
+			Preconditions.checkNotNull(
+					tokenizer,
 					"A tokenizer must be set to build a tokenizing metric");
 
 			Simplifier simplifier = this.simplifier;
@@ -152,19 +153,19 @@ public class StringMetricBuilder {
 
 		}
 
-		protected abstract StringMetric build(T metric,
-				Simplifier simplifier, Tokenizer tokenizer);
+		protected abstract StringMetric build(T metric, Simplifier simplifier,
+				Tokenizer tokenizer);
 	}
 
 	public class TokenListMetricBuilder extends
-			TokenMetricBuilder<ListMetric<? super String>> {
+			TokenMetricBuilder<ListMetric<String>> {
 
-		public TokenListMetricBuilder(ListMetric<? super String> metric) {
+		public TokenListMetricBuilder(ListMetric<String> metric) {
 			super(metric);
 		}
 
 		@Override
-		protected StringMetric build(ListMetric<? super String> metric,
+		protected StringMetric build(ListMetric<String> metric,
 				Simplifier simplifier, Tokenizer tokenizer) {
 			return new CompositeTokenListMetric(metric, simplifier, tokenizer);
 		}
@@ -172,14 +173,14 @@ public class StringMetricBuilder {
 	}
 
 	public class TokenSetMetricBuilder extends
-			TokenMetricBuilder<SetMetric<? super String>> {
+			TokenMetricBuilder<SetMetric<String>> {
 
-		public TokenSetMetricBuilder(SetMetric<? super String> metric) {
+		public TokenSetMetricBuilder(SetMetric<String> metric) {
 			super(metric);
 		}
 
 		@Override
-		protected StringMetric build(SetMetric<? super String> metric,
+		protected StringMetric build(SetMetric<String> metric,
 				Simplifier simplifier, Tokenizer tokenizer) {
 			return new CompositeTokenSetMetric(metric, simplifier, tokenizer);
 		}

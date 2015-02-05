@@ -32,7 +32,7 @@ public class BlockDistanceTest extends StringMetricTest {
 	public void test() {
 		testSimilarity(
 				new StringMetricBuilder()
-						.setMetric(new BlockDistance())
+						.setMetric(new BlockDistance<String>())
 						.setTokenizer(new WhitespaceTokenizer())
 						.build(),
 				new T[] {
@@ -46,7 +46,7 @@ public class BlockDistanceTest extends StringMetricTest {
 	public void test2() {
 		testSimilarity(
 				new StringMetricBuilder()
-						.setMetric(new BlockDistance())
+						.setMetric(new BlockDistance<String>())
 						.setTokenizer(new QGram1Tokenizer())
 						.build(),
 				new T[] {

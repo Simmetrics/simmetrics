@@ -34,6 +34,7 @@ public final class CompositeStringMetric implements StringMetric {
 		this.simplifier = simplifier;
 	}
 
+	@Override
 	public float compare(String a, String b) {
 		return metric.compare(simplifier.simplify(a), simplifier.simplify(b));
 	}

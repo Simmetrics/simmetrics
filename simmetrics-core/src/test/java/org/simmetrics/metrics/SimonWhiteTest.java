@@ -32,7 +32,7 @@ public class SimonWhiteTest extends StringMetricTest {
 	public void test() {
 		testSimilarity(
 				new StringMetricBuilder()
-						.setMetric(new SimonWhite())
+						.setMetric(new SimonWhite<String>())
 						.setTokenizer(
 								new WordQGramTokenizer(new QGram2Tokenizer()))
 						.build(),

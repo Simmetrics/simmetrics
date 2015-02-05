@@ -91,6 +91,7 @@ public final class GenericStopTermHandler implements TermHandler {
 		wordSet.clear();
 	}
 
+	@Override
 	public boolean isWord(final String termToTest) {
 		return wordSet.contains(termToTest);
 	}

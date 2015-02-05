@@ -38,6 +38,7 @@ public abstract class CaseSimplifier implements Simplifier  {
 			locale = Locale.getDefault();
 		}
 
+		@Override
 		public String simplify(String s) {
 			return s.toLowerCase(locale);
 		}
@@ -62,6 +63,7 @@ public abstract class CaseSimplifier implements Simplifier  {
 			locale = Locale.getDefault();
 		}
 
+		@Override
 		public String simplify(String s) {
 			return s.toUpperCase(locale);
 		}

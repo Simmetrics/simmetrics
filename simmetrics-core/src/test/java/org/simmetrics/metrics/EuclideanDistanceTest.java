@@ -31,7 +31,7 @@ public class EuclideanDistanceTest extends StringMetricTest {
 	@Test
 	public void test() {
 		testSimilarity(
-				new StringMetricBuilder().setMetric(new EuclideanDistance())
+				new StringMetricBuilder().setMetric(new EuclideanDistance<String>())
 						.setTokenizer(new WhitespaceTokenizer()).build(), new T[] {
 				new T(0.5000f, "test string1","test string2"),
 				new T(0.7500f, "aaa bbb ccc ddd","aaa bbb ccc eee"),

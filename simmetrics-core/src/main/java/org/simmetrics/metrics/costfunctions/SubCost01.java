@@ -31,6 +31,7 @@ package org.simmetrics.metrics.costfunctions;
  */
 final public class SubCost01 extends AbstractSubstitutionCost {
 
+	@Override
 	public final float getCost(final String str1, final int string1Index,
 			final String str2, final int string2Index) {
 		if (str1.charAt(string1Index) == str2.charAt(string2Index)) {
@@ -40,10 +41,12 @@ final public class SubCost01 extends AbstractSubstitutionCost {
 		}
 	}
 
+	@Override
 	public final float getMaxCost() {
 		return 1.0f;
 	}
 
+	@Override
 	public final float getMinCost() {
 		return 0.0f;
 	}

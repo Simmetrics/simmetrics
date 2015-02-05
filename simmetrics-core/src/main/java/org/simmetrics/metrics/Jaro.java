@@ -33,6 +33,7 @@ import org.simmetrics.StringMetric;
 public  class Jaro implements StringMetric {
 
 
+	@Override
 	public float compare(final String string1, final String string2) {
 
 		// get half the length of the string rounded up - (this is the distance

@@ -29,7 +29,7 @@ public class JaccardSimilarityTest extends StringMetricTest {
 	@Test
 	public void test() {
 		testSimilarity(
-				new StringMetricBuilder().setMetric(new JaccardSimilarity())
+				new StringMetricBuilder().setMetric(new JaccardSimilarity<String>())
 						.setTokenizer(new WhitespaceTokenizer()).build(), new T[] {
 				new T(0.3333f, "test string1", "test string2"),
 				new T(0.6000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),

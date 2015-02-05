@@ -35,12 +35,12 @@ import org.simmetrics.SetMetric;
  * @author Sam Chapman
  * @version 1.1
  */
-public class DiceSimilarity implements SetMetric<Object> {
+public class DiceSimilarity<T> implements SetMetric<T> {
 
 	@Override
-	public float compare(Set<Object> str1Tokens, Set<Object> str2Tokens) {
+	public float compare(Set<T> str1Tokens, Set<T> str2Tokens) {
 
-		final Set<Object> allTokens = new HashSet<>();
+		final Set<T> allTokens = new HashSet<>();
 		allTokens.addAll(str1Tokens);
 		allTokens.addAll(str2Tokens);
 

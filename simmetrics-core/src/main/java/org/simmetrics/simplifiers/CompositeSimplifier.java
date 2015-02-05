@@ -31,6 +31,7 @@ public class CompositeSimplifier implements Simplifier {
 		this.simplifiers = simplifiers;
 	}
 
+	@Override
 	public String simplify(String input) {
 		for (Simplifier s : simplifiers) {
 			input = s.simplify(input);

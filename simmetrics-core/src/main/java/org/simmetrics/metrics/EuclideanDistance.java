@@ -36,10 +36,10 @@ import static java.lang.Math.sqrt;
  * @author Sam Chapman
  * @version 1.2
  */
-public class EuclideanDistance implements ListMetric<Object> {
+public class EuclideanDistance<T> implements ListMetric<T> {
 
 	@Override
-	public float compare(List<Object> str1Tokens, List<Object> str2Tokens) {
+	public float compare(List<T> str1Tokens, List<T> str2Tokens) {
 
 		float totalPossible = (float) Math.sqrt((str1Tokens.size() * str1Tokens
 				.size()) + (str2Tokens.size() * str2Tokens.size()));
@@ -47,8 +47,8 @@ public class EuclideanDistance implements ListMetric<Object> {
 		return (totalPossible - totalDistance) / totalPossible;
 	}
 
-	private static float getEuclidianDistance(final List<Object> str1Tokens,
-			final List<Object> str2Tokens) {
+	private static <T> float getEuclidianDistance(final List<T> str1Tokens,
+			final List<T> str2Tokens) {
 		final Set<Object> allTokens = new HashSet<>();
 		allTokens.addAll(str1Tokens);
 		allTokens.addAll(str2Tokens);

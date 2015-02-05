@@ -31,7 +31,7 @@ public class QGramsDistanceTest extends StringMetricTest {
 	@Test
 	public void test() {
 		testSimilarity(
-				new StringMetricBuilder().setMetric(new QGramsDistance())
+				new StringMetricBuilder().setMetric(new QGramsDistance<String>())
 						.setTokenizer(new QGram3ExtendedTokenizer()).build(), new T[] {
 				new T(0.7857f, "test string1", "test string2"),
 				new T(0.7059f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),

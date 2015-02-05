@@ -44,6 +44,7 @@ public class QGramTokenizer extends AbstractTokenizer {
 		return q;
 	}
 
+	@Override
 	public ArrayList<String> tokenizeToList(final String input) {
 		final ArrayList<String> ret = new ArrayList<>();
 

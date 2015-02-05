@@ -56,11 +56,13 @@ public class TermFilterTokenizer extends AbstractTokenizer {
 
 	private final Predicate<String> isWord = new Predicate<String>() {
 
+		@Override
 		public boolean apply(String input) {
 			return termHandler.isWord(input);
 		}
 	};
 
+	@Override
 	public ArrayList<String> tokenizeToList(String input) {
 		return new ArrayList<>(filter(tokenizer.tokenizeToList(input),
 				isWord));

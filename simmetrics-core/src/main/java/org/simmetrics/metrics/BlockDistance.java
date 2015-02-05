@@ -27,7 +27,6 @@ import java.util.Set;
 import org.simmetrics.ListMetric;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
-import com.google.common.collect.Sets;
 
 import static java.lang.Math.abs;
 
@@ -40,24 +39,25 @@ import static java.lang.Math.abs;
  * @author Sam Chapman
  * @version 1.1
  */
-public class BlockDistance implements ListMetric<Object> {
+public class BlockDistance<T> implements ListMetric<T> {
 
 	@Override
-	public float compare(List<Object> str1Tokens, List<Object> str2Tokens) {
+	public float compare(List<T> str1Tokens, List<T> str2Tokens) {
 
 		final float totalPossible = str1Tokens.size() + str2Tokens.size();
 
-		final float totalDistance = getInnerUnNormalizedSimilarity(str1Tokens,
+		final float totalDistance = getInnerUnNormalizedSimilarity(
+				str1Tokens,
 				str2Tokens);
 		return (totalPossible - totalDistance) / totalPossible;
 	}
 
-	private static float getInnerUnNormalizedSimilarity(
-			final List<Object> str1Tokens, final List<Object> str2Tokens) {
+	private static <T> float getInnerUnNormalizedSimilarity(
+			final List<T> str1Tokens, final List<T> str2Tokens) {
 		final Set<Object> allTokens = new HashSet<>();
 		allTokens.addAll(str1Tokens);
 		allTokens.addAll(str2Tokens);
-		
+
 		int totalDistance = 0;
 		for (Object token : allTokens) {
 			int countInString1 = 0;

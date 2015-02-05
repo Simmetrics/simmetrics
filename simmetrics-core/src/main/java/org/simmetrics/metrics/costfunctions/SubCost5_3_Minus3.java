@@ -92,6 +92,7 @@ public final class SubCost5_3_Minus3 extends AbstractSubstitutionCost {
 	 *            - the index within the string2 to test
 	 * @return the cost of a given subsitution d(i,j) as defined above
 	 */
+	@Override
 	public final float getCost(final String str1, final int string1Index,
 			final String str2, final int string2Index) {
 		// check within range
@@ -116,10 +117,12 @@ public final class SubCost5_3_Minus3 extends AbstractSubstitutionCost {
 		}
 	}
 
+	@Override
 	public final float getMaxCost() {
 		return CHAR_EXACT_MATCH_SCORE;
 	}
 
+	@Override
 	public final float getMinCost() {
 		return CHAR_MISMATCH_MATCH_SCORE;
 	}

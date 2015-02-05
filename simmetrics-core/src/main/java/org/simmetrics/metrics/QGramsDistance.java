@@ -32,12 +32,10 @@ import org.simmetrics.ListMetric;
  * @author Sam Chapman
  * @version 1.1
  */
-public  class QGramsDistance implements ListMetric<Object> {
-
+public class QGramsDistance<T> implements ListMetric<T> {
 
 	@Override
-	public float compare(List<Object> str1Tokens, List<Object> str2Tokens) {
-
+	public float compare(List<T> str1Tokens, List<T> str2Tokens) {
 
 		final int maxQGramsMatching = str1Tokens.size() + str2Tokens.size();
 
@@ -46,15 +44,13 @@ public  class QGramsDistance implements ListMetric<Object> {
 			return 0.0f;
 		} else {
 			return (maxQGramsMatching - getInnerUnNormalizedSimilarity(
-					str1Tokens, str2Tokens)) / maxQGramsMatching;
+					str1Tokens,
+					str2Tokens)) / maxQGramsMatching;
 		}
 	}
 
-	
-
-	private static float getInnerUnNormalizedSimilarity(
-			final List<Object> str1Tokens,
-			final List<Object> str2Tokens) {
+	private static <T> float getInnerUnNormalizedSimilarity(
+			final List<T> str1Tokens, final List<T> str2Tokens) {
 		final Set<Object> allTokens = new HashSet<>();
 		allTokens.addAll(str1Tokens);
 		allTokens.addAll(str2Tokens);
@@ -85,14 +81,9 @@ public  class QGramsDistance implements ListMetric<Object> {
 		return difference;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "QGramsDistance";
 	}
 
-
-
-	
 }

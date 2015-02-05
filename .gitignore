@@ -16,3 +16,4 @@
 /.project
 /.settings/
 /target/
+/simmetrics-taglink/*.classpath

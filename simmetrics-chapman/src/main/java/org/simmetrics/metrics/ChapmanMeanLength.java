@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -43,8 +44,12 @@ public class ChapmanMeanLength implements StringMetric {
 	final private static int CHAPMANMEANLENGTHMAXSTRING = 500;
 
 	@Override
-	public float compare(final String string1, final String string2) {
-		final float bothLengths = string2.length() + string1.length();
+	public float compare(final String a, final String b) {
+		if (a.isEmpty() && b.isEmpty()) {
+			return 1.0f;
+		}
+
+		final float bothLengths = b.length() + a.length();
 		if (bothLengths > CHAPMANMEANLENGTHMAXSTRING) {
 			return 1.0f;
 		} else {
@@ -58,7 +63,5 @@ public class ChapmanMeanLength implements StringMetric {
 	public String toString() {
 		return "ChapmanMeanLength";
 	}
-	
-	
 
 }

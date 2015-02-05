@@ -38,11 +38,19 @@ import org.simmetrics.StringMetric;
 public class ChapmanLengthDeviation implements StringMetric {
 
 	@Override
-	public float compare(final String string1, final String string2) {
-		if (string1.length() >= string2.length()) {
-			return (float) string2.length() / (float) string1.length();
+	public float compare(final String a, final String b) {
+		
+		if(a.isEmpty() && b.isEmpty()){
+			return 1.0f;
+		} else if(a.isEmpty() || b.isEmpty()){
+			return 0.0f;
+		}
+		
+		
+		if (a.length() >= b.length()) {
+			return (float) b.length() / (float) a.length();
 		} else {
-			return (float) string1.length() / (float) string2.length();
+			return (float) a.length() / (float) b.length();
 		}
 	}
 

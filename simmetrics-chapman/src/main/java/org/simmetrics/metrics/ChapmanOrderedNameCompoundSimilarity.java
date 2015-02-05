@@ -48,11 +48,16 @@ public class ChapmanOrderedNameCompoundSimilarity implements ListMetric<String> 
 	private final StringMetric metric2 = new SmithWaterman();
 
 	@Override
-	public float compare(List<String> str1Tokens, List<String> str2Tokens) {
+	public float compare(List<String> a, List<String> b) {
 
-		int str1TokenNum = str1Tokens.size();
-		int str2TokenNum = str2Tokens.size();
-		int minTokens = Math.min(str1TokenNum, str2TokenNum);
+		if(a.isEmpty() && b.isEmpty()){
+			return 1.0f;
+		} else if(a.isEmpty() || b.isEmpty()){
+			return 0.0f;
+		}
+
+
+		int minTokens = Math.min(a.size(), b.size());
 
 		float SKEW_AMMOUNT = 1.0f;
 
@@ -60,8 +65,8 @@ public class ChapmanOrderedNameCompoundSimilarity implements ListMetric<String> 
 		for (int i = 1; i <= minTokens; i++) {
 			float strWeightingAdjustment = ((1.0f / minTokens) + (((((minTokens - i) + 0.5f) - (minTokens / 2.0f)) / minTokens)
 					* SKEW_AMMOUNT * (1.0f / minTokens)));
-			final String sToken = str1Tokens.get(str1TokenNum - i);
-			final String tToken = str2Tokens.get(str2TokenNum - i);
+			final String sToken = a.get(a.size() - i);
+			final String tToken = b.get(b.size() - i);
 
 			final float found1 = metric1.compare(sToken, tToken);
 			final float found2 = metric2.compare(sToken, tToken);

@@ -43,11 +43,11 @@ public final class WordQGramTokenizer implements Tokenizer {
 
 	/**
 	 * Constructs a WordQGramTokenizer with a {@link WhitespaceTokenizer} as a
-	 * word tokenizer and {@link QGram2Tokenizer}. A string is broken up into
-	 * words by the word tokenizer. For each word q-grams are made.
+	 * word tokenizer and {@link QGramTokenizer} with Q=2. A string is broken up
+	 * into words by the word tokenizer. For each word q-grams are made.
 	 */
 	public WordQGramTokenizer() {
-		this(new WhitespaceTokenizer(), new QGram2Tokenizer());
+		this(new WhitespaceTokenizer(), QGramTokenizer.Q2);
 	}
 
 	/**

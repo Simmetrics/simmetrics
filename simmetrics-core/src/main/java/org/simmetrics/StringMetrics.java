@@ -39,8 +39,7 @@ import org.simmetrics.metrics.SmithWaterman;
 import org.simmetrics.metrics.SmithWatermanGotoh;
 import org.simmetrics.metrics.SmithWatermanGotohWindowedAffine;
 import org.simmetrics.simplifiers.SoundexSimplifier;
-import org.simmetrics.tokenizers.QGram2Tokenizer;
-import org.simmetrics.tokenizers.QGram3ExtendedTokenizer;
+import org.simmetrics.tokenizers.QGramExtendedTokenizer;
 import org.simmetrics.tokenizers.QGramTokenizer;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
@@ -228,11 +227,11 @@ public abstract class StringMetrics {
 
 	public static StringMetric qGramsDistance() {
 		return new StringMetricBuilder().setMetric(new BlockDistance<String>())
-				.setTokenizer(new QGram3ExtendedTokenizer()).build();
+				.setTokenizer(QGramExtendedTokenizer.Q3_EXTENDED).build();
 	}
 
 	public static StringMetric simonWhite() {
-		return simonWhite(new QGram2Tokenizer());
+		return simonWhite(QGramTokenizer.Q3);
 	}
 
 	public static StringMetric simonWhite(QGramTokenizer tokenizer) {

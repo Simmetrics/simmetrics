@@ -32,6 +32,11 @@ import com.google.common.base.Preconditions;
  *
  */
 public class QGramTokenizer extends AbstractTokenizer {
+	
+	public static final QGramTokenizer Q1 = new QGramTokenizer(1);
+	public static final QGramTokenizer Q2 = new QGramTokenizer(2);
+	public static final QGramTokenizer Q3 = new QGramTokenizer(3);
+	
 
 	private final int q;
 

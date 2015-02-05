@@ -11,28 +11,35 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.simmetrics.tokenizers;
 
-/**
- * Basic Q-Gram tokenizer for a Q of 3 .
- * 
- * @author mpkorstanje
- *
- */
-public final class QGram3Tokenizer extends QGramTokenizer   {
+import org.simmetrics.tokenizers.Tokenizer;
 
-	private static final int Q = 3;
+public class QGram1TokenizerTest extends TokenizerTest {
 
-	public QGram3Tokenizer() {
-		super(Q);
+	@Override
+	protected Tokenizer getTokenizer() {
+		return QGramTokenizer.Q1;
 	}
 
+	@Override
+	public T[] getTests() {
+
+		return new T[] {
+				new T("123456789",
+				// Expected output
+						"1", "2", "3", "4", "5", "6", "7", "8", "9"),
+				new T("123456789123456789",
+						// Expected output
+						"1", "2", "3", "4", "5", "6", "7", "8", "9", "1", "2",
+						"3", "4", "5", "6", "7", "8", "9") };
+	}
 }

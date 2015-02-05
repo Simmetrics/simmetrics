@@ -20,14 +20,13 @@
  */
 package org.simmetrics.tokenizers;
 
-import org.simmetrics.tokenizers.QGram2ExtendedTokenizer;
 import org.simmetrics.tokenizers.Tokenizer;
 
 public class QGram2ExtendedTokenizerTest extends TokenizerTest {
 
 	@Override
 	protected Tokenizer getTokenizer() {
-		return new QGram2ExtendedTokenizer();
+		return QGramExtendedTokenizer.Q2_EXTENDED;
 	}
 
 	@Override

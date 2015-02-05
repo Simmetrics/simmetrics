@@ -23,7 +23,7 @@ package org.simmetrics.example;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.*;
-import org.simmetrics.tokenizers.QGram2Tokenizer;
+import org.simmetrics.tokenizers.QGramTokenizer;
 
 /**
  * SimpleExample implements a simple example to demonstrate the ease to use a
@@ -49,7 +49,7 @@ public class StringMetricBuilderExample {
 
 		StringMetric metric = new StringMetricBuilder()
 				.setMetric(new CosineSimilarity<String>())
-				.setTokenizer(new QGram2Tokenizer()).build();
+				.setTokenizer(QGramTokenizer.Q2).build();
 
 		final float result = metric.compare(str1, str2);
 

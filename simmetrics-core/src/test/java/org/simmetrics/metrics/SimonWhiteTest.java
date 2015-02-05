@@ -23,7 +23,7 @@ package org.simmetrics.metrics;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.SimonWhite;
-import org.simmetrics.tokenizers.QGram2Tokenizer;
+import org.simmetrics.tokenizers.QGramTokenizer;
 import org.simmetrics.tokenizers.WordQGramTokenizer;
 
 public class SimonWhiteTest extends StringMetricTest {
@@ -31,7 +31,7 @@ public class SimonWhiteTest extends StringMetricTest {
 	@Override
 	protected StringMetric getMetric() {
 		return new StringMetricBuilder().setMetric(new SimonWhite<String>())
-				.setTokenizer(new WordQGramTokenizer(new QGram2Tokenizer()))
+				.setTokenizer(new WordQGramTokenizer(QGramTokenizer.Q2))
 				.build();
 	}
 

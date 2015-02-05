@@ -29,7 +29,7 @@ import org.simmetrics.metrics.CosineSimilarity;
 import org.simmetrics.simplifiers.CachingSimplifier;
 import org.simmetrics.simplifiers.CaseSimplifier;
 import org.simmetrics.tokenizers.CachingTokenizer;
-import org.simmetrics.tokenizers.QGram2Tokenizer;
+import org.simmetrics.tokenizers.QGramTokenizer;
 
 public class CacheExample {
 
@@ -42,7 +42,7 @@ public class CacheExample {
 		StringMetric metric = new StringMetricBuilder()
 				.setMetric(new CosineSimilarity<String>())
 				.setSimplifier(new CaseSimplifier.Lower())
-				.setTokenizer(new QGram2Tokenizer())
+				.setTokenizer(QGramTokenizer.Q2)
 				.setCache(new CachingTokenizer())
 				.setCache(new CachingSimplifier())
 				.build();

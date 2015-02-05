@@ -11,34 +11,34 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.simmetrics.tokenizers;
 
-import org.simmetrics.tokenizers.QGram3ExtendedTokenizer;
 import org.simmetrics.tokenizers.Tokenizer;
 
 public class QGram3ExtendedTokenizerTest extends TokenizerTest {
 
 	@Override
 	protected Tokenizer getTokenizer() {
-		return new QGram3ExtendedTokenizer();
+		return QGramExtendedTokenizer.Q3_EXTENDED;
 	}
 
 	@Override
 	public T[] getTests() {
 
 		return new T[] {
-				new T("12345678", 
-						"##1", "#12", "123", "234", "345", "456","567", "678", "78#", "8##"),
-						new T("123123", 
-								"##1", "#12", "123", "231", "312", "123","23#", "3##"),
-								
+				new T("12345678", "##1", "#12", "123", "234", "345", "456",
+						"567", "678", "78#", "8##"),
+				new T("123123", "##1", "#12", "123", "231", "312", "123",
+						"23#", "3##"),
+
 		};
 	}
 }

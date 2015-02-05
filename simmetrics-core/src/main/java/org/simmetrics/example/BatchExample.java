@@ -27,7 +27,7 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetrics;
 import org.simmetrics.metrics.CosineSimilarity;
 import org.simmetrics.simplifiers.CaseSimplifier;
-import org.simmetrics.tokenizers.QGram2Tokenizer;
+import org.simmetrics.tokenizers.QGramTokenizer;
 
 public class BatchExample {
 
@@ -40,7 +40,7 @@ public class BatchExample {
 		StringMetric metric = new StringMetricBuilder()
 				.setMetric(new CosineSimilarity<String>())
 				.setSimplifier(new CaseSimplifier.Lower())
-				.setTokenizer(new QGram2Tokenizer())
+				.setTokenizer(QGramTokenizer.Q2)
 				.build();
 
 		float[] scores = StringMetrics.compare(metric, name, names);

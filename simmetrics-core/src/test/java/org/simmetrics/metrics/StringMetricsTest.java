@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.SimonWhite;
-import org.simmetrics.tokenizers.QGram2Tokenizer;
+import org.simmetrics.tokenizers.QGramTokenizer;
 import org.simmetrics.tokenizers.WordQGramTokenizer;
 
 import static org.simmetrics.StringMetrics.*;
@@ -46,7 +46,7 @@ public class StringMetricsTest {
 	private StringMetric metric = 
 			new StringMetricBuilder()
 				.setMetric(new SimonWhite<String>())
-				.setTokenizer(new WordQGramTokenizer(new QGram2Tokenizer()))
+				.setTokenizer(new WordQGramTokenizer(QGramTokenizer.Q2))
 				.build();
 
 	@Test

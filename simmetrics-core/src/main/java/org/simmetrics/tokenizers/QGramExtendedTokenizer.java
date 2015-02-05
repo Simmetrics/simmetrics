@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -21,6 +22,8 @@
 package org.simmetrics.tokenizers;
 
 import java.util.ArrayList;
+
+import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 
 /**
@@ -32,18 +35,38 @@ import com.google.common.base.Strings;
  */
 public class QGramExtendedTokenizer extends QGramTokenizer {
 
-	private final String Q_GRAM_START_PADDING = "#";
-	private final String Q_GRAM_END_PADDING = "#";
+	public static final QGramExtendedTokenizer Q2_EXTENDED = new QGramExtendedTokenizer(
+			2);
+	public static final QGramExtendedTokenizer Q3_EXTENDED = new QGramExtendedTokenizer(
+			3);
+
+	private final static String DEFAULT_START_PADDING = "#";
+	private final static String DEFAULT_END_PADDING = "#";
 
 	private final String endPadding;
 	private final String startPadding;
 
-	public QGramExtendedTokenizer(int q) {
+	public QGramExtendedTokenizer(int q, String startPadding, String endPadding) {
 		super(q);
-		
-		this.startPadding = Strings.repeat(Q_GRAM_START_PADDING, q - 1);
-		this.endPadding = Strings.repeat(Q_GRAM_END_PADDING, q - 1);
+		Preconditions.checkArgument(!startPadding.isEmpty(),
+				"startPadding may not be empty");
+		Preconditions.checkArgument(!endPadding.isEmpty(),
+				"endPadding may not be empty");
 
+		this.startPadding = Strings.repeat(startPadding, q - 1);
+		this.endPadding = Strings.repeat(endPadding, q - 1);
+	}
+	
+	public String getStartPadding() {
+		return startPadding;
+	}
+	
+	public String getEndPadding() {
+		return endPadding;
+	}
+
+	public QGramExtendedTokenizer(int q) {
+		this(q, DEFAULT_START_PADDING, DEFAULT_END_PADDING);
 	}
 
 	@Override
@@ -53,7 +76,8 @@ public class QGramExtendedTokenizer extends QGramTokenizer {
 
 	@Override
 	public String toString() {
-		return "QGramExtendedTokenizer [q=" + getQ() + "]";
+		return "QGramExtendedTokenizer [endPadding=" + endPadding
+				+ ", startPadding=" + startPadding + ", q=" + getQ() + "]";
 	}
 
 }

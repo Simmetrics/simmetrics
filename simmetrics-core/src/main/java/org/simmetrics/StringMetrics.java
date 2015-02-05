@@ -239,20 +239,20 @@ public abstract class StringMetrics {
 				.setTokenizer(new WordQGramTokenizer(tokenizer)).build();
 	}
 
-	public static SmithWaterman smithWaterman() {
+	public static StringMetric smithWaterman() {
 		return new SmithWaterman();
 	}
 
-	public static SmithWatermanGotoh smithWatermanGotoh() {
+	public static StringMetric smithWatermanGotoh() {
 		return new SmithWatermanGotoh();
 	}
 
-	public static SmithWatermanGotohWindowedAffine smithWatermanGotohWindowedAffine() {
+	public static StringMetric smithWatermanGotohWindowedAffine() {
 		return new SmithWatermanGotohWindowedAffine();
 	}
 
 	public static StringMetric soundex() {
 		return new StringMetricBuilder().setMetric(new JaroWinkler())
-				.setSimplifier(new SoundexSimplifier()).build();
+				.addSimplifier(new SoundexSimplifier()).build();
 	}
 }

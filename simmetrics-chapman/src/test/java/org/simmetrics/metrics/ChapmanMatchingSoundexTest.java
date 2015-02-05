@@ -21,7 +21,6 @@
  */
 package org.simmetrics.metrics;
 
-import org.junit.Test;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.simplifiers.SoundexSimplifier;
@@ -35,7 +34,7 @@ public class ChapmanMatchingSoundexTest extends StringMetricTest {
 				.setMetric(
 						new MongeElkan(new StringMetricBuilder()
 								.setMetric(new JaroWinkler())
-								.setSimplifier(new SoundexSimplifier()).build()))
+								.addSimplifier(new SoundexSimplifier()).build()))
 				.setTokenizer(new WhitespaceTokenizer()).build();
 	}
 

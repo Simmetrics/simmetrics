@@ -44,7 +44,7 @@ public final class WhitespaceTokenizer extends AbstractTokenizer {
 		final ArrayList<String> returnArrayList = new ArrayList<>();
 
 		for (String token : input.split(delimiters)) {
-			if (!token.isEmpty()) {
+			if (!token.isEmpty() && !token.matches(delimiters)) {
 				returnArrayList.add(token);
 			}
 		}

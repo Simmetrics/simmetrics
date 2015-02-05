@@ -39,7 +39,7 @@ public class BatchExample {
 
 		StringMetric metric = new StringMetricBuilder()
 				.setMetric(new CosineSimilarity<String>())
-				.setSimplifier(new CaseSimplifier.Lower())
+				.addSimplifier(new CaseSimplifier.Lower())
 				.setTokenizer(QGramTokenizer.Q2)
 				.build();
 

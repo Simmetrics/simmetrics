@@ -11,18 +11,23 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.simmetrics;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.simmetrics.metrics.CompositeStringMetric;
 import org.simmetrics.metrics.CompositeTokenListMetric;
 import org.simmetrics.metrics.CompositeTokenSetMetric;
+import org.simmetrics.simplifiers.CompositeSimplifier;
 import org.simmetrics.simplifiers.PassThroughSimplifier;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.SimplifyingSimplifier;
@@ -51,7 +56,7 @@ public class StringMetricBuilder {
 
 		private final StringMetric metric;
 
-		private Simplifier simplifier = new PassThroughSimplifier();
+		private final List<Simplifier> simplifiers = new ArrayList<>();
 
 		private SimplifyingSimplifier stringCache;
 
@@ -60,9 +65,9 @@ public class StringMetricBuilder {
 			this.metric = metric;
 		}
 
-		public SimplyfingMetricBuilder setSimplifier(Simplifier simplifier) {
+		public SimplyfingMetricBuilder addSimplifier(Simplifier simplifier) {
 			Preconditions.checkNotNull(simplifier);
-			this.simplifier = simplifier;
+			this.simplifiers.add(simplifier);
 			return this;
 		}
 
@@ -73,12 +78,20 @@ public class StringMetricBuilder {
 		}
 
 		public StringMetric build() {
-			if (simplifier instanceof PassThroughSimplifier) {
+			if (simplifiers.isEmpty()) {
 				return metric;
 			}
 
-			Simplifier simplifier = this.simplifier;
+			Simplifier simplifier;
+			if (simplifiers.size() == 1) {
+				simplifier = simplifiers.get(0);
+			} else {
+				CompositeSimplifier composite = new CompositeSimplifier();
+				composite.setSimplifiers(simplifiers.toArray(new Simplifier[simplifiers.size()]));
+				simplifier  = composite;
+			}
 
+			
 			if (stringCache != null) {
 				stringCache.setSimplifier(simplifier);
 				simplifier = stringCache;
@@ -91,23 +104,23 @@ public class StringMetricBuilder {
 
 	public abstract class TokenMetricBuilder<T> {
 
-		protected final T metric;
+		private final T metric;
 
-		protected Simplifier simplifier = new PassThroughSimplifier();
+		private final List<Simplifier> simplifiers = new ArrayList<>();
 
-		protected Tokenizer tokenizer;
+		private Tokenizer tokenizer;
 
-		protected TokenizingTokenizer tokenCache;
+		private TokenizingTokenizer tokenCache;
 
-		protected SimplifyingSimplifier stringCache;
+		private SimplifyingSimplifier stringCache;
 
 		public TokenMetricBuilder(T metric) {
 			this.metric = metric;
 		}
 
-		public TokenMetricBuilder<T> setSimplifier(Simplifier simplifier) {
+		public TokenMetricBuilder<T> addSimplifier(Simplifier simplifier) {
 			Preconditions.checkNotNull(simplifier);
-			this.simplifier = simplifier;
+			this.simplifiers.add(simplifier);
 			return this;
 		}
 
@@ -131,11 +144,20 @@ public class StringMetricBuilder {
 
 		public StringMetric build() {
 
-			Preconditions.checkNotNull(
-					tokenizer,
+			Preconditions.checkNotNull(tokenizer,
 					"A tokenizer must be set to build a tokenizing metric");
 
-			Simplifier simplifier = this.simplifier;
+			
+			Simplifier simplifier;
+			if(simplifiers.isEmpty()){
+				simplifier = new PassThroughSimplifier();
+			} else if (simplifiers.size() == 1) {
+				simplifier = simplifiers.get(0);
+			} else {
+				CompositeSimplifier composite = new CompositeSimplifier();
+				composite.setSimplifiers(simplifiers.toArray(new Simplifier[simplifiers.size()]));
+				simplifier  = composite;
+			}
 
 			if (stringCache != null) {
 				stringCache.setSimplifier(simplifier);

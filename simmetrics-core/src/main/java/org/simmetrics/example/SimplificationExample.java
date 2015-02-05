@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -21,7 +22,11 @@
 package org.simmetrics.example;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.StringMetrics;
+import org.simmetrics.StringMetricBuilder;
+import org.simmetrics.metrics.CosineSimilarity;
+import org.simmetrics.simplifiers.CaseSimplifier;
+import org.simmetrics.simplifiers.NonWordCharacterSimplifier;
+import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
 /**
  * SimpleExample implements a simple example to demonstrate the ease to use a
@@ -29,7 +34,7 @@ import org.simmetrics.StringMetrics;
  * 
  * @author mpkorstanje
  */
-public class SimpleExample {
+public class SimplificationExample {
 
 	/**
 	 * Runs a simple example.
@@ -39,19 +44,23 @@ public class SimpleExample {
 	 */
 	public static void main(final String[] args) {
 
-		String str1 = "This is a sentence. It is made of words";
-		String str2 = "This sentence is similair. It has almost the same words";
+		// gets the two input given by the user
+		final String str1 = "This is a sentence. It is made of words";
+		final String str2 = "This sentence is similair. It has almost the same words";
 
-		StringMetric metric = StringMetrics.cosineSimilarity();
+		StringMetric metric = new StringMetricBuilder()
+				.setMetric(new CosineSimilarity<String>())
+				.addSimplifier(new CaseSimplifier.Lower())
+				.addSimplifier(new NonWordCharacterSimplifier())
+				.setTokenizer(new WhitespaceTokenizer())
+				.build();
 
-		float result = metric.compare(str1, str2); //0.4472
+		final float result = metric.compare(str1, str2); //0.5590
 
 		String message = "Using metric %s on strings \"%s\" & \"%s\" gives a similarity score of %.4f";
-		message = String.format(message,metric,
-				str1, str2, result);
+		message = String.format(message, metric, str1, str2, result);
 		System.out.println(message);
 
 	}
-
 
 }

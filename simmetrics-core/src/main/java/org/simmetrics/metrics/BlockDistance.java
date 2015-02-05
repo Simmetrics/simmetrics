@@ -35,7 +35,6 @@ import static java.lang.Math.abs;
  * 
  * Also known as L1 Distance or City block distance.
  * 
- * 
  * @author Sam Chapman
  * @version 1.1
  * @param <T>

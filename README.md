@@ -7,7 +7,14 @@ SimMetrics is based on the [SimMetrics Library](http://sourceforge.net/projects/
 
 ## Example ##
 
-TOOD:
+```
+	String str1 = "This is a sentence. It is made of words";
+	String str2 = "This sentence is similair. It has almost the same words";
+
+	StringMetric metric = StringMetrics.cosineSimilarity();
+
+	float result = metric.compare(str1, str2); //0.4472
+```
 
 ## Refactoring & Redesign ##
 
@@ -24,13 +31,40 @@ The goal is to support a general workflow that consists of simplification, token
 
 ### Simplification ###
 
-Simplification serves to map a a complex string `Chilpéric II son of Childeric II` to a simpler format `chilperic ii son of childeric ii`. This allows string from different sources to be compared in the same normal form.
+Simplfication increases the effectiveness of a metric by removing noise. The process maps a a complex string such as `Chilpéric II son of Childeric II` to a simpler format `chilperic ii son of childeric ii`. This allows string from different sources to be compared in the same normal form.
 
-In the current situation some algorithms apply their own simplification such as the removal of whitespace, non-diacritics, a-z characters, upper case, ect. Some apply none at all. This is done inconsistently between algorithms which is undesirable as between languages simplification is often non-trivial when dealing with languages that use characters outside of the a-z rnage. It also leaves the available character space in which the comparison is done implicit to the algorithm. 
+Custom simplification can added by implementing the Simplifier interface.
 
-To remedy these concerns it should be possible to set a simplifier that can take care of this. Language specific simplifiers may need to be developed by third-parties. 
+```
+	public class NonWordCharacterSimplifier implements Simplifier {
 
-On top the provided some algorithms may apply their own simplification again. This is okay for algorithms which rely on a specific language such as Soundex.
+		@Override
+		public String simplify(String input) {
+		    return input.replaceAll("\\W", " ");
+		}
+	}
+```
+
+A custom simplifier can be added onto any metric by using the StringMetricBuilder. Multiple simplifiers can be chained through the CompositeSimplifier.
+
+```
+	final String str1 = "This is a sentence. It is made of words";
+	final String str2 = "This sentence is similair. It has almost the same words";
+
+	StringMetric metric = new StringMetricBuilder()
+			.setMetric(new CosineSimilarity<String>())
+			.setSimplifier(new CompositeSimplifier() {
+				{
+					setSimplifiers(
+							new CaseSimplifier.Lower(),
+							new NonWordCharacterSimplifier());
+				}
+			})
+			.setTokenizer(new WhitespaceTokenizer())
+			.build();
+
+	final float result = metric.compare(str1, str2); //0.5590
+```
 
 ### Tokenization ###
 

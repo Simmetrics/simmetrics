@@ -20,11 +20,12 @@
  */
 package org.simmetrics.metrics;
 
+import static java.util.Collections.frequency;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.simmetrics.TokenListMetric;
+import org.simmetrics.ListMetric;
 
 import static java.lang.Math.sqrt;
 
@@ -34,41 +35,41 @@ import static java.lang.Math.sqrt;
  * dimensions"
  *
  * @author Sam Chapman
- * @version 1.2
+ * @param <T>
+ *            type of the token
+ * 
  */
-public class EuclideanDistance implements TokenListMetric {
+public class EuclideanDistance<T> implements ListMetric<T> {
 
 	@Override
-	public float compare(List<String> str1Tokens, List<String> str2Tokens) {
+	public float compare(List<T> a, List<T> b) {
 
-		float totalPossible = (float) Math.sqrt((str1Tokens.size() * str1Tokens
-				.size()) + (str2Tokens.size() * str2Tokens.size()));
-		final float totalDistance = getEuclidianDistance(str1Tokens, str2Tokens);
+		if (a.isEmpty() && b.isEmpty()) {
+			return 1.0f;
+		}
+		
+		if (a.isEmpty() || b.isEmpty()) {
+			return 0.0f;
+		}
+		
+		float totalPossible = (float) Math.sqrt((a.size() * a.size())
+				+ (b.size() * b.size()));
+		final float totalDistance = getEuclidianDistance(a, b);
 		return (totalPossible - totalDistance) / totalPossible;
 	}
 
-	private static float getEuclidianDistance(final List<String> str1Tokens,
-			final List<String> str2Tokens) {
-		final Set<String> allTokens = new HashSet<>();
-		allTokens.addAll(str1Tokens);
-		allTokens.addAll(str2Tokens);
+	private static <T> float getEuclidianDistance(final List<T> a,
+			final List<T> b) {
+		final Set<T> all = new HashSet<>();
+		all.addAll(a);
+		all.addAll(b);
 
 		float totalDistance = 0.0f;
-		for (final String token : allTokens) {
-			int countInString1 = 0;
-			int countInString2 = 0;
-			for (final String sToken : str1Tokens) {
-				if (sToken.equals(token)) {
-					countInString1++;
-				}
-			}
-			for (final String sToken : str2Tokens) {
-				if (sToken.equals(token)) {
-					countInString2++;
-				}
-			}
+		for (final T token : all) {
+			int frequencyInA = frequency(a, token);
+			int frequencyInB = frequency(b, token);
 
-			totalDistance += ((countInString1 - countInString2) * (countInString1 - countInString2));
+			totalDistance += ((frequencyInA - frequencyInB) * (frequencyInA - frequencyInB));
 		}
 
 		totalDistance = (float) sqrt(totalDistance);

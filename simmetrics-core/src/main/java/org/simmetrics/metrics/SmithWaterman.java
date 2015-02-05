@@ -98,6 +98,7 @@ public class SmithWaterman implements StringMetric {
 		costFunction = costFunc;
 	}
 
+	@Override
 	public float compare(final String string1, final String string2) {
 		final float smithWaterman = getUnNormalisedSimilarity(string1, string2);
 

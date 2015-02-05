@@ -19,10 +19,8 @@
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.simmetrics.metrics;
+package org.simmetrics.tokenizers;
 
-import org.simmetrics.tokenizers.CachingTokenizer;
-import org.simmetrics.tokenizers.Tokenizer;
 
 /**
  * Interface for metrics that use a {@link Tokenizer} to tokenize strings. These

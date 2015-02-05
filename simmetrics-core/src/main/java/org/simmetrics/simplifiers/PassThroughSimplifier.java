@@ -24,6 +24,7 @@ package org.simmetrics.simplifiers;
 
 public final class PassThroughSimplifier implements Simplifier{
 
+	@Override
 	public String simplify(String input) {
 		return input;
 	}

@@ -23,6 +23,8 @@ package org.simmetrics.tokenizers;
 
 import java.util.ArrayList;
 
+import com.google.common.base.Preconditions;
+
 /**
  * Basic Q-Gram tokenizer for a variable Q.
  * 
@@ -34,13 +36,15 @@ public class QGramTokenizer extends AbstractTokenizer {
 	private final int q;
 
 	public QGramTokenizer(int q) {
+		Preconditions.checkArgument(q > 0, "q must be greater then 0");
 		this.q = q;
 	}
-	
+
 	public int getQ() {
 		return q;
 	}
 
+	@Override
 	public ArrayList<String> tokenizeToList(final String input) {
 		final ArrayList<String> ret = new ArrayList<>();
 
@@ -50,8 +54,6 @@ public class QGramTokenizer extends AbstractTokenizer {
 
 		return ret;
 	}
-	
-
 
 	@Override
 	public String toString() {

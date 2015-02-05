@@ -40,6 +40,7 @@ public class JaroWinkler implements StringMetric {
 
 	private static final float PREFIXADUSTMENTSCALE = 0.1f;
 
+	@Override
 	public float compare(final String string1, final String string2) {
 		// gets normal Jaro Score
 		final float dist = jaro.compare(string1, string2);

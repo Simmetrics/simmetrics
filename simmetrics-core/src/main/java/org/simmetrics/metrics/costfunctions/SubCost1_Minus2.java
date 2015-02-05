@@ -31,6 +31,7 @@ package org.simmetrics.metrics.costfunctions;
  */
 public final class SubCost1_Minus2 extends AbstractSubstitutionCost {
 
+	@Override
 	public final float getCost(final String str1, final int string1Index,
 			final String str2, final int string2Index) {
 		// check within range
@@ -48,10 +49,12 @@ public final class SubCost1_Minus2 extends AbstractSubstitutionCost {
 		}
 	}
 
+	@Override
 	public final float getMaxCost() {
 		return 1.0f;
 	}
 
+	@Override
 	public final float getMinCost() {
 		return -2.0f;
 	}

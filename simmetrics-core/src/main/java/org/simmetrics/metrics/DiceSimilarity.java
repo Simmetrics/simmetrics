@@ -23,7 +23,7 @@ package org.simmetrics.metrics;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.simmetrics.TokenSetMetric;
+import org.simmetrics.SetMetric;
 
 /**
  * Implements the DiceSimilarity algorithm providing a similarity measure
@@ -33,23 +33,31 @@ import org.simmetrics.TokenSetMetric;
  * of tokens in String2).
  * 
  * @author Sam Chapman
- * @version 1.1
+ * @param <T>
+ *            type of the token
  */
-public class DiceSimilarity implements TokenSetMetric {
+public class DiceSimilarity<T> implements SetMetric<T> {
 
 	@Override
-	public float compare(Set<String> str1Tokens, Set<String> str2Tokens) {
+	public float compare(Set<T> a, Set<T> b) {
 
-		final Set<String> allTokens = new HashSet<>();
-		allTokens.addAll(str1Tokens);
-		allTokens.addAll(str2Tokens);
+		if (a.isEmpty() && b.isEmpty()) {
+			return 1.0f;
+		}
 
-		final int commonTerms = (str1Tokens.size() + str2Tokens.size())
-				- allTokens.size();
+		if (a.isEmpty() || b.isEmpty()) {
+			return 0.0f;
+		}
+
+		final Set<T> all = new HashSet<>();
+		all.addAll(a);
+		all.addAll(b);
+
+		final int commonTerms = a.size() + b.size() - all.size();
 
 		// return Dices coefficient = (2*Common Terms) / (Number of distinct
 		// terms in String1 + Number of distinct terms in String2)
-		return (2.0f * commonTerms) / (str1Tokens.size() + str2Tokens.size());
+		return (2.0f * commonTerms) / (a.size() + b.size());
 	}
 
 	@Override

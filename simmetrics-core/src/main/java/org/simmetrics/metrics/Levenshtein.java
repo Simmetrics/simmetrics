@@ -36,6 +36,7 @@ public class Levenshtein implements StringMetric {
 
 	private final AbstractSubstitutionCost costFunction = new SubCost01();
 
+	@Override
 	public float compare(final String string1, final String string2) {
 		final float levensteinDistance = getUnNormalisedSimilarity(string1,
 				string2);

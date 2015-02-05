@@ -22,7 +22,6 @@
 
 package org.simmetrics.tokenizers;
 
-import org.simmetrics.metrics.Tokenizing;
 
 public interface TokenizingTokenizer extends Tokenizing, Tokenizer {
 	// Empty: because composite interface

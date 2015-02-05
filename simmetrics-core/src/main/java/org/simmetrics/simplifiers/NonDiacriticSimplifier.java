@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 
 public class NonDiacriticSimplifier implements Simplifier {
 
+	@Override
 	public String simplify(String input) {
 		return DIACRITICS_AND_FRIENDS.matcher(
 				Normalizer.normalize(input, Normalizer.Form.NFD))

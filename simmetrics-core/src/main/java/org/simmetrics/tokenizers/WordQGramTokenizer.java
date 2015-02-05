@@ -87,6 +87,7 @@ public final class WordQGramTokenizer implements Tokenizer {
 		this.qGramTokenizer = qGramTokenizer;
 	}
 
+	@Override
 	public ArrayList<String> tokenizeToList(final String input) {
 		final ArrayList<String> returnArrayList = new ArrayList<>(
 				input.length());
@@ -102,6 +103,7 @@ public final class WordQGramTokenizer implements Tokenizer {
 		return returnArrayList;
 	}
 
+	@Override
 	public Set<String> tokenizeToSet(final String input) {
 
 		// tokenizeToArray is not reused here on purpose. Removing duplicate
@@ -120,6 +122,7 @@ public final class WordQGramTokenizer implements Tokenizer {
 		return returnSet;
 	}
 
+	@Override
 	public String toString() {
 
 		return getClass().getName() + " [" + wordTokenizer + ", "

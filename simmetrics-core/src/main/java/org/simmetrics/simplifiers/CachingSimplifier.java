@@ -22,8 +22,6 @@ package org.simmetrics.simplifiers;
 
 import java.util.concurrent.ExecutionException;
 
-import org.simmetrics.metrics.SimplifyingSimplifier;
-
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -53,6 +51,7 @@ public class CachingSimplifier implements SimplifyingSimplifier {
 		this.simplifier = simplifier;
 	}
 
+	@Override
 	public Simplifier getSimplifier() {
 		return simplifier;
 	}
@@ -62,6 +61,7 @@ public class CachingSimplifier implements SimplifyingSimplifier {
 		this.simplifier = simplifier;
 	}
 
+	@Override
 	public String simplify(String input) {
 		try {
 			return arrayCache.get(input);

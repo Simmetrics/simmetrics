@@ -23,7 +23,7 @@ package org.simmetrics.metrics;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.simmetrics.TokenSetMetric;
+import org.simmetrics.SetMetric;
 
 /**
  * Implements the Overlap Coefficient algorithm providing a similarity measure
@@ -32,29 +32,40 @@ import org.simmetrics.TokenSetMetric;
  * 
  * overlap_coefficient(q,r) = (|q & r|) / min{|q|, |r|}.
  * 
- * @author Sam Chapman * @version 1.1
+ * @author Sam Chapman
+ * 
+ * @param <T>
+ *            type of the token
  */
-public final class OverlapCoefficient implements TokenSetMetric {
+public final class OverlapCoefficient<T> implements SetMetric<T> {
 
 	@Override
-	public float compare(Set<String> str1Tokens, Set<String> str2Tokens) {
+	public float compare(Set<T> a, Set<T> b) {
 
-		final Set<String> allTokens = new HashSet<>();
-		allTokens.addAll(str1Tokens);
-		allTokens.addAll(str2Tokens);
+		if(a.isEmpty() && b.isEmpty()){
+			return 1.0f;
+		}
+		
+		if(a.isEmpty() || b.isEmpty()){
+			return 0.0f;
+		}
+		
+		
+		
+		final Set<T> allTokens = new HashSet<>();
+		allTokens.addAll(a);
+		allTokens.addAll(b);
 
 		// overlap_coefficient(q,r) = ( | q & r | ) / min{ | q | , | r | }.
-		final int commonTerms = (str1Tokens.size() + str2Tokens.size())
+		final int commonTerms = (a.size() + b.size())
 				- allTokens.size();
 		return (float) (commonTerms)
-				/ (float) Math.min(str1Tokens.size(), str2Tokens.size());
+				/ (float) Math.min(a.size(), b.size());
 	}
 
 	@Override
 	public String toString() {
 		return "OverlapCoefficient";
 	}
-	
-	
 
 }

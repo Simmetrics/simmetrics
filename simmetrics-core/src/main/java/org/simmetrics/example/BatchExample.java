@@ -38,7 +38,7 @@ public class BatchExample {
 		String name = "Gearldine Desanti";
 
 		StringMetric metric = new StringMetricBuilder()
-				.setMetric(new CosineSimilarity())
+				.setMetric(new CosineSimilarity<String>())
 				.setSimplifier(new CaseSimplifier.Lower())
 				.setTokenizer(new QGram2Tokenizer())
 				.build();

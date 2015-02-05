@@ -30,6 +30,7 @@ package org.simmetrics.metrics.costfunctions;
 public final class AffineGap5_1 extends AbstractAffineGapCost 
 		 {
 
+	@Override
 	public final float getCost(final String stringToGap,
 			final int stringIndexStartGap, final int stringIndexEndGap) {
 		if (stringIndexStartGap >= stringIndexEndGap) {
@@ -39,10 +40,12 @@ public final class AffineGap5_1 extends AbstractAffineGapCost
 		}
 	}
 
+	@Override
 	public final float getMaxCost() {
 		return Float.MAX_VALUE;
 	}
 
+	@Override
 	public final float getMinCost() {
 		return 0.0f;
 	}

@@ -23,9 +23,9 @@ package org.simmetrics;
 
 import java.util.List;
 
-public interface TokenListMetric {
+public interface ListMetric<T> {
 	
-	public float compare(List<String> a, List<String> b);
+	public float compare(List<T> a, List<T> b);
 
 
 }

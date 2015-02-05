@@ -23,9 +23,9 @@ package org.simmetrics;
 import org.simmetrics.metrics.CompositeStringMetric;
 import org.simmetrics.metrics.CompositeTokenListMetric;
 import org.simmetrics.metrics.CompositeTokenSetMetric;
-import org.simmetrics.metrics.SimplifyingSimplifier;
 import org.simmetrics.simplifiers.PassThroughSimplifier;
 import org.simmetrics.simplifiers.Simplifier;
+import org.simmetrics.simplifiers.SimplifyingSimplifier;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.TokenizingTokenizer;
 
@@ -37,12 +37,12 @@ public class StringMetricBuilder {
 		return new SimplyfingMetricBuilder(metric);
 	}
 
-	public TokenListMetricBuilder setMetric(TokenListMetric metric) {
+	public TokenListMetricBuilder setMetric(ListMetric<String> metric) {
 		return new TokenListMetricBuilder(metric);
 
 	}
 
-	public TokenSetMetricBuilder setMetric(TokenSetMetric metric) {
+	public TokenSetMetricBuilder setMetric(SetMetric<String> metric) {
 		return new TokenSetMetricBuilder(metric);
 
 	}
@@ -131,7 +131,8 @@ public class StringMetricBuilder {
 
 		public StringMetric build() {
 
-			Preconditions.checkNotNull(tokenizer,
+			Preconditions.checkNotNull(
+					tokenizer,
 					"A tokenizer must be set to build a tokenizing metric");
 
 			Simplifier simplifier = this.simplifier;
@@ -152,19 +153,19 @@ public class StringMetricBuilder {
 
 		}
 
-		protected abstract StringMetric build(T metric,
-				Simplifier simplifier, Tokenizer tokenizer);
+		protected abstract StringMetric build(T metric, Simplifier simplifier,
+				Tokenizer tokenizer);
 	}
 
 	public class TokenListMetricBuilder extends
-			TokenMetricBuilder<TokenListMetric> {
+			TokenMetricBuilder<ListMetric<String>> {
 
-		public TokenListMetricBuilder(TokenListMetric metric) {
+		public TokenListMetricBuilder(ListMetric<String> metric) {
 			super(metric);
 		}
 
 		@Override
-		protected StringMetric build(TokenListMetric metric,
+		protected StringMetric build(ListMetric<String> metric,
 				Simplifier simplifier, Tokenizer tokenizer) {
 			return new CompositeTokenListMetric(metric, simplifier, tokenizer);
 		}
@@ -172,14 +173,14 @@ public class StringMetricBuilder {
 	}
 
 	public class TokenSetMetricBuilder extends
-			TokenMetricBuilder<TokenSetMetric> {
+			TokenMetricBuilder<SetMetric<String>> {
 
-		public TokenSetMetricBuilder(TokenSetMetric metric) {
+		public TokenSetMetricBuilder(SetMetric<String> metric) {
 			super(metric);
 		}
 
 		@Override
-		protected StringMetric build(TokenSetMetric metric,
+		protected StringMetric build(SetMetric<String> metric,
 				Simplifier simplifier, Tokenizer tokenizer) {
 			return new CompositeTokenSetMetric(metric, simplifier, tokenizer);
 		}

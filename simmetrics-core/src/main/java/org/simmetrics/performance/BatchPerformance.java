@@ -78,7 +78,7 @@ public class BatchPerformance {
 
 	private static void testCompareUncached() {
 		StringMetric metric = new StringMetricBuilder()
-				.setMetric(new SimonWhite())
+				.setMetric(new SimonWhite<String>())
 				.setTokenizer(new WordQGramTokenizer(new QGram2Tokenizer()))
 				.build();
 
@@ -101,7 +101,7 @@ public class BatchPerformance {
 			
 		
 		StringMetric metric = new StringMetricBuilder()
-				.setMetric(new SimonWhite())
+				.setMetric(new SimonWhite<String>())
 				.setTokenizer(new WordQGramTokenizer(new QGram2Tokenizer()))
 				.setCache(new CachingTokenizer()).build();
 

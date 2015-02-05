@@ -49,6 +49,7 @@ public class SoundexSimplifier implements Simplifier {
 	 *            - the length of the soundex code to create
 	 * @return a soundex code for a given string/name
 	 */
+	@Override
 	public String simplify(String wordStr) {
 
 		// check for empty input

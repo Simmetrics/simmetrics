@@ -25,6 +25,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.simmetrics.StringMetric;
 
 public abstract class StringMetricTest {
@@ -44,40 +45,62 @@ public abstract class StringMetricTest {
 
 	static final float DEFAULT_DELTA = 0.0001f;
 	protected float delta;
+	protected StringMetric metric;
 
 	@Before
 	public void setUp() throws Exception {
 		delta = getDelta();
+		metric = getMetric();
 	}
 
 	protected float getDelta() {
 		return DEFAULT_DELTA;
 	}
 
-	public void testSimilarity(StringMetric metric, T[] tests) {
-		testToString(metric);
-		
+	protected abstract StringMetric getMetric();
+
+	protected abstract T[] getTests();
+
+	protected void testSimilarity(StringMetric metric, T... tests) {
+
 		for (T t : tests) {
 
 			float actuall = metric.compare(t.string1, t.string2);
-			assertTrue("Similarity must fall within [0.0 - 1.0] range",
-					0.0f <= actuall && actuall <= 1.0f);
 
-			String message = String.format("\"%s\" vs \"%s\"", t.string1,
+			assertTrue("Similarity " + actuall
+					+ " must fall within [0.0 - 1.0] range", 0.0f <= actuall
+					&& actuall <= 1.0f);
+
+			String message = String.format(
+					"\"%s\" vs \"%s\"",
+					t.string1,
 					t.string2);
 			assertEquals(message, t.similarity, actuall, delta);
 		}
 	}
 
-	public void testToString(StringMetric metric) {
+	@Test
+	public void testSimilarity() {
+		testSimilarity(metric, getTests());
+	}
+
+	@Test
+	public void testEmptyStrings() {
+		testSimilarity(metric, new T(1.0f, "", ""));
+	}
+
+
+
+	@Test
+	public void testToString() {
+
 		assertFalse(
 				"@ indicates toString() was not implemented "
 						+ metric.toString(),
-						metric.toString().contains("@"));
+				metric.toString().contains("@"));
 
 		assertToStringContains(metric, metric.getClass().getSimpleName());
 	}
-	
 
 	protected static void assertToStringContains(StringMetric tokenizer,
 			String content) {
@@ -86,12 +109,15 @@ public abstract class StringMetricTest {
 
 		assertTrue(message, message.contains(content));
 	}
-	
-	public void generateTest(StringMetric metric, T[] tests) {
-		for (T t : tests) {
+
+	public void generateTest() {
+		for (T t : getTests()) {
 			float actuall = metric.compare(t.string1, t.string2);
-			String message = String.format("new T(%.4ff, \"%s\", \"%s\"),",
-					actuall, t.string1, t.string2);
+			String message = String.format(
+					"new T(%.4ff, \"%s\", \"%s\"),",
+					actuall,
+					t.string1,
+					t.string2);
 			System.out.println(message);
 		}
 	}

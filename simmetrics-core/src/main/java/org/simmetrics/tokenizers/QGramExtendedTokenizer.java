@@ -46,6 +46,7 @@ public class QGramExtendedTokenizer extends QGramTokenizer {
 
 	}
 
+	@Override
 	public ArrayList<String> tokenizeToList(String input) {
 		return super.tokenizeToList(startPadding + input + endPadding);
 	}

@@ -19,31 +19,20 @@
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.simmetrics.simplifiers;
+package org.simmetrics.tokenizers;
 
-import static com.google.common.base.Joiner.on;
+/**
+ * Basic Q-Gram tokenizer for a Q of 1.
+ * 
+ * @author mpkorstanje
+ *
+ */
+public final class QGram1Tokenizer extends QGramTokenizer {
 
-public class CompositeSimplifier implements Simplifier {
+	private static final int Q = 1;
 
-	private Simplifier[] simplifiers;
-
-	public void setSimplifiers(Simplifier... simplifiers) {
-		this.simplifiers = simplifiers;
-	}
-
-	@Override
-	public String simplify(String input) {
-		for (Simplifier s : simplifiers) {
-			input = s.simplify(input);
-		}
-
-		return input;
-
-	}
-
-	@Override
-	public String toString() {
-		return on("->").join(simplifiers);
+	public QGram1Tokenizer() {
+		super(Q);
 	}
 
 }

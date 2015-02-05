@@ -22,17 +22,17 @@
 package org.simmetrics.metrics;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.TokenListMetric;
+import org.simmetrics.ListMetric;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.tokenizers.Tokenizer;
 
 public final class CompositeTokenListMetric implements StringMetric {
 
-	private final TokenListMetric metric;
+	private final ListMetric<String> metric;
 	private final Simplifier simplifier;
 	private final Tokenizer tokenizer;
 
-	public CompositeTokenListMetric(TokenListMetric metric,
+	public CompositeTokenListMetric(ListMetric<String> metric,
 			Simplifier simplifier, Tokenizer tokenizer) {
 		super();
 		this.metric = metric;

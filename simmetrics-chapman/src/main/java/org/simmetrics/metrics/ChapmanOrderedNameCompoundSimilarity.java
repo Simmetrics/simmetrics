@@ -24,7 +24,7 @@ import java.util.List;
 
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.StringMetric;
-import org.simmetrics.TokenListMetric;
+import org.simmetrics.ListMetric;
 import org.simmetrics.simplifiers.SoundexSimplifier;
 
 /**
@@ -38,7 +38,7 @@ import org.simmetrics.simplifiers.SoundexSimplifier;
  * @author Sam Chapman, NLP Group, Sheffield Uni, UK
  * 
  */
-public class ChapmanOrderedNameCompoundSimilarity implements TokenListMetric {
+public class ChapmanOrderedNameCompoundSimilarity implements ListMetric<String> {
 
 	private final StringMetric metric1 = new StringMetricBuilder()
 			.setMetric(new JaroWinkler())

@@ -20,6 +20,7 @@
  */
 package org.simmetrics.metrics;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,36 +40,25 @@ import static java.lang.Math.sqrt;
 public class EuclideanDistance<T> implements ListMetric<T> {
 
 	@Override
-	public float compare(List<T> str1Tokens, List<T> str2Tokens) {
+	public float compare(List<T> a, List<T> b) {
 
-		float totalPossible = (float) Math.sqrt((str1Tokens.size() * str1Tokens
-				.size()) + (str2Tokens.size() * str2Tokens.size()));
-		final float totalDistance = getEuclidianDistance(str1Tokens, str2Tokens);
+		float totalPossible = (float) Math.sqrt((a.size() * a.size()) + (b.size() * b.size()));
+		final float totalDistance = getEuclidianDistance(a, b);
 		return (totalPossible - totalDistance) / totalPossible;
 	}
 
-	private static <T> float getEuclidianDistance(final List<T> str1Tokens,
-			final List<T> str2Tokens) {
-		final Set<Object> allTokens = new HashSet<>();
-		allTokens.addAll(str1Tokens);
-		allTokens.addAll(str2Tokens);
+	private static <T> float getEuclidianDistance(final List<T> a,
+			final List<T> b) {
+		final Set<T> all = new HashSet<>();
+		all.addAll(a);
+		all.addAll(b);
 
 		float totalDistance = 0.0f;
-		for (final Object token : allTokens) {
-			int countInString1 = 0;
-			int countInString2 = 0;
-			for (final Object sToken : str1Tokens) {
-				if (sToken.equals(token)) {
-					countInString1++;
-				}
-			}
-			for (final Object sToken : str2Tokens) {
-				if (sToken.equals(token)) {
-					countInString2++;
-				}
-			}
+		for (final T token : all) {
+			int frequencyInA = Collections.frequency(a, token);
+			int frequencyInB = Collections.frequency(b, token);
 
-			totalDistance += ((countInString1 - countInString2) * (countInString1 - countInString2));
+			totalDistance += ((frequencyInA - frequencyInB) * (frequencyInA - frequencyInB));
 		}
 
 		totalDistance = (float) sqrt(totalDistance);

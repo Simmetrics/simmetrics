@@ -20,6 +20,7 @@
  */
 package org.simmetrics.metrics;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,14 +28,13 @@ import java.util.Set;
 import org.simmetrics.ListMetric;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
-
 import static java.lang.Math.abs;
 
 /**
  * Implements the Block distance algorithm whereby vector space block distance
  * between tokens is used to determine a similarity.
  * 
- * Uses the {@link WhitespaceTokenizer} by default.
+ * 
  * 
  * @author Sam Chapman
  * @version 1.1
@@ -42,39 +42,30 @@ import static java.lang.Math.abs;
 public class BlockDistance<T> implements ListMetric<T> {
 
 	@Override
-	public float compare(List<T> str1Tokens, List<T> str2Tokens) {
+	public float compare(List<T> a, List<T> b) {
 
-		final float totalPossible = str1Tokens.size() + str2Tokens.size();
+		if (a.isEmpty() && b.isEmpty()) {
+			return 0.0f;
+		}
 
-		final float totalDistance = getInnerUnNormalizedSimilarity(
-				str1Tokens,
-				str2Tokens);
-		return (totalPossible - totalDistance) / totalPossible;
+		final float totalPossible = a.size() + b.size();
+
+		return (totalPossible - getInnerUnNormalizedSimilarity(a, b))
+				/ totalPossible;
 	}
 
-	private static <T> float getInnerUnNormalizedSimilarity(
-			final List<T> str1Tokens, final List<T> str2Tokens) {
-		final Set<Object> allTokens = new HashSet<>();
-		allTokens.addAll(str1Tokens);
-		allTokens.addAll(str2Tokens);
+	private static <T> float getInnerUnNormalizedSimilarity(final List<T> a,
+			final List<T> b) {
+		final Set<T> all = new HashSet<>();
+		all.addAll(a);
+		all.addAll(b);
 
 		int totalDistance = 0;
-		for (Object token : allTokens) {
-			int countInString1 = 0;
-			int countInString2 = 0;
-			for (Object sToken : str1Tokens) {
-				if (sToken.equals(token)) {
-					countInString1++;
-				}
-			}
-			for (Object sToken : str2Tokens) {
-				if (sToken.equals(token)) {
-					countInString2++;
-				}
-			}
+		for (T token : all) {
+			int frequencyInA = Collections.frequency(a, token);
+			int frequencyInB = Collections.frequency(b, token);
 
-			totalDistance += abs(countInString1 - countInString2);
-
+			totalDistance += abs(frequencyInA - frequencyInB);
 		}
 		return totalDistance;
 	}

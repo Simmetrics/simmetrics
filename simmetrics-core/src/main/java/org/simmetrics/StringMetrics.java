@@ -34,7 +34,6 @@ import org.simmetrics.metrics.MatchingCoefficient;
 import org.simmetrics.metrics.MongeElkan;
 import org.simmetrics.metrics.NeedlemanWunch;
 import org.simmetrics.metrics.OverlapCoefficient;
-import org.simmetrics.metrics.QGramsDistance;
 import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.metrics.SmithWaterman;
 import org.simmetrics.metrics.SmithWatermanGotoh;
@@ -228,12 +227,8 @@ public abstract class StringMetrics {
 	}
 
 	public static StringMetric qGramsDistance() {
-		return qGramsDistance(new QGram3ExtendedTokenizer());
-	}
-
-	public static StringMetric qGramsDistance(QGramTokenizer tokenizer) {
-		return new StringMetricBuilder().setMetric(new QGramsDistance<String>())
-				.setTokenizer(tokenizer).build();
+		return new StringMetricBuilder().setMetric(new BlockDistance<String>())
+				.setTokenizer(new QGram3ExtendedTokenizer()).build();
 	}
 
 	public static StringMetric simonWhite() {

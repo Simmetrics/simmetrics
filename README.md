@@ -53,13 +53,8 @@ A custom simplifier can be added onto any metric by using the StringMetricBuilde
 
 	StringMetric metric = new StringMetricBuilder()
 			.setMetric(new CosineSimilarity<String>())
-			.setSimplifier(new CompositeSimplifier() {
-				{
-					setSimplifiers(
-							new CaseSimplifier.Lower(),
-							new NonWordCharacterSimplifier());
-				}
-			})
+			.addSimplifier(new NonWordCharacterSimplifier())
+			.addSimplifier(new CaseSimplifier.Lower())
 			.setTokenizer(new WhitespaceTokenizer())
 			.build();
 

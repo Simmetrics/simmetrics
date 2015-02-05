@@ -20,9 +20,8 @@
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.simmetrics.metrics;
+package org.simmetrics.simplifiers;
 
-import org.simmetrics.simplifiers.Simplifier;
 
 public interface SimplifyingSimplifier extends Simplifier, Simplifying {
 

@@ -23,9 +23,9 @@ package org.simmetrics;
 import org.simmetrics.metrics.CompositeStringMetric;
 import org.simmetrics.metrics.CompositeTokenListMetric;
 import org.simmetrics.metrics.CompositeTokenSetMetric;
-import org.simmetrics.metrics.SimplifyingSimplifier;
 import org.simmetrics.simplifiers.PassThroughSimplifier;
 import org.simmetrics.simplifiers.Simplifier;
+import org.simmetrics.simplifiers.SimplifyingSimplifier;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.TokenizingTokenizer;
 

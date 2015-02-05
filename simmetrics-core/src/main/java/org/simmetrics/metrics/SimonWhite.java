@@ -61,21 +61,23 @@ import org.simmetrics.ListMetric;
 public class SimonWhite<T> implements ListMetric<T> {
 
 	@Override
-	public float compare(List<T> pairs1, List<T> b) {
+	public float compare(List<T> a, List<T> b) {
 
-		List<T> pairs2 = new ArrayList<>(b);
-		int union = pairs1.size() + pairs2.size();
-
-		if (union == 0) {
+		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
+
+		// Copy for destructive list difference
+		b = new ArrayList<>(b);
+		int union = a.size() + b.size();
 
 		// Count elements in the list intersection.
 		// Elements are counted only once in both lists.
 		// E.g. the intersection of [ab,ab,ab] and [ab,ab,ac,ad] is [ab,ab].
+		// Note: this is not the same as b.retainAll(a).size()
 		int intersection = 0;
-		for (T pair : pairs1) {
-			if (pairs2.remove(pair)) {
+		for (T token : a) {
+			if (b.remove(token)) {
 				intersection++;
 			}
 		}

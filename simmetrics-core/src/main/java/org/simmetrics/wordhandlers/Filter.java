@@ -27,7 +27,7 @@ package org.simmetrics.wordhandlers;
  * @author Sam Chapman
  * @version 1.1
  */
-public interface TermHandler {
+public interface Filter {
 
 	/**
 	 * Determines if a given term is a word or not.

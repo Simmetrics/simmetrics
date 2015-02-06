@@ -32,7 +32,7 @@ import java.util.Set;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class GenericStopTermHandler implements TermHandler {
+public final class GenericStopTermHandler implements Filter {
 
 	/**
 	 * The word set the stop word handler uses.

@@ -26,51 +26,35 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.simmetrics.wordhandlers.GenericStopTermHandler;
-import org.simmetrics.wordhandlers.TermHandler;
-
 import com.google.common.base.Predicate;
 
 import static com.google.common.collect.Collections2.filter;
 
-public class TermFilterTokenizer extends AbstractTokenizer {
+public class TokenFilter implements Tokenizer {
 
-	private Tokenizer tokenizer = new WhitespaceTokenizer();
+	private final Tokenizer tokenizer;
 
-	private TermHandler termHandler = new GenericStopTermHandler();
+	private final Predicate<String> filter;
 
-	public TermHandler getTermHandler() {
-		return termHandler;
-	}
-
-	public void setTermHandler(TermHandler termHandler) {
-		this.termHandler = termHandler;
-	}
-
-	public Tokenizer getTokenizer() {
-		return tokenizer;
-	}
-
-	public void setTokenizer(Tokenizer tokenizer) {
+	public TokenFilter(Tokenizer tokenizer, Predicate<String> filter) {
+		super();
 		this.tokenizer = tokenizer;
+		this.filter = filter;
 	}
-
-	private final Predicate<String> isWord = new Predicate<String>() {
-
-		@Override
-		public boolean apply(String input) {
-			return termHandler.isWord(input);
-		}
-	};
 
 	@Override
 	public ArrayList<String> tokenizeToList(String input) {
-		return new ArrayList<>(filter(tokenizer.tokenizeToList(input), isWord));
+		return new ArrayList<>(filter(tokenizer.tokenizeToList(input), filter));
 	}
 
 	@Override
 	public Set<String> tokenizeToSet(String input) {
-		return new HashSet<>(filter(tokenizer.tokenizeToSet(input), isWord));
+		return new HashSet<>(filter(tokenizer.tokenizeToSet(input), filter));
+	}
+
+	@Override
+	public String toString() {
+		return tokenizer + "->" + filter;
 	}
 
 }

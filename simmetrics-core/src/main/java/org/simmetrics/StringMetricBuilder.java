@@ -31,10 +31,12 @@ import org.simmetrics.simplifiers.CompositeSimplifier;
 import org.simmetrics.simplifiers.PassThroughSimplifier;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.SimplifyingSimplifier;
+import org.simmetrics.tokenizers.TokenFilter;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.TokenizingTokenizer;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Predicate;
 
 public class StringMetricBuilder {
 
@@ -87,11 +89,11 @@ public class StringMetricBuilder {
 				simplifier = simplifiers.get(0);
 			} else {
 				CompositeSimplifier composite = new CompositeSimplifier();
-				composite.setSimplifiers(simplifiers.toArray(new Simplifier[simplifiers.size()]));
-				simplifier  = composite;
+				composite.setSimplifiers(simplifiers
+						.toArray(new Simplifier[simplifiers.size()]));
+				simplifier = composite;
 			}
 
-			
 			if (stringCache != null) {
 				stringCache.setSimplifier(simplifier);
 				simplifier = stringCache;
@@ -113,6 +115,8 @@ public class StringMetricBuilder {
 		private TokenizingTokenizer tokenCache;
 
 		private SimplifyingSimplifier stringCache;
+
+		private Predicate<String> tokenFilter;
 
 		public TokenMetricBuilder(T metric) {
 			this.metric = metric;
@@ -142,21 +146,27 @@ public class StringMetricBuilder {
 			return this;
 		}
 
+		public TokenMetricBuilder<T> filter(
+				Predicate<String> tokenFilter) {
+			this.tokenFilter = tokenFilter;
+			return this;
+		}
+
 		public StringMetric build() {
 
 			Preconditions.checkNotNull(tokenizer,
 					"A tokenizer must be set to build a tokenizing metric");
 
-			
 			Simplifier simplifier;
-			if(simplifiers.isEmpty()){
+			if (simplifiers.isEmpty()) {
 				simplifier = new PassThroughSimplifier();
 			} else if (simplifiers.size() == 1) {
 				simplifier = simplifiers.get(0);
 			} else {
 				CompositeSimplifier composite = new CompositeSimplifier();
-				composite.setSimplifiers(simplifiers.toArray(new Simplifier[simplifiers.size()]));
-				simplifier  = composite;
+				composite.setSimplifiers(simplifiers
+						.toArray(new Simplifier[simplifiers.size()]));
+				simplifier = composite;
 			}
 
 			if (stringCache != null) {
@@ -165,6 +175,10 @@ public class StringMetricBuilder {
 			}
 
 			Tokenizer tokenizer = this.tokenizer;
+
+			if (tokenFilter != null) {
+				tokenizer = new TokenFilter(tokenizer, tokenFilter);
+			}
 
 			if (tokenCache != null) {
 				tokenCache.setTokenizer(tokenizer);

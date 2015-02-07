@@ -1,4 +1,4 @@
-package org.simmetrics.builder;
+package org.simmetrics;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +12,8 @@ import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.SimplifyingSimplifier;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.utils.TokenizingTokenizer;
+
+import com.google.common.base.Predicate;
 
 public class StringMetricBuilderTest {
 
@@ -35,6 +37,9 @@ public class StringMetricBuilderTest {
 
 	@Mock
 	private Tokenizer tokenizer;
+	
+	@Mock
+	private Predicate<String> predicate;
 
 	@Test
 	public void testStringMetric01() {
@@ -84,6 +89,15 @@ public class StringMetricBuilderTest {
 		StringMetric composed = new StringMetricBuilder()
 				.with(listMetric)
 				.tokenize(tokenizer)
+				.build();
+	}
+	
+	@Test
+	public void testListMetricWithFilter() {
+		StringMetric composed = new StringMetricBuilder()
+				.with(listMetric)
+				.tokenize(tokenizer)
+				.filter(predicate)
 				.build();
 	}
 	
@@ -160,6 +174,15 @@ public class StringMetricBuilderTest {
 		StringMetric composed = new StringMetricBuilder()
 				.with(setMetric)
 				.tokenize(tokenizer)
+				.build();
+	}
+	
+	@Test
+	public void testSetMetricWithFilter() {
+		StringMetric composed = new StringMetricBuilder()
+				.with(setMetric)
+				.tokenize(tokenizer)
+				.filter(predicate)
 				.build();
 	}
 	

@@ -8,28 +8,25 @@ import java.util.Set;
 
 import org.simmetrics.tokenizers.Tokenizer;
 
+import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 
 public final class FilteringTokenizer implements Tokenizer {
 
-	private Tokenizer tokenizer;
+	private final Tokenizer tokenizer;
 
 	private final Predicate<String> filter;
 
-	FilteringTokenizer(Predicate<String> filter) {
-		super();
-		this.filter = filter;
-	}
-
-	public void setTokenizer(Tokenizer tokenizer) {
+	public FilteringTokenizer(Tokenizer tokenizer, Predicate<String> predicate) {
+		Preconditions.checkNotNull(predicate);
+		this.filter = predicate;
 		this.tokenizer = tokenizer;
 	}
 
 	@Override
 	public ArrayList<String> tokenizeToList(String input) {
-		return new ArrayList<>(filter(tokenizer.tokenizeToList(input),
-				filter));
+		return new ArrayList<>(filter(tokenizer.tokenizeToList(input), filter));
 	}
 
 	@Override

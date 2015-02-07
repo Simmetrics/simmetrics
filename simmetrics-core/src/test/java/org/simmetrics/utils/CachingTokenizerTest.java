@@ -18,12 +18,13 @@
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.simmetrics.tokenizers;
+package org.simmetrics.utils;
 
 import java.util.Arrays;
 import java.util.Collections;
 
 import org.simmetrics.tokenizers.Tokenizer;
+import org.simmetrics.tokenizers.TokenizerTest;
 import org.simmetrics.utils.CachingTokenizer;
 
 import static org.mockito.Mockito.*;

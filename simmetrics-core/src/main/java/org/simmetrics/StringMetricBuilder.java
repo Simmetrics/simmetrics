@@ -35,10 +35,13 @@ import org.simmetrics.utils.CompositeSimplifier;
 import org.simmetrics.utils.CompositeStringMetric;
 import org.simmetrics.utils.CompositeTokenListMetric;
 import org.simmetrics.utils.CompositeTokenSetMetric;
+import org.simmetrics.utils.FilteringTokenizer;
 import org.simmetrics.utils.RecurisveTokenizer;
 import org.simmetrics.utils.TokenizingTokenizer;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 
 /**
  * Convenience tool to build string metrics.
@@ -112,8 +115,8 @@ public class StringMetricBuilder {
 	 *            the metric to use as a base
 	 * @return a builder for fluent chaining
 	 */
-	public StringMetricBldr with(StringMetric metric) {
-		return new StringMetricBldr(metric);
+	public CompositeStringMetricBuilder with(StringMetric metric) {
+		return new CompositeStringMetricBuilder(metric);
 	}
 
 	/**
@@ -123,8 +126,8 @@ public class StringMetricBuilder {
 	 *            the metric to use as a base
 	 * @return a builder for fluent chaining
 	 */
-	public TokenListMetricBldr with(ListMetric<String> metric) {
-		return new TokenListMetricBldr(metric);
+	public CompositeListMetricBuilder with(ListMetric<String> metric) {
+		return new CompositeListMetricBuilder(metric);
 
 	}
 
@@ -135,8 +138,8 @@ public class StringMetricBuilder {
 	 *            the metric to use as a base
 	 * @return a builder for fluent chaining
 	 */
-	public TokenSetMetricBldr with(SetMetric<String> metric) {
-		return new TokenSetMetricBldr(metric);
+	public CompositeSetMetricBuilder with(SetMetric<String> metric) {
+		return new CompositeSetMetricBuilder(metric);
 
 	}
 
@@ -166,9 +169,9 @@ public class StringMetricBuilder {
 
 	}
 
-	public final class StringMetricBldr extends SimplyfingBuilder<StringMetric> {
+	public final class CompositeStringMetricBuilder extends SimplyfingBuilder<StringMetric> {
 
-		public StringMetricBldr(StringMetric metric) {
+		public CompositeStringMetricBuilder(StringMetric metric) {
 			super(metric);
 		}
 
@@ -194,11 +197,11 @@ public class StringMetricBuilder {
 
 	}
 
-	public abstract class TokenMetricBuilder<T> extends SimplyfingBuilder<T> {
+	public abstract class CollectionMetricBuilder<T> extends SimplyfingBuilder<T> {
 
 		protected Tokenizer tokenizer;
 
-		TokenMetricBuilder(T metric) {
+		CollectionMetricBuilder(T metric) {
 			super(metric);
 			// TODO Auto-generated constructor stub
 		}
@@ -227,10 +230,10 @@ public class StringMetricBuilder {
 	 * @author mpkorstanje
 	 *
 	 */
-	public final class TokenListMetricBldr extends
-			TokenMetricBuilder<ListMetric<String>> {
+	public final class CompositeListMetricBuilder extends
+			CollectionMetricBuilder<ListMetric<String>> {
 
-		TokenListMetricBldr(ListMetric<String> metric) {
+		CompositeListMetricBuilder(ListMetric<String> metric) {
 			super(metric);
 		}
 
@@ -246,10 +249,10 @@ public class StringMetricBuilder {
 	 * @author mpkorstanje
 	 *
 	 */
-	public final class TokenSetMetricBldr extends
-			TokenMetricBuilder<SetMetric<String>> {
+	public final class CompositeSetMetricBuilder extends
+			CollectionMetricBuilder<SetMetric<String>> {
 
-		TokenSetMetricBldr(SetMetric<String> metric) {
+		CompositeSetMetricBuilder(SetMetric<String> metric) {
 			super(metric);
 		}
 
@@ -262,9 +265,9 @@ public class StringMetricBuilder {
 	public final class TokenSimplifierChainBuilder<T> extends
 			SimplifierChainBuilder {
 
-		private final TokenMetricBuilder<T> builder;
+		private final CollectionMetricBuilder<T> builder;
 
-		public TokenSimplifierChainBuilder(TokenMetricBuilder<T> builder,
+		public TokenSimplifierChainBuilder(CollectionMetricBuilder<T> builder,
 				Simplifier simplifier) {
 			super(simplifier);
 
@@ -333,9 +336,9 @@ public class StringMetricBuilder {
 	public final class StringSimplifierChainBuilder extends
 			SimplifierChainBuilder {
 
-		private final StringMetricBldr builder;
+		private final CompositeStringMetricBuilder builder;
 
-		public StringSimplifierChainBuilder(StringMetricBldr builder,
+		public StringSimplifierChainBuilder(CompositeStringMetricBuilder builder,
 				Simplifier simplifier) {
 			super(simplifier);
 			this.builder = builder;
@@ -362,13 +365,13 @@ public class StringMetricBuilder {
 
 	public final class TokenizingChainBuilder {
 
-		private final TokenMetricBuilder<?> builder;
+		private final CollectionMetricBuilder<?> builder;
 
 		private Tokenizer tokenizer;
 
 		private TokenizingTokenizer cache;
 
-		public TokenizingChainBuilder(TokenMetricBuilder<?> builder,
+		public TokenizingChainBuilder(CollectionMetricBuilder<?> builder,
 				Tokenizer tokenizer) {
 
 			Preconditions.checkNotNull(tokenizer);
@@ -381,6 +384,12 @@ public class StringMetricBuilder {
 		public TokenizingChainBuilder tokenize(Tokenizer tokenizer) {
 			Preconditions.checkNotNull(tokenizer);
 			this.tokenizer = new RecurisveTokenizer(this.tokenizer, tokenizer);
+			return this;
+		}
+		
+		public TokenizingChainBuilder filter(Predicate<String> predicate) {
+			Preconditions.checkNotNull(predicate);
+			this.tokenizer = new FilteringTokenizer(this.tokenizer, predicate);
 			return this;
 		}
 

@@ -25,6 +25,8 @@ import static com.google.common.base.Joiner.on;
 
 import org.simmetrics.simplifiers.Simplifier;
 
+import com.google.common.base.Preconditions;
+
 public class CompositeSimplifier implements Simplifier {
 
 	private final Simplifier[] simplifiers;

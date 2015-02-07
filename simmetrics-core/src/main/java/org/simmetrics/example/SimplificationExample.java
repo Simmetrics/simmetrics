@@ -49,7 +49,7 @@ public class SimplificationExample {
 		final String str2 = "This sentence is similair. It has almost the same words";
 
 		StringMetric metric = new StringMetricBuilder()
-				.setMetric(new CosineSimilarity<String>())
+				.with(new CosineSimilarity<String>())
 				.addSimplifier(new CaseSimplifier.Lower())
 				.addSimplifier(new NonWordCharacterSimplifier())
 				.setTokenizer(new WhitespaceTokenizer())

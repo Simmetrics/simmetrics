@@ -29,7 +29,7 @@ public class DiceSimilarityTest extends StringMetricTest {
 
 	@Override
 	protected StringMetric getMetric() {
-		return new StringMetricBuilder().setMetric(new DiceSimilarity<String>())
+		return new StringMetricBuilder().with(new DiceSimilarity<String>())
 				.setTokenizer(new WhitespaceTokenizer())
 				.build();
 	}

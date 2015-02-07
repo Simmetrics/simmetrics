@@ -29,7 +29,7 @@ public class EuclideanDistanceTest extends StringMetricTest {
 
 	@Override
 	protected StringMetric getMetric() {
-		return new StringMetricBuilder().setMetric(
+		return new StringMetricBuilder().with(
 				new EuclideanDistance<String>())
 				.setTokenizer(new WhitespaceTokenizer())
 				.build();

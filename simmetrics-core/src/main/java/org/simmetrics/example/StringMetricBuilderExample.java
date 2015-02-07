@@ -48,7 +48,7 @@ public class StringMetricBuilderExample {
 		final String str2 = args[1];
 
 		StringMetric metric = new StringMetricBuilder()
-				.setMetric(new CosineSimilarity<String>())
+				.with(new CosineSimilarity<String>())
 				.setTokenizer(QGramTokenizer.Q2).build();
 
 		final float result = metric.compare(str1, str2);

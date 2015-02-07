@@ -31,7 +31,7 @@ public class ChapmanOrderedNameCompoundSimilarityTest extends StringMetricTest {
 	@Override
 	protected StringMetric getMetric() {
 		return new StringMetricBuilder()
-				.setMetric(new ChapmanOrderedNameCompoundSimilarity())
+				.with(new ChapmanOrderedNameCompoundSimilarity())
 				.setTokenizer(new WhitespaceTokenizer()).build();
 	}
 

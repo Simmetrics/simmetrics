@@ -40,7 +40,7 @@ public class CacheExample {
 		String name = "Gearldine Desanti";
 
 		StringMetric metric = new StringMetricBuilder()
-				.setMetric(new CosineSimilarity<String>())
+				.with(new CosineSimilarity<String>())
 				.addSimplifier(new CaseSimplifier.Lower())
 				.setTokenizer(QGramTokenizer.Q2)
 				.setCache(new CachingTokenizer())

@@ -28,7 +28,7 @@ public class SoundexTest extends StringMetricTest {
 
 	@Override
 	protected StringMetric getMetric() {
-		return new StringMetricBuilder().setMetric(new JaroWinkler())
+		return new StringMetricBuilder().with(new JaroWinkler())
 				.addSimplifier(new SoundexSimplifier())
 				.build();
 	}

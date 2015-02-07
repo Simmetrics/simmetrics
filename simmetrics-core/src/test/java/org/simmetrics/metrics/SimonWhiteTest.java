@@ -30,7 +30,7 @@ public class SimonWhiteTest extends StringMetricTest {
 
 	@Override
 	protected StringMetric getMetric() {
-		return new StringMetricBuilder().setMetric(new SimonWhite<String>())
+		return new StringMetricBuilder().with(new SimonWhite<String>())
 				.setTokenizer(new WordQGramTokenizer(QGramTokenizer.Q2))
 				.build();
 	}

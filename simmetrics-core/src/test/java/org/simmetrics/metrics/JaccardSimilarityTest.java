@@ -28,7 +28,7 @@ public class JaccardSimilarityTest extends StringMetricTest {
 
 	@Override
 	protected StringMetric getMetric() {
-		return new StringMetricBuilder().setMetric(
+		return new StringMetricBuilder().with(
 				new JaccardSimilarity<String>())
 				.setTokenizer(new WhitespaceTokenizer())
 				.build();

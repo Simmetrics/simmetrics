@@ -30,7 +30,7 @@ public class MatchingCoefficientTest extends StringMetricTest {
 
 	@Override
 	protected StringMetric getMetric() {
-		return new StringMetricBuilder().setMetric(
+		return new StringMetricBuilder().with(
 				new MatchingCoefficient<String>())
 				.setTokenizer(new WhitespaceTokenizer())
 				.build();

@@ -29,7 +29,7 @@ public class OverlapCoefficientTest extends StringMetricTest {
 
 	@Override
 	protected StringMetric getMetric() {
-		return new StringMetricBuilder().setMetric(
+		return new StringMetricBuilder().with(
 				new OverlapCoefficient<String>())
 				.setTokenizer(new WhitespaceTokenizer())
 				.build();

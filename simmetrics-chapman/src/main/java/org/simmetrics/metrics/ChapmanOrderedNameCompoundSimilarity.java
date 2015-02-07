@@ -41,7 +41,7 @@ import org.simmetrics.simplifiers.SoundexSimplifier;
 public class ChapmanOrderedNameCompoundSimilarity implements ListMetric<String> {
 
 	private final StringMetric metric1 = new StringMetricBuilder()
-			.setMetric(new JaroWinkler())
+			.with(new JaroWinkler())
 			.addSimplifier(new SoundexSimplifier())
 			.build();
 

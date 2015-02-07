@@ -32,7 +32,7 @@ public class BlockDistanceTest extends StringMetricTest {
 	@Test
 	public void test2() {
 		testSimilarity(
-				new StringMetricBuilder().setMetric(new BlockDistance<String>())
+				new StringMetricBuilder().with(new BlockDistance<String>())
 						.setTokenizer(QGramTokenizer.Q1)
 						.build(),
 				new T[] { new T(0.8333f, "Healed", "Sealed"),
@@ -48,7 +48,7 @@ public class BlockDistanceTest extends StringMetricTest {
 
 	@Override
 	protected StringMetric getMetric() {
-		return new StringMetricBuilder().setMetric(new BlockDistance<String>())
+		return new StringMetricBuilder().with(new BlockDistance<String>())
 				.setTokenizer(new WhitespaceTokenizer())
 				.build();
 	}

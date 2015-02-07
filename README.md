@@ -52,10 +52,10 @@ A custom simplifier can be added onto any metric by using the StringMetricBuilde
 	final String str2 = "This sentence is similair. It has almost the same words";
 
 	StringMetric metric = new StringMetricBuilder()
-			.setMetric(new CosineSimilarity<String>())
-			.addSimplifier(new NonWordCharacterSimplifier())
-			.addSimplifier(new CaseSimplifier.Lower())
-			.setTokenizer(new WhitespaceTokenizer())
+			.with(new CosineSimilarity<String>())
+			.simplify(new CaseSimplifier.Lower())
+			.simplify(new NonWordCharacterSimplifier())
+			.tokenize(new WhitespaceTokenizer())
 			.build();
 
 	final float result = metric.compare(str1, str2); //0.5590

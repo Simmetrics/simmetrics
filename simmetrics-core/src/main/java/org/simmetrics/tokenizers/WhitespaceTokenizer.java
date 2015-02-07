@@ -24,6 +24,7 @@ package org.simmetrics.tokenizers;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * A simple whitespace tokenizer.
@@ -35,14 +36,14 @@ public final class WhitespaceTokenizer extends AbstractTokenizer {
 
 	@Override
 	public String toString() {
-		return "WhitespaceTokenizer [" + delimiters + "]";
+		return "WhitespaceTokenizer [" + pattern + "]";
 	}
 
-	private final String delimiters = "\\s+";
+	private final Pattern pattern = Pattern.compile("\\s+");
 
 	@Override
 	public final List<String> tokenizeToList(final String input) {
-		return Arrays.asList(input.split(delimiters));
+		return Arrays.asList(pattern.split(input));
 	}
 
 }

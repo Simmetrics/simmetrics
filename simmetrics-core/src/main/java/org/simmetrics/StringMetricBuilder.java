@@ -21,8 +21,12 @@
  */
 package org.simmetrics;
 
+import static com.google.common.collect.Collections2.filter;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.simmetrics.simplifiers.CompositeSimplifier;
 import org.simmetrics.simplifiers.PassThroughSimplifier;
@@ -32,6 +36,7 @@ import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.TokenizingTokenizer;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Predicate;
 
 /**
  * Convenience tool to build string metrics.
@@ -140,7 +145,7 @@ public class StringMetricBuilder {
 	 * @author mpkorstanje
 	 *
 	 */
-	public class SimplyfingMetricBuilder {
+	public final class SimplyfingMetricBuilder {
 
 		private final StringMetric metric;
 
@@ -221,7 +226,9 @@ public class StringMetricBuilder {
 
 		private SimplifyingSimplifier stringCache;
 
-		protected TokenMetricBuilder(T metric) {
+		private Predicate<String> tokenFilter;
+
+		TokenMetricBuilder(T metric) {
 			this.metric = metric;
 		}
 
@@ -285,6 +292,11 @@ public class StringMetricBuilder {
 			return this;
 		}
 
+		public TokenMetricBuilder<T> filter(Predicate<String> tokenFilter) {
+			this.tokenFilter = tokenFilter;
+			return this;
+		}
+
 		/**
 		 * Builds a the metric with the simplifiers, tokenizers and caches. A
 		 * tokenizer is required.
@@ -316,6 +328,10 @@ public class StringMetricBuilder {
 
 			Tokenizer tokenizer = this.tokenizer;
 
+			if (tokenFilter != null) {
+				tokenizer = new TokenFilter(tokenizer, tokenFilter);
+			}
+
 			if (tokenCache != null) {
 				tokenCache.setTokenizer(tokenizer);
 				tokenizer = tokenCache;
@@ -336,7 +352,7 @@ public class StringMetricBuilder {
 	 * @author mpkorstanje
 	 *
 	 */
-	public class TokenListMetricBuilder extends
+	public final class TokenListMetricBuilder extends
 			TokenMetricBuilder<ListMetric<String>> {
 
 		TokenListMetricBuilder(ListMetric<String> metric) {
@@ -358,7 +374,7 @@ public class StringMetricBuilder {
 	 * @author mpkorstanje
 	 *
 	 */
-	public class TokenSetMetricBuilder extends
+	public final class TokenSetMetricBuilder extends
 			TokenMetricBuilder<SetMetric<String>> {
 
 		TokenSetMetricBuilder(SetMetric<String> metric) {
@@ -449,6 +465,36 @@ public class StringMetricBuilder {
 		@Override
 		public String toString() {
 			return metric + " [" + simplifier + " -> " + tokenizer + "]";
+		}
+
+	}
+
+	public final class TokenFilter implements Tokenizer {
+
+		private final Tokenizer tokenizer;
+
+		private final Predicate<String> filter;
+
+		TokenFilter(Tokenizer tokenizer, Predicate<String> filter) {
+			super();
+			this.tokenizer = tokenizer;
+			this.filter = filter;
+		}
+
+		@Override
+		public ArrayList<String> tokenizeToList(String input) {
+			return new ArrayList<>(filter(tokenizer.tokenizeToList(input),
+					filter));
+		}
+
+		@Override
+		public Set<String> tokenizeToSet(String input) {
+			return new HashSet<>(filter(tokenizer.tokenizeToSet(input), filter));
+		}
+
+		@Override
+		public String toString() {
+			return tokenizer + "->" + filter;
 		}
 
 	}

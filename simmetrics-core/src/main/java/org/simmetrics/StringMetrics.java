@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -53,7 +54,11 @@ import org.simmetrics.tokenizers.WordQGramTokenizer;
  * @author mpkorstanje
  *
  */
-public abstract class StringMetrics {
+public final class StringMetrics {
+
+	private StringMetrics() {
+		// Utility class.
+	}
 
 	/**
 	 * Applies a metric to a string c and a list of strings. Returns an array
@@ -198,7 +203,8 @@ public abstract class StringMetrics {
 	}
 
 	public static StringMetric matchingCoefficient(Tokenizer tokenizer) {
-		return new StringMetricBuilder().with(new MatchingCoefficient<String>())
+		return new StringMetricBuilder()
+				.with(new MatchingCoefficient<String>())
 				.setTokenizer(tokenizer).build();
 	}
 

@@ -39,7 +39,7 @@ public final class WhitespaceTokenizer extends AbstractTokenizer {
 		return "WhitespaceTokenizer [" + pattern + "]";
 	}
 
-	private final Pattern pattern = Pattern.compile("\\s+");
+	private static final Pattern pattern = Pattern.compile("\\s+");
 
 	@Override
 	public final List<String> tokenizeToList(final String input) {

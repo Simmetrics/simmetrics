@@ -22,6 +22,8 @@
 
 package org.simmetrics.simplifiers;
 
+import java.util.regex.Pattern;
+
 /**
  * Replaces all non-word [^0-9a-zA-Z] characters with a space.
  * 
@@ -30,14 +32,16 @@ package org.simmetrics.simplifiers;
  */
 public class NonWordCharacterSimplifier implements Simplifier {
 
+	private static final Pattern pattern = Pattern.compile("\\W");
+
 	@Override
 	public String simplify(String input) {
-		return input.replaceAll("\\W", " ");
+		return pattern.matcher(input).replaceAll(" ");
 	}
 
 	@Override
 	public String toString() {
-		return "WordCharacterSimplifier";
+		return "NonWordCharacterSimplifier ["+ pattern +"]";
 	}
 
 }

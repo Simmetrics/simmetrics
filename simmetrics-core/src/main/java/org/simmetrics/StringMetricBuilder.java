@@ -21,6 +21,8 @@
  */
 package org.simmetrics;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,7 +159,7 @@ public class StringMetricBuilder {
 		protected Simplifier simplifier = new PassThroughSimplifier();
 
 		SimplyfingBuilder(T metric) {
-			Preconditions.checkNotNull(metric);
+			checkNotNull(metric);
 			this.metric = metric;
 		}
 
@@ -207,7 +209,7 @@ public class StringMetricBuilder {
 		}
 
 		void setTokenizer(Tokenizer tokenizer) {
-			Preconditions.checkNotNull(tokenizer);
+			checkNotNull(tokenizer);
 			this.tokenizer = tokenizer;
 		}
 
@@ -300,7 +302,7 @@ public class StringMetricBuilder {
 		private SimplifyingSimplifier cache;
 
 		public SimplifierChainBuilder(Simplifier simplifier) {
-			Preconditions.checkNotNull(simplifier);
+			checkNotNull(simplifier);
 			this.simplifiers.add(simplifier);
 		}
 
@@ -374,7 +376,7 @@ public class StringMetricBuilder {
 		public TokenizingChainBuilder(CollectionMetricBuilder<?> builder,
 				Tokenizer tokenizer) {
 
-			Preconditions.checkNotNull(tokenizer);
+			checkNotNull(tokenizer);
 
 			this.builder = builder;
 			this.tokenizer = tokenizer;

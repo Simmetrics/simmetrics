@@ -42,7 +42,7 @@ public class ChapmanOrderedNameCompoundSimilarity implements ListMetric<String> 
 
 	private final StringMetric metric1 = new StringMetricBuilder()
 			.with(new JaroWinkler())
-			.addSimplifier(new SoundexSimplifier())
+			.simplify(new SoundexSimplifier())
 			.build();
 
 	private final StringMetric metric2 = new SmithWaterman();

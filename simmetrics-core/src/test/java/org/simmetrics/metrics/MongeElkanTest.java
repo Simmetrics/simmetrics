@@ -31,7 +31,7 @@ public class MongeElkanTest extends StringMetricTest {
 	protected StringMetric getMetric() {
 		return new StringMetricBuilder().with(
 				new MongeElkan(new SmithWatermanGotoh()))
-				.setTokenizer(new WhitespaceTokenizer())
+				.tokenize(new WhitespaceTokenizer())
 				.build();
 	}
 

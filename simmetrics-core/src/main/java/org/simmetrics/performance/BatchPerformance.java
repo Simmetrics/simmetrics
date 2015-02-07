@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -27,9 +28,9 @@ import static org.simmetrics.StringMetrics.compare;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.SimonWhite;
-import org.simmetrics.tokenizers.CachingTokenizer;
 import org.simmetrics.tokenizers.QGramTokenizer;
-import org.simmetrics.tokenizers.WordQGramTokenizer;
+import org.simmetrics.tokenizers.WhitespaceTokenizer;
+import org.simmetrics.utils.CachingTokenizer;
 
 import com.google.common.base.Stopwatch;
 
@@ -79,8 +80,8 @@ public class BatchPerformance {
 	private static void testCompareUncached() {
 		StringMetric metric = new StringMetricBuilder()
 				.with(new SimonWhite<String>())
-				.setTokenizer(new WordQGramTokenizer(QGramTokenizer.Q2))
-				.build();
+				.tokenize(new WhitespaceTokenizer())
+				.tokenize(QGramTokenizer.Q2).build();
 
 		Stopwatch sw = Stopwatch.createStarted();
 		for (int n = 0; n < TEST_REPEATS; n++) {
@@ -98,12 +99,13 @@ public class BatchPerformance {
 	}
 
 	private static void testCompareCached() {
-			
-		
+
 		StringMetric metric = new StringMetricBuilder()
 				.with(new SimonWhite<String>())
-				.setTokenizer(new WordQGramTokenizer(QGramTokenizer.Q2))
-				.setCache(new CachingTokenizer()).build();
+				.tokenize(new WhitespaceTokenizer())
+				.tokenize(QGramTokenizer.Q2)
+				.setCache(new CachingTokenizer())
+				.build();
 
 		Stopwatch sw = Stopwatch.createStarted();
 		for (int n = 0; n < TEST_REPEATS; n++) {

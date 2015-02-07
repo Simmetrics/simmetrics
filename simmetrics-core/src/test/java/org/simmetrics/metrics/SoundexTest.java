@@ -29,7 +29,7 @@ public class SoundexTest extends StringMetricTest {
 	@Override
 	protected StringMetric getMetric() {
 		return new StringMetricBuilder().with(new JaroWinkler())
-				.addSimplifier(new SoundexSimplifier())
+				.simplify(new SoundexSimplifier())
 				.build();
 	}
 

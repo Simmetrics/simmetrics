@@ -20,13 +20,15 @@
  */
 
 
-package org.simmetrics.tokenizers;
+package org.simmetrics.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+
+import org.simmetrics.tokenizers.Tokenizer;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;

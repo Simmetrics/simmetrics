@@ -32,7 +32,7 @@ public class MatchingCoefficientTest extends StringMetricTest {
 	protected StringMetric getMetric() {
 		return new StringMetricBuilder().with(
 				new MatchingCoefficient<String>())
-				.setTokenizer(new WhitespaceTokenizer())
+				.tokenize(new WhitespaceTokenizer())
 				.build();
 	}
 

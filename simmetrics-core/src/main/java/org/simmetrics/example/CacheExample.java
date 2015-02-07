@@ -26,10 +26,10 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.StringMetrics;
 import org.simmetrics.metrics.CosineSimilarity;
-import org.simmetrics.simplifiers.CachingSimplifier;
 import org.simmetrics.simplifiers.CaseSimplifier;
-import org.simmetrics.tokenizers.CachingTokenizer;
 import org.simmetrics.tokenizers.QGramTokenizer;
+import org.simmetrics.utils.CachingSimplifier;
+import org.simmetrics.utils.CachingTokenizer;
 
 public class CacheExample {
 
@@ -41,10 +41,10 @@ public class CacheExample {
 
 		StringMetric metric = new StringMetricBuilder()
 				.with(new CosineSimilarity<String>())
-				.addSimplifier(new CaseSimplifier.Lower())
-				.setTokenizer(QGramTokenizer.Q2)
-				.setCache(new CachingTokenizer())
+				.simplify(new CaseSimplifier.Lower())
 				.setCache(new CachingSimplifier())
+				.tokenize(QGramTokenizer.Q2)
+				.setCache(new CachingTokenizer())
 				.build();
 
 		float[] scores = StringMetrics.compare(metric, name, names);

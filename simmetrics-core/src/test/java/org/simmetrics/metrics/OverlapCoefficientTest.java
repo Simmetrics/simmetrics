@@ -31,7 +31,7 @@ public class OverlapCoefficientTest extends StringMetricTest {
 	protected StringMetric getMetric() {
 		return new StringMetricBuilder().with(
 				new OverlapCoefficient<String>())
-				.setTokenizer(new WhitespaceTokenizer())
+				.tokenize(new WhitespaceTokenizer())
 				.build();
 	}
 

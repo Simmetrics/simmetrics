@@ -31,7 +31,7 @@ public class EuclideanDistanceTest extends StringMetricTest {
 	protected StringMetric getMetric() {
 		return new StringMetricBuilder().with(
 				new EuclideanDistance<String>())
-				.setTokenizer(new WhitespaceTokenizer())
+				.tokenize(new WhitespaceTokenizer())
 				.build();
 	}
 

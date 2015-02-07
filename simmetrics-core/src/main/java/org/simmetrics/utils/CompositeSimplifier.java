@@ -18,23 +18,34 @@
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.simmetrics.tokenizers;
 
-import java.util.ArrayList;
-import java.util.Set;
+package org.simmetrics.utils;
 
-public class CompositeTokenizer implements Tokenizer {
+import static com.google.common.base.Joiner.on;
 
-	@Override
-	public ArrayList<String> tokenizeToList(String input) {
-		// TODO Auto-generated method stub
-		return null;
+import org.simmetrics.simplifiers.Simplifier;
+
+public class CompositeSimplifier implements Simplifier {
+
+	private final Simplifier[] simplifiers;
+	
+	public CompositeSimplifier(Simplifier... simplifier) {
+		this.simplifiers = simplifier;
 	}
 
 	@Override
-	public Set<String> tokenizeToSet(String input) {
-		// TODO Auto-generated method stub
-		return null;
+	public String simplify(String input) {
+		for (Simplifier s : simplifiers) {
+			input = s.simplify(input);
+		}
+
+		return input;
+
+	}
+
+	@Override
+	public String toString() {
+		return on("->").join(simplifiers);
 	}
 
 }

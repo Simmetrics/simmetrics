@@ -30,7 +30,7 @@ public class JaccardSimilarityTest extends StringMetricTest {
 	protected StringMetric getMetric() {
 		return new StringMetricBuilder().with(
 				new JaccardSimilarity<String>())
-				.setTokenizer(new WhitespaceTokenizer())
+				.tokenize(new WhitespaceTokenizer())
 				.build();
 	}
 

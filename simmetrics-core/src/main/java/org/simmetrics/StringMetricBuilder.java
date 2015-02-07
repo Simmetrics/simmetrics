@@ -21,22 +21,24 @@
  */
 package org.simmetrics;
 
-import static com.google.common.collect.Collections2.filter;
-
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.simmetrics.simplifiers.CompositeSimplifier;
 import org.simmetrics.simplifiers.PassThroughSimplifier;
 import org.simmetrics.simplifiers.Simplifier;
+import org.simmetrics.simplifiers.Simplifying;
 import org.simmetrics.simplifiers.SimplifyingSimplifier;
+import org.simmetrics.tokenizers.QGramTokenizer;
 import org.simmetrics.tokenizers.Tokenizer;
-import org.simmetrics.tokenizers.TokenizingTokenizer;
+import org.simmetrics.utils.CachingSimplifier;
+import org.simmetrics.utils.CompositeSimplifier;
+import org.simmetrics.utils.CompositeStringMetric;
+import org.simmetrics.utils.CompositeTokenListMetric;
+import org.simmetrics.utils.CompositeTokenSetMetric;
+import org.simmetrics.utils.RecurisveTokenizer;
+import org.simmetrics.utils.TokenizingTokenizer;
 
 import com.google.common.base.Preconditions;
-import com.google.common.base.Predicate;
 
 /**
  * Convenience tool to build string metrics.
@@ -110,8 +112,8 @@ public class StringMetricBuilder {
 	 *            the metric to use as a base
 	 * @return a builder for fluent chaining
 	 */
-	public SimplyfingMetricBuilder with(StringMetric metric) {
-		return new SimplyfingMetricBuilder(metric);
+	public StringMetricBldr with(StringMetric metric) {
+		return new StringMetricBldr(metric);
 	}
 
 	/**
@@ -121,8 +123,8 @@ public class StringMetricBuilder {
 	 *            the metric to use as a base
 	 * @return a builder for fluent chaining
 	 */
-	public TokenListMetricBuilder with(ListMetric<String> metric) {
-		return new TokenListMetricBuilder(metric);
+	public TokenListMetricBldr with(ListMetric<String> metric) {
+		return new TokenListMetricBldr(metric);
 
 	}
 
@@ -133,8 +135,8 @@ public class StringMetricBuilder {
 	 *            the metric to use as a base
 	 * @return a builder for fluent chaining
 	 */
-	public TokenSetMetricBuilder with(SetMetric<String> metric) {
-		return new TokenSetMetricBuilder(metric);
+	public TokenSetMetricBldr with(SetMetric<String> metric) {
+		return new TokenSetMetricBldr(metric);
 
 	}
 
@@ -145,17 +147,29 @@ public class StringMetricBuilder {
 	 * @author mpkorstanje
 	 *
 	 */
-	public final class SimplyfingMetricBuilder {
+	public abstract class SimplyfingBuilder<T> {
 
-		private final StringMetric metric;
+		protected final T metric;
 
-		private final List<Simplifier> simplifiers = new ArrayList<>();
+		protected Simplifier simplifier = new PassThroughSimplifier();
 
-		private SimplifyingSimplifier stringCache;
-
-		SimplyfingMetricBuilder(StringMetric metric) {
+		SimplyfingBuilder(T metric) {
 			Preconditions.checkNotNull(metric);
 			this.metric = metric;
+		}
+
+		void setSimplifier(Simplifier simplifier) {
+			this.simplifier = simplifier;
+		}
+
+		public abstract SimplifierChainBuilder simplify(Simplifier simplifier);
+
+	}
+
+	public final class StringMetricBldr extends SimplyfingBuilder<StringMetric> {
+
+		public StringMetricBldr(StringMetric metric) {
+			super(metric);
 		}
 
 		/**
@@ -165,23 +179,8 @@ public class StringMetricBuilder {
 		 *            a simplifier to add
 		 * @return this for fluent chaining
 		 */
-		public SimplyfingMetricBuilder addSimplifier(Simplifier simplifier) {
-			Preconditions.checkNotNull(simplifier);
-			this.simplifiers.add(simplifier);
-			return this;
-		}
-
-		/**
-		 * Sets the cache that will store the simplified strings.
-		 * 
-		 * @param cache
-		 *            the cache to add
-		 * @return this for fluent chaining
-		 */
-		public SimplyfingMetricBuilder setCache(SimplifyingSimplifier cache) {
-			Preconditions.checkNotNull(cache);
-			this.stringCache = cache;
-			return this;
+		public StringSimplifierChainBuilder simplify(Simplifier simplifier) {
+			return new StringSimplifierChainBuilder(this, simplifier);
 		}
 
 		/**
@@ -190,159 +189,35 @@ public class StringMetricBuilder {
 		 * @return a metric
 		 */
 		public StringMetric build() {
-			if (simplifiers.isEmpty()) {
-				return metric;
-			}
-
-			Simplifier simplifier;
-			if (simplifiers.size() == 1) {
-				simplifier = simplifiers.get(0);
-			} else {
-				CompositeSimplifier composite = new CompositeSimplifier();
-				composite.setSimplifiers(simplifiers
-						.toArray(new Simplifier[simplifiers.size()]));
-				simplifier = composite;
-			}
-
-			if (stringCache != null) {
-				stringCache.setSimplifier(simplifier);
-				simplifier = stringCache;
-			}
-
 			return new CompositeStringMetric(metric, simplifier);
-
 		}
+
 	}
 
-	public abstract class TokenMetricBuilder<T> {
+	public abstract class TokenMetricBuilder<T> extends SimplyfingBuilder<T> {
 
-		private final T metric;
-
-		private final List<Simplifier> simplifiers = new ArrayList<>();
-
-		private Tokenizer tokenizer;
-
-		private TokenizingTokenizer tokenCache;
-
-		private SimplifyingSimplifier stringCache;
-
-		private Predicate<String> tokenFilter;
+		protected Tokenizer tokenizer;
 
 		TokenMetricBuilder(T metric) {
-			this.metric = metric;
+			super(metric);
+			// TODO Auto-generated constructor stub
 		}
 
-		/**
-		 * Adds a simplifier to the end of the chain.
-		 * 
-		 * @param simplifier
-		 *            simplifier to add
-		 * @return this for fluent chaining
-		 */
-		public TokenMetricBuilder<T> addSimplifier(Simplifier simplifier) {
-			Preconditions.checkNotNull(simplifier);
-			this.simplifiers.add(simplifier);
-			return this;
-		}
-
-		/**
-		 * Sets the tokenizer.
-		 * 
-		 * @param tokenizer
-		 *            tokenizer to tokenize strings
-		 * @return this for fluent chaining
-		 */
-		public TokenMetricBuilder<T> setTokenizer(Tokenizer tokenizer) {
+		void setTokenizer(Tokenizer tokenizer) {
 			Preconditions.checkNotNull(tokenizer);
 			this.tokenizer = tokenizer;
-			return this;
 		}
 
-		/**
-		 * Sets the cache for the tokenization step.
-		 * 
-		 * The builder will use
-		 * {@link TokenizingTokenizer#setTokenizer(Tokenizer)} to inject the
-		 * tokenizer into the cache.
-		 * 
-		 * @param cache
-		 *            cache to use for tokenized strings
-		 * @return this for fluent chaining
-		 */
-		public TokenMetricBuilder<T> setCache(TokenizingTokenizer cache) {
-			Preconditions.checkNotNull(cache);
-			this.tokenCache = cache;
-			return this;
+		public TokenizingChainBuilder tokenize(Tokenizer tokenizer) {
+			return new TokenizingChainBuilder(this, tokenizer);
 		}
 
-		/**
-		 * Sets the cache for the simplification step.
-		 * 
-		 * The builder will use
-		 * {@link SimplifyingSimplifier#setSimplifier(Simplifier)} to inject the
-		 * simplifier into the cache.
-		 * 
-		 * @param cache
-		 *            cache to use for simplified strings
-		 * @return this for fluent chaining
-		 */
-		public TokenMetricBuilder<T> setCache(SimplifyingSimplifier cache) {
-			Preconditions.checkNotNull(cache);
-			this.stringCache = cache;
-			return this;
+		public TokenSimplifierChainBuilder<T> simplify(Simplifier simplifier) {
+			return new TokenSimplifierChainBuilder<>(this, simplifier);
 		}
 
-		public TokenMetricBuilder<T> filter(Predicate<String> tokenFilter) {
-			this.tokenFilter = tokenFilter;
-			return this;
-		}
+		abstract StringMetric build();
 
-		/**
-		 * Builds a the metric with the simplifiers, tokenizers and caches. A
-		 * tokenizer is required.
-		 * 
-		 * @return a metric
-		 * 
-		 */
-		public StringMetric build() {
-
-			Preconditions.checkNotNull(tokenizer,
-					"A tokenizer must be set to build a tokenizing metric");
-
-			Simplifier simplifier;
-			if (simplifiers.isEmpty()) {
-				simplifier = new PassThroughSimplifier();
-			} else if (simplifiers.size() == 1) {
-				simplifier = simplifiers.get(0);
-			} else {
-				CompositeSimplifier composite = new CompositeSimplifier();
-				composite.setSimplifiers(simplifiers
-						.toArray(new Simplifier[simplifiers.size()]));
-				simplifier = composite;
-			}
-
-			if (stringCache != null) {
-				stringCache.setSimplifier(simplifier);
-				simplifier = stringCache;
-			}
-
-			Tokenizer tokenizer = this.tokenizer;
-
-			if (tokenFilter != null) {
-				tokenizer = new TokenFilter(tokenizer, tokenFilter);
-			}
-
-			if (tokenCache != null) {
-				tokenCache.setTokenizer(tokenizer);
-				tokenizer = tokenCache;
-			}
-
-			return build(metric, simplifier, tokenizer);
-
-		}
-
-		protected abstract StringMetric build(T metric, Simplifier simplifier,
-				Tokenizer tokenizer);
 	}
 
 	/**
@@ -352,19 +227,16 @@ public class StringMetricBuilder {
 	 * @author mpkorstanje
 	 *
 	 */
-	public final class TokenListMetricBuilder extends
+	public final class TokenListMetricBldr extends
 			TokenMetricBuilder<ListMetric<String>> {
 
-		TokenListMetricBuilder(ListMetric<String> metric) {
+		TokenListMetricBldr(ListMetric<String> metric) {
 			super(metric);
 		}
 
-		@Override
-		protected StringMetric build(ListMetric<String> metric,
-				Simplifier simplifier, Tokenizer tokenizer) {
+		StringMetric build() {
 			return new CompositeTokenListMetric(metric, simplifier, tokenizer);
 		}
-
 	}
 
 	/**
@@ -374,127 +246,164 @@ public class StringMetricBuilder {
 	 * @author mpkorstanje
 	 *
 	 */
-	public final class TokenSetMetricBuilder extends
+	public final class TokenSetMetricBldr extends
 			TokenMetricBuilder<SetMetric<String>> {
 
-		TokenSetMetricBuilder(SetMetric<String> metric) {
+		TokenSetMetricBldr(SetMetric<String> metric) {
 			super(metric);
 		}
 
-		@Override
-		protected StringMetric build(SetMetric<String> metric,
-				Simplifier simplifier, Tokenizer tokenizer) {
+		public StringMetric build() {
 			return new CompositeTokenSetMetric(metric, simplifier, tokenizer);
 		}
 
 	}
 
-	public final class CompositeStringMetric implements StringMetric {
+	public final class TokenSimplifierChainBuilder<T> extends
+			SimplifierChainBuilder {
 
-		private final Simplifier simplifier;
+		private final TokenMetricBuilder<T> builder;
 
-		private final StringMetric metric;
+		public TokenSimplifierChainBuilder(TokenMetricBuilder<T> builder,
+				Simplifier simplifier) {
+			super(simplifier);
 
-		CompositeStringMetric(StringMetric metric, Simplifier simplifier) {
-			this.metric = metric;
-			this.simplifier = simplifier;
+			this.builder = builder;
+
 		}
 
-		@Override
-		public float compare(String a, String b) {
-			return metric.compare(simplifier.simplify(a),
-					simplifier.simplify(b));
+		public TokenSimplifierChainBuilder<T> simplify(Simplifier simplifier) {
+			super.simplify(simplifier);
+			return this;
 		}
 
-		@Override
-		public String toString() {
-			return metric + " [" + simplifier + "]";
+		public TokenizingChainBuilder tokenize(Tokenizer tokenizer) {
+			builder.setSimplifier(innerBuild());
+			return builder.tokenize(tokenizer);
 		}
 
-	}
-
-	public final class CompositeTokenListMetric implements StringMetric {
-
-		private final ListMetric<String> metric;
-		private final Simplifier simplifier;
-		private final Tokenizer tokenizer;
-
-		CompositeTokenListMetric(ListMetric<String> metric,
-				Simplifier simplifier, Tokenizer tokenizer) {
-			super();
-			this.metric = metric;
-			this.simplifier = simplifier;
-			this.tokenizer = tokenizer;
-		}
-
-		@Override
-		public float compare(String a, String b) {
-			return metric.compare(
-					tokenizer.tokenizeToList(simplifier.simplify(a)),
-					tokenizer.tokenizeToList(simplifier.simplify(b)));
-		}
-
-		@Override
-		public String toString() {
-			return metric + " [" + simplifier + " -> " + tokenizer + "]";
+		public TokenSimplifierChainBuilder<T> setCache(
+				SimplifyingSimplifier cache) {
+			super.setCache(cache);
+			return this;
 		}
 
 	}
 
-	public final class CompositeTokenSetMetric implements StringMetric {
+	public abstract class SimplifierChainBuilder {
 
-		private final SetMetric<String> metric;
-		private final Simplifier simplifier;
-		private final Tokenizer tokenizer;
+		private final List<Simplifier> simplifiers = new ArrayList<>();
 
-		CompositeTokenSetMetric(SetMetric<String> metric,
-				Simplifier simplifier, Tokenizer tokenizer) {
-			super();
-			this.metric = metric;
-			this.simplifier = simplifier;
-			this.tokenizer = tokenizer;
+		private SimplifyingSimplifier cache;
+
+		public SimplifierChainBuilder(Simplifier simplifier) {
+			Preconditions.checkNotNull(simplifier);
+			this.simplifiers.add(simplifier);
 		}
 
-		@Override
-		public float compare(String a, String b) {
-			return metric.compare(
-					tokenizer.tokenizeToSet(simplifier.simplify(a)),
-					tokenizer.tokenizeToSet(simplifier.simplify(b)));
+		public SimplifierChainBuilder simplify(Simplifier simplifier) {
+			simplifiers.add(simplifier);
+			return this;
 		}
 
-		@Override
-		public String toString() {
-			return metric + " [" + simplifier + " -> " + tokenizer + "]";
+		public SimplifierChainBuilder setCache(SimplifyingSimplifier cache) {
+			Preconditions.checkNotNull(cache);
+			this.cache = cache;
+			return this;
+		}
+
+		Simplifier innerBuild() {
+			Simplifier s;
+			if (simplifiers.size() == 1) {
+				s = simplifiers.get(0);
+			} else {
+				Simplifier[] sa = simplifiers.toArray(new Simplifier[0]);
+				s = new CompositeSimplifier(sa);
+			}
+
+			if (cache != null) {
+				s = new CachingSimplifier(s);
+			}
+
+			return s;
 		}
 
 	}
 
-	public final class TokenFilter implements Tokenizer {
+	public final class StringSimplifierChainBuilder extends
+			SimplifierChainBuilder {
 
-		private final Tokenizer tokenizer;
+		private final StringMetricBldr builder;
 
-		private final Predicate<String> filter;
+		public StringSimplifierChainBuilder(StringMetricBldr builder,
+				Simplifier simplifier) {
+			super(simplifier);
+			this.builder = builder;
+		}
 
-		TokenFilter(Tokenizer tokenizer, Predicate<String> filter) {
-			super();
+		@Override
+		public StringSimplifierChainBuilder simplify(Simplifier simplifier) {
+			super.simplify(simplifier);
+			return this;
+		}
+		
+		@Override
+		public StringSimplifierChainBuilder setCache(SimplifyingSimplifier cache) {
+			super.setCache(cache);
+			return this; 
+		}
+
+		public StringMetric build() {
+			builder.setSimplifier(innerBuild());
+			return builder.build();
+		}
+
+	}
+
+	public final class TokenizingChainBuilder {
+
+		private final TokenMetricBuilder<?> builder;
+
+		private Tokenizer tokenizer;
+
+		private TokenizingTokenizer cache;
+
+		public TokenizingChainBuilder(TokenMetricBuilder<?> builder,
+				Tokenizer tokenizer) {
+
+			Preconditions.checkNotNull(tokenizer);
+
+			this.builder = builder;
 			this.tokenizer = tokenizer;
-			this.filter = filter;
+
 		}
 
-		@Override
-		public ArrayList<String> tokenizeToList(String input) {
-			return new ArrayList<>(filter(tokenizer.tokenizeToList(input),
-					filter));
+		public TokenizingChainBuilder tokenize(Tokenizer tokenizer) {
+			Preconditions.checkNotNull(tokenizer);
+			this.tokenizer = new RecurisveTokenizer(this.tokenizer, tokenizer);
+			return this;
 		}
 
-		@Override
-		public Set<String> tokenizeToSet(String input) {
-			return new HashSet<>(filter(tokenizer.tokenizeToSet(input), filter));
+		public TokenizingChainBuilder setCache(TokenizingTokenizer cache) {
+			Preconditions.checkNotNull(cache);
+			this.cache = cache;
+			return this;
 		}
 
-		@Override
-		public String toString() {
-			return tokenizer + "->" + filter;
+		private Tokenizer innerBuild() {
+
+			Tokenizer t = tokenizer;
+			if (cache != null) {
+				cache.setTokenizer(t);
+				t = cache;
+			}
+
+			return t;
+		}
+
+		public StringMetric build() {
+			builder.setTokenizer(innerBuild());
+			return builder.build();
 		}
 
 	}

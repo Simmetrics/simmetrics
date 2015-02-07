@@ -50,9 +50,9 @@ public class SimplificationExample {
 
 		StringMetric metric = new StringMetricBuilder()
 				.with(new CosineSimilarity<String>())
-				.addSimplifier(new CaseSimplifier.Lower())
-				.addSimplifier(new NonWordCharacterSimplifier())
-				.setTokenizer(new WhitespaceTokenizer())
+				.simplify(new CaseSimplifier.Lower())
+				.simplify(new NonWordCharacterSimplifier())
+				.tokenize(new WhitespaceTokenizer())
 				.build();
 
 		final float result = metric.compare(str1, str2); //0.5590

@@ -22,6 +22,7 @@ package org.simmetrics.simplifiers;
 
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetrics;
+import org.simmetrics.utils.CachingSimplifier;
 
 /**
  * Interface for classes that use a {@link Simplifier} to normalize strings.

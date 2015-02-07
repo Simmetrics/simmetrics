@@ -34,8 +34,8 @@ public class ChapmanMatchingSoundexTest extends StringMetricTest {
 				.with(
 						new MongeElkan(new StringMetricBuilder()
 								.with(new JaroWinkler())
-								.addSimplifier(new SoundexSimplifier()).build()))
-				.setTokenizer(new WhitespaceTokenizer()).build();
+								.simplify(new SoundexSimplifier()).build()))
+				.tokenize(new WhitespaceTokenizer()).build();
 	}
 
 	@Override

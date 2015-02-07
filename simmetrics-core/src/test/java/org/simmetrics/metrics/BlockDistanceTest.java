@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -33,9 +34,8 @@ public class BlockDistanceTest extends StringMetricTest {
 	public void test2() {
 		testSimilarity(
 				new StringMetricBuilder().with(new BlockDistance<String>())
-						.setTokenizer(QGramTokenizer.Q1)
-						.build(),
-				new T[] { new T(0.8333f, "Healed", "Sealed"),
+						.tokenize(QGramTokenizer.Q1).build(), new T[] {
+						new T(0.8333f, "Healed", "Sealed"),
 						new T(0.6153f, "Healed", "Healthy"),
 						new T(0.7272f, "Healed", "Heard"),
 						new T(0.6666f, "Healed", "Herded"),
@@ -49,8 +49,7 @@ public class BlockDistanceTest extends StringMetricTest {
 	@Override
 	protected StringMetric getMetric() {
 		return new StringMetricBuilder().with(new BlockDistance<String>())
-				.setTokenizer(new WhitespaceTokenizer())
-				.build();
+				.tokenize(new WhitespaceTokenizer()).build();
 	}
 
 	@Override

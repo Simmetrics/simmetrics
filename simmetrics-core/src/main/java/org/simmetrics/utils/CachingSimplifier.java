@@ -18,9 +18,12 @@
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.simmetrics.simplifiers;
+package org.simmetrics.utils;
 
 import java.util.concurrent.ExecutionException;
+
+import org.simmetrics.simplifiers.Simplifier;
+import org.simmetrics.simplifiers.SimplifyingSimplifier;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;

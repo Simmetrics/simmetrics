@@ -19,7 +19,9 @@
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.simmetrics.tokenizers;
+package org.simmetrics.utils;
+
+import org.simmetrics.tokenizers.Tokenizer;
 
 
 /**

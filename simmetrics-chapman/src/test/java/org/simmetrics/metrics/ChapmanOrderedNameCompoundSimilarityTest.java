@@ -32,7 +32,7 @@ public class ChapmanOrderedNameCompoundSimilarityTest extends StringMetricTest {
 	protected StringMetric getMetric() {
 		return new StringMetricBuilder()
 				.with(new ChapmanOrderedNameCompoundSimilarity())
-				.setTokenizer(new WhitespaceTokenizer()).build();
+				.tokenize(new WhitespaceTokenizer()).build();
 	}
 
 	@Override

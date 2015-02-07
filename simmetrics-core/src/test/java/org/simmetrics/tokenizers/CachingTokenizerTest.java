@@ -23,8 +23,8 @@ package org.simmetrics.tokenizers;
 import java.util.Arrays;
 import java.util.Collections;
 
-import org.simmetrics.tokenizers.CachingTokenizer;
 import org.simmetrics.tokenizers.Tokenizer;
+import org.simmetrics.utils.CachingTokenizer;
 
 import static org.mockito.Mockito.*;
 

@@ -23,14 +23,16 @@ package org.simmetrics.utils;
 
 import static com.google.common.base.Joiner.on;
 
+import java.util.List;
+
 import org.simmetrics.simplifiers.Simplifier;
 
 public class CompositeSimplifier implements Simplifier {
 
-	private final Simplifier[] simplifiers;
+	private final List<Simplifier> simplifiers;
 	
-	public CompositeSimplifier(Simplifier... simplifier) {
-		this.simplifiers = simplifier;
+	public CompositeSimplifier(List<Simplifier> simplifiers) {
+		this.simplifiers = simplifiers;
 	}
 
 	@Override

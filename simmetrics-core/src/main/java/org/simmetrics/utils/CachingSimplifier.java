@@ -35,7 +35,7 @@ public class CachingSimplifier implements SimplifyingSimplifier {
 
 	private Simplifier simplifier;
 
-	private LoadingCache<String, String> arrayCache = CacheBuilder.newBuilder()
+	private LoadingCache<String, String> cache = CacheBuilder.newBuilder()
 			.initialCapacity(CACHE_SIZE).maximumSize(CACHE_SIZE)
 			.build(new CacheLoader<String, String>() {
 
@@ -67,7 +67,7 @@ public class CachingSimplifier implements SimplifyingSimplifier {
 	@Override
 	public String simplify(String input) {
 		try {
-			return arrayCache.get(input);
+			return cache.get(input);
 		} catch (ExecutionException e) {
 			throw new IllegalStateException(e);
 		}

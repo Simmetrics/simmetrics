@@ -41,6 +41,7 @@ import org.simmetrics.utils.TokenizingTokenizer;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
+import com.google.common.cache.CacheBuilder;
 
 /**
  * Convenience tool to build string metrics.
@@ -325,12 +326,12 @@ public class StringMetricBuilder {
 			if (simplifiers.size() == 1) {
 				s = simplifiers.get(0);
 			} else {
-				Simplifier[] sa = simplifiers.toArray(new Simplifier[0]);
-				s = new CompositeSimplifier(sa);
+				s = new CompositeSimplifier(simplifiers);
 			}
 
 			if (cache != null) {
-				s = new CachingSimplifier(s);
+				cache.setSimplifier(s);
+				s = cache;
 			}
 
 			return s;

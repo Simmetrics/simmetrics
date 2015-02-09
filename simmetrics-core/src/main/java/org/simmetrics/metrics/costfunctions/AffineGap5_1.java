@@ -27,8 +27,12 @@ package org.simmetrics.metrics.costfunctions;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class AffineGap5_1 extends AbstractAffineGapCost 
-		 {
+public final class AffineGap5_1 implements AffineGapCost {
+
+	@Override
+	public String toString() {
+		return "AffineGap5_1";
+	}
 
 	@Override
 	public final float getCost(final String stringToGap,

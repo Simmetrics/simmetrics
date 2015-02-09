@@ -21,10 +21,10 @@
 
 package org.simmetrics.metrics;
 
-import org.simmetrics.metrics.costfunctions.AbstractAffineGapCost;
-import org.simmetrics.metrics.costfunctions.AbstractSubstitutionCost;
 import org.simmetrics.metrics.costfunctions.AffineGap5_1;
+import org.simmetrics.metrics.costfunctions.AffineGapCost;
 import org.simmetrics.metrics.costfunctions.SubCost5_3_Minus3;
+import org.simmetrics.metrics.costfunctions.SubstitutionCost;
 
 /**
  * Implements the Gotoh extension of the Smith-Waterman method incorporating
@@ -34,13 +34,12 @@ import org.simmetrics.metrics.costfunctions.SubCost5_3_Minus3;
  * @author Sam Chapman
  * @version 1.1
  */
-public  class SmithWatermanGotoh extends SmithWatermanGotohWindowedAffine {
+public class SmithWatermanGotoh extends SmithWatermanGotohWindowedAffine {
 
 	/**
 	 * constructor - default (empty).
 	 */
 	public SmithWatermanGotoh() {
-		// use the supers constructor
 		super(new AffineGap5_1(), new SubCost5_3_Minus3(), Integer.MAX_VALUE);
 	}
 
@@ -50,8 +49,7 @@ public  class SmithWatermanGotoh extends SmithWatermanGotohWindowedAffine {
 	 * @param gapCostFunc
 	 *            - the gap cost function
 	 */
-	public SmithWatermanGotoh(final AbstractAffineGapCost gapCostFunc) {
-		// use the supers constructor
+	public SmithWatermanGotoh(AffineGapCost gapCostFunc) {
 		super(gapCostFunc, new SubCost5_3_Minus3(), Integer.MAX_VALUE);
 	}
 
@@ -63,9 +61,8 @@ public  class SmithWatermanGotoh extends SmithWatermanGotohWindowedAffine {
 	 * @param costFunc
 	 *            - the cost function to use
 	 */
-	public SmithWatermanGotoh(final AbstractAffineGapCost gapCostFunc,
-			final AbstractSubstitutionCost costFunc) {
-		// use the supers constructor
+	public SmithWatermanGotoh(AffineGapCost gapCostFunc,
+			SubstitutionCost costFunc) {
 		super(gapCostFunc, costFunc, Integer.MAX_VALUE);
 	}
 
@@ -75,8 +72,7 @@ public  class SmithWatermanGotoh extends SmithWatermanGotohWindowedAffine {
 	 * @param costFunc
 	 *            - the cost function to use
 	 */
-	public SmithWatermanGotoh(final AbstractSubstitutionCost costFunc) {
-		// use the supers constructor
+	public SmithWatermanGotoh(SubstitutionCost costFunc) {
 		super(new AffineGap5_1(), costFunc, Integer.MAX_VALUE);
 	}
 
@@ -86,8 +82,5 @@ public  class SmithWatermanGotoh extends SmithWatermanGotohWindowedAffine {
 				+ ", getCostfunction()=" + getCostfunction()
 				+ ", getGapFunction()=" + getGapFunction() + "]";
 	}
-	
-	
-
 
 }

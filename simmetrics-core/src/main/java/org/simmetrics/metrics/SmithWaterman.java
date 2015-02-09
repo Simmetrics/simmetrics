@@ -22,8 +22,8 @@
 package org.simmetrics.metrics;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.costfunctions.AbstractSubstitutionCost;
 import org.simmetrics.metrics.costfunctions.SubCost1_Minus2;
+import org.simmetrics.metrics.costfunctions.SubstitutionCost;
 
 import static org.simmetrics.utils.Math.max3;
 import static org.simmetrics.utils.Math.max4;
@@ -36,7 +36,7 @@ import static org.simmetrics.utils.Math.max4;
  */
 public class SmithWaterman implements StringMetric {
 
-	private AbstractSubstitutionCost costFunction;
+	private SubstitutionCost costFunction;
 
 	@Override
 	public String toString() {
@@ -78,7 +78,7 @@ public class SmithWaterman implements StringMetric {
 	 *            - the cost function to use
 	 */
 	public SmithWaterman(final float costG,
-			final AbstractSubstitutionCost costFunc) {
+			final SubstitutionCost costFunc) {
 		// set the gapCost to the given value
 		gapCost = costG;
 		// set the cost func
@@ -91,7 +91,7 @@ public class SmithWaterman implements StringMetric {
 	 * @param costFunc
 	 *            - the cost function to use
 	 */
-	public SmithWaterman(final AbstractSubstitutionCost costFunc) {
+	public SmithWaterman(final SubstitutionCost costFunc) {
 		// set the gapCost to a default value
 		gapCost = 0.5f;
 		// set the cost func

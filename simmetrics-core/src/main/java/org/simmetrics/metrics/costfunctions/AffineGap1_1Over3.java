@@ -21,16 +21,18 @@
 
 package org.simmetrics.metrics.costfunctions;
 
-import org.simmetrics.metrics.costfunctions.AbstractAffineGapCost;
-
 /**
  * AffineGap1_1Over3 implements a Affine Gap cost function.
  * 
  * @author Sam Chapman
  * @version 1.1
  */
-final public class AffineGap1_1Over3 extends AbstractAffineGapCost
-		 {
+final public class AffineGap1_1Over3 implements AffineGapCost {
+
+	@Override
+	public String toString() {
+		return "AffineGap1_1Over3";
+	}
 
 	@Override
 	public final float getCost(final String stringToGap,
@@ -47,7 +49,6 @@ final public class AffineGap1_1Over3 extends AbstractAffineGapCost
 		return Float.MAX_VALUE;
 	}
 
-	
 	@Override
 	public final float getMinCost() {
 		return 0.0f;

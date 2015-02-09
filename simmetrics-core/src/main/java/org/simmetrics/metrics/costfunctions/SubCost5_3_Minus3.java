@@ -35,7 +35,11 @@ import java.util.Set;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class SubCost5_3_Minus3 extends AbstractSubstitutionCost {
+/**
+ * @author M.P. Korstanje
+ *
+ */
+public final class SubCost5_3_Minus3 implements SubstitutionCost {
 
 	/**
 	 * return score.
@@ -126,4 +130,11 @@ public final class SubCost5_3_Minus3 extends AbstractSubstitutionCost {
 	public final float getMinCost() {
 		return CHAR_MISMATCH_MATCH_SCORE;
 	}
+
+	@Override
+	public String toString() {
+		return "SubCost5_3_Minus3";
+	}
+	
+	
 }

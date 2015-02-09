@@ -21,8 +21,8 @@
 package org.simmetrics.metrics;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.costfunctions.AbstractSubstitutionCost;
 import org.simmetrics.metrics.costfunctions.SubCost01;
+import org.simmetrics.metrics.costfunctions.SubstitutionCost;
 import org.simmetrics.utils.Math;
 
 /**
@@ -34,7 +34,7 @@ import org.simmetrics.utils.Math;
  */
 public class Levenshtein implements StringMetric {
 
-	private final AbstractSubstitutionCost costFunction = new SubCost01();
+	private final SubstitutionCost costFunction = new SubCost01();
 
 	@Override
 	public float compare(final String string1, final String string2) {

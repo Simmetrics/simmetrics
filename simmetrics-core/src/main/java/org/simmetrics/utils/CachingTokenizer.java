@@ -21,9 +21,7 @@
 
 package org.simmetrics.utils;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
@@ -97,7 +95,7 @@ public class CachingTokenizer implements TokenizingTokenizer {
 		try {
 			// Return copy of list to preserve state of cached version. Callers
 			// may modify the list.
-			return new ArrayList<>(arrayCache.get(input));
+			return arrayCache.get(input);
 		} catch (ExecutionException e) {
 			throw new IllegalStateException(e);
 		}
@@ -108,7 +106,7 @@ public class CachingTokenizer implements TokenizingTokenizer {
 		try {
 			// Return copy of set to preserve state of cached set. Callers
 			// may modify the set.
-			return new HashSet<>(setCache.get(input));
+			return setCache.get(input);
 		} catch (ExecutionException e) {
 			throw new IllegalStateException(e);
 		}

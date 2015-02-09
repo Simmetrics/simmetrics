@@ -37,220 +37,229 @@ public class StringMetricBuilderTest {
 
 	@Mock
 	private Tokenizer tokenizer;
-	
+
 	@Mock
 	private Predicate<String> predicate;
 
 	@Test
 	public void testStringMetric01() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(stringMetric)
+		StringMetric composed = new StringMetricBuilder().with(stringMetric)
 				.build();
+		System.out.println(composed);
+
+		System.out.println(composed);
 	}
 
 	@Test
 	public void testStringMetricWithSimplifier01() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(stringMetric)
+		StringMetric composed = new StringMetricBuilder().with(stringMetric)
 				.simplify(simplifier)
 				.build();
+		System.out.println(composed);
+		System.out.println(composed);
 	}
-	
+
 	@Test
 	public void testStringMetricWithSimplifier02() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(stringMetric)
+		StringMetric composed = new StringMetricBuilder().with(stringMetric)
 				.simplify(simplifier)
 				.simplify(simplifier)
 				.build();
+		System.out.println(composed);
+		System.out.println(composed);
 	}
-	
+
 	@Test
 	public void testStringMetricWithSimplifier02WithCache() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(stringMetric)
+		StringMetric composed = new StringMetricBuilder().with(stringMetric)
 				.simplify(simplifier)
 				.simplify(simplifier)
 				.setCache(stringCache)
 				.build();
+		System.out.println(composed);
+		System.out.println(composed);
 	}
-	
+
 	@Test
 	public void testStringMetricWithSimplifier01WithCache() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(stringMetric)
+		StringMetric composed = new StringMetricBuilder().with(stringMetric)
 				.simplify(simplifier)
 				.setCache(stringCache)
 				.build();
+		System.out.println(composed);
+		System.out.println(composed);
 	}
 
 	@Test
 	public void testListMetric() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(listMetric)
+		StringMetric composed = new StringMetricBuilder().with(listMetric)
 				.tokenize(tokenizer)
 				.build();
+		System.out.println(composed);
+		System.out.println(composed);
 	}
-	
+
 	@Test
 	public void testListMetricWithFilter() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(listMetric)
+		StringMetric composed = new StringMetricBuilder().with(listMetric)
 				.tokenize(tokenizer)
 				.filter(predicate)
 				.build();
+		System.out.println(composed);
+		System.out.println(composed);
 	}
-	
+
 	@Test
 	public void testListMetricWithSimplifier01() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(listMetric)
+		StringMetric composed = new StringMetricBuilder().with(listMetric)
 				.simplify(simplifier)
 				.tokenize(tokenizer)
 				.build();
+		System.out.println(composed);
+		System.out.println(composed);
 	}
-	
+
 	@Test
 	public void testListMetricWithSimplifier02() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(listMetric)
+		StringMetric composed = new StringMetricBuilder().with(listMetric)
 				.simplify(simplifier)
 				.simplify(simplifier)
 				.tokenize(tokenizer)
 				.build();
+		System.out.println(composed);
 	}
 
 	@Test
 	public void testListMetricWithSimplifier01WithCache() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(listMetric)
+		StringMetric composed = new StringMetricBuilder().with(listMetric)
 				.simplify(simplifier)
 				.setCache(stringCache)
 				.tokenize(tokenizer)
 				.build();
+		System.out.println(composed);
 	}
-	
+
 	@Test
 	public void testListMetricWithSimplifier02WithCache() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(listMetric)
+		StringMetric composed = new StringMetricBuilder().with(listMetric)
 				.simplify(simplifier)
 				.simplify(simplifier)
 				.setCache(stringCache)
 				.tokenize(tokenizer)
 				.build();
+		System.out.println(composed);
 	}
-	
+
 	@Test
 	public void testListMetric02() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(listMetric)
+		StringMetric composed = new StringMetricBuilder().with(listMetric)
 				.tokenize(tokenizer)
 				.tokenize(tokenizer)
 				.build();
+		System.out.println(composed);
 	}
-	
+
 	@Test
 	public void testListMetric01WithCache() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(listMetric)
+		StringMetric composed = new StringMetricBuilder().with(listMetric)
 				.tokenize(tokenizer)
 				.setCache(tokenCache)
 				.build();
+		System.out.println(composed);
 	}
-	
+
 	@Test
 	public void testListMetric02WiCache() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(listMetric)
+		StringMetric composed = new StringMetricBuilder().with(listMetric)
 				.tokenize(tokenizer)
 				.tokenize(tokenizer)
 				.setCache(tokenCache)
 				.build();
+		System.out.println(composed);
 	}
-	
+
 	@Test
 	public void testSetMetric() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(setMetric)
+		StringMetric composed = new StringMetricBuilder().with(setMetric)
 				.tokenize(tokenizer)
 				.build();
+		System.out.println(composed);
 	}
-	
+
 	@Test
 	public void testSetMetricWithFilter() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(setMetric)
+		StringMetric composed = new StringMetricBuilder().with(setMetric)
 				.tokenize(tokenizer)
 				.filter(predicate)
 				.build();
+		System.out.println(composed);
 	}
-	
+
 	@Test
 	public void testSetMetricWithSimplifier01() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(setMetric)
+		StringMetric composed = new StringMetricBuilder().with(setMetric)
 				.simplify(simplifier)
 				.tokenize(tokenizer)
 				.build();
+		System.out.println(composed);
 	}
-	
+
 	@Test
 	public void testSetMetricWithSimplifier02() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(setMetric)
+		StringMetric composed = new StringMetricBuilder().with(setMetric)
 				.simplify(simplifier)
 				.simplify(simplifier)
 				.tokenize(tokenizer)
 				.build();
+		System.out.println(composed);
 	}
 
 	@Test
 	public void testSetMetricWithSimplifier01WithCache() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(setMetric)
+		StringMetric composed = new StringMetricBuilder().with(setMetric)
 				.simplify(simplifier)
 				.setCache(stringCache)
 				.tokenize(tokenizer)
 				.build();
+		System.out.println(composed);
 	}
-	
+
 	@Test
 	public void testSetMetricWithSimplifier02WithCache() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(setMetric)
+		StringMetric composed = new StringMetricBuilder().with(setMetric)
 				.simplify(simplifier)
 				.simplify(simplifier)
 				.setCache(stringCache)
 				.tokenize(tokenizer)
 				.build();
+		System.out.println(composed);
 	}
-	
+
 	@Test
 	public void testSetMetric02() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(setMetric)
+		StringMetric composed = new StringMetricBuilder().with(setMetric)
 				.tokenize(tokenizer)
 				.tokenize(tokenizer)
 				.build();
+		System.out.println(composed);
 	}
-	
+
 	@Test
 	public void testSetMetric01WithCache() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(setMetric)
+		StringMetric composed = new StringMetricBuilder().with(setMetric)
 				.tokenize(tokenizer)
 				.setCache(tokenCache)
 				.build();
+		System.out.println(composed);
 	}
-	
+
 	@Test
 	public void testSetMetric02WiCache() {
-		StringMetric composed = new StringMetricBuilder()
-				.with(setMetric)
+		StringMetric composed = new StringMetricBuilder().with(setMetric)
 				.tokenize(tokenizer)
 				.tokenize(tokenizer)
 				.setCache(tokenCache)
 				.build();
+		System.out.println(composed);
 	}
 }

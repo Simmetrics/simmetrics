@@ -232,7 +232,7 @@ public final class StringMetrics {
 
 	public static StringMetric qGramsDistance() {
 		return new StringMetricBuilder().with(new BlockDistance<String>())
-				.tokenize(QGramExtendedTokenizer.Q3_EXTENDED).build();
+				.tokenize(QGramExtendedTokenizer.Q3).build();
 	}
 
 	public static StringMetric simonWhite() {

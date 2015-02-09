@@ -10,7 +10,6 @@ import org.simmetrics.tokenizers.Tokenizer;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 
 public final class FilteringTokenizer implements Tokenizer {
 

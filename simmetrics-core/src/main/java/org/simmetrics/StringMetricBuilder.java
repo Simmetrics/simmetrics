@@ -28,9 +28,7 @@ import java.util.List;
 
 import org.simmetrics.simplifiers.PassThroughSimplifier;
 import org.simmetrics.simplifiers.Simplifier;
-import org.simmetrics.simplifiers.Simplifying;
 import org.simmetrics.simplifiers.SimplifyingSimplifier;
-import org.simmetrics.tokenizers.QGramTokenizer;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.utils.CachingSimplifier;
 import org.simmetrics.utils.CompositeSimplifier;
@@ -38,12 +36,11 @@ import org.simmetrics.utils.CompositeStringMetric;
 import org.simmetrics.utils.CompositeTokenListMetric;
 import org.simmetrics.utils.CompositeTokenSetMetric;
 import org.simmetrics.utils.FilteringTokenizer;
-import org.simmetrics.utils.RecurisveTokenizer;
+import org.simmetrics.utils.CompositeTokenizer;
 import org.simmetrics.utils.TokenizingTokenizer;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 
 /**
  * Convenience tool to build string metrics.
@@ -184,6 +181,7 @@ public class StringMetricBuilder {
 		 *            a simplifier to add
 		 * @return this for fluent chaining
 		 */
+		@Override
 		public StringSimplifierChainBuilder simplify(Simplifier simplifier) {
 			return new StringSimplifierChainBuilder(this, simplifier);
 		}
@@ -217,6 +215,7 @@ public class StringMetricBuilder {
 			return new TokenizingChainBuilder(this, tokenizer);
 		}
 
+		@Override
 		public TokenSimplifierChainBuilder<T> simplify(Simplifier simplifier) {
 			return new TokenSimplifierChainBuilder<>(this, simplifier);
 		}
@@ -239,6 +238,7 @@ public class StringMetricBuilder {
 			super(metric);
 		}
 
+		@Override
 		StringMetric build() {
 			return new CompositeTokenListMetric(metric, simplifier, tokenizer);
 		}
@@ -258,6 +258,7 @@ public class StringMetricBuilder {
 			super(metric);
 		}
 
+		@Override
 		public StringMetric build() {
 			return new CompositeTokenSetMetric(metric, simplifier, tokenizer);
 		}
@@ -277,6 +278,7 @@ public class StringMetricBuilder {
 
 		}
 
+		@Override
 		public TokenSimplifierChainBuilder<T> simplify(Simplifier simplifier) {
 			super.simplify(simplifier);
 			return this;
@@ -287,6 +289,7 @@ public class StringMetricBuilder {
 			return builder.tokenize(tokenizer);
 		}
 
+		@Override
 		public TokenSimplifierChainBuilder<T> setCache(
 				SimplifyingSimplifier cache) {
 			super.setCache(cache);
@@ -385,7 +388,7 @@ public class StringMetricBuilder {
 
 		public TokenizingChainBuilder tokenize(Tokenizer tokenizer) {
 			Preconditions.checkNotNull(tokenizer);
-			this.tokenizer = new RecurisveTokenizer(this.tokenizer, tokenizer);
+			this.tokenizer = new CompositeTokenizer(this.tokenizer, tokenizer);
 			return this;
 		}
 		

@@ -33,26 +33,26 @@ import com.google.common.base.Strings;
  * @author mpkorstanje
  *
  */
-public class QGramExtendedTokenizer extends QGramTokenizer {
+public class QGramExtendedTokenizer extends AbstractTokenizer {
 
-	public static final QGramExtendedTokenizer Q2_EXTENDED = new QGramExtendedTokenizer(
-			2);
-	public static final QGramExtendedTokenizer Q3_EXTENDED = new QGramExtendedTokenizer(
-			3);
+	public static final QGramExtendedTokenizer Q2 = new QGramExtendedTokenizer(2);
+	public static final QGramExtendedTokenizer Q3 = new QGramExtendedTokenizer(3);
 
 	private final static String DEFAULT_START_PADDING = "#";
 	private final static String DEFAULT_END_PADDING = "#";
 
 	private final String endPadding;
 	private final String startPadding;
+	
+	private final QGramTokenizer tokenizer;
 
 	public QGramExtendedTokenizer(int q, String startPadding, String endPadding) {
-		super(q);
 		Preconditions.checkArgument(!startPadding.isEmpty(),
 				"startPadding may not be empty");
 		Preconditions.checkArgument(!endPadding.isEmpty(),
 				"endPadding may not be empty");
 
+		this.tokenizer = new QGramTokenizer(q);
 		this.startPadding = Strings.repeat(startPadding, q - 1);
 		this.endPadding = Strings.repeat(endPadding, q - 1);
 	}
@@ -71,13 +71,13 @@ public class QGramExtendedTokenizer extends QGramTokenizer {
 
 	@Override
 	public ArrayList<String> tokenizeToList(String input) {
-		return super.tokenizeToList(startPadding + input + endPadding);
+		return tokenizer.tokenizeToList(startPadding + input + endPadding);
 	}
 
 	@Override
 	public String toString() {
 		return "QGramExtendedTokenizer [endPadding=" + endPadding
-				+ ", startPadding=" + startPadding + ", q=" + getQ() + "]";
+				+ ", startPadding=" + startPadding + ", q=" + tokenizer.getQ() + "]";
 	}
 
 }

@@ -31,6 +31,7 @@ import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.SimplifyingSimplifier;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.utils.CachingSimplifier;
+import org.simmetrics.utils.CachingTokenizer;
 import org.simmetrics.utils.CompositeSimplifier;
 import org.simmetrics.utils.CompositeStringMetric;
 import org.simmetrics.utils.CompositeTokenListMetric;
@@ -41,7 +42,6 @@ import org.simmetrics.utils.TokenizingTokenizer;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
-import com.google.common.cache.CacheBuilder;
 
 /**
  * Convenience tool to build string metrics.
@@ -169,7 +169,8 @@ public class StringMetricBuilder {
 
 	}
 
-	public final class CompositeStringMetricBuilder extends SimplyfingBuilder<StringMetric> {
+	public final class CompositeStringMetricBuilder extends
+			SimplyfingBuilder<StringMetric> {
 
 		public CompositeStringMetricBuilder(StringMetric metric) {
 			super(metric);
@@ -198,7 +199,8 @@ public class StringMetricBuilder {
 
 	}
 
-	public abstract class CollectionMetricBuilder<T> extends SimplyfingBuilder<T> {
+	public abstract class CollectionMetricBuilder<T> extends
+			SimplyfingBuilder<T> {
 
 		protected Tokenizer tokenizer;
 
@@ -240,7 +242,7 @@ public class StringMetricBuilder {
 		}
 
 		@Override
-		StringMetric build() {
+		CompositeTokenListMetric build() {
 			return new CompositeTokenListMetric(metric, simplifier, tokenizer);
 		}
 	}
@@ -260,7 +262,7 @@ public class StringMetricBuilder {
 		}
 
 		@Override
-		public StringMetric build() {
+		public CompositeTokenSetMetric build() {
 			return new CompositeTokenSetMetric(metric, simplifier, tokenizer);
 		}
 
@@ -296,10 +298,27 @@ public class StringMetricBuilder {
 			super.setCache(cache);
 			return this;
 		}
+		
+		@Override
+		public TokenSimplifierChainBuilder<T> setCache(int initialCapacity,
+				int maximumSize) {
+			super.setCache(initialCapacity, maximumSize);
+			return this;
+		}
+		
+		@Override
+		public TokenSimplifierChainBuilder<T> setCache() {
+			super.setCache();
+			return this;
+		}
+		
+		
 
 	}
 
 	public abstract class SimplifierChainBuilder {
+
+		private static final int CACHE_SIZE = 2;
 
 		private final List<Simplifier> simplifiers = new ArrayList<>();
 
@@ -319,6 +338,15 @@ public class StringMetricBuilder {
 			Preconditions.checkNotNull(cache);
 			this.cache = cache;
 			return this;
+		}
+
+		public SimplifierChainBuilder setCache(int initialCapacity,
+				int maximumSize) {
+			return setCache(new CachingSimplifier(initialCapacity, maximumSize));
+		}
+
+		public SimplifierChainBuilder setCache() {
+			return setCache(CACHE_SIZE, CACHE_SIZE);
 		}
 
 		Simplifier innerBuild() {
@@ -355,11 +383,24 @@ public class StringMetricBuilder {
 			super.simplify(simplifier);
 			return this;
 		}
-		
+
 		@Override
 		public StringSimplifierChainBuilder setCache(SimplifyingSimplifier cache) {
 			super.setCache(cache);
-			return this; 
+			return this;
+		}
+		
+		@Override
+		public StringSimplifierChainBuilder setCache(int initialCapacity,
+				int maximumSize) {
+			super.setCache(initialCapacity, maximumSize);
+			return this;
+		}
+		
+		@Override
+		public StringSimplifierChainBuilder setCache() {
+			super.setCache();
+			return this;
 		}
 
 		public StringMetric build() {
@@ -370,6 +411,7 @@ public class StringMetricBuilder {
 	}
 
 	public final class TokenizingChainBuilder {
+		private static final int CACHE_SIZE = 2;
 
 		private final CollectionMetricBuilder<?> builder;
 
@@ -392,7 +434,7 @@ public class StringMetricBuilder {
 			this.tokenizer = new CompositeTokenizer(this.tokenizer, tokenizer);
 			return this;
 		}
-		
+
 		public TokenizingChainBuilder filter(Predicate<String> predicate) {
 			Preconditions.checkNotNull(predicate);
 			this.tokenizer = new FilteringTokenizer(this.tokenizer, predicate);
@@ -404,16 +446,23 @@ public class StringMetricBuilder {
 			this.cache = cache;
 			return this;
 		}
+		
+		public TokenizingChainBuilder setCache(){
+			return setCache(CACHE_SIZE,CACHE_SIZE);
+		}
+
+		private TokenizingChainBuilder setCache(int initialCapacity, int maximumSize) {
+			return setCache(new CachingTokenizer(initialCapacity,maximumSize));
+		}
 
 		private Tokenizer innerBuild() {
 
-			Tokenizer t = tokenizer;
 			if (cache != null) {
-				cache.setTokenizer(t);
-				t = cache;
+				cache.setTokenizer(tokenizer);
+				return cache;
+			} else {
+				return tokenizer;
 			}
-
-			return t;
 		}
 
 		public StringMetric build() {

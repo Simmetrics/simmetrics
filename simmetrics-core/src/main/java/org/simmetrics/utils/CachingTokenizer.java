@@ -19,7 +19,6 @@
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package org.simmetrics.utils;
 
 import java.util.ArrayList;
@@ -40,33 +39,37 @@ public class CachingTokenizer implements TokenizingTokenizer {
 
 	private Tokenizer tokenizer;
 
-	private final LoadingCache<String, List<String>> arrayCache = CacheBuilder
-			.newBuilder().initialCapacity(CACHE_SIZE).maximumSize(CACHE_SIZE)
-			.build(new CacheLoader<String, List<String>>() {
+	private final LoadingCache<String, List<String>> arrayCache;
 
-				@Override
-				public List<String> load(String key) throws Exception {
-					return getTokenizer().tokenizeToList(key);
-				}
+	private final LoadingCache<String, Set<String>> setCache;
 
-			});
+	public CachingTokenizer(int initialCapacity, int maximumSize) {
+		this.arrayCache = CacheBuilder.newBuilder()
+				.initialCapacity(initialCapacity)
+				.maximumSize(maximumSize)
+				.build(new CacheLoader<String, List<String>>() {
 
-	private final LoadingCache<String, Set<String>> setCache = CacheBuilder
-			.newBuilder().initialCapacity(CACHE_SIZE).maximumSize(CACHE_SIZE)
-			.build(new CacheLoader<String, Set<String>>() {
+					@Override
+					public List<String> load(String key) throws Exception {
+						return getTokenizer().tokenizeToList(key);
+					}
 
-				@Override
-				public Set<String> load(String key) throws Exception {
-					return getTokenizer().tokenizeToSet(key);
-				}
+				});
+		this.setCache = CacheBuilder.newBuilder()
+				.initialCapacity(initialCapacity)
+				.maximumSize(maximumSize)
+				.build(new CacheLoader<String, Set<String>>() {
 
-			});
+					@Override
+					public Set<String> load(String key) throws Exception {
+						return getTokenizer().tokenizeToSet(key);
+					}
 
-	public CachingTokenizer() {
-		
+				});
 	}
 
 	public CachingTokenizer(Tokenizer tokenizer) {
+		this(CACHE_SIZE, CACHE_SIZE);
 		this.tokenizer = tokenizer;
 	}
 

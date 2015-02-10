@@ -22,7 +22,12 @@ package org.simmetrics.simplifiers;
 
 import static org.simmetrics.utils.Math.clamp;
 
-
+/**
+ * Simplifies a string by computing its Soundex code.
+ * 
+ * @author M.P. Korstanje
+ *
+ */
 public class SoundexSimplifier implements Simplifier {
 
 	/**
@@ -42,11 +47,8 @@ public class SoundexSimplifier implements Simplifier {
 	}
 
 	/**
-	 * calculates a soundex code for a given string/name.
+	 * Calculates a soundex code for a given string/name.
 	 *
-	 * @param wordString
-	 * @param length
-	 *            - the length of the soundex code to create
 	 * @return a soundex code for a given string/name
 	 */
 	@Override
@@ -64,6 +66,7 @@ public class SoundexSimplifier implements Simplifier {
 
 		// Clean and tidy
 		// remove non-chars whitespace and spaces
+		// FIXME: Slow code
 		wordStr = wordStr.replaceAll("[^a-z]", "");
 		wordStr = wordStr.replaceAll("\\s+", ""); //
 
@@ -90,6 +93,7 @@ public class SoundexSimplifier implements Simplifier {
 
 		// Match one or more characters, repeating characters are reduced to
 		// a single digit.
+		// FIXME: Slow code
 		wordStr = wordStr.replaceAll("[aeiouwh]+", "0");
 		wordStr = wordStr.replaceAll("[bpfv]+", "1");
 		wordStr = wordStr.replaceAll("[cskgjqxz]+", "2");
@@ -100,6 +104,7 @@ public class SoundexSimplifier implements Simplifier {
 
 		// Drop first letter code and remove zeros
 		wordStr = wordStr.substring(1).replaceAll("0", "");
+		// FIXME: This will not work for all soundex lenghts
 		wordStr += "000000000000000000"; /* pad with zeros on right */
 		// Add first letter of word and size to taste
 		wordStr = firstLetter + "-" + wordStr.substring(0, length - 2);
@@ -110,6 +115,5 @@ public class SoundexSimplifier implements Simplifier {
 	public String toString() {
 		return "SoundexSimplifier [length=" + length + "]";
 	}
-	
-	
+
 }

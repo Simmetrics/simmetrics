@@ -20,31 +20,10 @@
  */
 package org.simmetrics.utils;
 
-import org.simmetrics.StringMetric;
-import org.simmetrics.StringMetrics;
 import org.simmetrics.simplifiers.Simplifier;
 
 /**
- * Interface for classes that use a {@link Simplifier} to normalize strings.
- * These methods can be called by batching-processing systems to inject a
- * {@link CachingSimplifier}s.
- * 
- * For the benefit of these caching systems, implementations should take care to
- * call the simplifier exactly once for each argument.
- * 
- * <pre>
- * <code>
- * 
- * 	public float compare(String a, String b) {
- * 		return compareSimplified(simplifier.simplify(a), simplifier.simplify(b));
- * 	}
- * 
- * </code>
- * </pre>
- * 
- * 
- * @see StringMetrics#compare(StringMetric, String, String...)
- * @see StringMetrics#compare(StringMetric, String, java.util.List)
+ * Interface for classes that use a {@link Simplifier}.
  * 
  * @author mpkorstanje
  *
@@ -52,17 +31,17 @@ import org.simmetrics.simplifiers.Simplifier;
 public interface Simplifying {
 
 	/**
-	 * Sets the simplifier. The simplifier may not be null.
+	 * Sets the simplifier. May not be null.
 	 * 
 	 * @param simplifier
-	 *            a non null simplifier to set
+	 *            a simplifier to set
 	 */
 	public void setSimplifier(Simplifier simplifier);
 
 	/**
-	 * Gets the simplifier. The simplifier may not be null.
+	 * Gets the simplifier. When null no simplifier was set.
 	 * 
-	 * @return the a non-null simplifier
+	 * @return the simplifier or null when not set
 	 */
 	public Simplifier getSimplifier();
 

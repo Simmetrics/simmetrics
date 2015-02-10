@@ -24,7 +24,12 @@ package org.simmetrics.simplifiers;
 
 import org.simmetrics.utils.Simplifying;
 
-
+/**
+ * A simplifier that delegates the work to another simplifier.
+ * 
+ * @author M.P. Korstanje
+ *
+ */
 public interface SimplifyingSimplifier extends Simplifier, Simplifying {
 
 	// Empty: because composite interface

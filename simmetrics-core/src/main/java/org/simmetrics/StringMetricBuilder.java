@@ -95,10 +95,9 @@ import com.google.common.base.Predicate;
  * more effectively for matching words.
  * 
  * <p>
- * Tokenization can be done by any class implementing the
- * {@link TokenizingTokenizer} interface and is required for all metrics that
- * work on collections of tokens rather then whole strings. These are
- * {@link ListMetric}s and {@link SetMetric}s
+ * Tokenization can be done by any class implementing the {@link Tokenizer}
+ * interface and is required for all metrics that work on collections of tokens
+ * rather then whole strings; {@link ListMetric}s and {@link SetMetric}s
  * 
  * <h2>Filtering</h2>
  * 

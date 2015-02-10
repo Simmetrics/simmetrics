@@ -58,7 +58,7 @@ public class EuclideanDistance<T> implements ListMetric<T> {
 		return (totalPossible - totalDistance) / totalPossible;
 	}
 
-	public float distance(final List<T> a, final List<T> b) {
+	private static <T> float distance(final List<T> a, final List<T> b) {
 		final Set<T> all = new HashSet<>();
 		all.addAll(a);
 		all.addAll(b);

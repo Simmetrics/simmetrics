@@ -39,6 +39,11 @@ public class NeedlemanWunch implements StringMetric {
 
 	private final float gapCost;
 
+	/**
+	 * Constructs a NeedlemanWunch metric with a gap cost of 2.0 and a
+	 * substitution cost of 1.0.
+	 *
+	 */
 	public NeedlemanWunch() {
 		this(2.0f, new SubCost01());
 	}
@@ -139,7 +144,9 @@ public class NeedlemanWunch implements StringMetric {
 				float cost = costFunction.getCost(s, i - 1, t, j - 1);
 
 				// find lowest cost at point from three possible
-				d[i][j] = min3(d[i - 1][j] + gapCost, d[i][j - 1] + gapCost,
+				d[i][j] = min3(
+						d[i - 1][j] + gapCost,
+						d[i][j - 1] + gapCost,
 						d[i - 1][j - 1] + cost);
 			}
 		}

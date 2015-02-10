@@ -31,6 +31,11 @@ import static org.simmetrics.utils.Math.max4;
 /**
  * Implements the Smith-Waterman edit distance function.
  * 
+ * @see <a
+ *      href="http://www.gen.tcd.ie/molevol/nwswat.html for details">Needleman-Wunsch
+ *      Algorithm for Sequence Similarity Searches</a>
+ *
+ * 
  * @author Sam Chapman
  * @version 1.1
  */
@@ -118,15 +123,7 @@ public class SmithWaterman implements StringMetric {
 		}
 	}
 
-	/**
-	 * Implements the Smith-Waterman distance function
-	 * 
-	 * @see http://www.gen.tcd.ie/molevol/nwswat.html for details .
-	 *
-	 * @param s
-	 * @param t
-	 * @return the Smith-Waterman distance for the given strings
-	 */
+
 	private float getUnNormalisedSimilarity(final String s, final String t) {
 		final float[][] d; // matrix
 		final int n; // length of s

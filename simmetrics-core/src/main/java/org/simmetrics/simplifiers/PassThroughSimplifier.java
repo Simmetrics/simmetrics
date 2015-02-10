@@ -19,10 +19,15 @@
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package org.simmetrics.simplifiers;
 
-public final class PassThroughSimplifier implements Simplifier{
+/**
+ * Simplifier that does not modify a given string.
+ * 
+ * @author M.P. Korstanje
+ *
+ */
+public final class PassThroughSimplifier implements Simplifier {
 
 	@Override
 	public String simplify(String input) {
@@ -33,7 +38,5 @@ public final class PassThroughSimplifier implements Simplifier{
 	public String toString() {
 		return "[]";
 	}
-	
-	
 
 }

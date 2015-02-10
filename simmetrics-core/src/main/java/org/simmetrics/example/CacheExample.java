@@ -40,7 +40,7 @@ public class CacheExample {
 		StringMetric metric = new StringMetricBuilder()
 				.with(new CosineSimilarity<String>())
 				.simplify(new CaseSimplifier.Lower())
-				.setCache()
+				.addCache()
 				.tokenize(QGramTokenizer.Q2)
 				.setCache()
 				.build();

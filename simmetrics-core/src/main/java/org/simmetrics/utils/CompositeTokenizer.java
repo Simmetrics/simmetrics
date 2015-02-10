@@ -11,22 +11,27 @@ import com.google.common.base.Joiner;
 
 public final class CompositeTokenizer implements Tokenizer {
 
-	private final Tokenizer first, second;
+	private final List<Tokenizer> tokenizers;
 
-	public CompositeTokenizer(Tokenizer first, Tokenizer second) {
-		this.first = first;
-		this.second = second;
+	public CompositeTokenizer(List<Tokenizer> tokenizers) {
+		this.tokenizers = tokenizers;
 	}
 
 	@Override
 	public List<String> tokenizeToList(final String input) {
-		final List<String> list = new ArrayList<>(input.length());
-
-		for (String word : first.tokenizeToList(input)) {
-			list.addAll(second.tokenizeToList(word));
+		List<String> tokens = new ArrayList<>(1);
+		tokens.add(input);
+		
+		List<String> newTokens = new ArrayList<>(input.length());
+		for(Tokenizer t : tokenizers){
+			for(String token : tokens){
+				newTokens.addAll(t.tokenizeToList(token));
+			}
+			tokens = newTokens;
+			newTokens = new ArrayList<>(input.length());
 		}
-
-		return list;
+		
+		return tokens;
 	}
 
 	@Override
@@ -36,18 +41,24 @@ public final class CompositeTokenizer implements Tokenizer {
 		// words early means these don't have to be tokenized multiple
 		// times. Increases performance.
 
-		final Set<String> set = new HashSet<>(input.length());
-
-		for (String word : first.tokenizeToSet(input)) {
-			set.addAll(second.tokenizeToList(word));
+		Set<String> tokens = new HashSet<>(1);
+		tokens.add(input);
+		
+		Set<String> newTokens = new HashSet<>(input.length());
+		for(Tokenizer t : tokenizers){
+			for(String token : tokens){
+				newTokens.addAll(t.tokenizeToList(token));
+			}
+			tokens = newTokens;
+			newTokens = new HashSet<>(input.length());
 		}
-
-		return set;
+		
+		return tokens;
 	}
 
 	@Override
 	public String toString() {
-		return Joiner.on(" -> ").join(first, second);
+		return Joiner.on(" -> ").join(tokenizers);
 	}
 
 }

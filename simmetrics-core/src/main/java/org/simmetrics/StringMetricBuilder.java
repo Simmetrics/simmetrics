@@ -47,29 +47,32 @@ import com.google.common.base.Predicate;
  * Convenience tool to build string metrics.
  * 
  * <p>
- * String metrics build this way supports a general work flow that consists of
- * simplification, tokenization and comparison. Where applicable it should be
- * possible to construct a similarity metric with any simplifier, tokenizer. It
- * is also possible to add a cache for repeat operations.
+ * To improve the effectiveness of a comparison different combinations of
+ * simplification, tokenization, filtering and comparison schemes can be tried.
+ * This builder supports the creation of a work flow that applies
+ * simplification, tokenization, filtering and comparison.
+ * 
+ * <h2>Example</h2>
+ * 
  * 
  * <pre>
  * <code>
  * {@code
  * 	StringMetric metric = new StringMetricBuilder()
- * 			.with(new CosineSimilarity<String>())
- * 			.addSimplifier(new NonWordCharacterSimplifier())
- * 			.addSimplifier(new CaseSimplifier.Lower())
- * 			.setTokenizer(new WhitespaceTokenizer()).build();
+ * 		.with(new CosineSimilarity<String>())
+ * 		.addSimplifier(new NonWordCharacterSimplifier())
+ * 		.addSimplifier(new CaseSimplifier.Lower())
+ * 		.setTokenizer(new WhitespaceTokenizer()).build();
  * }
  * </code>
  * </pre>
  * 
  * <h2>Simplification</h2>
  * 
- * Simplification increases the effectiveness of a metric by removing noise. The
- * process maps a a complex string such as
- * <code>Chilpéric II son of Childeric II</code> to a simpler format
- * <code>chilperic ii son of childeric ii</code>. This allows string from
+ * Simplification increases the effectiveness of a metric by removing noise and
+ * reducing the dimensionality of the problem. The process maps a a complex
+ * string such as <code>Chilpéric II son of Childeric II</code> to a simpler
+ * format <code>chilperic ii son of childeric ii</code>. This allows string from
  * different sources to be compared in the same normal form.
  * 
  * <p>
@@ -78,8 +81,11 @@ import com.google.common.base.Predicate;
  * 
  * <h2>Tokenization</h2>
  * 
- * Tokenization cuts up a string into tokens e.g. <code>[chilperic, ii, son, of,
- * childeric, ii]</code>. Tokenization can also be done recursively
+ * Tokenization cuts up a string into tokens e.g.
+ * <code>chilperic ii son of childeric ii</code> is tokenized into
+ * <code>[chilperic, ii, son, of,
+ * childeric, ii]</code>. Tokenization can also be done repeatedly by tokenizing
+ * the individual tokens e.g.
  * <code>[ch,hi,il,il,lp,pe,er,ri,ic, ii, so,on, of, ch,hi,il,ld,de,er,ri,ic, ii]</code>
  * 
  * <p>
@@ -89,20 +95,36 @@ import com.google.common.base.Predicate;
  * more effectively for matching words.
  * 
  * <p>
- * Tokenization is required for all metrics that work on collections of tokens
- * rather then whole strings. These are {@link ListMetric}s and
- * {@link SetMetric}s
- * 
- * <p>
  * Tokenization can be done by any class implementing the
- * {@link TokenizingTokenizer} interface.
+ * {@link TokenizingTokenizer} interface and is required for all metrics that
+ * work on collections of tokens rather then whole strings. These are
+ * {@link ListMetric}s and {@link SetMetric}s
+ * 
+ * <h2>Filtering</h2>
+ * 
+ * Filtering removes tokens that should not be considered for comparison. For
+ * example removing all tokens with a size less then 3 from
+ * <code>[chilperic, ii, son, of,
+ * childeric, ii]</code> results in <code>[chilperic, son, childeric]</code>
+ * <p>
+ * By removing noise, common words, ect. filtering reduces the dimensionality of
+ * the tokenspace possibly increasing the effectiveness of a metric.
+ * <p>
+ * A Filter can be implemented by implementing a filter {@link Predicate}.
  * 
  * <h2>Measurement</h2>
  * 
- * Once simplified and possibly tokenized two strings can be compared. The exact
- * way which is determined by a metric. Metrics can either work on lists, sets
- * or directly work on strings. Any class implementing {@link StringMetric},
- * &nbsp;{@link ListMetric} or {@link SetMetric} can be used.
+ * Once simplified and possibly tokenized and filtered two strings can be
+ * compared. The exact way which is determined by a metric. Metrics can either
+ * work on lists, sets or directly work on strings. Any class implementing
+ * {@link StringMetric}, &nbsp;{@link ListMetric} or {@link SetMetric} can be
+ * used.
+ * 
+ * 
+ * <h2>The DSL</h2>
+ * 
+ * TODO: Document the syntax of the DSL.
+ * 
  * 
  * @author mpkorstanje
  *
@@ -143,13 +165,6 @@ public class StringMetricBuilder {
 
 	}
 
-	/**
-	 * Convenience tool to add simplification and caching support to a string
-	 * metric.
-	 * 
-	 * @author mpkorstanje
-	 *
-	 */
 	public abstract class SimplyfingBuilder<T> {
 
 		protected final T metric;
@@ -293,26 +308,24 @@ public class StringMetricBuilder {
 		}
 
 		@Override
-		public TokenSimplifierChainBuilder<T> setCache(
+		public TokenSimplifierChainBuilder<T> addCache(
 				SimplifyingSimplifier cache) {
-			super.setCache(cache);
+			super.addCache(cache);
 			return this;
 		}
-		
+
 		@Override
-		public TokenSimplifierChainBuilder<T> setCache(int initialCapacity,
+		public TokenSimplifierChainBuilder<T> addCache(int initialCapacity,
 				int maximumSize) {
-			super.setCache(initialCapacity, maximumSize);
+			super.addCache(initialCapacity, maximumSize);
 			return this;
 		}
-		
+
 		@Override
-		public TokenSimplifierChainBuilder<T> setCache() {
-			super.setCache();
+		public TokenSimplifierChainBuilder<T> addCache() {
+			super.addCache();
 			return this;
 		}
-		
-		
 
 	}
 
@@ -321,8 +334,6 @@ public class StringMetricBuilder {
 		private static final int CACHE_SIZE = 2;
 
 		private final List<Simplifier> simplifiers = new ArrayList<>();
-
-		private SimplifyingSimplifier cache;
 
 		public SimplifierChainBuilder(Simplifier simplifier) {
 			checkNotNull(simplifier);
@@ -334,35 +345,36 @@ public class StringMetricBuilder {
 			return this;
 		}
 
-		public SimplifierChainBuilder setCache(SimplifyingSimplifier cache) {
+		public SimplifierChainBuilder addCache(SimplifyingSimplifier cache) {
 			Preconditions.checkNotNull(cache);
-			this.cache = cache;
+
+			Simplifier simplifier = innerBuild();
+			cache.setSimplifier(simplifier);
+			simplifiers.add(simplifier);
+
 			return this;
 		}
 
-		public SimplifierChainBuilder setCache(int initialCapacity,
+		public SimplifierChainBuilder addCache(int initialCapacity,
 				int maximumSize) {
-			return setCache(new CachingSimplifier(initialCapacity, maximumSize));
+			return addCache(new CachingSimplifier(initialCapacity, maximumSize));
 		}
 
-		public SimplifierChainBuilder setCache() {
-			return setCache(CACHE_SIZE, CACHE_SIZE);
+		public SimplifierChainBuilder addCache() {
+			return addCache(CACHE_SIZE, CACHE_SIZE);
 		}
 
 		Simplifier innerBuild() {
-			Simplifier s;
+			Simplifier simplifier;
+			
 			if (simplifiers.size() == 1) {
-				s = simplifiers.get(0);
+				simplifier = simplifiers.get(0);
 			} else {
-				s = new CompositeSimplifier(simplifiers);
+				simplifier = new CompositeSimplifier(new ArrayList<>(simplifiers));
 			}
-
-			if (cache != null) {
-				cache.setSimplifier(s);
-				s = cache;
-			}
-
-			return s;
+			
+			simplifiers.clear();
+			return simplifier;
 		}
 
 	}
@@ -385,21 +397,21 @@ public class StringMetricBuilder {
 		}
 
 		@Override
-		public StringSimplifierChainBuilder setCache(SimplifyingSimplifier cache) {
-			super.setCache(cache);
+		public StringSimplifierChainBuilder addCache(SimplifyingSimplifier cache) {
+			super.addCache(cache);
 			return this;
 		}
-		
+
 		@Override
-		public StringSimplifierChainBuilder setCache(int initialCapacity,
+		public StringSimplifierChainBuilder addCache(int initialCapacity,
 				int maximumSize) {
-			super.setCache(initialCapacity, maximumSize);
+			super.addCache(initialCapacity, maximumSize);
 			return this;
 		}
-		
+
 		@Override
-		public StringSimplifierChainBuilder setCache() {
-			super.setCache();
+		public StringSimplifierChainBuilder addCache() {
+			super.addCache();
 			return this;
 		}
 
@@ -415,9 +427,7 @@ public class StringMetricBuilder {
 
 		private final CollectionMetricBuilder<?> builder;
 
-		private Tokenizer tokenizer;
-
-		private TokenizingTokenizer cache;
+		private final List<Tokenizer> tokenizers = new ArrayList<>();
 
 		public TokenizingChainBuilder(CollectionMetricBuilder<?> builder,
 				Tokenizer tokenizer) {
@@ -425,44 +435,45 @@ public class StringMetricBuilder {
 			checkNotNull(tokenizer);
 
 			this.builder = builder;
-			this.tokenizer = tokenizer;
+			this.tokenizers.add(tokenizer);
 
 		}
 
 		public TokenizingChainBuilder tokenize(Tokenizer tokenizer) {
 			Preconditions.checkNotNull(tokenizer);
-			this.tokenizer = new CompositeTokenizer(this.tokenizer, tokenizer);
+			this.tokenizers.add(tokenizer);
 			return this;
 		}
 
 		public TokenizingChainBuilder filter(Predicate<String> predicate) {
 			Preconditions.checkNotNull(predicate);
-			this.tokenizer = new FilteringTokenizer(this.tokenizer, predicate);
+			Tokenizer tokenizer = innerBuild();
+			this.tokenizers.add(new FilteringTokenizer(tokenizer, predicate));
 			return this;
 		}
 
 		public TokenizingChainBuilder setCache(TokenizingTokenizer cache) {
 			Preconditions.checkNotNull(cache);
-			this.cache = cache;
+			Tokenizer tokenizer = innerBuild();
+			cache.setTokenizer(tokenizer);
+			tokenizers.add(cache);
+
 			return this;
 		}
-		
-		public TokenizingChainBuilder setCache(){
-			return setCache(CACHE_SIZE,CACHE_SIZE);
+
+		public TokenizingChainBuilder setCache() {
+			return setCache(CACHE_SIZE, CACHE_SIZE);
 		}
 
-		private TokenizingChainBuilder setCache(int initialCapacity, int maximumSize) {
-			return setCache(new CachingTokenizer(initialCapacity,maximumSize));
+		public TokenizingChainBuilder setCache(int initialCapacity,
+				int maximumSize) {
+			return setCache(new CachingTokenizer(initialCapacity, maximumSize));
 		}
 
 		private Tokenizer innerBuild() {
-
-			if (cache != null) {
-				cache.setTokenizer(tokenizer);
-				return cache;
-			} else {
-				return tokenizer;
-			}
+			CompositeTokenizer compositeTokenizer = new CompositeTokenizer(new ArrayList<>(tokenizers));
+			tokenizers.clear();
+			return compositeTokenizer;
 		}
 
 		public StringMetric build() {

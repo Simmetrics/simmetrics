@@ -18,11 +18,11 @@
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.simmetrics.simplifiers;
+package org.simmetrics.utils;
 
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetrics;
-import org.simmetrics.utils.CachingSimplifier;
+import org.simmetrics.simplifiers.Simplifier;
 
 /**
  * Interface for classes that use a {@link Simplifier} to normalize strings.

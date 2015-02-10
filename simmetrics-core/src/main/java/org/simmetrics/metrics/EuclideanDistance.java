@@ -31,8 +31,8 @@ import static java.lang.Math.sqrt;
 
 /**
  * Implements the Euclidean Distance algorithm providing a similarity measure
- * between two strings using the vector space of combined terms as the
- * dimensions"
+ * between two lists using the vector space of combined terms as the
+ * dimensions.
  *
  * @author Sam Chapman
  * @param <T>

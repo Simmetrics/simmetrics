@@ -27,10 +27,9 @@ import org.simmetrics.SetMetric;
 
 /**
  * Implements the DiceSimilarity algorithm providing a similarity measure
- * between two strings using the vector space of presented tokens.
- * 
- * Dices coefficient = (2*Common tokens) / (Number of tokens in String1 + Number
- * of tokens in String2).
+ * between two sets using the vector space of presented tokens.
+ * <p>
+ * <code>dices coefficient = (2 * |a or b |) / (|a|  + |b|)</code>
  * 
  * @author Sam Chapman
  * @param <T>

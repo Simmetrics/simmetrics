@@ -27,7 +27,7 @@ import org.simmetrics.utils.Math;
 
 /**
  * Implements the basic Levenshtein algorithm providing a similarity measure
- * between two strings
+ * between two strings.
  * 
  * @author Sam Chapman
  * @version 1.1

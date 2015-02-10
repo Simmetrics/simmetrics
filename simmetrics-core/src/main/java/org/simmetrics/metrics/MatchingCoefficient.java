@@ -27,7 +27,7 @@ import static java.lang.Math.max;
 
 /**
  * Implements the Matching Coefficient algorithm providing a similarity measure
- * between two strings
+ * between two lists.
  * 
  * @author Sam Chapman
  * 

@@ -74,7 +74,7 @@ public class StringMetricBuilderTest {
 		StringMetric composed = new StringMetricBuilder().with(stringMetric)
 				.simplify(simplifier)
 				.simplify(simplifier)
-				.setCache(stringCache)
+				.addCache(stringCache)
 				.build();
 		System.out.println(composed);
 		System.out.println(composed);
@@ -84,7 +84,7 @@ public class StringMetricBuilderTest {
 	public void testStringMetricWithSimplifier01WithCache() {
 		StringMetric composed = new StringMetricBuilder().with(stringMetric)
 				.simplify(simplifier)
-				.setCache(stringCache)
+				.addCache(stringCache)
 				.build();
 		System.out.println(composed);
 		System.out.println(composed);
@@ -133,7 +133,7 @@ public class StringMetricBuilderTest {
 	public void testListMetricWithSimplifier01WithCache() {
 		StringMetric composed = new StringMetricBuilder().with(listMetric)
 				.simplify(simplifier)
-				.setCache(stringCache)
+				.addCache(stringCache)
 				.tokenize(tokenizer)
 				.build();
 		System.out.println(composed);
@@ -144,7 +144,7 @@ public class StringMetricBuilderTest {
 		StringMetric composed = new StringMetricBuilder().with(listMetric)
 				.simplify(simplifier)
 				.simplify(simplifier)
-				.setCache(stringCache)
+				.addCache(stringCache)
 				.tokenize(tokenizer)
 				.build();
 		System.out.println(composed);
@@ -218,7 +218,7 @@ public class StringMetricBuilderTest {
 	public void testSetMetricWithSimplifier01WithCache() {
 		StringMetric composed = new StringMetricBuilder().with(setMetric)
 				.simplify(simplifier)
-				.setCache(stringCache)
+				.addCache(stringCache)
 				.tokenize(tokenizer)
 				.build();
 		System.out.println(composed);
@@ -229,7 +229,7 @@ public class StringMetricBuilderTest {
 		StringMetric composed = new StringMetricBuilder().with(setMetric)
 				.simplify(simplifier)
 				.simplify(simplifier)
-				.setCache(stringCache)
+				.addCache(stringCache)
 				.tokenize(tokenizer)
 				.build();
 		System.out.println(composed);

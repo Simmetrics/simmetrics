@@ -29,7 +29,7 @@ import static org.simmetrics.utils.Math.max3;
 import static org.simmetrics.utils.Math.max4;
 
 /**
- * Implements the Smith-Waterman edit distance function
+ * Implements the Smith-Waterman edit distance function.
  * 
  * @author Sam Chapman
  * @version 1.1
@@ -77,8 +77,7 @@ public class SmithWaterman implements StringMetric {
 	 * @param costFunc
 	 *            - the cost function to use
 	 */
-	public SmithWaterman(final float costG,
-			final SubstitutionCost costFunc) {
+	public SmithWaterman(final float costG, final SubstitutionCost costFunc) {
 		// set the gapCost to the given value
 		gapCost = costG;
 		// set the cost func
@@ -189,7 +188,10 @@ public class SmithWaterman implements StringMetric {
 				cost = costFunction.getCost(s, i, t, j);
 
 				// find lowest cost at point from three possible
-				d[i][j] = max4(0, d[i - 1][j] - gapCost, d[i][j - 1] - gapCost,
+				d[i][j] = max4(
+						0,
+						d[i - 1][j] - gapCost,
+						d[i][j - 1] - gapCost,
 						d[i - 1][j - 1] + cost);
 				// update max possible if available
 				if (d[i][j] > maxSoFar) {

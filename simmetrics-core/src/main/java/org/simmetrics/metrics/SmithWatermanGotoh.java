@@ -28,7 +28,7 @@ import org.simmetrics.metrics.costfunctions.SubstitutionCost;
 
 /**
  * Implements the Gotoh extension of the Smith-Waterman method incorporating
- * affine gaps in the strings
+ * affine gaps in the strings.
  * 
  * 
  * @author Sam Chapman

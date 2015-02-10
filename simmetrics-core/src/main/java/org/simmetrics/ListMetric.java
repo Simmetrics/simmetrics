@@ -21,10 +21,37 @@
 
 package org.simmetrics;
 
+import java.util.Collections;
 import java.util.List;
-
+/**
+ * Measures the similarity between two lists. The measurement results in a value
+ * between 0 and 1 inclusive. A value of zero indicates that the lists are
+ * dissimilar, a value of 1 indicates they are similar.
+ * 
+ * <p>
+ * The elements in the lists have to implement {@link Object#hashCode()} and
+ * {@link Object#equals(Object)}.
+ * <p>
+ * Implementations may not modify the contents of the set. Sets should be
+ * treated as if wrapped by {@link Collections#unmodifiableList(List)}.
+ * 
+ * @author mpkorstanje
+ * @param <T>
+ *            the type of elements contained in the lists
+ *
+ */
 public interface ListMetric<T> {
-	
+	/**
+	 * Measures the similarity between lists a and b. The measurement results in
+	 * a value between 0 and 1 inclusive. A value of zero indicates that the
+	 * lists are dissimilar, a value of 1 indicates they are similar.
+	 * 
+	 * @param a
+	 *            set a to compare
+	 * @param b
+	 *            set b to compare
+	 * @return a value between 0 and 1 inclusive indicating similarity
+	 */
 	public float compare(List<T> a, List<T> b);
 
 

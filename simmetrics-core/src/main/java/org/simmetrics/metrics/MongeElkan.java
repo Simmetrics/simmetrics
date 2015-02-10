@@ -27,7 +27,7 @@ import org.simmetrics.ListMetric;
 
 /**
  * Implements the Monge Elkan algorithm providing an matching style similarity
- * measure between two strings
+ * measure between two strings.
  * 
  * @author Sam Chapman
  * @version 1.1

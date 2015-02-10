@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.simmetrics.tokenizers.Tokenizer;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 
@@ -35,7 +36,7 @@ public final class FilteringTokenizer implements Tokenizer {
 
 	@Override
 	public String toString() {
-		return tokenizer + "->" + filter;
+		return Joiner.on(" -> ").join(tokenizer, filter);
 	}
 
 }

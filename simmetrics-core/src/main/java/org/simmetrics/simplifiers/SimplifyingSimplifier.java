@@ -22,6 +22,8 @@
 
 package org.simmetrics.simplifiers;
 
+import org.simmetrics.utils.Simplifying;
+
 
 public interface SimplifyingSimplifier extends Simplifier, Simplifying {
 

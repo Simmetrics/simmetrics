@@ -23,7 +23,7 @@ package org.simmetrics.utils;
 import org.simmetrics.simplifiers.Simplifier;
 
 /**
- * Interface for classes that use a {@link Simplifier}.
+ * Interface for classes that delegate to a {@link Simplifier}.
  * 
  * @author mpkorstanje
  *

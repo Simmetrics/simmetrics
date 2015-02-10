@@ -23,49 +23,27 @@ package org.simmetrics.utils;
 
 import org.simmetrics.tokenizers.Tokenizer;
 
-
 /**
- * Interface for metrics that use a {@link Tokenizer} to tokenize strings. These
- * methods can be called by batching-processing systems to inject a
- * {@link CachingTokenizer}s.
- * 
- * 
- * For the benefit of these caching systems, implementations should take care to
- * call the tokenizer exactly once for each argument.
- * 
- * <pre>
- *  <code>
- * 	public ArrayList{@code<String>} tokenizeToList(String input) {
- * 		return tokenizer.tokenizeToList(input);
- * 	}
- * 
- * 	public Set{@code<String>} tokenizeToSet(String input) {
- * 		return tokenizer.tokenizeToSet(input);
- * 
- * 	}
- * </code>
- * </pre>
+ * Interface for classes that delegate to a {@link Tokenizer}.
  * 
  * @author mpkorstanje
  *
  */
 public interface Tokenizing {
 	/**
-	 * Gets the tokenizer. The tokenizer may not be null.
+	 * Gets the tokenizer. When null no simplifier was set.
 	 * 
-	 * @return the non-null tokenizer used
+	 * @return the tokenizer or null when not set
 	 */
 
 	public Tokenizer getTokenizer();
 
 	/**
-	 * Sets the tokenizer. The tokenizer may not be null.
+	 * Sets the tokenizer. May not be null.
 	 * 
 	 * @param tokenizer
-	 *            a non-null tokenizer
+	 *            a tokenizer to set
 	 */
 	public void setTokenizer(Tokenizer tokenizer);
-
-
 
 }

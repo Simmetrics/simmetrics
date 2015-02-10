@@ -28,7 +28,6 @@ import java.util.List;
 
 import org.simmetrics.simplifiers.PassThroughSimplifier;
 import org.simmetrics.simplifiers.Simplifier;
-import org.simmetrics.simplifiers.SimplifyingSimplifier;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.utils.CachingSimplifier;
 import org.simmetrics.utils.CachingTokenizer;
@@ -38,6 +37,7 @@ import org.simmetrics.utils.CompositeTokenListMetric;
 import org.simmetrics.utils.CompositeTokenSetMetric;
 import org.simmetrics.utils.FilteringTokenizer;
 import org.simmetrics.utils.CompositeTokenizer;
+import org.simmetrics.utils.SimplifyingSimplifier;
 import org.simmetrics.utils.TokenizingTokenizer;
 
 import com.google.common.base.Preconditions;
@@ -60,9 +60,9 @@ import com.google.common.base.Predicate;
  * {@code
  * 	StringMetric metric = new StringMetricBuilder()
  * 		.with(new CosineSimilarity<String>())
- * 		.addSimplifier(new NonWordCharacterSimplifier())
- * 		.addSimplifier(new CaseSimplifier.Lower())
- * 		.setTokenizer(new WhitespaceTokenizer()).build();
+ * 		.simplify(new NonWordCharacterSimplifier())
+ * 		.simplify(new CaseSimplifier.Lower())
+ * 		.tokenize(new WhitespaceTokenizer()).build();
  * }
  * </code>
  * </pre>
@@ -365,8 +365,8 @@ public class StringMetricBuilder {
 		}
 
 		@Override
-		public TokenSimplifierChainBuilder<T> setSimplifierCache(int initialCapacity,
-				int maximumSize) {
+		public TokenSimplifierChainBuilder<T> setSimplifierCache(
+				int initialCapacity, int maximumSize) {
 			super.setSimplifierCache(initialCapacity, maximumSize);
 			return this;
 		}
@@ -412,13 +412,16 @@ public class StringMetricBuilder {
 
 		/**
 		 * Sets a cache for simplification chain. The cache will store the
-		 * result of all simplification steps.
+		 * result of all simplification steps. The cache will be provided with a
+		 * simplifier through
+		 * {@link SimplifyingSimplifier#setSimplifier(Simplifier)}.
 		 * 
 		 * @param cache
 		 *            a cache to add
 		 * @return this for fluent chaining
 		 */
-		public SimplifierChainBuilder setSimplifierCache(SimplifyingSimplifier cache) {
+		public SimplifierChainBuilder setSimplifierCache(
+				SimplifyingSimplifier cache) {
 			Preconditions.checkNotNull(cache);
 			this.cache = cache;
 			return this;
@@ -437,7 +440,8 @@ public class StringMetricBuilder {
 		 */
 		public SimplifierChainBuilder setSimplifierCache(int initialCapacity,
 				int maximumSize) {
-			return setSimplifierCache(new CachingSimplifier(initialCapacity, maximumSize));
+			return setSimplifierCache(new CachingSimplifier(initialCapacity,
+					maximumSize));
 		}
 
 		/**
@@ -494,14 +498,15 @@ public class StringMetricBuilder {
 		}
 
 		@Override
-		public StringSimplifierChainBuilder setSimplifierCache(SimplifyingSimplifier cache) {
+		public StringSimplifierChainBuilder setSimplifierCache(
+				SimplifyingSimplifier cache) {
 			super.setSimplifierCache(cache);
 			return this;
 		}
 
 		@Override
-		public StringSimplifierChainBuilder setSimplifierCache(int initialCapacity,
-				int maximumSize) {
+		public StringSimplifierChainBuilder setSimplifierCache(
+				int initialCapacity, int maximumSize) {
 			super.setSimplifierCache(initialCapacity, maximumSize);
 			return this;
 		}
@@ -581,13 +586,16 @@ public class StringMetricBuilder {
 
 		/**
 		 * Sets a cache for tokenization chain. The cache will store the result
-		 * of all tokenization steps.
+		 * of all tokenization steps. The cache will be provided with a
+		 * tokenizer through {@link TokenizingTokenizer#setTokenizer(Tokenizer)}
+		 * . .
 		 * 
 		 * @param cache
 		 *            a cache to add
 		 * @return this for fluent chaining
 		 */
-		public TokenizingChainBuilder setTokenizerCache(TokenizingTokenizer cache) {
+		public TokenizingChainBuilder setTokenizerCache(
+				TokenizingTokenizer cache) {
 			Preconditions.checkNotNull(cache);
 			this.cache = cache;
 
@@ -617,7 +625,8 @@ public class StringMetricBuilder {
 		 */
 		public TokenizingChainBuilder setTokenizerCache(int initialCapacity,
 				int maximumSize) {
-			return setTokenizerCache(new CachingTokenizer(initialCapacity, maximumSize));
+			return setTokenizerCache(new CachingTokenizer(initialCapacity,
+					maximumSize));
 		}
 
 		private Tokenizer innerBuild() {

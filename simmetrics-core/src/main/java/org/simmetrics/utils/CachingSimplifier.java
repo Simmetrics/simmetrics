@@ -23,7 +23,6 @@ package org.simmetrics.utils;
 import java.util.concurrent.ExecutionException;
 
 import org.simmetrics.simplifiers.Simplifier;
-import org.simmetrics.simplifiers.SimplifyingSimplifier;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;

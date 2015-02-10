@@ -40,9 +40,9 @@ public class CacheExample {
 		StringMetric metric = new StringMetricBuilder()
 				.with(new CosineSimilarity<String>())
 				.simplify(new CaseSimplifier.Lower())
-				.addCache()
+				.setSimplifierCache()
 				.tokenize(QGramTokenizer.Q2)
-				.setCache()
+				.setTokenizerCache()
 				.build();
 
 		float[] scores = StringMetrics.compare(metric, name, names);

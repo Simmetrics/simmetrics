@@ -165,6 +165,14 @@ public class StringMetricBuilder {
 
 	}
 
+	/**
+	 * Builder for the simplification chain.
+	 * 
+	 * @author M.P. Korstanje
+	 * @param <T>
+	 *            type of metric for which the chain is build
+	 *
+	 */
 	public abstract class SimplyfingBuilder<T> {
 
 		protected final T metric;
@@ -180,14 +188,27 @@ public class StringMetricBuilder {
 			this.simplifier = simplifier;
 		}
 
+		/**
+		 * Adds a simplifier to the metric.
+		 * 
+		 * @param simplifier
+		 *            a simplifier to add
+		 * @return a builder for fluent chaining
+		 */
 		public abstract SimplifierChainBuilder simplify(Simplifier simplifier);
 
 	}
 
+	/**
+	 * Builder for the simplification chain of string metrics.
+	 * 
+	 * @author M.P. Korstanje
+	 *
+	 */
 	public final class CompositeStringMetricBuilder extends
 			SimplyfingBuilder<StringMetric> {
 
-		public CompositeStringMetricBuilder(StringMetric metric) {
+		CompositeStringMetricBuilder(StringMetric metric) {
 			super(metric);
 		}
 
@@ -196,7 +217,7 @@ public class StringMetricBuilder {
 		 * 
 		 * @param simplifier
 		 *            a simplifier to add
-		 * @return this for fluent chaining
+		 * @return a builder for fluent chaining
 		 */
 		@Override
 		public StringSimplifierChainBuilder simplify(Simplifier simplifier) {
@@ -204,7 +225,7 @@ public class StringMetricBuilder {
 		}
 
 		/**
-		 * Builds a metric with the simplifiers and cache.
+		 * Builds a metric with the given simplification steps and cache.
 		 * 
 		 * @return a metric
 		 */
@@ -214,6 +235,14 @@ public class StringMetricBuilder {
 
 	}
 
+	/**
+	 * Builder for the simplification chain of collection based metrics.
+	 * 
+	 * @author M.P. Korstanje
+	 * @param <T>
+	 *            type of metric for which the chain is build
+	 *
+	 */
 	public abstract class CollectionMetricBuilder<T> extends
 			SimplyfingBuilder<T> {
 
@@ -221,7 +250,6 @@ public class StringMetricBuilder {
 
 		CollectionMetricBuilder(T metric) {
 			super(metric);
-			// TODO Auto-generated constructor stub
 		}
 
 		void setTokenizer(Tokenizer tokenizer) {
@@ -229,6 +257,13 @@ public class StringMetricBuilder {
 			this.tokenizer = tokenizer;
 		}
 
+		/**
+		 * Adds a tokenization step to the metric.
+		 * 
+		 * @param tokenizer
+		 *            a tokenizer to add
+		 * @return a builder for fluent chaining
+		 */
 		public TokenizingChainBuilder tokenize(Tokenizer tokenizer) {
 			return new TokenizingChainBuilder(this, tokenizer);
 		}
@@ -283,12 +318,20 @@ public class StringMetricBuilder {
 
 	}
 
+	/**
+	 * Builder for the simplification and tokenization chains.
+	 * 
+	 * @author M.P. Korstanje
+	 *
+	 * @param <T>
+	 *            type of the metric for which the chain is build
+	 */
 	public final class TokenSimplifierChainBuilder<T> extends
 			SimplifierChainBuilder {
 
 		private final CollectionMetricBuilder<T> builder;
 
-		public TokenSimplifierChainBuilder(CollectionMetricBuilder<T> builder,
+		TokenSimplifierChainBuilder(CollectionMetricBuilder<T> builder,
 				Simplifier simplifier) {
 			super(simplifier);
 
@@ -302,89 +345,143 @@ public class StringMetricBuilder {
 			return this;
 		}
 
+		/**
+		 * Adds a tokenization step to the metric.
+		 * 
+		 * @param tokenizer
+		 *            a tokenizer to add
+		 * @return a builder for fluent chaining
+		 */
 		public TokenizingChainBuilder tokenize(Tokenizer tokenizer) {
 			builder.setSimplifier(innerBuild());
 			return builder.tokenize(tokenizer);
 		}
 
 		@Override
-		public TokenSimplifierChainBuilder<T> addCache(
+		public TokenSimplifierChainBuilder<T> setSimplifierCache(
 				SimplifyingSimplifier cache) {
-			super.addCache(cache);
+			super.setSimplifierCache(cache);
 			return this;
 		}
 
 		@Override
-		public TokenSimplifierChainBuilder<T> addCache(int initialCapacity,
+		public TokenSimplifierChainBuilder<T> setSimplifierCache(int initialCapacity,
 				int maximumSize) {
-			super.addCache(initialCapacity, maximumSize);
+			super.setSimplifierCache(initialCapacity, maximumSize);
 			return this;
 		}
 
 		@Override
-		public TokenSimplifierChainBuilder<T> addCache() {
-			super.addCache();
+		public TokenSimplifierChainBuilder<T> setSimplifierCache() {
+			super.setSimplifierCache();
 			return this;
 		}
 
 	}
 
+	/**
+	 * Builder for a simplifier chain.
+	 * 
+	 * @author M.P. Korstanje
+	 *
+	 */
 	public abstract class SimplifierChainBuilder {
 
 		private static final int CACHE_SIZE = 2;
 
 		private final List<Simplifier> simplifiers = new ArrayList<>();
 
-		public SimplifierChainBuilder(Simplifier simplifier) {
+		private SimplifyingSimplifier cache;
+
+		SimplifierChainBuilder(Simplifier simplifier) {
 			checkNotNull(simplifier);
 			this.simplifiers.add(simplifier);
 		}
 
+		/**
+		 * Adds a simplification step to the metric.
+		 * 
+		 * @param simplifier
+		 *            a simplifier to add
+		 * @return a builder for fluent chaining
+		 */
 		public SimplifierChainBuilder simplify(Simplifier simplifier) {
 			simplifiers.add(simplifier);
 			return this;
 		}
 
-		public SimplifierChainBuilder addCache(SimplifyingSimplifier cache) {
+		/**
+		 * Sets a cache for simplification chain. The cache will store the
+		 * result of all simplification steps.
+		 * 
+		 * @param cache
+		 *            a cache to add
+		 * @return this for fluent chaining
+		 */
+		public SimplifierChainBuilder setSimplifierCache(SimplifyingSimplifier cache) {
 			Preconditions.checkNotNull(cache);
-
-			Simplifier simplifier = innerBuild();
-			cache.setSimplifier(simplifier);
-			simplifiers.add(simplifier);
-
+			this.cache = cache;
 			return this;
 		}
 
-		public SimplifierChainBuilder addCache(int initialCapacity,
+		/**
+		 * Sets a cache for simplification chain. The cache will store the
+		 * result of all simplification steps.
+		 * 
+		 * @param initialCapacity
+		 *            initial cache size
+		 * @param maximumSize
+		 *            maximum cache size
+		 * 
+		 * @return this for fluent chaining
+		 */
+		public SimplifierChainBuilder setSimplifierCache(int initialCapacity,
 				int maximumSize) {
-			return addCache(new CachingSimplifier(initialCapacity, maximumSize));
+			return setSimplifierCache(new CachingSimplifier(initialCapacity, maximumSize));
 		}
 
-		public SimplifierChainBuilder addCache() {
-			return addCache(CACHE_SIZE, CACHE_SIZE);
+		/**
+		 * Sets a cache for simplification chain. The cache will store the
+		 * result of all simplification steps. The cache will have a size of 2.
+		 * 
+		 * @return this for fluent chaining
+		 */
+		public SimplifierChainBuilder setSimplifierCache() {
+			return setSimplifierCache(CACHE_SIZE, CACHE_SIZE);
 		}
 
 		Simplifier innerBuild() {
 			Simplifier simplifier;
-			
+
 			if (simplifiers.size() == 1) {
 				simplifier = simplifiers.get(0);
 			} else {
-				simplifier = new CompositeSimplifier(new ArrayList<>(simplifiers));
+				simplifier = new CompositeSimplifier(simplifiers);
 			}
-			
-			simplifiers.clear();
+
+			if (cache != null) {
+				cache.setSimplifier(simplifier);
+				simplifier = cache;
+			}
+
 			return simplifier;
 		}
 
 	}
 
+	/**
+	 * Builder for the simplification chain, used by the
+	 * {@link CompositeStringMetricBuilder}.
+	 * 
+	 * @author M.P. Korstanje
+	 *
+	 */
 	public final class StringSimplifierChainBuilder extends
 			SimplifierChainBuilder {
 
 		private final CompositeStringMetricBuilder builder;
 
-		public StringSimplifierChainBuilder(CompositeStringMetricBuilder builder,
+		StringSimplifierChainBuilder(CompositeStringMetricBuilder builder,
 				Simplifier simplifier) {
 			super(simplifier);
 			this.builder = builder;
@@ -397,24 +494,30 @@ public class StringMetricBuilder {
 		}
 
 		@Override
-		public StringSimplifierChainBuilder addCache(SimplifyingSimplifier cache) {
-			super.addCache(cache);
+		public StringSimplifierChainBuilder setSimplifierCache(SimplifyingSimplifier cache) {
+			super.setSimplifierCache(cache);
 			return this;
 		}
 
 		@Override
-		public StringSimplifierChainBuilder addCache(int initialCapacity,
+		public StringSimplifierChainBuilder setSimplifierCache(int initialCapacity,
 				int maximumSize) {
-			super.addCache(initialCapacity, maximumSize);
+			super.setSimplifierCache(initialCapacity, maximumSize);
 			return this;
 		}
 
 		@Override
-		public StringSimplifierChainBuilder addCache() {
-			super.addCache();
+		public StringSimplifierChainBuilder setSimplifierCache() {
+			super.setSimplifierCache();
 			return this;
 		}
 
+		/**
+		 * Builds a string metric that will apply the given simplification
+		 * steps.
+		 * 
+		 * @return a string metric.
+		 */
 		public StringMetric build() {
 			builder.setSimplifier(innerBuild());
 			return builder.build();
@@ -422,6 +525,13 @@ public class StringMetricBuilder {
 
 	}
 
+	/**
+	 * Builder for the tokenization chain. Supports tokenization, filtering and
+	 * caching.
+	 * 
+	 * @author M.P. Korstanje
+	 *
+	 */
 	public final class TokenizingChainBuilder {
 		private static final int CACHE_SIZE = 2;
 
@@ -429,7 +539,9 @@ public class StringMetricBuilder {
 
 		private final List<Tokenizer> tokenizers = new ArrayList<>();
 
-		public TokenizingChainBuilder(CollectionMetricBuilder<?> builder,
+		private TokenizingTokenizer cache;
+
+		TokenizingChainBuilder(CollectionMetricBuilder<?> builder,
 				Tokenizer tokenizer) {
 
 			checkNotNull(tokenizer);
@@ -439,12 +551,27 @@ public class StringMetricBuilder {
 
 		}
 
+		/**
+		 * Adds a tokenization step to the metric.
+		 * 
+		 * @param tokenizer
+		 *            a tokenizer to add
+		 * @return this for fluent chaining
+		 */
 		public TokenizingChainBuilder tokenize(Tokenizer tokenizer) {
 			Preconditions.checkNotNull(tokenizer);
 			this.tokenizers.add(tokenizer);
 			return this;
 		}
 
+		/**
+		 * Adds a filter step to the metric. All tokens that match the predicate
+		 * are kept.
+		 * 
+		 * @param predicate
+		 *            a predicate for tokens to keep
+		 * @return this for fluent chaining
+		 */
 		public TokenizingChainBuilder filter(Predicate<String> predicate) {
 			Preconditions.checkNotNull(predicate);
 			Tokenizer tokenizer = innerBuild();
@@ -452,30 +579,70 @@ public class StringMetricBuilder {
 			return this;
 		}
 
-		public TokenizingChainBuilder setCache(TokenizingTokenizer cache) {
+		/**
+		 * Sets a cache for tokenization chain. The cache will store the result
+		 * of all tokenization steps.
+		 * 
+		 * @param cache
+		 *            a cache to add
+		 * @return this for fluent chaining
+		 */
+		public TokenizingChainBuilder setTokenizerCache(TokenizingTokenizer cache) {
 			Preconditions.checkNotNull(cache);
-			Tokenizer tokenizer = innerBuild();
-			cache.setTokenizer(tokenizer);
-			tokenizers.add(cache);
+			this.cache = cache;
 
 			return this;
 		}
 
-		public TokenizingChainBuilder setCache() {
-			return setCache(CACHE_SIZE, CACHE_SIZE);
+		/**
+		 * Sets a cache for simplification chain. The cache will store the
+		 * result of all simplification steps. The cache will have a size of 2.
+		 * 
+		 * @return this for fluent chaining
+		 */
+		public TokenizingChainBuilder setTokenizerCache() {
+			return setTokenizerCache(CACHE_SIZE, CACHE_SIZE);
 		}
 
-		public TokenizingChainBuilder setCache(int initialCapacity,
+		/**
+		 * Sets a cache for simplification chain. The cache will store the
+		 * result of all simplification steps.
+		 * 
+		 * @param initialCapacity
+		 *            initial cache size
+		 * @param maximumSize
+		 *            maximum cache size
+		 * 
+		 * @return this for fluent chaining
+		 */
+		public TokenizingChainBuilder setTokenizerCache(int initialCapacity,
 				int maximumSize) {
-			return setCache(new CachingTokenizer(initialCapacity, maximumSize));
+			return setTokenizerCache(new CachingTokenizer(initialCapacity, maximumSize));
 		}
 
 		private Tokenizer innerBuild() {
-			CompositeTokenizer compositeTokenizer = new CompositeTokenizer(new ArrayList<>(tokenizers));
-			tokenizers.clear();
-			return compositeTokenizer;
+			Tokenizer tokenizer;
+
+			if (tokenizers.size() == 1) {
+				tokenizer = tokenizers.get(0);
+			} else {
+				tokenizer = new CompositeTokenizer(new ArrayList<>(tokenizers));
+			}
+
+			if (cache != null) {
+				cache.setTokenizer(tokenizer);
+				tokenizer = cache;
+			}
+
+			return tokenizer;
 		}
 
+		/**
+		 * Builds a string metric that will use the given simplification,
+		 * tokenization and filtering steps.
+		 * 
+		 * @return a string metric.
+		 */
 		public StringMetric build() {
 			builder.setTokenizer(innerBuild());
 			return builder.build();

@@ -29,15 +29,11 @@ import java.util.Set;
 /**
  * SubCost5_3_Minus3 implements a cost function as used in Monge Elkan where by
  * an exact match no match or an approximate match whereby a set of characters
- * are in an approximate range for pairings in {dt} {gj} {lr} {mn} {bpv} {aeiou}
- * {,.}
+ * are in an approximate range for pairings in <code>{dt} {gj} {lr} {mn} {bpv} {aeiou}
+ * {,.}</code>
  * 
  * @author Sam Chapman
  * @version 1.1
- */
-/**
- * @author M.P. Korstanje
- *
  */
 public final class SubCost5_3_Minus3 implements SubstitutionCost {
 

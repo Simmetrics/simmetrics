@@ -22,7 +22,7 @@
 package org.simmetrics.metrics.costfunctions;
 
 /**
- * SubstitutionCost is an interface for a cost function d(i,j).
+ * SubstitutionCost is an interface for a cost function <code>d(i,j)</code>.
  * 
  * @author Sam Chapman
  * @version 1.1
@@ -41,7 +41,7 @@ public interface SubstitutionCost {
 	 * @param string2Index
 	 *            - the index within the string2 to test
 	 *
-	 * @return the cost of a given substitution d(i,j)
+	 * @return the cost of a given substitution <code>d(i,j)</code>
 	 */
 	public float getCost(String str1, int string1Index, String str2,
 			int string2Index);

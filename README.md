@@ -5,7 +5,9 @@ SimMetrics is a java library of Similarity or Distance Metrics, e.g. Levenshtein
 
 SimMetrics is based on the [SimMetrics Library](http://sourceforge.net/projects/simmetrics/) by Sam Chapman.
 
-## Example ##
+## Usage ##
+
+For a quick and easy use [StringMetrics](/simmetrics-core/src/main/java/org/simmetrics/StringMetrics.java) contains a collection of well known metrics.
 
 ```
 	String str1 = "This is a sentence. It is made of words";
@@ -16,22 +18,29 @@ SimMetrics is based on the [SimMetrics Library](http://sourceforge.net/projects/
 	float result = metric.compare(str1, str2); //0.4472
 ```
 
-## Refactoring & Redesign ##
+The [StringMetricBuilder](/simmetrics-core/src/main/java/org/simmetrics/StringMetricBuilder.java) can be used to improve the effectiveness of a metric by adding simplifier steps that remove upper case, non-word characters, ect or using different tokenizers. These steps are generally domain dependent.
 
-This fork is aimed at refactoring and cleaning up the SimMetrics project. This is done with the following aims: 
+```
+	String str1 = "This is a sentence. It is made of words";
+	String str2 = "This sentence is similair. It has almost the same words";
 
- * Support general workflow of simplication, tokenization and comparision.
- * Reduce clutter on the InterfaceSimilarityMetrics.
- * Allow caching of expensive tokenization and simplification operations.
- * Allow for easy anonymous-subclassing-style configuration.
+	StringMetric metric = new StringMetricBuilder()
+			.with(new CosineSimilarity<String>())
+			.simplify(new CaseSimplifier.Lower())
+			.simplify(new NonWordCharacterSimplifier())
+			.tokenize(new WhitespaceTokenizer())
+			.build();
 
-## Workflow ##
+	float result = metric.compare(str1, str2); //0.5590
+```
 
-The goal is to support a general workflow that consists of simplification, tokenization and comparision. Where applicable it should be possible to construct a similarity metric with any simplifier, tokenizer and submetric.
+## String Metric Builder ##
+
+To improve the effectiveness of a comparison different combinations of simplification, tokenization, filtering and comparison schemes can be tried. The String Metric Builder supports the creation of a work flow that applies simplification, tokenization and filtering before comparison.
 
 ### Simplification ###
 
-Simplfication increases the effectiveness of a metric by removing noise. The process maps a a complex string such as `Chilpéric II son of Childeric II` to a simpler format `chilperic ii son of childeric ii`. This allows string from different sources to be compared in the same normal form.
+Simplfication increases the effectiveness of a metric by removing noise and dimensionality of the strings. The process maps a a complex string such as `Chilpéric II son of Childeric II` to a simpler format `chilperic ii son of childeric ii`. This allows string from different sources to be compared in the same normal form.
 
 Custom simplification can added by implementing the Simplifier interface.
 
@@ -45,7 +54,7 @@ Custom simplification can added by implementing the Simplifier interface.
 	}
 ```
 
-A custom simplifier can be added onto any metric by using the StringMetricBuilder. Multiple simplifiers can be chained through the CompositeSimplifier.
+A custom simplifier can be added onto any metric by using the StringMetricBuilder. 
 
 ```
 	final String str1 = "This is a sentence. It is made of words";
@@ -63,39 +72,49 @@ A custom simplifier can be added onto any metric by using the StringMetricBuilde
 
 ### Tokenization ###
 
-Tokenization cuts up a string into tokens e.g. `[chilperic, ii, son, of, childeric, ii]`. Tokenization can also be done recursively `[ch,hi,il,il,lp,pe,er,ri,ic, ii, so,on, of, ch,hi,il,ld,de,er,ri,ic, ii]`.
+Tokenization cuts up a string into tokens e.g. `[chilperic, ii, son, of, childeric, ii]`.Tokenization can also be done repeatedly by tokenizing the individual tokens e.g. `[ch,hi,il,il,lp,pe,er,ri,ic, ii, so,on, of, ch,hi,il,ld,de,er,ri,ic, ii]`.
 
-Not all algorithms use tokenization but those that do such as SimonWhite, Dice and Jaccard are agnostic towards the exact method. While it eniterely feasible to let each algorithm implements its own features, there is a shared concern with regards to caching. Tokenization is expensive, being able to set a cache in a common manner allows programatic optimization when neccesary.
+````
+	return new StringMetricBuilder()
+			.with(new SimonWhite<String>())
+			.tokenize(new WhitespaceTokenizer())
+			.tokenize(QGramTokenizer.Q2)
+			.build();
+````
 
-## Reduce Clutter ##
+The method of tokenization changes the effectiveness of a metric depending on the context. A whitespace tokenizer might be more useful to measure similarity between large bodies of texts whiles a q-gram tokenizer will work more effectively for matching words.
 
-Many interfaces in the library contain methods that are not strictly related to the core functionality of comparing strings. This includes description strings, explanations, performance testing methods, ect. This should either be removed where redundant or refactored when usefull.
-
-Ideally there is only a single method in the interface.
+Tokenization can be done by any class implementing the Tokenizer interface and is required for all metrics that work on collections of tokens rather then whole strings; ListMetrics and SetMetrics.
 
 ```
-    public interface StringMetric {
-    
-        public float compare(String s1, String s2)
-    
-    } 
+	public final class WhitespaceTokenizer implements Tokenizer {
+
+		@Override
+		public final List<String> tokenizeToList(final String input) {
+			return Arrays.asList(pattern.split(input));
+		}
+		
+		@Override
+		public Set<String> tokenizeToSet(final String input) {
+			return new HashSet<>(tokenizeToList(input));
+		}
+	
+	}
 ```
 
-## Support Caching ##
+
+## Caching ##
 
 Simplification and tokenization are complex and expensive operations. When comparing one string against a collection of strings these two operations are done repeatedly for a single string - a common use case when searching for a match. With a simple caching mechnism this overhead can be reduced. Being able to do this programmatically allows these to be inserted when needed.
 
-## Easy Configuration ##
+## Refactoring & Redesign ##
 
-# Usage #
+This fork is aimed at refactoring and cleaning up the SimMetrics project. This is done with the following aims: 
 
-TODO: KISS Example.
-
-## Tokenizers ##
-TODO: Configure tokenizer
-
-## Simplifiers ##
-TODO: Configure tokenizer, simplifier.
+ * Support general workflow of simplication, tokenization and comparision.
+ * Reduce clutter on the InterfaceSimilarityMetrics.
+ * Allow caching of expensive tokenization and simplification operations.
+ * Allow for easy anonymous-subclassing-style configuration.
 
 ## Caching ##
 TODO: Configure caching. Show provided caching in `StringMetrics`.

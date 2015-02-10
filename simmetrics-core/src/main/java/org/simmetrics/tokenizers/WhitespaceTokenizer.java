@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * A simple whitespace tokenizer.
+ * Tokenizes a string by white space.
  * 
  * @author Sam Chapman
  * @version 1.1

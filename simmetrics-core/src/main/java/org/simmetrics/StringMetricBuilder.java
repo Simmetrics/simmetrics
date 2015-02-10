@@ -47,14 +47,10 @@ import com.google.common.base.Predicate;
  * Convenience tool to build string metrics.
  * 
  * <p>
- * To improve the effectiveness of a comparison different combinations of
- * simplification, tokenization, filtering and comparison schemes can be tried.
- * This builder supports the creation of a work flow that applies
- * simplification, tokenization, filtering and comparison.
- * 
- * <h2>Example</h2>
- * 
- * 
+ * By adding simplifiers, tokenizers and filters the effectiveness of a metric
+ * can be improved. The exact combination is generally domain specific. This
+ * builder supports adding these onto existing metrics.
+ * <p>
  * <pre>
  * <code>
  * {@code
@@ -126,7 +122,7 @@ import com.google.common.base.Predicate;
  * 
  * 
  * @author mpkorstanje
- *
+ * 
  */
 public class StringMetricBuilder {
 	/**
@@ -170,7 +166,7 @@ public class StringMetricBuilder {
 	 * @author M.P. Korstanje
 	 * @param <T>
 	 *            type of metric for which the chain is build
-	 *
+	 * 
 	 */
 	public abstract class SimplyfingBuilder<T> {
 
@@ -202,7 +198,7 @@ public class StringMetricBuilder {
 	 * Builder for the simplification chain of string metrics.
 	 * 
 	 * @author M.P. Korstanje
-	 *
+	 * 
 	 */
 	public final class CompositeStringMetricBuilder extends
 			SimplyfingBuilder<StringMetric> {
@@ -240,7 +236,7 @@ public class StringMetricBuilder {
 	 * @author M.P. Korstanje
 	 * @param <T>
 	 *            type of metric for which the chain is build
-	 *
+	 * 
 	 */
 	public abstract class CollectionMetricBuilder<T> extends
 			SimplyfingBuilder<T> {
@@ -281,7 +277,7 @@ public class StringMetricBuilder {
 	 * Supports simplification and caching.
 	 * 
 	 * @author mpkorstanje
-	 *
+	 * 
 	 */
 	public final class CompositeListMetricBuilder extends
 			CollectionMetricBuilder<ListMetric<String>> {
@@ -301,7 +297,7 @@ public class StringMetricBuilder {
 	 * Supports simplification and caching.
 	 * 
 	 * @author mpkorstanje
-	 *
+	 * 
 	 */
 	public final class CompositeSetMetricBuilder extends
 			CollectionMetricBuilder<SetMetric<String>> {
@@ -321,7 +317,7 @@ public class StringMetricBuilder {
 	 * Builder for the simplification and tokenization chains.
 	 * 
 	 * @author M.P. Korstanje
-	 *
+	 * 
 	 * @param <T>
 	 *            type of the metric for which the chain is build
 	 */
@@ -382,7 +378,7 @@ public class StringMetricBuilder {
 	 * Builder for a simplifier chain.
 	 * 
 	 * @author M.P. Korstanje
-	 *
+	 * 
 	 */
 	public abstract class SimplifierChainBuilder {
 
@@ -477,7 +473,7 @@ public class StringMetricBuilder {
 	 * {@link CompositeStringMetricBuilder}.
 	 * 
 	 * @author M.P. Korstanje
-	 *
+	 * 
 	 */
 	public final class StringSimplifierChainBuilder extends
 			SimplifierChainBuilder {
@@ -534,7 +530,7 @@ public class StringMetricBuilder {
 	 * caching.
 	 * 
 	 * @author M.P. Korstanje
-	 *
+	 * 
 	 */
 	public final class TokenizingChainBuilder {
 		private static final int CACHE_SIZE = 2;

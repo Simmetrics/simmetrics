@@ -5,6 +5,20 @@ SimMetrics is a java library of Similarity or Distance Metrics, e.g. Levenshtein
 
 SimMetrics is based on the [SimMetrics Library](http://sourceforge.net/projects/simmetrics/) by Sam Chapman.
 
+## Version 2 ##
+
+This fork was aimed at refactoring and cleaning up the SimMetrics project. This has yielded the follow results
+
+ * Support general workflow of simplification, tokenization and comparision.
+ * Reduced clutter on the StringMetric interface.
+ * Allow caching of expensive tokenization and simplification operations.
+ * Allow for easy anonymous-subclassing-style configuration.
+ * Solved various small bugs
+
+Todo
+ * A new maven release.
+
+
 ## Usage ##
 
 For a quick and easy use [StringMetrics](./simmetrics-core/src/main/java/org/simmetrics/StringMetrics.java) contains a collection of well known string metrics.
@@ -163,11 +177,4 @@ Simplification and tokenization can be complex and expensive operations. When co
 When a cache is set it applies to the whole simplification or tokenization chain. The default cache has a size of two for use with `StringMetrics.compare(StringMetric, String, List<String>)` and friends.
 
 
-## Refactoring & Redesign ##
 
-This fork is aimed at refactoring and cleaning up the SimMetrics project. This is done with the following aims: 
-
- * Support general workflow of simplification, tokenization and comparision.
- * Reduce clutter on the InterfaceSimilarityMetrics.
- * Allow caching of expensive tokenization and simplification operations.
- * Allow for easy anonymous-subclassing-style configuration.

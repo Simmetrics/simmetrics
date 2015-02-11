@@ -22,6 +22,7 @@
 
 package org.simmetrics.tokenizers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -43,6 +44,10 @@ public final class WhitespaceTokenizer extends AbstractTokenizer {
 
 	@Override
 	public final List<String> tokenizeToList(final String input) {
+		if(input.isEmpty()){
+			return new ArrayList<>();
+		}
+		
 		return Arrays.asList(pattern.split(input));
 	}
 

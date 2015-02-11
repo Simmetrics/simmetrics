@@ -56,8 +56,7 @@ public class StringMetricsTest {
 						return input.length() >= 2;
 					}
 				})
-
-				.tokenize(QGramTokenizer.Q2)
+				.tokenize(new QGramTokenizer(2))
 				.build();
 
 	@Test

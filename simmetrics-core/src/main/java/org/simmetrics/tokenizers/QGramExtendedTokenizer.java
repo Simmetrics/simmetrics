@@ -21,11 +21,11 @@
  */
 package org.simmetrics.tokenizers;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Strings.repeat;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 
 /**
  * Basic Q-Gram tokenizer for a variable Q.The Q-Gram is extended beyond the
@@ -36,53 +36,77 @@ import com.google.common.base.Strings;
  */
 public class QGramExtendedTokenizer extends AbstractTokenizer {
 
-	public static final QGramExtendedTokenizer Q2 = new QGramExtendedTokenizer(2);
-	public static final QGramExtendedTokenizer Q3 = new QGramExtendedTokenizer(3);
-
 	private final static String DEFAULT_START_PADDING = "#";
 	private final static String DEFAULT_END_PADDING = "#";
 
 	private final String endPadding;
 	private final String startPadding;
-	
+
 	private final QGramTokenizer tokenizer;
 
+	/**
+	 * Constructs a q-gram tokenizer with the given q and padding.
+	 * 
+	 * @param q
+	 *            size of the tokens
+	 * @param startPadding
+	 *            padding to apply at the start of short tokens
+	 * @param endPadding
+	 *            padding to apply at the end of short tokens
+	 */
 	public QGramExtendedTokenizer(int q, String startPadding, String endPadding) {
-		Preconditions.checkArgument(!startPadding.isEmpty(),
+		checkArgument(!startPadding.isEmpty(),
 				"startPadding may not be empty");
-		Preconditions.checkArgument(!endPadding.isEmpty(),
+		checkArgument(!endPadding.isEmpty(),
 				"endPadding may not be empty");
 
 		this.tokenizer = new QGramTokenizer(q);
-		this.startPadding = Strings.repeat(startPadding, q - 1);
-		this.endPadding = Strings.repeat(endPadding, q - 1);
-	}
-	
-	public String getStartPadding() {
-		return startPadding;
-	}
-	
-	public String getEndPadding() {
-		return endPadding;
+		this.startPadding = repeat(startPadding, q - 1);
+		this.endPadding = repeat(endPadding, q - 1);
 	}
 
+	/**
+	 * Constructs a q-gram tokenizer with the given q and default padding.
+	 * 
+	 * @param q
+	 *            size of the tokens
+	 */
 	public QGramExtendedTokenizer(int q) {
 		this(q, DEFAULT_START_PADDING, DEFAULT_END_PADDING);
 	}
 
+	/**
+	 * Returns the start padding.
+	 * 
+	 * @return the start padding
+	 */
+	public String getStartPadding() {
+		return startPadding;
+	}
+
+	/**
+	 * Returns the end padding.
+	 * 
+	 * @return the end padding
+	 */
+	public String getEndPadding() {
+		return endPadding;
+	}
+
 	@Override
 	public List<String> tokenizeToList(String input) {
-		if(input.isEmpty()){
+		if (input.isEmpty()) {
 			return new ArrayList<>();
 		}
-		
+
 		return tokenizer.tokenizeToList(startPadding + input + endPadding);
 	}
 
 	@Override
 	public String toString() {
 		return "QGramExtendedTokenizer [endPadding=" + endPadding
-				+ ", startPadding=" + startPadding + ", q=" + tokenizer.getQ() + "]";
+				+ ", startPadding=" + startPadding + ", q=" + tokenizer.getQ()
+				+ "]";
 	}
 
 }

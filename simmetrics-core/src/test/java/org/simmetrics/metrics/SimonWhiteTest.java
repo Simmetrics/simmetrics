@@ -48,7 +48,7 @@ public class SimonWhiteTest extends StringMetricTest {
 		return new StringMetricBuilder().with(new SimonWhite<String>())
 				.tokenize(new WhitespaceTokenizer())
 				.filter(new MinimumLenght())
-				.tokenize(QGramTokenizer.Q2)
+				.tokenize(new QGramTokenizer(2))
 				.build();
 	}
 

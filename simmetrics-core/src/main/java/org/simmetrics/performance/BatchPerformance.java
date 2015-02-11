@@ -79,7 +79,8 @@ public class BatchPerformance {
 		StringMetric metric = new StringMetricBuilder()
 				.with(new SimonWhite<String>())
 				.tokenize(new WhitespaceTokenizer())
-				.tokenize(QGramTokenizer.Q2).build();
+				.tokenize(new QGramTokenizer(2))
+				.build();
 
 		Stopwatch sw = Stopwatch.createStarted();
 		for (int n = 0; n < TEST_REPEATS; n++) {
@@ -101,7 +102,7 @@ public class BatchPerformance {
 		StringMetric metric = new StringMetricBuilder()
 				.with(new SimonWhite<String>())
 				.tokenize(new WhitespaceTokenizer())
-				.tokenize(QGramTokenizer.Q2)
+				.tokenize(new QGramTokenizer(2))
 				.setTokenizerCache()
 				.build();
 

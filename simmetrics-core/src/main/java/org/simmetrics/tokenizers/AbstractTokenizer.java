@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -24,12 +25,17 @@ package org.simmetrics.tokenizers;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Convenience tokenizer. Provides default implementation for to set.
+ * 
+ * @author mpkorstanje
+ *
+ */
 public abstract class AbstractTokenizer implements Tokenizer {
 
 	@Override
 	public Set<String> tokenizeToSet(final String input) {
 		return new HashSet<>(tokenizeToList(input));
 	}
-
 
 }

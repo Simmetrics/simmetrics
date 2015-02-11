@@ -40,7 +40,7 @@ public class BatchExample {
 		StringMetric metric = new StringMetricBuilder()
 				.with(new CosineSimilarity<String>())
 				.simplify(new CaseSimplifier.Lower())
-				.tokenize(QGramTokenizer.Q2)
+				.tokenize(new QGramTokenizer(2))
 				.build();
 
 		float[] scores = StringMetrics.compare(metric, name, names);

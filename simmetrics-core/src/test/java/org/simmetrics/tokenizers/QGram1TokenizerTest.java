@@ -27,7 +27,8 @@ public class QGram1TokenizerTest extends TokenizerTest {
 
 	@Override
 	protected Tokenizer getTokenizer() {
-		return QGramTokenizer.Q1;
+		return new QGramTokenizer(1);
+
 	}
 
 	@Override
@@ -36,8 +37,8 @@ public class QGram1TokenizerTest extends TokenizerTest {
 		return new T[] {
 				new T(""),
 				new T("1", "1"),
-				new T("12", "1","2"),
-				
+				new T("12", "1", "2"),
+
 				new T("123456789",
 				// Expected output
 						"1", "2", "3", "4", "5", "6", "7", "8", "9"),

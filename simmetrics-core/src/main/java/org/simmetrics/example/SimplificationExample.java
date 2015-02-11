@@ -45,7 +45,6 @@ public class SimplificationExample {
 	 */
 	public static void main(final String[] args) {
 
-		// gets the two input given by the user
 		final String str1 = "This is a sentence. It is made of words";
 		final String str2 = "This sentence is similair. It has almost the same words";
 
@@ -54,7 +53,7 @@ public class SimplificationExample {
 				.simplify(new CaseSimplifier.Lower())
 				.simplify(new NonDiacriticSimplifier())
 				.tokenize(new WhitespaceTokenizer())
-				.tokenize(QGramTokenizer.Q2)
+				.tokenize(new QGramTokenizer(2))
 				.build();
 
 		final float result = metric.compare(str1, str2); //0.5590

@@ -103,7 +103,7 @@ import com.google.common.base.Predicates;
  * 	return new StringMetricBuilder()
  * 			.with(new SimonWhite<String>())
  * 			.tokenize(new WhitespaceTokenizer())
- * 			.tokenize(QGramTokenizer.Q2)
+ * 			.tokenize(new QGramTokenizer(2))
  * 			.build();
  * }
  * </code>
@@ -180,7 +180,7 @@ import com.google.common.base.Predicates;
  * 				.with(new CosineSimilarity<String>())
  * 				.simplify(new CaseSimplifier.Lower())
  * 				.setSimplifierCache()
- * 				.tokenize(QGramTokenizer.Q2)
+ * 				.tokenize(new QGramTokenizer(2))
  * 				.setTokenizerCache()
  * 				.build();
  * }

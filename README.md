@@ -97,7 +97,7 @@ Tokenization cuts up a string into tokens e.g. `[chilperic, ii, son, of, childer
 	return new StringMetricBuilder()
 			.with(new SimonWhite<String>())
 			.tokenize(new WhitespaceTokenizer())
-			.tokenize(QGramTokenizer.Q2)
+			.tokenize(new QGramTokenizer(2))
 			.build();
 ````
 
@@ -169,7 +169,7 @@ Simplification and tokenization can be complex and expensive operations. When co
 				.with(new CosineSimilarity<String>())
 				.simplify(new CaseSimplifier.Lower())
 				.setSimplifierCache()
-				.tokenize(QGramTokenizer.Q2)
+				.tokenize(new QGramTokenizer(2))
 				.setTokenizerCache()
 				.build();
 ```

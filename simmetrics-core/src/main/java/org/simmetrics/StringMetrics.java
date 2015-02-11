@@ -232,14 +232,14 @@ public final class StringMetrics {
 
 	public static StringMetric qGramsDistance() {
 		return new StringMetricBuilder().with(new BlockDistance<String>())
-				.tokenize(QGramExtendedTokenizer.Q3)
+				.tokenize(new QGramExtendedTokenizer(3))
 				.build();
 	}
 
 	public static StringMetric simonWhite() {
 		return new StringMetricBuilder().with(new SimonWhite<String>())
 				.tokenize(new WhitespaceTokenizer())
-				.tokenize(QGramTokenizer.Q2)
+				.tokenize(new QGramTokenizer(2))
 				.build();
 	}
 

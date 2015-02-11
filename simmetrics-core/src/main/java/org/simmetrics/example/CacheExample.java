@@ -41,7 +41,7 @@ public class CacheExample {
 				.with(new CosineSimilarity<String>())
 				.simplify(new CaseSimplifier.Lower())
 				.setSimplifierCache()
-				.tokenize(QGramTokenizer.Q2)
+				.tokenize(new QGramTokenizer(2))
 				.setTokenizerCache()
 				.build();
 

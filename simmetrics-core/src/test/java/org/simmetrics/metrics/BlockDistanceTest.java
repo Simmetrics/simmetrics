@@ -46,7 +46,7 @@ public class BlockDistanceTest extends ListMetricTest {
 	@Test
 	public void test2() {
 		testSimilarity(new StringMetricBuilder().with(getListMetric())
-				.tokenize(QGramTokenizer.Q1)
+				.tokenize(new QGramTokenizer(1))
 				.build(), new T[] { new T(0.8333f, "Healed", "Sealed"),
 				new T(0.6153f, "Healed", "Healthy"),
 				new T(0.7272f, "Healed", "Heard"),

@@ -34,6 +34,9 @@ public class QGram2TokenizerTest extends TokenizerTest {
 	public T[] getTests() {
 
 		return new T[] {
+				new T(""),
+				new T("1", "1"),
+				new T("12", "12"),
 				new T("123456789",
 				// Expected output
 						"12", "23", "34", "45", "56", "67", "78", "89"),

@@ -22,6 +22,7 @@
 package org.simmetrics.tokenizers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.common.base.Preconditions;
 
@@ -50,9 +51,18 @@ public class QGramTokenizer extends AbstractTokenizer {
 	}
 
 	@Override
-	public ArrayList<String> tokenizeToList(final String input) {
-		final ArrayList<String> ret = new ArrayList<>();
+	public List<String> tokenizeToList(final String input) {
+		final List<String> ret = new ArrayList<>();
 
+		if(input.isEmpty()){
+			return ret;
+		}
+		
+		if(input.length() <= q){
+			ret.add(input);
+			return ret;
+		}
+		
 		for (int i = 0; i < input.length() - q + 1; i++) {
 			ret.add(input.substring(i, i + q));
 		}

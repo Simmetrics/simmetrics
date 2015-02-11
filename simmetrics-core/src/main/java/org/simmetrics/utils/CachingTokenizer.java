@@ -21,6 +21,10 @@
 
 package org.simmetrics.utils;
 
+import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.unmodifiableSet;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
@@ -49,7 +53,7 @@ public class CachingTokenizer implements TokenizingTokenizer {
 
 					@Override
 					public List<String> load(String key) throws Exception {
-						return getTokenizer().tokenizeToList(key);
+						return unmodifiableList(getTokenizer().tokenizeToList(key));
 					}
 
 				});
@@ -60,7 +64,7 @@ public class CachingTokenizer implements TokenizingTokenizer {
 
 					@Override
 					public Set<String> load(String key) throws Exception {
-						return getTokenizer().tokenizeToSet(key);
+						return unmodifiableSet(getTokenizer().tokenizeToSet(key));
 					}
 
 				});

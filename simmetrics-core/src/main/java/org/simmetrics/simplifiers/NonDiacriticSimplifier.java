@@ -59,4 +59,11 @@ public class NonDiacriticSimplifier implements Simplifier {
 
 	private static final Pattern DIACRITICS_AND_FRIENDS = Pattern.compile("[\\p{InCombiningDiacriticalMarks}\\p{IsLm}\\p{IsSk}]+");
 
+	@Override
+	public String toString() {
+		return "NonDiacriticSimplifier";
+	}
+	
+	
+
 }

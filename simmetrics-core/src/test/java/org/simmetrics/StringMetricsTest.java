@@ -31,6 +31,8 @@ import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.tokenizers.QGramTokenizer;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
+import com.google.common.base.Predicate;
+
 import static org.simmetrics.StringMetrics.*;
 
 public class StringMetricsTest {
@@ -47,6 +49,14 @@ public class StringMetricsTest {
 			new StringMetricBuilder()
 				.with(new SimonWhite<String>())
 				.tokenize(new WhitespaceTokenizer())
+				.filter(new Predicate<String>() {
+					
+					@Override
+					public boolean apply(String input) {
+						return input.length() >= 2;
+					}
+				})
+
 				.tokenize(QGramTokenizer.Q2)
 				.build();
 

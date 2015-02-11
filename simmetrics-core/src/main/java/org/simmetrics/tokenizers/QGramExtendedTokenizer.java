@@ -21,7 +21,11 @@
  */
 package org.simmetrics.tokenizers;
 
+import static java.util.Collections.emptyList;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -70,7 +74,11 @@ public class QGramExtendedTokenizer extends AbstractTokenizer {
 	}
 
 	@Override
-	public ArrayList<String> tokenizeToList(String input) {
+	public List<String> tokenizeToList(String input) {
+		if(input.isEmpty()){
+			return new ArrayList<>();
+		}
+		
 		return tokenizer.tokenizeToList(startPadding + input + endPadding);
 	}
 

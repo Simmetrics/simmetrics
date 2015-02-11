@@ -10,9 +10,6 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.tokenizers.Tokenizer;
-import org.simmetrics.utils.SimplifyingSimplifier;
-import org.simmetrics.utils.TokenizingTokenizer;
-
 import com.google.common.base.Predicate;
 
 public class StringMetricBuilderTest {

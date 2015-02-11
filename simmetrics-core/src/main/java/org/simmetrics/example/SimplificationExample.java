@@ -23,11 +23,9 @@ package org.simmetrics.example;
 
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
-import org.simmetrics.metrics.CosineSimilarity;
 import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.simplifiers.CaseSimplifier;
 import org.simmetrics.simplifiers.NonDiacriticSimplifier;
-import org.simmetrics.simplifiers.NonWordCharacterSimplifier;
 import org.simmetrics.tokenizers.QGramTokenizer;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 

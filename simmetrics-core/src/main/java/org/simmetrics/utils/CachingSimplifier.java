@@ -35,8 +35,6 @@ public class CachingSimplifier implements SimplifyingSimplifier {
 
 	private final LoadingCache<String, String> cache;
 
-
-
 	public CachingSimplifier(int initialCapacity,
 			int maximumSize) {
 		this.cache = CacheBuilder.newBuilder()

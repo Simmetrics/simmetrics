@@ -26,13 +26,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.simmetrics.metrics.CosineSimilarity;
-import org.simmetrics.simplifiers.CaseSimplifier;
-import org.simmetrics.simplifiers.NonWordCharacterSimplifier;
 import org.simmetrics.simplifiers.PassThroughSimplifier;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.tokenizers.Tokenizer;
-import org.simmetrics.tokenizers.WhitespaceTokenizer;
 import org.simmetrics.utils.CachingSimplifier;
 import org.simmetrics.utils.CachingTokenizer;
 import org.simmetrics.utils.CompositeSimplifier;

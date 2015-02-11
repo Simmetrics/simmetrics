@@ -21,7 +21,6 @@
 package org.simmetrics.tokenizers;
 
 import org.simmetrics.tokenizers.Tokenizer;
-import org.simmetrics.tokenizers.TokenizerTest.T;
 
 public class QGram2ExtendedTokenizerTest extends TokenizerTest {
 

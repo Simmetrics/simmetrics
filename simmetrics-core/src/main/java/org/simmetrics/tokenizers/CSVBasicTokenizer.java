@@ -22,6 +22,7 @@
 package org.simmetrics.tokenizers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * CSVBasicTokenizer implements a simple CSV tokenizer. NB(this doesn't consider
@@ -35,8 +36,8 @@ public final class CSVBasicTokenizer extends AbstractTokenizer {
 	private final String delimiters = "[,\n]";
 
 	@Override
-	public final ArrayList<String> tokenizeToList(final String input) {
-		final ArrayList<String> returnArrayList = new ArrayList<>();
+	public List<String> tokenizeToList(final String input) {
+		final List<String> returnArrayList = new ArrayList<>();
 
 		for (String token : input.split(delimiters)) {
 			returnArrayList.add(token);

@@ -28,6 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.simmetrics.StringMetric;
 
+@SuppressWarnings("javadoc")
 public abstract class StringMetricTest {
 
 	protected class T {

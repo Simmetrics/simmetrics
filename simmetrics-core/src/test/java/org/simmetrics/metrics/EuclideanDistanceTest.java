@@ -25,6 +25,7 @@ import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.EuclideanDistance;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
+@SuppressWarnings("javadoc")
 public class EuclideanDistanceTest extends StringMetricTest {
 
 	@Override

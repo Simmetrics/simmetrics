@@ -23,6 +23,7 @@ package org.simmetrics.metrics;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.Jaro;
 
+@SuppressWarnings("javadoc")
 public class JaroTest extends StringMetricTest {
 
 	@Override

@@ -29,6 +29,7 @@ import org.simmetrics.metrics.BlockDistance;
 import org.simmetrics.tokenizers.QGramTokenizer;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
+@SuppressWarnings("javadoc")
 public class BlockDistanceTest extends ListMetricTest {
 
 	@Override

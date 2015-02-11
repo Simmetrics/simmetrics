@@ -23,6 +23,7 @@ package org.simmetrics.metrics;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.SmithWaterman;
 
+@SuppressWarnings("javadoc")
 public class SmithWatermanTest extends StringMetricTest {
 
 	@Override

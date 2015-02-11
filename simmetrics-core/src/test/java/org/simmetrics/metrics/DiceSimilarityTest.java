@@ -25,6 +25,7 @@ import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.DiceSimilarity;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
+@SuppressWarnings("javadoc")
 public class DiceSimilarityTest extends StringMetricTest {
 
 	@Override

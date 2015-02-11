@@ -24,6 +24,7 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.MongeElkan;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
+@SuppressWarnings("javadoc")
 
 public class MongeElkanTest extends StringMetricTest {
 

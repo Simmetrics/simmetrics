@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.simmetrics.ListMetric;
 
+@SuppressWarnings("javadoc")
 public abstract class ListMetricTest extends StringMetricTest {
 
 	private ListMetric<String> listMetric;

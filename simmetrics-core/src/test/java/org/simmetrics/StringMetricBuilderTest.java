@@ -10,8 +10,10 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.tokenizers.Tokenizer;
+
 import com.google.common.base.Predicate;
 
+@SuppressWarnings("javadoc")
 public class StringMetricBuilderTest {
 
 	@Before

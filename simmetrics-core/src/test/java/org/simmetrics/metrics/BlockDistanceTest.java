@@ -22,40 +22,49 @@
 package org.simmetrics.metrics;
 
 import org.junit.Test;
+import org.simmetrics.ListMetric;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.BlockDistance;
 import org.simmetrics.tokenizers.QGramTokenizer;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
-public class BlockDistanceTest extends StringMetricTest {
-
-	@Test
-	public void test2() {
-		testSimilarity(
-				new StringMetricBuilder().with(new BlockDistance<String>())
-						.tokenize(QGramTokenizer.Q1).build(), new T[] {
-						new T(0.8333f, "Healed", "Sealed"),
-						new T(0.6153f, "Healed", "Healthy"),
-						new T(0.7272f, "Healed", "Heard"),
-						new T(0.6666f, "Healed", "Herded"),
-						new T(0.6000f, "Healed", "Help"),
-						new T(0.4000f, "Healed", "Sold"),
-						new T(0.6000f, "Healed", "Help")
-
-				});
-	}
+public class BlockDistanceTest extends ListMetricTest {
 
 	@Override
-	protected StringMetric getMetric() {
-		return new StringMetricBuilder().with(new BlockDistance<String>())
-				.tokenize(new WhitespaceTokenizer()).build();
+	public ListMetric<String> getListMetric() {
+		return new BlockDistance<>();
 	}
-
+	
 	@Override
 	protected T[] getTests() {
 		return new T[] { new T(0.5000f, "test string1", "test string2"),
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.7500f, "a b c d", "a b c e"), };
 	}
+
+	@Test
+	public void test2() {
+		testSimilarity(new StringMetricBuilder().with(getListMetric())
+				.tokenize(QGramTokenizer.Q1)
+				.build(), new T[] { new T(0.8333f, "Healed", "Sealed"),
+				new T(0.6153f, "Healed", "Healthy"),
+				new T(0.7272f, "Healed", "Heard"),
+				new T(0.6666f, "Healed", "Herded"),
+				new T(0.6000f, "Healed", "Help"),
+				new T(0.4000f, "Healed", "Sold"),
+				new T(0.6000f, "Healed", "Help")
+
+		});
+	}
+
+	@Override
+	protected StringMetric getMetric() {
+		return new StringMetricBuilder().with(getListMetric())
+				.tokenize(new WhitespaceTokenizer())
+				.build();
+	}
+
+
+
 }

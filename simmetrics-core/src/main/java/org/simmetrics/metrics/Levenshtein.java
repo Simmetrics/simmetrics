@@ -21,20 +21,20 @@
 package org.simmetrics.metrics;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.costfunctions.AbstractSubstitutionCost;
 import org.simmetrics.metrics.costfunctions.SubCost01;
+import org.simmetrics.metrics.costfunctions.SubstitutionCost;
 import org.simmetrics.utils.Math;
 
 /**
  * Implements the basic Levenshtein algorithm providing a similarity measure
- * between two strings
+ * between two strings.
  * 
  * @author Sam Chapman
  * @version 1.1
  */
 public class Levenshtein implements StringMetric {
 
-	private final AbstractSubstitutionCost costFunction = new SubCost01();
+	private final SubstitutionCost costFunction = new SubCost01();
 
 	@Override
 	public float compare(final String string1, final String string2) {

@@ -30,8 +30,6 @@ import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.tokenizers.QGramTokenizer;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
-import org.simmetrics.utils.CachingTokenizer;
-
 import com.google.common.base.Stopwatch;
 
 public class BatchPerformance {
@@ -104,7 +102,7 @@ public class BatchPerformance {
 				.with(new SimonWhite<String>())
 				.tokenize(new WhitespaceTokenizer())
 				.tokenize(QGramTokenizer.Q2)
-				.setCache(new CachingTokenizer())
+				.setTokenizerCache()
 				.build();
 
 		Stopwatch sw = Stopwatch.createStarted();

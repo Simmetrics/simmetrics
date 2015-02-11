@@ -27,12 +27,27 @@ import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.tokenizers.QGramTokenizer;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
+import com.google.common.base.Predicate;
+
 public class SimonWhiteTest extends StringMetricTest {
+
+	public class MinimumLenght implements Predicate<String> {
+		@Override
+		public boolean apply(String input) {
+			return input.length() >= 2;
+		}
+		
+		@Override
+		public String toString() {
+			return "MinimumLenght";
+		}
+	}
 
 	@Override
 	protected StringMetric getMetric() {
 		return new StringMetricBuilder().with(new SimonWhite<String>())
 				.tokenize(new WhitespaceTokenizer())
+				.filter(new MinimumLenght())
 				.tokenize(QGramTokenizer.Q2)
 				.build();
 	}

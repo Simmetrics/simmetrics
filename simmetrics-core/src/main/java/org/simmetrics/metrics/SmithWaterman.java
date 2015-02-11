@@ -22,21 +22,26 @@
 package org.simmetrics.metrics;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.costfunctions.AbstractSubstitutionCost;
 import org.simmetrics.metrics.costfunctions.SubCost1_Minus2;
+import org.simmetrics.metrics.costfunctions.SubstitutionCost;
 
 import static org.simmetrics.utils.Math.max3;
 import static org.simmetrics.utils.Math.max4;
 
 /**
- * Implements the Smith-Waterman edit distance function
+ * Implements the Smith-Waterman edit distance function.
+ * 
+ * @see <a
+ *      href="http://www.gen.tcd.ie/molevol/nwswat.html for details">Needleman-Wunsch
+ *      Algorithm for Sequence Similarity Searches</a>
+ *
  * 
  * @author Sam Chapman
  * @version 1.1
  */
 public class SmithWaterman implements StringMetric {
 
-	private AbstractSubstitutionCost costFunction;
+	private SubstitutionCost costFunction;
 
 	@Override
 	public String toString() {
@@ -77,8 +82,7 @@ public class SmithWaterman implements StringMetric {
 	 * @param costFunc
 	 *            - the cost function to use
 	 */
-	public SmithWaterman(final float costG,
-			final AbstractSubstitutionCost costFunc) {
+	public SmithWaterman(final float costG, final SubstitutionCost costFunc) {
 		// set the gapCost to the given value
 		gapCost = costG;
 		// set the cost func
@@ -91,7 +95,7 @@ public class SmithWaterman implements StringMetric {
 	 * @param costFunc
 	 *            - the cost function to use
 	 */
-	public SmithWaterman(final AbstractSubstitutionCost costFunc) {
+	public SmithWaterman(final SubstitutionCost costFunc) {
 		// set the gapCost to a default value
 		gapCost = 0.5f;
 		// set the cost func
@@ -119,15 +123,7 @@ public class SmithWaterman implements StringMetric {
 		}
 	}
 
-	/**
-	 * Implements the Smith-Waterman distance function
-	 * 
-	 * @see http://www.gen.tcd.ie/molevol/nwswat.html for details .
-	 *
-	 * @param s
-	 * @param t
-	 * @return the Smith-Waterman distance for the given strings
-	 */
+
 	private float getUnNormalisedSimilarity(final String s, final String t) {
 		final float[][] d; // matrix
 		final int n; // length of s
@@ -189,7 +185,10 @@ public class SmithWaterman implements StringMetric {
 				cost = costFunction.getCost(s, i, t, j);
 
 				// find lowest cost at point from three possible
-				d[i][j] = max4(0, d[i - 1][j] - gapCost, d[i][j - 1] - gapCost,
+				d[i][j] = max4(
+						0,
+						d[i - 1][j] - gapCost,
+						d[i][j - 1] - gapCost,
 						d[i - 1][j - 1] + cost);
 				// update max possible if available
 				if (d[i][j] > maxSoFar) {

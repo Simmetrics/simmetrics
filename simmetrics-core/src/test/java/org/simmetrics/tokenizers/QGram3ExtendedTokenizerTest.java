@@ -22,18 +22,25 @@
 package org.simmetrics.tokenizers;
 
 import org.simmetrics.tokenizers.Tokenizer;
+import org.simmetrics.tokenizers.TokenizerTest.T;
 
 public class QGram3ExtendedTokenizerTest extends TokenizerTest {
 
 	@Override
 	protected Tokenizer getTokenizer() {
-		return QGramExtendedTokenizer.Q3_EXTENDED;
+		return QGramExtendedTokenizer.Q3;
 	}
 
 	@Override
 	public T[] getTests() {
 
 		return new T[] {
+				
+				new T(""),
+				new T("1", "##1", "#1#", "1##"),
+				new T("12", "##1", "#12","12#", "2##"),
+				new T("123", "##1", "#12","123", "23#","3##"),
+				
 				new T("12345678", "##1", "#12", "123", "234", "345", "456",
 						"567", "678", "78#", "8##"),
 				new T("123123", "##1", "#12", "123", "231", "312", "123",

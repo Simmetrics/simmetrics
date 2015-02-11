@@ -29,7 +29,12 @@ package org.simmetrics.metrics.costfunctions;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class SubCost1_Minus2 extends AbstractSubstitutionCost {
+public final class SubCost1_Minus2 implements SubstitutionCost {
+	 
+	@Override
+	public String toString() {
+		return "SubCost1_Minus2";
+	}
 
 	@Override
 	public final float getCost(final String str1, final int string1Index,

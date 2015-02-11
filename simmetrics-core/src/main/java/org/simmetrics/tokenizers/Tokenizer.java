@@ -25,16 +25,15 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * A tokenizer divides an input string into tokens. 
+ * A tokenizer divides an input string into tokens. A tokenizer may not provide
+ * empty strings as tokens. The returned collections can safely be modified.
  * 
- * @author Sam Chapman
- * @version 1.1
+ * @author M.P. Korstanje
  */
 public interface Tokenizer {
 
 	/**
-	 * Return tokenized version of a string as a list of tokens. This list can
-	 * be safely modified.
+	 * Return tokenized version of a string as a list of tokens.
 	 *
 	 * @param input
 	 *
@@ -43,8 +42,7 @@ public interface Tokenizer {
 	public List<String> tokenizeToList(String input);
 
 	/**
-	 * Return tokenized version of a string as a set of tokens. This set can be
-	 * safely modified.
+	 * Return tokenized version of a string as a set of tokens.
 	 *
 	 * @param input
 	 *

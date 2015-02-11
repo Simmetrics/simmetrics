@@ -19,12 +19,13 @@
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package org.simmetrics.utils;
 
-import java.util.ArrayList;
+import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.unmodifiableSet;
+
+import java.util.Collections;
 import java.util.List;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
@@ -40,33 +41,37 @@ public class CachingTokenizer implements TokenizingTokenizer {
 
 	private Tokenizer tokenizer;
 
-	private final LoadingCache<String, List<String>> arrayCache = CacheBuilder
-			.newBuilder().initialCapacity(CACHE_SIZE).maximumSize(CACHE_SIZE)
-			.build(new CacheLoader<String, List<String>>() {
+	private final LoadingCache<String, List<String>> arrayCache;
 
-				@Override
-				public List<String> load(String key) throws Exception {
-					return getTokenizer().tokenizeToList(key);
-				}
+	private final LoadingCache<String, Set<String>> setCache;
 
-			});
+	public CachingTokenizer(int initialCapacity, int maximumSize) {
+		this.arrayCache = CacheBuilder.newBuilder()
+				.initialCapacity(initialCapacity)
+				.maximumSize(maximumSize)
+				.build(new CacheLoader<String, List<String>>() {
 
-	private final LoadingCache<String, Set<String>> setCache = CacheBuilder
-			.newBuilder().initialCapacity(CACHE_SIZE).maximumSize(CACHE_SIZE)
-			.build(new CacheLoader<String, Set<String>>() {
+					@Override
+					public List<String> load(String key) throws Exception {
+						return unmodifiableList(getTokenizer().tokenizeToList(key));
+					}
 
-				@Override
-				public Set<String> load(String key) throws Exception {
-					return getTokenizer().tokenizeToSet(key);
-				}
+				});
+		this.setCache = CacheBuilder.newBuilder()
+				.initialCapacity(initialCapacity)
+				.maximumSize(maximumSize)
+				.build(new CacheLoader<String, Set<String>>() {
 
-			});
+					@Override
+					public Set<String> load(String key) throws Exception {
+						return unmodifiableSet(getTokenizer().tokenizeToSet(key));
+					}
 
-	public CachingTokenizer() {
-		
+				});
 	}
 
 	public CachingTokenizer(Tokenizer tokenizer) {
+		this(CACHE_SIZE, CACHE_SIZE);
 		this.tokenizer = tokenizer;
 	}
 
@@ -94,7 +99,7 @@ public class CachingTokenizer implements TokenizingTokenizer {
 		try {
 			// Return copy of list to preserve state of cached version. Callers
 			// may modify the list.
-			return new ArrayList<>(arrayCache.get(input));
+			return arrayCache.get(input);
 		} catch (ExecutionException e) {
 			throw new IllegalStateException(e);
 		}
@@ -105,7 +110,7 @@ public class CachingTokenizer implements TokenizingTokenizer {
 		try {
 			// Return copy of set to preserve state of cached set. Callers
 			// may modify the set.
-			return new HashSet<>(setCache.get(input));
+			return setCache.get(input);
 		} catch (ExecutionException e) {
 			throw new IllegalStateException(e);
 		}

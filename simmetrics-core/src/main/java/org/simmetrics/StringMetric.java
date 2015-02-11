@@ -24,9 +24,8 @@ package org.simmetrics;
 
 /**
  * Measures the similarity between two strings. The measurement results in a
- * value between 0 and 1. A value of zero indicates that the strings are
+ * value between 0 and 1 (inclusive). A value of zero indicates that the strings are
  * dissimilar, a a value of 1 indicates they are similar.
- * 
  * 
  * @author mpkorstanje
  *
@@ -35,8 +34,8 @@ package org.simmetrics;
 public interface StringMetric {
 	/**
 	 * Measures the similarity between strings a and b. The measurement results
-	 * in a value between 0 and 1. A value of zero indicates that the strings
-	 * are dissimilar, a a value of 1 indicates they are similar.
+	 * in a value between 0 and 1 (inclusive). A value of zero indicates that the strings
+	 * are dissimilar, a value of 1 indicates they are similar.
 	 * 
 	 * @param a
 	 *            string a to compare

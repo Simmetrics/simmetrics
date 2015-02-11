@@ -24,8 +24,11 @@ package org.simmetrics.example;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.CosineSimilarity;
+import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.simplifiers.CaseSimplifier;
+import org.simmetrics.simplifiers.NonDiacriticSimplifier;
 import org.simmetrics.simplifiers.NonWordCharacterSimplifier;
+import org.simmetrics.tokenizers.QGramTokenizer;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
 /**
@@ -49,10 +52,11 @@ public class SimplificationExample {
 		final String str2 = "This sentence is similair. It has almost the same words";
 
 		StringMetric metric = new StringMetricBuilder()
-				.with(new CosineSimilarity<String>())
+				.with(new SimonWhite<String>())
 				.simplify(new CaseSimplifier.Lower())
-				.simplify(new NonWordCharacterSimplifier())
+				.simplify(new NonDiacriticSimplifier())
 				.tokenize(new WhitespaceTokenizer())
+				.tokenize(QGramTokenizer.Q2)
 				.build();
 
 		final float result = metric.compare(str1, str2); //0.5590

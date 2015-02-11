@@ -22,6 +22,7 @@
 package org.simmetrics.tokenizers;
 
 import org.simmetrics.tokenizers.Tokenizer;
+import org.simmetrics.tokenizers.TokenizerTest.T;
 
 public class QGram3TokenizerTest extends TokenizerTest {
 
@@ -34,6 +35,10 @@ public class QGram3TokenizerTest extends TokenizerTest {
 	public T[] getTests() {
 
 		return new T[] {
+				new T(""),
+				new T("1", "1"),
+				new T("12", "12"),
+				new T("123", "123"),
 				new T("12345678", "123", "234", "345", "456", "567", "678"),
 				new T("123123", "123", "231", "312", "123"),
 

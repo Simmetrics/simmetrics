@@ -59,7 +59,7 @@ public class BlockDistance<T> implements ListMetric<T> {
 				/ totalPossible;
 	}
 
-	public float distance(final List<T> a,
+	private static <T> float distance(final List<T> a,
 			final List<T> b) {
 		final Set<T> all = new HashSet<>();
 		all.addAll(a);

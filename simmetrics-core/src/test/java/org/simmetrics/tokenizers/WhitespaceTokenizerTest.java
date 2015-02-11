@@ -34,6 +34,8 @@ public class WhitespaceTokenizerTest extends TokenizerTest {
 	public T[] getTests() {
 
 		return new T[] { 
+				new T(""),
+				new T(" "),
 				new T("A B C", "A", "B", "C"),
 				new T("A   B  C", "A", "B", "C"),
 				new T("A\nB", "A", "B"),

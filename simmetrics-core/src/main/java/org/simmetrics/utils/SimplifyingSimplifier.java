@@ -20,9 +20,16 @@
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.simmetrics.simplifiers;
+package org.simmetrics.utils;
 
+import org.simmetrics.simplifiers.Simplifier;
 
+/**
+ * A simplifier that delegates the work to another simplifier.
+ * 
+ * @author M.P. Korstanje
+ *
+ */
 public interface SimplifyingSimplifier extends Simplifier, Simplifying {
 
 	// Empty: because composite interface

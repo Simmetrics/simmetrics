@@ -23,17 +23,43 @@ package org.simmetrics.simplifiers;
 
 import java.util.Locale;
 
-public abstract class CaseSimplifier implements Simplifier  {
+/**
+ * Simplifiers for upper and lower case. Allows a locale to be set for the
+ * correct transformation.
+ * 
+ * @author M.P. Korstanje
+ *
+ */
+public abstract class CaseSimplifier implements Simplifier {
 
+	/**
+	 * Lower case simplifier. Transforms all upper case characters into their
+	 * lower case equivalent.
+	 * 
+	 * @author M.P. Korstanje
+	 *
+	 */
 	public static class Lower extends CaseSimplifier {
 
 		private final Locale locale;
 
-		public Lower(Locale l) {
+		/**
+		 * Constructs a new Lower case simplifier that will use the given
+		 * locale.
+		 * 
+		 * @param locale
+		 *            to use in transformation
+		 */
+		public Lower(Locale locale) {
 			super();
-			this.locale = l;
+			this.locale = locale;
 		}
 
+		/**
+		 * Constructs a new Lower case simplifier. The default locale will be
+		 * used.
+		 * 
+		 * */
 		public Lower() {
 			locale = Locale.getDefault();
 		}
@@ -42,7 +68,6 @@ public abstract class CaseSimplifier implements Simplifier  {
 		public String simplify(String s) {
 			return s.toLowerCase(locale);
 		}
-		
 
 		@Override
 		public String toString() {
@@ -50,15 +75,34 @@ public abstract class CaseSimplifier implements Simplifier  {
 		}
 	}
 
+	/**
+	 * Upper case simplifier. Transforms all lower case characters into their
+	 * upper case equivalent.
+	 * 
+	 * @author M.P. Korstanje
+	 *
+	 */
 	public static class Upper extends CaseSimplifier {
 
 		private final Locale locale;
 
-		public Upper(Locale l) {
+		/**
+		 * Constructs a new Upper case simplifier that will use the given
+		 * locale.
+		 * 
+		 * @param locale
+		 *            to use in transformation
+		 */
+		public Upper(Locale locale) {
 			super();
-			this.locale = l;
+			this.locale = locale;
 		}
 
+		/**
+		 * Constructs a new Upper case simplifier. The default locale will be
+		 * used.
+		 * 
+		 */
 		public Upper() {
 			locale = Locale.getDefault();
 		}
@@ -72,7 +116,6 @@ public abstract class CaseSimplifier implements Simplifier  {
 		public String toString() {
 			return "Upper [locale=" + locale + "]";
 		}
-		
-		
+
 	}
 }

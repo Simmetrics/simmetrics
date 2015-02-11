@@ -28,8 +28,6 @@ import org.simmetrics.StringMetrics;
 import org.simmetrics.metrics.CosineSimilarity;
 import org.simmetrics.simplifiers.CaseSimplifier;
 import org.simmetrics.tokenizers.QGramTokenizer;
-import org.simmetrics.utils.CachingSimplifier;
-import org.simmetrics.utils.CachingTokenizer;
 
 public class CacheExample {
 
@@ -42,9 +40,9 @@ public class CacheExample {
 		StringMetric metric = new StringMetricBuilder()
 				.with(new CosineSimilarity<String>())
 				.simplify(new CaseSimplifier.Lower())
-				.setCache(new CachingSimplifier())
+				.setSimplifierCache()
 				.tokenize(QGramTokenizer.Q2)
-				.setCache(new CachingTokenizer())
+				.setTokenizerCache()
 				.build();
 
 		float[] scores = StringMetrics.compare(metric, name, names);

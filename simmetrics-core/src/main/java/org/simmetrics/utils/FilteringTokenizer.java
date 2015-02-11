@@ -8,16 +8,35 @@ import java.util.Set;
 
 import org.simmetrics.tokenizers.Tokenizer;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 
+/**
+ * Tokenizer that filters tokens that don't match a predicate.
+ * 
+ * 
+ * @author M.P. Korstanje
+ *
+ */
 public final class FilteringTokenizer implements Tokenizer {
 
 	private final Tokenizer tokenizer;
 
 	private final Predicate<String> filter;
 
+	/**
+	 * Constructs a new filtering tokenizer.
+	 * 
+	 * Tokenization is delegated to the tokenizer. From the result all tokens
+	 * that don't match a predicate are removed.
+	 * 
+	 * 
+	 * @param tokenizer
+	 *            delegate tokenizer
+	 * @param predicate
+	 *            for tokens to keep
+	 */
 	public FilteringTokenizer(Tokenizer tokenizer, Predicate<String> predicate) {
 		Preconditions.checkNotNull(predicate);
 		this.filter = predicate;
@@ -36,7 +55,7 @@ public final class FilteringTokenizer implements Tokenizer {
 
 	@Override
 	public String toString() {
-		return tokenizer + "->" + filter;
+		return Joiner.on(" -> ").join(tokenizer, filter);
 	}
 
 }

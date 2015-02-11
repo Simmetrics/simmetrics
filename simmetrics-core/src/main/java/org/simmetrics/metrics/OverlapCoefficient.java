@@ -27,10 +27,10 @@ import org.simmetrics.SetMetric;
 
 /**
  * Implements the Overlap Coefficient algorithm providing a similarity measure
- * between two string where it is determined to what degree a string is a subset
+ * between two sets where it is determined to what degree a set is a subset
  * of another.
- * 
- * overlap_coefficient(q,r) = (|q & r|) / min{|q|, |r|}.
+ * <p>
+ * <code>overlap_coefficient(q,r) = (|q & r|) / min{|q|, |r|}</code>
  * 
  * @author Sam Chapman
  * 

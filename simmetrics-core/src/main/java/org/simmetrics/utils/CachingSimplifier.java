@@ -23,7 +23,6 @@ package org.simmetrics.utils;
 import java.util.concurrent.ExecutionException;
 
 import org.simmetrics.simplifiers.Simplifier;
-import org.simmetrics.simplifiers.SimplifyingSimplifier;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -31,27 +30,26 @@ import com.google.common.cache.LoadingCache;
 
 public class CachingSimplifier implements SimplifyingSimplifier {
 
-	private static final int CACHE_SIZE = 2;
 
 	private Simplifier simplifier;
 
-	private LoadingCache<String, String> arrayCache = CacheBuilder.newBuilder()
-			.initialCapacity(CACHE_SIZE).maximumSize(CACHE_SIZE)
-			.build(new CacheLoader<String, String>() {
+	private final LoadingCache<String, String> cache;
 
-				@Override
-				public String load(String key) throws Exception {
-					return getSimplifier().simplify(key);
-				}
 
-			});
 
-	public CachingSimplifier() {
-		// Empty constructor
-	}
+	public CachingSimplifier(int initialCapacity,
+			int maximumSize) {
+		this.cache = CacheBuilder.newBuilder()
+				.initialCapacity(initialCapacity)
+				.maximumSize(maximumSize)
+				.build(new CacheLoader<String, String>() {
 
-	public CachingSimplifier(Simplifier simplifier) {
-		this.simplifier = simplifier;
+					@Override
+					public String load(String key) throws Exception {
+						return getSimplifier().simplify(key);
+					}
+
+				});
 	}
 
 	@Override
@@ -67,7 +65,7 @@ public class CachingSimplifier implements SimplifyingSimplifier {
 	@Override
 	public String simplify(String input) {
 		try {
-			return arrayCache.get(input);
+			return cache.get(input);
 		} catch (ExecutionException e) {
 			throw new IllegalStateException(e);
 		}

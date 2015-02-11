@@ -23,16 +23,16 @@ package org.simmetrics.utils;
 
 import static com.google.common.base.Joiner.on;
 
-import org.simmetrics.simplifiers.Simplifier;
+import java.util.List;
 
-import com.google.common.base.Preconditions;
+import org.simmetrics.simplifiers.Simplifier;
 
 public class CompositeSimplifier implements Simplifier {
 
-	private final Simplifier[] simplifiers;
+	private final List<Simplifier> simplifiers;
 	
-	public CompositeSimplifier(Simplifier... simplifier) {
-		this.simplifiers = simplifier;
+	public CompositeSimplifier(List<Simplifier> simplifiers) {
+		this.simplifiers = simplifiers;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class CompositeSimplifier implements Simplifier {
 
 	@Override
 	public String toString() {
-		return on("->").join(simplifiers);
+		return on(" -> ").join(simplifiers);
 	}
 
 }

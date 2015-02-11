@@ -25,7 +25,7 @@ import org.simmetrics.StringMetric;
 
 /**
  * Implements the Jaro algorithm providing a similarity measure between two
- * strings allowing character transpositions to a degree
+ * strings allowing character transpositions to a degree.
  *
  * @author Sam Chapman
  * @version 1.1

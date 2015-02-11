@@ -31,8 +31,8 @@ import static java.lang.Math.sqrt;
 
 /**
  * Implements the Euclidean Distance algorithm providing a similarity measure
- * between two strings using the vector space of combined terms as the
- * dimensions"
+ * between two lists using the vector space of combined terms as the
+ * dimensions.
  *
  * @author Sam Chapman
  * @param <T>
@@ -54,12 +54,11 @@ public class EuclideanDistance<T> implements ListMetric<T> {
 		
 		float totalPossible = (float) Math.sqrt((a.size() * a.size())
 				+ (b.size() * b.size()));
-		final float totalDistance = getEuclidianDistance(a, b);
+		final float totalDistance = distance(a, b);
 		return (totalPossible - totalDistance) / totalPossible;
 	}
 
-	private static <T> float getEuclidianDistance(final List<T> a,
-			final List<T> b) {
+	private static <T> float distance(final List<T> a, final List<T> b) {
 		final Set<T> all = new HashSet<>();
 		all.addAll(a);
 		all.addAll(b);

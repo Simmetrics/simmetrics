@@ -22,6 +22,7 @@
 package org.simmetrics.tokenizers;
 
 import org.simmetrics.tokenizers.Tokenizer;
+import org.simmetrics.tokenizers.TokenizerTest.T;
 
 public class QGram1TokenizerTest extends TokenizerTest {
 
@@ -34,6 +35,10 @@ public class QGram1TokenizerTest extends TokenizerTest {
 	public T[] getTests() {
 
 		return new T[] {
+				new T(""),
+				new T("1", "1"),
+				new T("12", "1","2"),
+				
 				new T("123456789",
 				// Expected output
 						"1", "2", "3", "4", "5", "6", "7", "8", "9"),

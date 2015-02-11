@@ -29,8 +29,8 @@ import static java.lang.Math.pow;
 
 /**
  * Implements the Cosine Similarity algorithm providing a similarity measure
- * between two strings from the angular divergence within term based vector
- * space
+ * between two set from the angular divergence within term based vector
+ * space.
  * 
  * @author Sam Chapman
  * @param <T>

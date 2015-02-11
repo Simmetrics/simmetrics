@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -35,6 +36,8 @@ import static org.simmetrics.utils.Math.max4;
  * Implements the Smith-Waterman-Gotoh algorithm with a windowed affine gap
  * providing a similarity measure between two strings.
  * 
+ * @See <a href="http://www.gen.tcd.ie/molevol/nwswat.html"> Needleman-Wunsch
+ *      Algorithm for Sequence Similarity Searches</a>
  * @author Sam Chapman
  * @version 1.1
  */
@@ -199,8 +202,7 @@ public class SmithWatermanGotohWindowedAffine implements StringMetric {
 	@Override
 	public float compare(String string1, String string2) {
 
-		final float smithWatermanGotoh = getUnNormalisedSimilarity(string1,
-				string2);
+		final float smithWatermanGotoh = distance(string1, string2);
 
 		// normalise into zero to one region from min max possible
 		float maxValue = Math.min(string1.length(), string2.length());
@@ -222,14 +224,13 @@ public class SmithWatermanGotohWindowedAffine implements StringMetric {
 	/**
 	 * Implements the Smith-Waterman-Gotoh distance function
 	 * 
-	 * @see http://www.gen.tcd.ie/molevol/nwswat.html for details.
 	 *
 	 * @param s
 	 * @param t
 	 *
 	 * @return the Smith-Waterman-Gotoh distance for the two strings given
 	 */
-	private float getUnNormalisedSimilarity(final String s, final String t) {
+	private float distance(final String s, final String t) {
 		final float[][] d; // matrix
 		final int n; // length of s
 		final int m; // length of t

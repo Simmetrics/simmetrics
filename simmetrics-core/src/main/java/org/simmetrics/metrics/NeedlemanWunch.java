@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -30,6 +31,8 @@ import static org.simmetrics.utils.Math.min3;
  * Implements the Needleman-Wunch algorithm providing an edit distance based
  * similarity measure between two strings.
  * 
+ * @See <a href="http://www.gen.tcd.ie/molevol/nwswat.html"> Needleman-Wunsch
+ *      Algorithm for Sequence Similarity Searches</a>
  * @author Sam Chapman
  * @version 1.1
  */
@@ -144,9 +147,7 @@ public class NeedlemanWunch implements StringMetric {
 				float cost = costFunction.getCost(s, i - 1, t, j - 1);
 
 				// find lowest cost at point from three possible
-				d[i][j] = min3(
-						d[i - 1][j] + gapCost,
-						d[i][j - 1] + gapCost,
+				d[i][j] = min3(d[i - 1][j] + gapCost, d[i][j - 1] + gapCost,
 						d[i - 1][j - 1] + cost);
 			}
 		}

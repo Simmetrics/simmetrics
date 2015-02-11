@@ -26,9 +26,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.simmetrics.metrics.CosineSimilarity;
+import org.simmetrics.simplifiers.CaseSimplifier;
+import org.simmetrics.simplifiers.NonWordCharacterSimplifier;
 import org.simmetrics.simplifiers.PassThroughSimplifier;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.tokenizers.Tokenizer;
+import org.simmetrics.tokenizers.WhitespaceTokenizer;
 import org.simmetrics.utils.CachingSimplifier;
 import org.simmetrics.utils.CachingTokenizer;
 import org.simmetrics.utils.CompositeSimplifier;
@@ -42,15 +46,26 @@ import org.simmetrics.utils.TokenizingTokenizer;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 
 /**
- * Convenience tool to build string metrics.
+ * Convenience tool to build string metrics. Any class implementing
+ * {@link StringMetric}, {@link ListMetric} or {@link SetMetric} can be used to
+ * build a string metric. Supports the addition of simplification, tokenization,
+ * filtering and caching to a metric.
+ * 
+ * <h2>Metrics</h2>
+ * 
+ * A metric is used to measure the similarity between strings. Metrics can work
+ * on strings, lists or sets tokens. To compare strings with a metric that works
+ * on a collection of tokens a tokenizer is required.
  * 
  * <p>
  * By adding simplifiers, tokenizers and filters the effectiveness of a metric
  * can be improved. The exact combination is generally domain specific. This
- * builder supports adding these onto existing metrics.
+ * builder supports these domain specific customizations.
  * <p>
+ * 
  * <pre>
  * <code>
  * {@code
@@ -58,7 +73,8 @@ import com.google.common.base.Predicate;
  * 		.with(new CosineSimilarity<String>())
  * 		.simplify(new NonWordCharacterSimplifier())
  * 		.simplify(new CaseSimplifier.Lower())
- * 		.tokenize(new WhitespaceTokenizer()).build();
+ * 		.tokenize(new WhitespaceTokenizer())
+ * 		.build();
  * }
  * </code>
  * </pre>
@@ -83,12 +99,28 @@ import com.google.common.base.Predicate;
  * childeric, ii]</code>. Tokenization can also be done repeatedly by tokenizing
  * the individual tokens e.g.
  * <code>[ch,hi,il,il,lp,pe,er,ri,ic, ii, so,on, of, ch,hi,il,ld,de,er,ri,ic, ii]</code>
+ * <p>
+ * 
+ * <pre>
+ * <code>
+ * {@code
+ * 	return new StringMetricBuilder()
+ * 			.with(new SimonWhite<String>())
+ * 			.tokenize(new WhitespaceTokenizer())
+ * 			.tokenize(QGramTokenizer.Q2)
+ * 			.build();
+ * }
+ * </code>
+ * </pre>
+ * 
+ * 
+ * 
  * 
  * <p>
- * The method of tokenization changes the effectiveness of a metric depending on
- * the context. A whitespace tokenizer might be more useful to measure
- * similarity between large bodies of texts whiles a q-gram tokenizer will work
- * more effectively for matching words.
+ * The method of tokenization changes the space in which strings are compared.
+ * The effectiveness depends on the context. A whitespace tokenizer might be
+ * more useful to measure similarity between large bodies of texts whiles a
+ * q-gram tokenizer will work more effectively for matching words.
  * 
  * <p>
  * Tokenization can be done by any class implementing the {@link Tokenizer}
@@ -97,29 +129,75 @@ import com.google.common.base.Predicate;
  * 
  * <h2>Filtering</h2>
  * 
+ * 
  * Filtering removes tokens that should not be considered for comparison. For
- * example removing all tokens with a size less then 3 from
- * <code>[chilperic, ii, son, of,
- * childeric, ii]</code> results in <code>[chilperic, son, childeric]</code>
- * <p>
- * By removing noise, common words, ect. filtering reduces the dimensionality of
- * the tokenspace possibly increasing the effectiveness of a metric.
- * <p>
- * A Filter can be implemented by implementing a filter {@link Predicate}.
+ * example removing all tokens with a size less then three from `[chilperic, ii,
+ * son, of, childeric, ii]` results in `[chilperic, son, childeric]`.
  * 
- * <h2>Measurement</h2>
+ * A Filter can be implemented by implementing a the Predicate interface.
  * 
- * Once simplified and possibly tokenized and filtered two strings can be
- * compared. The exact way which is determined by a metric. Metrics can either
- * work on lists, sets or directly work on strings. Any class implementing
- * {@link StringMetric}, &nbsp;{@link ListMetric} or {@link SetMetric} can be
- * used.
+ * <pre>
+ * <code>
+ * {@code
+ * 		StringMetric metric = new StringMetricBuilder()
+ * 				.with(new CosineSimilarity<String>())
+ * 				.simplify(new CaseSimplifier.Lower())
+ * 				.simplify(new NonWordCharacterSimplifier())
+ * 				.tokenize(new WhitespaceTokenizer())
+ * 				.filter(new MinimumLenght(3))
+ * 				.build();
+ * }
+ * </code>
+ * </pre>
+ * 
+ * By chaining predicates more complicated filters can be build.
+ * 
+ * <pre>
+ * <code>
+ * {@code
+ * 		Set<String> commonWords = ...;
+ * 		
+ * 		StringMetric metric = new StringMetricBuilder()
+ * 				.with(new CosineSimilarity<String>())
+ * 				.simplify(new CaseSimplifier.Lower())
+ * 				.simplify(new NonWordCharacterSimplifier())
+ * 				.tokenize(new WhitespaceTokenizer())
+ * 				.filter(Predicates.not(Predicates.in(commonWords)))
+ * 				.build();
+ * }
+ * </code>
+ * </pre>
  * 
  * 
- * <h2>The DSL</h2>
+ * <h2>Caching</h2>
  * 
- * TODO: Document the syntax of the DSL.
+ * Simplification and tokenization can be complex and expensive operations. When
+ * comparing one string against a collection of strings these two operations are
+ * done repeatedly for a single string - a common use case when searching for a
+ * match. With a simple caching mechanism this overhead can be reduced.
  * 
+ * 
+ * <pre>
+ * <code>
+ * {@code
+ * 		StringMetric metric = new StringMetricBuilder()
+ * 				.with(new CosineSimilarity<String>())
+ * 				.simplify(new CaseSimplifier.Lower())
+ * 				.setSimplifierCache()
+ * 				.tokenize(QGramTokenizer.Q2)
+ * 				.setTokenizerCache()
+ * 				.build();
+ * }
+ * </code>
+ * </pre>
+ * 
+ * When a cache is set it applies to the whole simplification or tokenization
+ * chain. The default cache has a size of two for use with
+ * `StringMetrics.compare(StringMetric, String, List<String>)` and friends.
+ * 
+ * 
+ * @See {@link StringMetrics}
+ * @See {@link Predicates}
  * 
  * @author mpkorstanje
  * 

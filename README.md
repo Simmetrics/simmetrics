@@ -7,18 +7,24 @@ SimMetrics is based on the [SimMetrics Library](http://sourceforge.net/projects/
 
 ## Usage ##
 
-For a quick and easy use [StringMetrics](/simmetrics-core/src/main/java/org/simmetrics/StringMetrics.java) contains a collection of well known metrics.
+For a quick and easy use [StringMetrics](/simmetrics-core/src/main/java/org/simmetrics/StringMetrics.java) contains a collection of well known string metrics.
 
 ```
+
 	String str1 = "This is a sentence. It is made of words";
 	String str2 = "This sentence is similair. It has almost the same words";
-
+	
 	StringMetric metric = StringMetrics.cosineSimilarity();
-
+	
 	float result = metric.compare(str1, str2); //0.4472
+
 ```
 
-The [StringMetricBuilder](/simmetrics-core/src/main/java/org/simmetrics/StringMetricBuilder.java) can be used to improve the effectiveness of a metric by adding simplifier steps that remove upper case, non-word characters, ect or using different tokenizers. These steps are generally domain dependent.
+The [StringMetricBuilder](/simmetrics-core/src/main/java/org/simmetrics/StringMetricBuilder.java) is a convenience tool to build string metrics. Any class implementing StringMetric, ListMetric, SetMetric can be used to build a string metric.
+
+A metric is used to measure the similarity between strings. Metrics can work on strings, lists or sets tokens. To compare strings with a metric that works on a collection of tokens a tokenizer is required.
+
+By adding simplifiers, tokenizers and filters the effectiveness of a metric can be improved. The exact combination is generally domain specific. The builder supports these domain specific customizations.
 
 ```
 	String str1 = "This is a sentence. It is made of words";
@@ -34,13 +40,12 @@ The [StringMetricBuilder](/simmetrics-core/src/main/java/org/simmetrics/StringMe
 	float result = metric.compare(str1, str2); //0.5590
 ```
 
-## String Metric Builder ##
+The full process consists a of a chain simplification steps, followed by a chain of tokenization steps. After each tokenization step tokens can be filtered. The final result is passed onto the metric.
 
-To improve the effectiveness of a comparison different combinations of simplification, tokenization, filtering and comparison schemes can be tried. The String Metric Builder supports the creation of a work flow that applies simplification, tokenization and filtering before comparison.
 
 ### Simplification ###
 
-Simplfication increases the effectiveness of a metric by removing noise and dimensionality of the strings. The process maps a a complex string such as `Chilpéric II son of Childeric II` to a simpler format `chilperic ii son of childeric ii`. This allows string from different sources to be compared in the same normal form.
+Simplification increases the effectiveness of a metric by removing noise and dimensionality from the input. The process maps a a complex string such as `Chilpéric II son of Childeric II` to a simpler format `chilperic ii son of childeric ii`. This allows string from different sources to be compared in the same normal form.
 
 Custom simplification can added by implementing the Simplifier interface.
 
@@ -72,7 +77,7 @@ A custom simplifier can be added onto any metric by using the StringMetricBuilde
 
 ### Tokenization ###
 
-Tokenization cuts up a string into tokens e.g. `[chilperic, ii, son, of, childeric, ii]`.Tokenization can also be done repeatedly by tokenizing the individual tokens e.g. `[ch,hi,il,il,lp,pe,er,ri,ic, ii, so,on, of, ch,hi,il,ld,de,er,ri,ic, ii]`.
+Tokenization cuts up a string into tokens e.g. `[chilperic, ii, son, of, childeric, ii]`. Tokenization can also be done repeatedly by tokenizing the individual tokens e.g. `[ch,hi,il,il,lp,pe,er,ri,ic, ii, so,on, of, ch,hi,il,ld,de,er,ri,ic, ii]`.
 
 ````
 	return new StringMetricBuilder()
@@ -101,24 +106,68 @@ Tokenization can be done by any class implementing the Tokenizer interface and i
 	
 	}
 ```
+### Filtering ###
 
 
-## Caching ##
+Filtering removes tokens that should not be considered for comparison. For example removing all tokens with a size less then three from `[chilperic, ii, son, of, childeric, ii]` results in `[chilperic, son, childeric]`.
 
-Simplification and tokenization are complex and expensive operations. When comparing one string against a collection of strings these two operations are done repeatedly for a single string - a common use case when searching for a match. With a simple caching mechnism this overhead can be reduced. Being able to do this programmatically allows these to be inserted when needed.
+A Filter can be implemented by implementing a the Predicate interface.
+
+
+```
+		StringMetric metric = new StringMetricBuilder()
+				.with(new CosineSimilarity<String>())
+				.simplify(new CaseSimplifier.Lower())
+				.simplify(new NonWordCharacterSimplifier())
+				.tokenize(new WhitespaceTokenizer())
+				.filter(new Predicate<String>() {
+					
+					@Override
+					public boolean apply(String input) {
+						return input.length() > 3;
+					}
+				})
+				.build();
+```
+
+By chaining predicates more complicated filters can be build.  
+
+```
+		Set<String> commonWords = ...;
+		
+		StringMetric metric = new StringMetricBuilder()
+				.with(new CosineSimilarity<String>())
+				.simplify(new CaseSimplifier.Lower())
+				.simplify(new NonWordCharacterSimplifier())
+				.tokenize(new WhitespaceTokenizer())
+				.filter(Predicates.not(Predicates.in(commonWords)))
+				.build();
+```
+
+
+### Caching ###
+
+Simplification and tokenization can be complex and expensive operations. When comparing one string against a collection of strings these two operations are done repeatedly for a single string - a common use case when searching for a match. With a simple caching mechanism this overhead can be reduced. 
+
+
+```
+		StringMetric metric = new StringMetricBuilder()
+				.with(new CosineSimilarity<String>())
+				.simplify(new CaseSimplifier.Lower())
+				.setSimplifierCache()
+				.tokenize(QGramTokenizer.Q2)
+				.setTokenizerCache()
+				.build();
+```
+
+When a cache is set it applies to the whole simplification or tokenization chain. The default cache has a size of two for use with `StringMetrics.compare(StringMetric, String, List<String>)` and friends.
+
 
 ## Refactoring & Redesign ##
 
 This fork is aimed at refactoring and cleaning up the SimMetrics project. This is done with the following aims: 
 
- * Support general workflow of simplication, tokenization and comparision.
+ * Support general workflow of simplification, tokenization and comparision.
  * Reduce clutter on the InterfaceSimilarityMetrics.
  * Allow caching of expensive tokenization and simplification operations.
  * Allow for easy anonymous-subclassing-style configuration.
-
-## Caching ##
-TODO: Configure caching. Show provided caching in `StringMetrics`.
-
-## Performance Testing ##
-
-TODO: Show performance test usage.

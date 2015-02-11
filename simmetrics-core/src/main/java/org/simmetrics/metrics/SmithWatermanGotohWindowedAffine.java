@@ -36,8 +36,7 @@ import static org.simmetrics.utils.Math.max4;
  * Implements the Smith-Waterman-Gotoh algorithm with a windowed affine gap
  * providing a similarity measure between two strings.
  * 
- * @See <a href="http://www.gen.tcd.ie/molevol/nwswat.html"> Needleman-Wunsch
- *      Algorithm for Sequence Similarity Searches</a>
+
  * @author Sam Chapman
  * @version 1.1
  */

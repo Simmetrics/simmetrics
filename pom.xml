@@ -83,16 +83,6 @@
 		</plugins>
 	</build>
 
-	<profiles>
-		<profile>
-			<id>deploy-snapshot</id>
-			<properties>
-				<altDeploymentRepository>snapshots::default::${project.baseUri}/mavenRepo/snapshots</altDeploymentRepository>
-			</properties>
-		</profile>
-	</profiles>
-
-
 	<modules>
 		<module>simmetrics-core</module>
 		<module>simmetrics-taglink</module>

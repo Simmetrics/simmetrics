@@ -34,14 +34,13 @@ import org.simmetrics.simplifiers.SoundexSimplifier;
  *
  * This is intended to provide a better rating for lists of proper names.
  *
- *
- * @author Sam Chapman, NLP Group, Sheffield Uni, UK
+ * @author Sam Chapman
  * 
  */
 public class ChapmanOrderedNameCompoundSimilarity implements ListMetric<String> {
 
-	private final StringMetric metric1 = new StringMetricBuilder()
-			.with(new JaroWinkler())
+	private final StringMetric metric1 = new StringMetricBuilder().with(
+			new JaroWinkler())
 			.simplify(new SoundexSimplifier())
 			.build();
 
@@ -50,12 +49,11 @@ public class ChapmanOrderedNameCompoundSimilarity implements ListMetric<String> 
 	@Override
 	public float compare(List<String> a, List<String> b) {
 
-		if(a.isEmpty() && b.isEmpty()){
+		if (a.isEmpty() && b.isEmpty()) {
 			return 1.0f;
-		} else if(a.isEmpty() || b.isEmpty()){
+		} else if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
-
 
 		int minTokens = Math.min(a.size(), b.size());
 

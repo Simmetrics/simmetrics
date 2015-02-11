@@ -1,67 +1,63 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.simmetrics</groupId>
 	<artifactId>simmetrics</artifactId>
-	<version>1.6.3</version>
-	<packaging>jar</packaging>
+	<version>2.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
-	<name>simmetrics</name>
-	<description>SimMetrics is a Similarity Metric Library, based on previous work by http://sourceforge.net/projects/simmetrics/</description>
-	<url>https://bitbucket.org/Nickmancol/simmetrics</url>
+	<name>SimMetrics</name>
+	<description>SimMetrics is a java library of Similarity or Distance Metrics, e.g. Levenshtein distance, Cosine similarity, that provide float based similarity measures between String data. All metrics return consistent measures rather than unbounded similarity scores.</description>
+	<url>https://github.com/mpkorstanje/simmetrics</url>
+
+	<licenses>
+		<license>
+			<name>GNU General Public License (GPL)</name>
+			<url>http://www.gnu.org/licenses/gpl.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<altDeploymentRepository>releases::default::${project.baseUri}/mavenRepo/releases/</altDeploymentRepository>
 	</properties>
 
-	<developers>
-		<developer>
-			<id>@Nickmancol</id>
-			<name>Nicolas Bohorquez Gutierrez</name>
-			<email>nicolas.bg@gmail.com</email>
-			<timezone>America/Bogota</timezone>
-		</developer>
-		<developer>
-			<id>mpkorstanje</id>
-			<name>M.P. Korstanje</name>
-			<email>rien.korstanje@gmail.com</email>
-			<timezone>GTM+1</timezone>
-		</developer>
-	</developers>
-
 	<scm>
-		<connection>scm:hg:http://bitbucket.org/Nickmancol/simmetrics</connection>
-		<developerConnection>scm:hg:http://bitbucket.org/Nickmancol/simmetrics</developerConnection>
-		<url>http://bitbucket.org/Nickmancol/simmetrics</url>
+		<url>https://github.com/mpkorstanje/simmetrics</url>	
+		<connection>scm:git:git://github.com/mpkorstanje/simmetrics.git</connection>
+		<developerConnection>scm:git:git@github.com:mpkorstanje/simmetrics.git</developerConnection>
 	</scm>
-
-	<distributionManagement>
-		<repository>
-			<id>releases</id>
-			<url>https://bitbucket.org/Nickmancol/simmetrics/raw/tip/mavenRepo/releases/</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<url>https://bitbucket.org/Nickmancol/simmetrics/raw/tip/mavenRepo/snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
 
 	<build>
 		<plugins>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>3.2</version>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.1</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -74,6 +70,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>2.4</version>
 				<executions>
 					<execution>
 						<goals>
@@ -85,30 +82,9 @@
 		</plugins>
 	</build>
 
-	<profiles>
-		<profile>
-			<id>deploy-snapshot</id>
-			<properties>
-				<altDeploymentRepository>snapshots::default::${project.baseUri}/mavenRepo/snapshots</altDeploymentRepository>
-			</properties>
-		</profile>
-	</profiles>
-
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.8.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.perf4j</groupId>
-			<artifactId>perf4j</artifactId>
-			<version>0.9.16</version>
-		</dependency>
-		<dependency>
-			<groupId>org.reflections</groupId>
-			<artifactId>reflections</artifactId>
-			<version>0.9.9</version>
-		</dependency>
-	</dependencies>
+	<modules>
+		<module>simmetrics-core</module>
+		<module>simmetrics-taglink</module>
+		<module>simmetrics-chapman</module>
+	</modules>
 </project>

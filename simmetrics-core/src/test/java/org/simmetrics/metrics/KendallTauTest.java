@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class KendallTauTest {
+	private KendallTau<String> metric = new KendallTau<>();
 
 	@Test
 	public void empty() {
@@ -16,7 +17,7 @@ public class KendallTauTest {
 		List<String> a = Arrays.asList();
 		List<String> b = Arrays.asList();
 
-		KendallTauSimilarity<String> metric = new KendallTauSimilarity<>();
+		assertEquals(0.0f,metric.distance(a, b),  0.001f);
 
 		assertEquals(1.0f,metric.compare(a, b),  0.001f);
 
@@ -29,7 +30,7 @@ public class KendallTauTest {
 		List<String> a = Arrays.asList("A", "B", "C", "D", "E");
 		List<String> b = Arrays.asList("E", "D", "C", "B", "A");
 
-		KendallTauSimilarity<String> metric = new KendallTauSimilarity<>();
+		assertEquals(10.0f,metric.distance(a, b), 0.0001f);
 
 		assertEquals(0.0f,metric.compare(a, b),  0.001f);
 
@@ -41,7 +42,7 @@ public class KendallTauTest {
 		List<String> a = Arrays.asList("A", "B", "C", "D", "E");
 		List<String> b = Arrays.asList("C", "D", "A", "B", "E");
 
-		KendallTauSimilarity<String> metric = new KendallTauSimilarity<>();
+		assertEquals(4.0f,metric.distance(a, b), 0.0001f);
 
 		assertEquals(0.6f,metric.compare(a, b), 0.0001f);
 

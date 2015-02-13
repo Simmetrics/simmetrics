@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -25,9 +26,10 @@ import java.util.Collections;
 import java.util.Set;
 
 /**
- * Measures the similarity between two sets. The measurement results in a value
- * between 0 and 1 inclusive. A value of zero indicates that the sets are
- * dissimilar, a value of 1 indicates they are similar.
+ * Measures the similarity between two arbitrary sets containing elements of the
+ * same type. The measurement results in a value between 0 and 1 inclusive. A
+ * value of zero indicates that the sets are dissimilar, a value of 1 indicates
+ * they are similar.
  * 
  * <p>
  * The elements in the set have to implement {@link Object#hashCode()} and

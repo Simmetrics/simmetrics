@@ -31,30 +31,29 @@ public class ChapmanMatchingSoundexTest extends StringMetricTest {
 	@Override
 	protected StringMetric getMetric() {
 		return new StringMetricBuilder()
-				.with(
-						new MongeElkan(new StringMetricBuilder()
-								.with(new JaroWinkler())
-								.simplify(new SoundexSimplifier()).build()))
+				.with(new MongeElkan(new StringMetricBuilder()
+						.with(new JaroWinkler())
+						.simplify(new SoundexSimplifier()).build()))
 				.tokenize(new WhitespaceTokenizer()).build();
 	}
 
 	@Override
 	protected T[] getTests() {
-		return new T[] { new T(0.9556f, "test string1", "test string2"),
+		return new T[] { new T(0.9333f, "test string1", "test string2"),
 				new T(0.8833f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-				new T(0.9111f, "a b c d", "a b c e"),
-				new T(0.7778f, "Healed", "Sealed"),
-				new T(0.4000f, "Healed", "Healthy"),
-				new T(0.8222f, "Healed", "Heard"),
-				new T(0.2000f, "Healed", "Herded"),
-				new T(0.8444f, "Healed", "Help"),
-				new T(0.7778f, "Healed", "Sold"),
-				new T(0.8444f, "Healed", "Help"),
-				new T(0.6444f, "Sam J Chapman", "Samuel John Chapman"),
-				new T(0.5778f, "Sam Chapman", "S Chapman"),
-				new T(0.9000f, "John Smith", "Samuel John Chapman"),
-				new T(0.5389f, "John Smith", "Sam Chapman"),
-				new T(0.5389f, "John Smith", "Sam J Chapman"),
-				new T(0.1000f, "John Smith", "S Chapman"), };
+				new T(0.8833f, "a b c d", "a b c e"),
+				new T(0.7333f, "Healed", "Sealed"),
+				new T(0.3000f, "Healed", "Healthy"),
+				new T(0.7600f, "Healed", "Heard"),
+				new T(0.1000f, "Healed", "Herded"),
+				new T(0.7867f, "Healed", "Help"),
+				new T(0.7333f, "Healed", "Sold"),
+				new T(0.7867f, "Healed", "Help"),
+				new T(0.5889f, "Sam J Chapman", "Samuel John Chapman"),
+				new T(0.5167f, "Sam Chapman", "S Chapman"),
+				new T(0.8600f, "John Smith", "Samuel John Chapman"),
+				new T(0.4667f, "John Smith", "Sam Chapman"),
+				new T(0.4667f, "John Smith", "Sam J Chapman"),
+				new T(0.0500f, "John Smith", "S Chapman"), };
 	}
 }

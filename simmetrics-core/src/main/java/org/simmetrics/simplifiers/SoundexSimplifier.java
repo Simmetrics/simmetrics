@@ -37,7 +37,7 @@ import com.google.common.base.Strings;
 public class SoundexSimplifier implements Simplifier {
 
 	/**
-	 * Defines the soundex length in characters e.g. S-2433 is 6 long.
+	 * Defines the soundex length in characters e.g. s2433 is 5 long.
 	 */
 	private final static int SOUNDEXLENGTH = 5;
 
@@ -48,7 +48,7 @@ public class SoundexSimplifier implements Simplifier {
 	private int length;
 
 	public SoundexSimplifier(int length) {
-		Preconditions.checkArgument(length >= 4, "minimum length is 4");
+		Preconditions.checkArgument(length >= 1, "minimum length is 1");
 		this.length = length;
 	}
 
@@ -82,7 +82,6 @@ public class SoundexSimplifier implements Simplifier {
 			return "";
 		}
 
-
 		// Begin Classic SoundEx
 		// 1 <- B,P,F,V
 		// 2 <- C,S,K,G,J,Q,X,Z
@@ -107,7 +106,7 @@ public class SoundexSimplifier implements Simplifier {
 		// pad with zeros on right
 		wordStr += repeat("0", max(0, length - 1 - wordStr.length()));
 		// Add first letter of word and size to taste
-		wordStr = firstLetter + "-" + wordStr.substring(0, length - 1);
+		wordStr = firstLetter + wordStr.substring(0, length - 1);
 		return wordStr;
 	}
 

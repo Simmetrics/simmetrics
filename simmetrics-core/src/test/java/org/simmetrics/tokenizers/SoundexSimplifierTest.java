@@ -19,14 +19,14 @@ public class SoundexSimplifierTest {
 	@Test
 	public void test() {
 		
-		assertEquals("s-5200", simplifier.simplify("SNAKE"));
-		assertEquals("c-2000", simplifier.simplify("CAKE"));
-		assertEquals("f-5000", simplifier.simplify("Finn"));
-		assertEquals("j-2000", simplifier.simplify("Jake"));
-		assertEquals("p-1000", simplifier.simplify("PeeBee"));
-		assertEquals("m-6245", simplifier.simplify("Marceline"));
-		assertEquals("s-6000", simplifier.simplify("Sarah"));
-		assertEquals("e-4213", simplifier.simplify("Elizabeth"));
+		assertEquals("s5200", simplifier.simplify("SNAKE"));
+		assertEquals("c2000", simplifier.simplify("CAKE"));
+		assertEquals("f5000", simplifier.simplify("Finn"));
+		assertEquals("j2000", simplifier.simplify("Jake"));
+		assertEquals("p1000", simplifier.simplify("PeeBee"));
+		assertEquals("m6245", simplifier.simplify("Marceline"));
+		assertEquals("s6000", simplifier.simplify("Sarah"));
+		assertEquals("e4213", simplifier.simplify("Elizabeth"));
 
 	}
 	
@@ -37,22 +37,22 @@ public class SoundexSimplifierTest {
 	
 	@Test
 	public void testLong() {
-		
-		assertEquals("w-4124242352516", new SoundexSimplifier(14).simplify("Wolfeschlegelsteinhausenbergerdorff"));
-		assertEquals("k-5222425400000", new SoundexSimplifier(14).simplify("Keihanaikukauakahihuliheekahaunaele"));
+		SoundexSimplifier simplifier = new SoundexSimplifier(14);
+		assertEquals("w4124242352516", simplifier.simplify("Wolfeschlegelsteinhausenbergerdorff"));
+		assertEquals("k5222425400000", simplifier.simplify("Keihanaikukauakahihuliheekahaunaele"));
 
 
 	}
 	
 	@Test
 	public void testShort() {
-		assertEquals("a-000", new SoundexSimplifier(4).simplify("a"));
-		assertEquals("a-100", new SoundexSimplifier(4).simplify("ab"));
-		assertEquals("a-120", new SoundexSimplifier(4).simplify("abc"));
+		assertEquals("a0000", simplifier.simplify("a"));
+		assertEquals("a1000", simplifier.simplify("ab"));
+		assertEquals("a1200", simplifier.simplify("abc"));
 
-		assertEquals("j-200", new SoundexSimplifier(4).simplify("Jack"));
-		assertEquals("j-400", new SoundexSimplifier(4).simplify("Jill"));
-		assertEquals("j-525", new SoundexSimplifier(4).simplify("Johnson"));
+		assertEquals("j2000", simplifier.simplify("Jack"));
+		assertEquals("j4000", simplifier.simplify("Jill"));
+		assertEquals("j5250", simplifier.simplify("Johnson"));
 
 	}
 

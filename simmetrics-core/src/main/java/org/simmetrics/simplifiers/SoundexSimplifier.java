@@ -39,7 +39,7 @@ public class SoundexSimplifier implements Simplifier {
 	/**
 	 * Defines the soundex length in characters e.g. S-2433 is 6 long.
 	 */
-	private final static int SOUNDEXLENGTH = 6;
+	private final static int SOUNDEXLENGTH = 5;
 
 	public SoundexSimplifier() {
 		this(SOUNDEXLENGTH);
@@ -48,7 +48,7 @@ public class SoundexSimplifier implements Simplifier {
 	private int length;
 
 	public SoundexSimplifier(int length) {
-		Preconditions.checkArgument(length > 4, "minimum length is 4");
+		Preconditions.checkArgument(length >= 4, "minimum length is 4");
 		this.length = length;
 	}
 
@@ -82,13 +82,7 @@ public class SoundexSimplifier implements Simplifier {
 			return "";
 		}
 
-		// uses the assumption that enough valid characters are in the first
-		// 4 times the soundex required length
-		if (wordStr.length() > (SOUNDEXLENGTH * 4) + 1) {
-			wordStr = "-" + wordStr.substring(1, SOUNDEXLENGTH * 4);
-		} else {
-			wordStr = "-" + wordStr.substring(1);
-		}
+
 		// Begin Classic SoundEx
 		// 1 <- B,P,F,V
 		// 2 <- C,S,K,G,J,Q,X,Z
@@ -111,9 +105,9 @@ public class SoundexSimplifier implements Simplifier {
 		// Drop first letter code and remove zeros
 		wordStr = wordStr.substring(1).replaceAll("0", "");
 		// pad with zeros on right
-		wordStr += repeat("0", max(0, length - 2 - wordStr.length()));
+		wordStr += repeat("0", max(0, length - 1 - wordStr.length()));
 		// Add first letter of word and size to taste
-		wordStr = firstLetter + "-" + wordStr.substring(0, length - 2);
+		wordStr = firstLetter + "-" + wordStr.substring(0, length - 1);
 		return wordStr;
 	}
 

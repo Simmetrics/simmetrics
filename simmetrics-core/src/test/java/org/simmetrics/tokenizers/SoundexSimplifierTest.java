@@ -31,11 +31,28 @@ public class SoundexSimplifierTest {
 	}
 	
 	@Test
+	public void testEmpty() {
+		assertEquals("", simplifier.simplify(""));
+	}
+	
+	@Test
 	public void testLong() {
 		
-		assertEquals("w-4124242352500", new SoundexSimplifier(15).simplify("Wolfeschlegelsteinhausenbergerdorff"));
-		assertEquals("k-5222400000000", new SoundexSimplifier(15).simplify("Keihanaikukauakahihuliheekahaunaele"));
+		assertEquals("w-4124242352516", new SoundexSimplifier(14).simplify("Wolfeschlegelsteinhausenbergerdorff"));
+		assertEquals("k-5222425400000", new SoundexSimplifier(14).simplify("Keihanaikukauakahihuliheekahaunaele"));
 
+
+	}
+	
+	@Test
+	public void testShort() {
+		assertEquals("a-000", new SoundexSimplifier(4).simplify("a"));
+		assertEquals("a-100", new SoundexSimplifier(4).simplify("ab"));
+		assertEquals("a-120", new SoundexSimplifier(4).simplify("abc"));
+
+		assertEquals("j-200", new SoundexSimplifier(4).simplify("Jack"));
+		assertEquals("j-400", new SoundexSimplifier(4).simplify("Jill"));
+		assertEquals("j-525", new SoundexSimplifier(4).simplify("Johnson"));
 
 	}
 

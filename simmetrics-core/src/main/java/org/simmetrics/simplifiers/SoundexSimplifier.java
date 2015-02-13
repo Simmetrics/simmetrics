@@ -11,16 +11,22 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.simmetrics.simplifiers;
 
+import static com.google.common.base.Strings.repeat;
+import static java.lang.Math.max;
 import static org.simmetrics.utils.Math.clamp;
+
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 
 /**
  * Simplifies a string by computing its Soundex code.
@@ -41,9 +47,9 @@ public class SoundexSimplifier implements Simplifier {
 
 	private int length;
 
-	public SoundexSimplifier(int soundExLen) {
-		// ensure soundexLen is in a valid range
-		this.length = clamp(4, soundExLen, 10);
+	public SoundexSimplifier(int length) {
+		Preconditions.checkArgument(length > 4, "minimum length is 4");
+		this.length = length;
 	}
 
 	/**
@@ -104,8 +110,8 @@ public class SoundexSimplifier implements Simplifier {
 
 		// Drop first letter code and remove zeros
 		wordStr = wordStr.substring(1).replaceAll("0", "");
-		// FIXME: This will not work for all soundex lenghts
-		wordStr += "000000000000000000"; /* pad with zeros on right */
+		// pad with zeros on right
+		wordStr += repeat("0", max(0, length - 2 - wordStr.length()));
 		// Add first letter of word and size to taste
 		wordStr = firstLetter + "-" + wordStr.substring(0, length - 2);
 		return wordStr;

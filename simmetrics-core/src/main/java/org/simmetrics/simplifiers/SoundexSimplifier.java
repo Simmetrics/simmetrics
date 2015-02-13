@@ -11,16 +11,22 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.simmetrics.simplifiers;
 
+import static com.google.common.base.Strings.repeat;
+import static java.lang.Math.max;
 import static org.simmetrics.utils.Math.clamp;
+
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 
 /**
  * Simplifies a string by computing its Soundex code.
@@ -31,9 +37,9 @@ import static org.simmetrics.utils.Math.clamp;
 public class SoundexSimplifier implements Simplifier {
 
 	/**
-	 * Defines the soundex length in characters e.g. S-2433 is 6 long.
+	 * Defines the soundex length in characters e.g. s2433 is 5 long.
 	 */
-	private final static int SOUNDEXLENGTH = 6;
+	private final static int SOUNDEXLENGTH = 5;
 
 	public SoundexSimplifier() {
 		this(SOUNDEXLENGTH);
@@ -41,9 +47,9 @@ public class SoundexSimplifier implements Simplifier {
 
 	private int length;
 
-	public SoundexSimplifier(int soundExLen) {
-		// ensure soundexLen is in a valid range
-		this.length = clamp(4, soundExLen, 10);
+	public SoundexSimplifier(int length) {
+		Preconditions.checkArgument(length >= 1, "minimum length is 1");
+		this.length = length;
 	}
 
 	/**
@@ -76,13 +82,6 @@ public class SoundexSimplifier implements Simplifier {
 			return "";
 		}
 
-		// uses the assumption that enough valid characters are in the first
-		// 4 times the soundex required length
-		if (wordStr.length() > (SOUNDEXLENGTH * 4) + 1) {
-			wordStr = "-" + wordStr.substring(1, SOUNDEXLENGTH * 4);
-		} else {
-			wordStr = "-" + wordStr.substring(1);
-		}
 		// Begin Classic SoundEx
 		// 1 <- B,P,F,V
 		// 2 <- C,S,K,G,J,Q,X,Z
@@ -104,10 +103,10 @@ public class SoundexSimplifier implements Simplifier {
 
 		// Drop first letter code and remove zeros
 		wordStr = wordStr.substring(1).replaceAll("0", "");
-		// FIXME: This will not work for all soundex lenghts
-		wordStr += "000000000000000000"; /* pad with zeros on right */
+		// pad with zeros on right
+		wordStr += repeat("0", max(0, length - 1 - wordStr.length()));
 		// Add first letter of word and size to taste
-		wordStr = firstLetter + "-" + wordStr.substring(0, length - 2);
+		wordStr = firstLetter + wordStr.substring(0, length - 1);
 		return wordStr;
 	}
 

@@ -25,8 +25,12 @@ import com.google.common.base.Preconditions;
  * <p>
  * 
  * Note that this is not a {@link ListMetric} because it does not accept
- * arbitrary lists.
+ * arbitrary lists. The compared lists have to contain the same elements and a
+ * list may not contain duplicate elements.
  * <p>
+ * 
+ * @see <a href="http://en.wikipedia.org/wiki/Kendall_tau_distance">Wikipedia -
+ *      Kendall tau distance</a>
  * 
  * @author mpkorstanje
  *

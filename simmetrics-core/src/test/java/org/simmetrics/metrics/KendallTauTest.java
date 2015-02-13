@@ -47,5 +47,22 @@ public class KendallTauTest {
 		assertEquals(0.6f,metric.compare(a, b), 0.0001f);
 
 	}
+	
+	
+	
+	@Test
+	public void testTriangleInEquality() {
+
+		List<String> a = Arrays.asList("A", "B", "C", "D", "E");
+		List<String> b = Arrays.asList("C", "D", "A", "B", "E");
+		List<String> c = Arrays.asList("E", "D", "C", "B", "A");
+
+		assertEquals(4.0f,metric.distance(a, b), 0.0001f);
+		assertEquals(10.0f,metric.distance(a, c), 0.0001f);
+		assertEquals(6.0f,metric.distance(b, c), 0.0001f);
+
+
+
+	}
 
 }

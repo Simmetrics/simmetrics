@@ -15,11 +15,14 @@ import com.google.common.base.Preconditions;
 /**
  * Kendall tau rank distance is a metric that counts the number of pairwise
  * disagreements between two ranking lists. The larger the distance, the more
- * dissimilar the two lists are. Kendall tau distance is also called bubble-sort
- * distance since it is equivalent to the number of swaps that the bubble sort
- * algorithm would make to place one list in the same order as the other list.
+ * dissimilar the two lists are.
  * <p>
- * 
+ * Kendall tau distance is also called bubble-sort distance since it is
+ * equivalent to the number of swaps that the bubble sort algorithm would make
+ * to place one list in the same order as the other list.
+ * <p>
+ * The Kendall tau distance and similarity is transitive. 
+ * <p>
  * The elements in the lists have to implement {@link Object#hashCode()} and
  * {@link Object#equals(Object)}.
  * <p>

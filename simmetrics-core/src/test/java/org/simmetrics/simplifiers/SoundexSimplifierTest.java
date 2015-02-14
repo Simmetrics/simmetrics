@@ -91,6 +91,11 @@ public class SoundexSimplifierTest {
 		assertEquals("J2000", simplifier.simplify("&Jack"));
 		assertEquals("J4000", simplifier.simplify("Jill2000"));
 		assertEquals("J5250", simplifier.simplify("150Johnson"));
+		
+		assertEquals("A1230", simplifier.simplify("aaa bbb ccc ddd"));
+		assertEquals("A1200", simplifier.simplify("aaa bbb ccc eee"));
+
+
 
 	}
 

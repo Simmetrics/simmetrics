@@ -99,8 +99,8 @@ public class SoundexSimplifier implements Simplifier {
 		char previousCharacter = wordStr.charAt(0);
 		for (int i = 1; i < wordStr.length() && builder.length() < length; i++) {
 			char character = wordStr.charAt(i);
-			int characterCode = CHAR_CODE[character - OFFSET];
-			int previousCharacterCode = CHAR_CODE[previousCharacter - OFFSET];
+			char characterCode = CHAR_CODE[character - OFFSET];
+			char previousCharacterCode = CHAR_CODE[previousCharacter - OFFSET];
 
 			if (
 			// Don't add ignored codes

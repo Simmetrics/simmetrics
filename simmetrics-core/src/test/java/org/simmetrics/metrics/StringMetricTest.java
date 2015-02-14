@@ -111,6 +111,7 @@ public abstract class StringMetricTest {
 		assertTrue(message, message.contains(content));
 	}
 
+	@Test
 	public void generateTest() {
 		for (T t : getTests()) {
 			float actuall = metric.compare(t.string1, t.string2);

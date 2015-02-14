@@ -21,9 +21,7 @@
  */
 package org.simmetrics.simplifiers;
 
-import static com.google.common.base.Strings.repeat;
-import static java.lang.Math.max;
-import static org.simmetrics.utils.Math.clamp;
+import java.util.regex.Pattern;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -36,17 +34,36 @@ import com.google.common.base.Strings;
  */
 public class SoundexSimplifier implements Simplifier {
 
-	/**
-	 * Defines the soundex length in characters e.g. s2433 is 5 long.
-	 */
-	private final static int SOUNDEXLENGTH = 5;
+	private static final char IGNORE = '0';
+	private static final char OFFSET = 'A';
+	private static final char[] CHAR_CODE = {
+			// A B C D E F G H I J K L M
+			'0', '1', '2', '3', '0', '1', '2', '0', '0', '2', '2', '4', '5',
+			// N O P W R S T U V W X Y Z
+			'5', '0', '1', '2', '6', '2', '3', '0', '1', '0', '2', '0', '2' };
 
-	public SoundexSimplifier() {
-		this(SOUNDEXLENGTH);
-	}
+	private static final int DEFAULT_LENGTH = 5;
+
+	private final Pattern nonAzNonSpace = Pattern.compile("([^A-Z]|\\s)+");
 
 	private int length;
 
+	/**
+	 * Creates a new Soundex simplifier with a length of 5. The Soundex string
+	 * s2433 is 5 long.
+	 */
+	public SoundexSimplifier() {
+		this(DEFAULT_LENGTH);
+	}
+
+	/**
+	 * 
+	 * Creates a new Soundex simplifier with the given <code>length</code>. The
+	 * Soundex string s2433 is 5 long.
+	 *
+	 * @param length
+	 *            the length of the soundex string
+	 */
 	public SoundexSimplifier(int length) {
 		Preconditions.checkArgument(length >= 1, "minimum length is 1");
 		this.length = length;
@@ -65,16 +82,10 @@ public class SoundexSimplifier implements Simplifier {
 			return "";
 		}
 
-		wordStr = wordStr.toLowerCase();
-
-		// The next changes improvements may change this first letter
-		final char firstLetter = wordStr.charAt(0);
-
 		// Clean and tidy
-		// remove non-chars whitespace and spaces
-		// FIXME: Slow code
-		wordStr = wordStr.replaceAll("[^a-z]", "");
-		wordStr = wordStr.replaceAll("\\s+", ""); //
+		// to lower case remove non-chars whitespaces
+		wordStr = wordStr.toUpperCase();
+		wordStr = nonAzNonSpace.matcher(wordStr).replaceAll("");
 
 		// check for empty input again the previous clean and tidy could of
 		// shrunk it to zero.
@@ -82,37 +93,42 @@ public class SoundexSimplifier implements Simplifier {
 			return "";
 		}
 
-		// Begin Classic SoundEx
-		// 1 <- B,P,F,V
-		// 2 <- C,S,K,G,J,Q,X,Z
-		// 3 <- D,T
-		// 4 <- L
-		// 5 <- M,N
-		// 6 <- R
+		StringBuilder builder = new StringBuilder(length);
+		builder.append(wordStr.charAt(0));
 
-		// Match one or more characters, repeating characters are reduced to
-		// a single digit.
-		// FIXME: Slow code
-		wordStr = wordStr.replaceAll("[aeiouwh]+", "0");
-		wordStr = wordStr.replaceAll("[bpfv]+", "1");
-		wordStr = wordStr.replaceAll("[cskgjqxz]+", "2");
-		wordStr = wordStr.replaceAll("[dt]+", "3");
-		wordStr = wordStr.replaceAll("[l]+", "4");
-		wordStr = wordStr.replaceAll("[mn]+", "5");
-		wordStr = wordStr.replaceAll("[r]+", "6");
+		char previousCharacter = wordStr.charAt(0);
+		for (int i = 1; i < wordStr.length() && builder.length() < length; i++) {
+			char character = wordStr.charAt(i);
+			int characterCode = CHAR_CODE[character - OFFSET];
+			int previousCharacterCode = CHAR_CODE[previousCharacter - OFFSET];
 
-		// Drop first letter code and remove zeros
-		wordStr = wordStr.substring(1).replaceAll("0", "");
-		// pad with zeros on right
-		wordStr += repeat("0", max(0, length - 1 - wordStr.length()));
-		// Add first letter of word and size to taste
-		wordStr = firstLetter + wordStr.substring(0, length - 1);
-		return wordStr;
+			if (
+			// Don't add ignored codes
+			characterCode != IGNORE &&
+			// Don't add repeated codes
+					characterCode != previousCharacterCode) {
+				builder.append(characterCode);
+
+			}
+
+			// A code is also considered repeated when separated by a W or H.
+			if (character != 'W' && character != 'H') {
+				previousCharacter = character;
+			}
+		}
+
+		if (builder.length() < length) {
+			for (int i = builder.length(); i < length; i++) {
+				builder.append('0');
+			}
+		}
+
+		return builder.toString();
 	}
 
+	
 	@Override
 	public String toString() {
 		return "SoundexSimplifier [length=" + length + "]";
 	}
-
 }

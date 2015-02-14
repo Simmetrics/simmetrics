@@ -24,7 +24,7 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.MatchingCoefficient;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
-@SuppressWarnings("javadoc")
+
 
 public class MatchingCoefficientTest extends StringMetricTest {
 

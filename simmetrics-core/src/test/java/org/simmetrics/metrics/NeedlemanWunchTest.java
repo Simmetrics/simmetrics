@@ -22,7 +22,7 @@ package org.simmetrics.metrics;
 
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.NeedlemanWunch;
-@SuppressWarnings("javadoc")
+
 
 public class NeedlemanWunchTest extends StringMetricTest {
 

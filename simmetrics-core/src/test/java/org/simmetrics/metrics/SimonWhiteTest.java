@@ -29,7 +29,7 @@ import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
 import com.google.common.base.Predicate;
 
-@SuppressWarnings("javadoc")
+
 public class SimonWhiteTest extends StringMetricTest {
 
 	public class MinimumLenght implements Predicate<String> {

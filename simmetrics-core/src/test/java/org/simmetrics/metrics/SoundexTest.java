@@ -25,7 +25,7 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.simplifiers.SoundexSimplifier;
 
-@SuppressWarnings("javadoc")
+
 public class SoundexTest extends StringMetricTest {
 
 	@Override

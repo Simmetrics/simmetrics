@@ -21,10 +21,9 @@
  */
 package org.simmetrics.simplifiers;
 
-import java.util.regex.Pattern;
+import static com.google.common.base.Preconditions.checkArgument;
 
-import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
+import java.util.regex.Pattern;
 
 /**
  * Simplifies a string by computing its Soundex code.
@@ -65,7 +64,7 @@ public class SoundexSimplifier implements Simplifier {
 	 *            the length of the soundex string
 	 */
 	public SoundexSimplifier(int length) {
-		Preconditions.checkArgument(length >= 1, "minimum length is 1");
+		checkArgument(length >= 1, "minimum length is 1");
 		this.length = length;
 	}
 
@@ -126,7 +125,6 @@ public class SoundexSimplifier implements Simplifier {
 		return builder.toString();
 	}
 
-	
 	@Override
 	public String toString() {
 		return "SoundexSimplifier [length=" + length + "]";

@@ -25,7 +25,7 @@ import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.CosineSimilarity;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
-@SuppressWarnings("javadoc")
+
 public class CosineSimilarityTest extends StringMetricTest {
 
 	@Override

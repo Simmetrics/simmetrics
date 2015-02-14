@@ -24,7 +24,7 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
-@SuppressWarnings("javadoc")
+
 public class JaccardSimilarityTest extends StringMetricTest {
 
 	@Override

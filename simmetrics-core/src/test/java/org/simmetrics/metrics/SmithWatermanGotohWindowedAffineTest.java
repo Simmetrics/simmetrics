@@ -24,7 +24,7 @@ package org.simmetrics.metrics;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.SmithWatermanGotohWindowedAffine;
 
-@SuppressWarnings("javadoc")
+
 public class SmithWatermanGotohWindowedAffineTest extends StringMetricTest {
 
 

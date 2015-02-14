@@ -35,7 +35,7 @@ import com.google.common.base.Predicate;
 
 import static org.simmetrics.StringMetrics.*;
 
-@SuppressWarnings("javadoc")
+
 public class StringMetricsTest {
 
 	private static final float DELTA = 0.001f;

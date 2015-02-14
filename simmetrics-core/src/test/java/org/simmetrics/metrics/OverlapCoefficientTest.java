@@ -25,7 +25,7 @@ import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.OverlapCoefficient;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
-@SuppressWarnings("javadoc")
+
 public class OverlapCoefficientTest extends StringMetricTest {
 
 	@Override

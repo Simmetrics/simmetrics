@@ -31,26 +31,24 @@ public class SoundexSimplifierTest {
 		assertEquals("H4300", simplifier.simplify("Healthy"));
 		assertEquals("H4300", simplifier.simplify("Healed"));
 
-	
 	}
-	
 
+	/**
+	 * Tests references from <a href="http://en.wikipedia.org/wiki/Soundex"
+	 * >Wikipedia - Soundex</a>
+	 */
 	@Test
-	public void testWikiNames() {
-		
+	public void testWikipediaExamples() {
+
 		Simplifier simplifier = new SoundexSimplifier(4);
-		
+
 		assertEquals("R163", simplifier.simplify("Robert"));
 		assertEquals("R163", simplifier.simplify("Rupert"));
 		assertEquals("R150", simplifier.simplify("Rubin"));
-		
 
-		
 		assertEquals("A261", simplifier.simplify("Ashcraft"));
 		assertEquals("A261", simplifier.simplify("Ashcroft"));
-		
 
-		
 		assertEquals("T522", simplifier.simplify("Tymczak"));
 		assertEquals("P236", simplifier.simplify("Pfister"));
 	}
@@ -91,11 +89,9 @@ public class SoundexSimplifierTest {
 		assertEquals("J2000", simplifier.simplify("&Jack"));
 		assertEquals("J4000", simplifier.simplify("Jill2000"));
 		assertEquals("J5250", simplifier.simplify("150Johnson"));
-		
+
 		assertEquals("A1230", simplifier.simplify("aaa bbb ccc ddd"));
 		assertEquals("A1200", simplifier.simplify("aaa bbb ccc eee"));
-
-
 
 	}
 

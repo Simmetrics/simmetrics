@@ -37,33 +37,26 @@ public class Jaro implements StringMetric {
 
 	@Override
 	public float compare(final String string1, final String string2) {
-		
+
 		if (string1.isEmpty() && string2.isEmpty()) {
 			return 1.0f;
 		}
-		
+
 		if (string1.isEmpty() || string2.isEmpty()) {
 			return 0.0f;
 		}
-		
+
 		// get half the length of the string rounded up - (this is the distance
 		// used for acceptable transpositions)
-		final int halflen =  max(0,(int)floor(-1 + 0.5 * max(string1.length(), string2.length()))) ;
-				
+		final int halflen = max(0,
+				(int) floor(-1 + 0.5 * max(string1.length(), string2.length())));
 
 		// get common characters
-		final StringBuffer common1 = getCommonCharacters(string1, string2,
-				halflen);
-		final StringBuffer common2 = getCommonCharacters(string2, string1,
-				halflen);
+		final String common1 = getCommonCharacters(string1, string2, halflen);
+		final String common2 = getCommonCharacters(string2, string1, halflen);
 
 		// check for zero in common
 		if (common1.length() == 0 || common2.length() == 0) {
-			return 0.0f;
-		}
-
-		// check for same length common strings returning 0.0f is not the same
-		if (common1.length() != common2.length()) {
 			return 0.0f;
 		}
 
@@ -74,51 +67,72 @@ public class Jaro implements StringMetric {
 				transpositions++;
 		}
 		transpositions /= 2.0f;
-		
-		
-		float string1Common =  common1.length() / (float) string1.length();
-		float string2Common =  common2.length() / (float) string2.length();
-		float transpositionRatio= (common1.length() - transpositions) / common1.length();
-		
-		return (string1Common + string2Common + transpositionRatio) / 3.0f ;
+
+		float string1Common = common1.length() / (float) string1.length();
+		float string2Common = common2.length() / (float) string2.length();
+		float transpositionRatio = (common1.length() - transpositions)
+				/ common1.length();
+
+		return (string1Common + string2Common + transpositionRatio) / 3.0f;
 	}
 
 	/**
-	 * returns a string buffer of characters from string1 within string2 if they
-	 * are of a given distance seperation from the position in string1.
+	 * returns a string buffer of characters from <code>a</code> within
+	 * <code>b</code> if they are of a given distance <code>separation</code>
+	 * from the position in <code>a</code>.
 	 *
-	 * @param string1
-	 * @param string2
-	 * @param distanceSep
-	 * @return a string buffer of characters from string1 within string2 if they
-	 *         are of a given distance seperation from the position in string1
+	 * @param a
+	 * @param b
+	 * @param separation
+	 * @return a string buffer of characters from a within b
 	 */
-	private static StringBuffer getCommonCharacters(final String string1,
-			final String string2, final int distanceSep) {
-		// create a return buffer of characters
-		final StringBuffer returnCommons = new StringBuffer();
-		// create a copy of string2 for processing
-		final StringBuffer copy = new StringBuffer(string2);
-		// iterate over string1
-		for (int i = 0; i < string1.length(); i++) {
-			final char ch = string1.charAt(i);
-			
-			// set boolean for quick loop exit if found
-			boolean foundIt = false;
-			// compare char with range of characters to either side
-			for (int j = Math.max(0, i - distanceSep); !foundIt
-					&& j <= Math.min(i + distanceSep, copy.length() -1); j++) {
-				// check if found
-				if (copy.charAt(j) == ch) {
-					foundIt = true;
-					// append character found
-					returnCommons.append(ch);
-					// alter copied string2 for processing
-					copy.setCharAt(j, (char) 0);
-				}
+	private static String getCommonCharacters(final String a, final String b,
+			final int separation) {
+		final StringBuilder common = new StringBuilder(a.length() + b.length());
+		final StringBuilder copyOfB = new StringBuilder(b);
+
+		// Iterate of string a and find all characters that occur in b within
+		// the separation distance. Zero out any matches found to avoid
+		// duplicate matchings.
+		for (int i = 0; i < a.length(); i++) {
+			final char character = a.charAt(i);
+
+			int index = indexOf(character, copyOfB, i - separation, i
+					+ separation + 1);
+
+			if (index > -1) {
+				common.append(character);
+				copyOfB.setCharAt(index, (char) 0);
+			}
+
+		}
+		return common.toString();
+	}
+
+	/**
+	 * Search for <code>character</code> in <code>buffer</code> starting
+	 * <code>fromIndex<code> to <code>toIndex - 1</code>. Returns -1 when not
+	 * found.
+	 * 
+	 * @param character
+	 * @param buffer
+	 * @param fromIndex
+	 * @param toIndex
+	 * @return
+	 */
+	private static int indexOf(char character, StringBuilder buffer,
+			int fromIndex, int toIndex) {
+
+		// compare char with range of characters to either side
+		for (int j = Math.max(0, fromIndex); j < Math.min(toIndex,
+				buffer.length()); j++) {
+			// check if found
+			if (buffer.charAt(j) == character) {
+				return j;
 			}
 		}
-		return returnCommons;
+
+		return -1;
 	}
 
 	@Override

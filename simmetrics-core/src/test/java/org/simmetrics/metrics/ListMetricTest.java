@@ -22,18 +22,17 @@
 package org.simmetrics.metrics;
 
 import static java.util.Arrays.asList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static java.util.Collections.unmodifiableList;
 
 import java.util.Collections;
+import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.simmetrics.ListMetric;
+import org.simmetrics.metrics.StringMetricTest.T;
 import org.simmetrics.tokenizers.Tokenizer;
 
-public abstract class ListMetricTest {
+public abstract class ListMetricTest extends MetricTest<List<String>> {
 
 	protected class T {
 		protected final float similarity;
@@ -48,117 +47,45 @@ public abstract class ListMetricTest {
 
 	}
 
-	private ListMetric<String> metric;
-
-	static final float DEFAULT_DELTA = 0.0001f;
-	protected float delta;
-
-	protected float getDelta() {
-		return DEFAULT_DELTA;
-	}
-
-	public abstract ListMetric<String> getMetric();
-
-	@Before
-	public void setUp() throws Exception {
-		this.metric = getMetric();
-		this.delta = getDelta();
-	}
-
-	@Test
-	public void testUnmodifiable() {
-		metric.compare(
-				Collections.unmodifiableList(asList("a", "b", "c", "d")),
-				Collections.unmodifiableList(asList("c", "d", "e", "f")));
-	}
-
-	@Test
-	public void testToString() {
-
-		String string = metric.toString();
-
-		assertFalse(
-				"@ indicates toString() was not implemented "
-						+ metric.toString(), string.contains("@"));
-
-		String metricName = metric.getClass().getSimpleName();
-		String message = String.format("%s must contain %s ", string,
-				metricName);
-
-		assertTrue(message, message.contains(metricName));
-	}
-
 	protected void testSimilarity(ListMetric<String> metric,
 			Tokenizer tokenizer, T... tests) {
-		
-		generateTest(metric, tokenizer, tests);
 
 		for (T t : tests) {
-
-			float similarity = metric.compare(
-					tokenizer.tokenizeToList(t.string1),
-					tokenizer.tokenizeToList(t.string2));
-
-			String message1 = String.format(
-					"Similarity %f must fall within [0.0 - 1.0] range",
-					similarity);
-			assertTrue(message1, 0.0f <= similarity && similarity <= 1.0f);
-
-			String message = String.format("\"%s\" vs \"%s\"", t.string1,
-					t.string2);
-
-			assertEquals(message, t.similarity, similarity, delta);
+			List<String> a = unmodifiableList(tokenizer
+					.tokenizeToList(t.string1));
+			List<String> b = unmodifiableList(tokenizer
+					.tokenizeToList(t.string2));
+			testMetric(metric, a, b, t.similarity);
 		}
 	}
-	
-	protected void generateTest(ListMetric<String> metric,
-			Tokenizer tokenizer, T... tests) {
-		for (T t : tests) {
-			float actuall = metric.compare(
-					tokenizer.tokenizeToList(t.string1),
-					tokenizer.tokenizeToList(t.string2));
-		
-			String message = String.format(
-					"new T(%.4ff, \"%s\", \"%s\"),",
-					actuall,
-					t.string1,
-					t.string2);
-			System.out.println(message);
-		}
-	}
+
 
 	@Test
 	public void testEmpty() {
 		metric.compare(Collections.<String> emptyList(),
 				Collections.<String> emptyList());
 	}
-	
+
 	@Test
 	public void testEqual1() {
-		assertEquals(1.0, metric.compare(
-				asList("candy"),
-				asList("candy")), delta);
+		testMetric(metric, asList("candy"), asList("candy"), 1.0f);
 	}
+
 	@Test
 	public void testEqual2() {
-		assertEquals(1.0, metric.compare(
-				asList("candy","ice"),
-				asList("candy","ice")), delta);
+		testMetric(metric, asList("candy", "ice"), asList("candy", "ice"), 1.0f);
 	}
-	
+
 	@Test
 	public void testEqual3() {
-		assertEquals(1.0, metric.compare(
-				asList("candy","ice","slime"),
-				asList("candy","ice","slime")), delta);
+		testMetric(metric, asList("candy", "ice", "slime"),
+				asList("candy", "ice", "slime"), 1.0f);
 	}
-	
+
 	@Test
 	public void testEqual4() {
-		assertEquals(1.0, metric.compare(
-				asList("candy", "ice", "slime", "fire"),
-				asList("candy", "ice", "slime", "fire")), delta);
+		testMetric(metric, asList("candy", "ice", "slime", "fire"),
+				asList("candy", "ice", "slime", "fire"), 1.0f);
 	}
-	
-	
+
 }

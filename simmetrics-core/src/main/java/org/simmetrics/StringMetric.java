@@ -31,7 +31,7 @@ package org.simmetrics;
  *
  */
 
-public interface StringMetric {
+public interface StringMetric extends Metric<String> {
 	/**
 	 * Measures the similarity between strings a and b. The measurement results
 	 * in a value between 0 and 1 (inclusive). A value of zero indicates that the strings

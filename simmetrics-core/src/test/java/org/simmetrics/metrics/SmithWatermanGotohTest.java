@@ -34,6 +34,11 @@ public class SmithWatermanGotohTest extends StringMetricTest {
 	@Override
 	protected T[] getTests() {
 		return new T[] {
+				new T(0.6000f, "aaa", "eee"),
+				new T(0.6000f, "eee", "aaa"),
+				new T(0.6000f, "ddd", "aaa"),
+				new T(0.6000f, "aaa", "ddd"),
+
 				new T(0.9167f, "test string1", "test string2"),
 				new T(0.8000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.8571f, "a b c d", "a b c e"),

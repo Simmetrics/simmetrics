@@ -23,12 +23,15 @@ package org.simmetrics.metrics;
 
 import static com.google.common.collect.Sets.newHashSet;
 import static java.util.Arrays.asList;
+import static java.util.Collections.unmodifiableList;
 import static java.util.Collections.unmodifiableSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,7 +39,7 @@ import org.simmetrics.ListMetric;
 import org.simmetrics.SetMetric;
 import org.simmetrics.tokenizers.Tokenizer;
 
-public abstract class SetMetricTest {
+public abstract class SetMetricTest extends MetricTest<Set<String>> {
 
 	protected class T {
 		protected final float similarity;
@@ -50,99 +53,51 @@ public abstract class SetMetricTest {
 		}
 
 	}
-
-	private SetMetric<String> metric;
-
-	static final float DEFAULT_DELTA = 0.0001f;
-	protected float delta;
-
-	protected float getDelta() {
-		return DEFAULT_DELTA;
-	}
-
-	public abstract SetMetric<String> getMetric();
-
-	@Before
-	public void setUp() throws Exception {
-		this.metric = getMetric();
-		this.delta = getDelta();
-	}
-
-	@Test
-	public void testUnmodifiable() {
-		metric.compare(
-				unmodifiableSet(newHashSet("a", "b", "c", "d")),
-				unmodifiableSet(newHashSet("c", "d", "e", "f")));
-	}
-
-	@Test
-	public void testToString() {
-
-		String string = metric.toString();
-
-		assertFalse(
-				"@ indicates toString() was not implemented "
-						+ metric.toString(), string.contains("@"));
-
-		String metricName = metric.getClass().getSimpleName();
-		String message = String.format("%s must contain %s ", string,
-				metricName);
-
-		assertTrue(message, message.contains(metricName));
-	}
-
+	
 	protected void testSimilarity(SetMetric<String> metric,
 			Tokenizer tokenizer, T... tests) {
 
 		for (T t : tests) {
 
-			float similarity = metric.compare(
-					tokenizer.tokenizeToSet(t.string1),
-					tokenizer.tokenizeToSet(t.string2));
-
-			String message1 = String.format(
-					"Similarity %f must fall within [0.0 - 1.0] range",
-					similarity);
-			assertTrue(message1, 0.0f <= similarity && similarity <= 1.0f);
-
-			String message = String.format("\"%s\" vs \"%s\"", t.string1,
-					t.string2);
-
-			assertEquals(message, t.similarity, similarity, delta);
+			Set<String> a = unmodifiableSet(tokenizer
+					.tokenizeToSet(t.string1));
+			Set<String> b = unmodifiableSet(tokenizer
+					.tokenizeToSet(t.string2));
+			testMetric(metric, a, b, t.similarity);
 		}
 	}
 
-	@Test
-	public void testEmpty() {
-		metric.compare(Collections.<String> emptySet(),
-				Collections.<String> emptySet());
-	}
-
-	
-	@Test
-	public void testEqual1() {
-		assertEquals(1.0, metric.compare(
-				newHashSet("candy"),
-				newHashSet("candy")), delta);
-	}
-	@Test
-	public void testEqual2() {
-		assertEquals(1.0, metric.compare(
-				newHashSet("candy","ice"),
-				newHashSet("candy","ice")), delta);
-	}
-	
-	@Test
-	public void testEqual3() {
-		assertEquals(1.0, metric.compare(
-				newHashSet("candy","ice","slime"),
-				newHashSet("candy","ice","slime")), delta);
-	}
-	
-	@Test
-	public void testEqual4() {
-		assertEquals(1.0, metric.compare(
-				newHashSet("candy", "ice", "slime", "fire"),
-				newHashSet("candy", "ice", "slime", "fire")), delta);
-	}
+//	@Test
+//	public void testEmpty() {
+//		metric.compare(Collections.<String> emptySet(),
+//				Collections.<String> emptySet());
+//	}
+//
+//	
+//	@Test
+//	public void testEqual1() {
+//		assertEquals(1.0, metric.compare(
+//				newHashSet("candy"),
+//				newHashSet("candy")), delta);
+//	}
+//	@Test
+//	public void testEqual2() {
+//		assertEquals(1.0, metric.compare(
+//				newHashSet("candy","ice"),
+//				newHashSet("candy","ice")), delta);
+//	}
+//	
+//	@Test
+//	public void testEqual3() {
+//		assertEquals(1.0, metric.compare(
+//				newHashSet("candy","ice","slime"),
+//				newHashSet("candy","ice","slime")), delta);
+//	}
+//	
+//	@Test
+//	public void testEqual4() {
+//		assertEquals(1.0, metric.compare(
+//				newHashSet("candy", "ice", "slime", "fire"),
+//				newHashSet("candy", "ice", "slime", "fire")), delta);
+//	}
 }

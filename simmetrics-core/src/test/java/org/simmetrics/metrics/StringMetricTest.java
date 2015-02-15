@@ -21,17 +21,12 @@
 package org.simmetrics.metrics;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Arrays;
-
-import org.junit.Before;
 import org.junit.Test;
+import org.simmetrics.Metric;
 import org.simmetrics.StringMetric;
 
 
-public abstract class StringMetricTest {
+public abstract class StringMetricTest extends MetricTest<String> {
 
 	protected class T {
 		protected final float similarity;
@@ -46,39 +41,16 @@ public abstract class StringMetricTest {
 
 	}
 
-	static final float DEFAULT_DELTA = 0.0001f;
-	protected float delta;
-	protected StringMetric metric;
-
-	@Before
-	public void setUp() throws Exception {
-		delta = getDelta();
-		metric = getMetric();
-	}
-
-	protected float getDelta() {
-		return DEFAULT_DELTA;
-	}
-
-	protected abstract StringMetric getMetric();
-
 	protected abstract T[] getTests();
-
+	
 	protected void testSimilarity(StringMetric metric, T... tests) {
+		testSimilarity((Metric<String>)metric, tests);
+	}
+
+	protected void testSimilarity(Metric<String> metric, T... tests) {
 
 		for (T t : tests) {
-
-			float actuall = metric.compare(t.string1, t.string2);
-
-			assertTrue("Similarity " + actuall
-					+ " must fall within [0.0 - 1.0] range", 0.0f <= actuall
-					&& actuall <= 1.0f);
-
-			String message = String.format(
-					"\"%s\" vs \"%s\"",
-					t.string1,
-					t.string2);
-			assertEquals(message, t.similarity, actuall, delta);
+			testMetric(metric, t.string1, t.string2, t.similarity);
 		}
 	}
 
@@ -114,25 +86,6 @@ public abstract class StringMetricTest {
 	@Test
 	public void testEqual1() {
 		assertEquals(1.0, metric.compare("c","c"), delta);
-	}
-
-	@Test
-	public void testToString() {
-
-		assertFalse(
-				"@ indicates toString() was not implemented "
-						+ metric.toString(),
-				metric.toString().contains("@"));
-
-		assertToStringContains(metric, metric.getClass().getSimpleName());
-	}
-
-	protected static void assertToStringContains(StringMetric tokenizer,
-			String content) {
-		String string = tokenizer.toString();
-		String message = String.format("%s must contain %s ", string, content);
-
-		assertTrue(message, message.contains(content));
 	}
 
 	@Test

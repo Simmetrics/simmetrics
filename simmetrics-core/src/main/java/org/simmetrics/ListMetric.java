@@ -43,7 +43,7 @@ import java.util.List;
  *            the type of elements contained in the lists
  *
  */
-public interface ListMetric<T> {
+public interface ListMetric<T> extends Metric<List<T>> {
 	/**
 	 * Measures the similarity between lists a and b. The measurement results in
 	 * a value between 0 and 1 inclusive. A value of zero indicates that the

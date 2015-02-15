@@ -20,25 +20,26 @@
  */
 package org.simmetrics.metrics;
 
+import org.junit.Test;
+import org.simmetrics.ListMetric;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.EuclideanDistance;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
 
-public class EuclideanDistanceTest extends StringMetricTest {
+public class EuclideanDistanceTest extends ListMetricTest {
 
 	@Override
-	protected StringMetric getMetric() {
-		return new StringMetricBuilder().with(
-				new EuclideanDistance<String>())
-				.tokenize(new WhitespaceTokenizer())
-				.build();
+	public ListMetric<String> getMetric() {
+		return new EuclideanDistance<String>();
 	}
-
-	@Override
-	protected T[] getTests() {
-		return new T[] {
+	
+	@Test
+	public void test1() {
+		testSimilarity(
+				getMetric(), 
+				new WhitespaceTokenizer(), 
 				new T(0.5000f, "test string1", "test string2"),
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.7500f, "a b c d", "a b c e"),
@@ -102,6 +103,9 @@ public class EuclideanDistanceTest extends StringMetricTest {
 						"Structural Assessment: The Role of Large and Full-Scale Testing"),
 				new T(0.5528f,
 						"Web Aplications",
-						"How to Find a Scholarship Online"), };
+						"How to Find a Scholarship Online")
+				);
 	}
+
+
 }

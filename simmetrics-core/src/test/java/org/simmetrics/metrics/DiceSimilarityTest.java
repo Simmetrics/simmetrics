@@ -20,24 +20,26 @@
  */
 package org.simmetrics.metrics;
 
+import org.junit.Test;
+import org.simmetrics.SetMetric;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.DiceSimilarity;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
 
-public class DiceSimilarityTest extends StringMetricTest {
+public class DiceSimilarityTest extends SetMetricTest {
 
 	@Override
-	protected StringMetric getMetric() {
-		return new StringMetricBuilder().with(new DiceSimilarity<String>())
-				.tokenize(new WhitespaceTokenizer())
-				.build();
+	public SetMetric<String> getMetric() {
+		return new DiceSimilarity<>();
 	}
 
-	@Override
-	protected T[] getTests() {
-		return new T[] {
+	@Test
+	public void test1() {
+		testSimilarity(
+				getMetric(), 
+				new WhitespaceTokenizer(), 
 				new T(0.5000f, "test string1", "test string2"),
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.7500f, "a b c d", "a b c e"),
@@ -101,6 +103,6 @@ public class DiceSimilarityTest extends StringMetricTest {
 						"Structural Assessment: The Role of Large and Full-Scale Testing"),
 				new T(0.0000f,
 						"Web Aplications",
-						"How to Find a Scholarship Online"), };
+						"How to Find a Scholarship Online"));
 	}
 }

@@ -21,20 +21,21 @@
  */
 package org.simmetrics.metrics;
 
+import static com.google.common.collect.Sets.newHashSet;
+import static java.util.Collections.unmodifiableSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.simmetrics.ListMetric;
-import org.simmetrics.StringMetric;
+import org.simmetrics.SetMetric;
 import org.simmetrics.tokenizers.Tokenizer;
 
-public abstract class ListMetricTest {
+public abstract class SetMetricTest {
 
 	protected class T {
 		protected final float similarity;
@@ -49,7 +50,7 @@ public abstract class ListMetricTest {
 
 	}
 
-	private ListMetric<String> metric;
+	private SetMetric<String> metric;
 
 	static final float DEFAULT_DELTA = 0.0001f;
 	protected float delta;
@@ -58,7 +59,7 @@ public abstract class ListMetricTest {
 		return DEFAULT_DELTA;
 	}
 
-	public abstract ListMetric<String> getMetric();
+	public abstract SetMetric<String> getMetric();
 
 	@Before
 	public void setUp() throws Exception {
@@ -69,8 +70,8 @@ public abstract class ListMetricTest {
 	@Test
 	public void testUnmodifiable() {
 		metric.compare(
-				Collections.unmodifiableList(Arrays.asList("a", "b", "c", "d")),
-				Collections.unmodifiableList(Arrays.asList("c", "d", "e", "f")));
+				unmodifiableSet(newHashSet("a", "b", "c", "d")),
+				unmodifiableSet(newHashSet("c", "d", "e", "f")));
 	}
 
 	@Test
@@ -89,14 +90,14 @@ public abstract class ListMetricTest {
 		assertTrue(message, message.contains(metricName));
 	}
 
-	protected void testSimilarity(ListMetric<String> metric,
+	protected void testSimilarity(SetMetric<String> metric,
 			Tokenizer tokenizer, T... tests) {
 
 		for (T t : tests) {
 
 			float similarity = metric.compare(
-					tokenizer.tokenizeToList(t.string1),
-					tokenizer.tokenizeToList(t.string2));
+					tokenizer.tokenizeToSet(t.string1),
+					tokenizer.tokenizeToSet(t.string2));
 
 			String message1 = String.format(
 					"Similarity %f must fall within [0.0 - 1.0] range",
@@ -112,14 +113,14 @@ public abstract class ListMetricTest {
 
 	@Test
 	public void testEmpty() {
-		metric.compare(Collections.<String> emptyList(),
-				Collections.<String> emptyList());
+		metric.compare(Collections.<String> emptySet(),
+				Collections.<String> emptySet());
 	}
 
 	@Test
 	public void testEqual() {
 		assertEquals(1.0, metric.compare(
-				Arrays.asList("candy", "ice", "slime", "fire"),
-				Arrays.asList("candy", "ice", "slime", "fire")), delta);
+				newHashSet("candy", "ice", "slime", "fire"),
+				newHashSet("candy", "ice", "slime", "fire")), delta);
 	}
 }

@@ -21,23 +21,26 @@
  */
 package org.simmetrics.metrics;
 
+import org.junit.Test;
+import org.simmetrics.ListMetric;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.ChapmanOrderedNameCompoundSimilarity;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
-public class ChapmanOrderedNameCompoundSimilarityTest extends StringMetricTest {
+public class ChapmanOrderedNameCompoundSimilarityTest extends ListMetricTest {
 
 	@Override
-	protected StringMetric getMetric() {
-		return new StringMetricBuilder()
-				.with(new ChapmanOrderedNameCompoundSimilarity())
-				.tokenize(new WhitespaceTokenizer()).build();
+	public ListMetric<String> getMetric() {
+		return new ChapmanOrderedNameCompoundSimilarity();
 	}
 
-	@Override
-	protected T[] getTests() {
-		return new T[] { new T(0.9220f, "test string1", "test string2"),
+	@Test
+	public void test1() {
+		testSimilarity(
+				getMetric(), 
+				new WhitespaceTokenizer(), 
+				new T(0.9220f, "test string1", "test string2"),
 				new T(0.7604f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.7604f, "a b c d", "a b c e"),
 				new T(0.7833f, "Healed", "Sealed"),
@@ -52,8 +55,7 @@ public class ChapmanOrderedNameCompoundSimilarityTest extends StringMetricTest {
 				new T(0.4250f, "John Smith", "Samuel John Chapman"),
 				new T(0.2000f, "John Smith", "Sam Chapman"),
 				new T(0.2688f, "John Smith", "Sam J Chapman"),
-				new T(0.0625f, "John Smith", "S Chapman"),
-
-		};
+				new T(0.0625f, "John Smith", "S Chapman")
+		);
 	}
 }

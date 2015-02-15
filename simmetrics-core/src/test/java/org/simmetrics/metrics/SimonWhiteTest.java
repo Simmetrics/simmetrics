@@ -21,23 +21,30 @@
  */
 package org.simmetrics.metrics;
 
+import static java.util.Arrays.asList;
+
+import java.util.Arrays;
+
+import org.junit.Test;
+import org.simmetrics.ListMetric;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.tokenizers.QGramTokenizer;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
+import org.simmetrics.utils.CompositeTokenizer;
+import org.simmetrics.utils.FilteringTokenizer;
 
 import com.google.common.base.Predicate;
 
-
-public class SimonWhiteTest extends StringMetricTest {
+public class SimonWhiteTest extends ListMetricTest {
 
 	public class MinimumLenght implements Predicate<String> {
 		@Override
 		public boolean apply(String input) {
 			return input.length() >= 2;
 		}
-		
+
 		@Override
 		public String toString() {
 			return "MinimumLenght";
@@ -45,17 +52,18 @@ public class SimonWhiteTest extends StringMetricTest {
 	}
 
 	@Override
-	protected StringMetric getMetric() {
-		return new StringMetricBuilder().with(new SimonWhite<String>())
-				.tokenize(new WhitespaceTokenizer())
-				.filter(new MinimumLenght())
-				.tokenize(new QGramTokenizer(2))
-				.build();
+	public ListMetric<String> getMetric() {
+		return new SimonWhite<String>();
 	}
 
-	@Override
-	protected T[] getTests() {
-		return new T[] {
+	@Test
+	public void test1() {
+		
+		testSimilarity(
+				getMetric(), 
+				new CompositeTokenizer(asList(
+						new FilteringTokenizer(new WhitespaceTokenizer(), new MinimumLenght()),
+						new QGramTokenizer(2))),  
 				new T(0.8889f, "test string1", "test string2"),
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(1.0000f, "a b c d", "a b c e"),
@@ -107,6 +115,6 @@ public class SimonWhiteTest extends StringMetricTest {
 				new T(0.0690f, "Web Aplications",
 						"Structural Assessment: The Role of Large and Full-Scale Testing"),
 				new T(0.0606f, "Web Aplications",
-						"How to Find a Scholarship Online"), };
+						"How to Find a Scholarship Online"));
 	}
 }

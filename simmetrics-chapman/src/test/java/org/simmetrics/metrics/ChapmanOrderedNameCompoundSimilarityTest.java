@@ -40,22 +40,22 @@ public class ChapmanOrderedNameCompoundSimilarityTest extends ListMetricTest {
 		testSimilarity(
 				getMetric(), 
 				new WhitespaceTokenizer(), 
-				new T(0.9220f, "test string1", "test string2"),
-				new T(0.7604f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-				new T(0.7604f, "a b c d", "a b c e"),
-				new T(0.7833f, "Healed", "Sealed"),
-				new T(0.8000f, "Healed", "Healthy"),
-				new T(0.6800f, "Healed", "Heard"),
-				new T(0.2167f, "Healed", "Herded"),
-				new T(0.7058f, "Healed", "Help"),
-				new T(0.5542f, "Healed", "Sold"),
-				new T(0.7058f, "Healed", "Help"),
-				new T(0.7463f, "Sam J Chapman", "Samuel John Chapman"),
-				new T(0.8104f, "Sam Chapman", "S Chapman"),
-				new T(0.4250f, "John Smith", "Samuel John Chapman"),
-				new T(0.2000f, "John Smith", "Sam Chapman"),
-				new T(0.2688f, "John Smith", "Sam J Chapman"),
-				new T(0.0625f, "John Smith", "S Chapman")
+				new T(0.9554f, "test string1", "test string2"),
+				new T(0.8052f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+				new T(0.8052f, "a b c d", "a b c e"),
+				new T(0.8500f, "Healed", "Sealed"),
+				new T(0.8333f, "Healed", "Healthy"),
+				new T(0.7400f, "Healed", "Heard"),
+				new T(0.5467f, "Healed", "Herded"),
+				new T(0.7592f, "Healed", "Help"),
+				new T(0.6208f, "Healed", "Sold"),
+				new T(0.7592f, "Healed", "Help"),
+				new T(0.9681f, "Sam J Chapman", "Samuel John Chapman"),
+				new T(0.9775f, "Sam Chapman", "S Chapman"),
+				new T(0.6250f, "John Smith", "Samuel John Chapman"),
+				new T(0.4125f, "John Smith", "Sam Chapman"),
+				new T(0.6025f, "John Smith", "Sam J Chapman"),
+				new T(0.3875f, "John Smith", "S Chapman")
 		);
 	}
 }

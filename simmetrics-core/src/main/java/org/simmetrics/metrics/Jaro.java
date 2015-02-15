@@ -11,17 +11,20 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.simmetrics.metrics;
 
-import org.simmetrics.StringMetric;
+import static java.lang.Math.floor;
+import static java.lang.Math.max;
 
+import org.simmetrics.StringMetric;
 
 /**
  * Implements the Jaro algorithm providing a similarity measure between two
@@ -30,8 +33,7 @@ import org.simmetrics.StringMetric;
  * @author Sam Chapman
  * @version 1.1
  */
-public  class Jaro implements StringMetric {
-
+public class Jaro implements StringMetric {
 
 	@Override
 	public float compare(final String string1, final String string2) {
@@ -44,11 +46,10 @@ public  class Jaro implements StringMetric {
 			return 0.0f;
 		}
 		
-		
 		// get half the length of the string rounded up - (this is the distance
 		// used for acceptable transpositions)
-		final int halflen = ((Math.min(string1.length(), string2.length())) / 2)
-				+ ((Math.min(string1.length(), string2.length())) % 2);
+		final int halflen =  max(0,(int)floor(-1 + 0.5 * max(string1.length(), string2.length()))) ;
+				
 
 		// get common characters
 		final StringBuffer common1 = getCommonCharacters(string1, string2,
@@ -67,17 +68,19 @@ public  class Jaro implements StringMetric {
 		}
 
 		// get the number of transpositions
-		int transpositions = 0;
+		float transpositions = 0;
 		for (int i = 0; i < common1.length(); i++) {
 			if (common1.charAt(i) != common2.charAt(i))
 				transpositions++;
 		}
 		transpositions /= 2.0f;
-
-		// calculate jaro metric
-		return (common1.length() / ((float) string1.length())
-				+ common2.length() / ((float) string2.length()) + (common1
-				.length() - transpositions) / ((float) common1.length())) / 3.0f;
+		
+		
+		float string1Common =  common1.length() / (float) string1.length();
+		float string2Common =  common2.length() / (float) string2.length();
+		float transpositionRatio= (common1.length() - transpositions) / common1.length();
+		
+		return (string1Common + string2Common + transpositionRatio) / 3.0f ;
 	}
 
 	/**
@@ -99,11 +102,12 @@ public  class Jaro implements StringMetric {
 		// iterate over string1
 		for (int i = 0; i < string1.length(); i++) {
 			final char ch = string1.charAt(i);
+			
 			// set boolean for quick loop exit if found
 			boolean foundIt = false;
 			// compare char with range of characters to either side
 			for (int j = Math.max(0, i - distanceSep); !foundIt
-					&& j < Math.min(i + distanceSep, string2.length() - 1); j++) {
+					&& j <= Math.min(i + distanceSep, copy.length() -1); j++) {
 				// check if found
 				if (copy.charAt(j) == ch) {
 					foundIt = true;
@@ -116,6 +120,7 @@ public  class Jaro implements StringMetric {
 		}
 		return returnCommons;
 	}
+
 	@Override
 	public String toString() {
 		return "Jaro";

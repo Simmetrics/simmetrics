@@ -39,21 +39,23 @@ public class ChapmanMatchingSoundexTest extends StringMetricTest {
 
 	@Override
 	protected T[] getTests() {
-		return new T[] { new T(0.9333f, "test string1", "test string2"),
-				new T(0.8833f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-				new T(0.8833f, "a b c d", "a b c e"),
-				new T(0.7333f, "Healed", "Sealed"),
-				new T(0.9333f, "Healed", "Healthy"),
-				new T(0.7600f, "Healed", "Heard"),
-				new T(0.1000f, "Healed", "Herded"),
-				new T(0.7867f, "Healed", "Help"),
-				new T(0.7333f, "Healed", "Sold"),
-				new T(0.7867f, "Healed", "Help"),
-				new T(0.5889f, "Sam J Chapman", "Samuel John Chapman"),
-				new T(0.5167f, "Sam Chapman", "S Chapman"),
-				new T(0.8600f, "John Smith", "Samuel John Chapman"),
-				new T(0.4667f, "John Smith", "Sam Chapman"),
-				new T(0.4667f, "John Smith", "Sam J Chapman"),
-				new T(0.0500f, "John Smith", "S Chapman"), };
+		return new T[] { 
+				new T(1.0000f, "test string1", "test string2"),
+				new T(0.9667f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+				new T(0.9667f, "a b c d", "a b c e"),
+				new T(0.8667f, "Healed", "Sealed"),
+				new T(1.0000f, "Healed", "Healthy"),
+				new T(0.8800f, "Healed", "Heard"),
+				new T(0.7600f, "Healed", "Herded"),
+				new T(0.8933f, "Healed", "Help"),
+				new T(0.8667f, "Healed", "Sold"),
+				new T(0.8933f, "Healed", "Help"),
+				new T(0.9244f, "Sam J Chapman", "Samuel John Chapman"),
+				new T(0.9400f, "Sam Chapman", "S Chapman"),
+				new T(0.9467f, "John Smith", "Samuel John Chapman"),
+				new T(0.8800f, "John Smith", "Sam Chapman"),
+				new T(0.8867f, "John Smith", "Sam J Chapman"),
+				new T(0.7467f, "John Smith", "S Chapman"),
+			};
 	}
 }

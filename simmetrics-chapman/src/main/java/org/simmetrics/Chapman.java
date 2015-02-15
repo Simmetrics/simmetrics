@@ -1,7 +1,6 @@
 package org.simmetrics;
 
 import org.simmetrics.metrics.ChapmanLengthDeviation;
-import org.simmetrics.metrics.ChapmanMeanLength;
 import org.simmetrics.metrics.ChapmanOrderedNameCompoundSimilarity;
 import org.simmetrics.metrics.JaroWinkler;
 import org.simmetrics.metrics.MongeElkan;
@@ -20,7 +19,6 @@ import org.simmetrics.tokenizers.WhitespaceTokenizer;
  * <ul>
  * <li>Length Deviation
  * <li>Matching Soundex
- * <li>Mean Length
  * <li>Ordered Name Compound Similarity
  * </ul>
  * 
@@ -39,10 +37,6 @@ public class Chapman {
 						.build()))
 				.tokenize(new WhitespaceTokenizer())
 				.build();
-	}
-
-	public StringMetric meanLength() {
-		return new ChapmanMeanLength();
 	}
 
 	public StringMetric orderedNameCompoundSimilarity() {

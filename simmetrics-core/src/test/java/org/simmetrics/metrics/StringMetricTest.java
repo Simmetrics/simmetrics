@@ -24,6 +24,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.simmetrics.StringMetric;
@@ -88,6 +90,30 @@ public abstract class StringMetricTest {
 	@Test
 	public void testEmpty() {
 		testSimilarity(metric, new T(1.0f, "", "")); 
+	}
+	
+	@Test
+	public void testEqual5() {
+		assertEquals(1.0, metric.compare("candy","candy"), delta);
+		assertEquals(1.0, metric.compare("slime","slime"), delta);
+	}
+	@Test
+	public void testEqual4() {
+		assertEquals(1.0, metric.compare("fire","fire"), delta);
+	}
+	
+	@Test
+	public void testEqual3() {
+		assertEquals(1.0, metric.compare("ice","ice"), delta);
+	}
+	@Test
+	public void testEqual2() {
+		assertEquals(1.0, metric.compare("fa","fa"), delta);
+	}
+	
+	@Test
+	public void testEqual1() {
+		assertEquals(1.0, metric.compare("c","c"), delta);
 	}
 
 	@Test

@@ -32,6 +32,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.simmetrics.ListMetric;
 import org.simmetrics.StringMetric;
+import org.simmetrics.metrics.StringMetricTest.T;
 import org.simmetrics.tokenizers.Tokenizer;
 
 public abstract class ListMetricTest {
@@ -91,6 +92,8 @@ public abstract class ListMetricTest {
 
 	protected void testSimilarity(ListMetric<String> metric,
 			Tokenizer tokenizer, T... tests) {
+		
+		generateTest(metric, tokenizer, tests);
 
 		for (T t : tests) {
 
@@ -109,6 +112,22 @@ public abstract class ListMetricTest {
 			assertEquals(message, t.similarity, similarity, delta);
 		}
 	}
+	
+	protected void generateTest(ListMetric<String> metric,
+			Tokenizer tokenizer, T... tests) {
+		for (T t : tests) {
+			float actuall = metric.compare(
+					tokenizer.tokenizeToList(t.string1),
+					tokenizer.tokenizeToList(t.string2));
+		
+			String message = String.format(
+					"new T(%.4ff, \"%s\", \"%s\"),",
+					actuall,
+					t.string1,
+					t.string2);
+			System.out.println(message);
+		}
+	}
 
 	@Test
 	public void testEmpty() {
@@ -122,4 +141,6 @@ public abstract class ListMetricTest {
 				Arrays.asList("candy", "ice", "slime", "fire"),
 				Arrays.asList("candy", "ice", "slime", "fire")), delta);
 	}
+	
+	
 }

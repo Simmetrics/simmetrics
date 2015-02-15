@@ -22,6 +22,7 @@
 package org.simmetrics.metrics;
 
 import static com.google.common.collect.Sets.newHashSet;
+import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -117,8 +118,29 @@ public abstract class SetMetricTest {
 				Collections.<String> emptySet());
 	}
 
+	
 	@Test
-	public void testEqual() {
+	public void testEqual1() {
+		assertEquals(1.0, metric.compare(
+				newHashSet("candy"),
+				newHashSet("candy")), delta);
+	}
+	@Test
+	public void testEqual2() {
+		assertEquals(1.0, metric.compare(
+				newHashSet("candy","ice"),
+				newHashSet("candy","ice")), delta);
+	}
+	
+	@Test
+	public void testEqual3() {
+		assertEquals(1.0, metric.compare(
+				newHashSet("candy","ice","slime"),
+				newHashSet("candy","ice","slime")), delta);
+	}
+	
+	@Test
+	public void testEqual4() {
 		assertEquals(1.0, metric.compare(
 				newHashSet("candy", "ice", "slime", "fire"),
 				newHashSet("candy", "ice", "slime", "fire")), delta);

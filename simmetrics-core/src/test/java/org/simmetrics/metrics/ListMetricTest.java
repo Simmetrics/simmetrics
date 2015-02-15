@@ -21,18 +21,16 @@
  */
 package org.simmetrics.metrics;
 
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.simmetrics.ListMetric;
-import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.StringMetricTest.T;
 import org.simmetrics.tokenizers.Tokenizer;
 
 public abstract class ListMetricTest {
@@ -70,8 +68,8 @@ public abstract class ListMetricTest {
 	@Test
 	public void testUnmodifiable() {
 		metric.compare(
-				Collections.unmodifiableList(Arrays.asList("a", "b", "c", "d")),
-				Collections.unmodifiableList(Arrays.asList("c", "d", "e", "f")));
+				Collections.unmodifiableList(asList("a", "b", "c", "d")),
+				Collections.unmodifiableList(asList("c", "d", "e", "f")));
 	}
 
 	@Test
@@ -134,12 +132,32 @@ public abstract class ListMetricTest {
 		metric.compare(Collections.<String> emptyList(),
 				Collections.<String> emptyList());
 	}
-
+	
 	@Test
-	public void testEqual() {
+	public void testEqual1() {
 		assertEquals(1.0, metric.compare(
-				Arrays.asList("candy", "ice", "slime", "fire"),
-				Arrays.asList("candy", "ice", "slime", "fire")), delta);
+				asList("candy"),
+				asList("candy")), delta);
+	}
+	@Test
+	public void testEqual2() {
+		assertEquals(1.0, metric.compare(
+				asList("candy","ice"),
+				asList("candy","ice")), delta);
+	}
+	
+	@Test
+	public void testEqual3() {
+		assertEquals(1.0, metric.compare(
+				asList("candy","ice","slime"),
+				asList("candy","ice","slime")), delta);
+	}
+	
+	@Test
+	public void testEqual4() {
+		assertEquals(1.0, metric.compare(
+				asList("candy", "ice", "slime", "fire"),
+				asList("candy", "ice", "slime", "fire")), delta);
 	}
 	
 	

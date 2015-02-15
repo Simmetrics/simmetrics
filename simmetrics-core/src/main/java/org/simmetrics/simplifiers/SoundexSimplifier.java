@@ -43,13 +43,13 @@ public class SoundexSimplifier implements Simplifier {
 
 	private static final int DEFAULT_LENGTH = 5;
 
-	private final Pattern nonAzNonSpace = Pattern.compile("([^A-Z]|\\s)+");
+	private final Pattern nonAz = Pattern.compile("[^A-Z]+");
 
 	private int length;
 
 	/**
 	 * Creates a new Soundex simplifier with a length of 5. The Soundex string
-	 * s2433 is 5 long.
+	 * S2433 is 5 long.
 	 */
 	public SoundexSimplifier() {
 		this(DEFAULT_LENGTH);
@@ -58,7 +58,7 @@ public class SoundexSimplifier implements Simplifier {
 	/**
 	 * 
 	 * Creates a new Soundex simplifier with the given <code>length</code>. The
-	 * Soundex string s2433 is 5 long.
+	 * Soundex string S2433 is 5 long.
 	 *
 	 * @param length
 	 *            the length of the soundex string
@@ -84,7 +84,7 @@ public class SoundexSimplifier implements Simplifier {
 		// Clean and tidy
 		// to lower case remove non-chars whitespaces
 		wordStr = wordStr.toUpperCase();
-		wordStr = nonAzNonSpace.matcher(wordStr).replaceAll("");
+		wordStr = nonAz.matcher(wordStr).replaceAll("");
 
 		// check for empty input again the previous clean and tidy could of
 		// shrunk it to zero.

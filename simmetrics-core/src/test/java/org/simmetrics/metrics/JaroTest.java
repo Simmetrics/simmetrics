@@ -21,6 +21,7 @@
  */
 package org.simmetrics.metrics;
 
+import org.junit.Test;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.Jaro;
 
@@ -29,6 +30,18 @@ public class JaroTest extends StringMetricTest {
 	@Override
 	protected StringMetric getMetric() {
 		return new Jaro();
+	}
+
+	/**
+	 * Tests references from <a
+	 * href="http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance"
+	 * >Wikipedia - Jaro Winkler Distance</a>
+	 */
+	@Test
+	public void testWikipediaExamples() {
+		testSimilarity(getMetric(), new T(0.9444f, "MARTHA", "MARHTA"));
+		testSimilarity(getMetric(), new T(0.8222f, "DWAYNE", "DUANE"));
+		testSimilarity(getMetric(), new T(0.7666f, "DIXON", "DICKSONX"));
 	}
 
 	@Override

@@ -11,18 +11,21 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.simmetrics.metrics;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.simmetrics.ListMetric;
+
 import static java.lang.Math.max;
 
 /**
@@ -47,19 +50,24 @@ public class MatchingCoefficient<T> implements ListMetric<T> {
 			return 0.0f;
 		}
 
-		return intersection(a, b) / max(a.size(), b.size());
-	}
+		// Copy for destructive list difference
+		b = new ArrayList<>(b);
+		int union = a.size() + b.size();
 
-	private static <T> float intersection(final List<T> a,
-			final List<T> b) {
-
-		int totalFound = 0;
+		// Count elements in the list intersection.
+		// Elements are counted only once in both lists.
+		// E.g. the intersection of [ab,ab,ab] and [ab,ab,ac,ad] is [ab,ab].
+		// Note: this is not the same as b.retainAll(a).size()
+		int intersection = 0;
+		
 		for (T token : a) {
-			if (b.contains(token)) {
-				totalFound++;
+			if (b.remove(token)) {
+				intersection++;
 			}
 		}
-		return totalFound;
+
+		// matching co-efficient as common elements  / (common elements + non-common elements )
+		return intersection / (float)(union - intersection) ;
 	}
 
 	@Override

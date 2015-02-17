@@ -21,15 +21,16 @@
  */
 package org.simmetrics.metrics;
 
+import static org.simmetrics.StringMetricBuilder.with;
+
 import org.simmetrics.StringMetric;
-import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.simplifiers.SoundexSimplifier;
 
 public class SoundexTest extends StringMetricTest {
 
 	@Override
 	protected StringMetric getMetric() {
-		return new StringMetricBuilder().with(new JaroWinkler())
+		return with(new JaroWinkler())
 				.simplify(new SoundexSimplifier()).build();
 	}
 

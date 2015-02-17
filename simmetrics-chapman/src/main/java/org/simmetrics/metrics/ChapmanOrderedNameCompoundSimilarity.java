@@ -20,9 +20,10 @@
  */
 package org.simmetrics.metrics;
 
+import static org.simmetrics.StringMetricBuilder.with;
+
 import java.util.List;
 
-import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.StringMetric;
 import org.simmetrics.ListMetric;
 import org.simmetrics.simplifiers.SoundexSimplifier;
@@ -39,10 +40,9 @@ import org.simmetrics.simplifiers.SoundexSimplifier;
  */
 public class ChapmanOrderedNameCompoundSimilarity implements ListMetric<String> {
 
-	private final StringMetric metric1 = new StringMetricBuilder().with(
-			new JaroWinkler())
-			.simplify(new SoundexSimplifier())
-			.build();
+	private final StringMetric metric1 = with(new JaroWinkler())
+											.simplify(new SoundexSimplifier())
+											.build();
 
 	private final StringMetric metric2 = new SmithWaterman();
 

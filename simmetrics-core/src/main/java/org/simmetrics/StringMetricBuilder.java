@@ -50,6 +50,9 @@ import com.google.common.base.Predicates;
  * build a string metric. Supports the addition of simplification, tokenization,
  * filtering and caching to a metric.
  * 
+ * Designed to be used with a static import
+ * {@code import static org.simmetrics.StringMetricBuilder.with;}.
+ * 
  * <h2>Metrics</h2>
  * 
  * A metric is used to measure the similarity between strings. Metrics can work
@@ -65,8 +68,9 @@ import com.google.common.base.Predicates;
  * <pre>
  * <code>
  * {@code
- * 	StringMetric metric = new StringMetricBuilder()
- * 		.with(new CosineSimilarity<String>())
+ * 
+ * 
+ * 		with(new CosineSimilarity<String>())
  * 		.simplify(new NonWordCharacterSimplifier())
  * 		.simplify(new CaseSimplifier.Lower())
  * 		.tokenize(new WhitespaceTokenizer())
@@ -100,8 +104,7 @@ import com.google.common.base.Predicates;
  * <pre>
  * <code>
  * {@code
- * 	return new StringMetricBuilder()
- * 			.with(new SimonWhite<String>())
+ * 			with(new SimonWhite<String>())
  * 			.tokenize(new WhitespaceTokenizer())
  * 			.tokenize(new QGramTokenizer(2))
  * 			.build();
@@ -135,8 +138,7 @@ import com.google.common.base.Predicates;
  * <pre>
  * <code>
  * {@code
- * 		StringMetric metric = new StringMetricBuilder()
- * 				.with(new CosineSimilarity<String>())
+ * 				with(new CosineSimilarity<String>())
  * 				.simplify(new CaseSimplifier.Lower())
  * 				.simplify(new NonWordCharacterSimplifier())
  * 				.tokenize(new WhitespaceTokenizer())
@@ -153,8 +155,7 @@ import com.google.common.base.Predicates;
  * {@code
  * 		Set<String> commonWords = ...;
  * 		
- * 		StringMetric metric = new StringMetricBuilder()
- * 				.with(new CosineSimilarity<String>())
+ * 				with(new CosineSimilarity<String>())
  * 				.simplify(new CaseSimplifier.Lower())
  * 				.simplify(new NonWordCharacterSimplifier())
  * 				.tokenize(new WhitespaceTokenizer())
@@ -176,8 +177,7 @@ import com.google.common.base.Predicates;
  * <pre>
  * <code>
  * {@code
- * 		StringMetric metric = new StringMetricBuilder()
- * 				.with(new CosineSimilarity<String>())
+ * 				with(new CosineSimilarity<String>())
  * 				.simplify(new CaseSimplifier.Lower())
  * 				.setSimplifierCache()
  * 				.tokenize(new QGramTokenizer(2))
@@ -199,6 +199,7 @@ import com.google.common.base.Predicates;
  * 
  */
 public class StringMetricBuilder {
+
 	/**
 	 * Starts building a metric with a string metric.
 	 * 
@@ -206,7 +207,7 @@ public class StringMetricBuilder {
 	 *            the metric to use as a base
 	 * @return a builder for fluent chaining
 	 */
-	public CompositeStringMetricBuilder with(StringMetric metric) {
+	public static CompositeStringMetricBuilder with(StringMetric metric) {
 		return new CompositeStringMetricBuilder(metric);
 	}
 
@@ -217,7 +218,7 @@ public class StringMetricBuilder {
 	 *            the metric to use as a base
 	 * @return a builder for fluent chaining
 	 */
-	public CompositeListMetricBuilder with(ListMetric<String> metric) {
+	public static CompositeListMetricBuilder with(ListMetric<String> metric) {
 		return new CompositeListMetricBuilder(metric);
 
 	}
@@ -229,9 +230,8 @@ public class StringMetricBuilder {
 	 *            the metric to use as a base
 	 * @return a builder for fluent chaining
 	 */
-	public CompositeSetMetricBuilder with(SetMetric<String> metric) {
+	public static CompositeSetMetricBuilder with(SetMetric<String> metric) {
 		return new CompositeSetMetricBuilder(metric);
-
 	}
 
 	/**
@@ -242,7 +242,7 @@ public class StringMetricBuilder {
 	 *            type of metric for which the chain is build
 	 * 
 	 */
-	public abstract class SimplyfingBuilder<T> {
+	public static abstract class SimplyfingBuilder<T> {
 
 		protected final T metric;
 
@@ -274,7 +274,7 @@ public class StringMetricBuilder {
 	 * @author M.P. Korstanje
 	 * 
 	 */
-	public final class CompositeStringMetricBuilder extends
+	public static final class CompositeStringMetricBuilder extends
 			SimplyfingBuilder<StringMetric> {
 
 		CompositeStringMetricBuilder(StringMetric metric) {
@@ -312,7 +312,7 @@ public class StringMetricBuilder {
 	 *            type of metric for which the chain is build
 	 * 
 	 */
-	public abstract class CollectionMetricBuilder<T> extends
+	public static abstract class CollectionMetricBuilder<T> extends
 			SimplyfingBuilder<T> {
 
 		protected Tokenizer tokenizer;
@@ -353,7 +353,7 @@ public class StringMetricBuilder {
 	 * @author mpkorstanje
 	 * 
 	 */
-	public final class CompositeListMetricBuilder extends
+	public static final class CompositeListMetricBuilder extends
 			CollectionMetricBuilder<ListMetric<String>> {
 
 		CompositeListMetricBuilder(ListMetric<String> metric) {
@@ -373,7 +373,7 @@ public class StringMetricBuilder {
 	 * @author mpkorstanje
 	 * 
 	 */
-	public final class CompositeSetMetricBuilder extends
+	public static final class CompositeSetMetricBuilder extends
 			CollectionMetricBuilder<SetMetric<String>> {
 
 		CompositeSetMetricBuilder(SetMetric<String> metric) {
@@ -395,7 +395,7 @@ public class StringMetricBuilder {
 	 * @param <T>
 	 *            type of the metric for which the chain is build
 	 */
-	public final class TokenSimplifierChainBuilder<T> extends
+	public static final class TokenSimplifierChainBuilder<T> extends
 			SimplifierChainBuilder {
 
 		private final CollectionMetricBuilder<T> builder;
@@ -454,7 +454,7 @@ public class StringMetricBuilder {
 	 * @author M.P. Korstanje
 	 * 
 	 */
-	public abstract class SimplifierChainBuilder {
+	public static abstract class SimplifierChainBuilder {
 
 		private static final int CACHE_SIZE = 2;
 
@@ -549,7 +549,7 @@ public class StringMetricBuilder {
 	 * @author M.P. Korstanje
 	 * 
 	 */
-	public final class StringSimplifierChainBuilder extends
+	public static final class StringSimplifierChainBuilder extends
 			SimplifierChainBuilder {
 
 		private final CompositeStringMetricBuilder builder;
@@ -606,7 +606,7 @@ public class StringMetricBuilder {
 	 * @author M.P. Korstanje
 	 * 
 	 */
-	public final class TokenizingChainBuilder {
+	public static final class TokenizingChainBuilder {
 		private static final int CACHE_SIZE = 2;
 
 		private final CollectionMetricBuilder<?> builder;

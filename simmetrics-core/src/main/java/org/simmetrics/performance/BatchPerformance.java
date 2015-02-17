@@ -23,13 +23,14 @@ package org.simmetrics.performance;
 
 import java.util.concurrent.TimeUnit;
 
+import static org.simmetrics.StringMetricBuilder.with;
 import static org.simmetrics.StringMetrics.compare;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.tokenizers.QGramTokenizer;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
+
 import com.google.common.base.Stopwatch;
 
 public class BatchPerformance {
@@ -76,11 +77,10 @@ public class BatchPerformance {
 	}
 
 	private static void testCompareUncached() {
-		StringMetric metric = new StringMetricBuilder()
-				.with(new SimonWhite<String>())
-				.tokenize(new WhitespaceTokenizer())
-				.tokenize(new QGramTokenizer(2))
-				.build();
+		StringMetric metric = with(new SimonWhite<String>())
+								.tokenize(new WhitespaceTokenizer())
+								.tokenize(new QGramTokenizer(2))
+								.build();
 
 		Stopwatch sw = Stopwatch.createStarted();
 		for (int n = 0; n < TEST_REPEATS; n++) {
@@ -99,12 +99,11 @@ public class BatchPerformance {
 
 	private static void testCompareCached() {
 
-		StringMetric metric = new StringMetricBuilder()
-				.with(new SimonWhite<String>())
-				.tokenize(new WhitespaceTokenizer())
-				.tokenize(new QGramTokenizer(2))
-				.setTokenizerCache()
-				.build();
+		StringMetric metric = with(new SimonWhite<String>())
+								.tokenize(new WhitespaceTokenizer())
+								.tokenize(new QGramTokenizer(2))
+								.setTokenizerCache()
+								.build();
 
 		Stopwatch sw = Stopwatch.createStarted();
 		for (int n = 0; n < TEST_REPEATS; n++) {

@@ -25,7 +25,6 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 
 import org.junit.Test;
-import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.tokenizers.QGramTokenizer;
@@ -33,6 +32,7 @@ import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
 import com.google.common.base.Predicate;
 
+import static org.simmetrics.StringMetricBuilder.with;
 import static org.simmetrics.StringMetrics.*;
 
 
@@ -47,8 +47,7 @@ public class StringMetricsTest {
 			0.933f, 1.000f };
 
 	private StringMetric metric = 
-			new StringMetricBuilder()
-				.with(new SimonWhite<String>())
+			 with(new SimonWhite<String>())
 				.tokenize(new WhitespaceTokenizer())
 				.filter(new Predicate<String>() {
 					

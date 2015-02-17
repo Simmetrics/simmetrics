@@ -26,8 +26,6 @@ import java.util.List;
 
 import org.simmetrics.ListMetric;
 
-import static java.lang.Math.max;
-
 /**
  * Implements the Matching Coefficient algorithm providing a similarity measure
  * between two lists.

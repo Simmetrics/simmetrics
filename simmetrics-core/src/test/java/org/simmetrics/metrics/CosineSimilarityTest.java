@@ -23,8 +23,6 @@ package org.simmetrics.metrics;
 
 import org.junit.Test;
 import org.simmetrics.SetMetric;
-import org.simmetrics.StringMetric;
-import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.CosineSimilarity;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
@@ -32,7 +30,7 @@ public class CosineSimilarityTest extends SetMetricTest {
 
 	@Override
 	public SetMetric<String> getMetric() {
-		return new CosineSimilarity<String>();
+		return new CosineSimilarity<>();
 	}
 
 	@Test

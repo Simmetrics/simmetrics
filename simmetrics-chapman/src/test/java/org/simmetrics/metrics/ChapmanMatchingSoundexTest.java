@@ -21,8 +21,9 @@
  */
 package org.simmetrics.metrics;
 
+import static org.simmetrics.StringMetricBuilder.with;
+
 import org.simmetrics.StringMetric;
-import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.simplifiers.SoundexSimplifier;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
@@ -30,9 +31,8 @@ public class ChapmanMatchingSoundexTest extends StringMetricTest {
 
 	@Override
 	protected StringMetric getMetric() {
-		return new StringMetricBuilder()
-				.with(new MongeElkan(new StringMetricBuilder()
-						.with(new JaroWinkler())
+		return with(new MongeElkan(
+						with(new JaroWinkler())
 						.simplify(new SoundexSimplifier()).build()))
 				.tokenize(new WhitespaceTokenizer()).build();
 	}

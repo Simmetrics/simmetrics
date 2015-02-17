@@ -22,8 +22,6 @@ package org.simmetrics.metrics;
 
 import org.junit.Test;
 import org.simmetrics.ListMetric;
-import org.simmetrics.StringMetric;
-import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.EuclideanDistance;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
@@ -32,7 +30,7 @@ public class EuclideanDistanceTest extends ListMetricTest {
 
 	@Override
 	public ListMetric<String> getMetric() {
-		return new EuclideanDistance<String>();
+		return new EuclideanDistance<>();
 	}
 	
 	@Test

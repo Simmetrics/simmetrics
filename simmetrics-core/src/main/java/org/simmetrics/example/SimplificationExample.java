@@ -21,8 +21,9 @@
  */
 package org.simmetrics.example;
 
+import static org.simmetrics.StringMetricBuilder.with;
+
 import org.simmetrics.StringMetric;
-import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.simplifiers.CaseSimplifier;
 import org.simmetrics.simplifiers.NonDiacriticSimplifier;
@@ -48,8 +49,7 @@ public class SimplificationExample {
 		final String str1 = "This is a sentence. It is made of words";
 		final String str2 = "This sentence is similair. It has almost the same words";
 
-		StringMetric metric = new StringMetricBuilder()
-				.with(new SimonWhite<String>())
+		StringMetric metric = with(new SimonWhite<String>())
 				.simplify(new CaseSimplifier.Lower())
 				.simplify(new NonDiacriticSimplifier())
 				.tokenize(new WhitespaceTokenizer())

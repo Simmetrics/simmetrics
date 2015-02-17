@@ -30,7 +30,7 @@ public class MatchingCoefficientTest extends ListMetricTest {
 
 	@Override
 	public ListMetric<String> getMetric() {
-		return new MatchingCoefficient<String>();
+		return new MatchingCoefficient<>();
 	}
 
 	@Test

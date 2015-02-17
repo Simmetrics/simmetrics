@@ -22,8 +22,6 @@ package org.simmetrics.metrics;
 
 import org.junit.Test;
 import org.simmetrics.SetMetric;
-import org.simmetrics.StringMetric;
-import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.DiceSimilarity;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 

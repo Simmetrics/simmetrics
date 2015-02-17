@@ -1,5 +1,7 @@
 package org.simmetrics;
 
+import static org.simmetrics.StringMetricBuilder.with;
+
 import org.simmetrics.metrics.ChapmanLengthDeviation;
 import org.simmetrics.metrics.ChapmanOrderedNameCompoundSimilarity;
 import org.simmetrics.metrics.JaroWinkler;
@@ -31,8 +33,9 @@ public class Chapman {
 	}
 
 	public StringMetric matchingSoundex() {
-		return new StringMetricBuilder().with(
-				new MongeElkan(new StringMetricBuilder().with(new JaroWinkler())
+
+		return with(new MongeElkan(
+						with(new JaroWinkler())
 						.simplify(new SoundexSimplifier())
 						.build()))
 				.tokenize(new WhitespaceTokenizer())
@@ -40,8 +43,7 @@ public class Chapman {
 	}
 
 	public StringMetric orderedNameCompoundSimilarity() {
-		return new StringMetricBuilder().with(
-				new ChapmanOrderedNameCompoundSimilarity())
+		return with(new ChapmanOrderedNameCompoundSimilarity())
 				.tokenize(new WhitespaceTokenizer())
 				.build();
 	}

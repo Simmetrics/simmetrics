@@ -67,9 +67,7 @@ public class MongeElkan implements ListMetric<String> {
 		float sumMatchesAB = sumMatches(a, b);
 		float sumMatchesBA = sumMatches(b, a);
 
-		System.out.println();
-		return (float) (sqrt(sumMatchesAB * sumMatchesBA) / sqrt(a.size()
-				* b.size()));
+		return (float) sqrt(sumMatchesAB * sumMatchesBA);
 	}
 
 	private float sumMatches(List<String> a, List<String> b) {
@@ -82,7 +80,7 @@ public class MongeElkan implements ListMetric<String> {
 			}
 			sumMatches += maxFound;
 		}
-		return sumMatches;
+		return sumMatches / a.size();
 	}
 
 	@Override

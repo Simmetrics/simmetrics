@@ -165,99 +165,193 @@ public final class StringMetrics {
 		return results;
 	}
 
+	/**
+	 * Returns a string metric that uses a {@link WhitespaceTokenizer} and the
+	 * {@link BlockDistance} metric.
+	 * 
+	 * @return a block distance metric
+	 */
 	public static StringMetric blockDistance() {
 		return new StringMetricBuilder().with(new BlockDistance<String>())
-				.tokenize(new WhitespaceTokenizer())
-				.build();
+				.tokenize(new WhitespaceTokenizer()).build();
 	}
 
+	/**
+	 * Returns a string metric that uses a {@link WhitespaceTokenizer} and the
+	 * {@link CosineSimilarity} metric.
+	 * 
+	 * @return a cosine similarity metric
+	 */
 	public static StringMetric cosineSimilarity() {
 		return new StringMetricBuilder().with(new CosineSimilarity<String>())
-				.tokenize(new WhitespaceTokenizer())
-				.build();
+				.tokenize(new WhitespaceTokenizer()).build();
 	}
 
+	/**
+	 * Returns a string metric that uses a {@link WhitespaceTokenizer} and the
+	 * {@link DiceSimilarity} metric.
+	 * 
+	 * @return a dice similarity metric
+	 */
 	public static StringMetric diceSimilarity() {
 		return new StringMetricBuilder().with(new DiceSimilarity<String>())
-				.tokenize(new WhitespaceTokenizer())
-				.build();
+				.tokenize(new WhitespaceTokenizer()).build();
 	}
 
+	/**
+	 * Returns a string metric that uses a {@link WhitespaceTokenizer} and the
+	 * {@link EuclideanDistance} metric.
+	 * 
+	 * @return a Euclidean distance similarity metric
+	 */
 	public static StringMetric euclideanDistance() {
 		return new StringMetricBuilder().with(new EuclideanDistance<String>())
-				.tokenize(new WhitespaceTokenizer())
-				.build();
+				.tokenize(new WhitespaceTokenizer()).build();
 	}
 
+	/**
+	 * Returns a string metric that uses a {@link WhitespaceTokenizer} and the
+	 * {@link JaccardSimilarity} metric.
+	 * 
+	 * @return a Jaccard similarity metric
+	 */
 	public static StringMetric jaccardSimilarity() {
 		return new StringMetricBuilder().with(new JaccardSimilarity<String>())
-				.tokenize(new WhitespaceTokenizer())
-				.build();
+				.tokenize(new WhitespaceTokenizer()).build();
 	}
 
+	/**
+	 * Returns a string metric that uses the {@link Jaro} metric.
+	 * 
+	 * @return a Jaro metric
+	 */
 	public static StringMetric jaro() {
 		return new Jaro();
 	}
 
+	/**
+	 * Returns a string metric that uses the {@link JaroWinkler} metric.
+	 * 
+	 * @return a Jaro-Winkler metric
+	 */
 	public static StringMetric jaroWinkler() {
 		return new JaroWinkler();
 	}
 
+	/**
+	 * Returns a string metric that uses the {@link Levenshtein} metric.
+	 * 
+	 * @return a Levenshtein metric
+	 */
 	public static StringMetric levenshtein() {
 		return new Levenshtein();
 	}
 
+	/**
+	 * Returns a string metric that uses a {@link WhitespaceTokenizer} and the
+	 * {@link MatchingCoefficient} metric.
+	 * 
+	 * @return a matching coefficient metric
+	 */
 	public static StringMetric matchingCoefficient() {
-		return new StringMetricBuilder().with(new MatchingCoefficient<String>())
-				.tokenize(new WhitespaceTokenizer())
-				.build();
+		return new StringMetricBuilder()
+				.with(new MatchingCoefficient<String>())
+				.tokenize(new WhitespaceTokenizer()).build();
 	}
 
+	/**
+	 * Returns a string metric that uses a {@link WhitespaceTokenizer} and the
+	 * {@link MongeElkan} metric with an internal {@link SmithWatermanGotoh}
+	 * metric.
+	 * 
+	 * @return a Monge-Elkan metric
+	 */
 	public static StringMetric mongeElkan() {
-		return new StringMetricBuilder().with(
-				new MongeElkan(new SmithWatermanGotoh()))
-				.tokenize(new WhitespaceTokenizer())
-				.build();
+		return new StringMetricBuilder()
+				.with(new MongeElkan(new SmithWatermanGotoh()))
+				.tokenize(new WhitespaceTokenizer()).build();
 	}
 
+	/**
+	 * Returns a string metric that uses the {@link NeedlemanWunch} metric.
+	 * 
+	 * @return a Needleman-Wunch metric
+	 */
 	public static StringMetric needlemanWunch() {
 		return new NeedlemanWunch();
 	}
 
+	/**
+	 * Returns a string metric that uses a {@link WhitespaceTokenizer} and the
+	 * {@link OverlapCoefficient} metric.
+	 * 
+	 * @return a overlap coefficient metric
+	 */
 	public static StringMetric overlapCoefficient() {
 		return new StringMetricBuilder().with(new OverlapCoefficient<String>())
-				.tokenize(new WhitespaceTokenizer())
-				.build();
+				.tokenize(new WhitespaceTokenizer()).build();
 	}
 
+	/**
+	 * Returns a string metric that uses a {@link QGramExtendedTokenizer} for
+	 * {@code q=3} and the {@link BlockDistance} metric.
+	 * 
+	 * @return a q-grams distance metric
+	 */
 	public static StringMetric qGramsDistance() {
 		return new StringMetricBuilder().with(new BlockDistance<String>())
-				.tokenize(new QGramExtendedTokenizer(3))
-				.build();
+				.tokenize(new QGramExtendedTokenizer(3)).build();
 	}
 
+	/**
+	 * Returns a string metric that uses a {@link WhitespaceTokenizer} followed
+	 * by a {@link QGramExtendedTokenizer} for {@code q=2} and the
+	 * {@link SimonWhite} metric.
+	 * 
+	 * @return a Simon White metric
+	 */
 	public static StringMetric simonWhite() {
 		return new StringMetricBuilder().with(new SimonWhite<String>())
 				.tokenize(new WhitespaceTokenizer())
-				.tokenize(new QGramTokenizer(2))
-				.build();
+				.tokenize(new QGramTokenizer(2)).build();
 	}
 
+	/**
+	 * Returns a string metric that uses the {@link SmithWaterman} metric.
+	 * 
+	 * @return a Smith-Waterman metric
+	 */
 	public static StringMetric smithWaterman() {
 		return new SmithWaterman();
 	}
 
+	/**
+	 * Returns a string metric that uses the {@link SmithWatermanGotoh} metric.
+	 * 
+	 * @return a Smith-Waterman-Gotoh metric
+	 */
 	public static StringMetric smithWatermanGotoh() {
 		return new SmithWatermanGotoh();
 	}
 
+	/**
+	 * Returns a string metric that uses the
+	 * {@link SmithWatermanGotohWindowedAffine} metric.
+	 * 
+	 * @return a Smith-Waterman-Gotoh windowed affine metric
+	 */
 	public static StringMetric smithWatermanGotohWindowedAffine() {
 		return new SmithWatermanGotohWindowedAffine();
 	}
 
+	/**
+	 * Returns a string metric that uses a {@link SoundexSimplifier} and
+	 * {@link JaroWinkler} metric.
+	 * 
+	 * @return a Soundex metric
+	 */
 	public static StringMetric soundex() {
 		return new StringMetricBuilder().with(new JaroWinkler())
-				.simplify(new SoundexSimplifier())
-				.build();
+				.simplify(new SoundexSimplifier()).build();
 	}
 }

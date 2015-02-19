@@ -29,7 +29,6 @@ import java.util.List;
 
 import org.junit.Test;
 import org.simmetrics.ListMetric;
-import org.simmetrics.metrics.StringMetricTest.T;
 import org.simmetrics.tokenizers.Tokenizer;
 
 public abstract class ListMetricTest extends MetricTest<List<String>> {

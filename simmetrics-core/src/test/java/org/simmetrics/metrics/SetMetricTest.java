@@ -21,21 +21,9 @@
  */
 package org.simmetrics.metrics;
 
-import static com.google.common.collect.Sets.newHashSet;
-import static java.util.Arrays.asList;
-import static java.util.Collections.unmodifiableList;
 import static java.util.Collections.unmodifiableSet;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.simmetrics.ListMetric;
 import org.simmetrics.SetMetric;
 import org.simmetrics.tokenizers.Tokenizer;
 

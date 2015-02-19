@@ -24,7 +24,6 @@ package org.simmetrics.metrics;
 import org.junit.Test;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.JaroWinkler;
-import org.simmetrics.metrics.StringMetricTest.T;
 
 public class JaroWinklerTest extends StringMetricTest {
 

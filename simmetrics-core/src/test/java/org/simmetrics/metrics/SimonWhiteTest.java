@@ -23,12 +23,8 @@ package org.simmetrics.metrics;
 
 import static java.util.Arrays.asList;
 
-import java.util.Arrays;
-
 import org.junit.Test;
 import org.simmetrics.ListMetric;
-import org.simmetrics.StringMetric;
-import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.tokenizers.QGramTokenizer;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
@@ -53,7 +49,7 @@ public class SimonWhiteTest extends ListMetricTest {
 
 	@Override
 	public ListMetric<String> getMetric() {
-		return new SimonWhite<String>();
+		return new SimonWhite<>();
 	}
 
 	@Test

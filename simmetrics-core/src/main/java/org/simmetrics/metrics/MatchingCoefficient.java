@@ -21,14 +21,12 @@
  */
 package org.simmetrics.metrics;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.simmetrics.ListMetric;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
-import com.google.common.collect.Multisets;
 
 /**
  * Implements the matching coefficient algorithm providing a similarity measure

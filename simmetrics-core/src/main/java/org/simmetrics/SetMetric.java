@@ -33,8 +33,8 @@ import java.util.Set;
  * 
  * <p>
  * The elements in the set have to implement {@link Object#hashCode()} and
- * {@link Object#equals(Object)}.
- * <p>
+ * {@link Object#equals(Object)}.The similarity measure should be consistent
+ * with equals such that {@code a.equals(b) => compare(a,b) == 1.0}.
  * Implementations may not modify the contents of the set. Sets should be
  * treated as if wrapped by {@link Collections#unmodifiableSet(Set)}.
  * 

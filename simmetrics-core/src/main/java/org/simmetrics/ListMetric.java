@@ -30,13 +30,12 @@ import java.util.List;
  * the same type. The measurement results in a value between 0 and 1 inclusive.
  * A value of zero indicates that the lists are dissimilar, a value of 1
  * indicates they are similar.
- * 
  * <p>
  * The elements in the lists have to implement {@link Object#hashCode()} and
- * {@link Object#equals(Object)}.
- * <p>
- * Implementations may not modify the contents of the list. list should be
- * treated as if wrapped by {@link Collections#unmodifiableList(List)}.
+ * {@link Object#equals(Object)}. The similarity measure should be consistent
+ * with equals such that {@code a.equals(b) => compare(a,b) == 1.0}.
+ * Implementations should also not modify the contents of the list. List should
+ * be treated as if wrapped by {@link Collections#unmodifiableList(List)}.
  * 
  * @author mpkorstanje
  * @param <T>

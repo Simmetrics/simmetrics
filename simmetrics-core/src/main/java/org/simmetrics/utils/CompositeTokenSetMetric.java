@@ -1,6 +1,8 @@
 package org.simmetrics.utils;
 
-import org.simmetrics.SetMetric;
+import java.util.Set;
+
+import org.simmetrics.Metric;
 import org.simmetrics.StringMetric;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.tokenizers.Tokenizer;
@@ -9,11 +11,11 @@ import com.google.common.base.Preconditions;
 
 public final class CompositeTokenSetMetric implements StringMetric {
 
-	private final SetMetric<String> metric;
+	private final Metric<Set<String>> metric;
 	private final Simplifier simplifier;
 	private final Tokenizer tokenizer;
 
-	public CompositeTokenSetMetric(SetMetric<String> metric,
+	public CompositeTokenSetMetric(Metric<Set<String>> metric,
 			Simplifier simplifier, Tokenizer tokenizer) {
 		super();
 		Preconditions.checkNotNull(metric);

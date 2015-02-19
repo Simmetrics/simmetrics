@@ -1,5 +1,6 @@
 package org.simmetrics.utils;
 
+import org.simmetrics.Metric;
 import org.simmetrics.StringMetric;
 import org.simmetrics.simplifiers.Simplifier;
 
@@ -9,9 +10,9 @@ public final class CompositeStringMetric implements StringMetric {
 
 	private final Simplifier simplifier;
 
-	private final StringMetric metric;
+	private final Metric<String> metric;
 
-	public CompositeStringMetric(StringMetric metric, Simplifier simplifier) {
+	public CompositeStringMetric(Metric<String> metric, Simplifier simplifier) {
 		Preconditions.checkNotNull(metric);
 		Preconditions.checkNotNull(simplifier);
 		

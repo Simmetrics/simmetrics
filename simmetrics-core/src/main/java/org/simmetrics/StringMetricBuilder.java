@@ -25,6 +25,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.simmetrics.simplifiers.PassThroughSimplifier;
 import org.simmetrics.simplifiers.Simplifier;
@@ -244,11 +245,11 @@ public class StringMetricBuilder {
 	 */
 	public abstract class SimplyfingBuilder<T> {
 
-		protected final T metric;
+		protected final Metric<T> metric;
 
 		protected Simplifier simplifier = new PassThroughSimplifier();
 
-		SimplyfingBuilder(T metric) {
+		SimplyfingBuilder(Metric<T> metric) {
 			checkNotNull(metric);
 			this.metric = metric;
 		}
@@ -275,9 +276,9 @@ public class StringMetricBuilder {
 	 * 
 	 */
 	public final class CompositeStringMetricBuilder extends
-			SimplyfingBuilder<StringMetric> {
+			SimplyfingBuilder<String> {
 
-		CompositeStringMetricBuilder(StringMetric metric) {
+		CompositeStringMetricBuilder(Metric<String> metric) {
 			super(metric);
 		}
 
@@ -317,7 +318,7 @@ public class StringMetricBuilder {
 
 		protected Tokenizer tokenizer;
 
-		CollectionMetricBuilder(T metric) {
+		CollectionMetricBuilder(Metric<T> metric) {
 			super(metric);
 		}
 
@@ -354,9 +355,9 @@ public class StringMetricBuilder {
 	 * 
 	 */
 	public final class CompositeListMetricBuilder extends
-			CollectionMetricBuilder<ListMetric<String>> {
+			CollectionMetricBuilder<List<String>> {
 
-		CompositeListMetricBuilder(ListMetric<String> metric) {
+		CompositeListMetricBuilder(Metric<List<String>> metric) {
 			super(metric);
 		}
 
@@ -374,9 +375,9 @@ public class StringMetricBuilder {
 	 * 
 	 */
 	public final class CompositeSetMetricBuilder extends
-			CollectionMetricBuilder<SetMetric<String>> {
+			CollectionMetricBuilder<Set<String>> {
 
-		CompositeSetMetricBuilder(SetMetric<String> metric) {
+		CompositeSetMetricBuilder(Metric<Set<String>> metric) {
 			super(metric);
 		}
 

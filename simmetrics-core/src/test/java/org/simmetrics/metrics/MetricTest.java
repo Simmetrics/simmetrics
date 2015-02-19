@@ -48,7 +48,7 @@ public abstract class MetricTest<T> {
 	private void testRange(Metric<T> metric, T a, T b) {
 		float similarity = metric.compare(a, b);
 		String message1 = String.format(
-				"Similarity %f must fall within [0.0 - 1.0] range", similarity);
+				"Similarity %s-%s %f must fall within [0.0 - 1.0] range", a,b, similarity);
 		assertTrue(message1, 0.0f <= similarity && similarity <= 1.0f);
 	}
 

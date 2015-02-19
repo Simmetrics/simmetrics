@@ -36,7 +36,7 @@ import static org.simmetrics.utils.Math.max4;
  * Implements the Smith-Waterman-Gotoh algorithm with a windowed affine gap
  * providing a similarity measure between two strings.
  * 
-
+ * 
  * @author Sam Chapman
  * @version 1.1
  */
@@ -49,14 +49,29 @@ public class SmithWatermanGotohWindowedAffine implements StringMetric {
 				+ gapFunction + "]";
 	}
 
+	/**
+	 * Returns the window size.
+	 * 
+	 * @return the window size
+	 */
 	public int getWindowSize() {
 		return windowSize;
 	}
 
+	/**
+	 * Returns the substitution cost function.
+	 * 
+	 * @return the substitution cost function
+	 */
 	public SubstitutionCost getCostfunction() {
 		return costfunction;
 	}
 
+	/**
+	 * Returns the gap cost function.
+	 * 
+	 * @return the gap cost function
+	 */
 	public AffineGapCost getGapFunction() {
 		return gapFunction;
 	}

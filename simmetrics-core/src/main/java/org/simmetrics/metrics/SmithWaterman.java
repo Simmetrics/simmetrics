@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -31,9 +32,6 @@ import static org.simmetrics.utils.Math.max4;
 /**
  * Implements the Smith-Waterman edit distance function.
  * 
- * @see <a
- *      href="http://www.gen.tcd.ie/molevol/nwswat.html for details">Needleman-Wunsch
- *      Algorithm for Sequence Similarity Searches</a>
  *
  * 
  * @author Sam Chapman
@@ -123,7 +121,6 @@ public class SmithWaterman implements StringMetric {
 		}
 	}
 
-
 	private float getUnNormalisedSimilarity(final String s, final String t) {
 		final float[][] d; // matrix
 		final int n; // length of s
@@ -185,10 +182,7 @@ public class SmithWaterman implements StringMetric {
 				cost = costFunction.getCost(s, i, t, j);
 
 				// find lowest cost at point from three possible
-				d[i][j] = max4(
-						0,
-						d[i - 1][j] - gapCost,
-						d[i][j - 1] - gapCost,
+				d[i][j] = max4(0, d[i - 1][j] - gapCost, d[i][j - 1] - gapCost,
 						d[i - 1][j - 1] + cost);
 				// update max possible if available
 				if (d[i][j] > maxSoFar) {

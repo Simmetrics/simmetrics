@@ -29,7 +29,12 @@ import org.simmetrics.StringMetric;
 /**
  * Implements the Jaro algorithm providing a similarity measure between two
  * strings allowing character transpositions to a degree.
- *
+ * 
+ * @see <a
+ *      href="http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance">Wikipedia
+ *      - Jaro-Winkler distance</a>
+ * @see JaroWinkler
+ * 
  * @author Sam Chapman
  * @version 1.1
  */

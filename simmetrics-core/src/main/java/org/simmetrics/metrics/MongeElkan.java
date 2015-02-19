@@ -31,13 +31,20 @@ import org.simmetrics.ListMetric;
 
 /**
  * Implements the Monge Elkan algorithm providing an matching style similarity
- * measure between two strings. Because the matches of a in b are not symmetric
- * with the matches of b in a and because the whole operation is not symetric
- * when a and b have a different length the asymetry is normalized by by
- * sqrt(matches of a in b * matches of b in a) / sqrt(|a| * |b|).
+ * measure between two strings.
+ * <p>
+ * <code>similarity(a,b) = sum( for s in a | max( for q in b | metric(s,q))</code>
+ * </p>
+ * Implementation note: Because the matches of a in b are not symmetric with the
+ * matches of b in a and because the whole operation is not symmetric when a and
+ * b have a different length the asymmetry is normalized by
+ * 
+ * <p>
+ * <code>normalized_similarity(a,b) = sqrt(similarity(a,b) * similarity(b,a))</code>
+ * </p>
  * 
  * @author Sam Chapman
- * @version 1.1
+ * @author M.P. Korstanje
  */
 public class MongeElkan implements ListMetric<String> {
 

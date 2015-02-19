@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -31,9 +32,11 @@ import static java.lang.Math.abs;
 
 /**
  * Implements the Block distance algorithm whereby vector space block distance
- * between tokens is used to determine a similarity.
+ * between tokens is used to determine a similarity. Also known as L1 Distance
+ * or City block distance.
  * 
- * Also known as L1 Distance or City block distance.
+ * @see <a href="http://en.wikipedia.org/wiki/Taxicab_geometry">Wikipedia -
+ *      Taxicab geometry</a>
  * 
  * @author Sam Chapman
  * @version 1.1
@@ -48,19 +51,17 @@ public class BlockDistance<T> implements ListMetric<T> {
 		if (a.isEmpty() && b.isEmpty()) {
 			return 1.0f;
 		}
-		
+
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
 
 		final float totalPossible = a.size() + b.size();
 
-		return (totalPossible - distance(a, b))
-				/ totalPossible;
+		return (totalPossible - distance(a, b)) / totalPossible;
 	}
 
-	private static <T> float distance(final List<T> a,
-			final List<T> b) {
+	private static <T> float distance(final List<T> a, final List<T> b) {
 		final Set<T> all = new HashSet<>();
 		all.addAll(a);
 		all.addAll(b);

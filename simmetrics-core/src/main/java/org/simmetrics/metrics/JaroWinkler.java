@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -28,6 +29,12 @@ import org.simmetrics.StringMetric;
  * Implements the Jaro-Winkler algorithm providing a similarity measure between
  * two strings allowing character transpositions to a degree adjusting the
  * weighting for common prefixes.
+ * 
+ * @see <a
+ *      href="http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance">Wikipedia
+ *      - Jaro-Winkler distance</a>
+ * 
+ * @see Jaro
  * 
  * @author Sam Chapman
  * @version 1.1

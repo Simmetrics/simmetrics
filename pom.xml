@@ -103,5 +103,6 @@
 		<module>simmetrics-core</module>
 		<module>simmetrics-taglink</module>
 		<module>simmetrics-chapman</module>
+		<module>simmetrics-example</module>
 	</modules>
 </project>

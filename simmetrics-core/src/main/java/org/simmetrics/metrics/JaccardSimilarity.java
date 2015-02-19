@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -26,16 +27,18 @@ import java.util.Set;
 import org.simmetrics.SetMetric;
 
 /**
- * Implements the Jaccard Similarity algorithm providing a similarity measure
- * between two sets.
- * <p>
- * Each instance is represented as a Jaccard vector similarity function. The
- * Jaccard between two vectors X and Y is (X*Y) / (|X||Y|-(X*Y)) where (X*Y) is
- * the inner product of X and Y, and |X| = (X*X)^1/2, i.e. the Euclidean norm of
- * X.
- * <p>
- * This can more easily be described as <code>( |X & Y| ) / ( | X or Y | )</code>
+ * Implements the Jaccard similarity algorithm providing a similarity measure
+ * between two sets using the vector space of presented tokens.
  * 
+ * <p>
+ * <code>jaccard index(a,b) = ( |a & b| ) / ( | a or b | )</code>
+ * <p>
+ * 
+ * This metric is identical to the matching coefficient which operates on lists.
+ * 
+ * 
+ * @see <a href="http://en.wikipedia.org/wiki/Jaccard_index">Wikipedia - Jaccard
+ *      index</a>
  * 
  * @author Sam Chapman
  * 
@@ -60,10 +63,10 @@ public final class JaccardSimilarity<T> implements SetMetric<T> {
 		all.addAll(a);
 		all.addAll(b);
 
-		final int common = (a.size() + b.size()) - all.size();
+		final int intersection = (a.size() + b.size()) - all.size();
 
 		// return JaccardSimilarity
-		return (float) (common) / (float) (all.size());
+		return intersection / (float) all.size();
 	}
 
 	@Override

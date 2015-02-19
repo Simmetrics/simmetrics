@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -26,12 +27,19 @@ import java.util.Set;
 import org.simmetrics.SetMetric;
 
 /**
- * Implements the DiceSimilarity algorithm providing a similarity measure
- * between two sets using the vector space of presented tokens.
+ * Implements Dice similarity algorithm providing a similarity measure between
+ * two sets using the vector space of presented tokens.
  * <p>
- * <code>dices coefficient = (2 * |a or b |) / (|a|  + |b|)</code>
+ * <code>dices coefficient (a,b) = (2 * |a & b |) / (|a|  + |b|)</code>
+ * <p>
+ * This metric is identical to Simon White which operates on lists.
  * 
- * @author Sam Chapman
+ * @see SimonWhite
+ * @see <a
+ *      href="http://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient">Wikipedia
+ *      - Sørensen–Dice coefficient</a>
+ * 
+ * @author mpkorstanje
  * @param <T>
  *            type of the token
  */

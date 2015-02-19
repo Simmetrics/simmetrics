@@ -27,10 +27,37 @@ import java.util.List;
 import org.simmetrics.ListMetric;
 
 /**
- * Implements the Matching Coefficient algorithm providing a similarity measure
+ * Implements the matching coefficient algorithm providing a similarity measure
  * between two lists.
+ * <p>
+ * The matching coefficient between two lists is defined as ratio of elements
+ * that occur in both lists and elements that exclusively occur in either list.
+ * This metric is identical to Jaccard similarity. However repeated elements are
+ * considered as distinct occurrences.
  * 
- * @author Sam Chapman
+ * <p>
+ * <code>
+ * similarity(a,b) = (a A b)|  / (|a or b|)
+ * </code>
+ * 
+ * <p>
+ * The A operation takes the list intersection of <code>a</code> and
+ * <code>b</code>. This is a list <code>c</code> such that each element in has a
+ * 1-to-1 relation to an element in both <code>a</code> and <code>b</code>. E.g.
+ * the list intersection of <code>[ab,ab,ab,ac]</code> and
+ * <code>[ab,ab,ad]</code> is <code>[ab,ab]</code>. *
+ * <p>
+ * This metric is identical to Jaccard but is insensitive to repeated tokens.
+ * The list <code>["a","a","b"]</code> is identical to
+ * <code>["a","b","b"]</code>.
+ * 
+ * 
+ * @see JaccardSimilarity
+ * @see <a
+ *      href="http://en.wikipedia.org/wiki/Simple_matching_coefficient">Wikipedia
+ *      - Simple Matching Coefficient</a>
+ * 
+ * @author mpkorstanje
  * 
  * @param <T>
  *            type of the token
@@ -48,24 +75,23 @@ public class MatchingCoefficient<T> implements ListMetric<T> {
 			return 0.0f;
 		}
 
-		// Copy for destructive list difference
-		b = new ArrayList<>(b);
-		int union = a.size() + b.size();
-
 		// Count elements in the list intersection.
 		// Elements are counted only once in both lists.
 		// E.g. the intersection of [ab,ab,ab] and [ab,ab,ac,ad] is [ab,ab].
 		// Note: this is not the same as b.retainAll(a).size()
 		int intersection = 0;
-		
+		// Copy for destructive list difference
+		b = new ArrayList<>(b);
 		for (T token : a) {
 			if (b.remove(token)) {
 				intersection++;
 			}
 		}
 
-		// matching co-efficient as common elements  / (common elements + non-common elements )
-		return intersection / (float)(union - intersection) ;
+		// Implementation note: The size of the union of two sets is equal to
+		// the size of both lists minus the duplicate elements.
+		float union = a.size() + b.size() - intersection;
+		return intersection / union;
 	}
 
 	@Override

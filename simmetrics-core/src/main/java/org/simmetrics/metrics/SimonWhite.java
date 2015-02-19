@@ -28,7 +28,7 @@ import org.simmetrics.ListMetric;
 /**
  * Measures the similarity between two lists. Idea taken from <a
  * href="http://www.catalysoft.com/articles/StrikeAMatch.html">How to Strike a
- * Match</a>.
+ * Match</a> by Simon White.
  * 
  * <p>
  * <code>
@@ -47,7 +47,6 @@ import org.simmetrics.ListMetric;
  * the list intersection rather then the set intersection to prevent list of
  * duplicates from scoring a perfect match against a list with single elements.
  * E.g. 'GGGGG' should not be identical to 'GG'.
- * 
  * 
  * 
  * @see DiceSimilarity

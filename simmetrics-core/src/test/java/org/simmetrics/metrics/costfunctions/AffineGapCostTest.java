@@ -80,7 +80,7 @@ public abstract class AffineGapCostTest {
 		}
 	}
 
-	@Test
+	
 	public void generateTest() {
 		for (T t : getTests()) {
 			float actuall = cost.getCost(t.string, t.index1, t.index2);

@@ -85,7 +85,7 @@ public abstract class InterfaceSubstitutionCostTest {
 		}
 	}
 
-	@Test
+	
 	public void generateTest() {
 		for (T t : getTests()) {
 			float actuall = cost.getCost(t.string1, t.string1Index, t.string2,

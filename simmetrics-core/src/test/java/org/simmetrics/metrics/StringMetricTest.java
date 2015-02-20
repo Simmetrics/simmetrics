@@ -88,7 +88,7 @@ public abstract class StringMetricTest extends MetricTest<String> {
 		assertEquals(1.0, metric.compare("c","c"), delta);
 	}
 
-	@Test
+	
 	public void generateTest() {
 		for (T t : getTests()) {
 			float actuall = metric.compare(t.string1, t.string2);

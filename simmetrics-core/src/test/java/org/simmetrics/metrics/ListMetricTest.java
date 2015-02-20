@@ -33,7 +33,7 @@ import org.simmetrics.tokenizers.Tokenizer;
 
 public abstract class ListMetricTest extends MetricTest<List<String>> {
 
-	protected class T {
+	protected static class T {
 		protected final float similarity;
 		protected final String string1;
 		protected final String string2;

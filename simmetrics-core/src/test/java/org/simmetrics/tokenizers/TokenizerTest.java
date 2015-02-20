@@ -39,7 +39,7 @@ public abstract class TokenizerTest {
 
 	public abstract T[] getTests();
 
-	protected class T {
+	protected static class T {
 		protected final String string;
 		protected final String[] tokens;
 

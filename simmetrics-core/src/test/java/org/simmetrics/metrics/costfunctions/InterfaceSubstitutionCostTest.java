@@ -28,7 +28,7 @@ import org.simmetrics.metrics.costfunctions.SubstitutionCost;
 
 public abstract class InterfaceSubstitutionCostTest {
 
-	protected class T {
+	protected static class T {
 		protected final float cost;
 		protected final String string1;
 		protected final String string2;

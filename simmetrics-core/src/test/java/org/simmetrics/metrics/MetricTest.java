@@ -58,7 +58,7 @@ public abstract class MetricTest<T> {
 
 		String message = String
 				.format("Similarity relation \"%s\" vs \"%s\" must be symmetric",
-						a, b, similarity, similarityReversed);
+						a, b);
 		assertEquals(message, similarityReversed, similarity, delta);
 
 	}

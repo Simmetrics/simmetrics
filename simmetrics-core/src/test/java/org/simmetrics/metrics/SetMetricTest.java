@@ -29,7 +29,7 @@ import org.simmetrics.tokenizers.Tokenizer;
 
 public abstract class SetMetricTest extends MetricTest<Set<String>> {
 
-	protected class T {
+	protected static class T {
 		protected final float similarity;
 		protected final String string1;
 		protected final String string2;

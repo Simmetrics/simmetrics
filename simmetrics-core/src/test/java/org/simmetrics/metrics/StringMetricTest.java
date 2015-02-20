@@ -28,7 +28,7 @@ import org.simmetrics.StringMetric;
 
 public abstract class StringMetricTest extends MetricTest<String> {
 
-	protected class T {
+	protected static class T {
 		protected final float similarity;
 		protected final String string1;
 		protected final String string2;

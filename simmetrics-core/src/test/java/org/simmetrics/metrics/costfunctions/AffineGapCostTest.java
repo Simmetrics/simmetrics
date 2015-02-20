@@ -28,7 +28,7 @@ import org.simmetrics.metrics.costfunctions.AffineGapCost;
 
 public abstract class AffineGapCostTest {
 
-	protected class T {
+	protected static class T {
 		protected final float cost;
 		protected final String string;
 		protected final int index1;

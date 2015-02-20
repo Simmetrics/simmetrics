@@ -1,6 +1,6 @@
 package org.simmetrics.utils;
 
-import java.util.Set;
+import java.util.List;
 
 import org.simmetrics.Metric;
 import org.simmetrics.StringMetric;
@@ -9,15 +9,16 @@ import org.simmetrics.tokenizers.Tokenizer;
 
 import com.google.common.base.Preconditions;
 
-public final class CompositeTokenSetMetric implements StringMetric {
+public final class CompositeListMetric implements StringMetric {
 
-	private final Metric<Set<String>> metric;
+	private final Metric<List<String>> metric;
 	private final Simplifier simplifier;
 	private final Tokenizer tokenizer;
 
-	public CompositeTokenSetMetric(Metric<Set<String>> metric,
+	public CompositeListMetric(Metric<List<String>> metric,
 			Simplifier simplifier, Tokenizer tokenizer) {
 		super();
+
 		Preconditions.checkNotNull(metric);
 		Preconditions.checkNotNull(simplifier);
 		Preconditions.checkNotNull(tokenizer);
@@ -30,8 +31,8 @@ public final class CompositeTokenSetMetric implements StringMetric {
 	@Override
 	public float compare(String a, String b) {
 		return metric.compare(
-				tokenizer.tokenizeToSet(simplifier.simplify(a)),
-				tokenizer.tokenizeToSet(simplifier.simplify(b)));
+				tokenizer.tokenizeToList(simplifier.simplify(a)),
+				tokenizer.tokenizeToList(simplifier.simplify(b)));
 	}
 
 	@Override

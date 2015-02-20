@@ -25,7 +25,7 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 /**
- * MathFuncs implements a number of handy maths functions.
+ * A number of handy math functions.
  * 
  * @author Sam Chapman
  * @version 1.1

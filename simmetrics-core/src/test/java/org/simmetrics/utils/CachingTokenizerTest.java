@@ -47,7 +47,7 @@ public class CachingTokenizerTest extends TokenizerTest {
 		when(tokenizer.tokenizeToSet("EEE")).thenReturn(Collections.singleton("EEE"));
 
 		
-		return new CachingTokenizer(tokenizer);
+		return new CachingTokenizer(2,2,tokenizer);
 	}
 
 	@Override

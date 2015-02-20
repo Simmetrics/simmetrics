@@ -7,17 +7,13 @@ SimMetrics is based on the [SimMetrics Library](http://sourceforge.net/projects/
 
 ## Version 2 ##
 
-This fork was aimed at refactoring and cleaning up the SimMetrics project. This has yielded the follow results
+This version was aimed at refactoring and cleaning up the SimMetrics project. This has yielded the follow results
 
- * Support general workflow of simplification, tokenization and comparision.
+ * Support for general workflow of simplification, tokenization and comparision.
  * Reduced clutter on the StringMetric interface.
  * Allow caching of expensive tokenization and simplification operations.
  * Allow for easy anonymous-subclassing-style configuration.
  * Solved various small bugs
-
-Todo
- * A new maven release.
-
 
 ## Usage ##
 
@@ -176,6 +172,3 @@ Simplification and tokenization can be complex and expensive operations. When co
 ```
 
 When a cache is set it applies to the whole simplification or tokenization chain. The default cache has a size of two for use with `StringMetrics.compare(StringMetric, String, List<String>)` and friends.
-
-
-

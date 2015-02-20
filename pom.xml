@@ -1,0 +1,108 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.simmetrics</groupId>
+	<artifactId>simmetrics</artifactId>
+	<version>2.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>SimMetrics</name>
+	<description>SimMetrics is a java library of Similarity or Distance Metrics, e.g. Levenshtein distance, Cosine similarity, that provide float based similarity measures between String data. All metrics return consistent measures rather than unbounded similarity scores.</description>
+	<url>https://github.com/mpkorstanje/simmetrics</url>
+
+	<licenses>
+		<license>
+			<name>GNU General Public License (GPL)</name>
+			<url>http://www.gnu.org/licenses/gpl.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<scm>
+		<url>https://github.com/mpkorstanje/simmetrics</url>
+		<connection>scm:git:git://github.com/mpkorstanje/simmetrics.git</connection>
+		<developerConnection>scm:git:git@github.com:mpkorstanje/simmetrics.git</developerConnection>
+	</scm>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>external.atlassian.jgitflow</groupId>
+				<artifactId>jgitflow-maven-plugin</artifactId>
+				<version>1.0-m4.3</version>
+				<configuration>
+					<flowInitContext>
+						<masterBranchName>master</masterBranchName>
+						<developBranchName>develop</developBranchName>
+						<featureBranchPrefix>feature-</featureBranchPrefix>
+						<releaseBranchPrefix>release-</releaseBranchPrefix>
+						<hotfixBranchPrefix>hotfix-</hotfixBranchPrefix>
+						<versionTagPrefix>simmetric-</versionTagPrefix>
+					</flowInitContext>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<modules>
+		<module>simmetrics-core</module>
+		<module>simmetrics-taglink</module>
+		<module>simmetrics-chapman</module>
+		<module>simmetrics-example</module>
+	</modules>
+</project>

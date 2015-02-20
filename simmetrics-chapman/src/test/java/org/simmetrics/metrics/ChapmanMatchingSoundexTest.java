@@ -52,10 +52,10 @@ public class ChapmanMatchingSoundexTest extends StringMetricTest {
 				new T(0.8933f, "Healed", "Help"),
 				new T(0.9244f, "Sam J Chapman", "Samuel John Chapman"),
 				new T(0.9400f, "Sam Chapman", "S Chapman"),
-				new T(0.9467f, "John Smith", "Samuel John Chapman"),
-				new T(0.8800f, "John Smith", "Sam Chapman"),
-				new T(0.8867f, "John Smith", "Sam J Chapman"),
-				new T(0.7467f, "John Smith", "S Chapman"),
+				new T(0.8870f, "John Smith", "Samuel John Chapman"),
+				new T(0.8105f, "John Smith", "Sam Chapman"),
+				new T(0.8375f, "John Smith", "Sam J Chapman"),
+				new T(0.7125f, "John Smith", "S Chapman"),
 			};
 	}
 }

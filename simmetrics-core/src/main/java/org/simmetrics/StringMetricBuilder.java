@@ -136,8 +136,7 @@ import com.google.common.base.Predicates;
  * <pre>
  * <code>
  * {@code
- * 		StringMetric metric = new StringMetricBuilder()
- * 				.with(new CosineSimilarity<String>())
+ * 				with(new CosineSimilarity<String>())
  * 				.simplify(new CaseSimplifier.Lower())
  * 				.simplify(new NonWordCharacterSimplifier())
  * 				.tokenize(new WhitespaceTokenizer())
@@ -154,8 +153,7 @@ import com.google.common.base.Predicates;
  * {@code
  * 		Set<String> commonWords = ...;
  * 		
- * 		StringMetric metric = new StringMetricBuilder()
- * 				.with(new CosineSimilarity<String>())
+ * 				with(new CosineSimilarity<String>())
  * 				.simplify(new CaseSimplifier.Lower())
  * 				.simplify(new NonWordCharacterSimplifier())
  * 				.tokenize(new WhitespaceTokenizer())
@@ -177,8 +175,7 @@ import com.google.common.base.Predicates;
  * <pre>
  * <code>
  * {@code
- * 		StringMetric metric = new StringMetricBuilder()
- * 				.with(new CosineSimilarity<String>())
+ * 				with(new CosineSimilarity<String>())
  * 				.simplify(new CaseSimplifier.Lower())
  * 				.setSimplifierCache()
  * 				.tokenize(new QGramTokenizer(2))
@@ -200,6 +197,7 @@ import com.google.common.base.Predicates;
  * 
  */
 public class StringMetricBuilder {
+
 	/**
 	 * Starts building a metric with a string metric.
 	 * 
@@ -207,7 +205,7 @@ public class StringMetricBuilder {
 	 *            the metric to use as a base
 	 * @return a builder for fluent chaining
 	 */
-	public StringMetricSimplifierStep with(StringMetric metric) {
+	public static CompositeStringMetricBuilder with(StringMetric metric) {
 		return new CompositeStringMetricBuilder(metric);
 	}
 
@@ -218,7 +216,7 @@ public class StringMetricBuilder {
 	 *            the metric to use as a base
 	 * @return a builder for fluent chaining
 	 */
-	public CompositeListMetricBuilder with(ListMetric<String> metric) {
+	public static CompositeListMetricBuilder with(ListMetric<String> metric) {
 		return new CompositeListMetricBuilder(metric);
 
 	}
@@ -230,7 +228,7 @@ public class StringMetricBuilder {
 	 *            the metric to use as a base
 	 * @return a builder for fluent chaining
 	 */
-	public CompositeSetMetricBuilder with(SetMetric<String> metric) {
+	public static CompositeSetMetricBuilder with(SetMetric<String> metric) {
 		return new CompositeSetMetricBuilder(metric);
 
 	}
@@ -477,7 +475,7 @@ public class StringMetricBuilder {
 
 
 	@SuppressWarnings("javadoc")
-	public final class CompositeStringMetricBuilder implements
+	public static final class CompositeStringMetricBuilder implements
 			StringMetricSimplifierStep, StringMetricSimplifierCacheStep,
 			BuildStep {
 
@@ -547,7 +545,7 @@ public class StringMetricBuilder {
 
 
 	@SuppressWarnings("javadoc")
-	public abstract class CompositeCollectionMetricBuilder<T extends Collection<String>>
+	public static abstract class CompositeCollectionMetricBuilder<T extends Collection<String>>
 			implements BuildStep, CollectionMetricStep,
 			CollectionMetricSimplifierStep, CollectionMetricTokenizerStep,
 			CollectionMetricTokenizerCacheStep {
@@ -680,7 +678,7 @@ public class StringMetricBuilder {
 
 
 	@SuppressWarnings("javadoc")
-	public final class CompositeListMetricBuilder extends
+	public static final class CompositeListMetricBuilder extends
 			CompositeCollectionMetricBuilder<List<String>> {
 
 		CompositeListMetricBuilder(Metric<List<String>> metric) {
@@ -697,7 +695,7 @@ public class StringMetricBuilder {
 
 
 	@SuppressWarnings("javadoc")
-	public final class CompositeSetMetricBuilder extends
+	public static final class CompositeSetMetricBuilder extends
 			CompositeCollectionMetricBuilder<Set<String>> {
 
 		CompositeSetMetricBuilder(Metric<Set<String>> metric) {

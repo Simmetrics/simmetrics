@@ -20,8 +20,9 @@
  */
 package org.simmetrics.example;
 
+import static org.simmetrics.StringMetricBuilder.with;
+
 import org.simmetrics.StringMetric;
-import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.*;
 import org.simmetrics.tokenizers.QGramTokenizer;
 
@@ -47,8 +48,7 @@ public class StringMetricBuilderExample {
 		final String str1 = args[0];
 		final String str2 = args[1];
 
-		StringMetric metric = new StringMetricBuilder()
-				.with(new CosineSimilarity<String>())
+		StringMetric metric = with(new CosineSimilarity<String>())
 				.tokenize(new QGramTokenizer(2))
 				.build();
 

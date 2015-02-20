@@ -20,9 +20,10 @@
  */
 package org.simmetrics.example;
 
+import static org.simmetrics.StringMetricBuilder.with;
+
 import java.util.Arrays;
 
-import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetrics;
 import org.simmetrics.metrics.CosineSimilarity;
@@ -37,8 +38,7 @@ public class BatchExample {
 				"Alayna Sawin", "Charmain Scoggin", "Sanora Larkey" };
 		String name = "Gearldine Desanti";
 
-		StringMetric metric = new StringMetricBuilder()
-				.with(new CosineSimilarity<String>())
+		StringMetric metric = with(new CosineSimilarity<String>())
 				.simplify(new CaseSimplifier.Lower())
 				.tokenize(new QGramTokenizer(2))
 				.build();

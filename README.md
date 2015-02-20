@@ -40,12 +40,14 @@ A metric is used to measure the similarity between strings. Metrics can work on 
 
 By adding simplifiers, tokenizers and filters the effectiveness of a metric can be improved. The exact combination is generally domain specific. The builder supports these domain specific customization.
 
+For a terse syntax use the static import `import static org.simmetrics.StringMetricBuilder.with;`
+
 ```
 	String str1 = "This is a sentence. It is made of words";
 	String str2 = "This sentence is similair. It has almost the same words";
 
-	StringMetric metric = new StringMetricBuilder()
-			.with(new CosineSimilarity<String>())
+	StringMetric metric =
+			with(new CosineSimilarity<String>())
 			.simplify(new CaseSimplifier.Lower())
 			.simplify(new NonWordCharacterSimplifier())
 			.tokenize(new WhitespaceTokenizer())
@@ -54,8 +56,7 @@ By adding simplifiers, tokenizers and filters the effectiveness of a metric can 
 	float result = metric.compare(str1, str2); //0.5590
 ```
 
-The full process consists a of a chain simplification steps, followed by a chain of tokenization steps. After each tokenization step tokens can be filtered. The final result is passed onto the metric.
-
+The full process consists a of a chain of simplification steps, followed by a chain of tokenization steps. After each tokenization step tokens can be filtered. The final result is passed onto the metric.
 
 ### Simplification ###
 
@@ -79,8 +80,8 @@ A custom simplifier can be added onto any metric by using the StringMetricBuilde
 	final String str1 = "This is a sentence. It is made of words";
 	final String str2 = "This sentence is similair. It has almost the same words";
 
-	StringMetric metric = new StringMetricBuilder()
-			.with(new CosineSimilarity<String>())
+	StringMetric metric = 
+			with(new CosineSimilarity<String>())
 			.simplify(new CaseSimplifier.Lower())
 			.simplify(new NonWordCharacterSimplifier())
 			.tokenize(new WhitespaceTokenizer())
@@ -94,8 +95,8 @@ A custom simplifier can be added onto any metric by using the StringMetricBuilde
 Tokenization cuts up a string into tokens e.g. `[chilperic, ii, son, of, childeric, ii]`. Tokenization can also be done repeatedly by tokenizing the individual tokens e.g. `[ch,hi,il,il,lp,pe,er,ri,ic, ii, so,on, of, ch,hi,il,ld,de,er,ri,ic, ii]`.
 
 ````
-	return new StringMetricBuilder()
-			.with(new SimonWhite<String>())
+		StringMetric metric = 
+			with(new SimonWhite<String>())
 			.tokenize(new WhitespaceTokenizer())
 			.tokenize(new QGramTokenizer(2))
 			.build();
@@ -129,8 +130,8 @@ A filter can be implemented by implementing a the [Predicate](https://github.com
 
 
 ```
-		StringMetric metric = new StringMetricBuilder()
-				.with(new CosineSimilarity<String>())
+		StringMetric metric
+				with(new CosineSimilarity<String>())
 				.simplify(new CaseSimplifier.Lower())
 				.simplify(new NonWordCharacterSimplifier())
 				.tokenize(new WhitespaceTokenizer())
@@ -149,8 +150,8 @@ By chaining predicates more complicated filters can be build.
 ```
 		Set<String> commonWords = ...;
 		
-		StringMetric metric = new StringMetricBuilder()
-				.with(new CosineSimilarity<String>())
+		StringMetric metric =
+				with(new CosineSimilarity<String>())
 				.simplify(new CaseSimplifier.Lower())
 				.simplify(new NonWordCharacterSimplifier())
 				.tokenize(new WhitespaceTokenizer())
@@ -165,8 +166,8 @@ Simplification and tokenization can be complex and expensive operations. When co
 
 
 ```
-		StringMetric metric = new StringMetricBuilder()
-				.with(new CosineSimilarity<String>())
+		StringMetric metric =
+				with(new CosineSimilarity<String>())
 				.simplify(new CaseSimplifier.Lower())
 				.setSimplifierCache()
 				.tokenize(new QGramTokenizer(2))

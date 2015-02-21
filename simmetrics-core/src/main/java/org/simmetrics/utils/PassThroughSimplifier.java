@@ -19,7 +19,9 @@
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.simmetrics.simplifiers;
+package org.simmetrics.utils;
+
+import org.simmetrics.simplifiers.Simplifier;
 
 /**
  * Simplifier that does not modify a given string.

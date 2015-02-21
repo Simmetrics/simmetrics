@@ -28,7 +28,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.simmetrics.simplifiers.PassThroughSimplifier;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.utils.CachingSimplifier;
@@ -39,6 +38,7 @@ import org.simmetrics.utils.CompositeListMetric;
 import org.simmetrics.utils.CompositeSetMetric;
 import org.simmetrics.utils.FilteringTokenizer;
 import org.simmetrics.utils.CompositeTokenizer;
+import org.simmetrics.utils.PassThroughSimplifier;
 import org.simmetrics.utils.SimplifyingSimplifier;
 import org.simmetrics.utils.TokenizingTokenizer;
 

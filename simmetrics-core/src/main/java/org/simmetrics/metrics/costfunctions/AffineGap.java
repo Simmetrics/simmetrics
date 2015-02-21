@@ -22,30 +22,43 @@
 
 package org.simmetrics.metrics.costfunctions;
 
-import static com.google.common.base.Preconditions.checkPositionIndex;
+import static com.google.common.base.Preconditions.checkArgument;
 
 import com.google.common.base.Preconditions;
 
-public final class AffineGap5_1 implements Gap {
+public final class AffineGap implements Gap {
 
-	@Override
-	public String toString() {
-		return "AffineGap5_1";
+	private final float startValue;
+	private final float gapValue;
+
+	public AffineGap(float startValue, float gapValue) {
+		checkArgument(startValue <= 0.0f);
+		checkArgument(gapValue <= 0.0f);
+
+		this.startValue = startValue;
+		this.gapValue = gapValue;
 	}
 
 	@Override
 	public final float value(int fromIndex, int toIndex) {
-		checkPositionIndex(fromIndex, toIndex - 1);
-		return -5.0f - (toIndex - fromIndex - 1);
+		checkArgument(fromIndex < toIndex, "fromIndex must be before toIndex");
+		return startValue + gapValue * (toIndex - fromIndex - 1);
 	}
 
 	@Override
 	public final float max() {
-		return -5.0f;
+		return startValue;
 	}
 
 	@Override
 	public final float min() {
 		return Float.NEGATIVE_INFINITY;
 	}
+
+	@Override
+	public String toString() {
+		return "AffineGap [startValue=" + startValue + ", gapValue=" + gapValue
+				+ "]";
+	}
+
 }

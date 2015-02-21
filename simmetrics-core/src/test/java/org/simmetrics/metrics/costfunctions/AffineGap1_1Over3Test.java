@@ -11,23 +11,23 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.simmetrics.metrics.costfunctions;
 
-import org.simmetrics.metrics.costfunctions.AffineGap1_1Over3;
 import org.simmetrics.metrics.costfunctions.Gap;
 
 public class AffineGap1_1Over3Test extends AffineGapCostTest {
 
 	@Override
 	public Gap getCost() {
-		return new AffineGap1_1Over3();
+		return new AffineGap(-1f, -1 / 3f);
 	}
 
 	@Override
@@ -38,7 +38,6 @@ public class AffineGap1_1Over3Test extends AffineGapCostTest {
 				new T(-2.0000f, testString, 13, 17),
 				new T(-1.6667f, testString, 19, 22),
 				new T(-2.6667f, testString, 23, 29),
-				new T(-1.0000f, testString, 5, 6),
-		};
+				new T(-1.0000f, testString, 5, 6), };
 	}
 }

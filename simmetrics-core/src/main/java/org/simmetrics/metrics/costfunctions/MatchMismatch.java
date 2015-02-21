@@ -20,13 +20,13 @@ public class MatchMismatch implements Substitution {
 	}
 
 	@Override
-	public float getMaxCost() {
-		return max(matchCost, mismatchCost);
+	public float max() {
+		return Math.max(matchCost, mismatchCost);
 	}
 
 	@Override
-	public float getMinCost() {
-		return min(matchCost, mismatchCost);
+	public float min() {
+		return Math.min(matchCost, mismatchCost);
 	}
 
 	@Override

@@ -28,7 +28,7 @@ public interface Substitution {
 	public float compare(String a, int aIndex, String b,
 			int bIndex);
 
-	public float getMaxCost();
+	public float max();
 
-	public float getMinCost();
+	public float min();
 }

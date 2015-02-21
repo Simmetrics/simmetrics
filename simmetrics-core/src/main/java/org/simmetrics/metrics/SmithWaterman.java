@@ -37,16 +37,15 @@ public class SmithWaterman implements StringMetric {
 
 	private final float gapCost;
 
-	private Substitution substitutionFunction;
+	private Substitution substitution;
 
 	public SmithWaterman() {
 		this(0.5f, MATCH_1_MISMATCH_MINUS_2);
 	}
 
-	public SmithWaterman(final float gapCost,
-			final Substitution substitutionFunction) {
+	public SmithWaterman(float gapCost, Substitution substitution) {
 		this.gapCost = gapCost;
-		this.substitutionFunction = substitutionFunction;
+		this.substitution = substitution;
 	}
 
 	@Override
@@ -60,8 +59,8 @@ public class SmithWaterman implements StringMetric {
 			return 0.0f;
 		}
 
-		float maxDistance = (min(a.length(), b.length()) * max(
-				substitutionFunction.getMaxCost(), -gapCost));
+		float maxDistance = (min(a.length(), b.length()) 
+								* max(substitution.max(), -gapCost));
 		return smithWatermanDistance(a, b) / maxDistance;
 	}
 
@@ -77,7 +76,7 @@ public class SmithWaterman implements StringMetric {
 		final int n = s.length();
 		final int m = t.length();
 		final float gapCost = -this.gapCost;
-		final Substitution sf = this.substitutionFunction;
+		final Substitution sf = this.substitution;
 		final float[][] d = new float[n][m];
 
 		// Initialize corner
@@ -86,19 +85,28 @@ public class SmithWaterman implements StringMetric {
 
 		// Initialize edges
 		for (int i = 1; i < n; i++) {
-			d[i][0] = max3(0, d[i - 1][0] + gapCost, sf.compare(s, i, t, 0));
+			d[i][0] = max3(	0,
+							d[i - 1][0] + gapCost,
+							sf.compare(s, i, t, 0));
+			
 			max = max(max, d[i][0]);
 		}
+		
 		for (int j = 1; j < m; j++) {
-			d[0][j] = max3(0, d[0][j - 1] + gapCost, sf.compare(s, 0, t, j));
+			d[0][j] = max3(	0, 
+							d[0][j - 1] + gapCost, 
+							sf.compare(s, 0, t, j));
+			
 			max = max(max, d[0][j]);
 		}
 
 		// Find max
 		for (int i = 1; i < n; i++) {
 			for (int j = 1; j < m; j++) {
-				d[i][j] = max4(0, d[i - 1][j] + gapCost, d[i][j - 1] + gapCost,
-						d[i - 1][j - 1] + sf.compare(s, i, t, j));
+				d[i][j] = max4(	0, 
+								d[i - 1][j] + gapCost,
+								d[i][j - 1] + gapCost,
+								d[i - 1][j - 1] + sf.compare(s, i, t, j));
 
 				max = max(max, d[i][j]);
 			}
@@ -109,7 +117,7 @@ public class SmithWaterman implements StringMetric {
 
 	@Override
 	public String toString() {
-		return "SmithWaterman [costFunction=" + substitutionFunction + ", gapCost="
+		return "SmithWaterman [costFunction=" + substitution + ", gapCost="
 				+ gapCost + "]";
 	}
 }

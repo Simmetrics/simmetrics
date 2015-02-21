@@ -73,10 +73,10 @@ public abstract class InterfaceSubstitutionCostTest {
 					t.string2Index);
 
 			String costMessage = "Cost must fall within [%.3f - %.3f] range";
-			costMessage = String.format(costMessage, cost.getMinCost(),
-					cost.getMaxCost());
-			assertTrue(costMessage, cost.getMinCost() <= actuall
-					&& actuall <= cost.getMaxCost());
+			costMessage = String.format(costMessage, cost.min(),
+					cost.max());
+			assertTrue(costMessage, cost.min() <= actuall
+					&& actuall <= cost.max());
 
 			String message = String.format("\"%s\" vs \"%s\"",
 					t.string1.charAt(t.string1Index),

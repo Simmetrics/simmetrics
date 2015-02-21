@@ -21,6 +21,8 @@
  */
 package org.simmetrics.metrics;
 
+import static com.google.common.collect.HashMultiset.create;
+
 import java.util.List;
 
 import org.simmetrics.ListMetric;
@@ -83,7 +85,7 @@ public class MatchingCoefficient<T> implements ListMetric<T> {
 		// Note: this is not the same as b.retainAll(a).size()
 		int intersection = 0;
 		// Copy for destructive list difference
-		Multiset<T> bCopy = HashMultiset.create(b);
+		Multiset<T> bCopy = create(b);
 		for (T token : a) {
 			if (bCopy.remove(token)) {
 				intersection++;

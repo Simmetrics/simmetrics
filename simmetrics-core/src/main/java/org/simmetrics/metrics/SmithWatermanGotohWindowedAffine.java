@@ -220,8 +220,8 @@ public class SmithWatermanGotohWindowedAffine implements StringMetric {
 
 		// normalise into zero to one region from min max possible
 		float maxValue = Math.min(string1.length(), string2.length());
-		if (costfunction.getMaxCost() > -gapFunction.getMaxCost()) {
-			maxValue *= costfunction.getMaxCost();
+		if (costfunction.max() > -gapFunction.getMaxCost()) {
+			maxValue *= costfunction.max();
 		} else {
 			maxValue *= -gapFunction.getMaxCost();
 		}

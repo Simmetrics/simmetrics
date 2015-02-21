@@ -118,12 +118,12 @@ public final class SubCost5_3_Minus3 implements Substitution {
 	}
 
 	@Override
-	public final float getMaxCost() {
+	public final float max() {
 		return CHAR_EXACT_MATCH_SCORE;
 	}
 
 	@Override
-	public final float getMinCost() {
+	public final float min() {
 		return CHAR_MISMATCH_MATCH_SCORE;
 	}
 

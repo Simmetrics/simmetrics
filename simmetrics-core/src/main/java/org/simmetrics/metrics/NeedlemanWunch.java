@@ -65,13 +65,13 @@ public class NeedlemanWunch implements StringMetric {
 		// normalise into zero to one region from min max possible
 		float maxValue = Math.max(string1.length(), string2.length());
 		float minValue = maxValue;
-		if (costFunction.getMaxCost() > gapCost) {
-			maxValue *= costFunction.getMaxCost();
+		if (costFunction.max() > gapCost) {
+			maxValue *= costFunction.max();
 		} else {
 			maxValue *= gapCost;
 		}
-		if (costFunction.getMinCost() < gapCost) {
-			minValue *= costFunction.getMinCost();
+		if (costFunction.min() < gapCost) {
+			minValue *= costFunction.min();
 		} else {
 			minValue *= gapCost;
 		}

@@ -21,77 +21,58 @@
  */
 package org.simmetrics.metrics;
 
+import java.util.Objects;
+
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.costfunctions.MatchMismatch;
 import org.simmetrics.metrics.costfunctions.Substitution;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 import static org.simmetrics.utils.Math.min3;
 
-/**
- * Needleman-Wunch algorithm providing an edit distance based
- * similarity measure between two strings.
- * 
- * @See <a href="http://www.gen.tcd.ie/molevol/nwswat.html"> Needleman-Wunsch
- *      Algorithm for Sequence Similarity Searches</a>
- * @author Sam Chapman
- * @version 1.1
- */
+
 public class NeedlemanWunch implements StringMetric {
 
-	private static final Substitution MATCH_0_MISMATCH_1 = new MatchMismatch(0.0f,1.0f);
+	private static final Substitution MATCH_0_MISMATCH_1 = new MatchMismatch(
+			0.0f, -1.0f);
 
-	private final Substitution costFunction;
+	private final Substitution substitution;
 
-	private final float gapCost;
+	private final float gapValue;
 
 	public NeedlemanWunch() {
-		this(2.0f, MATCH_0_MISMATCH_1);
+		this(-2.0f, MATCH_0_MISMATCH_1);
 	}
 
-	public NeedlemanWunch(final float costG, final Substitution costFunc) {
-		this.gapCost = costG;
-		this.costFunction = costFunc;
-	}
-
-	public NeedlemanWunch(final Substitution costFunc) {
-		this(2.0f, costFunc);
+	public NeedlemanWunch(final float gapValue, final Substitution substitution) {
+		this.gapValue = gapValue;
+		this.substitution = substitution;
 	}
 
 	@Override
-	public float compare(String string1, String string2) {
-
-		float needlemanWunch = getUnNormalisedSimilarity(string1, string2);
-
-		// normalise into zero to one region from min max possible
-		float maxValue = Math.max(string1.length(), string2.length());
-		float minValue = maxValue;
-		if (costFunction.max() > gapCost) {
-			maxValue *= costFunction.max();
-		} else {
-			maxValue *= gapCost;
-		}
-		if (costFunction.min() < gapCost) {
-			minValue *= costFunction.min();
-		} else {
-			minValue *= gapCost;
-		}
-		if (minValue < 0.0f) {
-			maxValue -= minValue;
-			needlemanWunch -= minValue;
+	public float compare(String a, String b) {
+		
+		if (a.isEmpty() && b.isEmpty()) {
+			return 1.0f;
 		}
 
-		// check for 0 maxLen
-		if (maxValue == 0) {
-			return 1.0f; // as both strings identically zero length
-		} else {
-			// return actual / possible NeedlemanWunch distance to get 0-1 range
-			return 1.0f - (needlemanWunch / maxValue);
+		if (a.isEmpty() || b.isEmpty()) {
+			return 0.0f;
 		}
+
+		float maxDistance = max(a.length(), b.length())
+				* max(substitution.max(), gapValue);
+		float minDistance = max(a.length(), b.length()) * min(substitution.min(), gapValue);
+
+		return ((-needlemanWunch(a, b) - minDistance) / (maxDistance - minDistance));
 
 	}
 
-	private float getUnNormalisedSimilarity(final String s, final String t) {
+	private float needlemanWunch(final String s, final String t) {
 
+		if (Objects.equals(s, t))
+			return 0;
 		if (s.isEmpty()) {
 			return t.length();
 		}
@@ -99,38 +80,34 @@ public class NeedlemanWunch implements StringMetric {
 			return s.length();
 		}
 
-		// create matrix (n+1)x(m+1)
-		final float[][] d = new float[s.length() + 1][t.length() + 1];
+		final int m = s.length() + 1;
+		final int n = s.length() +1;
+		final float[][] d = new float[m][n];
 
-		// put row and column numbers in place
-		for (int i = 0; i < d.length; i++) {
+		for (int i = 1; i < m; i++) {
 			d[i][0] = i;
 		}
-		for (int j = 0; j < d[0].length; j++) {
+		for (int j = 1; j < n; j++) {
 			d[0][j] = j;
 		}
 
-		// cycle through rest of table filling values from the lowest cost value
-		// of the three part cost function
-		for (int i = 1; i < d.length; i++) {
-			for (int j = 1; j < d[0].length; j++) {
-				// get the substution cost
-				float cost = costFunction.compare(s, i - 1, t, j - 1);
-
-				// find lowest cost at point from three possible
-				d[i][j] = min3(d[i - 1][j] + gapCost, d[i][j - 1] + gapCost,
-						d[i - 1][j - 1] + cost);
+		for (int i = 1; i < m; i++) {
+			for (int j = 1; j < n; j++) {
+				d[i][j] = min3(
+						d[i - 1][j    ] - gapValue,
+						d[i    ][j - 1] - gapValue,
+						d[i - 1][j - 1]
+								- substitution.compare(s, i - 1, t, j - 1));
 			}
 		}
 
-		// return bottom right of matrix as holds the maximum edit score
-		return d[d.length - 1][d[0].length - 1];
+		return d[m - 1][n - 1];
 	}
 
 	@Override
 	public String toString() {
-		return "NeedlemanWunch [costFunction=" + costFunction + ", gapCost="
-				+ gapCost + "]";
+		return "NeedlemanWunch [costFunction=" + substitution + ", gapCost="
+				+ gapValue + "]";
 	}
 
 }

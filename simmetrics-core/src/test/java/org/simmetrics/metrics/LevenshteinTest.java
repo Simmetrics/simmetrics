@@ -33,9 +33,11 @@ public class LevenshteinTest extends StringMetricTest {
 	@Override
 	protected T[] getTests() {
 		return new T[] {
+
 				new T(0.9167f, "test string1", "test string2"),
-				new T(0.8000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.8571f, "a b c d", "a b c e"),
+
+				new T(0.8000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.8333f, "Healed", "Sealed"),
 				new T(0.5714f, "Healed", "Healthy"),
 				new T(0.6667f, "Healed", "Heard"),

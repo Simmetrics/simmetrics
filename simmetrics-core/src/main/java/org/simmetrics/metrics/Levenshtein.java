@@ -24,6 +24,7 @@ package org.simmetrics.metrics;
 import static java.lang.Math.max;
 import static org.simmetrics.utils.Math.min3;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import org.simmetrics.StringMetric;
@@ -39,8 +40,6 @@ import org.simmetrics.metrics.costfunctions.Substitution;
  * @author mpkorstanje
  */
 public class Levenshtein implements StringMetric {
-
-	private final Substitution substitution = new MatchMismatch(0.0f, 1.0f);
 
 	@Override
 	public float compare(final String a, final String b) {
@@ -85,15 +84,17 @@ public class Levenshtein implements StringMetric {
 
 			// use formula to fill in the rest of the row
 			for (int j = 0; j < t.length(); j++) {
-				v1[j + 1] = min3(v1[j] + 1, v0[j + 1] + 1,
-						v0[j] + substitution.compare(s, i, t, j));
+				v1[j + 1] = min3(
+						v1[j    ] + 1,
+						v0[j + 1] + 1,
+						v0[j    ] + (s.charAt(i) == t.charAt(j) ? 0.0f : 1.0f));
 			}
-
+			
 			// copy v1 (current row) to v0 (previous row) for next iteration
 			for (int j = 0; j < v0.length; j++)
 				v0[j] = v1[j];
 		}
-
+		
 		return v1[t.length()];
 	}
 

@@ -30,8 +30,8 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.ListMetric;
 
 /**
- * Implements the Monge Elkan algorithm providing an matching style similarity
- * measure between two strings.
+ * Monge Elkan algorithm providing an matching style similarity measure between
+ * two strings.
  * <p>
  * <code>similarity(a,b) = average( for s in a | max( for q in b | metric(s,q)) </code>
  * </p>

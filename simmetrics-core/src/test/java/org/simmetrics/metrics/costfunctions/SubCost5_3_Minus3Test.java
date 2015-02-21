@@ -21,13 +21,13 @@
 package org.simmetrics.metrics.costfunctions;
 
 import org.simmetrics.metrics.costfunctions.SubCost5_3_Minus3;
-import org.simmetrics.metrics.costfunctions.SubstitutionCost;
+import org.simmetrics.metrics.costfunctions.Substitution;
 
 
 public class SubCost5_3_Minus3Test extends InterfaceSubstitutionCostTest {
 
 	@Override
-	public SubstitutionCost getCost() {
+	public Substitution getCost() {
 		return new SubCost5_3_Minus3();
 	}
 

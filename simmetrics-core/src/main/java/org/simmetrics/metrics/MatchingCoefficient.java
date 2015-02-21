@@ -29,8 +29,8 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 
 /**
- * Implements the matching coefficient algorithm providing a similarity measure
- * between two lists.
+ * Matching coefficient algorithm providing a similarity measure between two
+ * lists.
  * <p>
  * The matching coefficient between two lists is defined as ratio of elements
  * that occur in both lists and elements that exclusively occur in either list.
@@ -76,7 +76,6 @@ public class MatchingCoefficient<T> implements ListMetric<T> {
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
-
 
 		// Count elements in the list intersection.
 		// Elements are counted only once in both lists.

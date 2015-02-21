@@ -29,9 +29,8 @@ import java.util.Set;
 import org.simmetrics.SetMetric;
 
 /**
- * Implements the Overlap Coefficient algorithm providing a similarity measure
- * between two sets where it is determined to what degree a set is a subset of
- * another.
+ * Overlap Coefficient algorithm providing a similarity measure between two sets
+ * where it is determined to what degree a set is a subset of another.
  * <p>
  * <code>overlap_coefficient(q,r) = (|q & r|) / min{|q|, |r|}</code>
  * 

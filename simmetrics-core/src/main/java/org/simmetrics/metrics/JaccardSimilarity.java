@@ -27,8 +27,8 @@ import java.util.Set;
 import org.simmetrics.SetMetric;
 
 /**
- * Implements the Jaccard similarity algorithm providing a similarity measure
- * between two sets using the vector space of presented tokens.
+ * Jaccard similarity algorithm providing a similarity measure between two sets
+ * using the vector space of presented tokens.
  * 
  * <p>
  * <code>jaccard index(a,b) = ( |a & b| ) / ( | a or b | )</code>

@@ -26,15 +26,15 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.costfunctions.AffineGap5_1;
 import org.simmetrics.metrics.costfunctions.AffineGapCost;
 import org.simmetrics.metrics.costfunctions.SubCost5_3_Minus3;
-import org.simmetrics.metrics.costfunctions.SubstitutionCost;
+import org.simmetrics.metrics.costfunctions.Substitution;
 
 import static java.lang.Math.max;
 import static org.simmetrics.utils.Math.max3;
 import static org.simmetrics.utils.Math.max4;
 
 /**
- * Implements the Smith-Waterman-Gotoh algorithm with a windowed affine gap
- * providing a similarity measure between two strings.
+ * Smith-Waterman-Gotoh algorithm with a windowed affine gap providing a
+ * similarity measure between two strings.
  * 
  * 
  * @author Sam Chapman
@@ -63,7 +63,7 @@ public class SmithWatermanGotohWindowedAffine implements StringMetric {
 	 * 
 	 * @return the substitution cost function
 	 */
-	public SubstitutionCost getCostfunction() {
+	public Substitution getCostfunction() {
 		return costfunction;
 	}
 
@@ -78,7 +78,7 @@ public class SmithWatermanGotohWindowedAffine implements StringMetric {
 
 	private final int windowSize;
 
-	private final SubstitutionCost costfunction;
+	private final Substitution costfunction;
 
 	private final AffineGapCost gapFunction;
 
@@ -118,7 +118,7 @@ public class SmithWatermanGotohWindowedAffine implements StringMetric {
 	 *            - the cost function to use
 	 */
 	public SmithWatermanGotohWindowedAffine(final AffineGapCost gapCostFunc,
-			final SubstitutionCost costfunction) {
+			final Substitution costfunction) {
 		// set the gap cost func
 		this.gapFunction = gapCostFunc;
 		// set the cost func
@@ -133,7 +133,7 @@ public class SmithWatermanGotohWindowedAffine implements StringMetric {
 	 * @param costfunction
 	 *            - the cost function to use
 	 */
-	public SmithWatermanGotohWindowedAffine(final SubstitutionCost costfunction) {
+	public SmithWatermanGotohWindowedAffine(final Substitution costfunction) {
 		// set the gapCost to a default value
 		this.gapFunction = new AffineGap5_1();
 		// set the cost func
@@ -186,7 +186,7 @@ public class SmithWatermanGotohWindowedAffine implements StringMetric {
 	 *            the size of the affine gap window to use
 	 */
 	public SmithWatermanGotohWindowedAffine(final AffineGapCost gapCostFunc,
-			final SubstitutionCost costfunction, final int affineGapWindowSize) {
+			final Substitution costfunction, final int affineGapWindowSize) {
 		// set the gap cost func
 		this.gapFunction = gapCostFunc;
 		// set the cost func
@@ -203,8 +203,8 @@ public class SmithWatermanGotohWindowedAffine implements StringMetric {
 	 * @param affineGapWindowSize
 	 *            the size of the affine gap window to use
 	 */
-	public SmithWatermanGotohWindowedAffine(
-			final SubstitutionCost costfunction, final int affineGapWindowSize) {
+	public SmithWatermanGotohWindowedAffine(final Substitution costfunction,
+			final int affineGapWindowSize) {
 		// set the gapCost to a default value
 		this.gapFunction = new AffineGap5_1();
 		// set the cost func
@@ -270,7 +270,7 @@ public class SmithWatermanGotohWindowedAffine implements StringMetric {
 		float maxSoFar = 0.0f;
 		for (i = 0; i < n; i++) {
 			// get the substution cost
-			cost = costfunction.getCost(s, i, t, 0);
+			cost = costfunction.compare(s, i, t, 0);
 
 			if (i == 0) {
 				d[0][0] = max(0, cost);
@@ -293,7 +293,7 @@ public class SmithWatermanGotohWindowedAffine implements StringMetric {
 		}
 		for (j = 0; j < m; j++) {
 			// get the substution cost
-			cost = costfunction.getCost(s, 0, t, j);
+			cost = costfunction.compare(s, 0, t, j);
 
 			if (j == 0) {
 				d[0][0] = max(0, cost);
@@ -320,7 +320,7 @@ public class SmithWatermanGotohWindowedAffine implements StringMetric {
 		for (i = 1; i < n; i++) {
 			for (j = 1; j < m; j++) {
 				// get the substution cost
-				cost = costfunction.getCost(s, i, t, j);
+				cost = costfunction.compare(s, i, t, j);
 
 				// find lowest cost at point from three possible
 				float maxGapCost1 = 0.0f;

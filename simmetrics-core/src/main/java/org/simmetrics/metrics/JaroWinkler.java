@@ -26,9 +26,9 @@ import static org.simmetrics.utils.Math.min3;
 import org.simmetrics.StringMetric;
 
 /**
- * Implements the Jaro-Winkler algorithm providing a similarity measure between
- * two strings allowing character transpositions to a degree adjusting the
- * weighting for common prefixes.
+ * Jaro-Winkler algorithm providing a similarity measure between two strings
+ * allowing character transpositions to a degree adjusting the weighting for
+ * common prefixes.
  * 
  * @see <a
  *      href="http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance">Wikipedia

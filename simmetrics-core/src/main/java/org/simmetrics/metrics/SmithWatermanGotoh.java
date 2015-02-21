@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -24,11 +25,11 @@ package org.simmetrics.metrics;
 import org.simmetrics.metrics.costfunctions.AffineGap5_1;
 import org.simmetrics.metrics.costfunctions.AffineGapCost;
 import org.simmetrics.metrics.costfunctions.SubCost5_3_Minus3;
-import org.simmetrics.metrics.costfunctions.SubstitutionCost;
+import org.simmetrics.metrics.costfunctions.Substitution;
 
 /**
- * Implements the Gotoh extension of the Smith-Waterman method incorporating
- * affine gaps in the strings.
+ * Gotoh extension of the Smith-Waterman method incorporating affine gaps in the
+ * strings.
  * 
  * 
  * @author Sam Chapman
@@ -61,8 +62,7 @@ public class SmithWatermanGotoh extends SmithWatermanGotohWindowedAffine {
 	 * @param costFunc
 	 *            - the cost function to use
 	 */
-	public SmithWatermanGotoh(AffineGapCost gapCostFunc,
-			SubstitutionCost costFunc) {
+	public SmithWatermanGotoh(AffineGapCost gapCostFunc, Substitution costFunc) {
 		super(gapCostFunc, costFunc, Integer.MAX_VALUE);
 	}
 
@@ -72,7 +72,7 @@ public class SmithWatermanGotoh extends SmithWatermanGotohWindowedAffine {
 	 * @param costFunc
 	 *            - the cost function to use
 	 */
-	public SmithWatermanGotoh(SubstitutionCost costFunc) {
+	public SmithWatermanGotoh(Substitution costFunc) {
 		super(new AffineGap5_1(), costFunc, Integer.MAX_VALUE);
 	}
 

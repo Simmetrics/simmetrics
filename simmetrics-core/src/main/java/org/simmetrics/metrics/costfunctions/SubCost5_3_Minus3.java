@@ -35,7 +35,7 @@ import java.util.Set;
  * @author Sam Chapman
  * @version 1.1
  */
-public final class SubCost5_3_Minus3 implements SubstitutionCost {
+public final class SubCost5_3_Minus3 implements Substitution {
 
 	/**
 	 * return score.
@@ -93,7 +93,7 @@ public final class SubCost5_3_Minus3 implements SubstitutionCost {
 	 * @return the cost of a given subsitution d(i,j) as defined above
 	 */
 	@Override
-	public final float getCost(final String str1, final int string1Index,
+	public final float compare(final String str1, final int string1Index,
 			final String str2, final int string2Index) {
 		// check within range
 		if (str1.length() <= string1Index || string1Index < 0) {

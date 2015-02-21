@@ -22,23 +22,13 @@
 package org.simmetrics.metrics.costfunctions;
 
 
-public interface SubstitutionCost {
+public interface Substitution {
 
 
-	public float getCost(String a, int aIndex, String b,
+	public float compare(String a, int aIndex, String b,
 			int bIndex);
 
-	/**
-	 * Returns the maximum possible cost.
-	 *
-	 * @return the maximum possible cost
-	 */
 	public float getMaxCost();
 
-	/**
-	 * Returns the minimum possible cost.
-	 *
-	 * @return the minimum possible cost
-	 */
 	public float getMinCost();
 }

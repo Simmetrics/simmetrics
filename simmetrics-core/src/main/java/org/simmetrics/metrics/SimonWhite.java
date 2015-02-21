@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -26,9 +27,9 @@ import java.util.List;
 import org.simmetrics.ListMetric;
 
 /**
- * Measures the similarity between two lists. Idea taken from <a
- * href="http://www.catalysoft.com/articles/StrikeAMatch.html">How to Strike a
- * Match</a> by Simon White.
+ * Simon White algorithm providing a similarity measure between two lists. Idea
+ * taken from <a href="http://www.catalysoft.com/articles/StrikeAMatch.html">How
+ * to Strike a Match</a> by Simon White.
  * 
  * <p>
  * <code>
@@ -64,7 +65,7 @@ public class SimonWhite<T> implements ListMetric<T> {
 		if (a.isEmpty() && b.isEmpty()) {
 			return 1.0f;
 		}
-		
+
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}

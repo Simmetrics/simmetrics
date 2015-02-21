@@ -27,7 +27,7 @@ import static java.lang.Math.max;
 import org.simmetrics.StringMetric;
 
 /**
- * Implements the Jaro algorithm providing a similarity measure between two
+ * Jaro algorithm providing a similarity measure between two
  * strings allowing character transpositions to a degree.
  * 
  * @see <a

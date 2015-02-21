@@ -29,8 +29,8 @@ import org.simmetrics.SetMetric;
 import static java.lang.Math.sqrt;
 
 /**
- * Implements the Cosine Similarity algorithm providing a similarity measure
- * between two set from the angular divergence within token based vector space.
+ * Cosine Similarity algorithm providing a similarity measure between two set
+ * from the angular divergence within token based vector space.
  * 
  * @see <a href="http://en.wikipedia.org/wiki/Cosine_similarity">Wikipedia
  *      Cosine similarity</a>

@@ -3,7 +3,7 @@ package org.simmetrics.metrics.costfunctions;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class MatchMismatch implements SubstitutionCost {
+public class MatchMismatch implements Substitution {
 
 	private final float matchCost;
 	private final float mismatchCost;
@@ -15,7 +15,7 @@ public class MatchMismatch implements SubstitutionCost {
 	}
 
 	@Override
-	public float getCost(String a, int aIndex, String b, int bIndex) {
+	public float compare(String a, int aIndex, String b, int bIndex) {
 		return a.charAt(aIndex) == b.charAt(bIndex) ? matchCost : mismatchCost;
 	}
 

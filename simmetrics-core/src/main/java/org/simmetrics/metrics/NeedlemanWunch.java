@@ -23,12 +23,12 @@ package org.simmetrics.metrics;
 
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.costfunctions.MatchMismatch;
-import org.simmetrics.metrics.costfunctions.SubstitutionCost;
+import org.simmetrics.metrics.costfunctions.Substitution;
 
 import static org.simmetrics.utils.Math.min3;
 
 /**
- * Implements the Needleman-Wunch algorithm providing an edit distance based
+ * Needleman-Wunch algorithm providing an edit distance based
  * similarity measure between two strings.
  * 
  * @See <a href="http://www.gen.tcd.ie/molevol/nwswat.html"> Needleman-Wunsch
@@ -38,9 +38,9 @@ import static org.simmetrics.utils.Math.min3;
  */
 public class NeedlemanWunch implements StringMetric {
 
-	private static final SubstitutionCost MATCH_0_MISMATCH_1 = new MatchMismatch(0.0f,1.0f);
+	private static final Substitution MATCH_0_MISMATCH_1 = new MatchMismatch(0.0f,1.0f);
 
-	private final SubstitutionCost costFunction;
+	private final Substitution costFunction;
 
 	private final float gapCost;
 
@@ -48,12 +48,12 @@ public class NeedlemanWunch implements StringMetric {
 		this(2.0f, MATCH_0_MISMATCH_1);
 	}
 
-	public NeedlemanWunch(final float costG, final SubstitutionCost costFunc) {
+	public NeedlemanWunch(final float costG, final Substitution costFunc) {
 		this.gapCost = costG;
 		this.costFunction = costFunc;
 	}
 
-	public NeedlemanWunch(final SubstitutionCost costFunc) {
+	public NeedlemanWunch(final Substitution costFunc) {
 		this(2.0f, costFunc);
 	}
 
@@ -115,7 +115,7 @@ public class NeedlemanWunch implements StringMetric {
 		for (int i = 1; i < d.length; i++) {
 			for (int j = 1; j < d[0].length; j++) {
 				// get the substution cost
-				float cost = costFunction.getCost(s, i - 1, t, j - 1);
+				float cost = costFunction.compare(s, i - 1, t, j - 1);
 
 				// find lowest cost at point from three possible
 				d[i][j] = min3(d[i - 1][j] + gapCost, d[i][j - 1] + gapCost,

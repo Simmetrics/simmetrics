@@ -30,7 +30,7 @@ import static org.simmetrics.utils.Math.max4;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.costfunctions.AffineGap;
 import org.simmetrics.metrics.costfunctions.Gap;
-import org.simmetrics.metrics.costfunctions.SubCost5_3_Minus3;
+import org.simmetrics.metrics.costfunctions.MatchMismatch;
 import org.simmetrics.metrics.costfunctions.Substitution;
 
 public class SmithWatermanGotoh implements StringMetric {
@@ -40,7 +40,7 @@ public class SmithWatermanGotoh implements StringMetric {
 	private final int windowSize;
 
 	public SmithWatermanGotoh() {
-		this(new AffineGap(-5.0f, -1.0f), new SubCost5_3_Minus3(), Integer.MAX_VALUE);
+		this(new AffineGap(-5.0f, -1.0f), new MatchMismatch(5.0f,-3.0f), Integer.MAX_VALUE);
 	}
 
 	public SmithWatermanGotoh(Gap gap, Substitution substitution, int windowSize) {

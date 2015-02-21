@@ -1,38 +1,43 @@
 package org.simmetrics.metrics.costfunctions;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
+import com.google.common.base.Preconditions;
+
 public class MatchMismatch implements Substitution {
 
-	private final float matchCost;
-	private final float mismatchCost;
+	private final float matchValue;
+	private final float mistMatchValue;
 
-	public MatchMismatch(float matchCost, float mismatchCost) {
+	public MatchMismatch(float matchValue, float mistMatchValue) {
 		super();
-		this.matchCost = matchCost;
-		this.mismatchCost = mismatchCost;
+		checkArgument(matchValue > mistMatchValue);
+		
+		this.matchValue = matchValue;
+		this.mistMatchValue = mistMatchValue;
 	}
 
 	@Override
 	public float compare(String a, int aIndex, String b, int bIndex) {
-		return a.charAt(aIndex) == b.charAt(bIndex) ? matchCost : mismatchCost;
+		return a.charAt(aIndex) == b.charAt(bIndex) ? matchValue : mistMatchValue;
 	}
 
 	@Override
 	public float max() {
-		return Math.max(matchCost, mismatchCost);
+		return matchValue;
 	}
 
 	@Override
 	public float min() {
-		return Math.min(matchCost, mismatchCost);
+		return mistMatchValue;
 	}
 
 	@Override
 	public String toString() {
-		return "MatchMismatch [matchCost=" + matchCost + ", mismatchCost="
-				+ mismatchCost + "]";
+		return "MatchMismatch [matchCost=" + matchValue + ", mismatchCost="
+				+ mistMatchValue + "]";
 	}
 	
 	

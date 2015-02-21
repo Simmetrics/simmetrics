@@ -22,65 +22,116 @@
 
 package org.simmetrics.metrics;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static org.simmetrics.utils.Math.max3;
+import static org.simmetrics.utils.Math.max4;
+
+import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.costfunctions.AffineGap5_1;
-import org.simmetrics.metrics.costfunctions.AffineGapCost;
+import org.simmetrics.metrics.costfunctions.Gap;
 import org.simmetrics.metrics.costfunctions.SubCost5_3_Minus3;
 import org.simmetrics.metrics.costfunctions.Substitution;
 
-/**
- * Gotoh extension of the Smith-Waterman method incorporating affine gaps in the
- * strings.
- * 
- * 
- * @author Sam Chapman
- * @version 1.1
- */
-public class SmithWatermanGotoh extends SmithWatermanGotohWindowedAffine {
+public class SmithWatermanGotoh implements StringMetric {
 
-	/**
-	 * constructor - default (empty).
-	 */
+	private final Gap gap;
+	private final Substitution substitution;
+	private final int windowSize;
+	
 	public SmithWatermanGotoh() {
-		super(new AffineGap5_1(), new SubCost5_3_Minus3(), Integer.MAX_VALUE);
+		this(new AffineGap5_1(), new SubCost5_3_Minus3(), Integer.MAX_VALUE);
 	}
-
-	/**
-	 * constructor.
-	 *
-	 * @param gapCostFunc
-	 *            - the gap cost function
-	 */
-	public SmithWatermanGotoh(AffineGapCost gapCostFunc) {
-		super(gapCostFunc, new SubCost5_3_Minus3(), Integer.MAX_VALUE);
-	}
-
-	/**
-	 * constructor.
-	 *
-	 * @param gapCostFunc
-	 *            - the cost of a gap
-	 * @param costFunc
-	 *            - the cost function to use
-	 */
-	public SmithWatermanGotoh(AffineGapCost gapCostFunc, Substitution costFunc) {
-		super(gapCostFunc, costFunc, Integer.MAX_VALUE);
-	}
-
-	/**
-	 * constructor.
-	 *
-	 * @param costFunc
-	 *            - the cost function to use
-	 */
-	public SmithWatermanGotoh(Substitution costFunc) {
-		super(new AffineGap5_1(), costFunc, Integer.MAX_VALUE);
+	
+	
+	public SmithWatermanGotoh(Gap gap, Substitution substitution, int windowSize) {
+		super();
+		this.gap = gap;
+		this.substitution = substitution;
+		this.windowSize = windowSize;
 	}
 
 	@Override
-	public String toString() {
-		return "SmithWatermanGotoh [getWindowSize()=" + getWindowSize()
-				+ ", getCostfunction()=" + getCostfunction()
-				+ ", getGapFunction()=" + getGapFunction() + "]";
+	public float compare(String a, String b) {
+
+		if (a.isEmpty() && b.isEmpty()) {
+			return 1.0f;
+		}
+		if (a.isEmpty() || b.isEmpty()) {
+			return 0.0f;
+		}
+		float maxDistance = (min(a.length(), b.length()) * max(
+				substitution.max(), gap.min()));
+		return smithWatermanGotoh(a, b) / maxDistance;
+
 	}
 
+	private float smithWatermanGotoh(String a, String b) {
+		int n = a.length();
+		int m = b.length();
+
+		float[][] d = new float[n][m];
+
+		float max = d[0][0] = max(0, substitution.compare(a, 0, b, 0));
+
+		for (int i = 0; i < n; i++) {
+
+			float maxGapCost = 0;
+
+			for (int k = max(1, i - windowSize); k < i; k++) {
+				maxGapCost = max(maxGapCost, d[i - k][0] + gap.value(i - k, i));
+			}
+
+			d[i][0] = max3(0, maxGapCost, substitution.compare(a, i, b, 0));
+
+			max = max(max, d[i][0]);
+
+		}
+
+		for (int j = 1; j < m; j++) {
+			float maxGapCost = 0;
+			for (int k = max(1, j - windowSize); k < j; k++) {
+				maxGapCost = max(maxGapCost, d[0][j - k] + gap.value(j - k, j));
+			}
+
+			d[0][j] = max3(0, maxGapCost, substitution.compare(a, 0, b, j));
+
+			max = max(max, d[0][j]);
+
+		}
+
+		for (int i = 1; i < n; i++) {
+
+			for (int j = 1; j < m; j++) {
+
+				float maxGapCostI = 0;
+				float maxGapCostJ = 0;
+				for (int k = max(1, i - windowSize); k < i; k++) {
+					maxGapCostI = max(maxGapCostI,
+							d[i - k][j] + gap.value(i - k, i));
+				}
+				for (int k = max(1, j - windowSize); k < j; k++) {
+					maxGapCostJ = max(maxGapCostJ,
+							d[i][j - k] + gap.value(j - k, j));
+				}
+
+				d[i][j] = max4(0, maxGapCostI, maxGapCostJ, d[i - 1][j - 1]
+						+ substitution.compare(a, i, b, j));
+
+				max = max(max, d[i][j]);
+			}
+
+		}
+
+		return max;
+	}
+
+
+	@Override
+	public String toString() {
+		return "SmithWatermanGotoh [gap=" + gap + ", substitution="
+				+ substitution + ", windowSize=" + windowSize + "]";
+	}
+	
+	
 }

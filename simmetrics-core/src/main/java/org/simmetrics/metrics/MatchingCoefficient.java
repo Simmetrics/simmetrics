@@ -27,7 +27,6 @@ import java.util.List;
 
 import org.simmetrics.ListMetric;
 
-import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 
 /**

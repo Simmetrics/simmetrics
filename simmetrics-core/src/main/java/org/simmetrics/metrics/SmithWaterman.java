@@ -23,175 +23,94 @@
 package org.simmetrics.metrics;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.costfunctions.SubCost1_Minus2;
+import org.simmetrics.metrics.costfunctions.MatchMismatch;
 import org.simmetrics.metrics.costfunctions.SubstitutionCost;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 import static org.simmetrics.utils.Math.max3;
 import static org.simmetrics.utils.Math.max4;
 
-/**
- * Implements the Smith-Waterman edit distance function.
- * 
- *
- * 
- * @author Sam Chapman
- * @version 1.1
- */
 public class SmithWaterman implements StringMetric {
 
-	private SubstitutionCost costFunction;
+	private static final SubstitutionCost MATCH_1_MISMATCH_MINUS_2 = new MatchMismatch(
+			1.0f, -2.0f);
+
+	private final float gapCost;
+
+	private SubstitutionCost substitutionCost;
+
+	public SmithWaterman() {
+		this(0.5f, MATCH_1_MISMATCH_MINUS_2);
+	}
+
+	public SmithWaterman(final float gapCost,
+			final SubstitutionCost substitutionCost) {
+		this.gapCost = gapCost;
+		this.substitutionCost = substitutionCost;
+	}
+
+	@Override
+	public float compare(final String a, final String b) {
+
+		if (a.isEmpty() && b.isEmpty()) {
+			return 1.0f;
+		}
+
+		if (a.isEmpty() || b.isEmpty()) {
+			return 0.0f;
+		}
+
+		float maxDistance = (min(a.length(), b.length()) * max(
+				substitutionCost.getMaxCost(), -gapCost));
+		return smithWatermanDistance(a, b) / maxDistance;
+	}
+
+	private float smithWatermanDistance(final String s, final String t) {
+		if (s.isEmpty()) {
+			return t.length();
+		}
+		if (t.isEmpty()) {
+			return s.length();
+		}
+
+		// Use locals for speed
+		final int n = s.length();
+		final int m = t.length();
+		final float gapCost = -this.gapCost;
+		final SubstitutionCost sc = this.substitutionCost;
+		final float[][] d = new float[n][m];
+
+		// Initialize corner
+		d[0][0] = max3(0, gapCost, sc.getCost(s, 0, t, 0));
+		float max = d[0][0];
+
+		// Initialize edges
+		for (int i = 1; i < n; i++) {
+			d[i][0] = max3(0, d[i - 1][0] + gapCost, sc.getCost(s, i, t, 0));
+			max = max(max, d[i][0]);
+		}
+		for (int j = 1; j < m; j++) {
+			d[0][j] = max3(0, d[0][j - 1] + gapCost, sc.getCost(s, 0, t, j));
+			max = max(max, d[0][j]);
+		}
+
+		// Find max
+		for (int i = 1; i < n; i++) {
+			for (int j = 1; j < m; j++) {
+				d[i][j] = max4(0, d[i - 1][j] + gapCost, d[i][j - 1] + gapCost,
+						d[i - 1][j - 1] + sc.getCost(s, i, t, j));
+
+				max = max(max, d[i][j]);
+			}
+		}
+
+		return max;
+	}
 
 	@Override
 	public String toString() {
-		return "SmithWaterman [costFunction=" + costFunction + ", gapCost="
+		return "SmithWaterman [costFunction=" + substitutionCost + ", gapCost="
 				+ gapCost + "]";
-	}
-
-	private float gapCost;
-
-	/**
-	 * constructor - default (empty).
-	 */
-	public SmithWaterman() {
-		// set the gapCost to a default value
-		gapCost = 0.5f;
-		// set the default cost func
-		costFunction = new SubCost1_Minus2();
-	}
-
-	/**
-	 * constructor.
-	 *
-	 * @param costG
-	 *            - the cost of a gap
-	 */
-	public SmithWaterman(final float costG) {
-		// set the gapCost to a given value
-		gapCost = costG;
-		// set the cost func to a default function
-		costFunction = new SubCost1_Minus2();
-	}
-
-	/**
-	 * constructor.
-	 *
-	 * @param costG
-	 *            - the cost of a gap
-	 * @param costFunc
-	 *            - the cost function to use
-	 */
-	public SmithWaterman(final float costG, final SubstitutionCost costFunc) {
-		// set the gapCost to the given value
-		gapCost = costG;
-		// set the cost func
-		costFunction = costFunc;
-	}
-
-	/**
-	 * constructor.
-	 *
-	 * @param costFunc
-	 *            - the cost function to use
-	 */
-	public SmithWaterman(final SubstitutionCost costFunc) {
-		// set the gapCost to a default value
-		gapCost = 0.5f;
-		// set the cost func
-		costFunction = costFunc;
-	}
-
-	@Override
-	public float compare(final String string1, final String string2) {
-		final float smithWaterman = getUnNormalisedSimilarity(string1, string2);
-
-		// normalise into zero to one region from min max possible
-		float maxValue = Math.min(string1.length(), string2.length());
-		if (costFunction.getMaxCost() > -gapCost) {
-			maxValue *= costFunction.getMaxCost();
-		} else {
-			maxValue *= -gapCost;
-		}
-
-		// check for 0 maxLen
-		if (maxValue == 0) {
-			return 1.0f; // as both strings identically zero length
-		} else {
-			// return actual / possible NeedlemanWunch distance to get 0-1 range
-			return (smithWaterman / maxValue);
-		}
-	}
-
-	private float getUnNormalisedSimilarity(final String s, final String t) {
-		final float[][] d; // matrix
-		final int n; // length of s
-		final int m; // length of t
-		int i; // iterates through s
-		int j; // iterates through t
-		float cost; // cost
-
-		// check for zero length input
-		n = s.length();
-		m = t.length();
-		if (n == 0) {
-			return m;
-		}
-		if (m == 0) {
-			return n;
-		}
-
-		// create matrix (n)x(m)
-		d = new float[n][m];
-
-		// process first row and column first as no need to consider previous
-		// rows/columns
-		float maxSoFar = 0.0f;
-		for (i = 0; i < n; i++) {
-			// get the substution cost
-			cost = costFunction.getCost(s, i, t, 0);
-
-			if (i == 0) {
-				d[0][0] = max3(0, -gapCost, cost);
-			} else {
-				d[i][0] = max3(0, d[i - 1][0] - gapCost, cost);
-			}
-			// update max possible if available
-			if (d[i][0] > maxSoFar) {
-				maxSoFar = d[i][0];
-			}
-		}
-		for (j = 0; j < m; j++) {
-			// get the substution cost
-			cost = costFunction.getCost(s, 0, t, j);
-
-			if (j == 0) {
-				d[0][0] = max3(0, -gapCost, cost);
-			} else {
-				d[0][j] = max3(0, d[0][j - 1] - gapCost, cost);
-			}
-			// update max possible if available
-			if (d[0][j] > maxSoFar) {
-				maxSoFar = d[0][j];
-			}
-		}
-
-		// cycle through rest of table filling values from the lowest cost value
-		// of the three part cost function
-		for (i = 1; i < n; i++) {
-			for (j = 1; j < m; j++) {
-				// get the substution cost
-				cost = costFunction.getCost(s, i, t, j);
-
-				// find lowest cost at point from three possible
-				d[i][j] = max4(0, d[i - 1][j] - gapCost, d[i][j - 1] - gapCost,
-						d[i - 1][j - 1] + cost);
-				// update max possible if available
-				if (d[i][j] > maxSoFar) {
-					maxSoFar = d[i][j];
-				}
-			}
-		}
-
-		// return max value within matrix as holds the maximum edit score
-		return maxSoFar;
 	}
 }

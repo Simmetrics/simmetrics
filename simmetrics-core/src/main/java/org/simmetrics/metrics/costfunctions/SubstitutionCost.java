@@ -21,30 +21,12 @@
 
 package org.simmetrics.metrics.costfunctions;
 
-/**
- * SubstitutionCost is an interface for a cost function <code>d(i,j)</code>.
- * 
- * @author Sam Chapman
- * @version 1.1
- */
+
 public interface SubstitutionCost {
 
-	/**
-	 * Get cost between characters.
-	 *
-	 * @param str1
-	 *            - the string1 to evaluate the cost
-	 * @param string1Index
-	 *            - the index within the string1 to test
-	 * @param str2
-	 *            - the string2 to evaluate the cost
-	 * @param string2Index
-	 *            - the index within the string2 to test
-	 *
-	 * @return the cost of a given substitution <code>d(i,j)</code>
-	 */
-	public float getCost(String str1, int string1Index, String str2,
-			int string2Index);
+
+	public float getCost(String a, int aIndex, String b,
+			int bIndex);
 
 	/**
 	 * Returns the maximum possible cost.

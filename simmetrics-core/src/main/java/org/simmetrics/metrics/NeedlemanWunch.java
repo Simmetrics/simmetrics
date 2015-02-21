@@ -22,7 +22,7 @@
 package org.simmetrics.metrics;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.costfunctions.SubCost01;
+import org.simmetrics.metrics.costfunctions.MatchMismatch;
 import org.simmetrics.metrics.costfunctions.SubstitutionCost;
 
 import static org.simmetrics.utils.Math.min3;
@@ -38,50 +38,21 @@ import static org.simmetrics.utils.Math.min3;
  */
 public class NeedlemanWunch implements StringMetric {
 
+	private static final SubstitutionCost MATCH_0_MISMATCH_1 = new MatchMismatch(0.0f,1.0f);
+
 	private final SubstitutionCost costFunction;
 
 	private final float gapCost;
 
-	/**
-	 * Constructs a NeedlemanWunch metric with a gap cost of 2.0 and a
-	 * substitution cost of 1.0.
-	 *
-	 */
 	public NeedlemanWunch() {
-		this(2.0f, new SubCost01());
+		this(2.0f, MATCH_0_MISMATCH_1);
 	}
 
-	/**
-	 * constructor.
-	 *
-	 * @param costG
-	 *            - the cost of a gap
-	 */
-	public NeedlemanWunch(final float costG) {
-		this(costG, new SubCost01());
-	}
-
-	/**
-	 * constructor.
-	 *
-	 * @param costG
-	 *            - the cost of a gap
-	 * @param costFunc
-	 *            - the cost function to use
-	 */
 	public NeedlemanWunch(final float costG, final SubstitutionCost costFunc) {
-		// set the gapCost to the given value
 		this.gapCost = costG;
-		// set the cost func
 		this.costFunction = costFunc;
 	}
 
-	/**
-	 * constructor.
-	 *
-	 * @param costFunc
-	 *            - the cost function to use
-	 */
 	public NeedlemanWunch(final SubstitutionCost costFunc) {
 		this(2.0f, costFunc);
 	}

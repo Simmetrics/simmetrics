@@ -33,7 +33,7 @@ import org.simmetrics.ListMetric;
  * Implements the Monge Elkan algorithm providing an matching style similarity
  * measure between two strings.
  * <p>
- * <code>similarity(a,b) = sum( for s in a | max( for q in b | metric(s,q))</code>
+ * <code>similarity(a,b) = average( for s in a | max( for q in b | metric(s,q)) </code>
  * </p>
  * Implementation note: Because the matches of a in b are not symmetric with the
  * matches of b in a and because the whole operation is not symmetric when a and
@@ -43,7 +43,6 @@ import org.simmetrics.ListMetric;
  * <code>normalized_similarity(a,b) = sqrt(similarity(a,b) * similarity(b,a))</code>
  * </p>
  * 
- * @author Sam Chapman
  * @author M.P. Korstanje
  */
 public class MongeElkan implements ListMetric<String> {
@@ -71,23 +70,23 @@ public class MongeElkan implements ListMetric<String> {
 			return 0.0f;
 		}
 
-		float sumMatchesAB = sumMatches(a, b);
-		float sumMatchesBA = sumMatches(b, a);
-
-		return (float) sqrt(sumMatchesAB * sumMatchesBA);
+		// calculates normalized_similarity(a,b)
+		return (float) sqrt(similarity(a, b) * similarity(b, a));
 	}
 
-	private float sumMatches(List<String> a, List<String> b) {
-		float sumMatches = 0.0f;
+	private float similarity(List<String> a, List<String> b) {
+		// calculates average( for s in a | max( for q in b | metric(s,q))
 
-		for (String aToken : a) {
-			float maxFound = 0.0f;
-			for (String bToken : b) {
-				maxFound = max(maxFound, metric.compare(aToken, bToken));
+		float sum = 0.0f;
+
+		for (String s : a) {
+			float max = 0.0f;
+			for (String q : b) {
+				max = max(max, metric.compare(s, q));
 			}
-			sumMatches += maxFound;
+			sum += max;
 		}
-		return sumMatches / a.size();
+		return sum / a.size();
 	}
 
 	@Override

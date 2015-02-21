@@ -26,6 +26,8 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.costfunctions.MatchMismatch;
 import org.simmetrics.metrics.costfunctions.Substitution;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static org.simmetrics.utils.Math.max3;
@@ -44,6 +46,8 @@ public class SmithWaterman implements StringMetric {
 	}
 
 	public SmithWaterman(float gapValue, Substitution substitution) {
+		checkArgument(gapValue <= 0.0f);
+		checkNotNull(substitution);
 		this.gapValue = gapValue;
 		this.substitution = substitution;
 	}
@@ -59,8 +63,8 @@ public class SmithWaterman implements StringMetric {
 			return 0.0f;
 		}
 
-		float maxDistance = (min(a.length(), b.length()) 
-								* max(substitution.max(), gapValue));
+		float maxDistance = min(a.length(), b.length()) 
+								* max(substitution.max(), gapValue);
 		return smithWaterman(a, b) / maxDistance;
 	}
 

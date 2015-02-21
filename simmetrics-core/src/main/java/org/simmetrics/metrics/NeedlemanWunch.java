@@ -27,6 +27,10 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.costfunctions.MatchMismatch;
 import org.simmetrics.metrics.costfunctions.Substitution;
 
+import com.google.common.base.Preconditions;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static org.simmetrics.utils.Math.min3;
@@ -45,7 +49,9 @@ public class NeedlemanWunch implements StringMetric {
 		this(-2.0f, MATCH_0_MISMATCH_1);
 	}
 
-	public NeedlemanWunch(final float gapValue, final Substitution substitution) {
+	public NeedlemanWunch(float gapValue, Substitution substitution) {
+		checkArgument(gapValue <= 0.0f);
+		checkNotNull(substitution);
 		this.gapValue = gapValue;
 		this.substitution = substitution;
 	}
@@ -71,8 +77,9 @@ public class NeedlemanWunch implements StringMetric {
 
 	private float needlemanWunch(final String s, final String t) {
 
-		if (Objects.equals(s, t))
+		if (Objects.equals(s, t)){
 			return 0;
+		}
 		if (s.isEmpty()) {
 			return t.length();
 		}
@@ -81,7 +88,7 @@ public class NeedlemanWunch implements StringMetric {
 		}
 
 		final int m = s.length() + 1;
-		final int n = s.length() +1;
+		final int n = t.length() +1;
 		final float[][] d = new float[m][n];
 
 		for (int i = 1; i < m; i++) {

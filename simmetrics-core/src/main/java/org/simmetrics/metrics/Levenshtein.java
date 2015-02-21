@@ -54,17 +54,15 @@ public class Levenshtein implements StringMetric {
 		return 1.0f - (levenstein(a, b) / max(a.length(), b.length()));
 	}
 
-	private float levenstein(final String s, final String t) {
+	private static float levenstein(final String s, final String t) {
 
-		// degenerate cases
 		if (Objects.equals(s, t))
 			return 0;
-		if (s.length() == 0)
+		if (s.isEmpty())
 			return t.length();
-		if (t.length() == 0)
+		if (t.isEmpty())
 			return s.length();
 
-		// create two work vectors of integer distances
 		final float[] v0 = new float[t.length() + 1];
 		final float[] v1 = new float[t.length() + 1];
 
@@ -76,13 +74,11 @@ public class Levenshtein implements StringMetric {
 		}
 
 		for (int i = 0; i < s.length(); i++) {
-			// calculate v1 (current row distances) from the previous row v0
 
 			// first element of v1 is A[i+1][0]
 			// edit distance is delete (i+1) chars from s to match empty t
 			v1[0] = i + 1;
 
-			// use formula to fill in the rest of the row
 			for (int j = 0; j < t.length(); j++) {
 				v1[j + 1] = min3(
 						v1[j    ] + 1,
@@ -90,9 +86,9 @@ public class Levenshtein implements StringMetric {
 						v0[j    ] + (s.charAt(i) == t.charAt(j) ? 0.0f : 1.0f));
 			}
 			
-			// copy v1 (current row) to v0 (previous row) for next iteration
-			for (int j = 0; j < v0.length; j++)
+			for (int j = 0; j < v0.length; j++){
 				v0[j] = v1[j];
+			}
 		}
 		
 		return v1[t.length()];

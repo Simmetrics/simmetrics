@@ -24,12 +24,26 @@ package org.simmetrics.metrics.costfunctions;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-import com.google.common.base.Preconditions;
-
+/**
+ * A gap function that takes into account the length the gap. Assigns a penalty
+ * that is linear in the length of the gap.
+ * 
+ * @author mpkorstanje
+ *
+ * @see <a href="https://en.wikipedia.org/wiki/Gap_penalty">Wikipedia - Gap
+ *      Penalty</a>
+ */
 public final class LinearGap implements Gap {
 
 	private final float gapValue;
 
+	/**
+	 * Constructs a linear gap function that scales the length of a gap with
+	 * <code>gapValue</code>.
+	 * 
+	 * @param gapValue
+	 *            a constant gap value
+	 */
 	public LinearGap(float gapValue) {
 		checkArgument(gapValue <= 0.0f);
 
@@ -56,7 +70,5 @@ public final class LinearGap implements Gap {
 	public String toString() {
 		return "LinearGap [gapValue=" + gapValue + "]";
 	}
-
-
 
 }

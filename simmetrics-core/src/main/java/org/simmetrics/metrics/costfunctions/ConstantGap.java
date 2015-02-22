@@ -24,12 +24,24 @@ package org.simmetrics.metrics.costfunctions;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-import com.google.common.base.Preconditions;
-
+/**
+ * A gap function that assigns a constant penalty to a gap regardless of size.
+ * 
+ * @author mpkorstanje
+ * @see <a href="https://en.wikipedia.org/wiki/Gap_penalty">Wikipedia - Gap
+ *      Penalty</a>
+ */
 public final class ConstantGap implements Gap {
 
 	private final float gapValue;
 
+	/**
+	 * Constructs a constant gap function that assigns a penalty of
+	 * <code>gapValue</code> to a gap. .
+	 * 
+	 * @param gapValue
+	 *            a non-positive constant gap value
+	 */
 	public ConstantGap(float gapValue) {
 		checkArgument(gapValue <= 0.0f);
 

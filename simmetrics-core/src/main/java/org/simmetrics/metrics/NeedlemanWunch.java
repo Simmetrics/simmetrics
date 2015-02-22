@@ -33,7 +33,19 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.costfunctions.MatchMismatch;
 import org.simmetrics.metrics.costfunctions.Substitution;
 
-
+/**
+ * Needleman-Wunsch algorithm providing a similarity measure between two
+ * strings.
+ * <p>
+ * Implementation uses linear space.
+ * 
+ * @author mpkorstanje
+ * @see SmithWatermanGotoh
+ * @see SmithWaterman
+ * @see <a
+ *      href="https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm">Wikipedia
+ *      - Needleman-Wunsch algorithm</a>
+ */
 public class NeedlemanWunch implements StringMetric {
 
 	private static final Substitution MATCH_0_MISMATCH_1 = new MatchMismatch(
@@ -56,7 +68,7 @@ public class NeedlemanWunch implements StringMetric {
 
 	@Override
 	public float compare(String a, String b) {
-		
+
 		if (a.isEmpty() && b.isEmpty()) {
 			return 1.0f;
 		}
@@ -67,7 +79,8 @@ public class NeedlemanWunch implements StringMetric {
 
 		float maxDistance = max(a.length(), b.length())
 				* max(substitution.max(), gapValue);
-		float minDistance = max(a.length(), b.length()) * min(substitution.min(), gapValue);
+		float minDistance = max(a.length(), b.length())
+				* min(substitution.min(), gapValue);
 
 		return ((-needlemanWunch(a, b) - minDistance) / (maxDistance - minDistance));
 
@@ -75,7 +88,7 @@ public class NeedlemanWunch implements StringMetric {
 
 	private float needlemanWunch(final String s, final String t) {
 
-		if (Objects.equals(s, t)){
+		if (Objects.equals(s, t)) {
 			return 0;
 		}
 		if (s.isEmpty()) {
@@ -84,31 +97,28 @@ public class NeedlemanWunch implements StringMetric {
 		if (t.isEmpty()) {
 			return s.length();
 		}
-		
-		final float[] v0 = new float[t.length() +1];
-		final float[] v1 = new float[t.length() +1];
-		
+
+		final float[] v0 = new float[t.length() + 1];
+		final float[] v1 = new float[t.length() + 1];
+
 		for (int j = 0; j < v0.length; j++) {
 			v0[j] = j;
 		}
 
 		for (int i = 1; i < s.length() + 1; i++) {
 			v1[0] = i;
-			
+
 			for (int j = 1; j < v0.length; j++) {
-				v1[j] = min3(
-						v0[j    ] - gapValue,
-						v1[j - 1] - gapValue,
-						v0[j - 1]
-								- substitution.compare(s, i - 1, t, j - 1));
+				v1[j] = min3(v0[j] - gapValue, v1[j - 1] - gapValue, v0[j - 1]
+						- substitution.compare(s, i - 1, t, j - 1));
 			}
-			
-			for (int j = 0; j < v0.length; j++){
+
+			for (int j = 0; j < v0.length; j++) {
 				v0[j] = v1[j];
 			}
 		}
 
-		return v1[v1.length -1];
+		return v1[v1.length - 1];
 	}
 
 	@Override

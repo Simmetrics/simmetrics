@@ -27,8 +27,6 @@ import static java.lang.Math.min;
 
 import org.simmetrics.StringMetric;
 
-import com.google.common.base.Preconditions;
-
 /**
  * Jaro-Winkler algorithm providing a similarity measure between two strings.
  * <p>

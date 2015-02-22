@@ -21,12 +21,19 @@
  */
 package org.simmetrics.metrics;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Strings.commonPrefix;
 import static java.lang.Math.min;
 
 import org.simmetrics.StringMetric;
 
+import com.google.common.base.Preconditions;
+
 /**
+ * Jaro-Winkler algorithm providing a similarity measure between two strings.
+ * <p>
+ * Can be configured with a prefix adjustment scale, max prefix length and boost
+ * threshold.
  * 
  * 
  * @see <a
@@ -41,23 +48,41 @@ public class JaroWinkler implements StringMetric {
 
 	private final Jaro jaro = new Jaro();
 
-	private static final float PREFIX_ADJUSTMENT_SCALE = 0.1f;
+	private static final float PREFIX_SCALE = 0.1f;
 	private static final float BOOST_THRESHOLD = 0;
 	private static final int MAX_PREFIX_LENGTH = 4;
 
 	private final float boostThreshold;
-	private final float prefixAdjustmentScale;
+	private final float prefixScale;
 	private final int maxPrefixLength;
 
+	/**
+	 * Constructs a new JaroWinkler metric.
+	 */
 	public JaroWinkler() {
-		this(BOOST_THRESHOLD, PREFIX_ADJUSTMENT_SCALE, MAX_PREFIX_LENGTH);
+		this(BOOST_THRESHOLD, PREFIX_SCALE, MAX_PREFIX_LENGTH);
 	}
 
-	public JaroWinkler(float boostThreshold, float prefixAdjustmentScale,
+	/**
+	 * Constructs a new JaroWinkler metric.
+	 * 
+	 * 
+	 * @param boostThreshold
+	 *            minimum jaro score for which the score is boosted
+	 * @param prefixScale
+	 *            scale at which a common prefix adds a bonus
+	 * @param maxPrefixLength
+	 *            cutoff at which a longer common prefix does not improve the
+	 *            score
+	 */
+	public JaroWinkler(float boostThreshold, float prefixScale,
 			int maxPrefixLength) {
-		super();
+		checkArgument(boostThreshold >= 0);
+		checkArgument(0 <= prefixScale && prefixScale <= 1);
+		checkArgument(maxPrefixLength >= 0);
+
 		this.boostThreshold = boostThreshold;
-		this.prefixAdjustmentScale = prefixAdjustmentScale;
+		this.prefixScale = prefixScale;
 		this.maxPrefixLength = maxPrefixLength;
 	}
 
@@ -71,12 +96,14 @@ public class JaroWinkler implements StringMetric {
 
 		int prefixLength = min(commonPrefix(a, b).length(), maxPrefixLength);
 
-		return jaroScore
-				+ (prefixLength * prefixAdjustmentScale * (1.0f - jaroScore));
+		return jaroScore + (prefixLength * prefixScale * (1.0f - jaroScore));
 	}
 
 	@Override
 	public String toString() {
-		return "JaroWinkler";
+		return "JaroWinkler [boostThreshold=" + boostThreshold
+				+ ", prefixScale=" + prefixScale + ", maxPrefixLength="
+				+ maxPrefixLength + "]";
 	}
+
 }

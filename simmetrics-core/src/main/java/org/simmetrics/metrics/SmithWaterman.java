@@ -76,37 +76,40 @@ public class SmithWaterman implements StringMetric {
 			return s.length();
 		}
 
-		final float[][] d = new float[s.length()][t.length()];
+		float[] v0 = new float[t.length()];
+		float[] v1 = new float[t.length()];
 
-		// Initialize corner
-		float max = d[0][0] = max3(0, gapValue, substitution.compare(s, 0, t, 0));
 		
-		// Initialize edges
-		for (int i = 1; i < s.length(); i++) {
-			d[i][0] = max3(	0,
-							d[i - 1][0] + gapValue,
-							substitution.compare(s, i, t, 0));
-			
-			max = max(max, d[i][0]);
-		}
+		float max = v0[0] = max3(0, gapValue, substitution.compare(s, 0, t, 0));
+
 		
-		for (int j = 1; j < t.length(); j++) {
-			d[0][j] = max3(	0, 
-							d[0][j - 1] + gapValue, 
+		for (int j = 1; j < v0.length; j++) {
+			v0[j] = max3(	0, 
+							v0[j - 1] + gapValue, 
 							substitution.compare(s, 0, t, j));
 			
-			max = max(max, d[0][j]);
+			max = max(max, v0[j]);
 		}
 
 		// Find max
 		for (int i = 1; i < s.length(); i++) {
-			for (int j = 1; j < t.length(); j++) {
-				d[i][j] = max4(	0, 
-								d[i - 1][j] + gapValue,
-								d[i][j - 1] + gapValue,
-								d[i - 1][j - 1] + substitution.compare(s, i, t, j));
+			v1[0] = max3(	0,
+							v0[0] + gapValue,
+							substitution.compare(s, i, t, 0));
+			
+			max = max(max, v1[0]);
+			
+			for (int j = 1; j < v0.length; j++) {
+				v1[j] = max4(	0, 
+								v0[j] + gapValue,
+								v1[j - 1] + gapValue,
+								v0[j - 1] + substitution.compare(s, i, t, j));
 
-				max = max(max, d[i][j]);
+				max = max(max, v1[j]);
+			}
+			
+			for (int j = 0; j < v0.length; j++){
+				v0[j] = v1[j];
 			}
 		}
 

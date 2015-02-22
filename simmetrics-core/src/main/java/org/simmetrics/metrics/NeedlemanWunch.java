@@ -84,29 +84,31 @@ public class NeedlemanWunch implements StringMetric {
 		if (t.isEmpty()) {
 			return s.length();
 		}
-
-		final int m = s.length() + 1;
-		final int n = t.length() +1;
-		final float[][] d = new float[m][n];
-
-		for (int i = 1; i < m; i++) {
-			d[i][0] = i;
-		}
-		for (int j = 1; j < n; j++) {
-			d[0][j] = j;
+		
+		final float[] v0 = new float[t.length() +1];
+		final float[] v1 = new float[t.length() +1];
+		
+		for (int j = 0; j < v0.length; j++) {
+			v0[j] = j;
 		}
 
-		for (int i = 1; i < m; i++) {
-			for (int j = 1; j < n; j++) {
-				d[i][j] = min3(
-						d[i - 1][j    ] - gapValue,
-						d[i    ][j - 1] - gapValue,
-						d[i - 1][j - 1]
+		for (int i = 1; i < s.length() + 1; i++) {
+			v1[0] = i;
+			
+			for (int j = 1; j < v0.length; j++) {
+				v1[j] = min3(
+						v0[j    ] - gapValue,
+						v1[j - 1] - gapValue,
+						v0[j - 1]
 								- substitution.compare(s, i - 1, t, j - 1));
+			}
+			
+			for (int j = 0; j < v0.length; j++){
+				v0[j] = v1[j];
 			}
 		}
 
-		return d[m - 1][n - 1];
+		return v1[v1.length -1];
 	}
 
 	@Override

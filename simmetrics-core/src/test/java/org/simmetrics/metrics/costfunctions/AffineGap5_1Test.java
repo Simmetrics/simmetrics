@@ -24,7 +24,7 @@ import org.simmetrics.metrics.costfunctions.AffineGap;
 import org.simmetrics.metrics.costfunctions.Gap;
 
 
-public class AffineGap5_1Test extends AffineGapCostTest {
+public class AffineGap5_1Test extends GapCostTest {
 
 	@Override
 	public Gap getCost() {

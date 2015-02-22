@@ -22,103 +22,118 @@
 
 package org.simmetrics.metrics;
 
+import org.simmetrics.StringMetric;
+import org.simmetrics.metrics.costfunctions.MatchMismatch;
+import org.simmetrics.metrics.costfunctions.Substitution;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static org.simmetrics.utils.Math.max3;
 import static org.simmetrics.utils.Math.max4;
 
-import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.costfunctions.AffineGap;
-import org.simmetrics.metrics.costfunctions.Gap;
-import org.simmetrics.metrics.costfunctions.MatchMismatch;
-import org.simmetrics.metrics.costfunctions.Substitution;
-
+/**
+ * Smith-Waterman algorithm providing a similarity measure between two strings.
+ * <p>
+ * Implementation uses Osamu Gotoh (1982).
+ * "An improved algorithm for matching biological sequences". Journal of
+ * molecular biology 162: 705". This implementation uses constant space and
+ * quadratic time.
+ * 
+ * @author mpkorstanje
+ * @see NeedlemanWunch
+ * @see SmithWaterman
+ * @see <a
+ *      href="https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm">Wikipedia
+ *      - Smith-Waterman algorithm</a>
+ *
+ */
 public class SmithWatermanGotoh implements StringMetric {
 
-	private final Gap gap;
-	private final Substitution substitution;
-	private final int windowSize;
+	private static final Substitution MATCH_1_MISMATCH_MINUS_2 = new MatchMismatch(
+			1.0f, -2.0f);
 
+	private final float gapValue;
+
+	private Substitution substitution;
+
+	/**
+	 * Constructs a new Smith Waterman metric. Gap penalty is -0.5, mismatch
+	 * penalty -2.0 and a matching score 1.0.
+	 * 
+	 */
 	public SmithWatermanGotoh() {
-		this(new AffineGap(-5.0f, -1.0f), new MatchMismatch(5.0f,-3.0f), Integer.MAX_VALUE);
+		this(-0.5f, MATCH_1_MISMATCH_MINUS_2);
 	}
 
-	public SmithWatermanGotoh(Gap gap, Substitution substitution, int windowSize) {
-		super();
-		this.gap = gap;
+	/**
+	 * Constructs a new Smith Waterman metric.
+	 * 
+	 * @param gapValue
+	 *            a non-positive gap penalty
+	 * @param substitution
+	 *            a substitution function
+	 */
+	public SmithWatermanGotoh(float gapValue, Substitution substitution) {
+		checkArgument(gapValue <= 0.0f);
+		checkNotNull(substitution);
+		this.gapValue = gapValue;
 		this.substitution = substitution;
-		this.windowSize = windowSize;
 	}
 
 	@Override
-	public float compare(String a, String b) {
+	public float compare(final String a, final String b) {
 
 		if (a.isEmpty() && b.isEmpty()) {
 			return 1.0f;
 		}
+
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
-		float maxDistance = min(a.length(), b.length()) * max(substitution.max(), gap.min());
-		return smithWatermanGotoh(a, b) / maxDistance;
 
+		float maxDistance = min(a.length(), b.length())
+				* max(substitution.max(), gapValue);
+		return smithWaterman(a, b) / maxDistance;
 	}
 
-	private float smithWatermanGotoh(String a, String b) {
-		final int n = a.length();
-		final int m = b.length();
-
-		final float[][] d = new float[n][m];
-
-		float max = d[0][0] = max(0, substitution.compare(a, 0, b, 0));
-
-		for (int i = 0; i < n; i++) {
-
-			float maxGapCost = 0;
-
-			for (int k = max(1, i - windowSize); k < i; k++) {
-				maxGapCost = max(maxGapCost, d[i - k][0] + gap.value(i - k, i));
-			}
-
-			d[i][0] = max3(0, maxGapCost, substitution.compare(a, i, b, 0));
-
-			max = max(max, d[i][0]);
-
+	private float smithWaterman(final String s, final String t) {
+		if (s.isEmpty()) {
+			return t.length();
+		}
+		if (t.isEmpty()) {
+			return s.length();
 		}
 
-		for (int j = 1; j < m; j++) {
-			float maxGapCost = 0;
-			for (int k = max(1, j - windowSize); k < j; k++) {
-				maxGapCost = max(maxGapCost, d[0][j - k] + gap.value(j - k, j));
-			}
+		float[] v0 = new float[t.length()];
+		float[] v1 = new float[t.length()];
 
-			d[0][j] = max3(0, maxGapCost, substitution.compare(a, 0, b, j));
+		float max = v0[0] = max3(0, gapValue, substitution.compare(s, 0, t, 0));
 
-			max = max(max, d[0][j]);
+		for (int j = 1; j < v0.length; j++) {
+			v0[j] = max3(0, v0[j - 1] + gapValue,
+					substitution.compare(s, 0, t, j));
 
+			max = max(max, v0[j]);
 		}
 
-		for (int i = 1; i < n; i++) {
+		// Find max
+		for (int i = 1; i < s.length(); i++) {
+			v1[0] = max3(0, v0[0] + gapValue, substitution.compare(s, i, t, 0));
 
-			for (int j = 1; j < m; j++) {
+			max = max(max, v1[0]);
 
-				float maxGapCost = 0;
-				for (int k = max(1, i - windowSize); k < i; k++) {
-					maxGapCost = max(maxGapCost,
-							d[i - k][j] + gap.value(i - k, i));
-				}
+			for (int j = 1; j < v0.length; j++) {
+				v1[j] = max4(0, v0[j] + gapValue, v1[j - 1] + gapValue,
+						v0[j - 1] + substitution.compare(s, i, t, j));
 
-				for (int k = max(1, j - windowSize); k < j; k++) {
-					maxGapCost = max(maxGapCost,
-							d[i][j - k] + gap.value(j - k, j));
-				}
-
-				d[i][j] = max3(0, maxGapCost,
-						d[i - 1][j - 1] + substitution.compare(a, i, b, j));
-
-				max = max(max, d[i][j]);
+				max = max(max, v1[j]);
 			}
 
+			for (int j = 0; j < v0.length; j++) {
+				v0[j] = v1[j];
+			}
 		}
 
 		return max;
@@ -126,8 +141,7 @@ public class SmithWatermanGotoh implements StringMetric {
 
 	@Override
 	public String toString() {
-		return "SmithWatermanGotoh [gap=" + gap + ", substitution="
-				+ substitution + ", windowSize=" + windowSize + "]";
+		return "SmithWaterman [substitution=" + substitution + ", gapValue="
+				+ gapValue + "]";
 	}
-
 }

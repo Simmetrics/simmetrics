@@ -24,34 +24,31 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.simmetrics.metrics.costfunctions.Substitution;
+import org.simmetrics.metrics.costfunctions.Gap;
 
-public abstract class InterfaceSubstitutionCostTest {
+public abstract class GapCostTest {
 
 	protected static class T {
 		protected final float cost;
-		protected final String string1;
-		protected final String string2;
-		protected final int string1Index;
-		protected final int string2Index;
+		protected final String string;
+		protected final int index1;
+		protected final int index2;
 
-		public T(float cost, String string1, int string1Index, String string2,
-				int string2Index) {
-			this.string1 = string1;
-			this.string1Index = string1Index;
-			this.string2 = string2;
-			this.string2Index = string2Index;
+		public T(float cost, String string, int index1, int index2) {
+			super();
 			this.cost = cost;
+			this.string = string;
+			this.index1 = index1;
+			this.index2 = index2;
 		}
-
 	}
 
 	private static final float DEFAULT_DELTA = 0.0001f;
 	private float delta;
 
-	protected Substitution cost;
+	protected Gap cost;
 
-	public abstract Substitution getCost();
+	public abstract Gap getCost();
 
 	public abstract T[] getTests();
 
@@ -69,18 +66,16 @@ public abstract class InterfaceSubstitutionCostTest {
 	public void testGetSimilarity() {
 		for (T t : getTests()) {
 
-			float actuall = cost.compare(t.string1, t.string1Index, t.string2,
-					t.string2Index);
+			float actuall = cost.value(t.index1, t.index2);
 
-			String costMessage = "Cost must fall within [%.3f - %.3f] range";
-			costMessage = String.format(costMessage, cost.min(),
+			String costMessage = "Cost %.3f must fall within [%.3f - %.3f] range";
+			costMessage = String.format(costMessage, actuall, cost.min(),
 					cost.max());
 			assertTrue(costMessage, cost.min() <= actuall
 					&& actuall <= cost.max());
 
 			String message = String.format("\"%s\" vs \"%s\"",
-					t.string1.charAt(t.string1Index),
-					t.string2.charAt(t.string2Index));
+					t.string.charAt(t.index1), t.string.charAt(t.index2));
 			assertEquals(message, t.cost, actuall, delta);
 		}
 	}
@@ -88,11 +83,10 @@ public abstract class InterfaceSubstitutionCostTest {
 	
 	public void generateTest() {
 		for (T t : getTests()) {
-			float actuall = cost.compare(t.string1, t.string1Index, t.string2,
-					t.string2Index);
-			String message = String.format(
-					"new T(%.4ff, testString1, %s, testString2, %s),", actuall,
-					t.string1Index, t.string2Index);
+			float actuall = cost.value(t.index1, t.index2);
+
+			String message = String.format("new T(%.4ff, testString, %s, %s),",
+					actuall, t.index1, t.index2);
 			System.out.println(message);
 		}
 	}
@@ -106,7 +100,7 @@ public abstract class InterfaceSubstitutionCostTest {
 		assertToStringContains(cost, cost.getClass().getSimpleName());
 	}
 
-	protected static void assertToStringContains(Substitution metric,
+	protected static void assertToStringContains(Gap metric,
 			String content) {
 		String string = metric.toString();
 		String message = String.format("%s must contain %s ", string, content);

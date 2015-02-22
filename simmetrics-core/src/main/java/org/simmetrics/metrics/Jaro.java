@@ -35,8 +35,8 @@ import org.simmetrics.StringMetric;
  *      - Jaro-Winkler distance</a>
  * @see JaroWinkler
  * 
- * @author Sam Chapman
- * @version 1.1
+ * @author mpkorstanje
+ * 
  */
 public class Jaro implements StringMetric {
 

@@ -24,12 +24,9 @@ package org.simmetrics.metrics;
 import static java.lang.Math.max;
 import static org.simmetrics.utils.Math.min3;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.costfunctions.MatchMismatch;
-import org.simmetrics.metrics.costfunctions.Substitution;
 
 /**
  * Levenshtein algorithm providing a similarity measure between two strings.

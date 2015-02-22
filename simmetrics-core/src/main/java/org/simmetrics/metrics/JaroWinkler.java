@@ -22,12 +22,9 @@
 package org.simmetrics.metrics;
 
 import static com.google.common.base.Strings.commonPrefix;
-import static java.lang.Math.max;
-import static org.simmetrics.utils.Math.min3;
+import static java.lang.Math.min;
 
 import org.simmetrics.StringMetric;
-
-import com.google.common.base.Strings;
 
 /**
  * 
@@ -45,7 +42,7 @@ public class JaroWinkler implements StringMetric {
 	private final Jaro jaro = new Jaro();
 
 	private static final float PREFIX_ADJUSTMENT_SCALE = 0.1f;
-	private static final float BOOST_THRESHOLD = 0.7f;
+	private static final float BOOST_THRESHOLD = 0;
 	private static final int MAX_PREFIX_LENGTH = 4;
 
 	private final float boostThreshold;
@@ -72,7 +69,7 @@ public class JaroWinkler implements StringMetric {
 			return jaroScore;
 		}
 
-		int prefixLength = max(commonPrefix(a, b).length(), maxPrefixLength);
+		int prefixLength = min(commonPrefix(a, b).length(), maxPrefixLength);
 
 		return jaroScore
 				+ (prefixLength * prefixAdjustmentScale * (1.0f - jaroScore));

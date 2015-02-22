@@ -22,6 +22,13 @@
 
 package org.simmetrics.metrics.costfunctions;
 
+/**
+ * https://en.wikipedia.org/wiki/Gap_penalty
+ * 
+ * 
+ * @author mpkorstanje
+ *
+ */
 public interface Gap {
 
 	public float value(int startIndex,int endIndex);

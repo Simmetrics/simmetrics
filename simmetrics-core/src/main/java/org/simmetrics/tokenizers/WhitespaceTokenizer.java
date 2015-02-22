@@ -31,8 +31,7 @@ import java.util.regex.Pattern;
 /**
  * Tokenizes a string by white space.
  * 
- * @author Sam Chapman
- * @version 1.1
+ * @author mpkorstanje
  */
 public final class WhitespaceTokenizer extends AbstractTokenizer {
 
@@ -45,10 +44,10 @@ public final class WhitespaceTokenizer extends AbstractTokenizer {
 
 	@Override
 	public List<String> tokenizeToList(final String input) {
-		if(input.isEmpty()){
+		if (input.isEmpty()) {
 			return new ArrayList<>();
 		}
-		
+
 		return asList(pattern.split(input));
 	}
 

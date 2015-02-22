@@ -40,8 +40,7 @@ import org.simmetrics.SetMetric;
  * @see <a href="http://en.wikipedia.org/wiki/Jaccard_index">Wikipedia - Jaccard
  *      index</a>
  * 
- * @author Sam Chapman
- * 
+ * @author mpkorstanje * 
  * @param <T>
  *            type of the token
  * 

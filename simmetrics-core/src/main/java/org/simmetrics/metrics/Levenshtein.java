@@ -21,113 +21,78 @@
  */
 package org.simmetrics.metrics;
 
+import static java.lang.Math.max;
+import static org.simmetrics.utils.Math.min3;
+
+import java.util.Objects;
+
 import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.costfunctions.SubCost01;
-import org.simmetrics.metrics.costfunctions.SubstitutionCost;
-import org.simmetrics.utils.Math;
 
 /**
- * Implements the basic Levenshtein algorithm providing a similarity measure
- * between two strings.
+ * Levenshtein algorithm providing a similarity measure between two strings.
  * 
  * @see <a href=" http://en.wikipedia.org/wiki/Levenshtein_distance">Wikipedia -
  *      Levenshtein distance</a>
  * 
- * @author Sam Chapman
- * @version 1.1
+ * @author mpkorstanje
  */
 public class Levenshtein implements StringMetric {
 
-	private final SubstitutionCost costFunction = new SubCost01();
-
 	@Override
-	public float compare(final String string1, final String string2) {
-		final float levensteinDistance = getUnNormalisedSimilarity(string1,
-				string2);
-		// convert into zero to one return
-
-		// get the max possible levenstein distance score for string
-		float maxLen = string1.length();
-		if (maxLen < string2.length()) {
-			maxLen = string2.length();
+	public float compare(final String a, final String b) {
+		if (a.isEmpty() && b.isEmpty()) {
+			return 1.0f;
 		}
 
-		// check for 0 maxLen
-		if (maxLen == 0) {
-			return 1.0f; // as both strings identically zero length
-		} else {
-			// return actual / possible levenstein distance to get 0-1 range
-			return 1.0f - (levensteinDistance / maxLen);
+		if (a.isEmpty() || b.isEmpty()) {
+			return 0.0f;
 		}
 
+		return 1.0f - (levenstein(a, b) / max(a.length(), b.length()));
 	}
 
-	private float getUnNormalisedSimilarity(final String s, final String t) {
+	private static float levenstein(final String s, final String t) {
 
-		/*
-		 * The levenstein distance function:
-		 * 
-		 * * Copy character from string1 over to string2 (cost 0)
-		 * 
-		 * * Delete a character in string1 (cost 1)
-		 * 
-		 * * Insert a character in string2 (cost 1)
-		 * 
-		 * * Substitute one character for another (cost 1)
-		 * 
-		 * D(i-1,j-1) + d(si,tj) //subst/copy
-		 * 
-		 * D(i,j) = min D(i-1,j)+1 //insert
-		 * 
-		 * D(i,j-1)+1 //delete
-		 * 
-		 * d(i,j) is a function whereby d(c,d)=0 if c=d, 1 else.
-		 */
-		final float[][] d; // matrix
-		final int n; // length of s
-		final int m; // length of t
-		int i; // iterates through s
-		int j; // iterates through t
-		float cost; // cost
+		if (Objects.equals(s, t))
+			return 0;
+		if (s.isEmpty())
+			return t.length();
+		if (t.isEmpty())
+			return s.length();
 
-		// Step 1
-		n = s.length();
-		m = t.length();
-		if (n == 0) {
-			return m;
-		}
-		if (m == 0) {
-			return n;
-		}
-		d = new float[n + 1][m + 1];
+		final float[] v0 = new float[t.length() + 1];
+		final float[] v1 = new float[t.length() + 1];
 
-		// Step 2
-		for (i = 0; i <= n; i++) {
-			d[i][0] = i;
-		}
-		for (j = 0; j <= m; j++) {
-			d[0][j] = j;
+		// initialize v0 (the previous row of distances)
+		// this row is A[0][i]: edit distance for an empty s
+		// the distance is just the number of characters to delete from t
+		for (int i = 0; i < v0.length; i++) {
+			v0[i] = i;
 		}
 
-		// Step 3
-		for (i = 1; i <= n; i++) {
-			// Step 4
-			for (j = 1; j <= m; j++) {
-				// Step 5
-				cost = costFunction.getCost(s, i - 1, t, j - 1);
+		for (int i = 0; i < s.length(); i++) {
 
-				// Step 6
-				d[i][j] = Math.min3(d[i - 1][j] + 1, d[i][j - 1] + 1,
-						d[i - 1][j - 1] + cost);
+			// first element of v1 is A[i+1][0]
+			// edit distance is delete (i+1) chars from s to match empty t
+			v1[0] = i + 1;
+
+			for (int j = 0; j < t.length(); j++) {
+				v1[j + 1] = min3(
+						v1[j    ] + 1,
+						v0[j + 1] + 1,
+						v0[j    ] + (s.charAt(i) == t.charAt(j) ? 0.0f : 1.0f));
+			}
+			
+			for (int j = 0; j < v0.length; j++){
+				v0[j] = v1[j];
 			}
 		}
-
-		// Step 7
-		return d[n][m];
+		
+		return v1[t.length()];
 	}
 
 	@Override
 	public String toString() {
-		return "Levenshtein [costFunction=" + costFunction + "]";
+		return "Levenshtein";
 	}
 }

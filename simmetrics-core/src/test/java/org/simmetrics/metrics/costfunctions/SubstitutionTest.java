@@ -24,9 +24,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.simmetrics.metrics.costfunctions.SubstitutionCost;
+import org.simmetrics.metrics.costfunctions.Substitution;
 
-public abstract class InterfaceSubstitutionCostTest {
+public abstract class SubstitutionTest {
 
 	protected static class T {
 		protected final float cost;
@@ -49,9 +49,9 @@ public abstract class InterfaceSubstitutionCostTest {
 	private static final float DEFAULT_DELTA = 0.0001f;
 	private float delta;
 
-	protected SubstitutionCost cost;
+	protected Substitution cost;
 
-	public abstract SubstitutionCost getCost();
+	public abstract Substitution getCost();
 
 	public abstract T[] getTests();
 
@@ -69,14 +69,14 @@ public abstract class InterfaceSubstitutionCostTest {
 	public void testGetSimilarity() {
 		for (T t : getTests()) {
 
-			float actuall = cost.getCost(t.string1, t.string1Index, t.string2,
+			float actuall = cost.compare(t.string1, t.string1Index, t.string2,
 					t.string2Index);
 
 			String costMessage = "Cost must fall within [%.3f - %.3f] range";
-			costMessage = String.format(costMessage, cost.getMinCost(),
-					cost.getMaxCost());
-			assertTrue(costMessage, cost.getMinCost() <= actuall
-					&& actuall <= cost.getMaxCost());
+			costMessage = String.format(costMessage, cost.min(),
+					cost.max());
+			assertTrue(costMessage, cost.min() <= actuall
+					&& actuall <= cost.max());
 
 			String message = String.format("\"%s\" vs \"%s\"",
 					t.string1.charAt(t.string1Index),
@@ -88,7 +88,7 @@ public abstract class InterfaceSubstitutionCostTest {
 	
 	public void generateTest() {
 		for (T t : getTests()) {
-			float actuall = cost.getCost(t.string1, t.string1Index, t.string2,
+			float actuall = cost.compare(t.string1, t.string1Index, t.string2,
 					t.string2Index);
 			String message = String.format(
 					"new T(%.4ff, testString1, %s, testString2, %s),", actuall,
@@ -106,7 +106,7 @@ public abstract class InterfaceSubstitutionCostTest {
 		assertToStringContains(cost, cost.getClass().getSimpleName());
 	}
 
-	protected static void assertToStringContains(SubstitutionCost metric,
+	protected static void assertToStringContains(Substitution metric,
 			String content) {
 		String string = metric.toString();
 		String message = String.format("%s must contain %s ", string, content);

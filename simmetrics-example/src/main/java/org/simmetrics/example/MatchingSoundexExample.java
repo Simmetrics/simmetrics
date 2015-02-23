@@ -19,43 +19,50 @@
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.simmetrics.metrics;
+package org.simmetrics.example;
 
 import static org.simmetrics.StringMetricBuilder.with;
 
 import org.simmetrics.StringMetric;
+import org.simmetrics.StringMetrics;
+import org.simmetrics.metrics.JaroWinkler;
+import org.simmetrics.metrics.MongeElkan;
 import org.simmetrics.simplifiers.SoundexSimplifier;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
-public class ChapmanMatchingSoundexTest extends StringMetricTest {
+/**
+ * SimpleExample implements a simple example to demonstrate the ease to use a
+ * similarity metric.
+ * 
+ * @author mpkorstanje
+ */
+public class MatchingSoundexExample {
 
-	@Override
-	protected StringMetric getMetric() {
-		return with(new MongeElkan(
+	/**
+	 * Runs a simple example.
+	 *
+	 * @param args
+	 *            two strings required for comparison
+	 */
+	public static void main(final String[] args) {
+
+		String str1 = "Jack Samuel Jhonson";
+		String str2 = "Jhonsonn Jack Sam";
+
+		StringMetric metric = 
+				with(new MongeElkan(
 						with(new JaroWinkler())
-						.simplify(new SoundexSimplifier()).build()))
-				.tokenize(new WhitespaceTokenizer()).build();
+						.simplify(new SoundexSimplifier())
+						.build()))
+				.tokenize(new WhitespaceTokenizer())
+				.build();
+
+		float result = metric.compare(str1, str2); // 0.9644
+
+		String message = "Using metric %s on strings \"%s\" & \"%s\" gives a similarity score of %.4f";
+		message = String.format(message, metric, str1, str2, result);
+		System.out.println(message);
+
 	}
 
-	@Override
-	protected T[] getTests() {
-		return new T[] { 
-				new T(1.0000f, "test string1", "test string2"),
-				new T(0.9667f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-				new T(0.9667f, "a b c d", "a b c e"),
-				new T(0.8667f, "Healed", "Sealed"),
-				new T(1.0000f, "Healed", "Healthy"),
-				new T(0.8800f, "Healed", "Heard"),
-				new T(0.7600f, "Healed", "Herded"),
-				new T(0.8933f, "Healed", "Help"),
-				new T(0.8667f, "Healed", "Sold"),
-				new T(0.8933f, "Healed", "Help"),
-				new T(0.9244f, "Sam J Chapman", "Samuel John Chapman"),
-				new T(0.9400f, "Sam Chapman", "S Chapman"),
-				new T(0.8870f, "John Smith", "Samuel John Chapman"),
-				new T(0.8105f, "John Smith", "Sam Chapman"),
-				new T(0.8375f, "John Smith", "Sam J Chapman"),
-				new T(0.7125f, "John Smith", "S Chapman"),
-			};
-	}
 }

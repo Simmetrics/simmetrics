@@ -31,15 +31,14 @@ import org.simmetrics.ListMetric;
 import static java.lang.Math.abs;
 
 /**
- * Implements the Block distance algorithm whereby vector space block distance
- * between tokens is used to determine a similarity. Also known as L1 Distance
- * or City block distance.
+ * Block distance algorithm whereby vector space block distance between tokens
+ * is used to determine a similarity. Also known as L1 Distance or City block
+ * distance.
  * 
  * @see <a href="http://en.wikipedia.org/wiki/Taxicab_geometry">Wikipedia -
  *      Taxicab geometry</a>
  * 
- * @author Sam Chapman
- * @version 1.1
+ * @author mpkorstanje
  * @param <T>
  *            type of token
  */

@@ -24,9 +24,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.simmetrics.metrics.costfunctions.AffineGapCost;
+import org.simmetrics.metrics.costfunctions.Gap;
 
-public abstract class AffineGapCostTest {
+public abstract class GapCostTest {
 
 	protected static class T {
 		protected final float cost;
@@ -46,9 +46,9 @@ public abstract class AffineGapCostTest {
 	private static final float DEFAULT_DELTA = 0.0001f;
 	private float delta;
 
-	protected AffineGapCost cost;
+	protected Gap cost;
 
-	public abstract AffineGapCost getCost();
+	public abstract Gap getCost();
 
 	public abstract T[] getTests();
 
@@ -66,13 +66,13 @@ public abstract class AffineGapCostTest {
 	public void testGetSimilarity() {
 		for (T t : getTests()) {
 
-			float actuall = cost.getCost(t.string, t.index1, t.index2);
+			float actuall = cost.value(t.index1, t.index2);
 
-			String costMessage = "Cost must fall within [%.3f - %.3f] range";
-			costMessage = String.format(costMessage, cost.getMinCost(),
-					cost.getMaxCost());
-			assertTrue(costMessage, cost.getMinCost() <= actuall
-					&& actuall <= cost.getMaxCost());
+			String costMessage = "Cost %.3f must fall within [%.3f - %.3f] range";
+			costMessage = String.format(costMessage, actuall, cost.min(),
+					cost.max());
+			assertTrue(costMessage, cost.min() <= actuall
+					&& actuall <= cost.max());
 
 			String message = String.format("\"%s\" vs \"%s\"",
 					t.string.charAt(t.index1), t.string.charAt(t.index2));
@@ -83,7 +83,7 @@ public abstract class AffineGapCostTest {
 	
 	public void generateTest() {
 		for (T t : getTests()) {
-			float actuall = cost.getCost(t.string, t.index1, t.index2);
+			float actuall = cost.value(t.index1, t.index2);
 
 			String message = String.format("new T(%.4ff, testString, %s, %s),",
 					actuall, t.index1, t.index2);
@@ -100,7 +100,7 @@ public abstract class AffineGapCostTest {
 		assertToStringContains(cost, cost.getClass().getSimpleName());
 	}
 
-	protected static void assertToStringContains(AffineGapCost metric,
+	protected static void assertToStringContains(Gap metric,
 			String content) {
 		String string = metric.toString();
 		String message = String.format("%s must contain %s ", string, content);

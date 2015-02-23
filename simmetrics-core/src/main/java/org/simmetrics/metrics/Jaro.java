@@ -27,69 +27,58 @@ import static java.lang.Math.max;
 import org.simmetrics.StringMetric;
 
 /**
- * Implements the Jaro algorithm providing a similarity measure between two
- * strings allowing character transpositions to a degree.
+ * Jaro algorithm providing a similarity measure between two strings.
  * 
  * @see <a
  *      href="http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance">Wikipedia
  *      - Jaro-Winkler distance</a>
  * @see JaroWinkler
  * 
- * @author Sam Chapman
- * @version 1.1
+ * @author mpkorstanje
+ * 
  */
 public class Jaro implements StringMetric {
 
 	@Override
-	public float compare(final String string1, final String string2) {
+	public float compare(final String a, final String b) {
 
-		if (string1.isEmpty() && string2.isEmpty()) {
+		if (a.isEmpty() && b.isEmpty()) {
 			return 1.0f;
 		}
 
-		if (string1.isEmpty() || string2.isEmpty()) {
+		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
 
-		// get half the length of the string rounded up - (this is the distance
-		// used for acceptable transpositions)
-		final int halflen = max(0,
-				(int) floor(-1 + 0.5 * max(string1.length(), string2.length())));
+		final int halfLength = max(0,
+				(int) floor(-1 + 0.5 * max(a.length(), b.length())));
 
-		// get common characters
-		final String common1 = getCommonCharacters(string1, string2, halflen);
-		final String common2 = getCommonCharacters(string2, string1, halflen);
+		final String commonA = getCommonCharacters(a, b, halfLength);
+		final String commonB = getCommonCharacters(b, a, halfLength);
 
-		// check for zero in common
-		if (common1.length() == 0 || common2.length() == 0) {
+		if (commonA.isEmpty() || commonB.isEmpty()) {
 			return 0.0f;
 		}
 
-		// get the number of transpositions
 		float transpositions = 0;
-		for (int i = 0; i < common1.length(); i++) {
-			if (common1.charAt(i) != common2.charAt(i))
+		for (int i = 0; i < commonA.length(); i++) {
+			if (commonA.charAt(i) != commonB.charAt(i))
 				transpositions++;
 		}
 		transpositions /= 2.0f;
 
-		float string1Common = common1.length() / (float) string1.length();
-		float string2Common = common2.length() / (float) string2.length();
-		float transpositionRatio = (common1.length() - transpositions)
-				/ common1.length();
+		float aCommonRatio = commonA.length() / (float) a.length();
+		float bCommonRatio = commonB.length() / (float) b.length();
+		float transpositionRatio = (commonA.length() - transpositions)
+				/ commonA.length();
 
-		return (string1Common + string2Common + transpositionRatio) / 3.0f;
+		return (aCommonRatio + bCommonRatio + transpositionRatio) / 3.0f;
 	}
 
-	/**
-	 * returns a string buffer of characters from <code>a</code> within
-	 * <code>b</code> if they are of a given distance <code>separation</code>
-	 * from the position in <code>a</code>.
-	 *
-	 * @param a
-	 * @param b
-	 * @param separation
-	 * @return a string buffer of characters from a within b
+	/*
+	 * Returns a string of characters from a within b A character in b is
+	 * counted as common when it is within separation distance from the position
+	 * in a.
 	 */
 	private static String getCommonCharacters(final String a, final String b,
 			final int separation) {
@@ -114,16 +103,10 @@ public class Jaro implements StringMetric {
 		return common.toString();
 	}
 
-	/**
-	 * Search for <code>character</code> in <code>buffer</code> starting
-	 * <code>fromIndex<code> to <code>toIndex - 1</code>. Returns -1 when not
-	 * found.
+	/*
+	 * Search for character in buffer starting at fromIndex to toIndex - 1.
 	 * 
-	 * @param character
-	 * @param buffer
-	 * @param fromIndex
-	 * @param toIndex
-	 * @return
+	 * Returns -1 when not found.
 	 */
 	private static int indexOf(char character, StringBuilder buffer,
 			int fromIndex, int toIndex) {

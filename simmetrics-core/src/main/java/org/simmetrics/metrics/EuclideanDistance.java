@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -30,11 +31,10 @@ import org.simmetrics.ListMetric;
 import static java.lang.Math.sqrt;
 
 /**
- * Implements the Euclidean Distance algorithm providing a similarity measure
- * between two lists using the vector space of combined terms as the
- * dimensions.
+ * Euclidean Distance algorithm providing a similarity measure between two lists
+ * using the vector space of combined terms as the dimensions.
  *
- * @author Sam Chapman
+ * @author mpkorstanje
  * @param <T>
  *            type of the token
  * 
@@ -47,15 +47,13 @@ public class EuclideanDistance<T> implements ListMetric<T> {
 		if (a.isEmpty() && b.isEmpty()) {
 			return 1.0f;
 		}
-		
+
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
-		
-		float totalPossible = (float) Math.sqrt((a.size() * a.size())
-				+ (b.size() * b.size()));
-		final float totalDistance = distance(a, b);
-		return (totalPossible - totalDistance) / totalPossible;
+
+		float totalPossible = (float) sqrt((a.size() * a.size()) + (b.size() * b.size()));
+		return (totalPossible - distance(a, b)) / totalPossible;
 	}
 
 	private static <T> float distance(final List<T> a, final List<T> b) {
@@ -71,8 +69,7 @@ public class EuclideanDistance<T> implements ListMetric<T> {
 			totalDistance += ((frequencyInA - frequencyInB) * (frequencyInA - frequencyInB));
 		}
 
-		totalDistance = (float) sqrt(totalDistance);
-		return totalDistance;
+		return (float) sqrt(totalDistance);
 	}
 
 	@Override

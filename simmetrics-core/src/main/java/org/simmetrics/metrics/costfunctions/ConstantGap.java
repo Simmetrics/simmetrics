@@ -20,35 +20,53 @@
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.simmetrics.tokenizers;
+package org.simmetrics.metrics.costfunctions;
 
-import static java.util.Arrays.asList;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
- * Tokenizes a string by white space.
+ * A gap function that assigns a constant penalty to a gap regardless of size.
  * 
  * @author mpkorstanje
+ * @see <a href="https://en.wikipedia.org/wiki/Gap_penalty">Wikipedia - Gap
+ *      Penalty</a>
  */
-public final class WhitespaceTokenizer extends AbstractTokenizer {
+public final class ConstantGap implements Gap {
+
+	private final float gapValue;
+
+	/**
+	 * Constructs a constant gap function that assigns a penalty of
+	 * <code>gapValue</code> to a gap. .
+	 * 
+	 * @param gapValue
+	 *            a non-positive constant gap value
+	 */
+	public ConstantGap(float gapValue) {
+		checkArgument(gapValue <= 0.0f);
+
+		this.gapValue = gapValue;
+	}
+
+	@Override
+	public final float value(int fromIndex, int toIndex) {
+		checkArgument(fromIndex < toIndex, "fromIndex must be before toIndex");
+		return gapValue;
+	}
+
+	@Override
+	public final float max() {
+		return gapValue;
+	}
+
+	@Override
+	public final float min() {
+		return gapValue;
+	}
 
 	@Override
 	public String toString() {
-		return "WhitespaceTokenizer [" + pattern + "]";
-	}
-
-	private static final Pattern pattern = Pattern.compile("\\s+");
-
-	@Override
-	public List<String> tokenizeToList(final String input) {
-		if (input.isEmpty()) {
-			return new ArrayList<>();
-		}
-
-		return asList(pattern.split(input));
+		return "ConstantGap [gapValue=" + gapValue + "]";
 	}
 
 }

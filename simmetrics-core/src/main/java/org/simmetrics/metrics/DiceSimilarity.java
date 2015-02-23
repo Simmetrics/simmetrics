@@ -27,8 +27,8 @@ import java.util.Set;
 import org.simmetrics.SetMetric;
 
 /**
- * Implements Dice similarity algorithm providing a similarity measure between
- * two sets using the vector space of presented tokens.
+ * Dice similarity algorithm providing a similarity measure between two sets
+ * using the vector space of presented tokens.
  * <p>
  * <code>dices coefficient (a,b) = (2 * |a & b |) / (|a|  + |b|)</code>
  * <p>

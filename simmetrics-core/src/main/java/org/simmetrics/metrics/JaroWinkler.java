@@ -21,69 +21,87 @@
  */
 package org.simmetrics.metrics;
 
-import static org.simmetrics.utils.Math.min3;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Strings.commonPrefix;
+import static java.lang.Math.min;
 
 import org.simmetrics.StringMetric;
 
 /**
- * Implements the Jaro-Winkler algorithm providing a similarity measure between
- * two strings allowing character transpositions to a degree adjusting the
- * weighting for common prefixes.
+ * Jaro-Winkler algorithm providing a similarity measure between two strings.
+ * <p>
+ * Can be configured with a prefix adjustment scale, max prefix length and boost
+ * threshold.
+ * 
  * 
  * @see <a
  *      href="http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance">Wikipedia
  *      - Jaro-Winkler distance</a>
  * 
  * @see Jaro
+ * @author mpkorstanje
  * 
- * @author Sam Chapman
- * @version 1.1
  */
 public class JaroWinkler implements StringMetric {
 
 	private final Jaro jaro = new Jaro();
 
-	private static final int MINPREFIXTESTLENGTH = 6;
+	private static final float PREFIX_SCALE = 0.1f;
+	private static final float BOOST_THRESHOLD = 0;
+	private static final int MAX_PREFIX_LENGTH = 4;
 
-	private static final float PREFIXADUSTMENTSCALE = 0.1f;
+	private final float boostThreshold;
+	private final float prefixScale;
+	private final int maxPrefixLength;
 
-	@Override
-	public float compare(final String string1, final String string2) {
-		// gets normal Jaro Score
-		final float dist = jaro.compare(string1, string2);
-
-		// This extension modifies the weights of poorly matching pairs string1,
-		// string2 which share a common prefix
-		final int prefixLength = getPrefixLength(string1, string2);
-		return dist + (prefixLength * PREFIXADUSTMENTSCALE * (1.0f - dist));
+	/**
+	 * Constructs a new JaroWinkler metric.
+	 */
+	public JaroWinkler() {
+		this(BOOST_THRESHOLD, PREFIX_SCALE, MAX_PREFIX_LENGTH);
 	}
 
 	/**
-	 * gets the prefix length found of common characters at the begining of the
-	 * strings.
-	 *
-	 * @param string1
-	 * @param string2
-	 * @return the prefix length found of common characters at the begining of
-	 *         the strings
+	 * Constructs a new JaroWinkler metric.
+	 * 
+	 * 
+	 * @param boostThreshold
+	 *            minimum jaro score for which the score is boosted
+	 * @param prefixScale
+	 *            scale at which a common prefix adds a bonus
+	 * @param maxPrefixLength
+	 *            cutoff at which a longer common prefix does not improve the
+	 *            score
 	 */
-	private static int getPrefixLength(final String string1,
-			final String string2) {
-		final int n = min3(MINPREFIXTESTLENGTH, string1.length(),
-				string2.length());
-		// check for prefix similarity of length n
-		for (int i = 0; i < n; i++) {
-			// check the prefix is the same so far
-			if (string1.charAt(i) != string2.charAt(i)) {
-				// not the same so return as far as got
-				return i;
-			}
+	public JaroWinkler(float boostThreshold, float prefixScale,
+			int maxPrefixLength) {
+		checkArgument(boostThreshold >= 0);
+		checkArgument(0 <= prefixScale && prefixScale <= 1);
+		checkArgument(maxPrefixLength >= 0);
+
+		this.boostThreshold = boostThreshold;
+		this.prefixScale = prefixScale;
+		this.maxPrefixLength = maxPrefixLength;
+	}
+
+	@Override
+	public float compare(final String a, final String b) {
+		final float jaroScore = jaro.compare(a, b);
+
+		if (jaroScore < boostThreshold) {
+			return jaroScore;
 		}
-		return n; // first n characters are the same
+
+		int prefixLength = min(commonPrefix(a, b).length(), maxPrefixLength);
+
+		return jaroScore + (prefixLength * prefixScale * (1.0f - jaroScore));
 	}
 
 	@Override
 	public String toString() {
-		return "JaroWinkler";
+		return "JaroWinkler [boostThreshold=" + boostThreshold
+				+ ", prefixScale=" + prefixScale + ", maxPrefixLength="
+				+ maxPrefixLength + "]";
 	}
+
 }

@@ -21,16 +21,17 @@
  */
 package org.simmetrics.metrics;
 
+import static com.google.common.collect.HashMultiset.create;
+
 import java.util.List;
 
 import org.simmetrics.ListMetric;
 
-import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 
 /**
- * Implements the matching coefficient algorithm providing a similarity measure
- * between two lists.
+ * Matching coefficient algorithm providing a similarity measure between two
+ * lists.
  * <p>
  * The matching coefficient between two lists is defined as ratio of elements
  * that occur in both lists and elements that exclusively occur in either list.
@@ -77,14 +78,13 @@ public class MatchingCoefficient<T> implements ListMetric<T> {
 			return 0.0f;
 		}
 
-
 		// Count elements in the list intersection.
 		// Elements are counted only once in both lists.
 		// E.g. the intersection of [ab,ab,ab] and [ab,ab,ac,ad] is [ab,ab].
 		// Note: this is not the same as b.retainAll(a).size()
 		int intersection = 0;
 		// Copy for destructive list difference
-		Multiset<T> bCopy = HashMultiset.create(b);
+		Multiset<T> bCopy = create(b);
 		for (T token : a) {
 			if (bCopy.remove(token)) {
 				intersection++;

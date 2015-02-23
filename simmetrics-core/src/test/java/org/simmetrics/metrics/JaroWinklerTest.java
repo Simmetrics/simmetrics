@@ -39,17 +39,18 @@ public class JaroWinklerTest extends StringMetricTest {
 	 */
 	@Test
 	public void testWikipediaExamples() {
-		testSimilarity(getMetric(), new T(0.9611f, "MARTHA", "MARHTA"));
-		testSimilarity(getMetric(), new T(0.8400f, "DWAYNE", "DUANE"));
-		testSimilarity(getMetric(), new T(0.8133f, "DIXON", "DICKSONX"));
+
+		testSimilarity(getMetric(), new T(0.9611f, "MARTHA", "MARHTA"), new T(
+				0.8400f, "DWAYNE", "DUANE"),
+				new T(0.8133f, "DIXON", "DICKSONX"));
 	}
 
 	@Override
 	protected T[] getTests() {
 		return new T[] {
-				new T(0.9778f, "test string1", "test string2"),
-				new T(0.9467f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-				new T(0.9619f, "a b c d", "a b c e"),
+				new T(0.9667f, "test string1", "test string2"),
+				new T(0.9200f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+				new T(0.9429f, "a b c d", "a b c e"),
 				new T(0.8889f, "Healed", "Sealed"),
 				new T(0.8476f, "Healed", "Healthy"),
 				new T(0.8756f, "Healed", "Heard"),
@@ -63,7 +64,7 @@ public class JaroWinklerTest extends StringMetricTest {
 				new T(0.4131f, "John Smith", "Sam Chapman"),
 				new T(0.4949f, "John Smith", "Sam J Chapman"),
 				new T(0.4333f, "John Smith", "S Chapman"),
-				new T(0.9460f, "Web Database Applications",
+				new T(0.9190f, "Web Database Applications",
 						"Web Database Applications with PHP & MySQL"),
 				new T(0.6901f, "Web Database Applications",
 						"Creating Database Web Applications with PHP and ASP"),
@@ -89,7 +90,7 @@ public class JaroWinklerTest extends StringMetricTest {
 						"Building Database Applications on the Web Using PHP3"),
 				new T(0.5909f, "Web Aplications",
 						"Building Web Database Applications with Visual Studio 6"),
-				new T(0.9096f, "Web Aplications",
+				new T(0.8644f, "Web Aplications",
 						"Web Application Development With PHP"),
 				new T(
 						0.7447f,

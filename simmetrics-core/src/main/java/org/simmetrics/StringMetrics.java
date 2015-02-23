@@ -40,7 +40,6 @@ import org.simmetrics.metrics.OverlapCoefficient;
 import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.metrics.SmithWaterman;
 import org.simmetrics.metrics.SmithWatermanGotoh;
-import org.simmetrics.metrics.SmithWatermanGotohWindowedAffine;
 import org.simmetrics.simplifiers.SoundexSimplifier;
 import org.simmetrics.tokenizers.QGramExtendedTokenizer;
 import org.simmetrics.tokenizers.QGramTokenizer;
@@ -335,16 +334,6 @@ public final class StringMetrics {
 	 */
 	public static StringMetric smithWatermanGotoh() {
 		return new SmithWatermanGotoh();
-	}
-
-	/**
-	 * Returns a string metric that uses the
-	 * {@link SmithWatermanGotohWindowedAffine} metric.
-	 * 
-	 * @return a Smith-Waterman-Gotoh windowed affine metric
-	 */
-	public static StringMetric smithWatermanGotohWindowedAffine() {
-		return new SmithWatermanGotohWindowedAffine();
 	}
 
 	/**

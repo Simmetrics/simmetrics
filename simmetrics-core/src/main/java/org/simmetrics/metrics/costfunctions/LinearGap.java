@@ -19,58 +19,56 @@
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.simmetrics.metrics;
 
-import java.util.HashSet;
-import java.util.Set;
+package org.simmetrics.metrics.costfunctions;
 
-import org.simmetrics.SetMetric;
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
- * Jaccard similarity algorithm providing a similarity measure between two sets
- * using the vector space of presented tokens.
+ * A gap function that takes into account the length the gap. Assigns a penalty
+ * that is linear in the length of the gap.
  * 
- * <p>
- * <code>jaccard index(a,b) = ( |a & b| ) / ( | a or b | )</code>
- * <p>
- * 
- * This metric is identical to the matching coefficient which operates on lists.
- * 
- * 
- * @see <a href="http://en.wikipedia.org/wiki/Jaccard_index">Wikipedia - Jaccard
- *      index</a>
- * 
- * @author mpkorstanje * 
- * @param <T>
- *            type of the token
- * 
+ * @author mpkorstanje
+ *
+ * @see <a href="https://en.wikipedia.org/wiki/Gap_penalty">Wikipedia - Gap
+ *      Penalty</a>
  */
-public final class JaccardSimilarity<T> implements SetMetric<T> {
+public final class LinearGap implements Gap {
+
+	private final float gapValue;
+
+	/**
+	 * Constructs a linear gap function that scales the length of a gap with
+	 * <code>gapValue</code>.
+	 * 
+	 * @param gapValue
+	 *            a constant gap value
+	 */
+	public LinearGap(float gapValue) {
+		checkArgument(gapValue <= 0.0f);
+
+		this.gapValue = gapValue;
+	}
 
 	@Override
-	public float compare(Set<T> a, Set<T> b) {
+	public final float value(int fromIndex, int toIndex) {
+		checkArgument(fromIndex < toIndex, "fromIndex must be before toIndex");
+		return gapValue * (toIndex - fromIndex - 1);
+	}
 
-		if (a.isEmpty() && b.isEmpty()) {
-			return 1.0f;
-		}
+	@Override
+	public final float max() {
+		return 0.0f;
+	}
 
-		if (a.isEmpty() || b.isEmpty()) {
-			return 0.0f;
-		}
-
-		final Set<T> all = new HashSet<>();
-		all.addAll(a);
-		all.addAll(b);
-
-		final int intersection = (a.size() + b.size()) - all.size();
-
-		// return JaccardSimilarity
-		return intersection / (float) all.size();
+	@Override
+	public final float min() {
+		return Float.NEGATIVE_INFINITY;
 	}
 
 	@Override
 	public String toString() {
-		return "JaccardSimilarity";
+		return "LinearGap [gapValue=" + gapValue + "]";
 	}
 
 }

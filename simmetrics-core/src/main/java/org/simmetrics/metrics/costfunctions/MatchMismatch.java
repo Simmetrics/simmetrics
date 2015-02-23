@@ -16,9 +16,10 @@ public class MatchMismatch implements Substitution {
 
 	/**
 	 * Constructs a new match-mismatch substitution function. When two
-	 * characters are equal<code>matchValue</code> is returned. In case of a
-	 * mismatch <code>mismatchValue</code>. The <code>matchValue</code> must be
-	 * strictly greater then <code>mismatchValue</code>
+	 * characters are equal a score of <code>matchValue</code> is assigned. In
+	 * case of a mismatch a score of <code>mismatchValue</code>. The
+	 * <code>matchValue</code> must be strictly greater then
+	 * <code>mismatchValue</code>
 	 * 
 	 * @param matchValue
 	 *            value when characters are equal

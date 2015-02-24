@@ -55,8 +55,8 @@ public class SmithWaterman implements StringMetric {
 
 	/**
 	 * Constructs a new Smith Waterman metric. Uses an affine gap of
-	 * <code>-5 - gapLength</code> a -3 substitution penalty for mismatches, 5
-	 * for mathes.
+	 * <code>-5.0 - gapLength</code> a <code>-3.0</code> substitution penalty for mismatches, <code>5.0</code>
+	 * for matches.
 	 * 
 	 */
 	public SmithWaterman() {

@@ -55,6 +55,12 @@ public class NeedlemanWunch implements StringMetric {
 
 	private final float gapValue;
 
+	/**
+	 * Constructs a new Needleman-Wunch metric. Uses an gap of <code>-2.0</code>
+	 * a <code>-1.0</code> substitution penalty for mismatches, <code>0</code>
+	 * for matches.
+	 * 
+	 */
 	public NeedlemanWunch() {
 		this(-2.0f, MATCH_0_MISMATCH_1);
 	}

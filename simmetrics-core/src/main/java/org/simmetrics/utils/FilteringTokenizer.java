@@ -17,7 +17,7 @@ import com.google.common.base.Predicate;
  * Tokenizer that filters tokens that don't match a predicate.
  * 
  * 
- * @author M.P. Korstanje
+ * 
  *
  * @see StringMetricBuilder
  */

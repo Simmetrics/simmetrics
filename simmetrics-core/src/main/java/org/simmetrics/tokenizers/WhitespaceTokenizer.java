@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 /**
  * Tokenizes a string by white space.
  * 
- * @author mpkorstanje
+ * 
  */
 public final class WhitespaceTokenizer extends AbstractTokenizer {
 

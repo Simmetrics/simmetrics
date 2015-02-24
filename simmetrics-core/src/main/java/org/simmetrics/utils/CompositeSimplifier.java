@@ -31,7 +31,7 @@ import org.simmetrics.simplifiers.Simplifier;
  * Simplifier composed of multiple simplifiers. Applies the simplifiers in their
  * iteration order.
  * 
- * @author mpkorstanje
+ * 
  *
  */
 public class CompositeSimplifier implements Simplifier {

@@ -30,7 +30,7 @@ import org.simmetrics.tokenizers.Tokenizer;
  * 
  * @see StringMetricBuilder
  * 
- * @author M.P. Korstanje
+ * 
  *
  */
 public interface TokenizingTokenizer extends Tokenizing, Tokenizer {

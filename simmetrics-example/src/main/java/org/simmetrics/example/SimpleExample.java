@@ -27,7 +27,7 @@ import org.simmetrics.StringMetrics;
  * SimpleExample implements a simple example to demonstrate the ease to use a
  * similarity metric.
  * 
- * @author mpkorstanje
+ * 
  */
 public class SimpleExample {
 

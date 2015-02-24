@@ -34,7 +34,7 @@ import org.simmetrics.StringMetric;
  * @see <a href=" http://en.wikipedia.org/wiki/Levenshtein_distance">Wikipedia -
  *      Levenshtein distance</a>
  * 
- * @author mpkorstanje
+ * 
  */
 public class Levenshtein implements StringMetric {
 

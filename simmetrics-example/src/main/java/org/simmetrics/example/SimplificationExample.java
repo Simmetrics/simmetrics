@@ -34,7 +34,7 @@ import org.simmetrics.tokenizers.WhitespaceTokenizer;
  * SimpleExample implements a simple example to demonstrate the ease to use a
  * similarity metric.
  * 
- * @author mpkorstanje
+ * 
  */
 public class SimplificationExample {
 

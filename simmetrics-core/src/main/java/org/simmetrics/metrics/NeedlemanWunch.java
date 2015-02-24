@@ -39,7 +39,7 @@ import org.simmetrics.metrics.functions.Substitution;
  * <p>
  * Implementation uses linear space.
  * 
- * @author mpkorstanje
+ * 
  * @see SmithWatermanGotoh
  * @see SmithWaterman
  * @see <a

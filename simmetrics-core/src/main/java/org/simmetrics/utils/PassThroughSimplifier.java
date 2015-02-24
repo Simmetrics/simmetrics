@@ -26,7 +26,7 @@ import org.simmetrics.simplifiers.Simplifier;
 /**
  * Simplifier that does not modify a given string.
  * 
- * @author M.P. Korstanje
+ * 
  *
  */
 public final class PassThroughSimplifier implements Simplifier {

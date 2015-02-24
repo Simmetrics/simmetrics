@@ -76,7 +76,7 @@ import org.simmetrics.tokenizers.WhitespaceTokenizer;
  * </ul>
  * 
  * 
- * @author mpkorstanje
+ * 
  *
  */
 public final class StringMetrics {

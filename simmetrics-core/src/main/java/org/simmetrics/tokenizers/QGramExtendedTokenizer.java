@@ -31,7 +31,7 @@ import java.util.List;
  * Basic Q-Gram tokenizer for a variable Q.The Q-Gram is extended beyond the
  * length of the string with padding.
  * 
- * @author mpkorstanje
+ * 
  *
  */
 public class QGramExtendedTokenizer extends AbstractTokenizer {

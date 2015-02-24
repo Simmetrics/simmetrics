@@ -60,7 +60,7 @@ import com.google.common.collect.Multiset;
  *      href="http://en.wikipedia.org/wiki/Simple_matching_coefficient">Wikipedia
  *      - Simple Matching Coefficient</a>
  * 
- * @author mpkorstanje
+ * 
  * 
  * @param <T>
  *            type of the token

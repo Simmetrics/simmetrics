@@ -36,7 +36,7 @@ import org.simmetrics.SetMetric;
  * 
  * Related to the Jaccard index.
  * 
- * @author mpkorstanje
+ * 
  * 
  * @param <T>
  *            type of the token

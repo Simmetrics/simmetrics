@@ -43,7 +43,7 @@ import org.simmetrics.ListMetric;
  * <code>normalized_similarity(a,b) = sqrt(similarity(a,b) * similarity(b,a))</code>
  * </p>
  * 
- * @author M.P. Korstanje
+ * 
  */
 public class MongeElkan implements ListMetric<String> {
 

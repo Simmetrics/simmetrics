@@ -12,7 +12,7 @@ import com.google.common.base.Preconditions;
  * simplification to the input. The simplifierd strings are compared by the
  * metric.
  * 
- * @author mpkorstanje
+ * 
  * 
  * @see StringMetricBuilder
  *

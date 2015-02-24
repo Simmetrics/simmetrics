@@ -6,7 +6,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  * A substitution function that assigns one value to equal characters, another
  * value to unequal characters.
  * 
- * @author mpkorstanje
+ * 
  *
  */
 public class MatchMismatch implements Substitution {

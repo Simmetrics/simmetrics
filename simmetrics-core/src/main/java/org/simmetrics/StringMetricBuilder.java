@@ -193,7 +193,7 @@ import com.google.common.base.Predicates;
  * @See {@link StringMetrics}
  * @See {@link Predicates}
  * 
- * @author mpkorstanje
+ * 
  * 
  */
 public class StringMetricBuilder {

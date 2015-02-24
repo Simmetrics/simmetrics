@@ -38,7 +38,7 @@ import static java.lang.Math.abs;
  * @see <a href="http://en.wikipedia.org/wiki/Taxicab_geometry">Wikipedia -
  *      Taxicab geometry</a>
  * 
- * @author mpkorstanje
+ * 
  * @param <T>
  *            type of token
  */

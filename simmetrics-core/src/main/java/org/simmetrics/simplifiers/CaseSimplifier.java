@@ -27,7 +27,7 @@ import java.util.Locale;
  * Simplifiers for upper and lower case. Allows a locale to be set for the
  * correct transformation.
  * 
- * @author M.P. Korstanje
+ * 
  *
  */
 public abstract class CaseSimplifier implements Simplifier {
@@ -36,7 +36,7 @@ public abstract class CaseSimplifier implements Simplifier {
 	 * Lower case simplifier. Transforms all upper case characters into their
 	 * lower case equivalent.
 	 * 
-	 * @author M.P. Korstanje
+	 * 
 	 *
 	 */
 	public static class Lower extends CaseSimplifier {
@@ -79,7 +79,7 @@ public abstract class CaseSimplifier implements Simplifier {
 	 * Upper case simplifier. Transforms all lower case characters into their
 	 * upper case equivalent.
 	 * 
-	 * @author M.P. Korstanje
+	 * 
 	 *
 	 */
 	public static class Upper extends CaseSimplifier {

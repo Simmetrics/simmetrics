@@ -36,7 +36,7 @@ import com.google.common.cache.LoadingCache;
  * evicted once the cache reaches its maximum size.
  * 
  * 
- * @author mpkorstanje
+ * 
  * 
  * @see StringMetricBuilder
  */

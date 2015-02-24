@@ -30,7 +30,7 @@ package org.simmetrics.metrics.functions;
  * results of the substitution function.
  * 
  * 
- * @author mpkorstanje
+ * 
  * 
  * @see Substitution
  * @see <a href="https://en.wikipedia.org/wiki/Gap_penalty">Wikipedia - Gap

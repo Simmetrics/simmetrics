@@ -15,7 +15,7 @@ import com.google.common.base.Preconditions;
  * simplification to the input and tokenizes the simplified input to a list. The
  * list are compared by the metric.
  * 
- * @author mpkorstanje
+ * 
  * @see StringMetricBuilder
  */
 public final class CompositeListMetric implements StringMetric {

@@ -45,7 +45,7 @@ import java.util.regex.Pattern;
  * 
  * </ul>
  *
- * @author M.P. Korstanje
+ * 
  *
  */
 public class NonDiacriticSimplifier implements Simplifier {

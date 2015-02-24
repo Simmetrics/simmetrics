@@ -26,7 +26,7 @@ import org.simmetrics.tokenizers.Tokenizer;
 /**
  * Interface for classes that delegate to a {@link Tokenizer}.
  * 
- * @author mpkorstanje
+ * 
  *
  */
 public interface Tokenizing {

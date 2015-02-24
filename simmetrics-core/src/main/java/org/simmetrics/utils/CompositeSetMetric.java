@@ -15,7 +15,7 @@ import com.google.common.base.Preconditions;
  * Applies simplification to the input and tokenizes the simplified input to a
  * set. The sets are compared by the metric.
  * 
- * @author mpkorstanje
+ * 
  * 
  * @see StringMetricBuilder
  *

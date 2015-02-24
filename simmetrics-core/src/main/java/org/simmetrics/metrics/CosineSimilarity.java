@@ -35,7 +35,7 @@ import static java.lang.Math.sqrt;
  * @see <a href="http://en.wikipedia.org/wiki/Cosine_similarity">Wikipedia
  *      Cosine similarity</a>
  * 
- * @author mpkorstanje
+ * 
  * @param <T>
  *            type of the token
  */

@@ -41,7 +41,7 @@ import static org.simmetrics.utils.Math.max4;
  * molecular biology 162: 705". This implementation uses constant space and
  * quadratic time.
  * 
- * @author mpkorstanje
+ * 
  * @see NeedlemanWunch
  * @see SmithWaterman
  * @see <a

@@ -30,7 +30,6 @@ import org.simmetrics.tokenizers.QGramTokenizer;
  * SimpleExample implements a simple example to demonstrate the ease to use a
  * similarity metric.
  * 
- * @author Sam Chapman
  */
 public class StringMetricBuilderExample {
 

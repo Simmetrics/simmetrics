@@ -29,7 +29,7 @@ package org.simmetrics.metrics.functions;
  * A positive value indicates the characters are similar, a negative value
  * indicates they are dissimilar.
  * 
- * @author mpkorstanje
+ * 
  * 
  * @see Gap
  * @see <a

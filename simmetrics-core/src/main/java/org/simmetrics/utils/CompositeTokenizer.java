@@ -12,7 +12,7 @@ import com.google.common.base.Joiner;
  * Tokenizer composed of multiple tokenizers. Applies the tokenizers in their
  * iteration order.
  * 
- * @author mpkorstanje
+ * 
  *
  */
 public final class CompositeTokenizer implements Tokenizer {

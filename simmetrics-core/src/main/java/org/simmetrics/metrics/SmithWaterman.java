@@ -41,7 +41,7 @@ import org.simmetrics.metrics.functions.Substitution;
  * Implementation uses implementation by Smith and Waterman. This implementation
  * uses quadratic space and cubic time.
  * 
- * @author mpkorstanje
+ * 
  * @see NeedlemanWunch
  * @see SmithWatermanGotoh * @see <a
  *      href="https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm"

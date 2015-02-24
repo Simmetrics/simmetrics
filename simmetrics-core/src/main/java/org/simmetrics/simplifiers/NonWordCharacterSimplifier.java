@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 /**
  * Replaces all non-word [^0-9a-zA-Z] characters with a space.
  * 
- * @author mpkorstanje
+ * 
  *
  */
 public class NonWordCharacterSimplifier implements Simplifier {

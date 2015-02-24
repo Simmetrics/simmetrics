@@ -39,7 +39,7 @@ import org.simmetrics.SetMetric;
  *      href="http://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient">Wikipedia
  *      - Sørensen–Dice coefficient</a>
  * 
- * @author mpkorstanje
+ * 
  * @param <T>
  *            type of the token
  */

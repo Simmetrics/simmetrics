@@ -25,7 +25,7 @@ import org.simmetrics.simplifiers.Simplifier;
 /**
  * Interface for classes that delegate to a {@link Simplifier}.
  * 
- * @author mpkorstanje
+ * 
  *
  */
 public interface Simplifying {

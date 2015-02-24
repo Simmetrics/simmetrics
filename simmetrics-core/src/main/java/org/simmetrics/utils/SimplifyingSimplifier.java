@@ -30,7 +30,7 @@ import org.simmetrics.simplifiers.Simplifier;
  * 
  * @see StringMetricBuilder
  * 
- * @author M.P. Korstanje
+ * 
  *
  */
 public interface SimplifyingSimplifier extends Simplifier, Simplifying {

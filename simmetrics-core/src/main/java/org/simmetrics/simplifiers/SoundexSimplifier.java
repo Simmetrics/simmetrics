@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 /**
  * Simplifies a string by computing its Soundex code.
  * 
- * @author M.P. Korstanje
+ * 
  *
  */
 public class SoundexSimplifier implements Simplifier {

@@ -52,7 +52,7 @@ import org.simmetrics.ListMetric;
  * 
  * @see DiceSimilarity
  * 
- * @author mpkorstanje
+ * 
  * @param <T>
  *            type of the token
  * 

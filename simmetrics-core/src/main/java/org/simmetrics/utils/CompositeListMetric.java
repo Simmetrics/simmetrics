@@ -4,17 +4,36 @@ import java.util.List;
 
 import org.simmetrics.Metric;
 import org.simmetrics.StringMetric;
+import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.tokenizers.Tokenizer;
 
 import com.google.common.base.Preconditions;
 
+/**
+ * String metric composed of a simplifier, tokenizer and list metric. Applies
+ * simplification to the input and tokenizes the simplified input to a list. The
+ * list are compared by the metric.
+ * 
+ * @author mpkorstanje
+ * @see StringMetricBuilder
+ */
 public final class CompositeListMetric implements StringMetric {
 
 	private final Metric<List<String>> metric;
 	private final Simplifier simplifier;
 	private final Tokenizer tokenizer;
 
+	/**
+	 * Creates a new composite list metric.
+	 * 
+	 * @param metric
+	 *            a list metric
+	 * @param simplifier
+	 *            a simplifier
+	 * @param tokenizer
+	 *            a tokenizer
+	 */
 	public CompositeListMetric(Metric<List<String>> metric,
 			Simplifier simplifier, Tokenizer tokenizer) {
 		super();
@@ -30,8 +49,7 @@ public final class CompositeListMetric implements StringMetric {
 
 	@Override
 	public float compare(String a, String b) {
-		return metric.compare(
-				tokenizer.tokenizeToList(simplifier.simplify(a)),
+		return metric.compare(tokenizer.tokenizeToList(simplifier.simplify(a)),
 				tokenizer.tokenizeToList(simplifier.simplify(b)));
 	}
 

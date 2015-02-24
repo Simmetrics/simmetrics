@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.simmetrics.metrics.costfunctions.Gap;
+import org.simmetrics.metrics.functions.Gap;
 
 public abstract class GapCostTest {
 

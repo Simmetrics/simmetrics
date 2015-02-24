@@ -20,7 +20,7 @@
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.simmetrics.metrics.costfunctions;
+package org.simmetrics.metrics.functions;
 
 /**
  * A substitution function assigns value to the substitution of one character

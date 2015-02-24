@@ -29,10 +29,10 @@ import static java.lang.Math.min;
 import static org.simmetrics.utils.Math.max3;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.costfunctions.AffineGap;
-import org.simmetrics.metrics.costfunctions.Gap;
-import org.simmetrics.metrics.costfunctions.MatchMismatch;
-import org.simmetrics.metrics.costfunctions.Substitution;
+import org.simmetrics.metrics.functions.AffineGap;
+import org.simmetrics.metrics.functions.Gap;
+import org.simmetrics.metrics.functions.MatchMismatch;
+import org.simmetrics.metrics.functions.Substitution;
 
 /**
  * Smith-Waterman algorithm providing a similarity measure between two strings.

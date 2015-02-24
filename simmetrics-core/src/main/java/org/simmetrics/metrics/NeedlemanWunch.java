@@ -30,8 +30,8 @@ import static org.simmetrics.utils.Math.min3;
 import java.util.Objects;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.costfunctions.MatchMismatch;
-import org.simmetrics.metrics.costfunctions.Substitution;
+import org.simmetrics.metrics.functions.MatchMismatch;
+import org.simmetrics.metrics.functions.Substitution;
 
 /**
  * Needleman-Wunsch algorithm providing a similarity measure between two

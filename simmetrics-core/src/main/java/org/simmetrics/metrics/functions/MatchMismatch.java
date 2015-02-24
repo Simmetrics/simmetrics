@@ -1,4 +1,4 @@
-package org.simmetrics.metrics.costfunctions;
+package org.simmetrics.metrics.functions;
 
 import static com.google.common.base.Preconditions.checkArgument;
 

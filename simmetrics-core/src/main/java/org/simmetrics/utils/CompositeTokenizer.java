@@ -8,14 +8,26 @@ import java.util.Set;
 import org.simmetrics.tokenizers.Tokenizer;
 
 import com.google.common.base.Joiner;
-
+/**
+ * Tokenizer composed of multiple tokenizers. Applies the tokenizers in their
+ * iteration order.
+ * 
+ * @author mpkorstanje
+ *
+ */
 public final class CompositeTokenizer implements Tokenizer {
 
-	private final List<Tokenizer> tokenizers;
-
-	public CompositeTokenizer(List<Tokenizer> tokenizers) {
+	private final Iterable<Tokenizer> tokenizers;
+	/**
+	 * Constructs a new composite tokenizer.
+	 * 
+	 * @param tokenizers
+	 *            an iteration of tokenizers
+	 */
+	public CompositeTokenizer(Iterable<Tokenizer> tokenizers) {
 		this.tokenizers = tokenizers;
 	}
+
 
 	@Override
 	public List<String> tokenizeToList(final String input) {

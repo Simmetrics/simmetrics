@@ -21,7 +21,8 @@
  */
 package org.simmetrics.metrics.costfunctions;
 
-import org.simmetrics.metrics.costfunctions.Gap;
+import org.simmetrics.metrics.functions.AffineGap;
+import org.simmetrics.metrics.functions.Gap;
 
 public class AffineGap1_1Over3Test extends GapCostTest {
 

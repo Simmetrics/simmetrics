@@ -21,110 +21,27 @@
  */
 package org.simmetrics.simplifiers;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
-import java.util.regex.Pattern;
+import static org.apache.commons.codec.language.Soundex.US_ENGLISH;
 
 /**
- * Simplifies a string by computing its Soundex code.
+ * Encodes a string into a Soundex value. Soundex is an encoding used to relate
+ * similar names, but can also be used as a general purpose scheme to find word
+ * with similar phonemes.
+ *
+ * This class is thread-safe and immutable.
  * 
+ * @see org.apache.commons.codec.language.Soundex
+ *
  */
 public class Soundex implements Simplifier {
 
-	private static final char IGNORE = '0';
-	private static final char OFFSET = 'A';
-	private static final char[] CHAR_CODE = {
-			// A B C D E F G H I J K L M
-			'0', '1', '2', '3', '0', '1', '2', '0', '0', '2', '2', '4', '5',
-			// N O P W R S T U V W X Y Z
-			'5', '0', '1', '2', '6', '2', '3', '0', '1', '0', '2', '0', '2' };
-
-	private static final int DEFAULT_LENGTH = 5;
-
-	private final Pattern nonAz = Pattern.compile("[^A-Z]+");
-
-	private int length;
-
-	/**
-	 * Creates a new Soundex simplifier with a length of 5. The Soundex string
-	 * S2433 is 5 long.
-	 */
-	public Soundex() {
-		this(DEFAULT_LENGTH);
-	}
-
-	/**
-	 * 
-	 * Creates a new Soundex simplifier with the given <code>length</code>. The
-	 * Soundex string S2433 is 5 long.
-	 *
-	 * @param length
-	 *            the length of the soundex string
-	 */
-	public Soundex(int length) {
-		checkArgument(length >= 1, "minimum length is 1");
-		this.length = length;
-	}
-
-	/**
-	 * Calculates a soundex code for a given string/name.
-	 *
-	 * @return a soundex code for a given string/name
-	 */
-	@Override
-	public String simplify(String wordStr) {
-
-		// check for empty input
-		if (wordStr.isEmpty()) {
-			return "";
-		}
-
-		// Clean and tidy
-		// to lower case remove non-chars whitespaces
-		wordStr = wordStr.toUpperCase();
-		wordStr = nonAz.matcher(wordStr).replaceAll("");
-
-		// check for empty input again the previous clean and tidy could of
-		// shrunk it to zero.
-		if (wordStr.isEmpty()) {
-			return "";
-		}
-
-		StringBuilder builder = new StringBuilder(length);
-		builder.append(wordStr.charAt(0));
-
-		char previousCharacter = wordStr.charAt(0);
-		for (int i = 1; i < wordStr.length() && builder.length() < length; i++) {
-			char character = wordStr.charAt(i);
-			char characterCode = CHAR_CODE[character - OFFSET];
-			char previousCharacterCode = CHAR_CODE[previousCharacter - OFFSET];
-
-			if (
-			// Don't add ignored codes
-			characterCode != IGNORE &&
-			// Don't add repeated codes
-					characterCode != previousCharacterCode) {
-				builder.append(characterCode);
-
-			}
-
-			// A code is also considered repeated when separated by a W or H.
-			if (character != 'W' && character != 'H') {
-				previousCharacter = character;
-			}
-		}
-
-		if (builder.length() < length) {
-			for (int i = builder.length(); i < length; i++) {
-				builder.append('0');
-			}
-		}
-
-		return builder.toString();
-	}
-
 	@Override
 	public String toString() {
-		return "SoundexSimplifier [length=" + length + "]";
+		return "SoundexSimplifier";
+	}
+
+	@Override
+	public String simplify(String input) {
+		return US_ENGLISH.soundex(input);
 	}
 }

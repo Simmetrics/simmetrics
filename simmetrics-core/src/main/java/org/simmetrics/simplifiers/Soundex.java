@@ -28,10 +28,8 @@ import java.util.regex.Pattern;
 /**
  * Simplifies a string by computing its Soundex code.
  * 
- * 
- *
  */
-public class SoundexSimplifier implements Simplifier {
+public class Soundex implements Simplifier {
 
 	private static final char IGNORE = '0';
 	private static final char OFFSET = 'A';
@@ -51,7 +49,7 @@ public class SoundexSimplifier implements Simplifier {
 	 * Creates a new Soundex simplifier with a length of 5. The Soundex string
 	 * S2433 is 5 long.
 	 */
-	public SoundexSimplifier() {
+	public Soundex() {
 		this(DEFAULT_LENGTH);
 	}
 
@@ -63,7 +61,7 @@ public class SoundexSimplifier implements Simplifier {
 	 * @param length
 	 *            the length of the soundex string
 	 */
-	public SoundexSimplifier(int length) {
+	public Soundex(int length) {
 		checkArgument(length >= 1, "minimum length is 1");
 		this.length = length;
 	}

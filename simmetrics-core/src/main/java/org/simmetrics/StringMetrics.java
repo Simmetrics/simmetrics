@@ -40,7 +40,7 @@ import org.simmetrics.metrics.OverlapCoefficient;
 import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.metrics.SmithWaterman;
 import org.simmetrics.metrics.SmithWatermanGotoh;
-import org.simmetrics.simplifiers.SoundexSimplifier;
+import org.simmetrics.simplifiers.Soundex;
 import org.simmetrics.tokenizers.QGramExtendedTokenizer;
 import org.simmetrics.tokenizers.QGramTokenizer;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
@@ -337,13 +337,13 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link SoundexSimplifier} and
+	 * Returns a string metric that uses a {@link Soundex} and
 	 * {@link JaroWinkler} metric.
 	 * 
 	 * @return a Soundex metric
 	 */
 	public static StringMetric soundex() {
 		return with(new JaroWinkler())
-				.simplify(new SoundexSimplifier()).build();
+				.simplify(new Soundex()).build();
 	}
 }

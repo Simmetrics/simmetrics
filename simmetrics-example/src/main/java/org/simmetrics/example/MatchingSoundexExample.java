@@ -27,7 +27,7 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetrics;
 import org.simmetrics.metrics.JaroWinkler;
 import org.simmetrics.metrics.MongeElkan;
-import org.simmetrics.simplifiers.SoundexSimplifier;
+import org.simmetrics.simplifiers.Soundex;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
 /**
@@ -52,7 +52,7 @@ public class MatchingSoundexExample {
 		StringMetric metric = 
 				with(new MongeElkan(
 						with(new JaroWinkler())
-						.simplify(new SoundexSimplifier())
+						.simplify(new Soundex())
 						.build()))
 				.tokenize(new WhitespaceTokenizer())
 				.build();

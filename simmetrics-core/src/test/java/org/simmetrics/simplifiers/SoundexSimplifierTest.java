@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.simmetrics.simplifiers.Simplifier;
-import org.simmetrics.simplifiers.SoundexSimplifier;
+import org.simmetrics.simplifiers.Soundex;
 
 public class SoundexSimplifierTest {
 
@@ -13,7 +13,7 @@ public class SoundexSimplifierTest {
 
 	@Before
 	public void setUp() throws Exception {
-		simplifier = new SoundexSimplifier();
+		simplifier = new Soundex();
 	}
 
 	@Test
@@ -40,7 +40,7 @@ public class SoundexSimplifierTest {
 	@Test
 	public void testWikipediaExamples() {
 
-		Simplifier simplifier = new SoundexSimplifier(4);
+		Simplifier simplifier = new Soundex(4);
 
 		assertEquals("R163", simplifier.simplify("Robert"));
 		assertEquals("R163", simplifier.simplify("Rupert"));
@@ -60,7 +60,7 @@ public class SoundexSimplifierTest {
 
 	@Test
 	public void testLong() {
-		Simplifier simplifier = new SoundexSimplifier(14);
+		Simplifier simplifier = new Soundex(14);
 		assertEquals("W4124242352516",
 				simplifier.simplify("Wolfeschlegelsteinhausenbergerdorff"));
 		assertEquals("K5222425400000",

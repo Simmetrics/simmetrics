@@ -3,8 +3,6 @@ SimMetrics [![Build Status](https://travis-ci.org/mpkorstanje/simmetrics.svg)](h
 
 SimMetrics is a java library of Similarity or Distance Metrics, e.g. Levenshtein distance, Cosine similarity, that provide float based similarity measures between String data. All metrics return consistent measures rather than unbounded similarity scores. 
 
-SimMetrics is based on the [SimMetrics Library](http://sourceforge.net/projects/simmetrics/) by Sam Chapman.
-
 ## Usage ##
 
 For a quick and easy use [StringMetrics](./simmetrics-core/src/main/java/org/simmetrics/StringMetrics.java) contains a collection of well known string metrics.
@@ -22,7 +20,7 @@ For a quick and easy use [StringMetrics](./simmetrics-core/src/main/java/org/sim
 
 The [StringMetricBuilder](./simmetrics-core/src/main/java/org/simmetrics/StringMetricBuilder.java) is a convenience tool to build string metrics. Any class implementing StringMetric, ListMetric, SetMetric can be used to build a string metric.
 
-For a terse syntax use the static import `import static org.simmetrics.StringMetricBuilder.with;`
+For a terse syntax use `import static org.simmetrics.StringMetricBuilder.with;`
 
 ```
 	String str1 = "This is a sentence. It is made of words";
@@ -38,13 +36,14 @@ For a terse syntax use the static import `import static org.simmetrics.StringMet
 	float result = metric.compare(str1, str2); //0.5590
 ```
 
+
 ## StringMetricBuilder ##
 
 A metric is used to measure the similarity between strings. Metrics can work on strings, lists or sets tokens. To compare strings with a metric that works on a collection of tokens a tokenizer is required.
 
 By adding simplifiers, tokenizers and filters the effectiveness of a metric can be improved. The exact combination is generally domain specific. The builder supports these domain specific customization.
 
-For a terse syntax use the static import `import static org.simmetrics.StringMetricBuilder.with;`
+For a terse syntax use `import static org.simmetrics.StringMetricBuilder.with;`
 
 ```
 	String str1 = "This is a sentence. It is made of words";

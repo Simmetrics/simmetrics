@@ -3,7 +3,7 @@
 
 	<groupId>org.simmetrics</groupId>
 	<artifactId>simmetrics</artifactId>
-	<version>ls-SNAPSHOT</version>
+	<version>3.0.0</version>
 	<packaging>pom</packaging>
 
 	<name>SimMetrics</name>

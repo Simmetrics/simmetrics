@@ -5,16 +5,6 @@ SimMetrics is a java library of Similarity or Distance Metrics, e.g. Levenshtein
 
 SimMetrics is based on the [SimMetrics Library](http://sourceforge.net/projects/simmetrics/) by Sam Chapman.
 
-## Version 2 ##
-
-This version was aimed at refactoring and cleaning up the SimMetrics project. This has yielded the follow results
-
- * Support for general workflow of simplification, tokenization and comparision.
- * Reduced clutter on the StringMetric interface.
- * Allow caching of expensive tokenization and simplification operations.
- * Allow for easy anonymous-subclassing-style configuration.
- * Solved various small bugs
-
 ## Usage ##
 
 For a quick and easy use [StringMetrics](./simmetrics-core/src/main/java/org/simmetrics/StringMetrics.java) contains a collection of well known string metrics.
@@ -32,6 +22,24 @@ For a quick and easy use [StringMetrics](./simmetrics-core/src/main/java/org/sim
 
 The [StringMetricBuilder](./simmetrics-core/src/main/java/org/simmetrics/StringMetricBuilder.java) is a convenience tool to build string metrics. Any class implementing StringMetric, ListMetric, SetMetric can be used to build a string metric.
 
+For a terse syntax use the static import `import static org.simmetrics.StringMetricBuilder.with;`
+
+```
+	String str1 = "This is a sentence. It is made of words";
+	String str2 = "This sentence is similair. It has almost the same words";
+
+	StringMetric metric =
+			with(new CosineSimilarity<String>())
+			.simplify(new Case.Lower(Locale.ENGLISH))
+			.simplify(new NonWordCharacterSimplifier())
+			.tokenize(new WhitespaceTokenizer())
+			.build();
+
+	float result = metric.compare(str1, str2); //0.5590
+```
+
+## StringMetricBuilder ##
+
 A metric is used to measure the similarity between strings. Metrics can work on strings, lists or sets tokens. To compare strings with a metric that works on a collection of tokens a tokenizer is required.
 
 By adding simplifiers, tokenizers and filters the effectiveness of a metric can be improved. The exact combination is generally domain specific. The builder supports these domain specific customization.
@@ -44,7 +52,7 @@ For a terse syntax use the static import `import static org.simmetrics.StringMet
 
 	StringMetric metric =
 			with(new CosineSimilarity<String>())
-			.simplify(new CaseSimplifier.Lower())
+			.simplify(new Case.Lower(Locale.ENGLISH))
 			.simplify(new NonWordCharacterSimplifier())
 			.tokenize(new WhitespaceTokenizer())
 			.build();

@@ -22,13 +22,17 @@ package org.simmetrics.example;
 
 import static org.simmetrics.StringMetricBuilder.with;
 
+import java.util.Locale;
+
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.*;
+import org.simmetrics.simplifiers.Case;
+import org.simmetrics.simplifiers.WordCharacters;
 import org.simmetrics.tokenizers.QGramTokenizer;
+import org.simmetrics.tokenizers.WhitespaceTokenizer;
 
 /**
- * SimpleExample implements a simple example to demonstrate the ease to use a
- * similarity metric.
+ * A simple demonstration of the {@link StringMetricBuilder} 
  * 
  */
 public class StringMetricBuilderExample {
@@ -37,39 +41,23 @@ public class StringMetricBuilderExample {
 	 * Runs a simple example.
 	 *
 	 * @param args
-	 *            two strings required for comparison
+	 *            not used
 	 */
 	public static void main(final String[] args) {
-
-		checkInput(args);
-
-		// gets the two input given by the user
-		final String str1 = args[0];
-		final String str2 = args[1];
+		final String str1 = "String!with&Junk";
+		final String str2 = "##Junk with String##";
 
 		StringMetric metric = with(new CosineSimilarity<String>())
-				.tokenize(new QGramTokenizer(2))
-				.build();
+				.simplify(new Case.Lower(Locale.ENGLISH))
+				.simplify(new WordCharacters())
+				.tokenize(new WhitespaceTokenizer())
+				.tokenize(new QGramTokenizer(2)).build();
 
 		final float result = metric.compare(str1, str2);
 
 		String message = "Using metric %s on strings \"%s\" & \"%s\" gives a similarity score of %.4f";
-		message = String.format(message, metric, str1, str2, result);
-		System.out.println(message);
+		System.out.format(message, metric, str1, str2, result);
 
-	}
-
-	private static void checkInput(final String[] args) {
-		if (args.length != 2) {
-			System.out
-					.println("Performs a rudimentary string metric comparison from the arguments given.");
-			System.out.println(String.format(
-					"Check the source of %s for more details.",
-					StringMetricBuilderExample.class.getName()));
-
-			System.out.print("Usage <string> <string>");
-			System.exit(1);
-		}
 	}
 
 }

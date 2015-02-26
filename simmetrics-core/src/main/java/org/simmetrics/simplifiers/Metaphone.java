@@ -5,7 +5,7 @@ package org.simmetrics.simplifiers;
  * 
  * This class is thread-safe and immutable.
  * 
- *  @see org.apache.commons.codec.language.Metaphone
+ * @see org.apache.commons.codec.language.Metaphone
  */
 public class Metaphone implements Simplifier {
 
@@ -22,6 +22,9 @@ public class Metaphone implements Simplifier {
 	 * Creates an instance of the Metaphone simplifier with a
 	 * {@code maxCodeLength}. All encodings will have at most
 	 * {@code maxCodeLength} characters.
+	 * 
+	 * @param maxCodeLength
+	 *            maximum length of the encoding
 	 */
 	public Metaphone(int maxCodeLength) {
 		this.simplifier = new org.apache.commons.codec.language.Metaphone();
@@ -32,7 +35,7 @@ public class Metaphone implements Simplifier {
 	public String simplify(String input) {
 		return simplifier.metaphone(input);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Metaphone [maxCodeLen=" + simplifier.getMaxCodeLen() + "]";

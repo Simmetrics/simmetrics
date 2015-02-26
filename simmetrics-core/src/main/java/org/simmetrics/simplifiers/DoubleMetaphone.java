@@ -12,7 +12,9 @@ public class DoubleMetaphone implements Simplifier {
 
 	private final org.apache.commons.codec.language.DoubleMetaphone simplifier;
 	private final boolean useAlternate;
-
+	  /**
+     * Creates an instance of this DoubleMetaphone encoder
+     */
 	public DoubleMetaphone() {
 		this.simplifier = new org.apache.commons.codec.language.DoubleMetaphone();
 		this.useAlternate = false;

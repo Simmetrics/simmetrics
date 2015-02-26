@@ -24,7 +24,6 @@ package org.simmetrics.example;
 import static org.simmetrics.StringMetricBuilder.with;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.StringMetrics;
 import org.simmetrics.metrics.JaroWinkler;
 import org.simmetrics.metrics.MongeElkan;
 import org.simmetrics.simplifiers.Soundex;
@@ -33,7 +32,6 @@ import org.simmetrics.tokenizers.WhitespaceTokenizer;
 /**
  * SimpleExample implements a simple example to demonstrate the ease to use a
  * similarity metric.
- * 
  * 
  */
 public class MatchingSoundexExample {

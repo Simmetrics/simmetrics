@@ -19,30 +19,29 @@
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.simmetrics.simplifiers;
 
-import static org.apache.commons.codec.language.Soundex.US_ENGLISH;
+import java.util.regex.Pattern;
 
 /**
- * Encodes a string into a Soundex value. Soundex is an encoding used to relate
- * similar names, but can also be used as a general purpose scheme to find word
- * with similar phonemes.
- *
- * This class is thread-safe and immutable.
+ * Replaces all consecutive non-word [^0-9a-zA-Z] characters with a space.
  * 
- * @see org.apache.commons.codec.language.Soundex
+ * This class is thread-safe and immutable.
  *
  */
-public class Soundex implements Simplifier {
+public class WordCharacters implements Simplifier {
 
-	@Override
-	public String toString() {
-		return "Soundex";
-	}
+	private static final Pattern pattern = Pattern.compile("\\W");
 
 	@Override
 	public String simplify(String input) {
-		return US_ENGLISH.soundex(input);
+		return pattern.matcher(input).replaceAll(" ");
 	}
-	
+
+	@Override
+	public String toString() {
+		return "NonWordCharacterSimplifier [" + pattern + "]";
+	}
+
 }

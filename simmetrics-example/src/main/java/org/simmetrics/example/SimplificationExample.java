@@ -25,7 +25,7 @@ import static org.simmetrics.StringMetricBuilder.with;
 
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.SimonWhite;
-import org.simmetrics.simplifiers.CaseSimplifier;
+import org.simmetrics.simplifiers.Case;
 import org.simmetrics.simplifiers.NonDiacritics;
 import org.simmetrics.tokenizers.QGramTokenizer;
 import org.simmetrics.tokenizers.WhitespaceTokenizer;
@@ -51,7 +51,7 @@ public class SimplificationExample {
 
 		StringMetric metric = 
 				with(new SimonWhite<String>())
-				.simplify(new CaseSimplifier.Lower())
+				.simplify(new Case.Lower())
 				.simplify(new NonDiacritics())
 				.tokenize(new WhitespaceTokenizer())
 				.tokenize(new QGramTokenizer(2))

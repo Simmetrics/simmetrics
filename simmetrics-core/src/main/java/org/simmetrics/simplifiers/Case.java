@@ -30,7 +30,7 @@ import java.util.Locale;
  * 
  *
  */
-public abstract class CaseSimplifier implements Simplifier {
+public abstract class Case implements Simplifier {
 
 	/**
 	 * Lower case simplifier. Transforms all upper case characters into their
@@ -39,7 +39,7 @@ public abstract class CaseSimplifier implements Simplifier {
 	 * 
 	 *
 	 */
-	public static class Lower extends CaseSimplifier {
+	public static class Lower extends Case {
 
 		private final Locale locale;
 
@@ -82,7 +82,7 @@ public abstract class CaseSimplifier implements Simplifier {
 	 * 
 	 *
 	 */
-	public static class Upper extends CaseSimplifier {
+	public static class Upper extends Case {
 
 		private final Locale locale;
 

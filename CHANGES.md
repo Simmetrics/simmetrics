@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-## Since 3.0.0-SNAPSHOT ##
+## Since 3.0.0 ##
 
  - Crud removal
   - Removed Chapman Algorithms

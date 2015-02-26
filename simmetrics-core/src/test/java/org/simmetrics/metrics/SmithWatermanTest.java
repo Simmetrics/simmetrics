@@ -22,7 +22,6 @@ package org.simmetrics.metrics;
 
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.SmithWaterman;
-import org.simmetrics.metrics.StringMetricTest.T;
 
 
 public class SmithWatermanTest extends StringMetricTest {

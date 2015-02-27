@@ -22,67 +22,33 @@
 
 package org.simmetrics.tokenizers;
 
+import static java.util.Arrays.asList;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.common.base.Preconditions;
+import java.util.regex.Pattern;
 
 /**
- * Basic Q-Gram tokenizer for a variable q. Returns a list with the original
- * input for tokens shorter then q.
+ * Tokenizes a string by white space.
  * 
  * 
- *
  */
-public class QGramTokenizer extends AbstractTokenizer {
-
-	private final int q;
-
-	/**
-	 * Constructs a q-gram tokenizer with the given q.
-	 * 
-	 * @param q
-	 *            size of the tokens
-	 * 
-	 */
-
-	public QGramTokenizer(int q) {
-		Preconditions.checkArgument(q > 0, "q must be greater then 0");
-		this.q = q;
-	}
-
-	/**
-	 * Returns the q of this tokenizer.
-	 * 
-	 * @return the q of this tokenizer
-	 */
-	public int getQ() {
-		return q;
-	}
-
-	@Override
-	public List<String> tokenizeToList(final String input) {
-		final List<String> ret = new ArrayList<>();
-
-		if (input.isEmpty()) {
-			return ret;
-		}
-
-		if (input.length() <= q) {
-			ret.add(input);
-			return ret;
-		}
-
-		for (int i = 0; i < input.length() - q + 1; i++) {
-			ret.add(input.substring(i, i + q));
-		}
-
-		return ret;
-	}
+public final class Whitespace extends AbstractTokenizer {
 
 	@Override
 	public String toString() {
-		return "QGramTokenizer [q=" + q + "]";
+		return "WhitespaceTokenizer [" + pattern + "]";
+	}
+
+	private static final Pattern pattern = Pattern.compile("\\s+");
+
+	@Override
+	public List<String> tokenizeToList(final String input) {
+		if (input.isEmpty()) {
+			return new ArrayList<>();
+		}
+
+		return asList(pattern.split(input));
 	}
 
 }

@@ -24,7 +24,7 @@ package org.simmetrics.metrics;
 import org.junit.Test;
 import org.simmetrics.ListMetric;
 import org.simmetrics.metrics.MatchingCoefficient;
-import org.simmetrics.tokenizers.WhitespaceTokenizer;
+import org.simmetrics.tokenizers.Whitespace;
 
 public class MatchingCoefficientTest extends ListMetricTest {
 
@@ -37,7 +37,7 @@ public class MatchingCoefficientTest extends ListMetricTest {
 	public void test1() {
 		testSimilarity(
 				getMetric(), 
-				new WhitespaceTokenizer(), 
+				new Whitespace(), 
 				new T(0.3333f, "test string1", "test string2"),
 				new T(0.6000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.6000f, "a b c d", "a b c e"),

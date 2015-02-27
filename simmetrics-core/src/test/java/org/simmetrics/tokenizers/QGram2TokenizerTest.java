@@ -27,7 +27,7 @@ public class QGram2TokenizerTest extends TokenizerTest {
 
 	@Override
 	protected Tokenizer getTokenizer() {
-		return new QGramTokenizer(2);
+		return new QGram(2);
 	}
 
 	@Override

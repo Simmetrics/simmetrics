@@ -24,7 +24,7 @@ package org.simmetrics.metrics;
 import org.junit.Test;
 import org.simmetrics.SetMetric;
 import org.simmetrics.metrics.CosineSimilarity;
-import org.simmetrics.tokenizers.WhitespaceTokenizer;
+import org.simmetrics.tokenizers.Whitespace;
 
 public class CosineSimilarityTest extends SetMetricTest {
 
@@ -37,7 +37,7 @@ public class CosineSimilarityTest extends SetMetricTest {
 	public void test1() {
 		testSimilarity(
 				getMetric(), 
-				new WhitespaceTokenizer(), 
+				new Whitespace(), 
 				new T(0.5000f, "test string1", "test string2"),
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.7500f, "a b c d", "a b c e"),

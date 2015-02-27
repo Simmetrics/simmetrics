@@ -34,7 +34,7 @@ import java.util.List;
  * 
  *
  */
-public class QGramExtendedTokenizer extends AbstractTokenizer {
+public class QGramExtended extends AbstractTokenizer {
 
 	private final static String DEFAULT_START_PADDING = "#";
 	private final static String DEFAULT_END_PADDING = "#";
@@ -42,7 +42,7 @@ public class QGramExtendedTokenizer extends AbstractTokenizer {
 	private final String endPadding;
 	private final String startPadding;
 
-	private final QGramTokenizer tokenizer;
+	private final QGram tokenizer;
 
 	/**
 	 * Constructs a q-gram tokenizer with the given q and padding.
@@ -54,13 +54,13 @@ public class QGramExtendedTokenizer extends AbstractTokenizer {
 	 * @param endPadding
 	 *            padding to apply at the end of short tokens
 	 */
-	public QGramExtendedTokenizer(int q, String startPadding, String endPadding) {
+	public QGramExtended(int q, String startPadding, String endPadding) {
 		checkArgument(!startPadding.isEmpty(),
 				"startPadding may not be empty");
 		checkArgument(!endPadding.isEmpty(),
 				"endPadding may not be empty");
 
-		this.tokenizer = new QGramTokenizer(q);
+		this.tokenizer = new QGram(q);
 		this.startPadding = repeat(startPadding, q - 1);
 		this.endPadding = repeat(endPadding, q - 1);
 	}
@@ -71,7 +71,7 @@ public class QGramExtendedTokenizer extends AbstractTokenizer {
 	 * @param q
 	 *            size of the tokens
 	 */
-	public QGramExtendedTokenizer(int q) {
+	public QGramExtended(int q) {
 		this(q, DEFAULT_START_PADDING, DEFAULT_END_PADDING);
 	}
 

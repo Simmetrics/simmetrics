@@ -36,8 +36,6 @@ import com.google.common.cache.LoadingCache;
  * evicted once the cache reaches its maximum size.
  * 
  * 
- * 
- * 
  * @see StringMetricBuilder
  */
 public class CachingSimplifier implements SimplifyingSimplifier {

@@ -51,7 +51,6 @@ public abstract class Case implements Simplifier {
 		 *            to use in transformation
 		 */
 		public Lower(Locale locale) {
-			super();
 			this.locale = locale;
 		}
 
@@ -61,7 +60,7 @@ public abstract class Case implements Simplifier {
 		 * 
 		 * */
 		public Lower() {
-			locale = Locale.getDefault();
+			this(Locale.getDefault());
 		}
 
 		@Override

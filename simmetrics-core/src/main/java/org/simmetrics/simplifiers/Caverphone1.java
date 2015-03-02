@@ -21,7 +21,7 @@ package org.simmetrics.simplifiers;
  */
 public class Caverphone1 implements Simplifier {
 
-	private final org.apache.commons.codec.language.Caverphone2 simplifier = new org.apache.commons.codec.language.Caverphone2();
+	private final org.apache.commons.codec.language.Caverphone1 simplifier = new org.apache.commons.codec.language.Caverphone1();
 
 	@Override
 	public String simplify(String input) {

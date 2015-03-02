@@ -41,7 +41,7 @@ public class WordCharacters implements Simplifier {
 
 	@Override
 	public String toString() {
-		return "NonWordCharacterSimplifier [" + pattern + "]";
+		return "WordCharacter [" + pattern + "]";
 	}
 
 }

@@ -16,9 +16,6 @@ import com.google.common.base.Predicate;
 /**
  * Tokenizer that filters tokens that don't match a predicate.
  * 
- * 
- * 
- *
  * @see StringMetricBuilder
  */
 public final class FilteringTokenizer implements Tokenizer {

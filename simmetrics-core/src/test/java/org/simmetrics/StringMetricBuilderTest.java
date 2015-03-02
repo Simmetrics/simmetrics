@@ -62,7 +62,7 @@ public class StringMetricBuilderTest {
 		with(stringMetric)
 				.simplify(simplifier)
 				.simplify(simplifier)
-				.setSimplifierCache()
+				.simplifierCache()
 				.build();
 	}
 
@@ -70,7 +70,7 @@ public class StringMetricBuilderTest {
 	public void testStringMetricWithSimplifier01WithCache() {
 		with(stringMetric)
 				.simplify(simplifier)
-				.setSimplifierCache()
+				.simplifierCache()
 				.build();
 	}
 
@@ -110,7 +110,7 @@ public class StringMetricBuilderTest {
 	public void testListMetricWithSimplifier01WithCache() {
 		with(listMetric)
 				.simplify(simplifier)
-				.setSimplifierCache()
+				.simplifierCache()
 				.tokenize(tokenizer)
 				.build();
 	}
@@ -120,7 +120,7 @@ public class StringMetricBuilderTest {
 		with(listMetric)
 				.simplify(simplifier)
 				.simplify(simplifier)
-				.setSimplifierCache()
+				.simplifierCache()
 				.tokenize(tokenizer)
 				.build();
 	}
@@ -137,7 +137,7 @@ public class StringMetricBuilderTest {
 	public void testListMetric01WithCache() {
 		with(listMetric)
 				.tokenize(tokenizer)
-				.setTokenizerCache()
+				.tokenizerCache()
 				.build();
 	}
 
@@ -146,7 +146,7 @@ public class StringMetricBuilderTest {
 		with(listMetric)
 				.tokenize(tokenizer)
 				.tokenize(tokenizer)
-				.setTokenizerCache()
+				.tokenizerCache()
 				.build();
 	}
 
@@ -186,7 +186,7 @@ public class StringMetricBuilderTest {
 	public void testSetMetricWithSimplifier01WithCache() {
 		with(setMetric)
 				.simplify(simplifier)
-				.setSimplifierCache()
+				.simplifierCache()
 				.tokenize(tokenizer)
 				.build();
 	}
@@ -196,7 +196,7 @@ public class StringMetricBuilderTest {
 		with(setMetric)
 				.simplify(simplifier)
 				.simplify(simplifier)
-				.setSimplifierCache()
+				.simplifierCache()
 				.tokenize(tokenizer)
 				.build();
 	}
@@ -213,7 +213,7 @@ public class StringMetricBuilderTest {
 	public void testSetMetric01WithCache() {
 		with(setMetric)
 				.tokenize(tokenizer)
-				.setTokenizerCache()
+				.tokenizerCache()
 				.build();
 	}
 
@@ -222,7 +222,7 @@ public class StringMetricBuilderTest {
 		with(setMetric)
 				.tokenize(tokenizer)
 				.tokenize(tokenizer)
-				.setTokenizerCache()
+				.tokenizerCache()
 				.build();
 	}
 }

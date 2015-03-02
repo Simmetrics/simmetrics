@@ -172,9 +172,9 @@ Simplification and tokenization can be complex and expensive operations. When co
 		StringMetric metric =
 				with(new CosineSimilarity<String>())
 				.simplify(new CaseSimplifier.Lower())
-				.setSimplifierCache()
+				.simplifierCache()
 				.tokenize(new QGramTokenizer(2))
-				.setTokenizerCache()
+				.tokenizerCache()
 				.build();
 ```
 

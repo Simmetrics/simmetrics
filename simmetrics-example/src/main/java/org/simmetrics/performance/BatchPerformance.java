@@ -104,7 +104,7 @@ public class BatchPerformance {
 				with(new SimonWhite<String>())
 				.tokenize(new WhitespaceTokenizer())
 				.tokenize(new QGramTokenizer(2))
-				.setTokenizerCache()
+				.tokenizerCache()
 				.build();
 
 		Stopwatch sw = Stopwatch.createStarted();

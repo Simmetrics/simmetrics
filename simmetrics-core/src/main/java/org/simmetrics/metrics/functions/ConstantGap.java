@@ -27,6 +27,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 /**
  * A gap function that assigns a constant penalty to a gap regardless of size.
  * 
+ * <p>
+ * This class is immutable and thread-safe.
  * 
  * @see <a href="https://en.wikipedia.org/wiki/Gap_penalty">Wikipedia - Gap
  *      Penalty</a>

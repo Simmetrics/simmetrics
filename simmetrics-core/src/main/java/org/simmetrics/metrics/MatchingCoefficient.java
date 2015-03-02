@@ -52,8 +52,9 @@ import com.google.common.collect.Multiset;
  * <p>
  * This metric is identical to Jaccard but is insensitive to repeated tokens.
  * The list <code>["a","a","b"]</code> is identical to
- * <code>["a","b","b"]</code>.
- * 
+ * <code>["a","b","b"]</code>. 
+ * <p>
+ * This class is immutable and thread-safe.
  * 
  * @see JaccardSimilarity
  * @see <a

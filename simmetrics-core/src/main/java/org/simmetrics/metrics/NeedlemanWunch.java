@@ -38,7 +38,8 @@ import org.simmetrics.metrics.functions.Substitution;
  * strings.
  * <p>
  * Implementation uses linear space.
- * 
+ * <p>
+ * This class is immutable and thread-safe if its substitution function is.
  * 
  * @see SmithWatermanGotoh
  * @see SmithWaterman
@@ -65,6 +66,14 @@ public class NeedlemanWunch implements StringMetric {
 		this(-2.0f, MATCH_0_MISMATCH_1);
 	}
 
+	/**
+	 * Constructs a new Needleman-Wunch metric.
+	 * 
+	 * @param gapValue
+	 *            a non-positive penalty for gaps
+	 * @param substitution
+	 *            a substitution function for mismatched characters
+	 */
 	public NeedlemanWunch(float gapValue, Substitution substitution) {
 		checkArgument(gapValue <= 0.0f);
 		checkNotNull(substitution);

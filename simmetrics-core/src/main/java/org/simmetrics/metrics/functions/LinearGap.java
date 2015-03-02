@@ -28,7 +28,8 @@ import static com.google.common.base.Preconditions.checkArgument;
  * A gap function that takes into account the length the gap. Assigns a penalty
  * that is linear in the length of the gap.
  * 
- * 
+ * <p>
+ * This class is immutable and thread-safe.
  *
  * @see <a href="https://en.wikipedia.org/wiki/Gap_penalty">Wikipedia - Gap
  *      Penalty</a>

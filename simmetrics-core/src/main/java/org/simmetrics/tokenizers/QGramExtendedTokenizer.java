@@ -31,7 +31,8 @@ import java.util.List;
  * Basic Q-Gram tokenizer for a variable Q.The Q-Gram is extended beyond the
  * length of the string with padding.
  * 
- * 
+ * <p>
+ * This class is immutable and thread-safe.
  *
  */
 public class QGramExtendedTokenizer extends AbstractTokenizer {
@@ -55,10 +56,8 @@ public class QGramExtendedTokenizer extends AbstractTokenizer {
 	 *            padding to apply at the end of short tokens
 	 */
 	public QGramExtendedTokenizer(int q, String startPadding, String endPadding) {
-		checkArgument(!startPadding.isEmpty(),
-				"startPadding may not be empty");
-		checkArgument(!endPadding.isEmpty(),
-				"endPadding may not be empty");
+		checkArgument(!startPadding.isEmpty(), "startPadding may not be empty");
+		checkArgument(!endPadding.isEmpty(), "endPadding may not be empty");
 
 		this.tokenizer = new QGramTokenizer(q);
 		this.startPadding = repeat(startPadding, q - 1);

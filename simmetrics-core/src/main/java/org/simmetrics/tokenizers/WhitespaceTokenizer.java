@@ -31,6 +31,8 @@ import java.util.regex.Pattern;
 /**
  * Tokenizes a string by white space.
  * 
+ * <p>
+ * This class is immutable and thread-safe.
  * 
  */
 public final class WhitespaceTokenizer extends AbstractTokenizer {

@@ -41,6 +41,8 @@ import static org.simmetrics.utils.Math.max4;
  * molecular biology 162: 705". This implementation uses constant space and
  * quadratic time.
  * 
+ * <p>
+ * This class is immutable and thread-safe if its substitution functions are.
  * 
  * @see NeedlemanWunch
  * @see SmithWaterman

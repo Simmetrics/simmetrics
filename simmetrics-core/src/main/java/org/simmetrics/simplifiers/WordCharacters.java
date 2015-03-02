@@ -26,8 +26,8 @@ import java.util.regex.Pattern;
 
 /**
  * Replaces all consecutive non-word [^0-9a-zA-Z] characters with a space.
- * 
- * This class is thread-safe and immutable.
+ * <p>
+ * This class is immutable and thread-safe.
  *
  */
 public class WordCharacters implements Simplifier {

@@ -31,7 +31,8 @@ import com.google.common.base.Preconditions;
  * Basic Q-Gram tokenizer for a variable q. Returns a list with the original
  * input for tokens shorter then q.
  * 
- * 
+ * <p>
+ * This class is immutable and thread-safe.
  *
  */
 public class QGramTokenizer extends AbstractTokenizer {

@@ -24,15 +24,13 @@ package org.simmetrics.utils;
 
 import static com.google.common.base.Joiner.on;
 
-
 import org.simmetrics.simplifiers.Simplifier;
 
 /**
  * Simplifier composed of multiple simplifiers. Applies the simplifiers in their
  * iteration order.
- * 
- * 
- *
+ * <p>
+ * This class is immutable and thread-safe if its components are.
  */
 public class CompositeSimplifier implements Simplifier {
 

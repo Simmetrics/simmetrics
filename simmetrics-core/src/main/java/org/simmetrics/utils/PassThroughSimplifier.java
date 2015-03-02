@@ -27,8 +27,8 @@ import org.simmetrics.simplifiers.Simplifier;
 /**
  * Simplifier that does not modify a given string.
  * 
- * 
- *
+ * <p>
+ * This class is immutable and thread-safe.
  */
 public final class PassThroughSimplifier implements Simplifier {
 

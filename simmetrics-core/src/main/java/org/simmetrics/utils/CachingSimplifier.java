@@ -35,7 +35,9 @@ import com.google.common.cache.LoadingCache;
  * when repeatedly processing identical strings. Least used cache entries are
  * evicted once the cache reaches its maximum size.
  * <p>
- * This class is immutable and thread-safe.
+ * This class is thread-safe provided its components are and
+ * {@link CachingSimplifier#setSimplifier(Simplifier)} is not used in a
+ * concurrent context.
  * 
  * @see StringMetricBuilder
  */

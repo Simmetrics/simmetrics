@@ -28,8 +28,8 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.*;
 import org.simmetrics.simplifiers.Case;
 import org.simmetrics.simplifiers.WordCharacters;
-import org.simmetrics.tokenizers.QGramTokenizer;
-import org.simmetrics.tokenizers.WhitespaceTokenizer;
+import org.simmetrics.tokenizers.QGram;
+import org.simmetrics.tokenizers.Whitespace;
 
 /**
  * A simple demonstration of the {@link StringMetricBuilder} 
@@ -50,8 +50,8 @@ public class StringMetricBuilderExample {
 		StringMetric metric = with(new CosineSimilarity<String>())
 				.simplify(new Case.Lower(Locale.ENGLISH))
 				.simplify(new WordCharacters())
-				.tokenize(new WhitespaceTokenizer())
-				.tokenize(new QGramTokenizer(2)).build();
+				.tokenize(new Whitespace())
+				.tokenize(new QGram(2)).build();
 
 		final float result = metric.compare(str1, str2);
 

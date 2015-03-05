@@ -29,8 +29,8 @@ For a terse syntax use `import static org.simmetrics.StringMetricBuilder.with;`
 	StringMetric metric =
 			with(new CosineSimilarity<String>())
 			.simplify(new Case.Lower(Locale.ENGLISH))
-			.simplify(new NonWordCharacterSimplifier())
-			.tokenize(new WhitespaceTokenizer())
+			.simplify(new NonWordCharacter())
+			.tokenize(new Whitespace())
 			.build();
 
 	float result = metric.compare(str1, str2); //0.5590
@@ -63,8 +63,8 @@ For a terse syntax use `import static org.simmetrics.StringMetricBuilder.with;`
 	StringMetric metric =
 			with(new CosineSimilarity<String>())
 			.simplify(new Case.Lower(Locale.ENGLISH))
-			.simplify(new NonWordCharacterSimplifier())
-			.tokenize(new WhitespaceTokenizer())
+			.simplify(new NonWordCharacter())
+			.tokenize(new Whitespace())
 			.build();
 
 	float result = metric.compare(str1, str2); //0.5590
@@ -97,8 +97,8 @@ A custom simplifier can be added onto any metric by using the StringMetricBuilde
 	StringMetric metric = 
 			with(new CosineSimilarity<String>())
 			.simplify(new CaseSimplifier.Lower())
-			.simplify(new NonWordCharacterSimplifier())
-			.tokenize(new WhitespaceTokenizer())
+			.simplify(new NonWordCharacter())
+			.tokenize(new Whitespace())
 			.build();
 
 	final float result = metric.compare(str1, str2); //0.5590
@@ -111,8 +111,8 @@ Tokenization cuts up a string into tokens e.g. `[chilperic, ii, son, of, childer
 ````
 		StringMetric metric = 
 			with(new SimonWhite<String>())
-			.tokenize(new WhitespaceTokenizer())
-			.tokenize(new QGramTokenizer(2))
+			.tokenize(new Whitespace())
+			.tokenize(new QGram(2))
 			.build();
 ````
 
@@ -146,9 +146,9 @@ A filter can be implemented by implementing a the [Predicate](https://github.com
 ```
 		StringMetric metric
 				with(new CosineSimilarity<String>())
-				.simplify(new CaseSimplifier.Lower())
-				.simplify(new NonWordCharacterSimplifier())
-				.tokenize(new WhitespaceTokenizer())
+				.simplify(new Case.Lower())
+				.simplify(new NonWordCharacter())
+				.tokenize(new Whitespace())
 				.filter(new Predicate<String>() {
 					
 					@Override
@@ -165,10 +165,10 @@ By chaining predicates more complicated filters can be build.
 		Set<String> commonWords = ...;
 		
 		StringMetric metric =
-				with(new CosineSimilarity<String>())
-				.simplify(new CaseSimplifier.Lower())
-				.simplify(new NonWordCharacterSimplifier())
-				.tokenize(new WhitespaceTokenizer())
+				with(new Cosine<String>())
+				.simplify(new Case.Lower())
+				.simplify(new NonWordCharacter())
+				.tokenize(new Whitespace())
 				.filter(Predicates.not(Predicates.in(commonWords)))
 				.build();
 ```
@@ -181,12 +181,13 @@ Simplification and tokenization can be complex and expensive operations. When co
 
 ```
 		StringMetric metric =
-				with(new CosineSimilarity<String>())
-				.simplify(new CaseSimplifier.Lower())
+				with(new Cosine<String>())
+				.simplify(new Case.Lower())
 				.setSimplifierCache()
-				.tokenize(new QGramTokenizer(2))
-				.setTokenizerCache()
+				.tokenize(new QGram(2))
+				.tokenizerCache()
 				.build();
 ```
 
 When a cache is set it applies to the whole simplification or tokenization chain. The default cache has a size of two for use with `StringMetrics.compare(StringMetric, String, List<String>)` and friends.
+

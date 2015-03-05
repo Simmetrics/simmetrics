@@ -4,7 +4,7 @@ import static java.util.Arrays.asList;
 
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.TokenizerTest;
-import org.simmetrics.tokenizers.WhitespaceTokenizer;
+import org.simmetrics.tokenizers.Whitespace;
 
 import static com.google.common.base.Predicates.*;
 
@@ -12,7 +12,7 @@ public class FilteringTokenizerTest extends TokenizerTest {
 
 	@Override
 	protected Tokenizer getTokenizer() {
-		return new FilteringTokenizer(new WhitespaceTokenizer(),
+		return new FilteringTokenizer(new Whitespace(),
 				not(in(asList(
 				"the", "and", "or"))));
 	}

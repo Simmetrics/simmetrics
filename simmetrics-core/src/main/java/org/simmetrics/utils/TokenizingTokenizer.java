@@ -30,8 +30,6 @@ import org.simmetrics.tokenizers.Tokenizer;
  * 
  * @see StringMetricBuilder
  * 
- * 
- *
  */
 public interface TokenizingTokenizer extends Tokenizing, Tokenizer {
 	// Empty: because composite interface

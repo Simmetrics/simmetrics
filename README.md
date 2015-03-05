@@ -36,6 +36,17 @@ For a terse syntax use `import static org.simmetrics.StringMetricBuilder.with;`
 	float result = metric.compare(str1, str2); //0.5590
 ```
 
+## Maven ##
+
+SimMetrics is available from Maven Central. Include the dependency.
+
+```
+	<dependency>
+		<groupId>com.github.mpkorstanje</groupId>
+		<artifactId>simmetrics</artifactId>
+		<version>3.0.0</version>
+	</dependency>
+```
 
 ## StringMetricBuilder ##
 

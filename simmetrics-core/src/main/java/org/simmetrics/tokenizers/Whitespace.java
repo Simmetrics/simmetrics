@@ -23,15 +23,15 @@
 package org.simmetrics.tokenizers;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * Tokenizes a string by white space.
- * 
- * 
+ * Splits a string into tokens around white space.
+ * <p>
+ * This class is immutable and thread-safe.
  */
 public final class Whitespace extends AbstractTokenizer {
 
@@ -45,7 +45,7 @@ public final class Whitespace extends AbstractTokenizer {
 	@Override
 	public List<String> tokenizeToList(final String input) {
 		if (input.isEmpty()) {
-			return new ArrayList<>();
+			return emptyList();
 		}
 
 		return asList(pattern.split(input));

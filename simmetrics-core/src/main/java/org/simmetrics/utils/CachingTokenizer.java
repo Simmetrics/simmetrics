@@ -41,9 +41,6 @@ import com.google.common.cache.LoadingCache;
  * when repeatedly processing identical strings. Least used cache entries are
  * evicted once the cache reaches its maximum size.
  * 
- * 
- * 
- * 
  * @see StringMetricBuilder
  */
 public class CachingTokenizer implements TokenizingTokenizer {

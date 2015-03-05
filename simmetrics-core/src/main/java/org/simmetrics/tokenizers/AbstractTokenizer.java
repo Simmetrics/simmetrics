@@ -27,8 +27,6 @@ import java.util.Set;
 
 /**
  * Convenience tokenizer. Provides default implementation for to set.
- * 
- * 
  *
  */
 public abstract class AbstractTokenizer implements Tokenizer {

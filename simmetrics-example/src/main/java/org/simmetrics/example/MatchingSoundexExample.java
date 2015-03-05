@@ -27,7 +27,7 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.JaroWinkler;
 import org.simmetrics.metrics.MongeElkan;
 import org.simmetrics.simplifiers.Soundex;
-import org.simmetrics.tokenizers.WhitespaceTokenizer;
+import org.simmetrics.tokenizers.Whitespace;
 
 /**
  * SimpleExample implements a simple example to demonstrate the ease to use a
@@ -52,7 +52,7 @@ public class MatchingSoundexExample {
 						with(new JaroWinkler())
 						.simplify(new Soundex())
 						.build()))
-				.tokenize(new WhitespaceTokenizer())
+				.tokenize(new Whitespace())
 				.build();
 
 		float result = metric.compare(str1, str2); // 0.9644

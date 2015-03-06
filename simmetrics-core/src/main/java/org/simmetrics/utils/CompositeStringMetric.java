@@ -12,7 +12,8 @@ import com.google.common.base.Preconditions;
  * simplification to the input. The simplifierd strings are compared by the
  * metric.
  * 
- * 
+ * <p>
+ * This class is immutable and thread-safe if its components are.
  * 
  * @see StringMetricBuilder
  *

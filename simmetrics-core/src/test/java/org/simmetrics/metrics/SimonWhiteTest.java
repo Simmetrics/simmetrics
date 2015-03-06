@@ -35,7 +35,7 @@ import com.google.common.base.Predicate;
 
 public class SimonWhiteTest extends ListMetricTest {
 
-	private static class MinimumLenght implements Predicate<String> {
+	static class MinimumLenght implements Predicate<String> {
 		@Override
 		public boolean apply(String input) {
 			return input.length() >= 2;

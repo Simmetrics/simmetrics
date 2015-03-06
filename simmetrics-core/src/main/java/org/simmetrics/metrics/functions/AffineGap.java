@@ -27,7 +27,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 /**
  * A gap function that calculates the gap penalty as <code>A+(B * GapLegth)</code>.
  * 
- * 
+ * <p>
+ * This class is immutable and thread-safe.
  * 
  * @see Substitution
  * @see <a href="https://en.wikipedia.org/wiki/Gap_penalty">Wikipedia - Gap

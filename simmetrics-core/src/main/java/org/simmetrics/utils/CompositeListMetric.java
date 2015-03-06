@@ -15,6 +15,8 @@ import com.google.common.base.Preconditions;
  * simplification to the input and tokenizes the simplified input to a list. The
  * list are compared by the metric.
  * 
+ * <p>
+ * This class is immutable and thread-safe if its components are.
  * 
  * @see StringMetricBuilder
  */

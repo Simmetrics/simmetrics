@@ -34,7 +34,8 @@ import static java.lang.Math.sqrt;
  * Euclidean Distance algorithm providing a similarity measure between two lists
  * using the vector space of combined terms as the dimensions.
  *
- * 
+ * <p>
+ * This class is immutable and thread-safe.
  * @param <T>
  *            type of the token
  * 

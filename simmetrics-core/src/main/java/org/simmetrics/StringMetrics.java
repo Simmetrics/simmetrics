@@ -74,9 +74,6 @@ import org.simmetrics.tokenizers.Whitespace;
  * <li>Smith-Waterman-Gotoh Windowed Affine
  * <li>Soundex
  * </ul>
- * 
- * 
- * 
  *
  */
 public final class StringMetrics {

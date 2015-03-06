@@ -29,7 +29,8 @@ package org.simmetrics.metrics.functions;
  * A positive value indicates the characters are similar, a negative value
  * indicates they are dissimilar.
  * 
- * 
+ * <p>
+ * This class is immutable and thread-safe.
  * 
  * @see Gap
  * @see <a

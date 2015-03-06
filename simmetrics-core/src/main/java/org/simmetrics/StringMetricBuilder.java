@@ -68,9 +68,9 @@ import com.google.common.base.Predicates;
  * {@code
  * 	StringMetric metric = new StringMetricBuilder()
  * 		.with(new CosineSimilarity<String>())
- * 		.simplify(new NonWordCharacterSimplifier())
- * 		.simplify(new CaseSimplifier.Lower())
- * 		.tokenize(new WhitespaceTokenizer())
+ * 		.simplify(new NonWordCharacter())
+ * 		.simplify(new Case.Lower())
+ * 		.tokenize(new Whitespace())
  * 		.build();
  * }
  * </code>
@@ -103,8 +103,8 @@ import com.google.common.base.Predicates;
  * {@code
  * 	return new StringMetricBuilder()
  * 			.with(new SimonWhite<String>())
- * 			.tokenize(new WhitespaceTokenizer())
- * 			.tokenize(new QGramTokenizer(2))
+ * 			.tokenize(new Whitespace())
+ * 			.tokenize(new QGram(2))
  * 			.build();
  * }
  * </code>
@@ -137,9 +137,9 @@ import com.google.common.base.Predicates;
  * <code>
  * {@code
  * 				with(new CosineSimilarity<String>())
- * 				.simplify(new CaseSimplifier.Lower())
- * 				.simplify(new NonWordCharacterSimplifier())
- * 				.tokenize(new WhitespaceTokenizer())
+ * 				.simplify(new Case.Lower())
+ * 				.simplify(new WordCharacter())
+ * 				.tokenize(new Whitespace())
  * 				.filter(new MinimumLenght(3))
  * 				.build();
  * }
@@ -154,9 +154,9 @@ import com.google.common.base.Predicates;
  * 		Set<String> commonWords = ...;
  * 		
  * 				with(new CosineSimilarity<String>())
- * 				.simplify(new CaseSimplifier.Lower())
- * 				.simplify(new NonWordCharacterSimplifier())
- * 				.tokenize(new WhitespaceTokenizer())
+ * 				.simplify(new Case.Lower())
+ * 				.simplify(new NonWordCharacter())
+ * 				.tokenize(new Whitespace())
  * 				.filter(Predicates.not(Predicates.in(commonWords)))
  * 				.build();
  * }
@@ -176,10 +176,10 @@ import com.google.common.base.Predicates;
  * <code>
  * {@code
  * 				with(new CosineSimilarity<String>())
- * 				.simplify(new CaseSimplifier.Lower())
- * 				.setSimplifierCache()
- * 				.tokenize(new QGramTokenizer(2))
- * 				.setTokenizerCache()
+ * 				.simplify(new Case.Lower())
+ * 				.simplifierCache()
+ * 				.tokenize(new QGram(2))
+ * 				.tokenizerCache()
  * 				.build();
  * }
  * </code>
@@ -285,7 +285,7 @@ public class StringMetricBuilder {
 		 *            a cache to add
 		 * @return this for fluent chaining
 		 */
-		BuildStep setSimplifierCache(SimplifyingSimplifier cache);
+		BuildStep simplifierCache(SimplifyingSimplifier cache);
 
 		/**
 		 * Sets a cache for simplification chain. The cache will store the
@@ -298,7 +298,7 @@ public class StringMetricBuilder {
 		 * 
 		 * @return this for fluent chaining
 		 */
-		BuildStep setSimplifierCache(int initialCapacity, int maximumSize);
+		BuildStep simplifierCache(int initialCapacity, int maximumSize);
 
 		/**
 		 * Sets a cache for simplification chain. The cache will store the
@@ -306,7 +306,7 @@ public class StringMetricBuilder {
 		 * 
 		 * @return this for fluent chaining
 		 */
-		BuildStep setSimplifierCache();
+		BuildStep simplifierCache();
 
 		/**
 		 * Builds a metric with the given simplifier.
@@ -360,7 +360,7 @@ public class StringMetricBuilder {
 		 *            a cache to add
 		 * @return this for fluent chaining
 		 */
-		CollectionMetricTokenizerStep setSimplifierCache(
+		CollectionMetricTokenizerStep simplifierCache(
 				SimplifyingSimplifier cache);
 
 		/**
@@ -374,7 +374,7 @@ public class StringMetricBuilder {
 		 * 
 		 * @return this for fluent chaining
 		 */
-		CollectionMetricTokenizerStep setSimplifierCache(int initialCapacity,
+		CollectionMetricTokenizerStep simplifierCache(int initialCapacity,
 				int maximumSize);
 
 		/**
@@ -383,7 +383,7 @@ public class StringMetricBuilder {
 		 * 
 		 * @return this for fluent chaining
 		 */
-		CollectionMetricTokenizerStep setSimplifierCache();
+		CollectionMetricTokenizerStep simplifierCache();
 
 		/**
 		 * Adds a tokenization step to the metric.
@@ -440,7 +440,7 @@ public class StringMetricBuilder {
 		 *            a cache to add
 		 * @return this for fluent chaining
 		 */
-		BuildStep setTokenizerCache(TokenizingTokenizer cache);
+		BuildStep tokenizerCache(TokenizingTokenizer cache);
 
 		/**
 		 * Sets a cache for simplification chain. The cache will store the
@@ -453,7 +453,7 @@ public class StringMetricBuilder {
 		 * 
 		 * @return this for fluent chaining
 		 */
-		BuildStep setTokenizerCache(int initialCapacity, int maximumSize);
+		BuildStep tokenizerCache(int initialCapacity, int maximumSize);
 
 		/**
 		 * Sets a cache for simplification chain. The cache will store the
@@ -461,7 +461,7 @@ public class StringMetricBuilder {
 		 * 
 		 * @return this for fluent chaining
 		 */
-		BuildStep setTokenizerCache();
+		BuildStep tokenizerCache();
 
 		/**
 		 * Builds a string metric that will use the given simplification,
@@ -517,21 +517,21 @@ public class StringMetricBuilder {
 		}
 
 		@Override
-		public BuildStep setSimplifierCache(SimplifyingSimplifier cache) {
+		public BuildStep simplifierCache(SimplifyingSimplifier cache) {
 			checkNotNull(cache);
 			this.cache = cache;
 			return this;
 		}
 
 		@Override
-		public BuildStep setSimplifierCache(int initialCapacity, int maximumSize) {
-			return setSimplifierCache(new CachingSimplifier(initialCapacity,
+		public BuildStep simplifierCache(int initialCapacity, int maximumSize) {
+			return simplifierCache(new CachingSimplifier(initialCapacity,
 					maximumSize));
 		}
 
 		@Override
-		public BuildStep setSimplifierCache() {
-			return setSimplifierCache(CACHE_SIZE, CACHE_SIZE);
+		public BuildStep simplifierCache() {
+			return simplifierCache(CACHE_SIZE, CACHE_SIZE);
 		}
 
 		@Override
@@ -601,24 +601,24 @@ public class StringMetricBuilder {
 				Tokenizer tokenizer);
 
 		@Override
-		public BuildStep setTokenizerCache(TokenizingTokenizer cache) {
+		public BuildStep tokenizerCache(TokenizingTokenizer cache) {
 			checkNotNull(cache);
 			this.tokenCache = cache;
 			return this;
 		}
 
 		@Override
-		public BuildStep setTokenizerCache(int initialCapacity, int maximumSize) {
-			return setTokenizerCache(new CachingTokenizer(initialCapacity, maximumSize));
+		public BuildStep tokenizerCache(int initialCapacity, int maximumSize) {
+			return tokenizerCache(new CachingTokenizer(initialCapacity, maximumSize));
 		}
 
 		@Override
-		public BuildStep setTokenizerCache() {
-			return setTokenizerCache(CACHE_SIZE, CACHE_SIZE);
+		public BuildStep tokenizerCache() {
+			return tokenizerCache(CACHE_SIZE, CACHE_SIZE);
 		}
 
 		@Override
-		public CollectionMetricTokenizerStep setSimplifierCache(
+		public CollectionMetricTokenizerStep simplifierCache(
 				SimplifyingSimplifier cache) {
 			checkNotNull(cache);
 			this.stringCache = cache;
@@ -626,15 +626,15 @@ public class StringMetricBuilder {
 		}
 
 		@Override
-		public CollectionMetricTokenizerStep setSimplifierCache(
+		public CollectionMetricTokenizerStep simplifierCache(
 				int initialCapacity, int maximumSize) {
-			return setSimplifierCache(new CachingSimplifier(initialCapacity,
+			return simplifierCache(new CachingSimplifier(initialCapacity,
 					maximumSize));
 		}
 
 		@Override
-		public CollectionMetricTokenizerStep setSimplifierCache() {
-			return setSimplifierCache(CACHE_SIZE, CACHE_SIZE);
+		public CollectionMetricTokenizerStep simplifierCache() {
+			return simplifierCache(CACHE_SIZE, CACHE_SIZE);
 		}
 
 		@Override

@@ -35,12 +35,13 @@ import org.simmetrics.SetMetric;
  * <p>
  * 
  * This metric is identical to the matching coefficient which operates on lists.
- * 
+ * <p>
+ * This class is immutable and thread-safe.
  * 
  * @see <a href="http://en.wikipedia.org/wiki/Jaccard_index">Wikipedia - Jaccard
  *      index</a>
  * 
- *  * 
+ * 
  * @param <T>
  *            type of the token
  * 

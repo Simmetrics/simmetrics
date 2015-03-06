@@ -25,6 +25,7 @@ import static org.simmetrics.StringMetricBuilder.with;
 import java.util.Locale;
 
 import org.simmetrics.StringMetric;
+import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.metrics.*;
 import org.simmetrics.simplifiers.Case;
 import org.simmetrics.simplifiers.WordCharacters;

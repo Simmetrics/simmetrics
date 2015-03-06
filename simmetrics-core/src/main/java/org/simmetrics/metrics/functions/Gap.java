@@ -29,7 +29,8 @@ package org.simmetrics.metrics.functions;
  * The penalty returned must be non-positive value to be consistent with the
  * results of the substitution function.
  * 
- * 
+ * <p>
+ * This class is immutable and thread-safe.
  * 
  * 
  * @see Substitution

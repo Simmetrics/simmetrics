@@ -34,11 +34,11 @@ import static java.lang.Math.abs;
  * Block distance algorithm whereby vector space block distance between tokens
  * is used to determine a similarity. Also known as L1 Distance or City block
  * distance.
+ * <p>
+ * This class is immutable and thread-safe.
  * 
  * @see <a href="http://en.wikipedia.org/wiki/Taxicab_geometry">Wikipedia -
  *      Taxicab geometry</a>
- * 
- * 
  * @param <T>
  *            type of token
  */

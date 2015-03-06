@@ -1,6 +1,9 @@
 Change Log
 ==========
 
+## Since 3.0.1 ##
+  - Fixed dependency on snapshot version of core in example moodule.
+
 ## Since 3.0.0 ##
 
  - Further crud removal

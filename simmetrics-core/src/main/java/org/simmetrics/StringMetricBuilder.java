@@ -68,9 +68,9 @@ import com.google.common.base.Predicates;
  * {@code
  * 	StringMetric metric = new StringMetricBuilder()
  * 		.with(new CosineSimilarity<String>())
- * 		.simplify(new NonWordCharacterSimplifier())
- * 		.simplify(new CaseSimplifier.Lower())
- * 		.tokenize(new WhitespaceTokenizer())
+ * 		.simplify(new NonWordCharacter())
+ * 		.simplify(new Case.Lower())
+ * 		.tokenize(new Whitespace())
  * 		.build();
  * }
  * </code>
@@ -103,8 +103,8 @@ import com.google.common.base.Predicates;
  * {@code
  * 	return new StringMetricBuilder()
  * 			.with(new SimonWhite<String>())
- * 			.tokenize(new WhitespaceTokenizer())
- * 			.tokenize(new QGramTokenizer(2))
+ * 			.tokenize(new Whitespace())
+ * 			.tokenize(new QGram(2))
  * 			.build();
  * }
  * </code>
@@ -137,9 +137,9 @@ import com.google.common.base.Predicates;
  * <code>
  * {@code
  * 				with(new CosineSimilarity<String>())
- * 				.simplify(new CaseSimplifier.Lower())
- * 				.simplify(new NonWordCharacterSimplifier())
- * 				.tokenize(new WhitespaceTokenizer())
+ * 				.simplify(new Case.Lower())
+ * 				.simplify(new WordCharacter())
+ * 				.tokenize(new Whitespace())
  * 				.filter(new MinimumLenght(3))
  * 				.build();
  * }
@@ -154,9 +154,9 @@ import com.google.common.base.Predicates;
  * 		Set<String> commonWords = ...;
  * 		
  * 				with(new CosineSimilarity<String>())
- * 				.simplify(new CaseSimplifier.Lower())
- * 				.simplify(new NonWordCharacterSimplifier())
- * 				.tokenize(new WhitespaceTokenizer())
+ * 				.simplify(new Case.Lower())
+ * 				.simplify(new NonWordCharacter())
+ * 				.tokenize(new Whitespace())
  * 				.filter(Predicates.not(Predicates.in(commonWords)))
  * 				.build();
  * }
@@ -176,9 +176,9 @@ import com.google.common.base.Predicates;
  * <code>
  * {@code
  * 				with(new CosineSimilarity<String>())
- * 				.simplify(new CaseSimplifier.Lower())
+ * 				.simplify(new Case.Lower())
  * 				.simplifierCache()
- * 				.tokenize(new QGramTokenizer(2))
+ * 				.tokenize(new QGram(2))
  * 				.tokenizerCache()
  * 				.build();
  * }

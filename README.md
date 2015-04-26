@@ -1,4 +1,4 @@
-SimMetrics [![Build Status](https://travis-ci.org/mpkorstanje/simmetrics.svg)](https://travis-ci.org/mpkorstanje/simmetrics)
+SimMetrics [![Build Status](https://travis-ci.org/Simmetrics/simmetrics.svg)](https://travis-ci.org/Simmetrics/simmetrics)
 ==========
 
 SimMetrics is a java library of Similarity or Distance Metrics, e.g. Levenshtein distance, Cosine similarity, that provide float based similarity measures between String data. All metrics return consistent measures rather than unbounded similarity scores. 

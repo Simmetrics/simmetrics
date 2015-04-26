@@ -38,7 +38,7 @@ import java.util.Set;
  * Implementations may not modify the contents of the set. Sets should be
  * treated as if wrapped by {@link Collections#unmodifiableSet(Set)}.
  * 
- * @author mpkorstanje
+ * 
  * @param <T>
  *            the type of elements contained in the sets
  *

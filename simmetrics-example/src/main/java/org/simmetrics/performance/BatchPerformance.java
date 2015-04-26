@@ -28,8 +28,8 @@ import static org.simmetrics.StringMetrics.compare;
 
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.SimonWhite;
-import org.simmetrics.tokenizers.QGramTokenizer;
-import org.simmetrics.tokenizers.WhitespaceTokenizer;
+import org.simmetrics.tokenizers.QGram;
+import org.simmetrics.tokenizers.Whitespace;
 
 import com.google.common.base.Stopwatch;
 
@@ -79,8 +79,8 @@ public class BatchPerformance {
 	private static void testCompareUncached() {
 		StringMetric metric = 
 				with(new SimonWhite<String>())
-				.tokenize(new WhitespaceTokenizer())
-				.tokenize(new QGramTokenizer(2))
+				.tokenize(new Whitespace())
+				.tokenize(new QGram(2))
 				.build();
 
 		Stopwatch sw = Stopwatch.createStarted();
@@ -102,9 +102,9 @@ public class BatchPerformance {
 
 		StringMetric metric = 
 				with(new SimonWhite<String>())
-				.tokenize(new WhitespaceTokenizer())
-				.tokenize(new QGramTokenizer(2))
-				.setTokenizerCache()
+				.tokenize(new Whitespace())
+				.tokenize(new QGram(2))
+				.tokenizerCache()
 				.build();
 
 		Stopwatch sw = Stopwatch.createStarted();

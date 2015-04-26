@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.simmetrics.ListMetric;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.MongeElkan;
-import org.simmetrics.tokenizers.WhitespaceTokenizer;
+import org.simmetrics.tokenizers.Whitespace;
 
 public class MongeElkanTest extends ListMetricTest {
 
@@ -50,7 +50,7 @@ public class MongeElkanTest extends ListMetricTest {
 	public void test1() {
 		testSimilarity(
 				getMetric(),
-				new WhitespaceTokenizer(),
+				new Whitespace(),
 				new T(0.5000f, "test string1", "test string2"),
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.7500f, "a b c d", "a b c e"),

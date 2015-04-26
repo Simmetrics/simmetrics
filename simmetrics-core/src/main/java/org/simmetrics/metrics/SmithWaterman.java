@@ -29,10 +29,10 @@ import static java.lang.Math.min;
 import static org.simmetrics.utils.Math.max3;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.costfunctions.AffineGap;
-import org.simmetrics.metrics.costfunctions.Gap;
-import org.simmetrics.metrics.costfunctions.MatchMismatch;
-import org.simmetrics.metrics.costfunctions.Substitution;
+import org.simmetrics.metrics.functions.AffineGap;
+import org.simmetrics.metrics.functions.Gap;
+import org.simmetrics.metrics.functions.MatchMismatch;
+import org.simmetrics.metrics.functions.Substitution;
 
 /**
  * Smith-Waterman algorithm providing a similarity measure between two strings.
@@ -40,8 +40,10 @@ import org.simmetrics.metrics.costfunctions.Substitution;
  * <p>
  * Implementation uses implementation by Smith and Waterman. This implementation
  * uses quadratic space and cubic time.
+ * <p>
+ * This class is immutable and thread-safe if its substitution and gap functions are.
  * 
- * @author mpkorstanje
+ * 
  * @see NeedlemanWunch
  * @see SmithWatermanGotoh * @see <a
  *      href="https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm"
@@ -55,8 +57,8 @@ public class SmithWaterman implements StringMetric {
 
 	/**
 	 * Constructs a new Smith Waterman metric. Uses an affine gap of
-	 * <code>-5 - gapLength</code> a -3 substitution penalty for mismatches, 5
-	 * for mathes.
+	 * <code>-5.0 - gapLength</code> a <code>-3.0</code> substitution penalty
+	 * for mismatches, <code>5.0</code> for matches.
 	 * 
 	 */
 	public SmithWaterman() {
@@ -72,7 +74,7 @@ public class SmithWaterman implements StringMetric {
 	 * @param substitution
 	 *            a substitution function to score substitutions by
 	 * @param windowSize
-	 *            a non-negative window in which 
+	 *            a non-negative window in which
 	 */
 	public SmithWaterman(Gap gap, Substitution substitution, int windowSize) {
 		checkNotNull(gap);
@@ -121,10 +123,10 @@ public class SmithWaterman implements StringMetric {
 			max = max(max, d[i][0]);
 
 		}
-		
+
 		// Initialize edge
 		for (int j = 1; j < m; j++) {
-			
+
 			// Find most optimal insertion
 			float maxGapCost = 0;
 			for (int k = max(1, j - windowSize); k < j; k++) {
@@ -153,7 +155,7 @@ public class SmithWaterman implements StringMetric {
 					maxGapCost = max(maxGapCost,
 							d[i][j - k] + gap.value(j - k, j));
 				}
-				
+
 				// Find most optimal of insertion, deletion and substitution
 				d[i][j] = max3(0, maxGapCost,
 						d[i - 1][j - 1] + substitution.compare(a, i, b, j));

@@ -20,8 +20,8 @@
  */
 package org.simmetrics.metrics.costfunctions;
 
-import org.simmetrics.metrics.costfunctions.AffineGap;
-import org.simmetrics.metrics.costfunctions.Gap;
+import org.simmetrics.metrics.functions.AffineGap;
+import org.simmetrics.metrics.functions.Gap;
 
 
 public class AffineGap5_1Test extends GapCostTest {

@@ -9,11 +9,25 @@ import org.simmetrics.tokenizers.Tokenizer;
 
 import com.google.common.base.Joiner;
 
+/**
+ * Tokenizer composed of multiple tokenizers. Applies the tokenizers in their
+ * iteration order.
+ * 
+ * <p>
+ * This class is immutable and thread-safe if its components are.
+ *
+ */
 public final class CompositeTokenizer implements Tokenizer {
 
-	private final List<Tokenizer> tokenizers;
+	private final Iterable<Tokenizer> tokenizers;
 
-	public CompositeTokenizer(List<Tokenizer> tokenizers) {
+	/**
+	 * Constructs a new composite tokenizer.
+	 * 
+	 * @param tokenizers
+	 *            an iteration of tokenizers
+	 */
+	public CompositeTokenizer(Iterable<Tokenizer> tokenizers) {
 		this.tokenizers = tokenizers;
 	}
 
@@ -21,16 +35,16 @@ public final class CompositeTokenizer implements Tokenizer {
 	public List<String> tokenizeToList(final String input) {
 		List<String> tokens = new ArrayList<>(1);
 		tokens.add(input);
-		
+
 		List<String> newTokens = new ArrayList<>(input.length());
-		for(Tokenizer t : tokenizers){
-			for(String token : tokens){
+		for (Tokenizer t : tokenizers) {
+			for (String token : tokens) {
 				newTokens.addAll(t.tokenizeToList(token));
 			}
 			tokens = newTokens;
 			newTokens = new ArrayList<>(input.length());
 		}
-		
+
 		return tokens;
 	}
 
@@ -43,16 +57,16 @@ public final class CompositeTokenizer implements Tokenizer {
 
 		Set<String> tokens = new HashSet<>(1);
 		tokens.add(input);
-		
+
 		Set<String> newTokens = new HashSet<>(input.length());
-		for(Tokenizer t : tokenizers){
-			for(String token : tokens){
+		for (Tokenizer t : tokenizers) {
+			for (String token : tokens) {
 				newTokens.addAll(t.tokenizeToList(token));
 			}
 			tokens = newTokens;
 			newTokens = new HashSet<>(input.length());
 		}
-		
+
 		return tokens;
 	}
 

@@ -20,69 +20,56 @@
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.simmetrics.tokenizers;
+package org.simmetrics.metrics.functions;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.common.base.Preconditions;
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
- * Basic Q-Gram tokenizer for a variable q. Returns a list with the original
- * input for tokens shorter then q.
+ * A gap function that takes into account the length the gap. Assigns a penalty
+ * that is linear in the length of the gap.
  * 
- * @author mpkorstanje
+ * <p>
+ * This class is immutable and thread-safe.
  *
+ * @see <a href="https://en.wikipedia.org/wiki/Gap_penalty">Wikipedia - Gap
+ *      Penalty</a>
  */
-public class QGramTokenizer extends AbstractTokenizer {
+public final class LinearGap implements Gap {
 
-	private final int q;
-
-	/**
-	 * Constructs a q-gram tokenizer with the given q.
-	 * 
-	 * @param q
-	 *            size of the tokens
-	 * 
-	 */
-
-	public QGramTokenizer(int q) {
-		Preconditions.checkArgument(q > 0, "q must be greater then 0");
-		this.q = q;
-	}
+	private final float gapValue;
 
 	/**
-	 * Returns the q of this tokenizer.
+	 * Constructs a linear gap function that scales the length of a gap with
+	 * <code>gapValue</code>.
 	 * 
-	 * @return the q of this tokenizer
+	 * @param gapValue
+	 *            a constant gap value
 	 */
-	public int getQ() {
-		return q;
+	public LinearGap(float gapValue) {
+		checkArgument(gapValue <= 0.0f);
+
+		this.gapValue = gapValue;
 	}
 
 	@Override
-	public List<String> tokenizeToList(final String input) {
-		final List<String> ret = new ArrayList<>();
+	public final float value(int fromIndex, int toIndex) {
+		checkArgument(fromIndex < toIndex, "fromIndex must be before toIndex");
+		return gapValue * (toIndex - fromIndex - 1);
+	}
 
-		if (input.isEmpty()) {
-			return ret;
-		}
+	@Override
+	public final float max() {
+		return 0.0f;
+	}
 
-		if (input.length() <= q) {
-			ret.add(input);
-			return ret;
-		}
-
-		for (int i = 0; i < input.length() - q + 1; i++) {
-			ret.add(input.substring(i, i + q));
-		}
-
-		return ret;
+	@Override
+	public final float min() {
+		return Float.NEGATIVE_INFINITY;
 	}
 
 	@Override
 	public String toString() {
-		return "QGramTokenizer [q=" + q + "]";
+		return "LinearGap [gapValue=" + gapValue + "]";
 	}
 
 }

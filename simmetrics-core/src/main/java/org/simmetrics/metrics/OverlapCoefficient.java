@@ -33,10 +33,11 @@ import org.simmetrics.SetMetric;
  * where it is determined to what degree a set is a subset of another.
  * <p>
  * <code>overlap_coefficient(q,r) = (|q & r|) / min{|q|, |r|}</code>
- * 
+ * <p>
  * Related to the Jaccard index.
  * 
- * @author mpkorstanje
+ * <p>
+ * This class is immutable and thread-safe.
  * 
  * @param <T>
  *            type of the token

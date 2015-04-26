@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -23,15 +24,25 @@ package org.simmetrics.utils;
 
 import static com.google.common.base.Joiner.on;
 
-import java.util.List;
-
 import org.simmetrics.simplifiers.Simplifier;
 
+/**
+ * Simplifier composed of multiple simplifiers. Applies the simplifiers in their
+ * iteration order.
+ * <p>
+ * This class is immutable and thread-safe if its components are.
+ */
 public class CompositeSimplifier implements Simplifier {
 
-	private final List<Simplifier> simplifiers;
-	
-	public CompositeSimplifier(List<Simplifier> simplifiers) {
+	private final Iterable<Simplifier> simplifiers;
+
+	/**
+	 * Constructs a new composite simplifier.
+	 * 
+	 * @param simplifiers
+	 *            an iteration of simplifiers
+	 */
+	public CompositeSimplifier(Iterable<Simplifier> simplifiers) {
 		this.simplifiers = simplifiers;
 	}
 

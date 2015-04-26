@@ -11,9 +11,10 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
@@ -27,19 +28,20 @@ import java.util.Locale;
  * Simplifiers for upper and lower case. Allows a locale to be set for the
  * correct transformation.
  * 
- * @author M.P. Korstanje
+ * <p>
+ * This class is immutable and thread-safe.
  *
  */
-public abstract class CaseSimplifier implements Simplifier {
+public abstract class Case implements Simplifier {
 
 	/**
 	 * Lower case simplifier. Transforms all upper case characters into their
 	 * lower case equivalent.
 	 * 
-	 * @author M.P. Korstanje
+	 * 
 	 *
 	 */
-	public static class Lower extends CaseSimplifier {
+	public static class Lower extends Case {
 
 		private final Locale locale;
 
@@ -51,7 +53,6 @@ public abstract class CaseSimplifier implements Simplifier {
 		 *            to use in transformation
 		 */
 		public Lower(Locale locale) {
-			super();
 			this.locale = locale;
 		}
 
@@ -61,7 +62,7 @@ public abstract class CaseSimplifier implements Simplifier {
 		 * 
 		 * */
 		public Lower() {
-			locale = Locale.getDefault();
+			this(Locale.getDefault());
 		}
 
 		@Override
@@ -79,10 +80,10 @@ public abstract class CaseSimplifier implements Simplifier {
 	 * Upper case simplifier. Transforms all lower case characters into their
 	 * upper case equivalent.
 	 * 
-	 * @author M.P. Korstanje
+	 * 
 	 *
 	 */
-	public static class Upper extends CaseSimplifier {
+	public static class Upper extends Case {
 
 		private final Locale locale;
 

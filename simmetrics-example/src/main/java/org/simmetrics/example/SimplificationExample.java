@@ -25,16 +25,16 @@ import static org.simmetrics.StringMetricBuilder.with;
 
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.SimonWhite;
-import org.simmetrics.simplifiers.CaseSimplifier;
-import org.simmetrics.simplifiers.NonDiacriticSimplifier;
-import org.simmetrics.tokenizers.QGramTokenizer;
-import org.simmetrics.tokenizers.WhitespaceTokenizer;
+import org.simmetrics.simplifiers.Case;
+import org.simmetrics.simplifiers.NonDiacritics;
+import org.simmetrics.tokenizers.QGram;
+import org.simmetrics.tokenizers.Whitespace;
 
 /**
  * SimpleExample implements a simple example to demonstrate the ease to use a
  * similarity metric.
  * 
- * @author mpkorstanje
+ * 
  */
 public class SimplificationExample {
 
@@ -51,10 +51,10 @@ public class SimplificationExample {
 
 		StringMetric metric = 
 				with(new SimonWhite<String>())
-				.simplify(new CaseSimplifier.Lower())
-				.simplify(new NonDiacriticSimplifier())
-				.tokenize(new WhitespaceTokenizer())
-				.tokenize(new QGramTokenizer(2))
+				.simplify(new Case.Lower())
+				.simplify(new NonDiacritics())
+				.tokenize(new Whitespace())
+				.tokenize(new QGram(2))
 				.build();
 
 		final float result = metric.compare(str1, str2); //0.5590

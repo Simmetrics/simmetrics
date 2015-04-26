@@ -33,13 +33,15 @@ import org.simmetrics.SetMetric;
  * <code>dices coefficient (a,b) = (2 * |a & b |) / (|a|  + |b|)</code>
  * <p>
  * This metric is identical to Simon White which operates on lists.
+ * <p>
+ * This class is immutable and thread-safe.
  * 
  * @see SimonWhite
  * @see <a
  *      href="http://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient">Wikipedia
  *      - Sørensen–Dice coefficient</a>
  * 
- * @author mpkorstanje
+ * 
  * @param <T>
  *            type of the token
  */

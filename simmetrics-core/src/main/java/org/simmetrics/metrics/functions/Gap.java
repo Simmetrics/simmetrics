@@ -20,55 +20,49 @@
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.simmetrics.metrics.costfunctions;
-
-import static com.google.common.base.Preconditions.checkArgument;
+package org.simmetrics.metrics.functions;
 
 /**
- * A gap function that takes into account the length the gap. Assigns a penalty
- * that is linear in the length of the gap.
+ * A gap function assigns penalty to the creation of a gap in a string when
+ * matching against another string.
+ * <p>
+ * The penalty returned must be non-positive value to be consistent with the
+ * results of the substitution function.
  * 
- * @author mpkorstanje
- *
+ * <p>
+ * This class is immutable and thread-safe.
+ * 
+ * 
+ * @see Substitution
  * @see <a href="https://en.wikipedia.org/wiki/Gap_penalty">Wikipedia - Gap
  *      Penalty</a>
+ *
  */
-public final class LinearGap implements Gap {
-
-	private final float gapValue;
+public interface Gap {
 
 	/**
-	 * Constructs a linear gap function that scales the length of a gap with
-	 * <code>gapValue</code>.
+	 * Returns the penalty for creating a gap from <code>fromIndex</code> to
+	 * <code>toIndex -1</code>. The value must be non-positive.
 	 * 
-	 * @param gapValue
-	 *            a constant gap value
+	 * @param fromIndex
+	 *            index at which the gap starts
+	 * @param toIndex
+	 *            index after the last gap entry
+	 * @return a gap penalty
 	 */
-	public LinearGap(float gapValue) {
-		checkArgument(gapValue <= 0.0f);
+	public float value(int fromIndex, int toIndex);
 
-		this.gapValue = gapValue;
-	}
+	/**
+	 * Returns the minimum value a gap can have
+	 * 
+	 * @return the minimum value a gap can have
+	 */
+	public float max();
 
-	@Override
-	public final float value(int fromIndex, int toIndex) {
-		checkArgument(fromIndex < toIndex, "fromIndex must be before toIndex");
-		return gapValue * (toIndex - fromIndex - 1);
-	}
-
-	@Override
-	public final float max() {
-		return 0.0f;
-	}
-
-	@Override
-	public final float min() {
-		return Float.NEGATIVE_INFINITY;
-	}
-
-	@Override
-	public String toString() {
-		return "LinearGap [gapValue=" + gapValue + "]";
-	}
-
+	/**
+	 * Returns the maximum value a gap can have
+	 * 
+	 * @return the maximum value a gap can have
+	 */
+	public float min();
 }

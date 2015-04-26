@@ -24,8 +24,8 @@ package org.simmetrics.metrics;
 import org.junit.Test;
 import org.simmetrics.ListMetric;
 import org.simmetrics.metrics.BlockDistance;
-import org.simmetrics.tokenizers.QGramTokenizer;
-import org.simmetrics.tokenizers.WhitespaceTokenizer;
+import org.simmetrics.tokenizers.QGram;
+import org.simmetrics.tokenizers.Whitespace;
 
 public class BlockDistanceTest extends ListMetricTest {
 
@@ -39,7 +39,7 @@ public class BlockDistanceTest extends ListMetricTest {
 	public void test1() {
 		testSimilarity(
 				getMetric(), 
-				new WhitespaceTokenizer(), 
+				new Whitespace(), 
 				new T(0.5000f, "test string1", "test string2"), 
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.7500f, "a b c d", "a b c e"));
@@ -49,7 +49,7 @@ public class BlockDistanceTest extends ListMetricTest {
 	public void test2() {
 		testSimilarity(
 				getMetric(),
-				new QGramTokenizer(1) ,
+				new QGram(1) ,
 				new T(0.8333f, "Healed", "Sealed"),
 				new T(0.6153f, "Healed", "Healthy"),
 				new T(0.7272f, "Healed", "Heard"),

@@ -20,7 +20,7 @@
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.simmetrics.metrics.costfunctions;
+package org.simmetrics.metrics.functions;
 
 /**
  * A substitution function assigns value to the substitution of one character
@@ -29,7 +29,8 @@ package org.simmetrics.metrics.costfunctions;
  * A positive value indicates the characters are similar, a negative value
  * indicates they are dissimilar.
  * 
- * @author mpkorstanje
+ * <p>
+ * This class is immutable and thread-safe.
  * 
  * @see Gap
  * @see <a

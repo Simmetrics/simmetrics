@@ -37,7 +37,7 @@ import org.simmetrics.StringMetricBuilder;
  * A simplifier can be added onto a metric through the
  * {@link StringMetricBuilder}.
  * 
- * @author M.P. Korstanje
+ * 
  *
  */
 public interface Simplifier {

@@ -23,8 +23,8 @@
 package org.simmetrics.metrics;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.costfunctions.MatchMismatch;
-import org.simmetrics.metrics.costfunctions.Substitution;
+import org.simmetrics.metrics.functions.MatchMismatch;
+import org.simmetrics.metrics.functions.Substitution;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -41,7 +41,9 @@ import static org.simmetrics.utils.Math.max4;
  * molecular biology 162: 705". This implementation uses constant space and
  * quadratic time.
  * 
- * @author mpkorstanje
+ * <p>
+ * This class is immutable and thread-safe if its substitution functions are.
+ * 
  * @see NeedlemanWunch
  * @see SmithWaterman
  * @see <a

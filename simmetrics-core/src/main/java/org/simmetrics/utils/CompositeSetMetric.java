@@ -11,11 +11,12 @@ import org.simmetrics.tokenizers.Tokenizer;
 import com.google.common.base.Preconditions;
 
 /**
- * String metric that is composed of a simplifier, tokenizer and set metric.
- * Applies simplification to the input and tokenizes the simplified input to a
- * set. The sets are compared by the metric.
+ * String metric composed of a simplifier, tokenizer and set metric. Applies
+ * simplification to the input and tokenizes the simplified input to a set. The
+ * sets are compared by the metric.
  * 
- * @author mpkorstanje
+ * <p>
+ * This class is immutable and thread-safe if its components are.
  * 
  * @see StringMetricBuilder
  *
@@ -27,10 +28,14 @@ public final class CompositeSetMetric implements StringMetric {
 	private final Tokenizer tokenizer;
 
 	/**
+	 * Creates a new composite set metric.
 	 * 
 	 * @param metric
+	 *            a list metric
 	 * @param simplifier
+	 *            a simplifier
 	 * @param tokenizer
+	 *            a tokenizer
 	 */
 	public CompositeSetMetric(Metric<Set<String>> metric,
 			Simplifier simplifier, Tokenizer tokenizer) {

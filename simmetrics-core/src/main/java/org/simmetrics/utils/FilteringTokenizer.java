@@ -15,10 +15,9 @@ import com.google.common.base.Predicate;
 
 /**
  * Tokenizer that filters tokens that don't match a predicate.
+ * <p>
+ * This class is immutable and thread-safe if its components are.
  * 
- * 
- * @author M.P. Korstanje
- *
  * @see StringMetricBuilder
  */
 public final class FilteringTokenizer implements Tokenizer {

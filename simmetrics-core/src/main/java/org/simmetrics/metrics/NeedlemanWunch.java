@@ -30,16 +30,17 @@ import static org.simmetrics.utils.Math.min3;
 import java.util.Objects;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.costfunctions.MatchMismatch;
-import org.simmetrics.metrics.costfunctions.Substitution;
+import org.simmetrics.metrics.functions.MatchMismatch;
+import org.simmetrics.metrics.functions.Substitution;
 
 /**
  * Needleman-Wunsch algorithm providing a similarity measure between two
  * strings.
  * <p>
  * Implementation uses linear space.
+ * <p>
+ * This class is immutable and thread-safe if its substitution function is.
  * 
- * @author mpkorstanje
  * @see SmithWatermanGotoh
  * @see SmithWaterman
  * @see <a
@@ -55,10 +56,24 @@ public class NeedlemanWunch implements StringMetric {
 
 	private final float gapValue;
 
+	/**
+	 * Constructs a new Needleman-Wunch metric. Uses an gap of <code>-2.0</code>
+	 * a <code>-1.0</code> substitution penalty for mismatches, <code>0</code>
+	 * for matches.
+	 * 
+	 */
 	public NeedlemanWunch() {
 		this(-2.0f, MATCH_0_MISMATCH_1);
 	}
 
+	/**
+	 * Constructs a new Needleman-Wunch metric.
+	 * 
+	 * @param gapValue
+	 *            a non-positive penalty for gaps
+	 * @param substitution
+	 *            a substitution function for mismatched characters
+	 */
 	public NeedlemanWunch(float gapValue, Substitution substitution) {
 		checkArgument(gapValue <= 0.0f);
 		checkNotNull(substitution);

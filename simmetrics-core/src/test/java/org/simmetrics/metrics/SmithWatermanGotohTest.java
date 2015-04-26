@@ -23,7 +23,6 @@ package org.simmetrics.metrics;
 
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.SmithWatermanGotoh;
-import org.simmetrics.metrics.StringMetricTest.T;
 
 public class SmithWatermanGotohTest extends StringMetricTest {
 

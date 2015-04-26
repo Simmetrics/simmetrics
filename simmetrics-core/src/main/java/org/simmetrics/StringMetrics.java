@@ -40,10 +40,10 @@ import org.simmetrics.metrics.OverlapCoefficient;
 import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.metrics.SmithWaterman;
 import org.simmetrics.metrics.SmithWatermanGotoh;
-import org.simmetrics.simplifiers.SoundexSimplifier;
-import org.simmetrics.tokenizers.QGramExtendedTokenizer;
-import org.simmetrics.tokenizers.QGramTokenizer;
-import org.simmetrics.tokenizers.WhitespaceTokenizer;
+import org.simmetrics.simplifiers.Soundex;
+import org.simmetrics.tokenizers.QGramExtended;
+import org.simmetrics.tokenizers.QGram;
+import org.simmetrics.tokenizers.Whitespace;
 
 /**
  * Utility class for StringMetrics.
@@ -74,9 +74,6 @@ import org.simmetrics.tokenizers.WhitespaceTokenizer;
  * <li>Smith-Waterman-Gotoh Windowed Affine
  * <li>Soundex
  * </ul>
- * 
- * 
- * @author mpkorstanje
  *
  */
 public final class StringMetrics {
@@ -167,58 +164,58 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link WhitespaceTokenizer} and the
+	 * Returns a string metric that uses a {@link Whitespace} and the
 	 * {@link BlockDistance} metric.
 	 * 
 	 * @return a block distance metric
 	 */
 	public static StringMetric blockDistance() {
 		return with(new BlockDistance<String>())
-				.tokenize(new WhitespaceTokenizer()).build();
+				.tokenize(new Whitespace()).build();
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link WhitespaceTokenizer} and the
+	 * Returns a string metric that uses a {@link Whitespace} and the
 	 * {@link CosineSimilarity} metric.
 	 * 
 	 * @return a cosine similarity metric
 	 */
 	public static StringMetric cosineSimilarity() {
 		return with(new CosineSimilarity<String>())
-				.tokenize(new WhitespaceTokenizer()).build();
+				.tokenize(new Whitespace()).build();
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link WhitespaceTokenizer} and the
+	 * Returns a string metric that uses a {@link Whitespace} and the
 	 * {@link DiceSimilarity} metric.
 	 * 
 	 * @return a dice similarity metric
 	 */
 	public static StringMetric diceSimilarity() {
 		return with(new DiceSimilarity<String>())
-				.tokenize(new WhitespaceTokenizer()).build();
+				.tokenize(new Whitespace()).build();
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link WhitespaceTokenizer} and the
+	 * Returns a string metric that uses a {@link Whitespace} and the
 	 * {@link EuclideanDistance} metric.
 	 * 
 	 * @return a Euclidean distance similarity metric
 	 */
 	public static StringMetric euclideanDistance() {
 		return with(new EuclideanDistance<String>())
-				.tokenize(new WhitespaceTokenizer()).build();
+				.tokenize(new Whitespace()).build();
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link WhitespaceTokenizer} and the
+	 * Returns a string metric that uses a {@link Whitespace} and the
 	 * {@link JaccardSimilarity} metric.
 	 * 
 	 * @return a Jaccard similarity metric
 	 */
 	public static StringMetric jaccardSimilarity() {
 		return with(new JaccardSimilarity<String>())
-				.tokenize(new WhitespaceTokenizer()).build();
+				.tokenize(new Whitespace()).build();
 	}
 
 	/**
@@ -249,19 +246,19 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link WhitespaceTokenizer} and the
+	 * Returns a string metric that uses a {@link Whitespace} and the
 	 * {@link MatchingCoefficient} metric.
 	 * 
 	 * @return a matching coefficient metric
 	 */
 	public static StringMetric matchingCoefficient() {
 		return with(new MatchingCoefficient<String>())
-				.tokenize(new WhitespaceTokenizer())
+				.tokenize(new Whitespace())
 				.build();
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link WhitespaceTokenizer} and the
+	 * Returns a string metric that uses a {@link Whitespace} and the
 	 * {@link MongeElkan} metric with an internal {@link SmithWatermanGotoh}
 	 * metric.
 	 * 
@@ -270,7 +267,7 @@ public final class StringMetrics {
 	public static StringMetric mongeElkan() {
 		return with(
 				new MongeElkan(new SmithWatermanGotoh()))
-				.tokenize(new WhitespaceTokenizer())
+				.tokenize(new Whitespace())
 				.build();
 	}
 
@@ -284,38 +281,38 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link WhitespaceTokenizer} and the
+	 * Returns a string metric that uses a {@link Whitespace} and the
 	 * {@link OverlapCoefficient} metric.
 	 * 
 	 * @return a overlap coefficient metric
 	 */
 	public static StringMetric overlapCoefficient() {
 		return with(new OverlapCoefficient<String>())
-				.tokenize(new WhitespaceTokenizer()).build();
+				.tokenize(new Whitespace()).build();
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link QGramExtendedTokenizer} for
+	 * Returns a string metric that uses a {@link QGramExtended} for
 	 * {@code q=3} and the {@link BlockDistance} metric.
 	 * 
 	 * @return a q-grams distance metric
 	 */
 	public static StringMetric qGramsDistance() {
 		return with(new BlockDistance<String>())
-				.tokenize(new QGramExtendedTokenizer(3)).build();
+				.tokenize(new QGramExtended(3)).build();
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link WhitespaceTokenizer} followed
-	 * by a {@link QGramExtendedTokenizer} for {@code q=2} and the
+	 * Returns a string metric that uses a {@link Whitespace} followed
+	 * by a {@link QGramExtended} for {@code q=2} and the
 	 * {@link SimonWhite} metric.
 	 * 
 	 * @return a Simon White metric
 	 */
 	public static StringMetric simonWhite() {
 		return with(new SimonWhite<String>())
-				.tokenize(new WhitespaceTokenizer())
-				.tokenize(new QGramTokenizer(2)).build();
+				.tokenize(new Whitespace())
+				.tokenize(new QGram(2)).build();
 	}
 
 	/**
@@ -337,13 +334,13 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link SoundexSimplifier} and
+	 * Returns a string metric that uses a {@link Soundex} and
 	 * {@link JaroWinkler} metric.
 	 * 
 	 * @return a Soundex metric
 	 */
 	public static StringMetric soundex() {
 		return with(new JaroWinkler())
-				.simplify(new SoundexSimplifier()).build();
+				.simplify(new Soundex()).build();
 	}
 }

@@ -40,9 +40,10 @@ import com.google.common.cache.LoadingCache;
  * Tokenizer that caches tokenized results. Can be used to improve performance
  * when repeatedly processing identical strings. Least used cache entries are
  * evicted once the cache reaches its maximum size.
- * 
- * 
- * @author mpkorstanje
+ * <p>
+ * This class is thread-safe provided its components are and the
+ * {@link CachingTokenizer#setTokenizer(Tokenizer)} is not called in a
+ * concurrent context.
  * 
  * @see StringMetricBuilder
  */

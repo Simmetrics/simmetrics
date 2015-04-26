@@ -21,13 +21,13 @@
 package org.simmetrics.tokenizers;
 
 import org.simmetrics.tokenizers.Tokenizer;
-import org.simmetrics.tokenizers.WhitespaceTokenizer;
+import org.simmetrics.tokenizers.Whitespace;
 
 public class WhitespaceTokenizerTest extends TokenizerTest {
 
 	@Override
 	protected Tokenizer getTokenizer() {
-		return new WhitespaceTokenizer();
+		return new Whitespace();
 	}
 
 	@Override

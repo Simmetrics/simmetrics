@@ -49,10 +49,12 @@ import org.simmetrics.ListMetric;
  * duplicates from scoring a perfect match against a list with single elements.
  * E.g. 'GGGGG' should not be identical to 'GG'.
  * 
+ * <p>
+ * This class is immutable and thread-safe.
  * 
  * @see DiceSimilarity
  * 
- * @author mpkorstanje
+ * 
  * @param <T>
  *            type of the token
  * 

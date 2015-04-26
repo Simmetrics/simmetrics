@@ -31,10 +31,15 @@ import org.simmetrics.StringMetric;
 /**
  * Levenshtein algorithm providing a similarity measure between two strings.
  * 
+ * 
+ *
+ * <p>
+ * This class is immutable and thread-safe.
+ * 
  * @see <a href=" http://en.wikipedia.org/wiki/Levenshtein_distance">Wikipedia -
  *      Levenshtein distance</a>
  * 
- * @author mpkorstanje
+ * 
  */
 public class Levenshtein implements StringMetric {
 
@@ -77,17 +82,15 @@ public class Levenshtein implements StringMetric {
 			v1[0] = i + 1;
 
 			for (int j = 0; j < t.length(); j++) {
-				v1[j + 1] = min3(
-						v1[j    ] + 1,
-						v0[j + 1] + 1,
-						v0[j    ] + (s.charAt(i) == t.charAt(j) ? 0.0f : 1.0f));
+				v1[j + 1] = min3(v1[j] + 1, v0[j + 1] + 1, v0[j]
+						+ (s.charAt(i) == t.charAt(j) ? 0.0f : 1.0f));
 			}
-			
-			for (int j = 0; j < v0.length; j++){
+
+			for (int j = 0; j < v0.length; j++) {
 				v0[j] = v1[j];
 			}
 		}
-		
+
 		return v1[t.length()];
 	}
 

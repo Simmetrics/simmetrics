@@ -1,4 +1,4 @@
-package org.simmetrics.metrics.costfunctions;
+package org.simmetrics.metrics.functions;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -6,7 +6,8 @@ import static com.google.common.base.Preconditions.checkArgument;
  * A substitution function that assigns one value to equal characters, another
  * value to unequal characters.
  * 
- * @author mpkorstanje
+ * <p>
+ * This class is immutable and thread-safe.
  *
  */
 public class MatchMismatch implements Substitution {
@@ -16,9 +17,10 @@ public class MatchMismatch implements Substitution {
 
 	/**
 	 * Constructs a new match-mismatch substitution function. When two
-	 * characters are equal<code>matchValue</code> is returned. In case of a
-	 * mismatch <code>mismatchValue</code>. The <code>matchValue</code> must be
-	 * strictly greater then <code>mismatchValue</code>
+	 * characters are equal a score of <code>matchValue</code> is assigned. In
+	 * case of a mismatch a score of <code>mismatchValue</code>. The
+	 * <code>matchValue</code> must be strictly greater then
+	 * <code>mismatchValue</code>
 	 * 
 	 * @param matchValue
 	 *            value when characters are equal

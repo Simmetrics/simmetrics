@@ -32,14 +32,15 @@ import org.simmetrics.StringMetric;
  * <p>
  * Can be configured with a prefix adjustment scale, max prefix length and boost
  * threshold.
- * 
+ * <p>
+ * This class is immutable and thread-safe.
  * 
  * @see <a
  *      href="http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance">Wikipedia
  *      - Jaro-Winkler distance</a>
  * 
  * @see Jaro
- * @author mpkorstanje
+ * 
  * 
  */
 public class JaroWinkler implements StringMetric {

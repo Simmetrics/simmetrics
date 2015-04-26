@@ -27,7 +27,7 @@ package org.simmetrics;
  * value between 0 and 1 (inclusive). A value of zero indicates that the strings are
  * dissimilar, a a value of 1 indicates they are similar.
  * 
- * @author mpkorstanje
+ * 
  *
  */
 

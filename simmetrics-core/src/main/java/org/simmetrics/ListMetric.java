@@ -37,7 +37,7 @@ import java.util.List;
  * Implementations should also not modify the contents of the list. List should
  * be treated as if wrapped by {@link Collections#unmodifiableList(List)}.
  * 
- * @author mpkorstanje
+ * 
  * @param <T>
  *            the type of elements contained in the lists
  *

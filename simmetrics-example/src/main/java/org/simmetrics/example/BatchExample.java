@@ -27,8 +27,8 @@ import java.util.Arrays;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetrics;
 import org.simmetrics.metrics.CosineSimilarity;
-import org.simmetrics.simplifiers.CaseSimplifier;
-import org.simmetrics.tokenizers.QGramTokenizer;
+import org.simmetrics.simplifiers.Case;
+import org.simmetrics.tokenizers.QGram;
 
 public class BatchExample {
 
@@ -39,8 +39,8 @@ public class BatchExample {
 		String name = "Gearldine Desanti";
 
 		StringMetric metric = with(new CosineSimilarity<String>())
-				.simplify(new CaseSimplifier.Lower())
-				.tokenize(new QGramTokenizer(2))
+				.simplify(new Case.Lower())
+				.tokenize(new QGram(2))
 				.build();
 
 		float[] scores = StringMetrics.compare(metric, name, names);

@@ -28,8 +28,6 @@ import java.util.Set;
 /**
  * A tokenizer divides an input string into tokens. A tokenizer may not provide
  * empty strings as tokens.
- * 
- * @author M.P. Korstanje
  */
 public interface Tokenizer {
 

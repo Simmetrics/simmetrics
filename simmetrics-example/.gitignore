@@ -1,4 +1,3 @@
-/*~
 /.classpath
 /.project
 /.settings/
@@ -6,3 +5,4 @@
 /bin/
 pom.xml.releaseBackup
 release.properties
+

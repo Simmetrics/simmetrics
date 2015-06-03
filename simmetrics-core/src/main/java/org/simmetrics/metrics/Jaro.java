@@ -22,6 +22,7 @@
 package org.simmetrics.metrics;
 
 import static java.lang.Math.max;
+import static java.lang.Math.min;
 import static java.util.Arrays.copyOf;
 
 import java.util.Arrays;
@@ -90,9 +91,9 @@ public class Jaro implements StringMetric {
 	 */
 	private static char[] getCommonCharacters(final String a, final String b,
 			final int separation) {
-		final char charsA[] = a.toCharArray();
-		final char charsB[] = b.toCharArray();
-		final char common[] = new char[charsA.length + charsB.length];
+		final char[] charsA = a.toCharArray();
+		final char[] charsB = b.toCharArray();
+		final char[] common = new char[min(charsA.length,charsB.length)];
 
 		// Iterate of string a and find all characters that occur in b within
 		// the separation distance. Zero out any matches found to avoid
@@ -123,8 +124,7 @@ public class Jaro implements StringMetric {
 			int toIndex) {
 
 		// compare char with range of characters to either side
-		for (int j = Math.max(0, fromIndex), length = Math.min(toIndex,
-				buffer.length); j < length; j++) {
+		for (int j = max(0, fromIndex), length = min(toIndex, buffer.length); j < length; j++) {
 			// check if found
 			if (buffer[j] == character) {
 				return j;

@@ -21,8 +21,10 @@
  */
 package org.simmetrics.metrics;
 
-import static java.lang.Math.floor;
 import static java.lang.Math.max;
+import static java.util.Arrays.copyOf;
+
+import java.util.Arrays;
 
 import org.simmetrics.StringMetric;
 
@@ -36,9 +38,9 @@ import org.simmetrics.StringMetric;
  *      href="http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance">Wikipedia
  *      - Jaro-Winkler distance</a>
  * @see JaroWinkler
- * 
- * 
- * 
+ *
+ *
+ *
  */
 public class Jaro implements StringMetric {
 
@@ -53,27 +55,30 @@ public class Jaro implements StringMetric {
 			return 0.0f;
 		}
 
-		final int halfLength = max(0,
-				(int) floor(-1 + 0.5 * max(a.length(), b.length())));
+		// Intentional integer division to round down.
+		final int halfLength = max(0, max(a.length(), b.length()) / 2 - 1);
 
-		final String commonA = getCommonCharacters(a, b, halfLength);
-		final String commonB = getCommonCharacters(b, a, halfLength);
+		final char[] commonA = getCommonCharacters(a, b, halfLength);
+		final char[] commonB = getCommonCharacters(b, a, halfLength);
 
-		if (commonA.isEmpty() || commonB.isEmpty()) {
+		if (commonA.length == 0 || commonB.length == 0) {
 			return 0.0f;
 		}
 
+		// Only need to check a single array for length. commonA and commonB
+		// will always contain the same multi-set of characters
 		float transpositions = 0;
-		for (int i = 0; i < commonA.length(); i++) {
-			if (commonA.charAt(i) != commonB.charAt(i))
+		for (int i = 0, length = commonA.length; i < length; i++) {
+			if (commonA[i] != commonB[i]) {
 				transpositions++;
+			}
 		}
 		transpositions /= 2.0f;
 
-		float aCommonRatio = commonA.length() / (float) a.length();
-		float bCommonRatio = commonB.length() / (float) b.length();
-		float transpositionRatio = (commonA.length() - transpositions)
-				/ commonA.length();
+		float aCommonRatio = commonA.length / (float) a.length();
+		float bCommonRatio = commonB.length / (float) b.length();
+		float transpositionRatio = (commonA.length - transpositions)
+				/ commonA.length;
 
 		return (aCommonRatio + bCommonRatio + transpositionRatio) / 3.0f;
 	}
@@ -83,27 +88,30 @@ public class Jaro implements StringMetric {
 	 * counted as common when it is within separation distance from the position
 	 * in a.
 	 */
-	private static String getCommonCharacters(final String a, final String b,
+	private static char[] getCommonCharacters(final String a, final String b,
 			final int separation) {
-		final StringBuilder common = new StringBuilder(a.length() + b.length());
-		final StringBuilder copyOfB = new StringBuilder(b);
+		final char charsA[] = a.toCharArray();
+		final char charsB[] = b.toCharArray();
+		final char common[] = new char[charsA.length + charsB.length];
 
 		// Iterate of string a and find all characters that occur in b within
 		// the separation distance. Zero out any matches found to avoid
 		// duplicate matchings.
-		for (int i = 0; i < a.length(); i++) {
-			final char character = a.charAt(i);
+		int commonIndex = 0;
+		for (int i = 0, length = charsA.length; i < length; i++) {
+			final char character = charsA[i];
 
-			int index = indexOf(character, copyOfB, i - separation, i
+			int index = indexOf(character, charsB, i - separation, i
 					+ separation + 1);
 
 			if (index > -1) {
-				common.append(character);
-				copyOfB.setCharAt(index, (char) 0);
+				common[commonIndex++] = character;
+				charsB[index] = (char) 0;
 			}
 
 		}
-		return common.toString();
+
+		return copyOf(common, commonIndex);
 	}
 
 	/*
@@ -111,14 +119,14 @@ public class Jaro implements StringMetric {
 	 * 
 	 * Returns -1 when not found.
 	 */
-	private static int indexOf(char character, StringBuilder buffer,
-			int fromIndex, int toIndex) {
+	private static int indexOf(char character, char[] buffer, int fromIndex,
+			int toIndex) {
 
 		// compare char with range of characters to either side
-		for (int j = Math.max(0, fromIndex); j < Math.min(toIndex,
-				buffer.length()); j++) {
+		for (int j = Math.max(0, fromIndex), length = Math.min(toIndex,
+				buffer.length); j < length; j++) {
 			// check if found
-			if (buffer.charAt(j) == character) {
+			if (buffer[j] == character) {
 				return j;
 			}
 		}

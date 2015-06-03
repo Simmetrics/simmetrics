@@ -1,6 +1,9 @@
 Change Log
 ==========
 
+## Since 3.0.2 ##
+  - Optimization of Jaro
+
 ## Since 3.0.1 ##
   - Fixed dependency on snapshot version of core in example moodule.
 

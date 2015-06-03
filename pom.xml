@@ -13,6 +13,7 @@
 	<modules>
 		<module>simmetrics-core</module>
 		<module>simmetrics-example</module>
+		<module>simmetrics-bench</module>
 	</modules>
 
 	<licenses>

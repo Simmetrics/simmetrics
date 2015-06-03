@@ -36,9 +36,9 @@ import org.simmetrics.StringMetric;
  *      href="http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance">Wikipedia
  *      - Jaro-Winkler distance</a>
  * @see JaroWinkler
- * 
- * 
- * 
+ *
+ *
+ *
  */
 public class Jaro implements StringMetric {
 
@@ -64,7 +64,7 @@ public class Jaro implements StringMetric {
 		}
 
 		float transpositions = 0;
-		for (int i = 0; i < commonA.length(); i++) {
+		for (int i = 0, length = commonA.length(); i < length; i++) {
 			if (commonA.charAt(i) != commonB.charAt(i))
 				transpositions++;
 		}
@@ -85,40 +85,42 @@ public class Jaro implements StringMetric {
 	 */
 	private static String getCommonCharacters(final String a, final String b,
 			final int separation) {
-		final StringBuilder common = new StringBuilder(a.length() + b.length());
-		final StringBuilder copyOfB = new StringBuilder(b);
+    final char charsA[] = a.toCharArray();
+    final char charsB[] = b.toCharArray();
+    final char common[] = new char[charsA.length + charsB.length];
 
 		// Iterate of string a and find all characters that occur in b within
 		// the separation distance. Zero out any matches found to avoid
 		// duplicate matchings.
-		for (int i = 0; i < a.length(); i++) {
-			final char character = a.charAt(i);
+    int commonIndex = 0;
+		for (int i = 0, length = charsA.length; i < length; i++) {
+			final char character = charsA[i];
 
-			int index = indexOf(character, copyOfB, i - separation, i
+			int index = indexOf(character, charsB, i - separation, i
 					+ separation + 1);
 
 			if (index > -1) {
-				common.append(character);
-				copyOfB.setCharAt(index, (char) 0);
+				common[commonIndex++] = character;
+				charsB[index] = (char) 0;
 			}
 
 		}
-		return common.toString();
+		return new String(common, 0, commonIndex);
 	}
 
 	/*
 	 * Search for character in buffer starting at fromIndex to toIndex - 1.
-	 * 
+	 *
 	 * Returns -1 when not found.
 	 */
-	private static int indexOf(char character, StringBuilder buffer,
+	private static int indexOf(char character, char[] buffer,
 			int fromIndex, int toIndex) {
 
 		// compare char with range of characters to either side
-		for (int j = Math.max(0, fromIndex); j < Math.min(toIndex,
-				buffer.length()); j++) {
+		for (int j = Math.max(0, fromIndex), length = Math.min(toIndex,
+        buffer.length); j < length; j++) {
 			// check if found
-			if (buffer.charAt(j) == character) {
+			if (buffer[j] == character) {
 				return j;
 			}
 		}

@@ -6,3 +6,5 @@
 /bin/
 pom.xml.releaseBackup
 release.properties
+*.iml
+/.idea

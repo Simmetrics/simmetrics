@@ -65,8 +65,11 @@ public class Levenshtein implements StringMetric {
 		if (t.isEmpty())
 			return s.length();
 
-		final float[] v0 = new float[t.length() + 1];
-		final float[] v1 = new float[t.length() + 1];
+		final int tLength = t.length();
+		final int sLength = s.length();
+		
+		final float[] v0 = new float[tLength + 1];
+		final float[] v1 = new float[tLength + 1];
 
 		// initialize v0 (the previous row of distances)
 		// this row is A[0][i]: edit distance for an empty s
@@ -75,13 +78,13 @@ public class Levenshtein implements StringMetric {
 			v0[i] = i;
 		}
 
-		for (int i = 0; i < s.length(); i++) {
+		for (int i = 0; i < sLength ; i++) {
 
 			// first element of v1 is A[i+1][0]
 			// edit distance is delete (i+1) chars from s to match empty t
 			v1[0] = i + 1;
 
-			for (int j = 0; j < t.length(); j++) {
+			for (int j = 0; j < tLength; j++) {
 				v1[j + 1] = min3(v1[j] + 1, v0[j + 1] + 1, v0[j]
 						+ (s.charAt(i) == t.charAt(j) ? 0.0f : 1.0f));
 			}
@@ -91,7 +94,7 @@ public class Levenshtein implements StringMetric {
 			}
 		}
 
-		return v1[t.length()];
+		return v1[tLength];
 	}
 
 	@Override

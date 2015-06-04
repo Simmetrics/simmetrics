@@ -21,10 +21,12 @@
  */
 package org.simmetrics.metrics;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.simmetrics.ListMetric;
+
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multiset;
 
 /**
  * Simon White algorithm providing a similarity measure between two lists. Idea
@@ -73,8 +75,7 @@ public class SimonWhite<T> implements ListMetric<T> {
 		}
 
 		// Copy for destructive list difference
-		b = new ArrayList<>(b);
-		int union = a.size() + b.size();
+		Multiset<T> bCopy = HashMultiset.create(b);
 
 		// Count elements in the list intersection.
 		// Elements are counted only once in both lists.
@@ -82,12 +83,12 @@ public class SimonWhite<T> implements ListMetric<T> {
 		// Note: this is not the same as b.retainAll(a).size()
 		int intersection = 0;
 		for (T token : a) {
-			if (b.remove(token)) {
+			if (bCopy.remove(token)) {
 				intersection++;
 			}
 		}
 
-		return 2.0f * intersection / union;
+		return 2.0f * intersection / (a.size() + b.size());
 
 	}
 

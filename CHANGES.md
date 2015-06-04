@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+## Since 3.0.3 ##
+  - Clarified java doc w/ regards to reflexive reflexive properties
+  - Clarified java doc w/ regards to NullPointerExceptions
+  - Optimization of Jaro
+  - Optimization of SimonWhite
+  - Various minor optimizations
+
 ## Since 3.0.2 ##
   - Optimization of Jaro
 

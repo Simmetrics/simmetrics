@@ -24,8 +24,6 @@ package org.simmetrics.metrics;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-import java.util.Arrays;
-
 import org.simmetrics.StringMetric;
 
 /**

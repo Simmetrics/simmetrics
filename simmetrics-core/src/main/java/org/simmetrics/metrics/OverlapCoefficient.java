@@ -59,7 +59,7 @@ public final class OverlapCoefficient<T> implements SetMetric<T> {
 			return 0.0f;
 		}
 
-		final Set<T> all = new HashSet<>();
+		final Set<T> all = new HashSet<>(a.size() + b.size());
 		all.addAll(a);
 		all.addAll(b);
 

@@ -8,6 +8,12 @@ package org.simmetrics;
  * <p>
  * The similarity measure should be consistent with equals such that
  * {@code a.equals(b) => compare(a,b) == 1.0}.
+ * <p>
+ * The similarity measure should be reflexive such that
+ * {@code compare(a,a) == 1.0}.
+ * <p>
+ * The similarity measure should be symmetric such that
+ * {@code compare(a,b) == compare(b,a)}.
  * 
  * @param <T>
  *            type of the elements compared
@@ -25,6 +31,8 @@ public interface Metric<T> {
 	 * @param b
 	 *            object b to compare
 	 * @return a value between 0 and 1 inclusive indicating similarity
+	 * @throws NullPointerException
+	 *             when either a or b is null
 	 */
 	public float compare(T a, T b);
 

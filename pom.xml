@@ -3,7 +3,7 @@
 
 	<groupId>com.github.mpkorstanje</groupId>
 	<artifactId>simmetrics</artifactId>
-	<version>3.0.2</version>
+	<version>3.0.3</version>
 	<packaging>pom</packaging>
 
 	<name>SimMetrics</name>
@@ -74,7 +74,8 @@
 
 
 	<profiles>
-		<!-- Runs the deployment to Nexus Central. Call with `mvn deploy -P release` -->
+		<!-- Runs the deployment to Nexus Central. Call with `mvn deploy -P release` 
+			or with `mvn jgitflow:release-finish -P release` when using gitflow -->
 		<profile>
 			<id>release</id>
 			<activation />

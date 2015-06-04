@@ -1,8 +1,10 @@
 package org.simmetrics.metrics;
 
+import static junit.framework.Assert.fail;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,10 +31,34 @@ public abstract class MetricTest<T> {
 	protected void testMetric(Metric<T> metric, T a, T b, float expected) {
 
 		testRange(metric, a, b);
-		testReflexsive(metric, a);
-		testReflexsive(metric, b);
-		testSymetric(metric, a, b);
+		testReflexive(metric, a);
+		testReflexive(metric, b);
+		testSymmetric(metric, a, b);
 		testExpected(metric, a, b, expected);
+		testNullPointerException(metric, a, b);
+	}
+
+	private void testNullPointerException(Metric<T> metric, T a, T b) {
+		try {
+			metric.compare(null, b);
+			fail("Metric should have thrown a null pointer exception for the first argument");
+		} catch (NullPointerException ignored) {
+			// Ignored
+		}
+
+		try {
+			metric.compare(a, null);
+			fail("Metric should have thrown a null pointer exception for the second argument");
+		} catch (NullPointerException ignored) {
+			// Ignored
+		}
+		
+		try {
+			metric.compare(null, null);
+			fail("Metric should have thrown a null pointer exception for either argument");
+		} catch (NullPointerException ignored) {
+			// Ignored
+		}
 	}
 
 	private void testExpected(Metric<T> metric, T a, T b, float expected) {
@@ -41,24 +67,24 @@ public abstract class MetricTest<T> {
 		assertEquals(message, expected, similarity, delta);
 	}
 
-	private void testReflexsive(Metric<T> metric, T a) {
+	private void testReflexive(Metric<T> metric, T a) {
 		assertEquals(1.0f, metric.compare(a, a), delta);
 	}
 
 	private void testRange(Metric<T> metric, T a, T b) {
 		float similarity = metric.compare(a, b);
 		String message1 = String.format(
-				"Similarity %s-%s %f must fall within [0.0 - 1.0] range", a,b, similarity);
+				"Similarity %s-%s %f must fall within [0.0 - 1.0] range", a, b,
+				similarity);
 		assertTrue(message1, 0.0f <= similarity && similarity <= 1.0f);
 	}
 
-	private void testSymetric(Metric<T> metric, T a, T b) {
+	private void testSymmetric(Metric<T> metric, T a, T b) {
 		float similarity = metric.compare(a, b);
 		float similarityReversed = metric.compare(b, a);
 
-		String message = String
-				.format("Similarity relation \"%s\" vs \"%s\" must be symmetric",
-						a, b);
+		String message = String.format(
+				"Similarity relation \"%s\" vs \"%s\" must be symmetric", a, b);
 		assertEquals(message, similarityReversed, similarity, delta);
 
 	}

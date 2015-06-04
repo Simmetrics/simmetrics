@@ -1,4 +1,4 @@
-<!--Maven settings template. Copy and fill out. -->
+<!--Maven settings template. Copy to or ammend ~/.m2/settings.xml -->
 <settings>
   <servers>
 	<server>

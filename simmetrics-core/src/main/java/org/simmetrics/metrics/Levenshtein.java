@@ -30,16 +30,12 @@ import org.simmetrics.StringMetric;
 
 /**
  * Levenshtein algorithm providing a similarity measure between two strings.
- * 
- * 
- *
  * <p>
  * This class is immutable and thread-safe.
  * 
  * @see <a href=" http://en.wikipedia.org/wiki/Levenshtein_distance">Wikipedia -
  *      Levenshtein distance</a>
- * 
- * 
+ *      
  */
 public class Levenshtein implements StringMetric {
 
@@ -68,8 +64,9 @@ public class Levenshtein implements StringMetric {
 		final int tLength = t.length();
 		final int sLength = s.length();
 		
-		final float[] v0 = new float[tLength + 1];
-		final float[] v1 = new float[tLength + 1];
+		float[] swap;
+		float[] v0 = new float[tLength + 1];
+		float[] v1 = new float[tLength + 1];
 
 		// initialize v0 (the previous row of distances)
 		// this row is A[0][i]: edit distance for an empty s
@@ -89,12 +86,12 @@ public class Levenshtein implements StringMetric {
 						+ (s.charAt(i) == t.charAt(j) ? 0.0f : 1.0f));
 			}
 
-			for (int j = 0; j < v0.length; j++) {
-				v0[j] = v1[j];
-			}
+			swap = v0; v0 = v1; v1 = swap;
+			
 		}
 
-		return v1[tLength];
+		// latest results was in v1 which was swapped to v0 
+		return v0[tLength];
 	}
 
 	@Override

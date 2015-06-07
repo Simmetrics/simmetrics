@@ -86,11 +86,10 @@ public class Levenshtein implements StringMetric {
 						+ (s.charAt(i) == t.charAt(j) ? 0.0f : 1.0f));
 			}
 
-			swap = v0; v0 = v1; v1 = swap;
-			
+			swap = v0; v0 = v1; v1 = swap;	
 		}
 
-		// latest results was in v1 which was swapped to v0 
+		// latest results was in v1 which was swapped with v0 
 		return v0[tLength];
 	}
 

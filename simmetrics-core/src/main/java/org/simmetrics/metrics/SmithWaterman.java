@@ -96,11 +96,11 @@ public class SmithWaterman implements StringMetric {
 		}
 		float maxDistance = min(a.length(), b.length())
 				* max(substitution.max(), gap.min());
-		return smithWatermanGotoh(a, b) / maxDistance;
+		return smithWaterman(a, b) / maxDistance;
 
 	}
 
-	private float smithWatermanGotoh(String a, String b) {
+	private float smithWaterman(String a, String b) {
 		final int n = a.length();
 		final int m = b.length();
 

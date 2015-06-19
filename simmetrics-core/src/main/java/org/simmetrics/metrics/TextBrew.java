@@ -24,12 +24,9 @@
  * TextBrew is an modification over edit distance where we can customize the costs
  * this enables up to fuzzily match shorthands such as:
  * "clmbs blvd" and "columbus boulevard" which gives 89% match
- * Excerpts of this code taken from:
- * @see <a href="https://github.com/relaynetwork/fuzzy-string-matching">fuzzy-string-matching</a>  @author Kyle Burton
- * @see <a href="https://github.com/puneetsl/jtextbrew>jTextBrew</a> @author Puneet Singh Ludu
- *
  * @see TextBrew
- * to know more about TextBrew @see <a href="http://www.ling.ohio-state.edu/~cbrew/795M/string-distance.html">TextBrew by Chris Brew</a>
+ * to know more about TextBrew
+ * @see <a href="http://www.ling.ohio-state.edu/~cbrew/795M/string-distance.html">TextBrew by Chris Brew</a>
  *
  */
  /*The codes mentioned above are Licensed with Apache License version 2.0*/

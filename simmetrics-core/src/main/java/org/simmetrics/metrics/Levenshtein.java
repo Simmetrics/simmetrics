@@ -35,9 +35,35 @@ import org.simmetrics.StringMetric;
  * 
  * @see <a href=" http://en.wikipedia.org/wiki/Levenshtein_distance">Wikipedia -
  *      Levenshtein distance</a>
- *      
+ * @see DamerauLevenshtein
+ * 
  */
 public class Levenshtein implements StringMetric {
+
+	private final float maxCost;
+	private final float insertDelete;
+	private final float substitute;
+
+	/**
+	 * Constructs a new weighted Levenshtein metric.
+	 * 
+	 * @param insertDelete
+	 *            positive non-zero cost of an insert or deletion operation
+	 * @param substitute
+	 *            positive non-zero cost of a substitute operation
+	 */
+	public Levenshtein(float insertDelete, float substitute) {
+		this.maxCost = max(insertDelete, substitute);
+		this.insertDelete = insertDelete;
+		this.substitute = substitute;
+	}
+
+	/**
+	 * Constructs a new Levenshtein metric.
+	 */
+	public Levenshtein() {
+		this(1.0f, 1.0f);
+	}
 
 	@Override
 	public float compare(final String a, final String b) {
@@ -49,10 +75,10 @@ public class Levenshtein implements StringMetric {
 			return 0.0f;
 		}
 
-		return 1.0f - (levenstein(a, b) / max(a.length(), b.length()));
+		return 1.0f - (distance(a, b) / (maxCost * max(a.length(), b.length())));
 	}
 
-	private static float levenstein(final String s, final String t) {
+	private float distance(final String s, final String t) {
 
 		if (Objects.equals(s, t))
 			return 0;
@@ -63,7 +89,7 @@ public class Levenshtein implements StringMetric {
 
 		final int tLength = t.length();
 		final int sLength = s.length();
-		
+
 		float[] swap;
 		float[] v0 = new float[tLength + 1];
 		float[] v1 = new float[tLength + 1];
@@ -72,29 +98,34 @@ public class Levenshtein implements StringMetric {
 		// this row is A[0][i]: edit distance for an empty s
 		// the distance is just the number of characters to delete from t
 		for (int i = 0; i < v0.length; i++) {
-			v0[i] = i;
+			v0[i] = i * insertDelete;
 		}
 
-		for (int i = 0; i < sLength ; i++) {
+		for (int i = 0; i < sLength; i++) {
 
 			// first element of v1 is A[i+1][0]
 			// edit distance is delete (i+1) chars from s to match empty t
-			v1[0] = i + 1;
+			v1[0] = (i + 1) * insertDelete;
 
 			for (int j = 0; j < tLength; j++) {
-				v1[j + 1] = min3(v1[j] + 1, v0[j + 1] + 1, v0[j]
-						+ (s.charAt(i) == t.charAt(j) ? 0.0f : 1.0f));
+				v1[j + 1] = min3(v1[j] + insertDelete,
+						v0[j + 1] + insertDelete,
+						v0[j] + (s.charAt(i) == t.charAt(j) ? 0.0f : substitute));
 			}
 
-			swap = v0; v0 = v1; v1 = swap;	
+			swap = v0;
+			v0 = v1;
+			v1 = swap;
 		}
 
-		// latest results was in v1 which was swapped with v0 
+		// latest results was in v1 which was swapped with v0
 		return v0[tLength];
 	}
 
 	@Override
 	public String toString() {
-		return "Levenshtein";
+		return "Levenshtein [insertDelete=" + insertDelete + ", substitute="
+				+ substitute + "]";
 	}
+
 }

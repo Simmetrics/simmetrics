@@ -20,8 +20,10 @@
  */
 package org.simmetrics.metrics;
 
+import org.junit.Test;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.Levenshtein;
+import org.simmetrics.metrics.StringMetricTest.T;
 
 public class LevenshteinTest extends StringMetricTest {
 
@@ -100,4 +102,31 @@ public class LevenshteinTest extends StringMetricTest {
 						"Web Aplications",
 						"How to Find a Scholarship Online"), };
 	}
+	
+	@Test 
+	public void insertDeleteCost(){
+		
+		testSimilarity(new Levenshtein(0.1f,1.0f), new T[]{
+			new T(0.94999f, "InsertDelete", "Insert"),
+			new T(0.94999f, "InsertDelete", "Delete"),
+			new T(0.94999f, "DeleteInsert", "Insert"),
+			new T(0.94999f, "DeleteInsert", "Delete"),
+		});
+	}
+	
+	@Test
+	public void substituteCost() {
+
+		testSimilarity(new Levenshtein(1.0f, 0.0f), new T[] {
+				new T(1.0000f, "Subsitute", "Subsytute"),
+				new T(1.0000f, "Subsitute", "Sybsytyte"), });
+		testSimilarity(new Levenshtein(1.0f, 0.0f), new T[] {
+				new T(0.5000f, "abc", "abcdef"),
+				new T(0.5000f, "def", "abcdef"), });
+
+		testSimilarity(new Levenshtein(1.0f, 0.1f), new T[] {
+				new T(0.9888f, "Subsitute", "Subsytute"),
+				new T(0.9666f, "Subsitute", "Sybsytyte"), });
+	}
+	
 }

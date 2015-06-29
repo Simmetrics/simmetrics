@@ -8,8 +8,10 @@ import static org.junit.Assert.assertTrue;
 import static org.simmetrics.utils.Math.max3;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.simmetrics.Metric;
+import org.simmetrics.metrics.ListMetricTest.T;
 
 public abstract class MetricTest<K> {
 
@@ -102,11 +104,6 @@ public abstract class MetricTest<K> {
 
 	protected T<K>[] tests;
 
-	@Test
-	public final void empty() {
-		assertEquals(1.0f, metric.compare(getEmpty(), getEmpty()), delta);
-	}
-
 	protected float getDelta() {
 		return DEFAULT_DELTA;
 	}
@@ -124,6 +121,19 @@ public abstract class MetricTest<K> {
 	protected boolean satisfiesSubadditivity() {
 		return true;
 	}
+	
+	@Before
+	public final void setUp() throws Exception {
+		this.delta = getDelta();
+		this.metric = getMetric();
+		this.tests = getTests();
+	}
+	
+	@Test
+	public final void empty() {
+		assertEquals(1.0f, metric.compare(getEmpty(), getEmpty()), delta);
+	}
+
 	@Test
 	public final void nullPointerException() {
 		for (T<K> t : tests) {
@@ -171,17 +181,20 @@ public abstract class MetricTest<K> {
 		}
 	}
 
-	@Before
-	public final void setUp() throws Exception {
-		this.delta = getDelta();
-		this.metric = getMetric();
-		this.tests = getTests();
-	}
+
 
 	@Test
 	public final void similarity() {
 		for (T<K> t : tests) {
 			testSimilarity(metric, t.a, t.b, t.similarity, delta);
+		}
+	}
+	
+	@Test
+	@Ignore
+	public final void generateSimilarity() {
+		for (T<K> t : tests) {
+			System.out.println(format("new T<>(%1.4ff, \"%s\", \"%s\"),", metric.compare(t.a, t.b), t.a, t.b));
 		}
 	}
 

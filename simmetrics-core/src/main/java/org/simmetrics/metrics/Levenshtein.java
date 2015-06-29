@@ -72,10 +72,6 @@ public class Levenshtein implements StringMetric, Distance<String> {
 			return 1.0f;
 		}
 
-		if (a.isEmpty() || b.isEmpty()) {
-			return 0.0f;
-		}
-
 		return 1.0f - (distance(a, b) / (maxCost * max(a.length(), b.length())));
 	}
 

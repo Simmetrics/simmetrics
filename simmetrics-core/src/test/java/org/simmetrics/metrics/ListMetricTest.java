@@ -64,7 +64,7 @@ public abstract class ListMetricTest extends MetricTest<List<String>> {
 	protected abstract T[] getListTests();
 
 	@Override
-	protected List<String> getEmpty() {
+	protected final List<String> getEmpty() {
 		return emptyList();
 	}
 

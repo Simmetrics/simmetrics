@@ -33,6 +33,7 @@ import org.simmetrics.utils.FilteringTokenizer;
 
 import com.google.common.base.Predicate;
 
+@SuppressWarnings("javadoc")
 public final class SimonWhiteTest extends ListMetricTest {
 	
 	@Override

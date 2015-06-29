@@ -170,7 +170,7 @@ public class SmithWaterman implements StringMetric {
 
 	@Override
 	public String toString() {
-		return "SmithWatermanGotoh [gap=" + gap + ", substitution="
+		return "SmithWaterman [gap=" + gap + ", substitution="
 				+ substitution + ", windowSize=" + windowSize + "]";
 	}
 

@@ -53,6 +53,7 @@ public interface StringMetric extends Metric<String> {
 	 * @throws NullPointerException
 	 *             when either a or b is null
 	 */
+	@Override
 	public float compare(String a, String b);
 
 }

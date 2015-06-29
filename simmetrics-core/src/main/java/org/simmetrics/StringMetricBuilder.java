@@ -565,6 +565,7 @@ public class StringMetricBuilder {
 			this.metric = metric;
 		}
 
+		@Override
 		public StringMetric build() {
 
 			Simplifier simplifier;

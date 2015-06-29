@@ -65,6 +65,7 @@ public interface ListMetric<T> extends Metric<List<T>> {
 	 * @throws NullPointerException
 	 *             when either a or b is null
 	 */
+	@Override
 	public float compare(List<T> a, List<T> b);
 
 }

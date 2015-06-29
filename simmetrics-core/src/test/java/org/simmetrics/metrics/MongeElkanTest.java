@@ -21,16 +21,17 @@
  */
 package org.simmetrics.metrics;
 
-import org.junit.Test;
 import org.simmetrics.ListMetric;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.MongeElkan;
+import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Whitespace;
 
-public class MongeElkanTest extends ListMetricTest {
+@SuppressWarnings("javadoc")
+public final class MongeElkanTest extends ListMetricTest {
 
 	@Override
-	public ListMetric<String> getMetric() {
+	protected ListMetric<String> getMetric() {
 		return new MongeElkan(new StringMetric() {
 
 			@Override
@@ -43,14 +44,17 @@ public class MongeElkanTest extends ListMetricTest {
 				return "Dummy";
 			}
 		});
-
 	}
 
-	@Test
-	public void test1() {
-		testSimilarity(
-				getMetric(),
-				new Whitespace(),
+	@Override
+	protected Tokenizer getTokenizer() {
+		return new Whitespace();
+	}
+
+	@Override
+	protected T[] getListTests() {
+		// TODO Auto-generated method stub
+		return new T[] {
 				new T(0.5000f, "test string1", "test string2"),
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.7500f, "a b c d", "a b c e"),
@@ -65,7 +69,7 @@ public class MongeElkanTest extends ListMetricTest {
 						"The field matching problem: Algorithms and applications Alvaro E. Monge and Charles P. Elkan Department of Computer Science and Engineering University of California, San Diego La Jolla, California",
 						"Alvaro E. Monge and Charles P. Elkan. Integrating external information sources to guide worldwide web information retrieval. Technical Report CS96-474, Department of Computer Science and Engineering, University of California, San Diego, January 1996")
 
-		);
-
+		};
 	}
+
 }

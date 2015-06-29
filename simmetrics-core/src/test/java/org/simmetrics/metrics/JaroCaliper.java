@@ -10,7 +10,8 @@ import com.google.caliper.Benchmark;
 import com.google.caliper.Param;
 import com.google.caliper.runner.CaliperMain;
 
-public class JaroCaliper {
+@SuppressWarnings("javadoc")
+public final class JaroCaliper {
 
 	enum Value {
 		Shakespear("This happy breed of men"), Rumi(

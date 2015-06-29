@@ -21,126 +21,202 @@
  */
 package org.simmetrics.metrics;
 
-import org.junit.Test;
+import org.simmetrics.Metric;
 import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.Levenshtein;
-import org.simmetrics.metrics.StringMetricTest.T;
 
-public class DamerauLevenshteinTest extends StringMetricTest {
+@SuppressWarnings("javadoc")
+public final class DamerauLevenshteinTest {
 
-	@Override
-	protected StringMetric getMetric() {
-		return new DamerauLevenshtein();
+	public static final class UnitCost extends StringMetricTest {
+
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+
+		@Override
+		protected StringMetric getMetric() {
+			return new DamerauLevenshtein();
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		protected T<String>[] getTests() {
+			return new T[] {
+
+					new T<>(0.9167f, "test string1", "test string2"),
+					new T<>(0.8571f, "a b c d", "a b c e"),
+
+					new T<>(0.7500f, "uxyw", "uyxw"),
+					new T<>(0.3333f, "uxaayw", "uyxw"),
+
+					new T<>(0.8888f, "transpose", "tranpsose"),
+
+					new T<>(0.8000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+					new T<>(0.8333f, "Healed", "Sealed"),
+					new T<>(0.5714f, "Healed", "Healthy"),
+					new T<>(0.6667f, "Healed", "Heard"),
+					new T<>(0.6667f, "Healed", "Herded"),
+					new T<>(0.5000f, "Healed", "Help"),
+					new T<>(0.3333f, "Healed", "Sold"),
+					new T<>(0.5000f, "Healed", "Help"),
+					new T<>(0.6842f, "Sam J Chapman", "Samuel John Chapman"),
+					new T<>(0.8182f, "Sam Chapman", "S Chapman"),
+					new T<>(0.2632f, "John Smith", "Samuel John Chapman"),
+					new T<>(0.0000f, "John Smith", "Sam Chapman"),
+					new T<>(0.0769f, "John Smith", "Sam J Chapman"),
+					new T<>(0.1000f, "John Smith", "S Chapman"),
+					new T<>(0.5952f, "Web Database Applications",
+							"Web Database Applications with PHP & MySQL"),
+					new T<>(0.4510f, "Web Database Applications",
+							"Creating Database Web Applications with PHP and ASP"),
+					new T<>(0.4231f, "Web Database Applications",
+							"Building Database Applications on the Web Using PHP3"),
+					new T<>(0.4545f, "Web Database Applications",
+							"Building Web Database Applications with Visual Studio 6"),
+					new T<>(0.2500f, "Web Database Applications",
+							"Web Application Development With PHP"),
+					new T<>(
+							0.2874f,
+							"Web Database Applications",
+							"WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
+					new T<>(0.1587f, "Web Database Applications",
+							"Structural Assessment: The Role of Large and Full-Scale Testing"),
+					new T<>(0.1563f, "Web Database Applications",
+							"How to Find a Scholarship Online"),
+					new T<>(0.3571f, "Web Aplications",
+							"Web Database Applications with PHP & MySQL"),
+					new T<>(0.2941f, "Web Aplications",
+							"Creating Database Web Applications with PHP and ASP"),
+					new T<>(0.2500f, "Web Aplications",
+							"Building Database Applications on the Web Using PHP3"),
+					new T<>(0.2727f, "Web Aplications",
+							"Building Web Database Applications with Visual Studio 6"),
+					new T<>(0.3889f, "Web Aplications",
+							"Web Application Development With PHP"),
+					new T<>(
+							0.1724f,
+							"Web Aplications",
+							"WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
+					new T<>(0.1111f, "Web Aplications",
+							"Structural Assessment: The Role of Large and Full-Scale Testing"),
+					new T<>(0.1875f, "Web Aplications",
+							"How to Find a Scholarship Online"), };
+		}
+
 	}
 
-	@Override
-	protected T[] getTests() {
-		return new T[] {
+	public static final class InsertDeleteCost extends StringMetricTest {
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
 
-				new T(0.7500f, "uxyw", "uyxw"),
-				new T(0.8888f, "transpose", "tranpsose"),
+		@SuppressWarnings("unchecked")
+		@Override
+		protected T<String>[] getTests() {
+			return new T[] { new T<>(0.94999f, "InsertDelete", "Insert"),
+					new T<>(0.94999f, "InsertDelete", "Delete"),
+					new T<>(0.94999f, "DeleteInsert", "Insert"),
+					new T<>(0.94999f, "DeleteInsert", "Delete"), };
+		}
 
-				new T(0.9167f, "test string1", "test string2"),
-				new T(0.8571f, "a b c d", "a b c e"),
+		@Override
+		protected Metric<String> getMetric() {
+			return new DamerauLevenshtein(0.1f, 1.0f, 1.0f);
+		}
 
-				new T(0.8000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-				new T(0.8333f, "Healed", "Sealed"),
-				new T(0.5714f, "Healed", "Healthy"),
-				new T(0.6667f, "Healed", "Heard"),
-				new T(0.6667f, "Healed", "Herded"),
-				new T(0.5000f, "Healed", "Help"),
-				new T(0.3333f, "Healed", "Sold"),
-				new T(0.5000f, "Healed", "Help"),
-				new T(0.6842f, "Sam J Chapman", "Samuel John Chapman"),
-				new T(0.8182f, "Sam Chapman", "S Chapman"),
-				new T(0.2632f, "John Smith", "Samuel John Chapman"),
-				new T(0.0000f, "John Smith", "Sam Chapman"),
-				new T(0.0769f, "John Smith", "Sam J Chapman"),
-				new T(0.1000f, "John Smith", "S Chapman"),
-				new T(0.5952f, "Web Database Applications",
-						"Web Database Applications with PHP & MySQL"),
-				new T(0.4510f, "Web Database Applications",
-						"Creating Database Web Applications with PHP and ASP"),
-				new T(0.4231f, "Web Database Applications",
-						"Building Database Applications on the Web Using PHP3"),
-				new T(0.4545f, "Web Database Applications",
-						"Building Web Database Applications with Visual Studio 6"),
-				new T(0.2500f, "Web Database Applications",
-						"Web Application Development With PHP"),
-				new T(
-						0.2874f,
-						"Web Database Applications",
-						"WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
-				new T(0.1587f, "Web Database Applications",
-						"Structural Assessment: The Role of Large and Full-Scale Testing"),
-				new T(0.1563f, "Web Database Applications",
-						"How to Find a Scholarship Online"),
-				new T(0.3571f, "Web Aplications",
-						"Web Database Applications with PHP & MySQL"),
-				new T(0.2941f, "Web Aplications",
-						"Creating Database Web Applications with PHP and ASP"),
-				new T(0.2500f, "Web Aplications",
-						"Building Database Applications on the Web Using PHP3"),
-				new T(0.2727f, "Web Aplications",
-						"Building Web Database Applications with Visual Studio 6"),
-				new T(0.3889f, "Web Aplications",
-						"Web Application Development With PHP"),
-				new T(
-						0.1724f,
-						"Web Aplications",
-						"WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
-				new T(0.1111f, "Web Aplications",
-						"Structural Assessment: The Role of Large and Full-Scale Testing"),
-				new T(0.1875f, "Web Aplications",
-						"How to Find a Scholarship Online"), };
 	}
 
-	@Test
-	public void insertDeleteCost() {
+	public static final class NoSubstituteCost extends StringMetricTest {
 
-		testSimilarity(new DamerauLevenshtein(0.1f, 1.0f, 1.0f), new T[] {
-				new T(0.94999f, "InsertDelete", "Insert"),
-				new T(0.94999f, "InsertDelete", "Delete"),
-				new T(0.94999f, "DeleteInsert", "Insert"),
-				new T(0.94999f, "DeleteInsert", "Delete"), });
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		protected T<String>[] getTests() {
+			return new T[] { new T<>(1.0000f, "Subsitute", "Subsytute"),
+					new T<>(1.0000f, "Subsitute", "Sybsytyte"),
+					new T<>(0.5000f, "abc", "abcdef"),
+					new T<>(0.5000f, "def", "abcdef"), };
+		}
+
+		@Override
+		protected Metric<String> getMetric() {
+			return new DamerauLevenshtein(1.0f, 0.0f, 1.0f);
+		}
 	}
 
-	@Test
-	public void substituteCost() {
+	public static final class LowSubstituteCost extends StringMetricTest {
 
-		testSimilarity(new Levenshtein(1.0f, 0.0f), new T[] {
-				new T(1.0000f, "Subsitute", "Subsytute"),
-				new T(1.0000f, "Subsitute", "Sybsytyte"), });
-		testSimilarity(new Levenshtein(1.0f, 0.0f), new T[] {
-				new T(0.5000f, "abc", "abcdef"),
-				new T(0.5000f, "def", "abcdef"), });
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
 
-		testSimilarity(new Levenshtein(1.0f, 0.1f), new T[] {
-				new T(0.9888f, "Subsitute", "Subsytute"),
-				new T(0.9666f, "Subsitute", "Sybsytyte"), });
+		@SuppressWarnings("unchecked")
+		@Override
+		protected T<String>[] getTests() {
+			return new T[] { new T<>(0.9888f, "Subsitute", "Subsytute"),
+					new T<>(0.9666f, "Subsitute", "Sybsytyte"), };
+		}
+
+		@Override
+		protected Metric<String> getMetric() {
+			return new DamerauLevenshtein(1.0f, 0.1f, 1.0f);
+		}
+
 	}
 
-	@Test
-	public void transposeCost() {
+	public static final class NoTransposeCost extends StringMetricTest {
 
-		testSimilarity(new DamerauLevenshtein(1.0f, 1.0f, 0.0f), new T[] {
-				new T(1.000f, "uxyw", "uyxw"),
-				new T(1.000f, "uxyvxyw", "uyxvyxw"),
-				new T(1.000f, "transpose", "tranpsose"),
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
 
-				new T(1.0000f, "uxyyxw", "uyxxyw"),
-				new T(1.0000f, "uxyxyw", "uyxyxw"),
-				new T(0.8571f, "uxyvxyw", "uyxyxw"),
-				new T(0.8571f, "uxyxyw", "uyxvyxw"), });
+		@SuppressWarnings("unchecked")
+		@Override
+		protected T<String>[] getTests() {
+			return new T[] { new T<>(1.000f, "uxyw", "uyxw"),
+					new T<>(1.000f, "uxyvxyw", "uyxvyxw"),
+					new T<>(1.000f, "transpose", "tranpsose"),
 
-		testSimilarity(new DamerauLevenshtein(1.0f, 1.0f, 0.1f), new T[] {
-				new T(0.9750f, "uxyw", "uyxw"),
-				new T(0.9714f, "uxyvxyw", "uyxvyxw"),
-				new T(0.9888f, "transpose", "tranpsose"),
+					new T<>(1.0000f, "uxyyxw", "uyxxyw"),
+					new T<>(1.0000f, "uxyxyw", "uyxyxw"),
+					new T<>(0.8571f, "uxyvxyw", "uyxyxw"),
+					new T<>(0.8571f, "uxyxyw", "uyxvyxw"), };
+		}
 
-				new T(0.9666f, "uxyyxw", "uyxxyw"),
-				new T(0.9666f, "uxyxyw", "uyxyxw"),
-				new T(0.8285f, "uxyvxyw", "uyxyxw"),
-				new T(0.8285f, "uxyxyw", "uyxvyxw"), });
+		@Override
+		protected Metric<String> getMetric() {
+			return new DamerauLevenshtein(1.0f, 1.0f, 0.0f);
+		}
+
 	}
+
+	public static final class LowTransposeCost extends StringMetricTest {
+
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		protected T<String>[] getTests() {
+			return new T[] { new T<>(0.9750f, "uxyw", "uyxw"),
+					new T<>(0.9714f, "uxyvxyw", "uyxvyxw"),
+					new T<>(0.9888f, "transpose", "tranpsose"),
+
+					new T<>(0.9666f, "uxyyxw", "uyxxyw"),
+					new T<>(0.9666f, "uxyxyw", "uyxyxw"),
+					new T<>(0.8285f, "uxyvxyw", "uyxyxw"),
+					new T<>(0.8285f, "uxyxyw", "uyxvyxw"), };
+		}
+
+		@Override
+		protected Metric<String> getMetric() {
+			return new DamerauLevenshtein(1.0f, 1.0f, 0.1f);
+		}
+
+	}
+
 }

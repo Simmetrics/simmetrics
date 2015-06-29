@@ -1,20 +1,37 @@
 package org.simmetrics.metrics;
 
+import static java.lang.String.format;
 import static junit.framework.Assert.fail;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import junit.framework.Assert;
+import static org.simmetrics.utils.Math.max3;
+
+import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.simmetrics.Metric;
 
-public abstract class MetricTest<T> {
+public abstract class MetricTest<K> {
+
+	protected static final class T<K> {
+		protected final float similarity;
+		protected final K a;
+		protected final K b;
+
+		public T(float similarity, K a, K b) {
+			this.a = a;
+			this.b = b;
+			this.similarity = similarity;
+		}
+	}
 
 	static final float DEFAULT_DELTA = 0.0001f;
 	protected float delta;
-	protected Metric<T> metric;
+	protected Metric<K> metric;
+	protected T<K>[] tests;
 
 	protected float getDelta() {
 		return DEFAULT_DELTA;
@@ -24,21 +41,81 @@ public abstract class MetricTest<T> {
 	public void setUp() throws Exception {
 		this.delta = getDelta();
 		this.metric = getMetric();
+		this.tests = getTests();
 	}
 
-	protected abstract Metric<T> getMetric();
+	protected abstract T<K>[] getTests();
 
-	protected void testMetric(Metric<T> metric, T a, T b, float expected) {
+	protected abstract Metric<K> getMetric();
 
-		testRange(metric, a, b);
-		testReflexive(metric, a);
-		testReflexive(metric, b);
-		testSymmetric(metric, a, b);
-		testExpected(metric, a, b, expected);
-		testNullPointerException(metric, a, b);
+	@Test
+	public void nullPointerException() {
+		for (T<K> t : tests) {
+			testNullPointerException(metric, t.a, t.b);
+		}
 	}
 
-	private void testNullPointerException(Metric<T> metric, T a, T b) {
+	@Test
+	public void range() {
+		for (T<K> t : tests) {
+			testRange(metric, t.a, t.b);
+		}
+	}
+
+	@Test
+	public void reflexive() {
+		for (T<K> t : tests) {
+			testReflexive(metric, t.a);
+			testReflexive(metric, t.b);
+		}
+	}
+
+	@Test
+	public void symmetric() {
+		for (T<K> t : tests) {
+			testReflexive(metric, t.a);
+			testReflexive(metric, t.b);
+		}
+	}
+
+	@Test
+	public void similarity() {
+		for (T<K> t : tests) {
+			testSimilarity(metric, t.a, t.b, t.similarity);
+		}
+	}
+
+	@Test
+	public void optionalSubadditivity () {
+		if(!satisfiesSubadditivity()){
+			return;
+		}
+		
+		for (T<K> n : tests) {
+			for (T<K> m : tests) {
+				testSubadditivity(metric, n.a, n.b, m.a);
+				testSubadditivity(metric, n.a, n.b, m.b);
+			}
+		}
+	}
+
+	protected boolean satisfiesSubadditivity(){
+		return true;
+	}
+
+	private void testSubadditivity(Metric<K> metric, K a, K b, K c) {
+
+		float ab = 1.0f - metric.compare(a, b);
+		float ac = 1.0f - metric.compare(a, c);
+		float bc = 1.0f - metric.compare(b, c);
+
+		assertTrue(
+				format("triangle ineqaulity must hold for %s, %s, %s with %s, %s, %s",
+						a, b, c, ab, ac, bc), ab == 0.0f || ac == 0.0f
+						|| bc == 0.0f || 2 * max3(ab, ac, bc) <= ab + ac + bc);
+	}
+
+	private void testNullPointerException(Metric<K> metric, K a, K b) {
 		try {
 			metric.compare(null, b);
 			fail("Metric should have thrown a null pointer exception for the first argument");
@@ -52,7 +129,7 @@ public abstract class MetricTest<T> {
 		} catch (NullPointerException ignored) {
 			// Ignored
 		}
-		
+
 		try {
 			metric.compare(null, null);
 			fail("Metric should have thrown a null pointer exception for either argument");
@@ -61,17 +138,17 @@ public abstract class MetricTest<T> {
 		}
 	}
 
-	private void testExpected(Metric<T> metric, T a, T b, float expected) {
+	private void testSimilarity(Metric<K> metric, K a, K b, float expected) {
 		float similarity = metric.compare(a, b);
 		String message = String.format("\"%s\" vs \"%s\"", a, b);
 		assertEquals(message, expected, similarity, delta);
 	}
 
-	private void testReflexive(Metric<T> metric, T a) {
+	private void testReflexive(Metric<K> metric, K a) {
 		assertEquals(1.0f, metric.compare(a, a), delta);
 	}
 
-	private void testRange(Metric<T> metric, T a, T b) {
+	private void testRange(Metric<K> metric, K a, K b) {
 		float similarity = metric.compare(a, b);
 		String message1 = String.format(
 				"Similarity %s-%s %f must fall within [0.0 - 1.0] range", a, b,
@@ -79,7 +156,7 @@ public abstract class MetricTest<T> {
 		assertTrue(message1, 0.0f <= similarity && similarity <= 1.0f);
 	}
 
-	private void testSymmetric(Metric<T> metric, T a, T b) {
+	private void testSymmetric(Metric<K> metric, K a, K b) {
 		float similarity = metric.compare(a, b);
 		float similarityReversed = metric.compare(b, a);
 
@@ -104,5 +181,13 @@ public abstract class MetricTest<T> {
 
 		assertTrue(message, message.contains(metricName));
 	}
+	
+	@Test
+	public void testEmpty() {
+		assertEquals(1.0f, metric.compare(getEmpty(), getEmpty()), delta);
+	}
+
+	protected abstract K getEmpty();
+
 
 }

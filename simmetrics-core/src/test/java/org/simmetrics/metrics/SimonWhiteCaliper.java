@@ -11,7 +11,7 @@ import com.google.caliper.Benchmark;
 import com.google.caliper.Param;
 import com.google.caliper.runner.CaliperMain;
 
-public class SimonWhiteCaliper {
+public final class SimonWhiteCaliper {
 
 	enum Value {
 		Shakespear("This happy breed of men"), Rumi("Sell your cleverness and buy bewilderment.");

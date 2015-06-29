@@ -21,42 +21,68 @@
  */
 package org.simmetrics.metrics;
 
-import org.junit.Test;
-import org.simmetrics.ListMetric;
-import org.simmetrics.metrics.BlockDistance;
+import java.util.List;
+
+import org.simmetrics.Metric;
 import org.simmetrics.tokenizers.QGram;
+import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Whitespace;
 
-public class BlockDistanceTest extends ListMetricTest {
+@SuppressWarnings("javadoc")
+public final class BlockDistanceTest {
 
-	
-	@Override
-	public ListMetric<String> getMetric() {
-		return new BlockDistance<>();
+	public final static class WhiteSpaceTest extends ListMetricTest {
+
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+
+		@Override
+		protected Tokenizer getTokenizer() {
+			return new Whitespace();
+		}
+
+		@Override
+		protected T[] getListTests() {
+			// TODO Auto-generated method stub
+			return new T[] { new T(0.5000f, "test string1", "test string2"),
+					new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+					new T(0.7500f, "a b c d", "a b c e") };
+		}
+
+		@Override
+		protected Metric<List<String>> getMetric() {
+			return new BlockDistance<>();
+		}
+
 	}
 
-	@Test
-	public void test1() {
-		testSimilarity(
-				getMetric(), 
-				new Whitespace(), 
-				new T(0.5000f, "test string1", "test string2"), 
-				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-				new T(0.7500f, "a b c d", "a b c e"));
+	public final static class QGramTest extends ListMetricTest {
+		
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+		@Override
+		protected Tokenizer getTokenizer() {
+			return new QGram(1);
+		}
+
+		@Override
+		protected T[] getListTests() {
+			return new T[] { new T(0.8333f, "Healed", "Sealed"),
+					new T(0.6153f, "Healed", "Healthy"),
+					new T(0.7272f, "Healed", "Heard"),
+					new T(0.6666f, "Healed", "Herded"),
+					new T(0.6000f, "Healed", "Help"),
+					new T(0.4000f, "Healed", "Sold"),
+					new T(0.6000f, "Healed", "Help") };
+		}
+
+		@Override
+		protected Metric<List<String>> getMetric() {
+			return new BlockDistance<>();
+		}
+
 	}
 
-	@Test
-	public void test2() {
-		testSimilarity(
-				getMetric(),
-				new QGram(1) ,
-				new T(0.8333f, "Healed", "Sealed"),
-				new T(0.6153f, "Healed", "Healthy"),
-				new T(0.7272f, "Healed", "Heard"),
-				new T(0.6666f, "Healed", "Herded"),
-				new T(0.6000f, "Healed", "Help"),
-				new T(0.4000f, "Healed", "Sold"),
-				new T(0.6000f, "Healed", "Help")
-		);
-	}
 }

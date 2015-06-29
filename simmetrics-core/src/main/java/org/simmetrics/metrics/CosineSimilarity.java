@@ -53,7 +53,7 @@ public class CosineSimilarity<T> implements SetMetric<T> {
 			return 0.0f;
 		}
 
-		final Set<Object> all = new HashSet<>(a.size() + b.size());
+		final Set<T> all = new HashSet<>(a.size() + b.size());
 		all.addAll(a);
 		all.addAll(b);
 

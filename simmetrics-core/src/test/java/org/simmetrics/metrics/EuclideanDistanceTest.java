@@ -29,6 +29,7 @@ import org.simmetrics.tokenizers.Whitespace;
 @SuppressWarnings("javadoc")
 public final class EuclideanDistanceTest extends ListMetricTest {
 	
+	@Override
 	protected boolean satisfiesSubadditivity() {
 		return false;
 	}
@@ -43,6 +44,7 @@ public final class EuclideanDistanceTest extends ListMetricTest {
 		return new Whitespace();
 	}
 
+	@Override
 	protected T[] getListTests() {
 		return new T[] {
 				new T(0.5000f, "test string1", "test string2"),

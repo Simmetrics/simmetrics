@@ -23,7 +23,6 @@ package org.simmetrics.metrics;
 
 import static java.util.Arrays.asList;
 
-import org.junit.Test;
 import org.simmetrics.ListMetric;
 import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.tokenizers.QGram;
@@ -36,6 +35,7 @@ import com.google.common.base.Predicate;
 
 public final class SimonWhiteTest extends ListMetricTest {
 	
+	@Override
 	protected boolean satisfiesSubadditivity(){
 		return false;
 	}

@@ -33,6 +33,7 @@ public final class BlockDistanceTest {
 
 	public final static class WhiteSpaceTest extends ListMetricTest {
 
+		@Override
 		protected boolean satisfiesSubadditivity() {
 			return false;
 		}
@@ -59,6 +60,7 @@ public final class BlockDistanceTest {
 
 	public final static class QGramTest extends ListMetricTest {
 		
+		@Override
 		protected boolean satisfiesSubadditivity() {
 			return false;
 		}

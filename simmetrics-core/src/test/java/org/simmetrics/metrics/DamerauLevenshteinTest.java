@@ -29,6 +29,7 @@ public final class DamerauLevenshteinTest {
 
 	public static final class UnitCost extends StringMetricTest {
 
+		@Override
 		protected boolean satisfiesSubadditivity() {
 			return false;
 		}
@@ -106,6 +107,8 @@ public final class DamerauLevenshteinTest {
 	}
 
 	public static final class InsertDeleteCost extends StringMetricTest {
+		
+		@Override
 		protected boolean satisfiesSubadditivity() {
 			return false;
 		}
@@ -128,7 +131,13 @@ public final class DamerauLevenshteinTest {
 
 	public static final class NoSubstituteCost extends StringMetricTest {
 
+		@Override
 		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+		
+		@Override
+		protected boolean satisfiesCoincidence() {
 			return false;
 		}
 
@@ -149,6 +158,7 @@ public final class DamerauLevenshteinTest {
 
 	public static final class LowSubstituteCost extends StringMetricTest {
 
+		@Override
 		protected boolean satisfiesSubadditivity() {
 			return false;
 		}
@@ -169,7 +179,13 @@ public final class DamerauLevenshteinTest {
 
 	public static final class NoTransposeCost extends StringMetricTest {
 
+		@Override
 		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+		
+		@Override
+		protected boolean satisfiesCoincidence() {
 			return false;
 		}
 
@@ -195,6 +211,7 @@ public final class DamerauLevenshteinTest {
 
 	public static final class LowTransposeCost extends StringMetricTest {
 
+		@Override
 		protected boolean satisfiesSubadditivity() {
 			return false;
 		}

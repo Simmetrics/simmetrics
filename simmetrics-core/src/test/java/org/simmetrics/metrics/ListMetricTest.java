@@ -56,6 +56,7 @@ public abstract class ListMetricTest extends MetricTest<List<String>> {
 		return transformed;
 	}
 
+	@Override
 	protected final MetricTest.T<List<String>>[] getTests() {
 		return transformTest(getTokenizer(), getListTests());
 	}

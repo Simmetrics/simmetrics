@@ -30,6 +30,11 @@ import org.simmetrics.tokenizers.Whitespace;
 public final class OverlapCoefficientTest extends SetMetricTest {
 
 	@Override
+	protected boolean satisfiesCoincidence() {
+		return false;
+	}
+	
+	@Override
 	protected SetMetric<String> getMetric() {
 		return new OverlapCoefficient<>();
 	}
@@ -39,6 +44,7 @@ public final class OverlapCoefficientTest extends SetMetricTest {
 		return new Whitespace();
 	}
 
+	@Override
 	public T[] getSetTests() {
 
 		return new T[] {

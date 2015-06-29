@@ -24,6 +24,7 @@ package org.simmetrics.metrics;
 
 public abstract class StringMetricTest extends MetricTest<String> {
 
+	@Override
 	protected String getEmpty() {
 		return "";
 	}

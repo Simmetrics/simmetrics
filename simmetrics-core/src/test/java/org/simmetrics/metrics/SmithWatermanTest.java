@@ -27,7 +27,13 @@ import org.simmetrics.metrics.SmithWaterman;
 @SuppressWarnings("javadoc")
 public class SmithWatermanTest extends StringMetricTest {
 	
+	@Override
 	protected boolean satisfiesSubadditivity(){
+		return false;
+	}
+	
+	@Override
+	protected boolean satisfiesCoincidence() {
 		return false;
 	}
 	

@@ -36,6 +36,7 @@ public final class JaroTest {
 
 	public static final class WikipediaExamples extends StringMetricTest {
 		
+		@Override
 		protected boolean satisfiesSubadditivity() {
 			return false;
 		}
@@ -57,6 +58,7 @@ public final class JaroTest {
 
 	public static final class Defaults extends StringMetricTest {
 		
+		@Override
 		protected boolean satisfiesSubadditivity(){
 			return false;
 		}

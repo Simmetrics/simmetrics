@@ -100,6 +100,7 @@ public final class LevenshteinTest {
 
 	public static final class InsertDeleteCost extends StringMetricTest {
 
+		@Override
 		protected boolean satisfiesSubadditivity() {
 			return false;
 		}
@@ -123,6 +124,11 @@ public final class LevenshteinTest {
 
 	public static final class NoSubstituteCost extends StringMetricTest {
 
+		@Override
+		protected boolean satisfiesCoincidence() {
+			return false;
+		}
+		
 		@SuppressWarnings("unchecked")
 		@Override
 		protected T<String>[] getTests() {

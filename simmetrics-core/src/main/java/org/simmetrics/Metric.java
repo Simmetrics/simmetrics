@@ -23,8 +23,9 @@ package org.simmetrics;
 public interface Metric<T> {
 	/**
 	 * Measures the similarity between a and b. The measurement results in a
-	 * value between 0 and 1 inclusive. A value of {@code 0.0} indicates that a
-	 * and bare dissimilar, a value of {@code 1.0} indicates they are similar.
+	 * value between 0 and 1 inclusive. A value of {@code 0.0} indicates that
+	 * {@code a} and {@code b} are dissimilar, a value of {@code 1.0} indicates
+	 * they are similar.
 	 * 
 	 * @param a
 	 *            object a to compare

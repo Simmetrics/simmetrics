@@ -22,6 +22,7 @@
 package org.simmetrics.metrics;
 
 import static java.util.Collections.frequency;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,7 +41,7 @@ import static java.lang.Math.sqrt;
  *            type of the token
  * 
  */
-public class EuclideanDistance<T> implements ListMetric<T> {
+public class EuclideanDistance<T> implements ListMetric<T>, Distance<List<T>> {
 
 	@Override
 	public float compare(List<T> a, List<T> b) {
@@ -57,7 +58,8 @@ public class EuclideanDistance<T> implements ListMetric<T> {
 		return (totalPossible - distance(a, b)) / totalPossible;
 	}
 
-	private static <T> float distance(final List<T> a, final List<T> b) {
+	@Override
+	public float distance(final List<T> a, final List<T> b) {
 		final Set<T> all = new HashSet<>(a.size() + b.size());
 		all.addAll(a);
 		all.addAll(b);

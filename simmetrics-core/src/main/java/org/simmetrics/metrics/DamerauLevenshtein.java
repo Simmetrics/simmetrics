@@ -27,8 +27,6 @@ import static org.simmetrics.utils.Math.max3;
 import static org.simmetrics.utils.Math.min3;
 import static org.simmetrics.utils.Math.min4;
 
-import java.util.Objects;
-
 import org.simmetrics.StringMetric;
 
 /**
@@ -45,7 +43,7 @@ import org.simmetrics.StringMetric;
  * @see Levenshtein
  * 
  */
-public class DamerauLevenshtein implements StringMetric {
+public class DamerauLevenshtein implements StringMetric,Distance<String> {
 
 	private final float maxCost;
 	private final float insertDelete;
@@ -66,14 +64,14 @@ public class DamerauLevenshtein implements StringMetric {
 	 * @param insertDelete
 	 *            positive non-zero cost of an insert or deletion operation
 	 * @param substitute
-	 *            positive non-zero cost of a substitute operation
+	 *            positive cost of a substitute operation
 	 * @param transpose
 	 *            positive cost of a transpose operation
 	 */
 	public DamerauLevenshtein(float insertDelete, float substitute,
 			float transpose) {
 		checkArgument(insertDelete > 0);
-		checkArgument(substitute > 0);
+		checkArgument(substitute >= 0);
 		checkArgument(transpose >= 0);
 
 		this.maxCost = max3(insertDelete, substitute, transpose);
@@ -95,16 +93,16 @@ public class DamerauLevenshtein implements StringMetric {
 		return 1.0f - (distance(a, b) / (maxCost * max(a.length(), b.length())));
 	}
 
+	@Override
+	public float distance(final String s, final String t) {
 
-	private float distance(final String s, final String t) {
-
-		if (Objects.equals(s, t))
-			return 0;
 		if (s.isEmpty())
 			return t.length() * insertDelete;
 		if (t.isEmpty())
-			return s.length() * insertDelete;
-
+			return s.length() * insertDelete;	
+		if (s.equals(t))
+			return 0;
+		
 		final int tLength = t.length();
 		final int sLength = s.length();
 

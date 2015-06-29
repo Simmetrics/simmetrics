@@ -21,10 +21,9 @@
  */
 package org.simmetrics.metrics;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
 import static org.simmetrics.utils.Math.min3;
-
-import java.util.Objects;
 
 import org.simmetrics.StringMetric;
 
@@ -38,7 +37,7 @@ import org.simmetrics.StringMetric;
  * @see DamerauLevenshtein
  * 
  */
-public class Levenshtein implements StringMetric {
+public class Levenshtein implements StringMetric, Distance<String> {
 
 	private final float maxCost;
 	private final float insertDelete;
@@ -50,9 +49,11 @@ public class Levenshtein implements StringMetric {
 	 * @param insertDelete
 	 *            positive non-zero cost of an insert or deletion operation
 	 * @param substitute
-	 *            positive non-zero cost of a substitute operation
+	 *            positive cost of a substitute operation
 	 */
 	public Levenshtein(float insertDelete, float substitute) {
+		checkArgument(insertDelete > 0);
+		checkArgument(substitute >= 0);
 		this.maxCost = max(insertDelete, substitute);
 		this.insertDelete = insertDelete;
 		this.substitute = substitute;
@@ -78,15 +79,16 @@ public class Levenshtein implements StringMetric {
 		return 1.0f - (distance(a, b) / (maxCost * max(a.length(), b.length())));
 	}
 
-	private float distance(final String s, final String t) {
+	@Override
+	public float distance(final String s, final String t) {
 
-		if (Objects.equals(s, t))
-			return 0;
 		if (s.isEmpty())
 			return t.length();
 		if (t.isEmpty())
 			return s.length();
-
+		if (s.equals(t))
+			return 0;
+		
 		final int tLength = t.length();
 		final int sLength = s.length();
 

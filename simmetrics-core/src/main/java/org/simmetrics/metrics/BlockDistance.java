@@ -22,6 +22,7 @@
 package org.simmetrics.metrics;
 
 import static java.util.Collections.frequency;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -42,7 +43,7 @@ import static java.lang.Math.abs;
  * @param <T>
  *            type of token
  */
-public class BlockDistance<T> implements ListMetric<T> {
+public class BlockDistance<T> implements ListMetric<T>, Distance<List<T>> {
 
 	@Override
 	public float compare(List<T> a, List<T> b) {
@@ -55,12 +56,12 @@ public class BlockDistance<T> implements ListMetric<T> {
 			return 0.0f;
 		}
 
-		final float totalPossible = a.size() + b.size();
 
-		return (totalPossible - distance(a, b)) / totalPossible;
+		return 1.0f - distance(a, b) / (a.size() + b.size());
 	}
 
-	private static <T> float distance(final List<T> a, final List<T> b) {
+	@Override
+	public float distance(final List<T> a, final List<T> b) {
 		final Set<T> all = new HashSet<>(a.size() + b.size());
 		all.addAll(a);
 		all.addAll(b);
@@ -79,5 +80,7 @@ public class BlockDistance<T> implements ListMetric<T> {
 	public String toString() {
 		return "BlockDistance";
 	}
+
+
 
 }

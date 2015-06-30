@@ -31,6 +31,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.simmetrics.tokenizers.Tokenizer;
 
+@SuppressWarnings("javadoc")
 public abstract class TokenizerTest {
 
 	private Tokenizer tokenizer;

@@ -26,6 +26,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.simmetrics.metrics.functions.Gap;
 
+@SuppressWarnings("javadoc")
 public abstract class GapCostTest {
 
 	protected static class T {

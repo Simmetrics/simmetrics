@@ -26,6 +26,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.simmetrics.metrics.functions.Substitution;
 
+@SuppressWarnings("javadoc")
 public abstract class SubstitutionTest {
 
 	protected static class T {

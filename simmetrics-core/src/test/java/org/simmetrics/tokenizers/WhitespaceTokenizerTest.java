@@ -23,6 +23,7 @@ package org.simmetrics.tokenizers;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Whitespace;
 
+@SuppressWarnings("javadoc")
 public class WhitespaceTokenizerTest extends TokenizerTest {
 
 	@Override

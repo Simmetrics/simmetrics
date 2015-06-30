@@ -101,13 +101,7 @@ public class SmithWatermanGotoh implements StringMetric {
 	}
 
 	private float smithWatermanGotoh(final String s, final String t) {
-		if (s.isEmpty()) {
-			return t.length();
-		}
-		if (t.isEmpty()) {
-			return s.length();
-		}
-
+		
 		float[] v0 = new float[t.length()];
 		float[] v1 = new float[t.length()];
 

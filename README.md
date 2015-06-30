@@ -44,6 +44,6 @@ SimMetrics is available through Maven Central. Include the dependency:
 	<dependency>
 		<groupId>com.github.mpkorstanje</groupId>
 		<artifactId>simmetrics-core</artifactId>
-		<version>3.0.3</version>
+		<version>3.0.4</version>
 	</dependency>
 ```

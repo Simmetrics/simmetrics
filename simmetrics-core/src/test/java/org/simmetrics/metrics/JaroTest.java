@@ -47,6 +47,7 @@ public class JaroTest extends StringMetricTest {
 	@Override
 	protected T[] getTests() {
 		return new T[] {
+				new T(0.0000f, "aaaa", "bbbb"),
 				new T(0.9444f, "test string1", "test string2"),
 				new T(0.8667f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.9048f, "a b c d", "a b c e"),

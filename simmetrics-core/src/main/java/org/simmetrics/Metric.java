@@ -14,6 +14,12 @@ package org.simmetrics;
  * <p>
  * The similarity measure should be symmetric such that
  * {@code compare(a,b) == compare(b,a)}.
+ * <p>
+ * The similarity measure may be s such that
+ * {@code compare(a, c) ≤ compare(a, b) + compare(b, c)}
+ * <p>
+ * The similarity measure may satisfy the coincidence axiom such that
+ * {@code compare(a, b) = 0 if and only if a.equals(b)}
  * 
  * @param <T>
  *            type of the elements compared

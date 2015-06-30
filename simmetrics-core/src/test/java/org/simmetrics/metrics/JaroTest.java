@@ -74,7 +74,9 @@ public final class JaroTest {
 			return new T[] {
 					new T<>(0.9444f, "test string1", "test string2"),
 					new T<>(0.0000f, "test string1", "Sold"),
-
+					new T<>(0.7777f, "test", "test string2"),
+					new T<>(0.0000f, "", "test string2"),
+					
 					new T<>(0.8667f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 					new T<>(0.9048f, "a b c d", "a b c e"),
 					new T<>(0.8889f, "Healed", "Sealed"),

@@ -11,8 +11,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.simmetrics.Metric;
-import org.simmetrics.metrics.ListMetricTest.T;
 
+@SuppressWarnings("javadoc")
 public abstract class MetricTest<K> {
 
 	protected static final class T<K> {

@@ -53,9 +53,10 @@ public final class MongeElkanTest extends ListMetricTest {
 
 	@Override
 	protected T[] getListTests() {
-		// TODO Auto-generated method stub
 		return new T[] {
 				new T(0.5000f, "test string1", "test string2"),
+				new T(0.7071f, "test", "test string2"),
+				new T(0.0000f, "", "test string2"),
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.7500f, "a b c d", "a b c e"),
 				new T(0.3333f, "Sam J Chapman", "Samuel John Chapman"),

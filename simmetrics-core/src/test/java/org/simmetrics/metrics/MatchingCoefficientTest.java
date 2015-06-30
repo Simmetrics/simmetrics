@@ -41,6 +41,8 @@ public final class MatchingCoefficientTest extends ListMetricTest {
 	@Override
 	protected T[] getListTests() {
 		return new T[]{new T(0.3333f, "test string1", "test string2"),
+				new T(0.5000f, "test", "test string2"),
+				new T(0.0000f, "", "test string2"),
 				new T(0.6000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.6000f, "a b c d", "a b c e"),
 				new T(0.3333f, "aaa bbb ccc ddd aaa bbb ccc ddd", "aaa bbb ccc eee"),

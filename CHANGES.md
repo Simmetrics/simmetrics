@@ -1,6 +1,9 @@
 Change Log
 ==========
 
+## Since 3.0.4 ##
+  - Fixed bug where Jaro would produce NaN similarity when neither string had any characters in common.
+
 ## Since 3.0.3 ##
   - Clarified java doc w/ regards to reflexive reflexive properties
   - Clarified java doc w/ regards to NullPointerExceptions

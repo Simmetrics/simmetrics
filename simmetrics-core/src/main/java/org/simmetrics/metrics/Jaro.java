@@ -80,7 +80,7 @@ public class Jaro implements StringMetric {
 		if (commonCharacters == 0) {
 			return 0.0f;
 		}
-
+		
 		float aCommonRatio = commonCharacters / (float) a.length();
 		float bCommonRatio = commonCharacters / (float) b.length();
 		float transpositionRatio = (commonCharacters - transpositions / 2.0f)

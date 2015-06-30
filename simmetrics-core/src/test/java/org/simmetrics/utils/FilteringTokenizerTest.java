@@ -8,6 +8,7 @@ import org.simmetrics.tokenizers.Whitespace;
 
 import static com.google.common.base.Predicates.*;
 
+@SuppressWarnings("javadoc")
 public class FilteringTokenizerTest extends TokenizerTest {
 
 	@Override

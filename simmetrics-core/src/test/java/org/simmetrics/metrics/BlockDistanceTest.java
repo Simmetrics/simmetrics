@@ -45,7 +45,6 @@ public final class BlockDistanceTest {
 
 		@Override
 		protected T[] getListTests() {
-			// TODO Auto-generated method stub
 			return new T[] { 
 					new T(0.5000f, "test string1", "test string2"),
 					new T(0.6666f, "test", "test string2"),

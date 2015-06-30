@@ -36,6 +36,7 @@ import static org.simmetrics.StringMetricBuilder.with;
 import static org.simmetrics.StringMetrics.*;
 
 
+@SuppressWarnings("javadoc")
 public class StringMetricsTest {
 
 	private static final float DELTA = 0.001f;

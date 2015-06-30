@@ -15,6 +15,7 @@ import org.simmetrics.tokenizers.Tokenizer;
 import com.google.common.base.Predicate;
 
 
+@SuppressWarnings("javadoc")
 public class StringMetricBuilderTest {
 
 	@Before

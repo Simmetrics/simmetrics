@@ -25,6 +25,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.simmetrics.utils.Math;
 
+@SuppressWarnings("javadoc")
 public class MathFuncsTest {
 
 	@Test

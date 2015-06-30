@@ -21,7 +21,6 @@
  */
 package org.simmetrics.metrics.costfunctions;
 
-import org.simmetrics.metrics.costfunctions.GapCostTest.T;
 import org.simmetrics.metrics.functions.AffineGap;
 import org.simmetrics.metrics.functions.Gap;
 

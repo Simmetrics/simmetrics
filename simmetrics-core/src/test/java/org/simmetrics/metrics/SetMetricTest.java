@@ -23,10 +23,12 @@ package org.simmetrics.metrics;
 
 import static java.util.Collections.emptySet;
 import static java.util.Collections.unmodifiableSet;
+
 import java.util.Set;
 
 import org.simmetrics.tokenizers.Tokenizer;
 
+@SuppressWarnings("javadoc")
 public abstract class SetMetricTest extends MetricTest<Set<String>> {
 
 	protected static final class T {

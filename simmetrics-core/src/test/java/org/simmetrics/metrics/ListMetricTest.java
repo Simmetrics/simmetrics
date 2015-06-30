@@ -23,9 +23,12 @@ package org.simmetrics.metrics;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
+
 import java.util.List;
+
 import org.simmetrics.tokenizers.Tokenizer;
 
+@SuppressWarnings("javadoc")
 public abstract class ListMetricTest extends MetricTest<List<String>> {
 
 	protected static final class T {

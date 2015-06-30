@@ -22,6 +22,7 @@
 package org.simmetrics.metrics;
 
 
+@SuppressWarnings("javadoc")
 public abstract class StringMetricTest extends MetricTest<String> {
 
 	@Override

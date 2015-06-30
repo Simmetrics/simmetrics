@@ -3,7 +3,7 @@
 
 	<groupId>com.github.mpkorstanje</groupId>
 	<artifactId>simmetrics</artifactId>
-	<version>3.0.4-SNAPSHOT</version>
+	<version>3.0.4</version>
 	<packaging>pom</packaging>
 
 	<name>SimMetrics</name>

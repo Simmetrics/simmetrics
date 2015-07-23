@@ -97,13 +97,12 @@ public class Jaro implements StringMetric {
 		final boolean[] matched = new boolean[charsB.length];
 
 		// Iterate of string a and find all characters that occur in b within
-		// the separation distance. Zero out any matches found to avoid
+		// the separation distance. Mark any matches found to avoid
 		// duplicate matchings.
 		int commonIndex = 0;
 		for (int i = 0, length = charsA.length; i < length; i++) {
 			final char character = charsA[i];
-
-			int index = indexOf(character, charsB, i - separation, i
+			final int index = indexOf(character, charsB, i - separation, i
 					+ separation + 1, matched);
 			if (index > -1) {
 				common[commonIndex++] = character;

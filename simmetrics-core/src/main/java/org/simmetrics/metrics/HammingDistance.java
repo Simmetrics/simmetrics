@@ -1,3 +1,25 @@
+/*
+ * SimMetrics - SimMetrics is a java library of Similarity or Distance Metrics,
+ * e.g. Levenshtein Distance, that provide float based similarity measures
+ * between String Data. All metrics return consistent measures rather than
+ * unbounded similarity scores.
+ * 
+ * Copyright (C) 2014 SimMetrics authors
+ * 
+ * This file is part of SimMetrics. This program is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU General Public
+ * License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package org.simmetrics.metrics;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -15,54 +37,6 @@ import org.simmetrics.Distance;
  * 
  */
 public final class HammingDistance {
-	/**
-	 * Hamming Distance algorithm to calculate distance between strings of equal
-	 * length.
-	 *
-	 * <p>
-	 * This class is immutable and thread-safe.
-	 * 
-	 */
-	public static final class HammingStringDistance implements Distance<String> {
-
-		HammingStringDistance() {
-			// avoid synthetics
-		}
-
-		/**
-		 * Measures the distance between strings {@code a} and {@code b} of
-		 * equal length. The measurement results in a non-negative value. A
-		 * value of {@code 0.0} indicates that {@code a} and {@code b} are
-		 * similar.
-		 * 
-		 * @param a
-		 *            string a to compare
-		 * @param b
-		 *            string b to compare
-		 * @return a non-negative value
-		 * @throws NullPointerException
-		 *             when either a or b is null
-		 * @throws IllegalArgumentException
-		 *             when a and b differ in length
-		 */
-		@Override
-		public float distance(String a, String b) {
-			checkArgument(a.length() == b.length());
-
-			if (a.isEmpty()) {
-				return 0;
-			}
-
-			int distance = 0;
-			for (int i = 0; i < a.length(); i++) {
-				if (a.charAt(i) != b.charAt(i)) {
-					distance++;
-				}
-			}
-			return distance;
-		}
-	}
-
 	/**
 	 * Hamming Distance algorithm to calculate distance between lists of equal
 	 * size.
@@ -109,7 +83,7 @@ public final class HammingDistance {
 			Iterator<T> aItt = a.iterator();
 			Iterator<T> bItt = b.iterator();
 
-			while (aItt.hasNext() && bItt.hasNext()) {
+			while (aItt.hasNext()) {
 				if (!aItt.next().equals(bItt.next())) {
 					distance++;
 				}
@@ -117,15 +91,64 @@ public final class HammingDistance {
 
 			return distance;
 		}
+		
+		@Override
+		public String toString() {
+			return "HammingListDistance";
+		}
 	}
 
 	/**
-	 * Constructs a new Hamming distance to compare strings.
+	 * Hamming Distance algorithm to calculate distance between strings of equal
+	 * length.
+	 *
+	 * <p>
+	 * This class is immutable and thread-safe.
 	 * 
-	 * @return a new Hamming distance to compare strings
 	 */
-	public static Distance<String> forString() {
-		return new HammingStringDistance();
+	public static final class HammingStringDistance implements Distance<String> {
+
+		HammingStringDistance() {
+			// avoid synthetics
+		}
+
+		/**
+		 * Measures the distance between strings {@code a} and {@code b} of
+		 * equal length. The measurement results in a non-negative value. A
+		 * value of {@code 0.0} indicates that {@code a} and {@code b} are
+		 * similar.
+		 * 
+		 * @param a
+		 *            string a to compare
+		 * @param b
+		 *            string b to compare
+		 * @return a non-negative value
+		 * @throws NullPointerException
+		 *             when either a or b is null
+		 * @throws IllegalArgumentException
+		 *             when a and b differ in length
+		 */
+		@Override
+		public float distance(String a, String b) {
+			checkArgument(a.length() == b.length());
+
+			if (a.isEmpty()) {
+				return 0;
+			}
+
+			int distance = 0;
+			for (int i = 0; i < a.length(); i++) {
+				if (a.charAt(i) != b.charAt(i)) {
+					distance++;
+				}
+			}
+			return distance;
+		}
+		
+		@Override
+		public String toString() {
+			return "HammingStringDistance";
+		}
 	}
 
 	/**
@@ -135,5 +158,14 @@ public final class HammingDistance {
 	 */
 	public static <T> Distance<List<T>> forList() {
 		return new HammingListDistance<>();
+	}
+
+	/**
+	 * Constructs a new Hamming distance to compare strings.
+	 * 
+	 * @return a new Hamming distance to compare strings
+	 */
+	public static Distance<String> forString() {
+		return new HammingStringDistance();
 	}
 }

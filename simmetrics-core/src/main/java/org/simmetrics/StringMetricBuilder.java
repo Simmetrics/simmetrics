@@ -510,10 +510,9 @@ public class StringMetricBuilder {
 			if (cache != null) {
 				cache.setSimplifier(simplifier);
 				return new CompositeStringMetric(metric, cache);
-			} else {
-				return new CompositeStringMetric(metric, simplifier);
-			}
-
+			} 
+			
+			return new CompositeStringMetric(metric, simplifier);
 		}
 
 		@Override

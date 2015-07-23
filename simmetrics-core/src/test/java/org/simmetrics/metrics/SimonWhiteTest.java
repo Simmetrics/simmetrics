@@ -24,6 +24,7 @@ package org.simmetrics.metrics;
 import static java.util.Arrays.asList;
 
 import org.simmetrics.ListMetric;
+import org.simmetrics.ListMetricTest;
 import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.tokenizers.QGram;
 import org.simmetrics.tokenizers.Tokenizer;

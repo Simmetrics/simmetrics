@@ -22,6 +22,7 @@
 package org.simmetrics.metrics;
 
 import org.simmetrics.StringMetric;
+import org.simmetrics.StringMetricTest;
 import org.simmetrics.metrics.SmithWatermanGotoh;
 
 @SuppressWarnings("javadoc")

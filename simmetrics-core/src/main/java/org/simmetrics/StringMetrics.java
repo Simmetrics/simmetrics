@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.simmetrics.metrics.BlockDistance;
 import org.simmetrics.metrics.CosineSimilarity;
+import org.simmetrics.metrics.DamerauLevenshtein;
 import org.simmetrics.metrics.DiceSimilarity;
 import org.simmetrics.metrics.EuclideanDistance;
 import org.simmetrics.metrics.JaccardSimilarity;
@@ -57,6 +58,7 @@ import org.simmetrics.tokenizers.Whitespace;
  * <ul>
  * <li>Block Distance
  * <li>Cosine Similarity
+ * <li>Damerau Levenshtein
  * <li>Dice Similarity
  * <li>Euclidean Distance
  * <li>Jaccard Similarity
@@ -186,6 +188,15 @@ public final class StringMetrics {
 	}
 
 	/**
+	 * Returns a string metric that uses a {@link DamerauLevenshtein} metric.
+	 * 
+	 * @return a dice similarity metric
+	 */
+	public static StringMetric damerauLevenshtein() {
+		return new DamerauLevenshtein();
+	}
+	
+	/**
 	 * Returns a string metric that uses a {@link Whitespace} and the
 	 * {@link DiceSimilarity} metric.
 	 * 
@@ -206,7 +217,7 @@ public final class StringMetrics {
 		return with(new EuclideanDistance<String>())
 				.tokenize(new Whitespace()).build();
 	}
-
+	
 	/**
 	 * Returns a string metric that uses a {@link Whitespace} and the
 	 * {@link JaccardSimilarity} metric.
@@ -343,4 +354,6 @@ public final class StringMetrics {
 		return with(new JaroWinkler())
 				.simplify(new Soundex()).build();
 	}
+	
+	
 }

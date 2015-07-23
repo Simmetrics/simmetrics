@@ -23,6 +23,7 @@ package org.simmetrics.metrics;
 
 import org.simmetrics.Metric;
 import org.simmetrics.StringMetric;
+import org.simmetrics.StringMetricTest;
 import org.simmetrics.metrics.Levenshtein;
 
 @SuppressWarnings("javadoc")

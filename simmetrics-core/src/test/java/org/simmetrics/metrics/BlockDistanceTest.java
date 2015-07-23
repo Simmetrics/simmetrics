@@ -21,8 +21,14 @@
  */
 package org.simmetrics.metrics;
 
+import static java.util.Arrays.asList;
+
+import java.util.Collections;
 import java.util.List;
 
+import org.simmetrics.Distance;
+import org.simmetrics.DistanceTest;
+import org.simmetrics.ListMetricTest;
 import org.simmetrics.Metric;
 import org.simmetrics.tokenizers.QGram;
 import org.simmetrics.tokenizers.Tokenizer;
@@ -31,6 +37,39 @@ import org.simmetrics.tokenizers.Whitespace;
 @SuppressWarnings("javadoc")
 public final class BlockDistanceTest {
 
+	public final static class DistanceListTest extends DistanceTest<List<String>> {
+
+		@Override
+		protected Distance<List<String>> getMetric() {
+			return new BlockDistance<>();
+		}
+		
+		@Override
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+		@Override
+		protected List<String> getEmpty() {
+			return Collections.emptyList();
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		protected DistanceTest.T<List<String>>[] getTests() {
+			return new T[] { 
+					new T<>(0.0000f, asList("test","string1"), asList("test","string1")),
+					new T<>(2.0000f, asList("test","string1"), asList("test","string2")),
+					new T<>(1.0000f, asList("test"), asList("test","string2")),
+					new T<>(2.0000f, asList(), asList("test","string2")),
+					new T<>(2.0000f, asList("aaa","bbb","ccc","ddd"), asList("aaa","bbb","ccc","eee")),
+					new T<>(2.0000f, asList("aaa","bbb"), asList("aaa","aaa")),
+					new T<>(1.0000f, asList("aaa"), asList("aaa","aaa")),
+					new T<>(2.0000f, asList("a","b","c","d"), asList("a","b","c","e")),
+					new T<>(4.0000f, asList("a","b","c","d"), asList("a","b","e","f")) 		
+			};
+		}
+	}
+	
 	public final static class WhiteSpaceTest extends ListMetricTest {
 
 		@Override

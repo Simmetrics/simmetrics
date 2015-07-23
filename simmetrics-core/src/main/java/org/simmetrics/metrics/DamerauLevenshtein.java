@@ -27,13 +27,16 @@ import static org.simmetrics.utils.Math.max3;
 import static org.simmetrics.utils.Math.min3;
 import static org.simmetrics.utils.Math.min4;
 
+import org.simmetrics.Distance;
 import org.simmetrics.StringMetric;
 
 /**
  * Damerau-Levenshtein algorithm providing a similarity measure between two
  * strings.
  * <p>
- * Insert/delete, substitute and transpose operations can be weighted.
+ * Insert/delete, substitute and transpose operations can be weighted. When the
+ * cost for substitution and/or transposition are zero Damerau-Levenshtein does
+ * not satisfy the coincidence property.
  * <p>
  * This class is immutable and thread-safe.
  * 
@@ -43,7 +46,7 @@ import org.simmetrics.StringMetric;
  * @see Levenshtein
  * 
  */
-public class DamerauLevenshtein implements StringMetric,Distance<String> {
+public class DamerauLevenshtein implements StringMetric, Distance<String> {
 
 	private final float maxCost;
 	private final float insertDelete;
@@ -58,8 +61,9 @@ public class DamerauLevenshtein implements StringMetric,Distance<String> {
 	}
 
 	/**
-	 * Constructs a new weighted Damerau-Levenshtein metric.
-	 * 
+	 * Constructs a new weighted Damerau-Levenshtein metric. When the cost for
+	 * substitution and/or transposition are zero Damerau-Levenshtein does not
+	 * satisfy the coincidence property.
 	 * 
 	 * @param insertDelete
 	 *            positive non-zero cost of an insert or deletion operation
@@ -95,10 +99,10 @@ public class DamerauLevenshtein implements StringMetric,Distance<String> {
 		if (s.isEmpty())
 			return t.length() * insertDelete;
 		if (t.isEmpty())
-			return s.length() * insertDelete;	
+			return s.length() * insertDelete;
 		if (s.equals(t))
 			return 0;
-		
+
 		final int tLength = t.length();
 		final int sLength = s.length();
 
@@ -146,7 +150,7 @@ public class DamerauLevenshtein implements StringMetric,Distance<String> {
 
 	@Override
 	public String toString() {
-		return "DamerauLevenshtein [insertDelete=" + insertDelete + ", substitute="
-				+ substitute + "]";
+		return "DamerauLevenshtein [insertDelete=" + insertDelete
+				+ ", substitute=" + substitute + "]";
 	}
 }

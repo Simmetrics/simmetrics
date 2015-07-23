@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.simmetrics.Distance;
 import org.simmetrics.ListMetric;
 
 import static java.lang.Math.abs;

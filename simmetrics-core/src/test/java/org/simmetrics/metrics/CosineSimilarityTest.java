@@ -22,6 +22,7 @@
 package org.simmetrics.metrics;
 
 import org.simmetrics.SetMetric;
+import org.simmetrics.SetMetricTest;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Whitespace;
 
@@ -41,6 +42,7 @@ public final class CosineSimilarityTest extends SetMetricTest {
 	protected T[] getSetTests() {
 		return new T[]{				
 				
+				new T(0.5000f, "test string1", "test string2"),
 				new T(0.5000f, "test string1", "test string2"),
 				new T(0.7071f, "test", "test string2"),
 				new T(0.0000f, "", "test string2"),

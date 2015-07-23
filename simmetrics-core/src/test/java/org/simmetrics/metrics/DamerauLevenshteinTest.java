@@ -23,6 +23,7 @@ package org.simmetrics.metrics;
 
 import org.simmetrics.Metric;
 import org.simmetrics.StringMetric;
+import org.simmetrics.StringMetricTest;
 
 @SuppressWarnings("javadoc")
 public final class DamerauLevenshteinTest {

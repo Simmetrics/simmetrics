@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.simmetrics.metrics;
+package org.simmetrics;
 
 
 @SuppressWarnings("javadoc")

@@ -22,6 +22,7 @@
 package org.simmetrics.metrics;
 
 import org.simmetrics.ListMetric;
+import org.simmetrics.ListMetricTest;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Whitespace;
 

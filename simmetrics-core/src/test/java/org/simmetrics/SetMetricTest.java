@@ -19,17 +19,17 @@
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.simmetrics.metrics;
+package org.simmetrics;
 
-import static java.util.Collections.emptyList;
-import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.emptySet;
+import static java.util.Collections.unmodifiableSet;
 
-import java.util.List;
+import java.util.Set;
 
 import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings("javadoc")
-public abstract class ListMetricTest extends MetricTest<List<String>> {
+public abstract class SetMetricTest extends MetricTest<Set<String>> {
 
 	protected static final class T {
 		protected final float similarity;
@@ -43,34 +43,31 @@ public abstract class ListMetricTest extends MetricTest<List<String>> {
 		}
 
 	}
+	
+	@Override
+	protected MetricTest.T<Set<String>>[] getTests() {
+		return transformTest(getTokenizer(), getSetTests());
+	}
+
+	protected abstract T[] getSetTests();
 
 	protected abstract Tokenizer getTokenizer();
 
-	private static MetricTest.T<List<String>>[] transformTest(
+	private static MetricTest.T<Set<String>>[] transformTest(
 			Tokenizer tokenizer, T... tests) {
 		@SuppressWarnings("unchecked")
-		MetricTest.T<List<String>>[] transformed = new MetricTest.T[tests.length];
+		MetricTest.T<Set<String>>[] transformed = new MetricTest.T[tests.length];
 		for (int i = 0; i < tests.length; i++) {
 			T t = tests[i];
 			transformed[i] = new MetricTest.T<>(t.similarity,
-					unmodifiableList(tokenizer.tokenizeToList(t.string1)),
-					unmodifiableList(tokenizer.tokenizeToList(t.string2)));
+					unmodifiableSet(tokenizer.tokenizeToSet(t.string1)),
+					unmodifiableSet(tokenizer.tokenizeToSet(t.string2)));
 		}
 		return transformed;
 	}
 
 	@Override
-	protected final MetricTest.T<List<String>>[] getTests() {
-		return transformTest(getTokenizer(), getListTests());
+	protected Set<String> getEmpty() {
+		return emptySet();
 	}
-
-	protected abstract T[] getListTests();
-
-	@Override
-	protected final List<String> getEmpty() {
-		return emptyList();
-	}
-
-
-
 }

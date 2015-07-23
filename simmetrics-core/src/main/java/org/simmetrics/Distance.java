@@ -1,9 +1,9 @@
-package org.simmetrics.metrics;
+package org.simmetrics;
 
 /**
- * Measures the distance between two arbitrary objects of the same type . The
- * measurement results in a non-negative value. A value of zero indicates that
- * the sets are similar.
+ * Measures the unnormalized similarity (distance) between two arbitrary
+ * objects of the same type . The measurement results in a non-negative value. A
+ * value of zero indicates that the sets are similar.
  * <p>
  * The distance measure should be consistent with equals such that
  * {@code a.equals(b) => distance(a,b) == 0.0}.
@@ -20,12 +20,14 @@ package org.simmetrics.metrics;
  * The distance measure may satisfy the coincidence axiom such that
  * {@code compare(a, b) = 0 if and only if a.equals(b)}
  * 
+ * @see <a href="https://en.wikipedia.org/wiki/Metric_(mathematics)">Wikipedia -
+ *      Metric</a>
  * 
  * @param <T>
  *            type of the elements compared
  * 
  */
-interface Distance<T> {
+public interface Distance<T> {
 	/**
 	 * Measures the distance between a and b. The measurement results in a
 	 * non-negative value. A value of {@code 0.0} indicates that {@code a} and

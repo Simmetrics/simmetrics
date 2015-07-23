@@ -25,10 +25,14 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
 import static org.simmetrics.utils.Math.min3;
 
+import org.simmetrics.Distance;
 import org.simmetrics.StringMetric;
 
 /**
  * Levenshtein algorithm providing a similarity measure between two strings.
+ * <p>
+ * Insert/delete and substitute operations can be weighted. When the cost for
+ * substitution is zero Levenshtein does not satisfy the coincidence property.
  * <p>
  * This class is immutable and thread-safe.
  * 
@@ -44,7 +48,9 @@ public class Levenshtein implements StringMetric, Distance<String> {
 	private final float substitute;
 
 	/**
-	 * Constructs a new weighted Levenshtein metric.
+	 * Constructs a new weighted Levenshtein metric. When the cost for
+	 * substitution is zero Levenshtein does not satisfy the coincidence
+	 * property.
 	 * 
 	 * @param insertDelete
 	 *            positive non-zero cost of an insert or deletion operation
@@ -84,7 +90,7 @@ public class Levenshtein implements StringMetric, Distance<String> {
 			return s.length();
 		if (s.equals(t))
 			return 0;
-		
+
 		final int tLength = t.length();
 		final int sLength = s.length();
 
@@ -108,7 +114,9 @@ public class Levenshtein implements StringMetric, Distance<String> {
 			for (int j = 0; j < tLength; j++) {
 				v1[j + 1] = min3(v1[j] + insertDelete,
 						v0[j + 1] + insertDelete,
-						v0[j] + (s.charAt(i) == t.charAt(j) ? 0.0f : substitute));
+						v0[j]
+								+ (s.charAt(i) == t.charAt(j) ? 0.0f
+										: substitute));
 			}
 
 			swap = v0;

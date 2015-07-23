@@ -29,6 +29,32 @@ import org.simmetrics.metrics.Jaro;
 @SuppressWarnings("javadoc")
 public final class JaroTest {
 
+	public static final class NullCharacters extends StringMetricTest {
+
+		@Override
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		protected T<String>[] getTests() {
+			return new T[] { 
+					new T<>(0.9047f, "He0ll0o", "Hel00lo"),
+					new T<>(0.9047f, "He\0ll\0o", "Hel\0\0lo"), 
+					new T<>(0.8888f, "0000", "000000"),
+					new T<>(0.8888f, "\0\0\0\0", "\0\0\0\0\0\0"),
+			};
+
+		}
+
+		@Override
+		protected Metric<String> getMetric() {
+			return new Jaro();
+		}
+
+	}
+
 	/**
 	 * Tests references from <a
 	 * href="http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance"
@@ -36,7 +62,7 @@ public final class JaroTest {
 	 */
 
 	public static final class WikipediaExamples extends StringMetricTest {
-		
+
 		@Override
 		protected boolean satisfiesSubadditivity() {
 			return false;
@@ -58,12 +84,12 @@ public final class JaroTest {
 	}
 
 	public static final class Defaults extends StringMetricTest {
-		
+
 		@Override
-		protected boolean satisfiesSubadditivity(){
+		protected boolean satisfiesSubadditivity() {
 			return false;
 		}
-		
+
 		@Override
 		protected StringMetric getMetric() {
 			return new Jaro();
@@ -77,7 +103,7 @@ public final class JaroTest {
 					new T<>(0.0000f, "test string1", "Sold"),
 					new T<>(0.7777f, "test", "test string2"),
 					new T<>(0.0000f, "", "test string2"),
-					
+
 					new T<>(0.8667f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 					new T<>(0.9048f, "a b c d", "a b c e"),
 					new T<>(0.8889f, "Healed", "Sealed"),

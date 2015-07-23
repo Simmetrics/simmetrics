@@ -42,11 +42,6 @@ public final class HammingDistanceTest {
 		}
 
 		@Override
-		protected boolean satisfiesSubadditivity() {
-			return false;
-		}
-
-		@Override
 		protected List<String> getEmpty() {
 			return emptyList();
 		}
@@ -55,13 +50,6 @@ public final class HammingDistanceTest {
 		@Override
 		protected DistanceTest.T<List<String>>[] getTests() {
 			return new T[] {
-					new T<>(0.0000f, asList("test", "string1"), asList("test",
-							"string1")),
-					new T<>(1.0000f, asList("test", "string1"), asList("test",
-							"string2")),
-					new T<>(1.0000f, asList("aaa", "bbb", "ccc", "ddd"),
-							asList("aaa", "bbb", "ccc", "eee")),
-					new T<>(1.0000f, asList("aaa", "bbb"), asList("aaa", "aaa")),
 					new T<>(1.0000f, asList("a", "b", "c", "d"), asList("a",
 							"b", "c", "e")),
 					new T<>(2.0000f, asList("a", "b", "c", "d"), asList("a",
@@ -83,11 +71,6 @@ public final class HammingDistanceTest {
 		}
 
 		@Override
-		protected boolean satisfiesSubadditivity() {
-			return false;
-		}
-
-		@Override
 		protected String getEmpty() {
 			return "";
 		}
@@ -95,11 +78,11 @@ public final class HammingDistanceTest {
 		@SuppressWarnings("unchecked")
 		@Override
 		protected DistanceTest.T<String>[] getTests() {
-			return new T[] { new T<>(0.0000f, "test string1", "test string1"),
-					new T<>(1.0000f, "test string1", "test string2"),
+			return new T[] { new T<>(0.0000f, "test 1", "test 1"),
+					new T<>(1.0000f, "test 1", "test 2"),
 					new T<>(3.0000f, "aaabbb", "aaaaaa"),
-					new T<>(1.0000f, "abcd", "abce"),
-					new T<>(2.0000f, "abcd", "abef") };
+					new T<>(1.0000f, "abcdxy", "abcexy"),
+					new T<>(2.0000f, "abcdxy", "abefxy") };
 		}
 
 		@Test(expected = IllegalArgumentException.class)

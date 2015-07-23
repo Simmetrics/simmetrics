@@ -225,6 +225,18 @@ public abstract class MetricTest<K> {
 			testSymmetric(metric, t.a, t.b, delta);
 		}
 	}
+	
+	@Test
+	public final void containsEmptyVsNonEmptyTest() {
+		final K empty = getEmpty();
+		for (T<K> t : tests) {
+			if(t.a.equals(empty) ^ !t.b.equals(empty)){
+				return;
+			}
+		}
+		
+		fail("tests did not contain empty vs non-empty test");
+	}
 
 	@Test
 	public final void implementsToString() {

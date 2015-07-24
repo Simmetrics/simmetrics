@@ -23,17 +23,24 @@ package org.simmetrics.metrics;
 
 import static java.util.Arrays.asList;
 
-import org.junit.Test;
 import org.simmetrics.ListMetric;
+import org.simmetrics.ListMetricTest;
 import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.tokenizers.QGram;
+import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Whitespace;
 import org.simmetrics.utils.CompositeTokenizer;
 import org.simmetrics.utils.FilteringTokenizer;
 
 import com.google.common.base.Predicate;
 
-public class SimonWhiteTest extends ListMetricTest {
+@SuppressWarnings("javadoc")
+public final class SimonWhiteTest extends ListMetricTest {
+	
+	@Override
+	protected boolean satisfiesSubadditivity(){
+		return false;
+	}
 
 	static class MinimumLenght implements Predicate<String> {
 		@Override
@@ -48,19 +55,22 @@ public class SimonWhiteTest extends ListMetricTest {
 	}
 
 	@Override
-	public ListMetric<String> getMetric() {
+	protected ListMetric<String> getMetric() {
 		return new SimonWhite<>();
 	}
 
-	@Test
-	public void test1() {
-		
-		testSimilarity(
-				getMetric(), 
-				new CompositeTokenizer(asList(
-						new FilteringTokenizer(new Whitespace(), new MinimumLenght()),
-						new QGram(2))),  
+	@Override
+	protected Tokenizer getTokenizer() {
+		return new CompositeTokenizer(asList(new FilteringTokenizer(
+				new Whitespace(), new MinimumLenght()), new QGram(2)));
+	}
+
+	@Override
+	protected T[] getListTests() {
+		return new T[] {
 				new T(0.8889f, "test string1", "test string2"),
+				new T(0.5000f, "test", "test string2"),
+				new T(0.0000f, "", "test string2"),
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(1.0000f, "a b c d", "a b c e"),
 				new T(0.8000f, "Healed", "Sealed"),
@@ -111,6 +121,6 @@ public class SimonWhiteTest extends ListMetricTest {
 				new T(0.0690f, "Web Aplications",
 						"Structural Assessment: The Role of Large and Full-Scale Testing"),
 				new T(0.0606f, "Web Aplications",
-						"How to Find a Scholarship Online"));
+						"How to Find a Scholarship Online") };
 	}
 }

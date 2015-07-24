@@ -65,6 +65,7 @@ public interface SetMetric<T> extends Metric<Set<T>> {
 	 * @throws NullPointerException
 	 *             when either a or b is null
 	 */
+	@Override
 	public float compare(Set<T> a, Set<T> b);
 
 }

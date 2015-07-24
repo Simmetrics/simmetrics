@@ -23,9 +23,11 @@ package org.simmetrics.metrics.costfunctions;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.simmetrics.metrics.functions.Substitution;
 
+@SuppressWarnings("javadoc")
 public abstract class SubstitutionTest {
 
 	protected static class T {
@@ -85,7 +87,8 @@ public abstract class SubstitutionTest {
 		}
 	}
 
-	
+	@Test
+	@Ignore
 	public void generateTest() {
 		for (T t : getTests()) {
 			float actuall = cost.compare(t.string1, t.string1Index, t.string2,

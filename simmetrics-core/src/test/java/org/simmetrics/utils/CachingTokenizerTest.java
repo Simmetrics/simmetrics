@@ -29,6 +29,7 @@ import org.simmetrics.utils.CachingTokenizer;
 
 import static org.mockito.Mockito.*;
 
+@SuppressWarnings("javadoc")
 public class CachingTokenizerTest extends TokenizerTest {
 
 	private Tokenizer tokenizer;

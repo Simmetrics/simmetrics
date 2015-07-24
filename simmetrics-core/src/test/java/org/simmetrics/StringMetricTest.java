@@ -19,29 +19,15 @@
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.simmetrics.utils;
+package org.simmetrics;
 
-import static java.util.Arrays.asList;
-
-import org.simmetrics.tokenizers.Tokenizer;
-import org.simmetrics.tokenizers.TokenizerTest;
-import org.simmetrics.tokenizers.Whitespace;
-
-import static com.google.common.base.Predicates.*;
 
 @SuppressWarnings("javadoc")
-public class FilteringTokenizerTest extends TokenizerTest {
+public abstract class StringMetricTest extends MetricTest<String> {
 
 	@Override
-	protected Tokenizer getTokenizer() {
-		return new FilteringTokenizer(new Whitespace(),
-				not(in(asList(
-				"the", "and", "or"))));
+	protected final String getEmpty() {
+		return "";
 	}
 
-	@Override
-	public T[] getTests() {
-		return new T[] { new T("the mouse and cat or dog", "mouse", "cat",
-				"dog") };
-	}
 }

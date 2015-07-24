@@ -19,17 +19,19 @@
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.simmetrics.metrics;
+package org.simmetrics;
 
+import static java.util.Collections.emptySet;
 import static java.util.Collections.unmodifiableSet;
+
 import java.util.Set;
 
-import org.simmetrics.SetMetric;
 import org.simmetrics.tokenizers.Tokenizer;
 
+@SuppressWarnings("javadoc")
 public abstract class SetMetricTest extends MetricTest<Set<String>> {
 
-	protected static class T {
+	protected static final class T {
 		protected final float similarity;
 		protected final String string1;
 		protected final String string2;
@@ -42,50 +44,30 @@ public abstract class SetMetricTest extends MetricTest<Set<String>> {
 
 	}
 	
-	protected void testSimilarity(SetMetric<String> metric,
-			Tokenizer tokenizer, T... tests) {
-
-		for (T t : tests) {
-
-			Set<String> a = unmodifiableSet(tokenizer
-					.tokenizeToSet(t.string1));
-			Set<String> b = unmodifiableSet(tokenizer
-					.tokenizeToSet(t.string2));
-			testMetric(metric, a, b, t.similarity);
-		}
+	@Override
+	protected MetricTest.T<Set<String>>[] getTests() {
+		return transformTest(getTokenizer(), getSetTests());
 	}
 
-//	@Test
-//	public void testEmpty() {
-//		metric.compare(Collections.<String> emptySet(),
-//				Collections.<String> emptySet());
-//	}
-//
-//	
-//	@Test
-//	public void testEqual1() {
-//		assertEquals(1.0, metric.compare(
-//				newHashSet("candy"),
-//				newHashSet("candy")), delta);
-//	}
-//	@Test
-//	public void testEqual2() {
-//		assertEquals(1.0, metric.compare(
-//				newHashSet("candy","ice"),
-//				newHashSet("candy","ice")), delta);
-//	}
-//	
-//	@Test
-//	public void testEqual3() {
-//		assertEquals(1.0, metric.compare(
-//				newHashSet("candy","ice","slime"),
-//				newHashSet("candy","ice","slime")), delta);
-//	}
-//	
-//	@Test
-//	public void testEqual4() {
-//		assertEquals(1.0, metric.compare(
-//				newHashSet("candy", "ice", "slime", "fire"),
-//				newHashSet("candy", "ice", "slime", "fire")), delta);
-//	}
+	protected abstract T[] getSetTests();
+
+	protected abstract Tokenizer getTokenizer();
+
+	private static MetricTest.T<Set<String>>[] transformTest(
+			Tokenizer tokenizer, T... tests) {
+		@SuppressWarnings("unchecked")
+		MetricTest.T<Set<String>>[] transformed = new MetricTest.T[tests.length];
+		for (int i = 0; i < tests.length; i++) {
+			T t = tests[i];
+			transformed[i] = new MetricTest.T<>(t.similarity,
+					unmodifiableSet(tokenizer.tokenizeToSet(t.string1)),
+					unmodifiableSet(tokenizer.tokenizeToSet(t.string2)));
+		}
+		return transformed;
+	}
+
+	@Override
+	protected Set<String> getEmpty() {
+		return emptySet();
+	}
 }

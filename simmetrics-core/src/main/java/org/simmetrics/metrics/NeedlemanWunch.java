@@ -88,16 +88,12 @@ public class NeedlemanWunch implements StringMetric {
 			return 1.0f;
 		}
 
-		if (a.isEmpty() || b.isEmpty()) {
-			return 0.0f;
-		}
-
 		float maxDistance = max(a.length(), b.length())
 				* max(substitution.max(), gapValue);
 		float minDistance = max(a.length(), b.length())
 				* min(substitution.min(), gapValue);
 
-		return ((-needlemanWunch(a, b) - minDistance) / (maxDistance - minDistance));
+		return (-needlemanWunch(a, b) - minDistance) / (maxDistance - minDistance);
 
 	}
 
@@ -106,11 +102,12 @@ public class NeedlemanWunch implements StringMetric {
 		if (Objects.equals(s, t)) {
 			return 0;
 		}
+
 		if (s.isEmpty()) {
-			return t.length();
+			return -gapValue * t.length();
 		}
 		if (t.isEmpty()) {
-			return s.length();
+			return -gapValue * s.length();
 		}
 
 		final float[] v0 = new float[t.length() + 1];

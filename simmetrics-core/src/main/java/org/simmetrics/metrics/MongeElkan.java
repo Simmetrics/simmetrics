@@ -37,12 +37,13 @@ import org.simmetrics.ListMetric;
  * </p>
  * Implementation note: Because the matches of a in b are not symmetric with the
  * matches of b in a and because the whole operation is not symmetric when a and
- * b have a different length the asymmetry is normalized by *
- * <p>
- * This class is immutable and thread-safe.
+ * b have a different length the asymmetry is normalized by:
  * <p>
  * <code>normalized_similarity(a,b) = sqrt(similarity(a,b) * similarity(b,a))</code>
  * </p>
+ * <p>
+ * This class is immutable and thread-safe.
+ * 
  * 
  * 
  */

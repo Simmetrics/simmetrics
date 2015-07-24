@@ -11,34 +11,47 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.simmetrics.metrics;
 
-import org.junit.Test;
 import org.simmetrics.SetMetric;
+import org.simmetrics.SetMetricTest;
 import org.simmetrics.metrics.OverlapCoefficient;
+import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Whitespace;
 
-
-public class OverlapCoefficientTest extends SetMetricTest {
+@SuppressWarnings("javadoc")
+public final class OverlapCoefficientTest extends SetMetricTest {
 
 	@Override
-	public SetMetric<String> getMetric() {
+	protected boolean satisfiesCoincidence() {
+		return false;
+	}
+	
+	@Override
+	protected SetMetric<String> getMetric() {
 		return new OverlapCoefficient<>();
 	}
 
-	@Test
-	public void test1() {
-		testSimilarity(
-				getMetric(),
-				new Whitespace(),
+	@Override
+	protected Tokenizer getTokenizer() {
+		return new Whitespace();
+	}
+
+	@Override
+	public T[] getSetTests() {
+
+		return new T[] {
 				new T(0.5000f, "test string1", "test string2"),
+				new T(1.0000f, "test", "test string2"),
+				new T(0.0000f, "", "test string2"),
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.7500f, "a b c d", "a b c e"),
 				new T(0.0000f, "Healed", "Sealed"),
@@ -54,53 +67,46 @@ public class OverlapCoefficientTest extends SetMetricTest {
 				new T(0.0000f, "John Smith", "Sam Chapman"),
 				new T(0.0000f, "John Smith", "Sam J Chapman"),
 				new T(0.0000f, "John Smith", "S Chapman"),
-				new T(1.0000f,
-						"Web Database Applications",
+				new T(1.0000f, "Web Database Applications",
 						"Web Database Applications with PHP & MySQL"),
-				new T(1.0000f,
-						"Web Database Applications",
+				new T(1.0000f, "Web Database Applications",
 						"Creating Database Web Applications with PHP and ASP"),
-				new T(1.0000f,
-						"Web Database Applications",
+				new T(1.0000f, "Web Database Applications",
 						"Building Database Applications on the Web Using PHP3"),
-				new T(1.0000f,
-						"Web Database Applications",
+				new T(1.0000f, "Web Database Applications",
 						"Building Web Database Applications with Visual Studio 6"),
-				new T(0.3333f,
-						"Web Database Applications",
+				new T(0.3333f, "Web Database Applications",
 						"Web Application Development With PHP"),
-				new T(1.0000f,
+				new T(
+						1.0000f,
 						"Web Database Applications",
 						"WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
-				new T(0.0000f,
-						"Web Database Applications",
+				new T(0.0000f, "Web Database Applications",
 						"Structural Assessment: The Role of Large and Full-Scale Testing"),
-				new T(0.0000f,
-						"Web Database Applications",
+				new T(0.0000f, "Web Database Applications",
 						"How to Find a Scholarship Online"),
-				new T(0.5000f,
-						"Web Aplications",
+				new T(0.5000f, "Web Aplications",
 						"Web Database Applications with PHP & MySQL"),
-				new T(0.5000f,
-						"Web Aplications",
+				new T(0.5000f, "Web Aplications",
 						"Creating Database Web Applications with PHP and ASP"),
-				new T(0.5000f,
-						"Web Aplications",
+				new T(0.5000f, "Web Aplications",
 						"Building Database Applications on the Web Using PHP3"),
-				new T(0.5000f,
-						"Web Aplications",
+				new T(0.5000f, "Web Aplications",
 						"Building Web Database Applications with Visual Studio 6"),
-				new T(0.5000f,
-						"Web Aplications",
+				new T(0.5000f, "Web Aplications",
 						"Web Application Development With PHP"),
-				new T(0.5000f,
+				new T(
+						0.5000f,
 						"Web Aplications",
 						"WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
-				new T(0.0000f,
-						"Web Aplications",
+				new T(0.0000f, "Web Aplications",
 						"Structural Assessment: The Role of Large and Full-Scale Testing"),
-				new T(0.0000f,
-						"Web Aplications",
-						"How to Find a Scholarship Online"));
+				new T(0.0000f, "Web Aplications",
+						"How to Find a Scholarship Online") };
+
 	}
+
+
+	
+
 }

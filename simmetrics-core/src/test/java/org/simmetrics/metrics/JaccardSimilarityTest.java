@@ -21,23 +21,30 @@
  */
 package org.simmetrics.metrics;
 
-import org.junit.Test;
 import org.simmetrics.SetMetric;
+import org.simmetrics.SetMetricTest;
+import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Whitespace;
 
-public class JaccardSimilarityTest extends SetMetricTest {
+@SuppressWarnings("javadoc")
+public final class JaccardSimilarityTest extends SetMetricTest {
 
 	@Override
-	public SetMetric<String> getMetric() {
+	protected SetMetric<String> getMetric() {
 		return new JaccardSimilarity<>();
 	}
 
-	@Test
-	public void test1() {
-		testSimilarity(
-				getMetric(),
-				new Whitespace(),
+	@Override
+	protected Tokenizer getTokenizer() {
+		return new Whitespace();
+	}
+
+	@Override
+	protected T[] getSetTests() {
+		return new T[] {
 				new T(0.3333f, "test string1", "test string2"),
+				new T(0.5000f, "test", "test string2"),
+				new T(0.0000f, "", "test string2"),
 				new T(0.6000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.6000f, "a b c d", "a b c e"),
 				new T(0.0000f, "Healed", "Sealed"),
@@ -88,6 +95,8 @@ public class JaccardSimilarityTest extends SetMetricTest {
 				new T(0.0000f, "Web Aplications",
 						"Structural Assessment: The Role of Large and Full-Scale Testing"),
 				new T(0.0000f, "Web Aplications",
-						"How to Find a Scholarship Online"));
+						"How to Find a Scholarship Online") };
 	}
+
+
 }

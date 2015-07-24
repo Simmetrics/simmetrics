@@ -19,21 +19,19 @@
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.simmetrics.metrics;
+package org.simmetrics;
 
-import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
 
-import java.util.Collections;
 import java.util.List;
 
-import org.junit.Test;
-import org.simmetrics.ListMetric;
 import org.simmetrics.tokenizers.Tokenizer;
 
+@SuppressWarnings("javadoc")
 public abstract class ListMetricTest extends MetricTest<List<String>> {
 
-	protected static class T {
+	protected static final class T {
 		protected final float similarity;
 		protected final String string1;
 		protected final String string2;
@@ -46,45 +44,33 @@ public abstract class ListMetricTest extends MetricTest<List<String>> {
 
 	}
 
-	protected void testSimilarity(ListMetric<String> metric,
+	protected abstract Tokenizer getTokenizer();
+
+	private static MetricTest.T<List<String>>[] transformTest(
 			Tokenizer tokenizer, T... tests) {
-
-		for (T t : tests) {
-			List<String> a = unmodifiableList(tokenizer
-					.tokenizeToList(t.string1));
-			List<String> b = unmodifiableList(tokenizer
-					.tokenizeToList(t.string2));
-			testMetric(metric, a, b, t.similarity);
+		@SuppressWarnings("unchecked")
+		MetricTest.T<List<String>>[] transformed = new MetricTest.T[tests.length];
+		for (int i = 0; i < tests.length; i++) {
+			T t = tests[i];
+			transformed[i] = new MetricTest.T<>(t.similarity,
+					unmodifiableList(tokenizer.tokenizeToList(t.string1)),
+					unmodifiableList(tokenizer.tokenizeToList(t.string2)));
 		}
+		return transformed;
+	}
+
+	@Override
+	protected final MetricTest.T<List<String>>[] getTests() {
+		return transformTest(getTokenizer(), getListTests());
+	}
+
+	protected abstract T[] getListTests();
+
+	@Override
+	protected final List<String> getEmpty() {
+		return emptyList();
 	}
 
 
-	@Test
-	public void testEmpty() {
-		metric.compare(Collections.<String> emptyList(),
-				Collections.<String> emptyList());
-	}
-
-	@Test
-	public void testEqual1() {
-		testMetric(metric, asList("candy"), asList("candy"), 1.0f);
-	}
-
-	@Test
-	public void testEqual2() {
-		testMetric(metric, asList("candy", "ice"), asList("candy", "ice"), 1.0f);
-	}
-
-	@Test
-	public void testEqual3() {
-		testMetric(metric, asList("candy", "ice", "slime"),
-				asList("candy", "ice", "slime"), 1.0f);
-	}
-
-	@Test
-	public void testEqual4() {
-		testMetric(metric, asList("candy", "ice", "slime", "fire"),
-				asList("candy", "ice", "slime", "fire"), 1.0f);
-	}
 
 }

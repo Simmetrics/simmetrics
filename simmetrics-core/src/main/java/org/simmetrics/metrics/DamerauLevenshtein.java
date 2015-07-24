@@ -23,53 +23,65 @@ package org.simmetrics.metrics;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
+import static org.simmetrics.utils.Math.max3;
 import static org.simmetrics.utils.Math.min3;
+import static org.simmetrics.utils.Math.min4;
 
 import org.simmetrics.Distance;
 import org.simmetrics.StringMetric;
 
 /**
- * Levenshtein algorithm providing a similarity measure between two strings.
+ * Damerau-Levenshtein algorithm providing a similarity measure between two
+ * strings.
  * <p>
- * Insert/delete and substitute operations can be weighted. When the cost for
- * substitution is zero Levenshtein does not satisfy the coincidence property.
+ * Insert/delete, substitute and transpose operations can be weighted. When the
+ * cost for substitution and/or transposition are zero Damerau-Levenshtein does
+ * not satisfy the coincidence property.
  * <p>
  * This class is immutable and thread-safe.
  * 
- * @see <a href=" http://en.wikipedia.org/wiki/Levenshtein_distance">Wikipedia -
- *      Levenshtein distance</a>
- * @see DamerauLevenshtein
+ * @see <a
+ *      href="https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance">Wikipedia
+ *      - Damerau-Levenshtein distance</a>
+ * @see Levenshtein
  * 
  */
-public class Levenshtein implements StringMetric, Distance<String> {
+public class DamerauLevenshtein implements StringMetric, Distance<String> {
 
 	private final float maxCost;
 	private final float insertDelete;
 	private final float substitute;
+	private final float transpose;
 
 	/**
-	 * Constructs a new weighted Levenshtein metric. When the cost for
-	 * substitution is zero Levenshtein does not satisfy the coincidence
-	 * property.
+	 * Constructs a new Damerau-Levenshtein metric.
+	 */
+	public DamerauLevenshtein() {
+		this(1.0f, 1.0f, 1.0f);
+	}
+
+	/**
+	 * Constructs a new weighted Damerau-Levenshtein metric. When the cost for
+	 * substitution and/or transposition are zero Damerau-Levenshtein does not
+	 * satisfy the coincidence property.
 	 * 
 	 * @param insertDelete
 	 *            positive non-zero cost of an insert or deletion operation
 	 * @param substitute
 	 *            positive cost of a substitute operation
+	 * @param transpose
+	 *            positive cost of a transpose operation
 	 */
-	public Levenshtein(float insertDelete, float substitute) {
+	public DamerauLevenshtein(float insertDelete, float substitute,
+			float transpose) {
 		checkArgument(insertDelete > 0);
 		checkArgument(substitute >= 0);
-		this.maxCost = max(insertDelete, substitute);
+		checkArgument(transpose >= 0);
+
+		this.maxCost = max3(insertDelete, substitute, transpose);
 		this.insertDelete = insertDelete;
 		this.substitute = substitute;
-	}
-
-	/**
-	 * Constructs a new Levenshtein metric.
-	 */
-	public Levenshtein() {
-		this(1.0f, 1.0f);
+		this.transpose = transpose;
 	}
 
 	@Override
@@ -85,9 +97,9 @@ public class Levenshtein implements StringMetric, Distance<String> {
 	public float distance(final String s, final String t) {
 
 		if (s.isEmpty())
-			return t.length();
+			return t.length() * insertDelete;
 		if (t.isEmpty())
-			return s.length();
+			return s.length() * insertDelete;
 		if (s.equals(t))
 			return 0;
 
@@ -97,41 +109,48 @@ public class Levenshtein implements StringMetric, Distance<String> {
 		float[] swap;
 		float[] v0 = new float[tLength + 1];
 		float[] v1 = new float[tLength + 1];
+		float[] v2 = new float[tLength + 1];
 
-		// initialize v0 (the previous row of distances)
+		// initialize v1 (the previous row of distances)
 		// this row is A[0][i]: edit distance for an empty s
 		// the distance is just the number of characters to delete from t
-		for (int i = 0; i < v0.length; i++) {
-			v0[i] = i * insertDelete;
+		for (int i = 0; i < v1.length; i++) {
+			v1[i] = i * insertDelete;
 		}
 
 		for (int i = 0; i < sLength; i++) {
 
-			// first element of v1 is A[i+1][0]
+			// first element of v2 is A[i+1][0]
 			// edit distance is delete (i+1) chars from s to match empty t
-			v1[0] = (i + 1) * insertDelete;
+			v2[0] = (i + 1) * insertDelete;
 
 			for (int j = 0; j < tLength; j++) {
-				v1[j + 1] = min3(v1[j] + insertDelete,
-						v0[j + 1] + insertDelete,
-						v0[j]
-								+ (s.charAt(i) == t.charAt(j) ? 0.0f
-										: substitute));
+				if (j > 0 && i > 0 && s.charAt(i - 1) == t.charAt(j)
+						&& s.charAt(i) == t.charAt(j - 1)) {
+					v2[j + 1] = min4(v2[j] + insertDelete, v1[j + 1]
+							+ insertDelete, v1[j]
+							+ (s.charAt(i) == t.charAt(j) ? 0.0f : substitute),
+							v0[j - 1] + transpose);
+				} else {
+					v2[j + 1] = min3(v2[j] + insertDelete, v1[j + 1]
+							+ insertDelete, v1[j]
+							+ (s.charAt(i) == t.charAt(j) ? 0.0f : substitute));
+				}
 			}
 
 			swap = v0;
 			v0 = v1;
-			v1 = swap;
+			v1 = v2;
+			v2 = swap;
 		}
 
-		// latest results was in v1 which was swapped with v0
-		return v0[tLength];
+		// latest results was in v2 which was swapped to v1
+		return v1[tLength];
 	}
 
 	@Override
 	public String toString() {
-		return "Levenshtein [insertDelete=" + insertDelete + ", substitute="
-				+ substitute + "]";
+		return "DamerauLevenshtein [insertDelete=" + insertDelete
+				+ ", substitute=" + substitute + "]";
 	}
-
 }

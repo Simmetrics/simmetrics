@@ -26,7 +26,7 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 /**
- * The class {@code Math} contains methods for performing usefull functions.
+ * The class {@code Math} contains methods for performing useful functions.
  */
 public final class Math {
 

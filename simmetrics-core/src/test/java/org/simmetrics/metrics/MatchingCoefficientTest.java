@@ -21,24 +21,29 @@
  */
 package org.simmetrics.metrics;
 
-import org.junit.Test;
 import org.simmetrics.ListMetric;
-import org.simmetrics.metrics.MatchingCoefficient;
+import org.simmetrics.ListMetricTest;
+import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Whitespace;
 
-public class MatchingCoefficientTest extends ListMetricTest {
+@SuppressWarnings("javadoc")
+public final class MatchingCoefficientTest extends ListMetricTest {
 
 	@Override
-	public ListMetric<String> getMetric() {
+	protected ListMetric<String> getMetric() {
 		return new MatchingCoefficient<>();
 	}
 
-	@Test
-	public void test1() {
-		testSimilarity(
-				getMetric(), 
-				new Whitespace(), 
-				new T(0.3333f, "test string1", "test string2"),
+	@Override
+	protected Tokenizer getTokenizer() {
+		return new Whitespace();
+	}
+
+	@Override
+	protected T[] getListTests() {
+		return new T[]{new T(0.3333f, "test string1", "test string2"),
+				new T(0.5000f, "test", "test string2"),
+				new T(0.0000f, "", "test string2"),
 				new T(0.6000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.6000f, "a b c d", "a b c e"),
 				new T(0.3333f, "aaa bbb ccc ddd aaa bbb ccc ddd", "aaa bbb ccc eee"),
@@ -84,8 +89,6 @@ public class MatchingCoefficientTest extends ListMetricTest {
 				new T(0.0000f, "Web Aplications",
 						"Structural Assessment: The Role of Large and Full-Scale Testing"),
 				new T(0.0000f, "Web Aplications",
-						"How to Find a Scholarship Online")
-
-		);
+						"How to Find a Scholarship Online")};
 	}
 }

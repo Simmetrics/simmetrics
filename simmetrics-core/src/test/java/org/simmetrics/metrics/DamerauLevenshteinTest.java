@@ -24,17 +24,20 @@ package org.simmetrics.metrics;
 import org.simmetrics.Metric;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricTest;
-import org.simmetrics.metrics.Levenshtein;
 
 @SuppressWarnings("javadoc")
-public final class LevenshteinTest {
+public final class DamerauLevenshteinTest {
 
 	public static final class UnitCost extends StringMetricTest {
-		
-		
+
 		@Override
 		protected StringMetric getMetric() {
-			return new Levenshtein();
+			return new DamerauLevenshtein();
+		}
+
+		@Override
+		protected boolean satisfiesSubadditivity() {
+			return false;
 		}
 
 		@SuppressWarnings("unchecked")
@@ -52,7 +55,11 @@ public final class LevenshteinTest {
 
 					new T<>(0.8571f, "a b c d", "a b c e"),
 
-					new T<>(0.8000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+					new T<>(0.7500f, "uxyw", "uyxw"),
+					new T<>(0.3333f, "uxaayw", "uyxw"),
+
+					new T<>(0.8888f, "transpose", "tranpsose"),
+
 					new T<>(0.8333f, "Healed", "Sealed"),
 					new T<>(0.5714f, "Healed", "Healthy"),
 					new T<>(0.6667f, "Healed", "Heard"),
@@ -103,31 +110,32 @@ public final class LevenshteinTest {
 					new T<>(0.1875f, "Web Aplications",
 							"How to Find a Scholarship Online"), };
 		}
+
 	}
 
 	public static final class InsertDeleteCost extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
-			return new Levenshtein(0.1f, 1.0f);
+			return new DamerauLevenshtein(0.1f, 1.0f, 1.0f);
 		}
-		
+
 		@Override
 		protected boolean satisfiesSubadditivity() {
 			return false;
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		@Override
 		protected T<String>[] getTests() {
-			return new T[] { 
+			return new T[] {
 					new T<>(0.9500f, "InsertDelete", "Insert"),
 					new T<>(0.9500f, "InsertDelete", "Delete"),
 					new T<>(0.9500f, "DeleteInsert", "Insert"),
 					new T<>(0.9500f, "DeleteInsert", "Delete"),
 					new T<>(0.9833f, "test string1", "test string2"),
 					new T<>(0.9333f, "test", "test string2"),
-					new T<>(0.0000f, "", "test string2"),
+					new T<>(0.9000f, "", "test string2"),
 					new T<>(0.9600f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 					new T<>(0.9143f, "aaa bbb", "aaa aaa"),
 					new T<>(0.9429f, "aaa", "aaa aaa"),
@@ -137,17 +145,21 @@ public final class LevenshteinTest {
 	}
 
 	public static final class NoSubstituteCost extends StringMetricTest {
-
 		@Override
 		protected Metric<String> getMetric() {
-			return new Levenshtein(1.0f, 0.0f);
+			return new DamerauLevenshtein(1.0f, 0.0f, 1.0f);
 		}
-		
+
+		@Override
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+
 		@Override
 		protected boolean satisfiesCoincidence() {
 			return false;
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		@Override
 		protected T<String>[] getTests() {
@@ -156,13 +168,6 @@ public final class LevenshteinTest {
 					new T<>(1.0000f, "Subsitute", "Sybsytyte"),
 					new T<>(0.5000f, "abc", "abcdef"),
 					new T<>(0.5000f, "def", "abcdef"),
-					new T<>(1.0000f, "Healed", "Sealed"),
-					new T<>(0.8571f, "Healed", "Healthy"),
-					new T<>(0.8333f, "Healed", "Heard"),
-					new T<>(1.0000f, "Healed", "Herded"),
-					new T<>(0.6667f, "Healed", "Help"),
-					new T<>(0.6667f, "Healed", "Sold"),
-					new T<>(0.6667f, "Healed", "Help"),
 					new T<>(1.0000f, "test string1", "test string2"),
 					new T<>(0.3333f, "test", "test string2"),
 					new T<>(0.0000f, "", "test string2"),
@@ -170,42 +175,96 @@ public final class LevenshteinTest {
 					new T<>(1.0000f, "aaa bbb", "aaa aaa"),
 					new T<>(0.4286f, "aaa", "aaa aaa"),
 					new T<>(1.0000f, "a b c d", "a b c e"),
-
 			};
 		}
+
 	}
 
 	public static final class LowSubstituteCost extends StringMetricTest {
-		
+
 		@Override
 		protected Metric<String> getMetric() {
-			return new Levenshtein(1.0f, 0.1f);
+			return new DamerauLevenshtein(1.0f, 0.1f, 1.0f);
 		}
 
-		
+		@Override
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+
 		@SuppressWarnings("unchecked")
 		@Override
 		protected T<String>[] getTests() {
-			return new T[] { 
-					new T<>(0.9889f, "Subsitute", "Subsytute"),
-					new T<>(0.9667f, "Subsitute", "Sybsytyte"),
-					new T<>(0.5000f, "abc", "abcdef"),
-					new T<>(0.5000f, "def", "abcdef"),
-					new T<>(0.9833f, "Healed", "Sealed"),
-					new T<>(0.8286f, "Healed", "Healthy"),
-					new T<>(0.8167f, "Healed", "Heard"),
-					new T<>(0.9667f, "Healed", "Herded"),
-					new T<>(0.6500f, "Healed", "Help"),
-					new T<>(0.6333f, "Healed", "Sold"),
-					new T<>(0.6500f, "Healed", "Help"),
-					new T<>(0.9917f, "test string1", "test string2"),
-					new T<>(0.3333f, "test", "test string2"),
-					new T<>(0.0000f, "", "test string2"),
-					new T<>(0.9800f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-					new T<>(0.9571f, "aaa bbb", "aaa aaa"),
-					new T<>(0.4286f, "aaa", "aaa aaa"),
-					new T<>(0.9857f, "a b c d", "a b c e"),
+			return new T[] {
+				new T<>(0.9889f, "Subsitute", "Subsytute"),
+				new T<>(0.9667f, "Subsitute", "Sybsytyte"),
+				new T<>(0.9917f, "test string1", "test string2"),
+				new T<>(0.3333f, "test", "test string2"),
+				new T<>(0.0000f, "", "test string2"),
+				new T<>(0.9800f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+				new T<>(0.9571f, "aaa bbb", "aaa aaa"),
+				new T<>(0.4286f, "aaa", "aaa aaa"),
+				new T<>(0.9857f, "a b c d", "a b c e"),
 			};
 		}
 	}
+
+	public static final class NoTransposeCost extends StringMetricTest {
+
+		@Override
+		protected Metric<String> getMetric() {
+			return new DamerauLevenshtein(1.0f, 1.0f, 0.0f);
+		}
+		
+		@Override
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+
+		@Override
+		protected boolean satisfiesCoincidence() {
+			return false;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		protected T<String>[] getTests() {
+			return new T[] { new T<>(1.000f, "uxyw", "uyxw"),
+					new T<>(1.000f, "uxyvxyw", "uyxvyxw"),
+					new T<>(1.000f, "transpose", "tranpsose"),
+
+					new T<>(1.0000f, "uxyyxw", "uyxxyw"),
+					new T<>(1.0000f, "uxyxyw", "uyxyxw"),
+					new T<>(0.8571f, "uxyvxyw", "uyxyxw"),
+					new T<>(0.8571f, "uxyxyw", "uyxvyxw"), };
+		}
+
+	}
+
+	public static final class LowTransposeCost extends StringMetricTest {
+		
+		@Override
+		protected Metric<String> getMetric() {
+			return new DamerauLevenshtein(1.0f, 1.0f, 0.1f);
+		}
+		
+		@Override
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		protected T<String>[] getTests() {
+			return new T[] { new T<>(0.9750f, "uxyw", "uyxw"),
+					new T<>(0.9714f, "uxyvxyw", "uyxvyxw"),
+					new T<>(0.9888f, "transpose", "tranpsose"),
+
+					new T<>(0.9666f, "uxyyxw", "uyxxyw"),
+					new T<>(0.9666f, "uxyxyw", "uyxyxw"),
+					new T<>(0.8285f, "uxyvxyw", "uyxyxw"),
+					new T<>(0.8285f, "uxyxyw", "uyxvyxw"), };
+		}
+	}
+
 }

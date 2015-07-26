@@ -27,7 +27,7 @@ import static org.simmetrics.utils.Math.max3;
 import static org.simmetrics.utils.Math.min3;
 import static org.simmetrics.utils.Math.min4;
 
-import org.simmetrics.Distance;
+import org.simmetrics.StringDistance;
 import org.simmetrics.StringMetric;
 
 /**
@@ -46,7 +46,7 @@ import org.simmetrics.StringMetric;
  * @see Levenshtein
  * 
  */
-public class DamerauLevenshtein implements StringMetric, Distance<String> {
+public class DamerauLevenshtein implements StringMetric, StringDistance {
 
 	private final float maxCost;
 	private final float insertDelete;

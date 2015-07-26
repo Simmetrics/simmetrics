@@ -213,7 +213,7 @@ public abstract class DistanceTest<K> {
 	
 	@Test
 	@Ignore
-	public final void generateSimilarity() {
+	public final void generateDistance() {
 		for (T<K> t : tests) {
 			System.out.println(format("new T<>(%1.4ff, \"%s\", \"%s\"),", metric.distance(t.a, t.b), t.a, t.b));
 		}

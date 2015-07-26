@@ -22,6 +22,8 @@
 
 package org.simmetrics.utils;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import org.simmetrics.simplifiers.Simplifier;
 
 /**
@@ -34,12 +36,7 @@ public final class PassThroughSimplifier implements Simplifier {
 
 	@Override
 	public String simplify(String input) {
-		// Throw null pointer exception to remain consistent with other
-		// simplifiers.
-		if (input == null) {
-			throw new NullPointerException();
-		}
-
+		checkNotNull(input);
 		return input;
 	}
 

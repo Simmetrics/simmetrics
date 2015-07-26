@@ -1,5 +1,7 @@
 package org.simmetrics.utils;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Set;
 
 import org.simmetrics.Metric;
@@ -7,9 +9,6 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.tokenizers.Tokenizer;
-
-import com.google.common.base.Preconditions;
-
 /**
  * String metric composed of a simplifier, tokenizer and set metric. Applies
  * simplification to the input and tokenizes the simplified input to a set. The
@@ -39,10 +38,9 @@ public final class CompositeSetMetric implements StringMetric {
 	 */
 	public CompositeSetMetric(Metric<Set<String>> metric,
 			Simplifier simplifier, Tokenizer tokenizer) {
-		super();
-		Preconditions.checkNotNull(metric);
-		Preconditions.checkNotNull(simplifier);
-		Preconditions.checkNotNull(tokenizer);
+		checkNotNull(metric);
+		checkNotNull(simplifier);
+		checkNotNull(tokenizer);
 
 		this.metric = metric;
 		this.simplifier = simplifier;

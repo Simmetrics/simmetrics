@@ -119,11 +119,11 @@ public abstract class MetricTest<K> {
 
 	}
 
-	protected float delta;
+	private float delta;
 
 	protected Metric<K> metric;
 
-	protected T<K>[] tests;
+	private T<K>[] tests;
 
 	protected float getDelta() {
 		return DEFAULT_DELTA;

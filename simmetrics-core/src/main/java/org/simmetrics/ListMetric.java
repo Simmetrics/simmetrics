@@ -32,7 +32,10 @@ import java.util.List;
  * indicates they are similar.
  * <p>
  * The elements in the lists have to implement {@link Object#hashCode()} and
- * {@link Object#equals(Object)}. *
+ * {@link Object#equals(Object)}.
+ * <p>
+ * The elements in the lists may not be null if metric does not support null
+ * values.
  * <p>
  * The similarity measure should be consistent with equals such that
  * {@code a.equals(b) => compare(a,b) == 1.0}.
@@ -64,6 +67,9 @@ public interface ListMetric<T> extends Metric<List<T>> {
 	 * @return a value between 0 and 1 inclusive indicating similarity
 	 * @throws NullPointerException
 	 *             when either a or b is null
+	 * @throws IllegalArgumentException
+	 *             when either a or b contains null elements and this metric
+	 *             does not permit lists containing null.
 	 */
 	@Override
 	public float compare(List<T> a, List<T> b);

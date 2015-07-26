@@ -1,5 +1,6 @@
 package org.simmetrics.utils;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Collections2.filter;
 
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.tokenizers.Tokenizer;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 
 /**
@@ -39,7 +39,8 @@ public final class FilteringTokenizer implements Tokenizer {
 	 *            for tokens to keep
 	 */
 	public FilteringTokenizer(Tokenizer tokenizer, Predicate<String> predicate) {
-		Preconditions.checkNotNull(predicate);
+		checkNotNull(tokenizer);
+		checkNotNull(predicate);
 		this.filter = predicate;
 		this.tokenizer = tokenizer;
 	}

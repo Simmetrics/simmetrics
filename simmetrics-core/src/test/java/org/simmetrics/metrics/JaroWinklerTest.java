@@ -39,13 +39,13 @@ public final class JaroWinklerTest   {
 			return false;
 		}
 
-		@SuppressWarnings("unchecked")
+		
 		@Override
-		protected T<String>[] getTests() {
+		protected T[] getStringTests()  {
 			return new T[] { 
-					new T<>(0.9611f, "MARTHA", "MARHTA"),
-					new T<>(0.8400f, "DWAYNE", "DUANE"),
-					new T<>(0.8133f, "DIXON", "DICKSONX") };
+					new T(0.9611f, "MARTHA", "MARHTA"),
+					new T(0.8400f, "DWAYNE", "DUANE"),
+					new T(0.8133f, "DIXON", "DICKSONX") };
 		}
 
 		@Override
@@ -67,63 +67,63 @@ public final class JaroWinklerTest   {
 			return new JaroWinkler();
 		}
 
-		@SuppressWarnings("unchecked")
+		
 		@Override
-		protected T<String>[] getTests() {
+		protected T[] getStringTests()  {
 			return new T[] {
-					new T<>(0.9667f, "test string1", "test string2"),
-					new T<>(0.8666f, "test", "test string2"),
-					new T<>(0.0000f, "", "test string2"),
-					new T<>(0.9200f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-					new T<>(0.9429f, "a b c d", "a b c e"),
-					new T<>(0.8889f, "Healed", "Sealed"),
-					new T<>(0.8476f, "Healed", "Healthy"),
-					new T<>(0.8756f, "Healed", "Heard"),
-					new T<>(0.7556f, "Healed", "Herded"),
-					new T<>(0.8000f, "Healed", "Help"),
-					new T<>(0.6111f, "Healed", "Sold"),
-					new T<>(0.8000f, "Healed", "Help"),
-					new T<>(0.8545f, "Sam J Chapman", "Samuel John Chapman"),
-					new T<>(0.8288f, "Sam Chapman", "S Chapman"),
-					new T<>(0.5945f, "John Smith", "Samuel John Chapman"),
-					new T<>(0.4131f, "John Smith", "Sam Chapman"),
-					new T<>(0.4949f, "John Smith", "Sam J Chapman"),
-					new T<>(0.4333f, "John Smith", "S Chapman"),
-					new T<>(0.9190f, "Web Database Applications",
+					new T(0.9667f, "test string1", "test string2"),
+					new T(0.8666f, "test", "test string2"),
+					new T(0.0000f, "", "test string2"),
+					new T(0.9200f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+					new T(0.9429f, "a b c d", "a b c e"),
+					new T(0.8889f, "Healed", "Sealed"),
+					new T(0.8476f, "Healed", "Healthy"),
+					new T(0.8756f, "Healed", "Heard"),
+					new T(0.7556f, "Healed", "Herded"),
+					new T(0.8000f, "Healed", "Help"),
+					new T(0.6111f, "Healed", "Sold"),
+					new T(0.8000f, "Healed", "Help"),
+					new T(0.8545f, "Sam J Chapman", "Samuel John Chapman"),
+					new T(0.8288f, "Sam Chapman", "S Chapman"),
+					new T(0.5945f, "John Smith", "Samuel John Chapman"),
+					new T(0.4131f, "John Smith", "Sam Chapman"),
+					new T(0.4949f, "John Smith", "Sam J Chapman"),
+					new T(0.4333f, "John Smith", "S Chapman"),
+					new T(0.9190f, "Web Database Applications",
 							"Web Database Applications with PHP & MySQL"),
-					new T<>(0.6901f, "Web Database Applications",
+					new T(0.6901f, "Web Database Applications",
 							"Creating Database Web Applications with PHP and ASP"),
-					new T<>(0.6353f, "Web Database Applications",
+					new T(0.6353f, "Web Database Applications",
 							"Building Database Applications on the Web Using PHP3"),
-					new T<>(0.6582f, "Web Database Applications",
+					new T(0.6582f, "Web Database Applications",
 							"Building Web Database Applications with Visual Studio 6"),
-					new T<>(0.7786f, "Web Database Applications",
+					new T(0.7786f, "Web Database Applications",
 							"Web Application Development With PHP"),
-					new T<>(
+					new T(
 							0.7404f,
 							"Web Database Applications",
 							"WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
-					new T<>(0.4751f, "Web Database Applications",
+					new T(0.4751f, "Web Database Applications",
 							"Structural Assessment: The Role of Large and Full-Scale Testing"),
-					new T<>(0.4882f, "Web Database Applications",
+					new T(0.4882f, "Web Database Applications",
 							"How to Find a Scholarship Online"),
-					new T<>(0.7981f, "Web Aplications",
+					new T(0.7981f, "Web Aplications",
 							"Web Database Applications with PHP & MySQL"),
-					new T<>(0.5980f, "Web Aplications",
+					new T(0.5980f, "Web Aplications",
 							"Creating Database Web Applications with PHP and ASP"),
-					new T<>(0.5675f, "Web Aplications",
+					new T(0.5675f, "Web Aplications",
 							"Building Database Applications on the Web Using PHP3"),
-					new T<>(0.5909f, "Web Aplications",
+					new T(0.5909f, "Web Aplications",
 							"Building Web Database Applications with Visual Studio 6"),
-					new T<>(0.8644f, "Web Aplications",
+					new T(0.8644f, "Web Aplications",
 							"Web Application Development With PHP"),
-					new T<>(
+					new T(
 							0.7447f,
 							"Web Aplications",
 							"WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
-					new T<>(0.4751f, "Web Aplications",
+					new T(0.4751f, "Web Aplications",
 							"Structural Assessment: The Role of Large and Full-Scale Testing"),
-					new T<>(0.4931f, "Web Aplications",
+					new T(0.4931f, "Web Aplications",
 							"How to Find a Scholarship Online"), };
 		}
 	}

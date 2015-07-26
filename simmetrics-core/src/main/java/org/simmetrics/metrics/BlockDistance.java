@@ -27,7 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.simmetrics.Distance;
+import org.simmetrics.ListDistance;
 import org.simmetrics.ListMetric;
 
 import static java.lang.Math.abs;
@@ -44,7 +44,7 @@ import static java.lang.Math.abs;
  * @param <T>
  *            type of token
  */
-public class BlockDistance<T> implements ListMetric<T>, Distance<List<T>> {
+public class BlockDistance<T> implements ListMetric<T>, ListDistance<T>{
 
 	@Override
 	public float compare(List<T> a, List<T> b) {

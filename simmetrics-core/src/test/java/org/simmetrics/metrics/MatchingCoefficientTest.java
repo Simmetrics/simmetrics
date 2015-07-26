@@ -21,10 +21,10 @@
  */
 package org.simmetrics.metrics;
 
+import static java.util.Arrays.asList;
+
 import org.simmetrics.ListMetric;
 import org.simmetrics.ListMetricTest;
-import org.simmetrics.tokenizers.Tokenizer;
-import org.simmetrics.tokenizers.Whitespace;
 
 @SuppressWarnings("javadoc")
 public final class MatchingCoefficientTest extends ListMetricTest {
@@ -34,14 +34,12 @@ public final class MatchingCoefficientTest extends ListMetricTest {
 		return new MatchingCoefficient<>();
 	}
 
-	@Override
-	protected Tokenizer getTokenizer() {
-		return new Whitespace();
-	}
 
 	@Override
 	protected T[] getListTests() {
-		return new T[]{new T(0.3333f, "test string1", "test string2"),
+		return new T[]{
+				new T(  0.3334f, asList("test", null), asList("test","string2")),
+				new T(0.3333f, "test string1", "test string2"),
 				new T(0.5000f, "test", "test string2"),
 				new T(0.0000f, "", "test string2"),
 				new T(0.6000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),

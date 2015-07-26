@@ -27,7 +27,7 @@ import java.util.Set;
 
 /**
  * A tokenizer divides an input string into tokens. A tokenizer may not provide
- * empty strings as tokens.
+ * empty strings or {@code null} as tokens.
  */
 public interface Tokenizer {
 

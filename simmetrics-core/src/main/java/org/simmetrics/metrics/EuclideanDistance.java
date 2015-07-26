@@ -27,7 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.simmetrics.Distance;
+import org.simmetrics.ListDistance;
 import org.simmetrics.ListMetric;
 
 import static java.lang.Math.sqrt;
@@ -42,7 +42,7 @@ import static java.lang.Math.sqrt;
  *            type of the token
  * 
  */
-public class EuclideanDistance<T> implements ListMetric<T>, Distance<List<T>> {
+public class EuclideanDistance<T> implements ListMetric<T>, ListDistance<T> {
 
 	@Override
 	public float compare(List<T> a, List<T> b) {

@@ -23,9 +23,8 @@ package org.simmetrics.metrics;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
-import static org.simmetrics.utils.Math.max3;
-import static org.simmetrics.utils.Math.min3;
-import static org.simmetrics.utils.Math.min4;
+import static org.simmetrics.utils.Math.max;
+import static org.simmetrics.utils.Math.min;
 
 import org.simmetrics.StringDistance;
 import org.simmetrics.StringMetric;
@@ -78,14 +77,14 @@ public class DamerauLevenshtein implements StringMetric, StringDistance {
 		checkArgument(substitute >= 0);
 		checkArgument(transpose >= 0);
 
-		this.maxCost = max3(insertDelete, substitute, transpose);
+		this.maxCost = max(insertDelete, substitute, transpose);
 		this.insertDelete = insertDelete;
 		this.substitute = substitute;
 		this.transpose = transpose;
 	}
 
 	@Override
-	public float compare(final String a, final String b) {
+	public float compare(final String a, final String b) {	
 		if (a.isEmpty() && b.isEmpty()) {
 			return 1.0f;
 		}
@@ -127,12 +126,12 @@ public class DamerauLevenshtein implements StringMetric, StringDistance {
 			for (int j = 0; j < tLength; j++) {
 				if (j > 0 && i > 0 && s.charAt(i - 1) == t.charAt(j)
 						&& s.charAt(i) == t.charAt(j - 1)) {
-					v2[j + 1] = min4(v2[j] + insertDelete, v1[j + 1]
+					v2[j + 1] = min(v2[j] + insertDelete, v1[j + 1]
 							+ insertDelete, v1[j]
 							+ (s.charAt(i) == t.charAt(j) ? 0.0f : substitute),
 							v0[j - 1] + transpose);
 				} else {
-					v2[j + 1] = min3(v2[j] + insertDelete, v1[j + 1]
+					v2[j + 1] = min(v2[j] + insertDelete, v1[j + 1]
 							+ insertDelete, v1[j]
 							+ (s.charAt(i) == t.charAt(j) ? 0.0f : substitute));
 				}

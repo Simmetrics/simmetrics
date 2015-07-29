@@ -41,7 +41,9 @@ import org.simmetrics.utils.CompositeTokenizer;
 import org.simmetrics.utils.PassThroughSimplifier;
 import org.simmetrics.utils.SimplifyingSimplifier;
 import org.simmetrics.utils.TokenizingTokenizer;
+import org.simmetrics.utils.TransformingTokenizer;
 
+import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 
@@ -58,9 +60,9 @@ import com.google.common.base.Predicates;
  * on a collection of tokens a tokenizer is required.
  * 
  * <p>
- * By adding simplifiers, tokenizers and filters the effectiveness of a metric
- * can be improved. The exact combination is generally domain specific. This
- * builder supports these domain specific customizations.
+ * By adding simplifiers, tokenizers and filters and transform the effectiveness
+ * of a metric can be improved. The exact combination is generally domain
+ * specific. This builder supports these domain specific customizations.
  * <p>
  * 
  * <pre>
@@ -71,8 +73,12 @@ import com.google.common.base.Predicates;
  * 		.simplify(new NonWordCharacter())
  * 		.simplify(new Case.Lower())
  * 		.tokenize(new Whitespace())
+ * 		.filter(new LongWords())
+ * 		.transform(new RemovePossessiveS())
+ * 		.tokenize(new QGram(3))
  * 		.build();
  * }
+ * 
  * </code>
  * </pre>
  * 
@@ -110,9 +116,6 @@ import com.google.common.base.Predicates;
  * </code>
  * </pre>
  * 
- * 
- * 
- * 
  * <p>
  * The method of tokenization changes the space in which strings are compared.
  * The effectiveness depends on the context. A whitespace tokenizer might be
@@ -131,7 +134,8 @@ import com.google.common.base.Predicates;
  * example removing all tokens with a size less then three from `[chilperic, ii,
  * son, of, childeric, ii]` results in `[chilperic, son, childeric]`.
  * 
- * A Filter can be implemented by implementing a the Predicate interface.
+ * A Filter can be implemented by implementing a the {@link Predicate}
+ * interface.
  * 
  * <pre>
  * <code>
@@ -163,6 +167,28 @@ import com.google.common.base.Predicates;
  * </code>
  * </pre>
  * 
+ * <h2>Transformation</h2>
+ * 
+ * Functions can be used to transform tokens to a simpler or canonical form.
+ * This may be used to reduce the possible token space. For example removing the
+ * possessive -s from a sentence `[I'll, do, my, work, and, you, do, yours]`
+ * results in `[I'll, do, my, work, and, you, do, your]`.
+ * 
+ * A function can be implemented by implementing a the {@link Function}
+ * interface.
+ *
+ * <pre>
+ * <code>
+ * {@code
+ * 		with(new CosineSimilarity<String>())
+ * 		.simplify(new NonWordCharacter())
+ * 		.simplify(new Case.Lower())
+ * 		.tokenize(new Whitespace())
+ * 		.transform(new RemovePossessiveS())
+ * 		.build();
+ * }
+ * </code>
+ * </pre>
  * 
  * <h2>Caching</h2>
  * 
@@ -431,6 +457,17 @@ public class StringMetricBuilder {
 		CollectionMetricTokenizerCacheStep filter(Predicate<String> predicate);
 
 		/**
+		 * Adds a transform step to the metric. All tokens are transformed by
+		 * the function. The function may not return null.
+		 * 
+		 * @param function
+		 *            a function to transform tokens
+		 * @return this for fluent chaining
+		 */
+		CollectionMetricTokenizerCacheStep transform(
+				Function<String, String> function);
+
+		/**
 		 * Sets a cache for tokenization chain. The cache will store the result
 		 * of all tokenization steps. The cache will be provided with a
 		 * tokenizer through {@link TokenizingTokenizer#setTokenizer(Tokenizer)}
@@ -473,7 +510,6 @@ public class StringMetricBuilder {
 
 	}
 
-
 	@SuppressWarnings("javadoc")
 	public static final class CompositeStringMetricBuilder implements
 			StringMetricSimplifierStep, StringMetricSimplifierCacheStep,
@@ -510,8 +546,8 @@ public class StringMetricBuilder {
 			if (cache != null) {
 				cache.setSimplifier(simplifier);
 				return new CompositeStringMetric(metric, cache);
-			} 
-			
+			}
+
 			return new CompositeStringMetric(metric, simplifier);
 		}
 
@@ -541,7 +577,6 @@ public class StringMetricBuilder {
 		}
 
 	}
-
 
 	@SuppressWarnings("javadoc")
 	public static abstract class CompositeCollectionMetricBuilder<T extends Collection<String>>
@@ -582,12 +617,7 @@ public class StringMetricBuilder {
 				simplifier = stringCache;
 			}
 
-			Tokenizer tokenizer;
-			if (tokenizers.size() == 1) {
-				tokenizer = tokenizers.get(0);
-			} else {
-				tokenizer = new CompositeTokenizer(tokenizers);
-			}
+			Tokenizer tokenizer = packTokenizers();
 
 			if (tokenCache != null) {
 				tokenCache.setTokenizer(tokenizer);
@@ -609,7 +639,8 @@ public class StringMetricBuilder {
 
 		@Override
 		public BuildStep tokenizerCache(int initialCapacity, int maximumSize) {
-			return tokenizerCache(new CachingTokenizer(initialCapacity, maximumSize));
+			return tokenizerCache(new CachingTokenizer(initialCapacity,
+					maximumSize));
 		}
 
 		@Override
@@ -654,19 +685,9 @@ public class StringMetricBuilder {
 		@Override
 		public CollectionMetricTokenizerCacheStep filter(
 				Predicate<String> predicate) {
-			
 			checkNotNull(predicate);
-			
-			Tokenizer tokenizer;
-			if (tokenizers.size() == 1) {
-				tokenizer = tokenizers.get(0);
-			} else {
-				tokenizer = new CompositeTokenizer(new ArrayList<>(tokenizers));
-			}
 
-			tokenizers.clear();
-
-			FilteringTokenizer filter = new FilteringTokenizer(tokenizer,
+			Tokenizer filter = new FilteringTokenizer(packTokenizers(),
 					predicate);
 
 			tokenizers.add(filter);
@@ -674,8 +695,32 @@ public class StringMetricBuilder {
 			return this;
 		}
 
-	}
+		@Override
+		public CollectionMetricTokenizerCacheStep transform(
+				Function<String, String> function) {
+			checkNotNull(function);
 
+			Tokenizer transform = new TransformingTokenizer(packTokenizers(),
+					function);
+
+			tokenizers.add(transform);
+
+			return this;
+		}
+		
+		private Tokenizer packTokenizers() {
+			final Tokenizer tokenizer;
+			if (tokenizers.size() == 1) {
+				tokenizer = tokenizers.get(0);
+			} else {
+				tokenizer = new CompositeTokenizer(new ArrayList<>(tokenizers));
+			}
+
+			tokenizers.clear();
+			return tokenizer;
+		}
+
+	}
 
 	@SuppressWarnings("javadoc")
 	public static final class CompositeListMetricBuilder extends
@@ -692,7 +737,6 @@ public class StringMetricBuilder {
 		}
 
 	}
-
 
 	@SuppressWarnings("javadoc")
 	public static final class CompositeSetMetricBuilder extends

@@ -552,7 +552,6 @@ public final class StringMetricBuilder {
 		}
 
 		private Simplifier chainSimplifiers() {
-			checkState(!simplifiers.isEmpty());
 			final Simplifier simplifier = Simplifiers.chain(simplifiers);
 			simplifiers.clear();
 
@@ -708,14 +707,12 @@ public final class StringMetricBuilder {
 		}
 
 		private Tokenizer chainTokenizers() {
-			checkState(!tokenizers.isEmpty());
 			final Tokenizer tokenizer = Tokenizers.chain(tokenizers);
 			tokenizers.clear();
 			return tokenizer;
 		}
 
 		private Simplifier chainSimplifiers() {
-			checkState(!simplifiers.isEmpty());
 			final Simplifier simplifier = Simplifiers.chain(simplifiers);
 			simplifiers.clear();
 			return simplifier;

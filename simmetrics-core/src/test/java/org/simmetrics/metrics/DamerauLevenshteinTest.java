@@ -21,6 +21,8 @@
  */
 package org.simmetrics.metrics;
 
+import org.junit.Test;
+import org.junit.experimental.theories.suppliers.TestedOn;
 import org.simmetrics.Metric;
 import org.simmetrics.StringDistance;
 import org.simmetrics.StringDistanceTest;
@@ -30,7 +32,32 @@ import org.simmetrics.StringMetricTest;
 @SuppressWarnings("javadoc")
 public final class DamerauLevenshteinTest {
 
+	@SuppressWarnings("unused")
+	@Test(expected=IllegalArgumentException.class)
+	public void insertDeleteCostOnBound(){
+		new DamerauLevenshtein(0, 1, 1);
+	}
+
+	@SuppressWarnings("unused")
+	@Test(expected=IllegalArgumentException.class)
+	public void insertDeleteCostBelowBound(){
+		new DamerauLevenshtein(-1f, 1, 1);
+	}
+
+	@SuppressWarnings("unused")
+	@Test(expected=IllegalArgumentException.class)
+	public void substituteCostBelowBound(){
+		new DamerauLevenshtein(1, -Float.MIN_VALUE, 1);
+	}
+	@SuppressWarnings("unused")
+	@Test(expected=IllegalArgumentException.class)
+	public void transposeCostBelowBound(){
+		new DamerauLevenshtein(1, 1, -Float.MIN_VALUE);
+	}
+	
 	public static final class DistanceString {
+		
+		
 		public static final class UnitCost extends StringDistanceTest {
 
 			@Override

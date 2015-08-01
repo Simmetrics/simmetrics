@@ -247,11 +247,6 @@ public abstract class MetricTest<K> {
 		assertFalse(
 				"toString() was not implemented "
 						+ metric.toString(), defaultToString.equals(metricToString));
-
-		String metricName = metric.getClass().getSimpleName();
-
-		assertTrue(format("%s must contain %s ", metricToString,
-				metricName), metricToString.contains(metricName));
 	}
 
 }

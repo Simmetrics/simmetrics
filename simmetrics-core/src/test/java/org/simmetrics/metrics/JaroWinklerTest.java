@@ -55,6 +55,29 @@ public final class JaroWinklerTest   {
 
 	}
 
+	public static final class BoostThreshold extends StringMetricTest {
+
+		@Override
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+
+		@Override
+		protected StringMetric getMetric() {
+			return JaroWinkler.createWithBoostThreshold();
+		}
+
+		@Override
+		protected T[] getStringTests() {
+			return new T[] { 
+					new T(0.9666f, "test string1", "test string2"),
+					new T(0.0000f, "test string1", "Sold"),
+					new T(0.8666f, "test", "test string2"),
+					new T(0.0000f, "", "test string2"),
+					new T(0.9199f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+					new T(0.9428f, "a b c d", "a b c e")};
+		}
+	}
 	public static final class Defaults extends StringMetricTest {
 		
 		@Override

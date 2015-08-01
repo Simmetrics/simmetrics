@@ -48,7 +48,9 @@ public class JaroWinkler implements StringMetric {
 	private final Jaro jaro = new Jaro();
 
 	private static final float PREFIX_SCALE = 0.1f;
-	private static final float BOOST_THRESHOLD = 0;
+	private static final float WINKLER_BOOST_THRESHOLD = 0.7f;
+
+	private static final float BOOST_THRESHOLD = 0.0f;
 	private static final int MAX_PREFIX_LENGTH = 4;
 
 	private final float boostThreshold;
@@ -60,6 +62,16 @@ public class JaroWinkler implements StringMetric {
 	 */
 	public JaroWinkler() {
 		this(BOOST_THRESHOLD, PREFIX_SCALE, MAX_PREFIX_LENGTH);
+	}
+
+	/**
+	 * Constructs a new JaroWinkler metric with Winklers boost threshold of 0.7.
+	 * 
+	 * @return a new JaroWinkler metric
+	 */
+	public static JaroWinkler createWithBoostThreshold() {
+		return new JaroWinkler(WINKLER_BOOST_THRESHOLD, PREFIX_SCALE,
+				MAX_PREFIX_LENGTH);
 	}
 
 	/**

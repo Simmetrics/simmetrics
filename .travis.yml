@@ -11,4 +11,5 @@ branches:
   - release-*
 
 after_success:
-  - mvn clean cobertura:cobertura coveralls:report
+  - mvn clean cobertura:cobertura coveralls:report -P coveralls.io
+

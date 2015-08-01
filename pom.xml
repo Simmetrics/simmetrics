@@ -176,15 +176,6 @@
 			<build>
 				<plugins>
 					<plugin>
-						<groupId>org.eluder.coveralls</groupId>
-						<artifactId>coveralls-maven-plugin</artifactId>
-						<version>3.1.0</version>
-					</plugin>
-				</plugins>
-			</build>
-			<reporting>
-				<plugins>
-					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>cobertura-maven-plugin</artifactId>
 						<version>2.7</version>
@@ -196,8 +187,13 @@
 							<aggregate>true</aggregate>
 						</configuration>
 					</plugin>
+					<plugin>
+						<groupId>org.eluder.coveralls</groupId>
+						<artifactId>coveralls-maven-plugin</artifactId>
+						<version>3.1.0</version>
+					</plugin>
 				</plugins>
-			</reporting>
+			</build>
 		</profile>
 	</profiles>
 

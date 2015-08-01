@@ -54,7 +54,22 @@ public final class Simplifiers {
 		if (simplifiers.size() == 1) {
 			return simplifiers.get(0);
 		}
-		return new ChainSimplifier(simplifiers);
+		return new ChainSimplifier(flatten(simplifiers));
+	}
+
+	private static List<Simplifier> flatten(List<Simplifier> simplifiers) {
+		final List<Simplifier> flattend = new ArrayList<>(simplifiers.size());
+
+		for (Simplifier s : simplifiers) {
+			if (s instanceof ChainSimplifier) {
+				final ChainSimplifier c = (ChainSimplifier) s;
+				flattend.addAll(c.getSimplifiers());
+			} else {
+				flattend.add(s);
+			}
+		}
+
+		return flattend;
 	}
 
 	/**
@@ -78,16 +93,11 @@ public final class Simplifiers {
 
 		ChainSimplifier(List<Simplifier> simplifiers) {
 			checkArgument(!simplifiers.contains(null));
-			this.simplifiers = new ArrayList<>(simplifiers.size());
-
-			for (Simplifier s : simplifiers) {
-				if (s instanceof ChainSimplifier) {
-					final ChainSimplifier c = (ChainSimplifier) s;
-					this.simplifiers.addAll(c.simplifiers);
-				} else {
-					this.simplifiers.add(s);
-				}
-			}
+			this.simplifiers = new ArrayList<>(simplifiers);
+		}
+		
+		List<Simplifier> getSimplifiers() {
+			return simplifiers;
 		}
 
 		@Override

@@ -165,8 +165,9 @@
 							<maxmem>256m</maxmem>
 							<aggregate>true</aggregate>
 							<instrumentation>
+								<ignoreTrivial>true</ignoreTrivial>
 								<ignores>
-									<ignore>com.github.mpkorstanje.simmetrics.example.*</ignore>
+									<ignore>org.simmetrics.example.*</ignore>
 								</ignores>
 							</instrumentation>
 						</configuration>
@@ -204,8 +205,9 @@
 							<aggregate>true</aggregate>
 
 							<instrumentation>
+								<ignoreTrivial>true</ignoreTrivial>
 								<ignores>
-									<ignore>com.github.mpkorstanje.simmetrics.example.*</ignore>
+									<ignore>org.simmetrics.example.*</ignore>
 								</ignores>
 							</instrumentation>
 						</configuration>

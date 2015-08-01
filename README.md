@@ -10,22 +10,20 @@ SimMetrics is a java library of Similarity or Distance Metrics, e.g. Levenshtein
 
 For a quick and easy use [StringMetrics](./simmetrics-core/src/main/java/org/simmetrics/StringMetrics.java) contains a collection of well known string metrics.
 
-```
-
+```java
 	String str1 = "This is a sentence. It is made of words";
 	String str2 = "This sentence is similair. It has almost the same words";
 	
 	StringMetric metric = StringMetrics.cosineSimilarity();
 	
 	float result = metric.compare(str1, str2); //0.4472
-
 ```
 
 The [StringMetricBuilder](./simmetrics-core/src/main/java/org/simmetrics/StringMetricBuilder.java) is a convenience tool to build string metrics. Any class implementing StringMetric, ListMetric, SetMetric can be used to build a string metric. The builder supports simplification, tokenization, token-filtering, and caching.
 
 For a terse syntax use `import static org.simmetrics.StringMetricBuilder.with;`
 
-```
+```java
 	String str1 = "This is a sentence. It is made of words";
 	String str2 = "This sentence is similair. It has almost the same words";
 

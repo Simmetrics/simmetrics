@@ -75,7 +75,7 @@ public final class Tokenizers {
 			}
 		}
 
-		public static Tokenizer createCombined(FilteringTokenizer tokenizer,
+		static Tokenizer createCombined(FilteringTokenizer tokenizer,
 				Predicate<String> predicate) {
 
 			if (tokenizer instanceof TransformingFilteringTokenizer) {
@@ -88,7 +88,7 @@ public final class Tokenizers {
 					tokenizer.getPredicate(), predicate));
 		}
 
-		public static Tokenizer createCombined(
+		static Tokenizer createCombined(
 				TransformingTokenizer tokenizer, Predicate<String> predicate) {
 			return new TransformingFilteringTokenizer(tokenizer, predicate);
 		}
@@ -244,12 +244,12 @@ public final class Tokenizers {
 			}
 		}
 
-		public static Tokenizer createCombined(FilteringTokenizer tokenizer,
+		static Tokenizer createCombined(FilteringTokenizer tokenizer,
 				Function<String, String> function) {
 			return new FilteringTransformingTokenizer(tokenizer, function);
 		}
 
-		public static Tokenizer createCombined(TransformingTokenizer tokenizer,
+		static Tokenizer createCombined(TransformingTokenizer tokenizer,
 				Function<String, String> function) {
 
 			if (tokenizer instanceof FilteringTransformingTokenizer) {

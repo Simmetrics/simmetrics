@@ -42,7 +42,7 @@ import com.google.common.base.Objects;
  */
 public final class HammingDistance {
 	
-	HammingDistance() {
+	private HammingDistance() {
 		//Don't construct
 	}
 	/**
@@ -164,7 +164,7 @@ public final class HammingDistance {
 	 * 
 	 * @return a new Hamming distance to compare lists
 	 */
-	public static <T> Distance<List<T>> forList() {
+	public static <T> ListDistance<T> forList() {
 		return new HammingListDistance<>();
 	}
 

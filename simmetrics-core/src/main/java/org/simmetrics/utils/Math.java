@@ -191,23 +191,4 @@ public final class Math {
 		return java.lang.Math.min(
 				java.lang.Math.min(java.lang.Math.min(a, b), c), d);
 	}
-
-	/**
-	 * Clamps an {@code int} value between the upper and lower bounds. The
-	 * returned value will be no lower then the lower bound and no higher then
-	 * the upper bound. If the value falls between the upper and lower bound the
-	 * value is returned.
-	 * 
-	 * 
-	 * @param lower
-	 *            lower bound
-	 * @param a
-	 *            an argument
-	 * @param upper
-	 *            upper bound
-	 * @return a value clamped between the upper and lower bounds.
-	 */
-	public static int clamp(int lower, int a, int upper) {
-		return java.lang.Math.min(java.lang.Math.max(lower, a), upper);
-	}
 }

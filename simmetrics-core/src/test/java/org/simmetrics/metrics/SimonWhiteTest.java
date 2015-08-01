@@ -22,6 +22,8 @@
 package org.simmetrics.metrics;
 
 import static java.util.Arrays.asList;
+import static org.simmetrics.tokenizers.Tokenizers.chain;
+import static org.simmetrics.tokenizers.Tokenizers.filter;
 
 import org.simmetrics.ListMetric;
 import org.simmetrics.ListMetricTest;
@@ -29,8 +31,6 @@ import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.tokenizers.QGram;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Whitespace;
-import org.simmetrics.utils.CompositeTokenizer;
-import org.simmetrics.utils.FilteringTokenizer;
 
 import com.google.common.base.Predicate;
 
@@ -60,7 +60,7 @@ public final class SimonWhiteTest extends ListMetricTest {
 	}
 
 	private static Tokenizer getTokenizer() {
-		return new CompositeTokenizer(asList(new FilteringTokenizer(
+		return chain(asList(filter(
 				new Whitespace(), new MinimumLenght()), new QGram(2)));
 	}
 

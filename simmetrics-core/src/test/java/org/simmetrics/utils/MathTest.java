@@ -26,10 +26,10 @@ import org.junit.Test;
 import org.simmetrics.utils.Math;
 
 @SuppressWarnings("javadoc")
-public class MathFuncsTest {
+public class MathTest {
 
 	@Test
-	public void testMax3float() {
+	public void max3float() {	
 		assertEquals(0.3f, Math.max(0.1f, 0.2f, 0.3f), 0.0);
 		assertEquals(0.31f, Math.max(0.31f, 0.2f, 0.3f), 0.0);
 		assertEquals(0.5f, Math.max(0.1f, 0.5f, 0.3f), 0.0);
@@ -37,14 +37,14 @@ public class MathFuncsTest {
 	}
 
 	@Test
-	public void testMax3int() {
+	public void max3int() {
 		assertEquals(5, Math.max(-10, 5, 3));
 		assertEquals(10, Math.max(10, 5, 3));
 		assertEquals(13, Math.max(-10, 5, 13));
 	}
 
 	@Test
-	public void testMax4float() {
+	public void max4float() {
 		assertEquals(36.9f, Math.max(10.1f, 5.45f, -3.12f, 36.9f), 0.0);
 		assertEquals(10.1f, Math.max(10.1f, 5.45f, -3.12f, 6.9f), 0.0);
 		assertEquals(-3.12f, Math.max(-10.1f, -5.45f, -3.12f, -36.9f),
@@ -53,7 +53,7 @@ public class MathFuncsTest {
 	}
 
 	@Test
-	public void testMax4int() {
+	public void max4int() {
 		assertEquals(5, Math.max(-10, 5, 3, 1));
 		assertEquals(10, Math.max(10, 5, 3, 1));
 		assertEquals(13, Math.max(-10, 5, 13, 1));
@@ -61,21 +61,21 @@ public class MathFuncsTest {
 	}
 
 	@Test
-	public void testMin3float() {
+	public void min3float() {
 		assertEquals(5.45f, Math.min(10.1f, 5.45f, 13.12f), 0.0);
 		assertEquals(0.1f, Math.min(0.1f, 5.45f, 13.12f), 0.0);
 		assertEquals(-3.12f, Math.min(10.1f, 5.45f, -3.12f), 0.0);
 	}
 
 	@Test
-	public void testMin3int() {
+	public void min3int() {
 		assertEquals(-10, Math.min(-10, 5, 13));
 		assertEquals(-13, Math.min(-10, 5, -13));
 		assertEquals(5, Math.min(10, 5, 13));
 	}
 
 	@Test
-	public void testMin4int() {
+	public void min4int() {
 		assertEquals(-10, Math.min(-10, 5, 3, 1));
 		assertEquals(-5, Math.min(10, -5, 13, 1));
 		assertEquals(3, Math.min(10, 5, 3, 15));
@@ -84,7 +84,7 @@ public class MathFuncsTest {
 	}
 
 	@Test
-	public void testMin4float() {
+	public void min4float() {
 		assertEquals(-10.1f, Math.min(-10.1f, 5.45f, -3.12f, 36.9f), 0.0);
 		assertEquals(-5.45f, Math.min(10.1f, -5.45f, -3.12f, 6.9f), 0.0);
 		assertEquals(3.12f, Math.min(10.1f, 5.45f, 3.12f, 36.9f),0.0);

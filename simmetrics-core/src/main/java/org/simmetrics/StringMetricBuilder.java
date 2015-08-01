@@ -22,6 +22,10 @@
 package org.simmetrics;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
+import static org.simmetrics.StringMetrics.create;
+import static org.simmetrics.StringMetrics.createForListMetric;
+import static org.simmetrics.StringMetrics.createForSetMetric;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,19 +33,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.simmetrics.simplifiers.Simplifier;
+import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.tokenizers.Tokenizer;
+import org.simmetrics.tokenizers.Tokenizers;
 import org.simmetrics.utils.CachingSimplifier;
 import org.simmetrics.utils.CachingTokenizer;
-import org.simmetrics.utils.CompositeSimplifier;
-import org.simmetrics.utils.CompositeStringMetric;
-import org.simmetrics.utils.CompositeListMetric;
-import org.simmetrics.utils.CompositeSetMetric;
-import org.simmetrics.utils.FilteringTokenizer;
-import org.simmetrics.utils.CompositeTokenizer;
-import org.simmetrics.utils.PassThroughSimplifier;
 import org.simmetrics.utils.SimplifyingSimplifier;
 import org.simmetrics.utils.TokenizingTokenizer;
-import org.simmetrics.utils.TransformingTokenizer;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -222,7 +220,7 @@ import com.google.common.base.Predicates;
  * 
  * 
  */
-public class StringMetricBuilder {
+public final class StringMetricBuilder {
 
 	/**
 	 * Starts building a metric with a string metric.
@@ -522,8 +520,7 @@ public class StringMetricBuilder {
 
 	}
 
-	@SuppressWarnings("javadoc")
-	public static final class CompositeStringMetricBuilder implements
+	private static final class CompositeStringMetricBuilder implements
 			StringMetricSimplifierStep {
 
 		private final StringMetric metric;
@@ -546,20 +543,20 @@ public class StringMetricBuilder {
 				return metric;
 			}
 
-			Simplifier simplifier;
-
-			if (simplifiers.size() == 1) {
-				simplifier = simplifiers.get(0);
-			} else {
-				simplifier = new CompositeSimplifier(simplifiers);
+			if (cache == null) {
+				return create(metric, chainSimplifiers());
 			}
 
-			if (cache != null) {
-				cache.setSimplifier(simplifier);
-				return new CompositeStringMetric(metric, cache);
-			}
+			cache.setSimplifier(chainSimplifiers());
+			return create(metric, cache);
+		}
 
-			return new CompositeStringMetric(metric, simplifier);
+		private Simplifier chainSimplifiers() {
+			checkState(!simplifiers.isEmpty());
+			final Simplifier simplifier = Simplifiers.chain(simplifiers);
+			simplifiers.clear();
+
+			return simplifier;
 		}
 
 		@Override
@@ -589,8 +586,7 @@ public class StringMetricBuilder {
 
 	}
 
-	@SuppressWarnings("javadoc")
-	public static abstract class CompositeCollectionMetricBuilder<T extends Collection<String>>
+	private static abstract class CompositeCollectionMetricBuilder<T extends Collection<String>>
 			implements CollectionMetricSimplifierStep,
 			CollectionMetricTokenizerStep {
 
@@ -612,33 +608,29 @@ public class StringMetricBuilder {
 		@Override
 		public StringMetric build() {
 
-			Simplifier simplifier;
-
-			if (simplifiers.isEmpty()) {
-				simplifier = new PassThroughSimplifier();
-			} else if (simplifiers.size() == 1) {
-				simplifier = simplifiers.get(0);
-			} else {
-				simplifier = new CompositeSimplifier(simplifiers);
-			}
-
-			if (stringCache != null) {
-				stringCache.setSimplifier(simplifier);
-				simplifier = stringCache;
-			}
-
-			Tokenizer tokenizer = packTokenizers();
+			Tokenizer tokenizer = chainTokenizers();
 
 			if (tokenCache != null) {
 				tokenCache.setTokenizer(tokenizer);
 				tokenizer = tokenCache;
 			}
 
-			return build(metric, simplifier, tokenizer);
+			if (simplifiers.isEmpty()) {
+				return build(metric, tokenizer);
+			}
+
+			if (stringCache != null) {
+				stringCache.setSimplifier(chainSimplifiers());
+				return build(metric, stringCache, tokenizer);
+			}
+
+			return build(metric, chainSimplifiers(), tokenizer);
 		}
 
 		abstract StringMetric build(Metric<T> metric, Simplifier simplifier,
 				Tokenizer tokenizer);
+
+		abstract StringMetric build(Metric<T> metric, Tokenizer tokenizer);
 
 		@Override
 		public BuildStep tokenizerCache(TokenizingTokenizer cache) {
@@ -696,7 +688,7 @@ public class StringMetricBuilder {
 		public CollectionMetricTokenizerStep filter(Predicate<String> predicate) {
 			checkNotNull(predicate);
 
-			Tokenizer filter = new FilteringTokenizer(packTokenizers(),
+			final Tokenizer filter = Tokenizers.filter(chainTokenizers(),
 					predicate);
 
 			tokenizers.add(filter);
@@ -708,31 +700,30 @@ public class StringMetricBuilder {
 		public CollectionMetricTokenizerStep transform(
 				Function<String, String> function) {
 			checkNotNull(function);
-
-			Tokenizer transform = new TransformingTokenizer(packTokenizers(),
+			final Tokenizer transform = Tokenizers.transform(chainTokenizers(),
 					function);
-
 			tokenizers.add(transform);
 
 			return this;
 		}
 
-		private Tokenizer packTokenizers() {
-			final Tokenizer tokenizer;
-			if (tokenizers.size() == 1) {
-				tokenizer = tokenizers.get(0);
-			} else {
-				tokenizer = new CompositeTokenizer(new ArrayList<>(tokenizers));
-			}
-
+		private Tokenizer chainTokenizers() {
+			checkState(!tokenizers.isEmpty());
+			final Tokenizer tokenizer = Tokenizers.chain(tokenizers);
 			tokenizers.clear();
 			return tokenizer;
 		}
 
+		private Simplifier chainSimplifiers() {
+			checkState(!simplifiers.isEmpty());
+			final Simplifier simplifier = Simplifiers.chain(simplifiers);
+			simplifiers.clear();
+			return simplifier;
+		}
+
 	}
 
-	@SuppressWarnings("javadoc")
-	public static final class CompositeListMetricBuilder extends
+	private static final class CompositeListMetricBuilder extends
 			CompositeCollectionMetricBuilder<List<String>> {
 
 		CompositeListMetricBuilder(Metric<List<String>> metric) {
@@ -742,13 +733,17 @@ public class StringMetricBuilder {
 		@Override
 		StringMetric build(Metric<List<String>> metric, Simplifier simplifier,
 				Tokenizer tokenizer) {
-			return new CompositeListMetric(metric, simplifier, tokenizer);
+			return createForListMetric(metric, simplifier, tokenizer);
+		}
+
+		@Override
+		StringMetric build(Metric<List<String>> metric, Tokenizer tokenizer) {
+			return createForListMetric(metric, tokenizer);
 		}
 
 	}
 
-	@SuppressWarnings("javadoc")
-	public static final class CompositeSetMetricBuilder extends
+	private static final class CompositeSetMetricBuilder extends
 			CompositeCollectionMetricBuilder<Set<String>> {
 
 		CompositeSetMetricBuilder(Metric<Set<String>> metric) {
@@ -758,7 +753,12 @@ public class StringMetricBuilder {
 		@Override
 		StringMetric build(Metric<Set<String>> metric, Simplifier simplifier,
 				Tokenizer tokenizer) {
-			return new CompositeSetMetric(metric, simplifier, tokenizer);
+			return createForSetMetric(metric, simplifier, tokenizer);
+		}
+
+		@Override
+		StringMetric build(Metric<Set<String>> metric, Tokenizer tokenizer) {
+			return createForSetMetric(metric, tokenizer);
 		}
 
 	}

@@ -73,27 +73,6 @@
 		</plugins>
 	</build>
 
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>clirr-maven-plugin</artifactId>
-				<version>2.6.1</version>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.7</version>
-				<configuration>
-					<formats>
-						<format>html</format>
-					</formats>
-					<maxmem>256m</maxmem>
-					<aggregate>true</aggregate>
-				</configuration>
-			</plugin>
-		</plugins>
-	</reporting>
 
 	<profiles>
 		<!-- Runs the deployment to Nexus Central. Call with `mvn deploy -P release` 
@@ -185,6 +164,11 @@
 							</formats>
 							<maxmem>256m</maxmem>
 							<aggregate>true</aggregate>
+							<instrumentation>
+								<ignores>
+									<ignore>com.github.mpkorstanje.simmetrics.example.*</ignore>
+								</ignores>
+							</instrumentation>
 						</configuration>
 					</plugin>
 					<plugin>
@@ -194,6 +178,41 @@
 					</plugin>
 				</plugins>
 			</build>
+		</profile>
+		<!-- Creates reports. Call with `mvn clean site -P reports` Kinda slow. 
+			Don't waste Travis time building these. -->
+		<profile>
+			<id>reports</id>
+			<activation />
+
+			<reporting>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>clirr-maven-plugin</artifactId>
+						<version>2.6.1</version>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>cobertura-maven-plugin</artifactId>
+						<version>2.7</version>
+						<configuration>
+							<formats>
+								<format>html</format>
+							</formats>
+							<maxmem>256m</maxmem>
+							<aggregate>true</aggregate>
+
+							<instrumentation>
+								<ignores>
+									<ignore>com.github.mpkorstanje.simmetrics.example.*</ignore>
+								</ignores>
+							</instrumentation>
+						</configuration>
+					</plugin>
+				</plugins>
+			</reporting>
+
 		</profile>
 	</profiles>
 

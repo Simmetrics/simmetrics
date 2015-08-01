@@ -1,8 +1,9 @@
-# SimMetrics
-[![Build Status]](https://travis-ci.org/Simmetrics/simmetrics)
-[![Test Coverage]](https://coveralls.io/r/Simmetrics/simmetrics?branch=develop)
-[![SemVer]](http://semver.org)
+[![Build Status](https://travis-ci.org/Simmetrics/simmetrics.svg)](https://travis-ci.org/Simmetrics/simmetrics)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.mpkorstanje/simmetrics/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.mpkorstanje/simmetrics)
+[![Coverage Status](https://coveralls.io/repos/Simmetrics/simmetrics/badge.svg?branch=develop&service=github)](https://coveralls.io/github/Simmetrics/simmetrics?branch=develop)
 
+SimMetrics 
+==========
 SimMetrics is a java library of Similarity or Distance Metrics, e.g. Levenshtein distance, Cosine similarity, that provide float based similarity measures between String data. All metrics return consistent measures rather than unbounded similarity scores. 
 
 ## Usage ##

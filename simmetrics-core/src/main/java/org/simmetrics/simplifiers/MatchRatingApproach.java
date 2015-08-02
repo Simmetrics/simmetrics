@@ -4,8 +4,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.apache.commons.codec.language.MatchRatingApproachEncoder;
 
-import com.google.common.base.Preconditions;
-
 /**
  * Match Rating Approach Phonetic Algorithm Developed by <CITE>Western Airlines</CITE> in 1977.
  *

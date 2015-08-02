@@ -1,7 +1,6 @@
 package org.simmetrics.simplifier;
 
 import org.simmetrics.simplifiers.Nysiis;
-import org.simmetrics.simplifiers.RefinedSoundex;
 import org.simmetrics.simplifiers.Simplifier;
 
 @SuppressWarnings("javadoc")

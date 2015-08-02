@@ -1,8 +1,6 @@
 package org.simmetrics.simplifier;
 
-import org.simmetrics.simplifiers.Caverphone2;
 import org.simmetrics.simplifiers.ColognePhonetic;
-import org.simmetrics.simplifiers.DaitchMokotoffSoundex;
 import org.simmetrics.simplifiers.Simplifier;
 
 @SuppressWarnings("javadoc")

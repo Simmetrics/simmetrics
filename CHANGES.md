@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+## Since 3.2.0 ##
+
+ - Better handling of null elements in ListDistance and ListMetric
+ - Added transformation step for tokens in StringMetricBuilder
+ - Added efficient chaining of tokenizers, simplifiers, filters and transforms
+ - Fixed bug where builder would allow incorrect initial step
+
 ## Since 3.1.0 ##
  - Added Block distance
  - Added Hamming distance

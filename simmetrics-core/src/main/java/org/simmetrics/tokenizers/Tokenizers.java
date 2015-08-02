@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.simmetrics.StringMetricBuilder;
-
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
@@ -149,6 +148,10 @@ public final class Tokenizers {
 		RecursiveTokenizer(List<Tokenizer> tokenizers) {
 			checkArgument(!tokenizers.contains(null));
 			this.tokenizers = new ArrayList<>(tokenizers);
+		}
+
+		Collection<Tokenizer> getTokenizers() {
+			return tokenizers;
 		}
 
 		@Override
@@ -310,38 +313,45 @@ public final class Tokenizers {
 	}
 
 	/**
-	 * Constructs a new tokenizer chain. The output of each tokenizer is
-	 * tokenized by the next. The tokenizers are applied in order.
+	 * Chains tokenizers together. The output of each tokenizer is tokenized by
+	 * the next. The tokenizers are applied in order.
+	 * 
+	 * If only a single tokenizer is provided, that tokenizer is returned.
 	 * 
 	 * @param tokenizers
 	 *            a non-empty list of tokenizers
-	 * @return a new composite tokenizer.
+	 * @return a chain of tokenizers
 	 */
 	public static Tokenizer chain(List<Tokenizer> tokenizers) {
-		checkArgument(!tokenizers.isEmpty());
-		checkArgument(!tokenizers.contains(null));
 		if (tokenizers.size() == 1) {
 			return tokenizers.get(0);
 		}
-		return new RecursiveTokenizer(tokenizers);
+		return new RecursiveTokenizer(flatten(tokenizers));
 	}
 
+	
 	/**
-	 * Constructs a new tokenizer chain. The output of each tokenizer is
-	 * tokenized by the next. The tokenizers are applied in order.
+	 * Chains tokenizers together. The output of each tokenizer is tokenized by
+	 * the next. The tokenizers are applied in order.
+	 * 
+	 * If only a single tokenizer is provided, that tokenizer is returned.
 	 * 
 	 * @param tokenizer
 	 *            the first tokenizer
 	 * 
 	 * @param tokenizers
 	 *            a the other tokenizers
-	 * @return a new composite tokenizer.
+	 * @return a chain of tokenizers
 	 */
 	public static Tokenizer chain(Tokenizer tokenizer, Tokenizer... tokenizers) {
 		checkArgument(tokenizer != null);
+
+		if (tokenizers.length == 0) {
+			return tokenizer;
+		}
+
 		return chain(asList(tokenizer, tokenizers));
 	}
-
 	/**
 	 * Constructs a new filtering tokenizer. After tokenization, all tokens that
 	 * don't match a predicate are removed.
@@ -350,7 +360,7 @@ public final class Tokenizers {
 	 *            delegate tokenizer
 	 * @param predicate
 	 *            for tokens to keep
-	 * @return a new composite tokenizer.
+	 * @return a new filtering tokenizer.
 	 */
 	public static Tokenizer filter(Tokenizer tokenizer,
 			Predicate<String> predicate) {
@@ -366,6 +376,21 @@ public final class Tokenizers {
 		return new FilteringTokenizer(tokenizer, predicate);
 	}
 
+	private static List<Tokenizer> flatten(List<Tokenizer> simplifiers) {
+		final List<Tokenizer> flattend = new ArrayList<>(simplifiers.size());
+
+		for (Tokenizer s : simplifiers) {
+			if (s instanceof RecursiveTokenizer) {
+				final RecursiveTokenizer c = (RecursiveTokenizer) s;
+				flattend.addAll(c.getTokenizers());
+			} else {
+				flattend.add(s);
+			}
+		}
+
+		return flattend;
+	}
+
 	/**
 	 * Constructs a new transforming tokenizer. After tokenization, all tokens
 	 * are transformed by the function.
@@ -374,7 +399,7 @@ public final class Tokenizers {
 	 *            delegate tokenizer
 	 * @param function
 	 *            to transform tokens
-	 * @return a new composite tokenizer.
+	 * @return a new transforming tokenizer.
 	 */
 	public static Tokenizer transform(Tokenizer tokenizer,
 			Function<String, String> function) {

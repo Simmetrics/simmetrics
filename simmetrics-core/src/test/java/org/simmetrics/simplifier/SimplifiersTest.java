@@ -1,6 +1,5 @@
 package org.simmetrics.simplifier;
 
-import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertSame;
 import static org.simmetrics.simplifiers.Simplifiers.chain;
 
@@ -8,18 +7,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import junit.framework.Assert;
-
 import org.junit.Test;
 import org.simmetrics.simplifiers.Case;
 import org.simmetrics.simplifiers.Simplifier;
-import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.simplifiers.WordCharacters;
 
 @SuppressWarnings("javadoc")
 public final class SimplifiersTest {
 
-	public static final class ChainChainSimplifier extends SimplifierTest {
+	public static final class WithChainSimplifier extends SimplifierTest {
 
 		@Override
 		protected Simplifier getSimplifier() {
@@ -36,7 +32,22 @@ public final class SimplifiersTest {
 
 	}
 
-	public static final class ChainSimplifier extends SimplifierTest {
+	public static final class WithEmpty extends SimplifierTest {
+
+		@Override
+		protected Simplifier getSimplifier() {
+			return chain(new ArrayList<Simplifier>());
+		}
+
+		@Override
+		protected T[] getTests() {
+			return new T[] { new T("a Sheep Goat", "a Sheep Goat"),
+					new T("", "") };
+		}
+
+	}
+	
+	public static final class WithTwo extends SimplifierTest {
 
 		@Override
 		protected Simplifier getSimplifier() {
@@ -114,11 +125,6 @@ public final class SimplifiersTest {
 			}
 		};
 
-	}
-
-	@Test
-	public void chainWithEmptyList() {
-		assertNotNull(chain(new ArrayList<Simplifier>()));
 	}
 
 	@Test(expected = IllegalArgumentException.class)

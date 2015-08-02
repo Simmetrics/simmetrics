@@ -3,12 +3,15 @@ package org.simmetrics.tokenizers;
 import static com.google.common.base.Predicates.in;
 import static com.google.common.base.Predicates.not;
 import static java.util.Arrays.asList;
+import static junit.framework.Assert.assertSame;
 import static org.simmetrics.tokenizers.Tokenizers.chain;
 import static org.simmetrics.tokenizers.Tokenizers.filter;
 import static org.simmetrics.tokenizers.Tokenizers.transform;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+
 import org.junit.Test;
 import org.simmetrics.tokenizers.QGram;
 import org.simmetrics.tokenizers.Tokenizer;
@@ -20,15 +23,6 @@ import com.google.common.base.Predicate;
 
 @SuppressWarnings("javadoc")
 public final class TokenizersTest {
-	
-	@Test(expected=IllegalArgumentException.class)
-	public void chainWithEmptyList(){
-		Tokenizers.chain(new ArrayList<Tokenizer>());
-	}
-	@Test(expected=IllegalArgumentException.class)
-	public void chainWithListContainingNull(){
-		Tokenizers.chain(Arrays.asList(new Whitespace(), (Tokenizer)null));
-	}
 
 	public static final class FilteringFilteringTokenizerTest extends
 			TokenizerTest {
@@ -80,8 +74,8 @@ public final class TokenizersTest {
 		}
 	}
 
-	public static final class FilteringTransformingTransformingTokenizerTest extends
-			TokenizerTest {
+	public static final class FilteringTransformingTransformingTokenizerTest
+			extends TokenizerTest {
 		@Override
 		public T[] getTests() {
 			return new T[] {
@@ -91,8 +85,9 @@ public final class TokenizersTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return transform(transform(filter(new Whitespace(), theAndOr()),
-					toUpperCase()),reverseCapitalized());
+			return transform(
+					transform(filter(new Whitespace(), theAndOr()),
+							toUpperCase()), reverseCapitalized());
 		}
 	}
 
@@ -131,34 +126,79 @@ public final class TokenizersTest {
 		}
 	}
 
-	public static final class TokennizerChainTest extends TokenizerTest {
+	public static final class TokennizerChainTest {
 
-		@Override
-		public T[] getTests() {
-			return new T[] {
-					new T("the mouse and cat or dog", "the", "mou", "ous",
-							"use", "and", "cat", "or", "dog"), new T("") };
+		public static final class WithChain extends TokenizerTest {
+
+			@Override
+			public T[] getTests() {
+				return new T[] {
+						new T("Mouse", "Mo", "ou", "ou", "us", "ou", "us",
+								"us", "se"), new T("") };
+			}
+
+			@Override
+			protected Tokenizer getTokenizer() {
+				return chain(new QGram(5), chain(new QGram(4), new QGram(3)),
+						new QGram(2));
+			}
 		}
 
-		@Override
-		protected Tokenizer getTokenizer() {
-			return chain(new Whitespace(), new QGram(3));
-		}
-	}
+		public static final class WithEmpty extends TokenizerTest {
 
-	public static final class TransformingFilteringTokenizerTest extends
-			TokenizerTest {
-		@Override
-		public T[] getTests() {
-			return new T[] {
-					new T("the mouse and cat or dog", "THE", "AND", "OR"),
-					new T("") };
+			@Override
+			public T[] getTests() {
+				return new T[] {
+						new T("the mouse and cat or dog",
+								"the mouse and cat or dog"), new T("", "") };
+			}
+
+			@Override
+			protected Tokenizer getTokenizer() {
+				return chain(new ArrayList<Tokenizer>());
+			}
 		}
 
-		@Override
-		protected Tokenizer getTokenizer() {
-			return filter(transform(new Whitespace(), toUpperCase()),
-					mouseCatDogUpperCase());
+		public static final class WithTwo extends TokenizerTest {
+
+			@Override
+			public T[] getTests() {
+				return new T[] {
+						new T("the mouse and cat or dog", "the", "mou", "ous",
+								"use", "and", "cat", "or", "dog"), new T("") };
+			}
+
+			@Override
+			protected Tokenizer getTokenizer() {
+				return chain(new Whitespace(), new QGram(3));
+			}
+		}
+
+		@Test(expected = IllegalArgumentException.class)
+		public void chainWithListContainingNull() {
+			Tokenizers.chain(Arrays.asList(new Whitespace(), (Tokenizer) null));
+		}
+
+		@Test(expected = IllegalArgumentException.class)
+		public void chainWithNull() {
+			Tokenizers.chain((Tokenizer) null);
+		}
+
+		@Test(expected = IllegalArgumentException.class)
+		public void chainWithNullInVarArg() {
+			Tokenizers.chain(new Whitespace(), null, new Whitespace());
+		}
+
+		@Test
+		public void chainWithSingle() {
+			Tokenizer t = new Whitespace();
+			assertSame(t, chain(t));
+		}
+
+		@Test
+		public void chainWithSingletonList() {
+			Tokenizer t = new Whitespace();
+			assertSame(t, Tokenizers.chain(Collections.singletonList(t)));
 		}
 	}
 
@@ -179,20 +219,19 @@ public final class TokenizersTest {
 		}
 	}
 
-	public static final class TransformingFilteringTransformingTokenizerTest
-			extends TokenizerTest {
+	public static final class TransformingFilteringTokenizerTest extends
+			TokenizerTest {
 		@Override
 		public T[] getTests() {
 			return new T[] {
-					new T("the Mouse and Cat or Dog", "ESUOM", "TAC", "GOD"),
+					new T("the mouse and cat or dog", "THE", "AND", "OR"),
 					new T("") };
 		}
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return transform(
-					filter(transform(new Whitespace(), reverseCapitalized()),
-							theAndOr()), toUpperCase());
+			return filter(transform(new Whitespace(), toUpperCase()),
+					mouseCatDogUpperCase());
 		}
 	}
 
@@ -212,6 +251,23 @@ public final class TokenizersTest {
 							filter(transform(new Whitespace(),
 									reverseCapitalized()), theAndOr()),
 							toUpperCase()), mouseCatDogUpperCase());
+		}
+	}
+
+	public static final class TransformingFilteringTransformingTokenizerTest
+			extends TokenizerTest {
+		@Override
+		public T[] getTests() {
+			return new T[] {
+					new T("the Mouse and Cat or Dog", "ESUOM", "TAC", "GOD"),
+					new T("") };
+		}
+
+		@Override
+		protected Tokenizer getTokenizer() {
+			return transform(
+					filter(transform(new Whitespace(), reverseCapitalized()),
+							theAndOr()), toUpperCase());
 		}
 	}
 

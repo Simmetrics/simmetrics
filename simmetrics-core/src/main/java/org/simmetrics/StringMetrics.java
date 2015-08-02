@@ -23,7 +23,7 @@ package org.simmetrics;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.simmetrics.StringMetricBuilder.with;
+import static org.simmetrics.tokenizers.Tokenizers.chain;
 
 import java.util.List;
 import java.util.Set;
@@ -50,7 +50,6 @@ import org.simmetrics.tokenizers.QGramExtended;
 import org.simmetrics.tokenizers.QGram;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Whitespace;
-
 
 /**
  * Utility class for StringMetrics.
@@ -175,8 +174,8 @@ public final class StringMetrics {
 	 * @return a block distance metric
 	 */
 	public static StringMetric blockDistance() {
-		return with(new BlockDistance<String>()).tokenize(new Whitespace())
-				.build();
+		return createForListMetric(new BlockDistance<String>(),
+				new Whitespace());
 	}
 
 	/**
@@ -186,8 +185,8 @@ public final class StringMetrics {
 	 * @return a cosine similarity metric
 	 */
 	public static StringMetric cosineSimilarity() {
-		return with(new CosineSimilarity<String>()).tokenize(new Whitespace())
-				.build();
+		return createForSetMetric(new CosineSimilarity<String>(),
+				new Whitespace());
 	}
 
 	/**
@@ -206,8 +205,8 @@ public final class StringMetrics {
 	 * @return a dice similarity metric
 	 */
 	public static StringMetric diceSimilarity() {
-		return with(new DiceSimilarity<String>()).tokenize(new Whitespace())
-				.build();
+		return createForSetMetric(new DiceSimilarity<String>(),
+				new Whitespace());
 	}
 
 	/**
@@ -217,8 +216,8 @@ public final class StringMetrics {
 	 * @return a Euclidean distance similarity metric
 	 */
 	public static StringMetric euclideanDistance() {
-		return with(new EuclideanDistance<String>()).tokenize(new Whitespace())
-				.build();
+		return createForListMetric(new EuclideanDistance<String>(),
+				new Whitespace());
 	}
 
 	/**
@@ -228,8 +227,8 @@ public final class StringMetrics {
 	 * @return a Jaccard similarity metric
 	 */
 	public static StringMetric jaccardSimilarity() {
-		return with(new JaccardSimilarity<String>()).tokenize(new Whitespace())
-				.build();
+		return createForSetMetric(new JaccardSimilarity<String>(),
+				new Whitespace());
 	}
 
 	/**
@@ -266,8 +265,8 @@ public final class StringMetrics {
 	 * @return a matching coefficient metric
 	 */
 	public static StringMetric matchingCoefficient() {
-		return with(new MatchingCoefficient<String>()).tokenize(
-				new Whitespace()).build();
+		return createForListMetric(new MatchingCoefficient<String>(),
+				new Whitespace());
 	}
 
 	/**
@@ -278,8 +277,8 @@ public final class StringMetrics {
 	 * @return a Monge-Elkan metric
 	 */
 	public static StringMetric mongeElkan() {
-		return with(new MongeElkan(new SmithWatermanGotoh())).tokenize(
-				new Whitespace()).build();
+		return createForListMetric(new MongeElkan(new SmithWatermanGotoh()),
+				new Whitespace());
 	}
 
 	/**
@@ -298,8 +297,8 @@ public final class StringMetrics {
 	 * @return a overlap coefficient metric
 	 */
 	public static StringMetric overlapCoefficient() {
-		return with(new OverlapCoefficient<String>())
-				.tokenize(new Whitespace()).build();
+		return createForSetMetric(new OverlapCoefficient<String>(),
+				new Whitespace());
 	}
 
 	/**
@@ -309,8 +308,8 @@ public final class StringMetrics {
 	 * @return a q-grams distance metric
 	 */
 	public static StringMetric qGramsDistance() {
-		return with(new BlockDistance<String>()).tokenize(new QGramExtended(3))
-				.build();
+		return createForListMetric(new BlockDistance<String>(),
+				new QGramExtended(3));
 	}
 
 	/**
@@ -320,8 +319,8 @@ public final class StringMetrics {
 	 * @return a Simon White metric
 	 */
 	public static StringMetric simonWhite() {
-		return with(new SimonWhite<String>()).tokenize(new Whitespace())
-				.tokenize(new QGram(2)).build();
+		return createForListMetric(new SimonWhite<String>(),
+				chain(new Whitespace(), new QGram(2)));
 	}
 
 	/**
@@ -349,7 +348,7 @@ public final class StringMetrics {
 	 * @return a Soundex metric
 	 */
 	public static StringMetric soundex() {
-		return with(new JaroWinkler()).simplify(new Soundex()).build();
+		return create(new JaroWinkler(), new Soundex());
 	}
 
 	private static final class ForList implements StringMetric {
@@ -433,7 +432,7 @@ public final class StringMetrics {
 
 	}
 
-	private static final class ForSetWithSimplifier implements StringMetric  {
+	private static final class ForSetWithSimplifier implements StringMetric {
 
 		private final Metric<Set<String>> metric;
 		private final Simplifier simplifier;
@@ -464,7 +463,7 @@ public final class StringMetrics {
 
 	}
 
-	private static final class ForStringWithSimplifier implements StringMetric  {
+	private static final class ForStringWithSimplifier implements StringMetric {
 
 		private final Metric<String> metric;
 

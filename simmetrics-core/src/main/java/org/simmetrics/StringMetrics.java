@@ -102,7 +102,7 @@ public final class StringMetrics {
 	 * @return an array with the similarity value for c and each string in the
 	 *         list
 	 */
-	public static final float[] compare(StringMetric metric, final String c,
+	public static float[] compare(StringMetric metric, final String c,
 			final List<String> strings) {
 
 		final float[] results = new float[strings.size()];
@@ -129,7 +129,7 @@ public final class StringMetrics {
 	 * @return an array with the similarity value for c and each string in the
 	 *         list
 	 */
-	public static final float[] compare(StringMetric metric, final String c,
+	public static float[] compare(StringMetric metric, final String c,
 			final String... strings) {
 
 		final float[] results = new float[strings.length];
@@ -155,7 +155,7 @@ public final class StringMetrics {
 	 *             when a and b are of a different length
 	 * @return a list of similarity values for each pair a[n] b[n].
 	 */
-	public static final float[] compareArrays(StringMetric metric,
+	public static float[] compareArrays(StringMetric metric,
 			final String[] a, final String[] b) {
 		checkArgument(a.length == b.length, "arrays must have the same length");
 

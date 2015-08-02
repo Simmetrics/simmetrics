@@ -22,7 +22,6 @@
 package org.simmetrics;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 import static org.simmetrics.StringMetrics.create;
 import static org.simmetrics.StringMetrics.createForListMetric;
 import static org.simmetrics.StringMetrics.createForSetMetric;

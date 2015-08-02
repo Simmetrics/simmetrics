@@ -162,13 +162,14 @@
 							<formats>
 								<format>xml</format>
 							</formats>
-							<maxmem>256m</maxmem>
+
 							<aggregate>true</aggregate>
 							<instrumentation>
 								<ignoreTrivial>true</ignoreTrivial>
-								<ignores>
-									<ignore>org.simmetrics.example.*</ignore>
-								</ignores>
+								<excludes>
+									<exclude>org/simmetrics/example/*.class</exclude>
+									<exclude>org/simmetrics/performance/*.class</exclude>
+								</excludes>
 							</instrumentation>
 						</configuration>
 					</plugin>
@@ -201,14 +202,13 @@
 							<formats>
 								<format>html</format>
 							</formats>
-							<maxmem>256m</maxmem>
 							<aggregate>true</aggregate>
-
 							<instrumentation>
 								<ignoreTrivial>true</ignoreTrivial>
-								<ignores>
-									<ignore>org.simmetrics.example.*</ignore>
-								</ignores>
+								<excludes>
+									<exclude>org/simmetrics/example/*.class</exclude>
+									<exclude>org/simmetrics/performance/*.class</exclude>
+								</excludes>
 							</instrumentation>
 						</configuration>
 					</plugin>

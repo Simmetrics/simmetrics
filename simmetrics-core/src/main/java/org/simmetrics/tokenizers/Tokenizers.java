@@ -51,17 +51,17 @@ public final class Tokenizers {
 
 			@Override
 			Collection<String> tokenizeToFilteredList(String input) {
-				return Collections2.filter(tokenizer.tokenizeToTransformedList(input),
-						predicate);
+				return Collections2.filter(
+						tokenizer.tokenizeToTransformedList(input), predicate);
 
 			}
 
 			@Override
 			Collection<String> tokenizeToFilteredSet(String input) {
-				return Collections2.filter(tokenizer.tokenizeToTransformedSet(input),
-						predicate);
+				return Collections2.filter(
+						tokenizer.tokenizeToTransformedSet(input), predicate);
 			}
-			
+
 			@Override
 			public List<String> tokenizeToList(String input) {
 				return newArrayList(Collections2.filter(
@@ -88,8 +88,8 @@ public final class Tokenizers {
 					tokenizer.getPredicate(), predicate));
 		}
 
-		static Tokenizer createCombined(
-				TransformingTokenizer tokenizer, Predicate<String> predicate) {
+		static Tokenizer createCombined(TransformingTokenizer tokenizer,
+				Predicate<String> predicate) {
 			return new TransformingFilteringTokenizer(tokenizer, predicate);
 		}
 
@@ -139,7 +139,6 @@ public final class Tokenizers {
 		public final String toString() {
 			return Joiner.on(" -> ").join(tokenizer, predicate);
 		}
-
 
 	}
 
@@ -230,17 +229,17 @@ public final class Tokenizers {
 				return newHashSet(Collections2.transform(
 						tokenizer.tokenizeToFilteredSet(input), function));
 			}
-			
+
 			@Override
 			Collection<String> tokenizeToTransformedList(String input) {
-				return Collections2.transform(tokenizer.tokenizeToFilteredList(input),
-						function);
+				return Collections2.transform(
+						tokenizer.tokenizeToFilteredList(input), function);
 			}
 
 			@Override
 			Collection<String> tokenizeToTransformedSet(String input) {
-				return Collections2.transform(tokenizer.tokenizeToFilteredSet(input),
-						function);
+				return Collections2.transform(
+						tokenizer.tokenizeToFilteredSet(input), function);
 			}
 		}
 
@@ -384,13 +383,14 @@ public final class Tokenizers {
 			return TransformingTokenizer.createCombined(
 					(TransformingTokenizer) tokenizer, function);
 		} else if (tokenizer instanceof FilteringTokenizer) {
-			return TransformingTokenizer.createCombined((FilteringTokenizer) tokenizer, function);
+			return TransformingTokenizer.createCombined(
+					(FilteringTokenizer) tokenizer, function);
 		}
 
 		return new TransformingTokenizer(tokenizer, function);
 	}
 
-	Tokenizers() {
+	private Tokenizers() {
 		// Utility class
 	}
 

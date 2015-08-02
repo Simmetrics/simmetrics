@@ -1,11 +1,13 @@
 package org.simmetrics.simplifier;
 
+import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.simmetrics.simplifiers.Simplifier;
 
@@ -19,17 +21,16 @@ public abstract class SimplifierTest {
 			this.string = string;
 			this.expected = expected;
 		}
-		
+
 		public String string() {
 			return string;
 		}
-		
 
 	}
 
 	private static void testSimplified(String expected, String simplified) {
-		assertEquals(expected, simplified);
 		assertNotNull(simplified);
+		assertEquals(expected, simplified);
 	}
 
 	protected Simplifier simplifier;
@@ -78,5 +79,15 @@ public abstract class SimplifierTest {
 	@Test(expected = NullPointerException.class)
 	public final void simplfyNullPointerException() {
 		simplifier.simplify(null);
+	}
+
+	@Test
+	@Ignore
+	public final void generateSimplified() {
+		System.out.println(simplifier);
+		for (T t : tests) {
+			System.out.println(format("new T(\"%s\", \"%s\"),", t.string,
+					simplifier.simplify(t.string)));
+		}
 	}
 }

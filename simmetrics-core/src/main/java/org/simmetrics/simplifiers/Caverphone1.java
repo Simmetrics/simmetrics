@@ -1,5 +1,7 @@
 package org.simmetrics.simplifiers;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Encodes a string into a Caverphone 1.0 value.
  *
@@ -25,6 +27,7 @@ public class Caverphone1 implements Simplifier {
 
 	@Override
 	public String simplify(String input) {
+		checkNotNull(input);
 		return simplifier.encode(input);
 	}
 	

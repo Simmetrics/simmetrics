@@ -19,10 +19,11 @@
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.simmetrics.metrics;
+package org.simmetrics.performance;
 
 import org.simmetrics.Metric;
 import org.simmetrics.StringMetric;
+import org.simmetrics.metrics.Jaro;
 
 import static java.lang.Math.*;
 import static java.util.Arrays.copyOf;

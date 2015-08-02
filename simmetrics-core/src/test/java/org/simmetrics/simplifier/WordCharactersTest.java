@@ -13,7 +13,8 @@ public class WordCharactersTest extends SimplifierTest {
 
 	@Override
 	protected T[] getTests() {
-		return new T[] { new T("##", "  "), new T("The ##th Hour", "The   th Hour"),
+		return new T[] { new T("##", "  "),
+				new T("The ##th Hour", "The   th Hour"),
 				new T("", "") };
 	}
 

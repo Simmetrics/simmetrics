@@ -30,6 +30,8 @@ import static com.google.common.collect.Lists.asList;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.base.Preconditions;
+
 /**
  * Simplifier composed of multiple simplifiers.
  * <p>
@@ -84,6 +86,10 @@ public final class Simplifiers {
 	public static Simplifier chain(Simplifier simplifier,
 			Simplifier... simplifiers) {
 		checkArgument(simplifier != null);
+		if(simplifiers.length == 0){
+			return simplifier;
+		}
+		
 		return chain(asList(simplifier, simplifiers));
 	}
 

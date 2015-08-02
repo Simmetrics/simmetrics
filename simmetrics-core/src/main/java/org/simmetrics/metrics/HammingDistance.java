@@ -28,6 +28,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.simmetrics.Distance;
+import org.simmetrics.ListDistance;
+import org.simmetrics.StringDistance;
+
+import com.google.common.base.Objects;
 
 /**
  * Hamming Distance algorithm to calculate distance between lists and strings.
@@ -37,6 +41,10 @@ import org.simmetrics.Distance;
  * 
  */
 public final class HammingDistance {
+	
+	private HammingDistance() {
+		//Don't construct
+	}
 	/**
 	 * Hamming Distance algorithm to calculate distance between lists of equal
 	 * size.
@@ -49,7 +57,7 @@ public final class HammingDistance {
 	 * 
 	 */
 	public static final class HammingListDistance<T> implements
-			Distance<List<T>> {
+			ListDistance<T> {
 
 		HammingListDistance() {
 			// avoid synthetics
@@ -84,7 +92,7 @@ public final class HammingDistance {
 			Iterator<T> bItt = b.iterator();
 
 			while (aItt.hasNext()) {
-				if (!aItt.next().equals(bItt.next())) {
+				if (!Objects.equal(aItt.next(), bItt.next())) {
 					distance++;
 				}
 			}
@@ -106,7 +114,7 @@ public final class HammingDistance {
 	 * This class is immutable and thread-safe.
 	 * 
 	 */
-	public static final class HammingStringDistance implements Distance<String> {
+	public static final class HammingStringDistance implements StringDistance {
 
 		HammingStringDistance() {
 			// avoid synthetics
@@ -156,7 +164,7 @@ public final class HammingDistance {
 	 * 
 	 * @return a new Hamming distance to compare lists
 	 */
-	public static <T> Distance<List<T>> forList() {
+	public static <T> ListDistance<T> forList() {
 		return new HammingListDistance<>();
 	}
 

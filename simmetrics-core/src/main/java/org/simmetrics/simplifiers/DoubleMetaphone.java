@@ -1,5 +1,7 @@
 package org.simmetrics.simplifiers;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Encodes a string into a double metaphone value. This Implementation is based
  * on the algorithm by <cite>Lawrence Philips</cite>.
@@ -10,14 +12,17 @@ package org.simmetrics.simplifiers;
  */
 public class DoubleMetaphone implements Simplifier {
 
-	private final org.apache.commons.codec.language.DoubleMetaphone simplifier;
+	private static final int DEFAULT_CODE_LENGTH = 4;
+	private static final boolean DEFAULT_USE_ALTERNATE = false;
+
+	private final org.apache.commons.codec.language.DoubleMetaphone simplifier = new org.apache.commons.codec.language.DoubleMetaphone();
 	private final boolean useAlternate;
-	  /**
-     * Creates an instance of this DoubleMetaphone encoder
-     */
+
+	/**
+	 * Creates an instance of this DoubleMetaphone encoder
+	 */
 	public DoubleMetaphone() {
-		this.simplifier = new org.apache.commons.codec.language.DoubleMetaphone();
-		this.useAlternate = false;
+		this(DEFAULT_CODE_LENGTH,DEFAULT_USE_ALTERNATE);
 	}
 
 	/**
@@ -31,21 +36,24 @@ public class DoubleMetaphone implements Simplifier {
 	 *            use alternate encode
 	 */
 	public DoubleMetaphone(int maxCodeLength, boolean useAlternate) {
-		this.simplifier = new org.apache.commons.codec.language.DoubleMetaphone();
 		this.simplifier.setMaxCodeLen(maxCodeLength);
 		this.useAlternate = useAlternate;
 	}
 
 	@Override
 	public String simplify(String input) {
-		return simplifier.doubleMetaphone(input, useAlternate);
+		checkNotNull(input);
+		
+		final String simplified = simplifier.doubleMetaphone(input, useAlternate);
+		if(simplified == null){
+			return "";
+		}
+		return simplified;
 	}
 
 	@Override
 	public String toString() {
 		return "DoubleMetaphone [useAlternate=" + useAlternate + "]";
 	}
-	
-	
 
 }

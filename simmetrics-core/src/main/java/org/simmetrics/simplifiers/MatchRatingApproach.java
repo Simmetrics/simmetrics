@@ -1,5 +1,7 @@
 package org.simmetrics.simplifiers;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import org.apache.commons.codec.language.MatchRatingApproachEncoder;
 
 /**
@@ -16,6 +18,7 @@ public class MatchRatingApproach implements Simplifier {
 
 	@Override
 	public String simplify(String input) {
+		checkNotNull(input);
 		return simplifier.encode(input);
 	}
 	

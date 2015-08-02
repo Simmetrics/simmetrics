@@ -26,7 +26,7 @@ import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.simmetrics.utils.Math.max3;
+import static org.simmetrics.utils.Math.max;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -105,7 +105,7 @@ public abstract class MetricTest<K> {
 		assertTrue(
 				format("triangle ineqaulity must hold for %s, %s, %s with %s, %s, %s",
 						a, b, c, ab, ac, bc), ab == 0.0f || ac == 0.0f
-						|| bc == 0.0f || 2 * max3(ab, ac, bc) <= ab + ac + bc);
+						|| bc == 0.0f || 2 * max(ab, ac, bc) <= ab + ac + bc);
 	}
 
 	private static <K> void testSymmetric(Metric<K> metric, K a, K b,
@@ -119,11 +119,11 @@ public abstract class MetricTest<K> {
 
 	}
 
-	protected float delta;
+	private float delta;
 
 	protected Metric<K> metric;
 
-	protected T<K>[] tests;
+	private T<K>[] tests;
 
 	protected float getDelta() {
 		return DEFAULT_DELTA;
@@ -247,11 +247,6 @@ public abstract class MetricTest<K> {
 		assertFalse(
 				"toString() was not implemented "
 						+ metric.toString(), defaultToString.equals(metricToString));
-
-		String metricName = metric.getClass().getSimpleName();
-
-		assertTrue(format("%s must contain %s ", metricToString,
-				metricName), metricToString.contains(metricName));
 	}
 
 }

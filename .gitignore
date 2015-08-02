@@ -5,4 +5,7 @@
 /target/
 /bin/
 pom.xml.releaseBackup
+pom.xml.versionsBackup
 release.properties
+
+

@@ -26,7 +26,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-import static org.simmetrics.utils.Math.max3;
+import static org.simmetrics.utils.Math.max;
 
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.functions.AffineGap;
@@ -118,7 +118,7 @@ public class SmithWaterman implements StringMetric {
 				maxGapCost = max(maxGapCost, d[i - k][0] + gap.value(i - k, i));
 			}
 
-			d[i][0] = max3(0, maxGapCost, substitution.compare(a, i, b, 0));
+			d[i][0] = max(0, maxGapCost, substitution.compare(a, i, b, 0));
 
 			max = max(max, d[i][0]);
 
@@ -133,7 +133,7 @@ public class SmithWaterman implements StringMetric {
 				maxGapCost = max(maxGapCost, d[0][j - k] + gap.value(j - k, j));
 			}
 
-			d[0][j] = max3(0, maxGapCost, substitution.compare(a, 0, b, j));
+			d[0][j] = max(0, maxGapCost, substitution.compare(a, 0, b, j));
 
 			max = max(max, d[0][j]);
 
@@ -157,7 +157,7 @@ public class SmithWaterman implements StringMetric {
 				}
 
 				// Find most optimal of insertion, deletion and substitution
-				d[i][j] = max3(0, maxGapCost,
+				d[i][j] = max(0, maxGapCost,
 						d[i - 1][j - 1] + substitution.compare(a, i, b, j));
 
 				max = max(max, d[i][j]);

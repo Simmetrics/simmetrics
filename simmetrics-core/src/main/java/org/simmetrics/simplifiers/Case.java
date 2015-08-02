@@ -105,7 +105,7 @@ public abstract class Case implements Simplifier {
 		 * 
 		 */
 		public Upper() {
-			locale = Locale.getDefault();
+			this(Locale.getDefault());
 		}
 
 		@Override

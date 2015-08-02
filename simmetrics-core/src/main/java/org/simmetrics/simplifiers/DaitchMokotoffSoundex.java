@@ -1,5 +1,7 @@
 package org.simmetrics.simplifiers;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Encodes a string into a Daitch-Mokotoff Soundex value.
  * <p>
@@ -20,12 +22,11 @@ package org.simmetrics.simplifiers;
 public class DaitchMokotoffSoundex implements Simplifier {
 
 	private final org.apache.commons.codec.language.DaitchMokotoffSoundex simplifier;
-
 	/**
 	 * Creates a new instance with ASCII-folding enabled.
 	 */
 	public DaitchMokotoffSoundex() {
-		this.simplifier = new org.apache.commons.codec.language.DaitchMokotoffSoundex();
+		this(true);
 	}
 
 	/**
@@ -45,6 +46,8 @@ public class DaitchMokotoffSoundex implements Simplifier {
 
 	@Override
 	public String simplify(String input) {
+		checkNotNull(input);
+
 		return simplifier.encode(input);
 	}
 

@@ -1,5 +1,6 @@
 package org.simmetrics.simplifiers;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static org.apache.commons.codec.language.RefinedSoundex.US_ENGLISH;
 
 /**
@@ -17,6 +18,7 @@ public class RefinedSoundex implements Simplifier {
 
 	@Override
 	public String simplify(String input) {
+		checkNotNull(input);
 		return US_ENGLISH.soundex(input);
 	}
 

@@ -19,13 +19,14 @@
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.simmetrics.metrics;
+package org.simmetrics.performance;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.simmetrics.ListMetric;
 import org.simmetrics.Metric;
+import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.tokenizers.QGram;
 
 import com.google.caliper.Benchmark;

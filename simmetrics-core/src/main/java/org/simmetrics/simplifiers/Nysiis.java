@@ -1,5 +1,7 @@
 package org.simmetrics.simplifiers;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Encodes a string into a NYSIIS value. NYSIIS is an encoding used to relate
  * similar names, but can also be used as a general purpose scheme to find word
@@ -13,7 +15,7 @@ package org.simmetrics.simplifiers;
 public class Nysiis implements Simplifier {
 
 	private final org.apache.commons.codec.language.Nysiis simplifier;
-
+	
 	/**
 	 * Creates an instance of the Nysiis encoder with strict mode (original
 	 * form), i.e. encoded strings have a maximum length of 6.
@@ -40,6 +42,7 @@ public class Nysiis implements Simplifier {
 
 	@Override
 	public String simplify(String input) {
+		checkNotNull(input);
 		return simplifier.nysiis(input);
 	}
 

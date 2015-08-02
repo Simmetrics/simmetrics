@@ -23,9 +23,9 @@ package org.simmetrics.metrics;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
-import static org.simmetrics.utils.Math.min3;
+import static org.simmetrics.utils.Math.min;
 
-import org.simmetrics.Distance;
+import org.simmetrics.StringDistance;
 import org.simmetrics.StringMetric;
 
 /**
@@ -41,7 +41,7 @@ import org.simmetrics.StringMetric;
  * @see DamerauLevenshtein
  * 
  */
-public class Levenshtein implements StringMetric, Distance<String> {
+public class Levenshtein implements StringMetric, StringDistance {
 
 	private final float maxCost;
 	private final float insertDelete;
@@ -112,7 +112,7 @@ public class Levenshtein implements StringMetric, Distance<String> {
 			v1[0] = (i + 1) * insertDelete;
 
 			for (int j = 0; j < tLength; j++) {
-				v1[j + 1] = min3(v1[j] + insertDelete,
+				v1[j + 1] = min(v1[j] + insertDelete,
 						v0[j + 1] + insertDelete,
 						v0[j]
 								+ (s.charAt(i) == t.charAt(j) ? 0.0f

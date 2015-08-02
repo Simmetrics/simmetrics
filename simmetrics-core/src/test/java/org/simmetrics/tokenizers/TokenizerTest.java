@@ -11,18 +11,20 @@
  * License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU General Public License along with
  * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.simmetrics.tokenizers;
 
+import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
 
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,59 +36,27 @@ import org.simmetrics.tokenizers.Tokenizer;
 @SuppressWarnings("javadoc")
 public abstract class TokenizerTest {
 
-	private Tokenizer tokenizer;
-
-	protected abstract Tokenizer getTokenizer();
-
-	public abstract T[] getTests();
-
 	protected static class T {
-		protected final String string;
-		protected final String[] tokens;
+		private final String string;
+		private final String[] tokens;
 
 		public T(String string, String... tokens) {
 			this.string = string;
 			this.tokens = tokens;
 		}
 
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		tokenizer = getTokenizer();
-	}
-
-	@Test
-	public void testTokenizeToArrayList() {
-		for (T t : getTests()) {
-			List<String> tokens = tokenizer.tokenizeToList(t.string);
-			String message = String.format("for %s expected: %s found: %s",
-					t.string, Arrays.toString(t.tokens),
-					Arrays.toString(tokens.toArray()));
-			assertArrayEquals(message, t.tokens,
-					tokens.toArray(new String[tokens.size()]));
+		public String string() {
+			return string;
 		}
-	}
 
-	@Test
-	public void testTokenizeToSet() {
-		for (T t : getTests()) {
-			Set<String> tokens = tokenizer.tokenizeToSet(t.string);
-			Set<String> expected = new HashSet<>(Arrays.asList(t.tokens));
-
-			assertEquals(expected, tokens);
-
+		public List<String> tokensAsList() {
+			return asList(tokens);
 		}
-	}
 
-	@Test
-	public void testToString() {
-		assertFalse(
-				"@ indicates toString() was not implemented "
-						+ tokenizer.toString(),
-				tokenizer.toString().contains("@"));
+		public Set<String> tokensAsSet() {
+			return new HashSet<>(tokensAsList());
+		}
 
-		assertToStringContains(tokenizer, tokenizer.getClass().getSimpleName());
 	}
 
 	protected static void assertToStringContains(Tokenizer tokenizer,
@@ -95,6 +65,71 @@ public abstract class TokenizerTest {
 		String message = String.format("%s must contain %s ", string, content);
 
 		assertTrue(message, message.contains(content));
+	}
+
+	private static void testTokens(String string, Collection<String> expected,
+			Collection<String> actual) {
+		assertEquals(string + " did not tokenize to " + expected + " but " + actual, expected, actual);
+		assertFalse(actual + " contained null", actual.contains(null));
+	}
+
+	protected T[] tests;
+
+	protected Tokenizer tokenizer;
+
+	protected abstract T[] getTests();
+
+	protected abstract Tokenizer getTokenizer();
+
+	@Before
+	public final void setUp() throws Exception {
+		tokenizer = getTokenizer();
+		tests = getTests();
+	}
+
+	@Test
+	public final void containsEmptyTest() {
+		for (T t : tests) {
+			if (t.string().isEmpty()) {
+				return;
+			}
+		}
+
+		fail("Test must contain a case with empty string");
+	}
+
+	@Test
+	public final void implementsToString() {
+		assertFalse(
+				"@ indicates toString() was not implemented "
+						+ tokenizer.toString(),
+				tokenizer.toString().contains("@"));
+
+		assertToStringContains(tokenizer, tokenizer.getClass().getSimpleName());
+	}
+
+	@Test
+	public final void tokenizeToArrayList() {
+		for (T t : tests) {
+			testTokens(t.string(), t.tokensAsList(), tokenizer.tokenizeToList(t.string()));
+		}
+	}
+
+	@Test(expected = NullPointerException.class)
+	public final void tokenizeToListNullPointerException() {
+		tokenizer.tokenizeToList(null);
+	}
+
+	@Test
+	public final void tokenizeToSet() {
+		for (T t : tests) {
+			testTokens(t.string(), t.tokensAsSet(), tokenizer.tokenizeToSet(t.string()));
+		}
+	}
+
+	@Test(expected = NullPointerException.class)
+	public final void tokenizeToSetNullPointerException() {
+		tokenizer.tokenizeToSet(null);
 	}
 
 }

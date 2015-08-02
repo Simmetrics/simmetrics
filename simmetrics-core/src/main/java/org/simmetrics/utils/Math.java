@@ -22,9 +22,6 @@
 
 package org.simmetrics.utils;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-
 /**
  * The class {@code Math} contains methods for performing useful functions.
  */
@@ -50,8 +47,8 @@ public final class Math {
 	 *            an other argument
 	 * @return the larger of {@code a}, {@code b} and {@code c}.
 	 */
-	public static float max3(float a, float b, float c) {
-		return max(a, max(b, c));
+	public static float max(float a, float b, float c) {
+		return java.lang.Math.max(java.lang.Math.max(a, b), c);
 	}
 
 	/**
@@ -67,8 +64,8 @@ public final class Math {
 	 *            an other argument
 	 * @return the larger of {@code a}, {@code b} and {@code c}.
 	 */
-	public static int max3(final int a, final int b, final int c) {
-		return max(a, max(b, c));
+	public static int max(final int a, final int b, final int c) {
+		return java.lang.Math.max(java.lang.Math.max(a, b), c);
 	}
 
 	/**
@@ -89,8 +86,9 @@ public final class Math {
 	 *            an other argument
 	 * @return the larger of {@code a}, {@code b}, {@code c} and {@code d}.
 	 */
-	public static float max4(float a, float b, float c, float d) {
-		return max(max(d, a), max(b, c));
+	public static float max(float a, float b, float c, float d) {
+		return java.lang.Math.max(
+				java.lang.Math.max(java.lang.Math.max(a, b), c), d);
 	}
 
 	/**
@@ -108,8 +106,9 @@ public final class Math {
 	 *            an other argument
 	 * @return the larger of {@code a}, {@code b}, {@code c} and {@code d}.
 	 */
-	public static int max4(final int d, final int a, final int b, final int c) {
-		return max(max(d, a), max(b, c));
+	public static int max(final int a, final int b, final int c, final int d) {
+		return java.lang.Math.max(
+				java.lang.Math.max(java.lang.Math.max(a, b), c), d);
 	}
 
 	/**
@@ -128,8 +127,8 @@ public final class Math {
 	 * 
 	 * @return the smaller of {@code a}, {@code b} and {@code c}.
 	 */
-	public static float min3(float a, float b, float c) {
-		return min(a, min(b, c));
+	public static float min(float a, float b, float c) {
+		return java.lang.Math.min(java.lang.Math.min(a, b), c);
 	}
 
 	/**
@@ -146,8 +145,8 @@ public final class Math {
 	 * 
 	 * @return the smaller of {@code a}, {@code b} and {@code c}.
 	 */
-	public static int min3(final int a, final int b, final int c) {
-		return min(a, min(b, c));
+	public static int min(final int a, final int b, final int c) {
+		return java.lang.Math.min(java.lang.Math.min(a, b), c);
 	}
 
 	/**
@@ -167,9 +166,10 @@ public final class Math {
 	 *            an other argument
 	 * @return the smaller of {@code a}, {@code b}, {@code c} and {@code d}.
 	 */
-	public static float min4(final float a, final float b, final float c,
+	public static float min(final float a, final float b, final float c,
 			final float d) {
-		return min(min(d, a), min(b, c));
+		return java.lang.Math.min(
+				java.lang.Math.min(java.lang.Math.min(a, b), c), d);
 	}
 
 	/**
@@ -187,26 +187,8 @@ public final class Math {
 	 *            an other argument
 	 * @return the smaller of {@code a}, {@code b} and {@code c}.
 	 */
-	public static int min4(final int a, final int b, final int c, final int d) {
-		return min(min(d, a), min(b, c));
-	}
-
-	/**
-	 * Clamps an {@code int} value between the upper and lower bounds. The
-	 * returned value will be no lower then the lower bound and no higher then
-	 * the upper bound. If the value falls between the upper and lower bound the
-	 * value is returned.
-	 * 
-	 * 
-	 * @param lower
-	 *            lower bound
-	 * @param a
-	 *            an argument
-	 * @param upper
-	 *            upper bound
-	 * @return a value clamped between the upper and lower bounds.
-	 */
-	public static int clamp(int lower, int a, int upper) {
-		return min(max(lower, a), upper);
+	public static int min(final int a, final int b, final int c, final int d) {
+		return java.lang.Math.min(
+				java.lang.Math.min(java.lang.Math.min(a, b), c), d);
 	}
 }

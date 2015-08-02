@@ -33,6 +33,7 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.tokenizers.Tokenizer;
 
+import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 
 
@@ -57,7 +58,8 @@ public class StringMetricBuilderTest {
 
 	@Mock
 	private Predicate<String> predicate;
-
+	@Mock
+	private Function<String,String> function;
 	@Test
 	public void testStringMetric01() {
 		with(stringMetric)
@@ -110,6 +112,32 @@ public class StringMetricBuilderTest {
 				.filter(predicate)
 				.build();
 	}
+	@Test
+	public void testListMetricWithTransform() {
+		with(listMetric)
+				.tokenize(tokenizer)
+				.transform(function)
+				.build();
+	}
+	
+	
+	@Test
+	public void testListMetricWithFilterAndTransform01() {
+		with(listMetric)
+				.tokenize(tokenizer)
+				.filter(predicate)
+				.transform(function)
+				.build();
+	}
+
+	@Test
+	public void testListMetricWithFilterAndTransform02() {
+		with(listMetric)
+				.tokenize(tokenizer)
+				.transform(function)
+				.filter(predicate)
+				.build();
+	}
 
 	@Test
 	public void testListMetricWithSimplifier01() {
@@ -127,6 +155,7 @@ public class StringMetricBuilderTest {
 				.tokenize(tokenizer)
 				.build();
 	}
+
 
 	@Test
 	public void testListMetricWithSimplifier01WithCache() {
@@ -183,6 +212,33 @@ public class StringMetricBuilderTest {
 	public void testSetMetricWithFilter() {
 		with(setMetric)
 				.tokenize(tokenizer)
+				.filter(predicate)
+				.build();
+	}
+	
+	@Test
+	public void testSetMetricWithTransform() {
+		with(setMetric)
+				.tokenize(tokenizer)
+				.transform(function)
+				.build();
+	}
+	
+	
+	@Test
+	public void testSetMetricWithFilterAndTransform01() {
+		with(setMetric)
+				.tokenize(tokenizer)
+				.filter(predicate)
+				.transform(function)
+				.build();
+	}
+
+	@Test
+	public void testSetMetricWithFilterAndTransform02() {
+		with(setMetric)
+				.tokenize(tokenizer)
+				.transform(function)
 				.filter(predicate)
 				.build();
 	}

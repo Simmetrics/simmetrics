@@ -25,12 +25,15 @@ import org.simmetrics.ListMetric;
 import org.simmetrics.ListMetricTest;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.MongeElkan;
-import org.simmetrics.tokenizers.Tokenizer;
-import org.simmetrics.tokenizers.Whitespace;
 
 @SuppressWarnings("javadoc")
 public final class MongeElkanTest extends ListMetricTest {
 
+	@Override
+	protected boolean supportsNullValues() {
+		return false;
+	}
+	
 	@Override
 	protected ListMetric<String> getMetric() {
 		return new MongeElkan(new StringMetric() {
@@ -45,11 +48,6 @@ public final class MongeElkanTest extends ListMetricTest {
 				return "Dummy";
 			}
 		});
-	}
-
-	@Override
-	protected Tokenizer getTokenizer() {
-		return new Whitespace();
 	}
 
 	@Override

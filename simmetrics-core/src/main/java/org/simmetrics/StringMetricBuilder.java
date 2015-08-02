@@ -220,6 +220,10 @@ import com.google.common.base.Predicates;
  * 
  */
 public final class StringMetricBuilder {
+	
+	private StringMetricBuilder(){
+		// Utility class
+	}
 
 	/**
 	 * Starts building a metric with a string metric.

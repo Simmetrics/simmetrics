@@ -7,6 +7,9 @@ import static org.simmetrics.tokenizers.Tokenizers.chain;
 import static org.simmetrics.tokenizers.Tokenizers.filter;
 import static org.simmetrics.tokenizers.Tokenizers.transform;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import org.junit.Test;
 import org.simmetrics.tokenizers.QGram;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Tokenizers;
@@ -17,6 +20,15 @@ import com.google.common.base.Predicate;
 
 @SuppressWarnings("javadoc")
 public final class TokenizersTest {
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void chainWithEmptyList(){
+		Tokenizers.chain(new ArrayList<Tokenizer>());
+	}
+	@Test(expected=IllegalArgumentException.class)
+	public void chainWithListContainingNull(){
+		Tokenizers.chain(Arrays.asList(new Whitespace(), (Tokenizer)null));
+	}
 
 	public static final class FilteringFilteringTokenizerTest extends
 			TokenizerTest {

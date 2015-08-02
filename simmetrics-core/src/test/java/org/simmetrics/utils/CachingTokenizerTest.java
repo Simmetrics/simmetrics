@@ -20,12 +20,13 @@
  */
 package org.simmetrics.utils;
 
+import org.junit.Test;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.TokenizerTest;
 import org.simmetrics.utils.CachingTokenizer;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.google.monitoring.runtime.instrumentation.common.com.google.common.collect.Sets.newHashSet;
+import static com.google.common.collect.Sets.newHashSet;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("javadoc")
@@ -63,7 +64,7 @@ public class CachingTokenizerTest extends TokenizerTest {
 
 		};
 	}
-
+	@Test
 	public final void tokenizeToListUsesCache() {
 		for (T t : tests) {
 			tokenizer.tokenizeToList(t.string());
@@ -73,7 +74,8 @@ public class CachingTokenizerTest extends TokenizerTest {
 		 verify(innerTokenizer, times(2)).tokenizeToList("CCC");
 	}
 
-	
+
+	@Test
 	public final void tokenizeToSetUsesCache() {
 		for (T t : tests) {
 			tokenizer.tokenizeToSet(t.string());

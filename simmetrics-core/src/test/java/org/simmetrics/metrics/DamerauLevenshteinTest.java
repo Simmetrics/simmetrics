@@ -22,7 +22,6 @@
 package org.simmetrics.metrics;
 
 import org.junit.Test;
-import org.junit.experimental.theories.suppliers.TestedOn;
 import org.simmetrics.Metric;
 import org.simmetrics.StringDistance;
 import org.simmetrics.StringDistanceTest;

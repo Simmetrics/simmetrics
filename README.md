@@ -1,5 +1,5 @@
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.mpkorstanje/simmetrics/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.mpkorstanje/simmetrics-core)
 [![Build Status](https://travis-ci.org/Simmetrics/simmetrics.svg)](https://travis-ci.org/Simmetrics/simmetrics)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.mpkorstanje/simmetrics/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.mpkorstanje/simmetrics)
 [![Coverage Status](https://coveralls.io/repos/Simmetrics/simmetrics/badge.svg?branch=develop&service=github)](https://coveralls.io/github/Simmetrics/simmetrics?branch=develop)
 
 SimMetrics 

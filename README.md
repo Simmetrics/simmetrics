@@ -13,9 +13,9 @@ For a quick and easy use [StringMetrics](./simmetrics-core/src/main/java/org/sim
 ```java
 	String str1 = "This is a sentence. It is made of words";
 	String str2 = "This sentence is similair. It has almost the same words";
-	
+
 	StringMetric metric = StringMetrics.cosineSimilarity();
-	
+
 	float result = metric.compare(str1, str2); //0.4472
 ```
 
@@ -29,9 +29,9 @@ For a terse syntax use `import static org.simmetrics.StringMetricBuilder.with;`
 
 	StringMetric metric =
 			with(new CosineSimilarity<String>())
-			.simplify(new Case.Lower(Locale.ENGLISH))
-			.simplify(new NonWordCharacter())
-			.tokenize(new Whitespace())
+			.simplify(Simplifiers.toLowerCase(Locale.ENGLISH))
+			.simplify(Simplifiers.replaceNonWord())
+			.tokenize(Tokenizers.whitespace())
 			.build();
 
 	float result = metric.compare(str1, str2); //0.5590

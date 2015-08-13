@@ -51,7 +51,7 @@ import com.google.common.collect.Sets;
  * 
  */
 @SuppressWarnings("javadoc")
-public class StringMetricBuilderExample {
+public final class StringMetricBuilderExample {
 
 	/**
 	 * By simplifying the input before applying the metric similar strings can

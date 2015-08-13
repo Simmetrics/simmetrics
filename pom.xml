@@ -190,10 +190,6 @@
 							<aggregate>true</aggregate>
 							<instrumentation>
 								<ignoreTrivial>true</ignoreTrivial>
-								<excludes>
-									<exclude>org/simmetrics/example/*.class</exclude>
-									<exclude>org/simmetrics/performance/*.class</exclude>
-								</excludes>
 							</instrumentation>
 						</configuration>
 					</plugin>

@@ -40,8 +40,8 @@ import org.simmetrics.StringMetricBuilder;
  * Utilities for simplifiers. Construct simple simplifiers or chain multiple
  * simplifiers into a single simplifier.
  * <p>
- * All methods return immutable and thread-safe classes provided the arguments
- * are also immutable and thread-safe.
+ * All methods return immutable objects provided the arguments
+ * are also immutable.
  */
 public final class Simplifiers {
 

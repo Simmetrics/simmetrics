@@ -83,7 +83,10 @@ import org.simmetrics.tokenizers.Tokenizers;
  * <li>Smith-Waterman-Gotoh Windowed Affine
  * <li>Soundex
  * </ul>
- *
+ * 
+ * <p>
+ * All methods return immutable objects provided the arguments
+ * are also immutable.
  */
 public final class StringMetrics {
 

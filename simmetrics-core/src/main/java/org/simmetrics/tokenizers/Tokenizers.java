@@ -48,8 +48,8 @@ import com.google.common.collect.Collections2;
  * tokenizers into a single tokenizers or apply filters and transforms to
  * tokens.
  * <p>
- * All methods return immutable and thread-safe classes provided the arguments
- * are also immutable and thread-safe.
+ * All methods return immutable objects provided the arguments
+ * are also immutable.
  */
 public final class Tokenizers {
 

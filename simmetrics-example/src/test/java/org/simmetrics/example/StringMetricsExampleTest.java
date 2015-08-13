@@ -1,6 +1,6 @@
 /*
  * #%L
- * Simmetrics Core
+ * Simmetrics Examples
  * %%
  * Copyright (C) 2014 - 2015 Simmetrics Authors
  * %%
@@ -19,30 +19,40 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+package org.simmetrics.example;
+import static org.junit.Assert.assertEquals;
 
-package org.simmetrics.tokenizers;
+import org.junit.Assert;
+import org.junit.Test;
 
-import org.simmetrics.tokenizers.Tokenizer;
 
-@SuppressWarnings({"javadoc","deprecation"})
-public class WhitespaceTokenizerTest extends TokenizerTest {
+@SuppressWarnings("javadoc")
+public class StringMetricsExampleTest {
+	
+	private static final float DELTA = 0.0001f;
 
-	@Override
-	protected Tokenizer getTokenizer() {
-		return new Whitespace();
+	@Test
+	public void example01(){
+		assertEquals(0.7341f, StringMetricsExample.example01(), DELTA);
 	}
-
-	@Override
-	public T[] getTests() {
-
-		return new T[] { 
-				new T(""),
-				new T(" "),
-				new T("A B C", "A", "B", "C"),
-				new T("A   B  C", "A", "B", "C"),
-				new T("A\nB", "A", "B"),
-				new T("A\tB", "A", "B"), 
-				new T("A\t\nB", "A", "B"),
-		};
+	
+	@Test
+	public void example02(){
+		assertEquals(0.7777f, StringMetricsExample.example02(), DELTA);
 	}
+	
+	@Test
+	public void example03(){
+		assertEquals(0.7270f, StringMetricsExample.example03(), DELTA);
+	}
+	
+	@Test
+	public void example04(){
+		Assert.assertArrayEquals(new float[]{
+				0.5714f,0.5039f,0.0000f,0.0000f,0.0000f,0.0000f
+				
+		}, StringMetricsExample.example04(), DELTA);
+	}
+	
+
 }

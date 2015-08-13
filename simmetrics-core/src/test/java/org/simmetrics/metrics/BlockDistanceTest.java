@@ -23,6 +23,7 @@
 package org.simmetrics.metrics;
 
 import static java.util.Arrays.asList;
+import static org.simmetrics.tokenizers.Tokenizers.qGram;
 
 import java.util.List;
 
@@ -30,7 +31,6 @@ import org.simmetrics.Distance;
 import org.simmetrics.ListDistanceTest;
 import org.simmetrics.ListMetricTest;
 import org.simmetrics.Metric;
-import org.simmetrics.tokenizers.QGram;
 import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings("javadoc")
@@ -73,7 +73,7 @@ public final class BlockDistanceTest {
 
 		@Override
 		protected T[] getListTests() {
-			final Tokenizer q1 = new QGram(1);
+			final Tokenizer q1 = qGram(1);
 			return new T[] { 
 					new T(0.5000f, asList("test", null), asList("test","string2")),
 					new T(1.0000f, "test string1", "test string1"),

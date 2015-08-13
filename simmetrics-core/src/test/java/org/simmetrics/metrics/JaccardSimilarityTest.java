@@ -22,10 +22,11 @@
 
 package org.simmetrics.metrics;
 
+import static org.simmetrics.tokenizers.Tokenizers.whitespace;
+
 import org.simmetrics.SetMetric;
 import org.simmetrics.SetMetricTest;
 import org.simmetrics.tokenizers.Tokenizer;
-import org.simmetrics.tokenizers.Whitespace;
 
 @SuppressWarnings("javadoc")
 public final class JaccardSimilarityTest extends SetMetricTest {
@@ -37,7 +38,7 @@ public final class JaccardSimilarityTest extends SetMetricTest {
 
 	@Override
 	protected Tokenizer getTokenizer() {
-		return new Whitespace();
+		return whitespace();
 	}
 
 	@Override

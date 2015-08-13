@@ -60,13 +60,7 @@ public abstract class TokenizerTest {
 
 	}
 
-	protected static void assertToStringContains(Tokenizer tokenizer,
-			String content) {
-		String string = tokenizer.toString();
-		String message = String.format("%s must contain %s ", string, content);
 
-		assertTrue(message, message.contains(content));
-	}
 
 	private static void testTokens(String string, Collection<String> expected,
 			Collection<String> actual) {
@@ -101,12 +95,13 @@ public abstract class TokenizerTest {
 
 	@Test
 	public final void implementsToString() {
-		assertFalse(
-				"@ indicates toString() was not implemented "
-						+ tokenizer.toString(),
-				tokenizer.toString().contains("@"));
 
-		assertToStringContains(tokenizer, tokenizer.getClass().getSimpleName());
+		String metricToString = tokenizer.toString();
+		String defaultToString = tokenizer.getClass().getName() + "@" + Integer.toHexString(tokenizer.hashCode());
+
+		assertFalse(
+				"toString() was not implemented "
+						+ tokenizer.toString(), defaultToString.equals(metricToString));
 	}
 
 	@Test

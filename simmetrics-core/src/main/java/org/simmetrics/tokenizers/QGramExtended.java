@@ -33,7 +33,10 @@ import java.util.List;
  * length of the string with padding.
  * <p>
  * This class is immutable and thread-safe.
+ * 
+ * @deprecated Use {@link Tokenizers#qGramWithPadding(int, String)}
  */
+@Deprecated
 public class QGramExtended extends AbstractTokenizer {
 
 	private final static String DEFAULT_START_PADDING = "#";

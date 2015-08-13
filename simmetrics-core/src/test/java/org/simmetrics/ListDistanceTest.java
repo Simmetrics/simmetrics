@@ -23,13 +23,13 @@ package org.simmetrics;
 
 import static java.util.Collections.unmodifiableList;
 import static org.junit.Assert.fail;
+import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
 import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
 import org.simmetrics.tokenizers.Tokenizer;
-import org.simmetrics.tokenizers.Whitespace;
 
 @SuppressWarnings("javadoc")
 public abstract class ListDistanceTest extends DistanceTest<List<String>> {
@@ -46,7 +46,7 @@ public abstract class ListDistanceTest extends DistanceTest<List<String>> {
 		}
 
 		public T(float similarity, String a, String b) {
-			this(new Whitespace(), similarity, a, b);
+			this(whitespace(), similarity, a, b);
 		}
 
 		public T(Tokenizer t, float similarity, String a, String b) {

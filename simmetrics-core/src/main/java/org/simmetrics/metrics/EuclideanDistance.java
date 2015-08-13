@@ -52,10 +52,6 @@ public class EuclideanDistance<T> implements ListMetric<T>, ListDistance<T> {
 			return 1.0f;
 		}
 
-		if (a.isEmpty() || b.isEmpty()) {
-			return 0.0f;
-		}
-
 		float totalPossible = (float) sqrt((a.size() * a.size()) + (b.size() * b.size()));
 		return (totalPossible - distance(a, b)) / totalPossible;
 	}

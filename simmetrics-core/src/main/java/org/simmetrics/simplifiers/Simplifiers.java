@@ -1,25 +1,18 @@
 /*
- * #%L
- * Simmetrics Core
- * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
- * %%
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * #%L Simmetrics Core %% Copyright (C) 2014 - 2015 Simmetrics Authors %% This
+ * program is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
  * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU General Public
- * License along with this program.  If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
- * #L%
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
  */
-
 
 package org.simmetrics.simplifiers;
 
@@ -28,13 +21,21 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Lists.asList;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.simmetrics.StringMetricBuilder;
 
 /**
- * Simplifier composed of multiple simplifiers.
+ * Utilities for simplifiers. Construct simple simplifiers or chain multiple
+ * simplifiers into a single simplifier.
  * <p>
- * This class is immutable and thread-safe if its components are.
+ * All methods return immutable and thread-safe classes provided the arguments
+ * are also immutable and thread-safe.
  */
 public final class Simplifiers {
 
@@ -46,7 +47,7 @@ public final class Simplifiers {
 			checkArgument(!simplifiers.contains(null));
 			this.simplifiers = new ArrayList<>(simplifiers);
 		}
-		
+
 		List<Simplifier> getSimplifiers() {
 			return simplifiers;
 		}
@@ -69,11 +70,120 @@ public final class Simplifiers {
 	}
 
 	/**
+	 * A simplifier that removes diacritics.
+	 * <p>
+	 * This class is thread-safe and immutable.
+	 */
+	private static final class RemoveDiacritics implements Simplifier {
+
+		private static final Pattern DIACRITICS_AND_FRIENDS = Pattern
+				.compile("[\\p{InCombiningDiacriticalMarks}\\p{IsLm}\\p{IsSk}]+");
+
+		RemoveDiacritics() {
+			// TODO Auto-generated constructor stub
+		}
+
+		/**
+		 * Simplifies the input string by removing all diacritics.
+		 * <p>
+		 * The input string is transformed to canonical decomposition. After
+		 * which any characters matching the regex
+		 * <code>\p{InCombiningDiacriticalMarks}\p{IsLm}\p{IsSk}]+</code> are
+		 * removed. The resulting string will be in canonical decomposition
+		 * form.
+		 * <p>
+		 * 
+		 * @return the input string in canonical decomposition form without
+		 *         diacritics
+		 *
+		 */
+		@Override
+		public String simplify(String input) {
+			return DIACRITICS_AND_FRIENDS.matcher(
+					Normalizer.normalize(input, Normalizer.Form.NFD))
+					.replaceAll("");
+		}
+
+		@Override
+		public String toString() {
+			return "RemoveDiacritics";
+		}
+
+	}
+
+	private static final class ReplaceAll implements Simplifier {
+		private final Pattern pattern;
+
+		private final String repplacement;
+
+		public ReplaceAll(Pattern pattern, String replacement) {
+			checkNotNull(replacement);
+			checkNotNull(pattern);
+			this.pattern = pattern;
+			this.repplacement = replacement;
+		}
+
+		@Override
+		public String simplify(String input) {
+			return pattern.matcher(input).replaceAll(repplacement);
+		}
+
+		@Override
+		public String toString() {
+			return "Replace [" + pattern + " -> '" + repplacement + "' ]";
+		}
+	}
+
+	private static final class ToLowerCase implements Simplifier {
+
+		private final Locale locale;
+
+		ToLowerCase(Locale locale) {
+			this.locale = locale;
+		}
+
+		@Override
+		public String simplify(String s) {
+			return s.toLowerCase(locale);
+		}
+
+		@Override
+		public String toString() {
+			return "ToLowerCase [locale=" + locale + "]";
+		}
+	}
+
+	private static final class ToUpperCase implements Simplifier {
+
+		private final Locale locale;
+
+		ToUpperCase(Locale locale) {
+			this.locale = locale;
+		}
+
+		@Override
+		public String simplify(String s) {
+			return s.toUpperCase(locale);
+		}
+
+		@Override
+		public String toString() {
+			return "ToUpperCase [locale=" + locale + "]";
+		}
+	}
+
+	private static final Pattern consecutiveNonWord = Pattern.compile("\\W+");
+
+	private static final Pattern nonWord = Pattern.compile("\\W");
+
+	/**
 	 * Constructs a new chain of simplifiers. Applies the simplifiers in order.
 	 * 
 	 * @param simplifiers
 	 *            a non-empty list of simplifiers
 	 * @return a new composite simplifier
+	 * 
+	 * @see StringMetricBuilder
 	 */
 	public static Simplifier chain(List<Simplifier> simplifiers) {
 		if (simplifiers.size() == 1) {
@@ -90,14 +200,16 @@ public final class Simplifiers {
 	 * @param simplifiers
 	 *            the others
 	 * @return a new composite simplifier
+	 * 
+	 * @see StringMetricBuilder
 	 */
 	public static Simplifier chain(Simplifier simplifier,
 			Simplifier... simplifiers) {
 		checkArgument(simplifier != null);
-		if(simplifiers.length == 0){
+		if (simplifiers.length == 0) {
 			return simplifier;
 		}
-		
+
 		return chain(asList(simplifier, simplifiers));
 	}
 
@@ -114,6 +226,210 @@ public final class Simplifiers {
 		}
 
 		return flattend;
+	}
+
+	/**
+	 * Returns a simplifier that removes every subsequence of the input that
+	 * matches the regex.
+	 * 
+	 * @see Matcher#replaceAll(String)
+	 * 
+	 * @param regex
+	 *            the regex to remove
+	 * 
+	 * @return a simplifier that remove parts from the input
+	 */
+	public static Simplifier removeAll(String regex) {
+		return removeAll(Pattern.compile(regex));
+	}
+
+	/**
+	 * Returns a simplifier that removes every subsequence of the input that
+	 * matches the pattern.
+	 * 
+	 * @see Matcher#replaceAll(String)
+	 * 
+	 * @param pattern
+	 *            the pattern to remove
+	 * 
+	 * @return a simplifier that remove parts from the input
+	 */
+	public static Simplifier removeAll(Pattern pattern) {
+		return new ReplaceAll(pattern, "");
+	}
+
+	/**
+	 * Returns a simplifier that removes diacritics.
+	 * <p>
+	 * The input string is transformed to the canonical decomposition form.
+	 * After which any characters matching the regex
+	 * <code>\p{InCombiningDiacriticalMarks}\p{IsLm}\p{IsSk}]+</code> are
+	 * removed. The resulting string will be in canonical decomposition form.
+	 * <p>
+	 * The returned simplifier is thread-safe and immutable.
+	 * 
+	 * @return a simplifier that removes diacritics
+	 * 
+	 *
+	 */
+	public static Simplifier removeDiacritics() {
+		return new RemoveDiacritics();
+	}
+
+	/**
+	 * Returns a simplifier that removes all non-word {@code [^0-9a-zA-Z]}
+	 * characters.
+	 * <p>
+	 * The returned simplifier is thread-safe and immutable.
+	 * 
+	 * @return a simplifier that removes all non-word characters
+	 * 
+	 * @see #removeAll(Pattern)
+	 */
+	public static Simplifier removeNonWord() {
+		return removeNonWord("");
+	}
+
+	/**
+	 * Returns a simplifier that removes all consecutive non-word characters
+	 * {@code [^0-9a-zA-Z]+} and replaces them with the {@code replacement}.
+	 * <p>
+	 * The returned simplifier is thread-safe and immutable.
+	 * 
+	 * @see #removeAll(Pattern)
+	 * 
+	 * @param replacement
+	 *            replaces the consecutive non word characters
+	 * 
+	 * @return a simplifier that replaces all consecutive non-word characters
+	 *         with a replacement
+	 * 
+	 */
+	public static Simplifier removeNonWord(String replacement) {
+		return removeAll(consecutiveNonWord);
+	}
+
+	/**
+	 * Returns a simplifier that replaces every subsequence of the input that
+	 * matches the regex with the given replacement string.
+	 * 
+	 * @see Matcher#replaceAll(String)
+	 * 
+	 * @param regex
+	 *            the regex to replace
+	 * @param replacement
+	 *            the replacement string
+	 * @return a simplifier that replaces a pattern in the input
+	 * 
+	 */
+	public static Simplifier replaceAll(String regex, String replacement) {
+		return replaceAll(Pattern.compile(regex), replacement);
+	}
+
+	/**
+	 * Returns a simplifier that replaces every subsequence of the input that
+	 * matches the pattern with the given replacement string.
+	 * 
+	 * @see Matcher#replaceAll(String)
+	 * 
+	 * @param pattern
+	 *            the pattern to replace
+	 * @param replacement
+	 *            the replacement string
+	 * @return a simplifier that replaces a pattern in the input
+	 * 
+	 */
+	public static Simplifier replaceAll(Pattern pattern, String replacement) {
+		return new ReplaceAll(pattern, replacement);
+	}
+
+	/**
+	 * Returns a simplifier that replaces all individual non-word characters
+	 * {@code [^0-9a-zA-Z]} with a space.
+	 * <p>
+	 * The returned simplifier is thread-safe and immutable.
+	 * 
+	 * @return a simplifier that replaces all non-word characters
+	 */
+	public static Simplifier replaceNonWord() {
+		return replaceNonWord(" ");
+	}
+
+	/**
+	 * Returns a simplifier that replaces all individual non-word characters
+	 * {@code [^0-9a-zA-Z]} with the {@code replacement}.
+	 * <p>
+	 * The simplifier class is thread-safe and immutable.
+	 * 
+	 * @param replacement
+	 *            replaces the non word characters
+	 * 
+	 * @return a simplifier that replaces all non-word characters
+	 */
+	public static Simplifier replaceNonWord(String replacement) {
+		return replaceAll(nonWord, replacement);
+	}
+
+	/**
+	 * Returns a simplifier that transforms all upper case characters into their
+	 * lower case equivalent.
+	 * <P>
+	 * Uses the default locale to apply the transform.
+	 * <p>
+	 * The returned simplifier is thread-safe and immutable.
+	 * 
+	 * @return a simplifier that transforms all upper case characters into their
+	 *         lower case equivalent
+	 */
+	public static Simplifier toLowerCase() {
+		return toLowerCase(Locale.getDefault());
+	}
+
+	/**
+	 * Returns a simplifier that transforms all upper case characters into their
+	 * lower case equivalent.
+	 * <p>
+	 * The returned simplifier is thread-safe and immutable.
+	 * 
+	 * @param l
+	 *            locale in which the transform is applied
+	 *
+	 * @return a simplifier that transforms all upper case characters into their
+	 *         lower case equivalent
+	 */
+	public static Simplifier toLowerCase(Locale l) {
+		return new ToLowerCase(l);
+	}
+
+	/**
+	 * Returns a simplifier that transforms all lower case characters into their
+	 * upper case equivalent.
+	 * <P>
+	 * Uses the default locale to apply the transform.
+	 * <p>
+	 * The returned simplifier is thread-safe and immutable.
+	 * 
+	 * @return a simplifier that transforms all lower case characters into their
+	 *         upper case equivalent
+	 */
+	public static Simplifier toUpperCase() {
+		return toUpperCase(Locale.getDefault());
+	}
+
+	/**
+	 * Returns a simplifier that transforms all lower case characters into their
+	 * upper case equivalent.
+	 * <p>
+	 * The returned simplifier is thread-safe and immutable.
+	 * 
+	 * @param l
+	 *            locale in which the transform is applied
+	 *
+	 * @return a simplifier that transforms all upper case characters into their
+	 *         lower case equivalent
+	 */
+	public static Simplifier toUpperCase(Locale l) {
+		return new ToUpperCase(l);
 	}
 
 	private Simplifiers() {

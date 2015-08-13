@@ -22,16 +22,19 @@
 
 package org.simmetrics.tokenizers;
 
+import static org.simmetrics.tokenizers.Tokenizers.qGram;
+import static org.simmetrics.tokenizers.Tokenizers.qGramWithPadding;
+
 import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings("javadoc")
 public final class QGramTest {
 
-	public static final class QGram1TokenizerTest extends TokenizerTest {
+	public static final class QGram1 extends TokenizerTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return new QGram(1);
+			return Tokenizers.qGram(1);
 
 		}
 
@@ -52,12 +55,46 @@ public final class QGramTest {
 							"3", "4", "5", "6", "7", "8", "9") };
 		}
 	}
-	
-	public static final class QGram2ExtendedTokenizerTest extends TokenizerTest {
+
+	public static final class QGram2WithPadding extends TokenizerTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return new QGramExtended(2);
+			return qGramWithPadding(2,"@");
+		}
+
+		@Override
+		public T[] getTests() {
+
+			return new T[] {
+					new T(""),
+					new T("1", "@1", "1@"),
+					new T("12", "@1", "12", "2@")};
+		}
+	}
+	
+	public static final class QGram2WithTwoSidedPadding extends TokenizerTest {
+
+		@Override
+		protected Tokenizer getTokenizer() {
+			return qGramWithPadding(2,"L","R");
+		}
+
+		@Override
+		public T[] getTests() {
+
+			return new T[] {
+					new T(""),
+					new T("1", "L1", "1R"),
+					new T("12", "L1", "12", "2R")};
+		}
+	}
+	
+	public static final class QGram2WithDefaultPadding extends TokenizerTest {
+
+		@Override
+		protected Tokenizer getTokenizer() {
+			return qGramWithPadding(2);
 		}
 
 		@Override
@@ -78,11 +115,11 @@ public final class QGramTest {
 		}
 	}
 	
-	public static final class QGram2TokenizerTest extends TokenizerTest {
+	public static final class QGram2 extends TokenizerTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return new QGram(2);
+			return qGram(2);
 		}
 
 		@Override
@@ -102,11 +139,11 @@ public final class QGramTest {
 		}
 	}
 	
-	public static final class QGram3ExtendedTokenizerTest extends TokenizerTest {
+	public static final class QGram3WithDefaultPadding extends TokenizerTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return new QGramExtended(3);
+			return qGramWithPadding(3);
 		}
 
 		@Override
@@ -128,11 +165,11 @@ public final class QGramTest {
 		}
 	}
 	
-	public static final class QGram3TokenizerTest extends TokenizerTest {
+	public static final class QGram3 extends TokenizerTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return new QGram(3);
+			return qGram(3);
 		}
 
 		@Override

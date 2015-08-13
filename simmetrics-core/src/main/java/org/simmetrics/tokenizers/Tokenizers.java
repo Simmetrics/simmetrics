@@ -1,23 +1,17 @@
 /*
- * #%L
- * Simmetrics Core
- * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
- * %%
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * #%L Simmetrics Core %% Copyright (C) 2014 - 2015 Simmetrics Authors %% This
+ * program is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
  * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU General Public
- * License along with this program.  If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
- * #L%
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
  */
 package org.simmetrics.tokenizers;
 
@@ -28,26 +22,28 @@ import static com.google.common.base.Predicates.and;
 import static com.google.common.collect.Lists.asList;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
-import org.simmetrics.StringMetricBuilder;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
 /**
- * Tokenizer composed of a tokenizer and one or more post processors. Either
- * more tokenizers, filters or transformations.
+ * Utilities for tokenizers. Construct simple tokenizers, chain multiple
+ * tokenizers into a single tokenizers or apply filters and transforms to
+ * tokens.
  * <p>
- * This class is immutable and thread-safe if its components are.
- * 
- * @see StringMetricBuilder
+ * All methods return immutable and thread-safe classes provided the arguments
+ * are also immutable and thread-safe.
  */
 public final class Tokenizers {
 
@@ -158,6 +154,30 @@ public final class Tokenizers {
 		@Override
 		public final String toString() {
 			return Joiner.on(" -> ").join(tokenizer, predicate);
+		}
+
+	}
+
+	private static final class PatternTokenizer extends AbstractTokenizer {
+
+		private final Pattern pattern;
+
+		public PatternTokenizer(Pattern pattern) {
+			this.pattern = pattern;
+		}
+
+		@Override
+		public List<String> tokenizeToList(final String input) {
+			if (input.isEmpty()) {
+				return emptyList();
+			}
+
+			return asList(pattern.split(input));
+		}
+
+		@Override
+		public String toString() {
+			return "PatternTokenizer [" + pattern + "]";
 		}
 
 	}
@@ -333,6 +353,8 @@ public final class Tokenizers {
 		}
 	}
 
+	private static final Pattern whitespace = Pattern.compile("\\s+");
+
 	/**
 	 * Chains tokenizers together. The output of each tokenizer is tokenized by
 	 * the next. The tokenizers are applied in order.
@@ -350,7 +372,6 @@ public final class Tokenizers {
 		return new RecursiveTokenizer(flatten(tokenizers));
 	}
 
-	
 	/**
 	 * Chains tokenizers together. The output of each tokenizer is tokenized by
 	 * the next. The tokenizers are applied in order.
@@ -373,6 +394,7 @@ public final class Tokenizers {
 
 		return chain(asList(tokenizer, tokenizers));
 	}
+
 	/**
 	 * Constructs a new filtering tokenizer. After tokenization, all tokens that
 	 * don't match a predicate are removed.
@@ -413,6 +435,94 @@ public final class Tokenizers {
 	}
 
 	/**
+	 * Returns a tokenizer that splits a string into tokens around the pattern
+	 * as if calling {@code Pattern.compile(pattern).split(input)}.
+	 * 
+	 * @param regex
+	 *            to split the the string around
+	 * 
+	 * @return a pattern tokenizer
+	 */
+	public static Tokenizer pattern(String regex) {
+		return pattern(Pattern.compile(regex));
+	}
+
+	/**
+	 * Returns a tokenizer that splits a string into tokens around the pattern
+	 * as if calling {@code Pattern.compile(pattern).split(input)}.
+	 * 
+	 * @param pattern
+	 *            to split the the string around
+	 * 
+	 * @return a pattern tokenizer
+	 */
+	public static Tokenizer pattern(Pattern pattern) {
+		return new PatternTokenizer(pattern);
+	}
+
+	/**
+	 * Returns a basic q-gram tokenizer for a variable q. The tokenizer will
+	 * returns a list with the original input for tokens shorter then q.
+	 * 
+	 * @param q
+	 *            size of the tokens
+	 * @return a q-gram tokenizer
+	 *
+	 */
+	@SuppressWarnings("deprecation")
+	public static Tokenizer qGram(int q) {
+		return new QGram(q);
+	}
+
+	/**
+	 * 
+	 * Returns a basic q-gram tokenizer for a variable Q.The Q-Gram is extended
+	 * beyond the length of the string with padding. Uses {@code #} as the
+	 * default padding.
+	 * 
+	 * @param q
+	 *            size of the tokens
+	 * @return a q-gram tokenizer
+	 */
+	@SuppressWarnings("deprecation")
+	public static Tokenizer qGramWithPadding(int q) {
+		return new QGramExtended(q);
+	}
+
+	/**
+	 * 
+	 * Returns a basic q-gram tokenizer for a variable Q.The Q-Gram is extended
+	 * beyond the length of the string with padding.
+	 * 
+	 * @param q
+	 *            size of the tokens
+	 * @param padding
+	 *            padding to padd start and end of string with
+	 * @return a q-gram tokenizer
+	 */
+	public static Tokenizer qGramWithPadding(int q, String padding) {
+		return qGramWithPadding(q, padding, padding);
+	}
+
+	/**
+	 * Returns a basic q-gram tokenizer for a variable Q.The Q-Gram is extended
+	 * beyond the length of the string with padding.
+	 * 
+	 * @param q
+	 *            size of the tokens
+	 * @param startPadding
+	 *            padding to padd startof string with
+	 * @param endPadding
+	 *            padding to padd end of string with
+	 * @return a q-gram tokenizer
+	 */
+	@SuppressWarnings("deprecation")
+	public static Tokenizer qGramWithPadding(int q, String startPadding,
+			String endPadding) {
+		return new QGramExtended(q, startPadding, endPadding);
+	}
+
+	/**
 	 * Constructs a new transforming tokenizer. After tokenization, all tokens
 	 * are transformed by the function.
 	 * 
@@ -434,6 +544,16 @@ public final class Tokenizers {
 		}
 
 		return new TransformingTokenizer(tokenizer, function);
+	}
+
+	/**
+	 * Returns a tokenizer that splits a string into tokens around whitespace as
+	 * if calling {@code Pattern.compile("\\s+").split(input)}.
+	 * 
+	 * @return a white space tokenizer
+	 */
+	public static Tokenizer whitespace() {
+		return pattern(whitespace);
 	}
 
 	private Tokenizers() {

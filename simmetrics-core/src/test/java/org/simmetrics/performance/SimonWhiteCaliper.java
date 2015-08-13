@@ -22,14 +22,14 @@
 
 package org.simmetrics.performance;
 
+import static org.simmetrics.tokenizers.Tokenizers.qGram;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.simmetrics.ListMetric;
 import org.simmetrics.Metric;
 import org.simmetrics.metrics.SimonWhite;
-import org.simmetrics.tokenizers.QGram;
-
 import com.google.caliper.Benchmark;
 import com.google.caliper.Param;
 import com.google.caliper.runner.CaliperMain;
@@ -43,7 +43,7 @@ public final class SimonWhiteCaliper {
 		final List<String> s;
 
 		Value(String s) {
-			this.s = new QGram(2).tokenizeToList(s);
+			this.s = qGram(2).tokenizeToList(s);
 		}
 	}
 

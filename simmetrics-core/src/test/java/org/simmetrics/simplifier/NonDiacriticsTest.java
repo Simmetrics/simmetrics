@@ -24,7 +24,7 @@ package org.simmetrics.simplifier;
 import org.simmetrics.simplifiers.NonDiacritics;
 import org.simmetrics.simplifiers.Simplifier;
 
-@SuppressWarnings("javadoc")
+@SuppressWarnings({"javadoc","deprecation"})
 public class NonDiacriticsTest extends SimplifierTest {
 
 	@Override

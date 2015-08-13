@@ -1,23 +1,17 @@
 /*
- * #%L
- * Simmetrics Core
- * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
- * %%
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * #%L Simmetrics Core %% Copyright (C) 2014 - 2015 Simmetrics Authors %% This
+ * program is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
  * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU General Public
- * License along with this program.  If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
- * #L%
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
  */
 
 package org.simmetrics;
@@ -43,7 +37,6 @@ import org.simmetrics.utils.TokenizingTokenizer;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 
 /**
  * Convenience tool to build string metrics. Any class implementing
@@ -61,24 +54,6 @@ import com.google.common.base.Predicates;
  * By adding simplifiers, tokenizers and filters and transform the effectiveness
  * of a metric can be improved. The exact combination is generally domain
  * specific. This builder supports these domain specific customizations.
- * <p>
- * 
- * <pre>
- * <code>
- * {@code
- * 	StringMetric metric = new StringMetricBuilder()
- * 		.with(new CosineSimilarity<String>())
- * 		.simplify(new NonWordCharacter())
- * 		.simplify(new Case.Lower())
- * 		.tokenize(new Whitespace())
- * 		.filter(new LongWords())
- * 		.transform(new RemovePossessiveS())
- * 		.tokenize(new QGram(3))
- * 		.build();
- * }
- * 
- * </code>
- * </pre>
  * 
  * <h2>Simplification</h2>
  * 
@@ -101,19 +76,7 @@ import com.google.common.base.Predicates;
  * the individual tokens e.g.
  * <code>[ch,hi,il,il,lp,pe,er,ri,ic, ii, so,on, of, ch,hi,il,ld,de,er,ri,ic, ii]</code>
  * <p>
- * 
- * <pre>
- * <code>
- * {@code
- * 	return new StringMetricBuilder()
- * 			.with(new SimonWhite<String>())
- * 			.tokenize(new Whitespace())
- * 			.tokenize(new QGram(2))
- * 			.build();
- * }
- * </code>
- * </pre>
- * 
+ *
  * <p>
  * The method of tokenization changes the space in which strings are compared.
  * The effectiveness depends on the context. A whitespace tokenizer might be
@@ -127,66 +90,25 @@ import com.google.common.base.Predicates;
  * 
  * <h2>Filtering</h2>
  * 
- * 
- * Filtering removes tokens that should not be considered for comparison. For
- * example removing all tokens with a size less then three from `[chilperic, ii,
- * son, of, childeric, ii]` results in `[chilperic, son, childeric]`.
- * 
+ * Filtering removes tokens that do not match the predicate. For example
+ * filtering <code>[chilperic, ii,
+ * son, of, childeric, ii]</code> with a predicate that accepts all strings of
+ * length three or more results in: <code>[chilperic, son, childeric]</code>.
+ * <p>
+ * Filtering can be done repeatedly after a tokenization step.
+ * <p>
  * A Filter can be implemented by implementing a the {@link Predicate}
- * interface.
- * 
- * <pre>
- * <code>
- * {@code
- * 				with(new CosineSimilarity<String>())
- * 				.simplify(new Case.Lower())
- * 				.simplify(new WordCharacter())
- * 				.tokenize(new Whitespace())
- * 				.filter(new MinimumLenght(3))
- * 				.build();
- * }
- * </code>
- * </pre>
- * 
- * By chaining predicates more complicated filters can be build.
- * 
- * <pre>
- * <code>
- * {@code
- * 		Set<String> commonWords = ...;
- * 		
- * 				with(new CosineSimilarity<String>())
- * 				.simplify(new Case.Lower())
- * 				.simplify(new NonWordCharacter())
- * 				.tokenize(new Whitespace())
- * 				.filter(Predicates.not(Predicates.in(commonWords)))
- * 				.build();
- * }
- * </code>
- * </pre>
+ * interface. By chaining predicates more complicated filters can be build.
  * 
  * <h2>Transformation</h2>
  * 
  * Functions can be used to transform tokens to a simpler or canonical form.
  * This may be used to reduce the possible token space. For example removing the
  * possessive -s from a sentence `[I'll, do, my, work, and, you, do, yours]`
- * results in `[I'll, do, my, work, and, you, do, your]`.
- * 
+ * results in <code>[I'll, do, my, work, and, you, do, your]</code>.
+ * <p>
  * A function can be implemented by implementing a the {@link Function}
  * interface.
- *
- * <pre>
- * <code>
- * {@code
- * 		with(new CosineSimilarity<String>())
- * 		.simplify(new NonWordCharacter())
- * 		.simplify(new Case.Lower())
- * 		.tokenize(new Whitespace())
- * 		.transform(new RemovePossessiveS())
- * 		.build();
- * }
- * </code>
- * </pre>
  * 
  * <h2>Caching</h2>
  * 
@@ -194,35 +116,16 @@ import com.google.common.base.Predicates;
  * comparing one string against a collection of strings these two operations are
  * done repeatedly for a single string - a common use case when searching for a
  * match. With a simple caching mechanism this overhead can be reduced.
- * 
- * 
- * <pre>
- * <code>
- * {@code
- * 				with(new CosineSimilarity<String>())
- * 				.simplify(new Case.Lower())
- * 				.simplifierCache()
- * 				.tokenize(new QGram(2))
- * 				.tokenizerCache()
- * 				.build();
- * }
- * </code>
- * </pre>
- * 
+ * <p>
  * When a cache is set it applies to the whole simplification or tokenization
  * chain. The default cache has a size of two for use with
- * `StringMetrics.compare(StringMetric, String, List<String>)` and friends.
- * 
- * 
- * @See {@link StringMetrics}
- * @See {@link Predicates}
- * 
- * 
+ * <code>StringMetrics.compare(StringMetric, String, List<String>)</code> and
+ * friends.
  * 
  */
-public final class StringMetricBuilder {
-	
-	private StringMetricBuilder(){
+public class StringMetricBuilder {
+
+	StringMetricBuilder() {
 		// Utility class
 	}
 
@@ -524,8 +427,8 @@ public final class StringMetricBuilder {
 
 	}
 
-	private static final class CompositeStringMetricBuilder implements
-			StringMetricSimplifierStep {
+	private static final class CompositeStringMetricBuilder extends
+			StringMetricBuilder implements StringMetricSimplifierStep {
 
 		private final StringMetric metric;
 
@@ -590,8 +493,8 @@ public final class StringMetricBuilder {
 	}
 
 	private static abstract class CompositeCollectionMetricBuilder<T extends Collection<String>>
-			implements CollectionMetricSimplifierStep,
-			CollectionMetricTokenizerStep {
+			extends StringMetricBuilder implements
+			CollectionMetricSimplifierStep, CollectionMetricTokenizerStep {
 
 		private final Metric<T> metric;
 

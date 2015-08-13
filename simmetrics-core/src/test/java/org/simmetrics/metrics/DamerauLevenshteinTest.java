@@ -29,7 +29,7 @@ import org.simmetrics.StringDistanceTest;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricTest;
 
-@SuppressWarnings("javadoc")
+@SuppressWarnings({"javadoc","static-method" })
 public final class DamerauLevenshteinTest {
 
 	@SuppressWarnings("unused")

@@ -24,7 +24,7 @@ package org.simmetrics.simplifier;
 import org.simmetrics.simplifiers.Case;
 import org.simmetrics.simplifiers.Simplifier;
 
-@SuppressWarnings("javadoc")
+@SuppressWarnings({"javadoc","deprecation"})
 public class CaseTest {
 	
 	public static class CaseUpper extends SimplifierTest {

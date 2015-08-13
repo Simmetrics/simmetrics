@@ -50,9 +50,13 @@ import java.util.regex.Pattern;
  * <p>
  * This class is thread-safe and immutable.
  * 
+ * @deprecated Use {@link Simplifiers#removeDiacritics()} instead.
+ * 
  *
  */
+@Deprecated
 public class NonDiacritics implements Simplifier {
+	
 
 	@Override
 	public String simplify(String input) {

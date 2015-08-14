@@ -50,12 +50,11 @@ public abstract class MetricTest<K> {
 	}
 
 	private static final float DEFAULT_DELTA = 0.0001f;
-	private static <K> void testCoincidence(Metric<K> metric, K a, K b) {
-		if (metric.compare(a, b) == 1.0f) {
-			assertTrue(format("coincidence did not hold for %s and %s", a, b),
-					a.equals(b));
-		}
+
+	private static <K> boolean testCoincidence(Metric<K> metric, K a, K b) {
+		return metric.compare(a, b) != 1.0f || a.equals(b);
 	}
+
 	private static <K> void testNullPointerException(Metric<K> metric, K a, K b) {
 		try {
 			metric.compare(null, b);
@@ -78,6 +77,7 @@ public abstract class MetricTest<K> {
 			// Ignored
 		}
 	}
+
 	private static <K> void testRange(Metric<K> metric, K a, K b) {
 		float similarity = metric.compare(a, b);
 		String message1 = String.format(
@@ -97,16 +97,14 @@ public abstract class MetricTest<K> {
 		assertEquals(message, expected, similarity, delta);
 	}
 
-	private static <K> void testSubadditivity(Metric<K> metric, K a, K b, K c) {
+	private static <K> boolean testSubadditivity(Metric<K> metric, K a, K b, K c) {
 
 		float ab = 1.0f - metric.compare(a, b);
 		float ac = 1.0f - metric.compare(a, c);
 		float bc = 1.0f - metric.compare(b, c);
 
-		assertTrue(
-				format("triangle ineqaulity must hold for %s, %s, %s with %s, %s, %s",
-						a, b, c, ab, ac, bc), ab == 0.0f || ac == 0.0f
-						|| bc == 0.0f || 2 * max(ab, ac, bc) <= ab + ac + bc);
+		return (ab == 0.0f || ac == 0.0f || bc == 0.0f || 2 * max(ab, ac, bc) <= ab
+				+ ac + bc);
 	}
 
 	private static <K> void testSymmetric(Metric<K> metric, K a, K b,
@@ -135,7 +133,7 @@ public abstract class MetricTest<K> {
 	protected abstract Metric<K> getMetric();
 
 	protected abstract T<K>[] getTests();
-	
+
 	protected boolean satisfiesCoincidence() {
 		return true;
 	}
@@ -143,14 +141,14 @@ public abstract class MetricTest<K> {
 	protected boolean satisfiesSubadditivity() {
 		return true;
 	}
-	
+
 	@Before
 	public final void setUp() throws Exception {
 		this.delta = getDelta();
 		this.metric = getMetric();
 		this.tests = getTests();
 	}
-	
+
 	@Test
 	public final void empty() {
 		assertEquals(1.0f, metric.compare(getEmpty(), getEmpty()), delta);
@@ -164,27 +162,49 @@ public abstract class MetricTest<K> {
 	}
 
 	@Test
-	public final void optionalCoincidence() {
-		if (!satisfiesCoincidence()) {
-			return;
-		}
-
-		for (T<K> t : tests) {
-			testCoincidence(metric, t.a, t.b);
+	public final void coincidence() {
+		if (satisfiesCoincidence()) {
+			for (T<K> t : tests) {
+				assertTrue(
+						format("coincidence did not hold for %s and %s", t.a,
+								t.b), testCoincidence(metric, t.a, t.b));
+			}
+		} else {
+			for (T<K> t : tests) {
+				if (!testCoincidence(metric, t.a, t.b)) {
+					return;
+				}
+			}
+			fail("no counter example for the coincidence property was found");
 		}
 	}
 
 	@Test
-	public final void optionalSubadditivity() {
-		if (!satisfiesSubadditivity()) {
-			return;
-		}
-
-		for (T<K> n : tests) {
-			for (T<K> m : tests) {
-				testSubadditivity(metric, n.a, n.b, m.a);
-				testSubadditivity(metric, n.a, n.b, m.b);
+	public final void subadditivity() {
+		if (satisfiesSubadditivity()) {
+			for (T<K> n : tests) {
+				for (T<K> m : tests) {
+					assertTrue(
+							format("triangle ineqaulity must hold for %s, %s, %s",
+									n.a, n.b, m.a),
+							testSubadditivity(metric, n.a, n.b, m.a));
+					assertTrue(
+							format("triangle ineqaulity must hold for %s, %s, %s",
+									n.a, n.b, m.b),
+							testSubadditivity(metric, n.a, n.b, m.b));
+					
+				}
 			}
+		} else {
+			for (T<K> n : tests) {
+				for (T<K> m : tests) {
+					if (!testSubadditivity(metric, n.a, n.b, m.a)
+							|| !testSubadditivity(metric, n.a, n.b, m.b)) {
+						return;
+					}
+				}
+			}
+			fail("no counter example for the subadditive property was found");
 		}
 	}
 
@@ -203,20 +223,19 @@ public abstract class MetricTest<K> {
 		}
 	}
 
-
-
 	@Test
 	public final void similarity() {
 		for (T<K> t : tests) {
 			testSimilarity(metric, t.a, t.b, t.similarity, delta);
 		}
 	}
-	
+
 	@Test
 	@Ignore
 	public final void generateSimilarity() {
 		for (T<K> t : tests) {
-			System.out.println(format("new T<>(%1.4ff, \"%s\", \"%s\"),", metric.compare(t.a, t.b), t.a, t.b));
+			System.out.println(format("new T<>(%1.4ff, \"%s\", \"%s\"),",
+					metric.compare(t.a, t.b), t.a, t.b));
 		}
 	}
 
@@ -226,16 +245,16 @@ public abstract class MetricTest<K> {
 			testSymmetric(metric, t.a, t.b, delta);
 		}
 	}
-	
+
 	@Test
 	public final void containsEmptyVsNonEmptyTest() {
 		final K empty = getEmpty();
 		for (T<K> t : tests) {
-			if(t.a.equals(empty) ^ !t.b.equals(empty)){
+			if (t.a.equals(empty) ^ !t.b.equals(empty)) {
 				return;
 			}
 		}
-		
+
 		fail("tests did not contain empty vs non-empty test");
 	}
 
@@ -243,11 +262,11 @@ public abstract class MetricTest<K> {
 	public final void implementsToString() {
 
 		String metricToString = metric.toString();
-		String defaultToString = metric.getClass().getName() + "@" + Integer.toHexString(metric.hashCode());
+		String defaultToString = metric.getClass().getName() + "@"
+				+ Integer.toHexString(metric.hashCode());
 
-		assertFalse(
-				"toString() was not implemented "
-						+ metric.toString(), defaultToString.equals(metricToString));
+		assertFalse("toString() was not implemented " + metric.toString(),
+				defaultToString.equals(metricToString));
 	}
 
 }

@@ -42,7 +42,10 @@ public final class JaroTest {
 			return new T[] { new T(0.9047f, "He0ll0o", "Hel00lo"),
 					new T(0.9047f, "He\0ll\0o", "Hel\0\0lo"),
 					new T(0.8888f, "0000", "000000"),
-					new T(0.8888f, "\0\0\0\0", "\0\0\0\0\0\0"), };
+					new T(0.8888f, "\0\0\0\0", "\0\0\0\0\0\0"), 
+					new T(0.8666f, "H0000", "\0000000"),
+
+			};
 
 		}
 
@@ -70,7 +73,11 @@ public final class JaroTest {
 		protected T[] getStringTests() {
 			return new T[] { new T(0.9444f, "MARTHA", "MARHTA"),
 					new T(0.8222f, "DWAYNE", "DUANE"),
-					new T(0.7666f, "DIXON", "DICKSONX") };
+					new T(0.7666f, "DIXON", "DICKSONX"),
+					//Not from Wikipedia, proves triangle inequality doesn't hold
+					new T(0.5999f, "OZYMANDIAS", "MARCUS") ,
+
+			};
 		}
 
 		@Override

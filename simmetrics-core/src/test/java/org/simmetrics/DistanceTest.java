@@ -50,13 +50,13 @@ public abstract class DistanceTest<K> {
 	}
 
 	private static final float DEFAULT_DELTA = 0.0001f;
-	private static <K> void testCoincidence(Distance<K> distance, K a, K b) {
-		if (distance.distance(a, b) == 0.0f) {
-			assertTrue(format("coincidence did not hold for %s and %s", a, b),
-					a.equals(b));
-		}
+
+	private static <K> boolean testCoincidence(Distance<K> distance, K a, K b) {
+		return distance.distance(a, b) != 0.0f || a.equals(b);
 	}
-	private static <K> void testNullPointerException(Distance<K> distance, K a, K b) {
+
+	private static <K> void testNullPointerException(Distance<K> distance, K a,
+			K b) {
 		try {
 			distance.distance(null, b);
 			fail("Distance should have thrown a null pointer exception for the first argument");
@@ -78,11 +78,11 @@ public abstract class DistanceTest<K> {
 			// Ignored
 		}
 	}
+
 	private static <K> void testRange(Distance<K> metric, K a, K b) {
 		float similarity = metric.distance(a, b);
 		String message1 = String.format(
-				"Distance %s-%s %f must be non-negative", a, b,
-				similarity);
+				"Distance %s-%s %f must be non-negative", a, b, similarity);
 		assertTrue(message1, 0.0f <= similarity);
 	}
 
@@ -97,16 +97,14 @@ public abstract class DistanceTest<K> {
 		assertEquals(message, expected, similarity, delta);
 	}
 
-	private static <K> void testSubadditivity(Distance<K> metric, K a, K b, K c) {
+	private static <K> boolean testSubadditivity(Distance<K> metric, K a, K b,
+			K c) {
 
 		float ab = metric.distance(a, b);
 		float ac = metric.distance(a, c);
 		float bc = metric.distance(b, c);
-
-		assertTrue(
-				format("triangle ineqaulity must hold for %s, %s, %s with %s, %s, %s",
-						a, b, c, ab, ac, bc), ab == 0.0f || ac == 0.0f
-						|| bc == 0.0f || 2 * max(ab, ac, bc) <= ab + ac + bc);
+		return (ab == 0.0f || ac == 0.0f || bc == 0.0f || 2 * max(ab, ac, bc) <= ab
+				+ ac + bc);
 	}
 
 	private static <K> void testSymmetric(Distance<K> metric, K a, K b,
@@ -135,7 +133,7 @@ public abstract class DistanceTest<K> {
 	protected abstract Distance<K> getMetric();
 
 	protected abstract T<K>[] getTests();
-	
+
 	protected boolean satisfiesCoincidence() {
 		return true;
 	}
@@ -143,14 +141,14 @@ public abstract class DistanceTest<K> {
 	protected boolean satisfiesSubadditivity() {
 		return true;
 	}
-	
+
 	@Before
 	public final void setUp() throws Exception {
 		this.delta = getDelta();
 		this.metric = getMetric();
 		this.tests = getTests();
 	}
-	
+
 	@Test
 	public final void empty() {
 		assertEquals(0.0f, metric.distance(getEmpty(), getEmpty()), delta);
@@ -164,27 +162,48 @@ public abstract class DistanceTest<K> {
 	}
 
 	@Test
-	public final void optionalCoincidence() {
-		if (!satisfiesCoincidence()) {
-			return;
-		}
-
-		for (T<K> t : tests) {
-			testCoincidence(metric, t.a, t.b);
+	public final void coincidence() {
+		if (satisfiesCoincidence()) {
+			for (T<K> t : tests) {
+				assertTrue(
+						format("coincidence did not hold for %s and %s", t.a,
+								t.b), testCoincidence(metric, t.a, t.b));
+			}
+		} else {
+			for (T<K> t : tests) {
+				if (!testCoincidence(metric, t.a, t.b)) {
+					return;
+				}
+			}
+			fail("no counter example for the coincidence property was found");
 		}
 	}
 
 	@Test
-	public final void optionalSubadditivity() {
-		if (!satisfiesSubadditivity()) {
-			return;
-		}
-
-		for (T<K> n : tests) {
-			for (T<K> m : tests) {
-				testSubadditivity(metric, n.a, n.b, m.a);
-				testSubadditivity(metric, n.a, n.b, m.b);
+	public final void subadditivity() {
+		if (satisfiesSubadditivity()) {
+			for (T<K> n : tests) {
+				for (T<K> m : tests) {
+					assertTrue(
+							format("triangle ineqaulity must hold for %s, %s, %s",
+									n.a, n.b, m.a),
+							testSubadditivity(metric, n.a, n.b, m.a));
+					assertTrue(
+							format("triangle ineqaulity must hold for %s, %s, %s",
+									n.a, n.b, m.b),
+							testSubadditivity(metric, n.a, n.b, m.b));
+				}
 			}
+		} else {
+			for (T<K> n : tests) {
+				for (T<K> m : tests) {
+					if (!testSubadditivity(metric, n.a, n.b, m.a)
+							|| !testSubadditivity(metric, n.a, n.b, m.b)) {
+						return;
+					}
+				}
+			}
+			fail("no counter example for the subadditive property was found");
 		}
 	}
 
@@ -203,20 +222,19 @@ public abstract class DistanceTest<K> {
 		}
 	}
 
-
-
 	@Test
 	public final void distance() {
 		for (T<K> t : tests) {
 			testDistance(metric, t.a, t.b, t.distance, delta);
 		}
 	}
-	
+
 	@Test
 	@Ignore
 	public final void generateDistance() {
 		for (T<K> t : tests) {
-			System.out.println(format("new T<>(%1.4ff, \"%s\", \"%s\"),", metric.distance(t.a, t.b), t.a, t.b));
+			System.out.println(format("new T<>(%1.4ff, \"%s\", \"%s\"),",
+					metric.distance(t.a, t.b), t.a, t.b));
 		}
 	}
 
@@ -231,16 +249,16 @@ public abstract class DistanceTest<K> {
 	public final void implementsToString() {
 
 		String metricToString = metric.toString();
-		String defaultToString = metric.getClass().getName() + "@" + Integer.toHexString(metric.hashCode());
+		String defaultToString = metric.getClass().getName() + "@"
+				+ Integer.toHexString(metric.hashCode());
 
-		assertFalse(
-				"toString() was not implemented "
-						+ metric.toString(), defaultToString.equals(metricToString));
+		assertFalse("toString() was not implemented " + metric.toString(),
+				defaultToString.equals(metricToString));
 
 		String metricName = metric.getClass().getSimpleName();
 
-		assertTrue(format("%s must contain %s ", metricToString,
-				metricName), metricToString.contains(metricName));
+		assertTrue(format("%s must contain %s ", metricToString, metricName),
+				metricToString.contains(metricName));
 	}
 
 }

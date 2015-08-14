@@ -258,18 +258,14 @@ public final class DamerauLevenshteinTest {
 			}
 
 			@Override
-			protected boolean satisfiesSubadditivity() {
-				return false;
-			}
-
-			@Override
 			protected boolean satisfiesCoincidence() {
 				return false;
 			}
 
 			@Override
 			protected T[] getStringTests() {
-				return new T[] { new T(1.0000f, "Subsitute", "Subsytute"),
+				return new T[] {
+						new T(1.0000f, "Subsitute", "Subsytute"),
 						new T(1.0000f, "Subsitute", "Sybsytyte"),
 						new T(0.5000f, "abc", "abcdef"),
 						new T(0.5000f, "def", "abcdef"),
@@ -288,7 +284,7 @@ public final class DamerauLevenshteinTest {
 
 			@Override
 			protected Metric<String> getMetric() {
-				return new DamerauLevenshtein(1.0f, 0.1f, 1.0f);
+				return new DamerauLevenshtein(1.0f, 0.2f, 1.0f);
 			}
 
 			@Override
@@ -298,15 +294,23 @@ public final class DamerauLevenshteinTest {
 
 			@Override
 			protected T[] getStringTests() {
-				return new T[] { new T(0.9889f, "Subsitute", "Subsytute"),
-						new T(0.9667f, "Subsitute", "Sybsytyte"),
-						new T(0.9917f, "test string1", "test string2"),
+				return new T[] { 
+						new T(0.9778f, "Subsitute", "Subsytute"),
+						new T(0.9333f, "Subsitute", "Sybsytyte"),
+						new T(0.9833f, "test string1", "test string2"),
 						new T(0.3333f, "test", "test string2"),
 						new T(0.0000f, "", "test string2"),
-						new T(0.9800f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-						new T(0.9571f, "aaa bbb", "aaa aaa"),
+						new T(0.9600f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+						new T(0.9143f, "aaa bbb", "aaa aaa"),
 						new T(0.4286f, "aaa", "aaa aaa"),
-						new T(0.9857f, "a b c d", "a b c e"), };
+						new T(0.9714f, "a b c d", "a b c e"),
+						new T(0.9000f, "uxyw", "uyxw"),
+						new T(0.6000f, "uxaayw", "uyxw"),
+						new T(0.9714f, "uxxxxxxyyyyyyw", "uxxxxxyxyyyyyw"),
+						new T(0.8500f, "uxxxxxxaayyyyyyw", "uxxxxxyxyyyyyw"),
+						new T(0.9000f, "wxyu", "wyxu"),
+						new T(0.6000f, "wxaayu", "wyxu"),
+				};
 			}
 		}
 
@@ -315,11 +319,6 @@ public final class DamerauLevenshteinTest {
 			@Override
 			protected Metric<String> getMetric() {
 				return new DamerauLevenshtein(1.0f, 1.0f, 0.0f);
-			}
-
-			@Override
-			protected boolean satisfiesSubadditivity() {
-				return false;
 			}
 
 			@Override
@@ -355,7 +354,8 @@ public final class DamerauLevenshteinTest {
 
 			@Override
 			protected T[] getStringTests() {
-				return new T[] { new T(0.9750f, "uxyw", "uyxw"),
+				return new T[] {
+						new T(0.9750f, "uxyw", "uyxw"),
 						new T(0.9714f, "uxyvxyw", "uyxvyxw"),
 						new T(0.9888f, "transpose", "tranpsose"),
 

@@ -46,7 +46,10 @@ public final class JaroWinklerTest   {
 			return new T[] { 
 					new T(0.9611f, "MARTHA", "MARHTA"),
 					new T(0.8400f, "DWAYNE", "DUANE"),
-					new T(0.8133f, "DIXON", "DICKSONX") };
+					new T(0.8133f, "DIXON", "DICKSONX"), 
+					// Not from Wikipedia, proves triangle inequality doens't hold
+					new T(0.5999f, "OZYMANDIAS", "MARCUS") ,
+			};
 		}
 
 		@Override

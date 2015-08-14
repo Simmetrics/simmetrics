@@ -27,6 +27,7 @@ import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertSame;
 import static org.simmetrics.tokenizers.Tokenizers.chain;
 import static org.simmetrics.tokenizers.Tokenizers.filter;
+import static org.simmetrics.tokenizers.Tokenizers.pattern;
 import static org.simmetrics.tokenizers.Tokenizers.qGram;
 import static org.simmetrics.tokenizers.Tokenizers.transform;
 import static org.simmetrics.tokenizers.Tokenizers.whitespace;
@@ -52,12 +53,12 @@ public final class TokenizersTest {
 		public T[] getTests() {
 			return new T[] {
 					new T("the MOUSE and CAT or DOG are cool", "are", "cool"),
-					new T("") };
+					new T("","") };
 		}
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return filter(filter(whitespace(), theAndOr()),
+			return filter(filter(pattern("\\s+"), theAndOr()),
 					mouseCatDogUpperCase());
 		}
 
@@ -69,12 +70,12 @@ public final class TokenizersTest {
 		public T[] getTests() {
 			return new T[] {
 					new T("the mouse and cat or dog", "mouse", "cat", "dog"),
-					new T("") };
+					new T("","") };
 		}
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return Tokenizers.filter(whitespace(), theAndOr());
+			return Tokenizers.filter(pattern("\\s+"), theAndOr());
 		}
 
 	}
@@ -85,12 +86,12 @@ public final class TokenizersTest {
 		public T[] getTests() {
 			return new T[] {
 					new T("the mouse and cat or dog", "MOUSE", "CAT", "DOG"),
-					new T("") };
+					new T("","") };
 		}
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return Tokenizers.transform(filter(whitespace(), theAndOr()),
+			return Tokenizers.transform(filter(pattern("\\s+"), theAndOr()),
 					toUpperCase());
 		}
 	}
@@ -101,13 +102,13 @@ public final class TokenizersTest {
 		public T[] getTests() {
 			return new T[] {
 					new T("the mouse and cat or dog", "ESUOM", "TAC", "GOD"),
-					new T("") };
+					new T("","") };
 		}
 
 		@Override
 		protected Tokenizer getTokenizer() {
 			return transform(
-					transform(filter(whitespace(), theAndOr()), toUpperCase()),
+					transform(filter(pattern("\\s+"), theAndOr()), toUpperCase()),
 					reverseCapitalized());
 		}
 	}
@@ -118,13 +119,13 @@ public final class TokenizersTest {
 		public T[] getTests() {
 			return new T[] {
 					new T("the mouse and cat or dog are cool", "ARE", "COOL"),
-					new T("") };
+					new T("","") };
 		}
 
 		@Override
 		protected Tokenizer getTokenizer() {
 			return filter(
-					transform(filter(whitespace(), theAndOr()), toUpperCase()),
+					transform(filter(pattern("\\s+"), theAndOr()), toUpperCase()),
 					mouseCatDogUpperCase());
 		}
 	}
@@ -135,13 +136,13 @@ public final class TokenizersTest {
 		public T[] getTests() {
 			return new T[] {
 					new T("the mouse and cat or dog are cool", "ERA", "LOOC"),
-					new T("") };
+					new T("","") };
 		}
 
 		@Override
 		protected Tokenizer getTokenizer() {
 			return transform(
-					filter(transform(filter(whitespace(), theAndOr()),
+					filter(transform(filter(pattern("\\s+"), theAndOr()),
 							toUpperCase()), mouseCatDogUpperCase()),
 					reverseCapitalized());
 		}
@@ -228,13 +229,13 @@ public final class TokenizersTest {
 		public T[] getTests() {
 			return new T[] {
 					new T("the mouse and cat or dog are cool", "ARE", "COOL"),
-					new T("") };
+					new T("","") };
 		}
 
 		@Override
 		protected Tokenizer getTokenizer() {
 			return filter(
-					filter(transform(whitespace(), toUpperCase()),
+					filter(transform(pattern("\\s+"), toUpperCase()),
 							mouseCatDogUpperCase()), theAndOrUpperCase());
 		}
 	}
@@ -245,30 +246,30 @@ public final class TokenizersTest {
 		public T[] getTests() {
 			return new T[] {
 					new T("the mouse and cat or dog", "THE", "AND", "OR"),
-					new T("") };
+					new T("","") };
 		}
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return filter(transform(whitespace(), toUpperCase()),
+			return filter(transform(pattern("\\s+"), toUpperCase()),
 					mouseCatDogUpperCase());
 		}
 	}
 
-	public static final class TransformingFilteringTransformingFilterTokenizerTest
+	public static final class TransformingFilteringTransformingFilteringTokenizerTest
 			extends TokenizerTest {
 		@Override
 		public T[] getTests() {
 			return new T[] {
 					new T("the Mouse and Cat or Dog", "ESUOM", "TAC", "GOD"),
-					new T("") };
+					new T("","") };
 		}
 
 		@Override
 		protected Tokenizer getTokenizer() {
 			return filter(
 					transform(
-							filter(transform(whitespace(), reverseCapitalized()),
+							filter(transform(pattern("\\s+"), reverseCapitalized()),
 									theAndOr()), toUpperCase()),
 					mouseCatDogUpperCase());
 		}
@@ -280,13 +281,13 @@ public final class TokenizersTest {
 		public T[] getTests() {
 			return new T[] {
 					new T("the Mouse and Cat or Dog", "ESUOM", "TAC", "GOD"),
-					new T("") };
+					new T("","") };
 		}
 
 		@Override
 		protected Tokenizer getTokenizer() {
 			return transform(
-					filter(transform(whitespace(), reverseCapitalized()),
+					filter(transform(pattern("\\s+"), reverseCapitalized()),
 							theAndOr()), toUpperCase());
 		}
 	}
@@ -297,14 +298,15 @@ public final class TokenizersTest {
 		public T[] getTests() {
 			return new T[] {
 					new T("the mouse and cat or dog", "THE", "MOUSE", "AND",
-							"CAT", "OR", "DOG"), new T("") };
+							"CAT", "OR", "DOG"), new T("","") };
 		}
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return Tokenizers.transform(whitespace(), toUpperCase());
+			return Tokenizers.transform(pattern("\\s+"), toUpperCase());
 		}
 	}
+	
 
 	public static final class TransformingTransformingTokenizerTest extends
 			TokenizerTest {
@@ -313,13 +315,31 @@ public final class TokenizersTest {
 		public T[] getTests() {
 			return new T[] {
 					new T("the Mouse and Cat or Dog", "THE", "ESUOM", "AND",
-							"TAC", "OR", "GOD"), new T("") };
+							"TAC", "OR", "GOD"), new T("","") };
 		}
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return transform(transform(whitespace(), reverseCapitalized()),
+			return transform(transform(pattern("\\s+"), reverseCapitalized()),
 					toUpperCase());
+		}
+	}
+	
+
+	public static final class TransformingTransformingTransformingTokenizerTest extends
+			TokenizerTest {
+
+		@Override
+		public T[] getTests() {
+			return new T[] {
+					new T("the Mouse and Cat or Dog", "EHT", "MOUSE", "DNA",
+							"CAT", "RO", "DOG"), new T("","") };
+		}
+
+		@Override
+		protected Tokenizer getTokenizer() {
+			return transform(transform(transform(pattern("\\s+"), reverseCapitalized()),
+					toUpperCase()),reverseCapitalized());
 		}
 	}
 	public static final class Whitespace extends TokenizerTest {
@@ -374,7 +394,7 @@ public final class TokenizersTest {
 
 			@Override
 			public String apply(String input) {
-				if (!Character.isUpperCase(input.charAt(0))) {
+				if (input.isEmpty() || !Character.isUpperCase(input.charAt(0))) {
 					return input;
 				}
 

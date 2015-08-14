@@ -45,7 +45,7 @@ public final class BlockDistanceTest {
 
 		@Override
 		protected boolean satisfiesSubadditivity() {
-			return false;
+			return true;
 		}
 
 		@Override
@@ -55,12 +55,14 @@ public final class BlockDistanceTest {
 					new T(2.0000f, "test string1", "test string2"),
 					new T(1.0000f, "test", "test string2"),
 					new T(2.0000f, "", "test string2"),
+					new T(2.0000f, getEmpty(), asList("test","string2")),
 					new T(2.0000f, asList("test", null), asList("test","string2")),
 					new T(2.0000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 					new T(2.0000f, "aaa bbb", "aaa aaa"),
 					new T(1.0000f, "aaa", "aaa aaa"),
 					new T(2.0000f, "a b c d", "a b c e"),
-					new T(4.0000f, "a b c d", "a b e f") };
+					new T(4.0000f, "a b c d", "a b e f"),
+			};
 		}
 	}
 

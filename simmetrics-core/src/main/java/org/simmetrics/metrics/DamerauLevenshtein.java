@@ -151,6 +151,9 @@ public class DamerauLevenshtein implements StringMetric, StringDistance {
 	@Override
 	public String toString() {
 		return "DamerauLevenshtein [insertDelete=" + insertDelete
-				+ ", substitute=" + substitute + "]";
+				+ ", substitute=" + substitute + ", transpose=" + transpose
+				+ "]";
 	}
+
+	
 }

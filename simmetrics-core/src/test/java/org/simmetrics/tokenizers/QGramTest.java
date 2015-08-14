@@ -23,6 +23,7 @@
 package org.simmetrics.tokenizers;
 
 import static org.simmetrics.tokenizers.Tokenizers.qGram;
+import static org.simmetrics.tokenizers.Tokenizers.qGramWithFilter;
 import static org.simmetrics.tokenizers.Tokenizers.qGramWithPadding;
 
 import org.simmetrics.tokenizers.Tokenizer;
@@ -136,6 +137,22 @@ public final class QGramTest {
 							// Expected output
 							"12", "23", "34", "45", "56", "67", "78", "89", "91",
 							"12", "23", "34", "45", "56", "67", "78", "89") };
+		}
+	}
+	public static final class QGram2WithFilter extends TokenizerTest {
+
+		@Override
+		protected Tokenizer getTokenizer() {
+			return qGramWithFilter(2);
+		}
+
+		@Override
+		public T[] getTests() {
+
+			return new T[] {
+					new T(""),
+					new T("1"),
+					new T("12","12")};
 		}
 	}
 	

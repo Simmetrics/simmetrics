@@ -178,10 +178,6 @@ public final class Simplifiers {
 		}
 	}
 
-	private static final Pattern consecutiveNonWord = Pattern.compile("\\W+");
-
-	private static final Pattern nonWord = Pattern.compile("\\W");
-
 	/**
 	 * Constructs a new chain of simplifiers. Applies the simplifiers in order.
 	 * 
@@ -312,7 +308,7 @@ public final class Simplifiers {
 	 * 
 	 */
 	public static Simplifier removeNonWord(String replacement) {
-		return removeAll(consecutiveNonWord);
+		return removeAll("\\W+");
 	}
 
 	/**
@@ -373,7 +369,7 @@ public final class Simplifiers {
 	 * @return a simplifier that replaces all non-word characters
 	 */
 	public static Simplifier replaceNonWord(String replacement) {
-		return replaceAll(nonWord, replacement);
+		return replaceAll("\\W", replacement);
 	}
 
 	/**

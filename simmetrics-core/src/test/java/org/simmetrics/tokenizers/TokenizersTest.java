@@ -335,6 +335,7 @@ public final class TokenizersTest {
 			return new T[] { 
 					new T(""),
 					new T(" "),
+					new T(" A","A"),
 					new T("A B C", "A", "B", "C"),
 					new T("A   B  C", "A", "B", "C"),
 					new T("A\nB", "A", "B"),
@@ -355,8 +356,10 @@ public final class TokenizersTest {
 		public T[] getTests() {
 
 			return new T[] { 
-					new T(""),
+					new T("",""),
 					new T(" "," "),
+					new T(",","",""),
+					new T(",,","","",""),
 					new T("A,B,C", "A", "B", "C"),
 					new T("A,,B,,C", "A","","B","","C"),
 			};

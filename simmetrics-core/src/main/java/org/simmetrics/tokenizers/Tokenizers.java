@@ -29,7 +29,6 @@ import static com.google.common.collect.Lists.asList;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
 import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -48,10 +47,26 @@ import com.google.common.collect.Collections2;
  * tokenizers into a single tokenizers or apply filters and transforms to
  * tokens.
  * <p>
- * All methods return immutable objects provided the arguments
- * are also immutable.
+ * All methods return immutable objects provided the arguments are also
+ * immutable.
  */
 public final class Tokenizers {
+
+	private static final class IsNotEmpty implements Predicate<String> {
+		IsNotEmpty() {
+
+		}
+
+		@Override
+		public boolean apply(String input) {
+			return !input.isEmpty();
+		}
+
+		@Override
+		public String toString() {
+			return "IsNotEmpty";
+		}
+	}
 
 	private static class FilteringTokenizer implements Tokenizer {
 
@@ -164,26 +179,22 @@ public final class Tokenizers {
 
 	}
 
-	private static final class PatternTokenizer extends AbstractTokenizer {
+	private static final class SplitTokenizer extends AbstractTokenizer {
 
 		private final Pattern pattern;
 
-		public PatternTokenizer(Pattern pattern) {
+		public SplitTokenizer(Pattern pattern) {
 			this.pattern = pattern;
 		}
 
 		@Override
 		public List<String> tokenizeToList(final String input) {
-			if (input.isEmpty()) {
-				return emptyList();
-			}
-
-			return asList(pattern.split(input));
+			return asList(pattern.split(input, -1));
 		}
 
 		@Override
 		public String toString() {
-			return "PatternTokenizer [" + pattern + "]";
+			return "SplitTokenizer [" + pattern + "]";
 		}
 
 	}
@@ -359,8 +370,6 @@ public final class Tokenizers {
 		}
 	}
 
-	private static final Pattern whitespace = Pattern.compile("\\s+");
-
 	/**
 	 * Chains tokenizers together. The output of each tokenizer is tokenized by
 	 * the next. The tokenizers are applied in order.
@@ -442,7 +451,7 @@ public final class Tokenizers {
 
 	/**
 	 * Returns a tokenizer that splits a string into tokens around the pattern
-	 * as if calling {@code Pattern.compile(pattern).split(input)}.
+	 * as if calling {@code Pattern.compile(regex).split(input,-1)}.
 	 * 
 	 * @param regex
 	 *            to split the the string around
@@ -455,7 +464,7 @@ public final class Tokenizers {
 
 	/**
 	 * Returns a tokenizer that splits a string into tokens around the pattern
-	 * as if calling {@code Pattern.compile(pattern).split(input)}.
+	 * as if calling {@code pattern.split(input,-1)}.
 	 * 
 	 * @param pattern
 	 *            to split the the string around
@@ -463,12 +472,13 @@ public final class Tokenizers {
 	 * @return a pattern tokenizer
 	 */
 	public static Tokenizer pattern(Pattern pattern) {
-		return new PatternTokenizer(pattern);
+		return new SplitTokenizer(pattern);
 	}
 
 	/**
 	 * Returns a basic q-gram tokenizer for a variable q. The tokenizer will
-	 * returns a list with the original input for tokens shorter then q.
+	 * return an empty list if the input is empty. A list with the original
+	 * input is returned for tokens shorter then q.
 	 * 
 	 * @param q
 	 *            size of the tokens
@@ -481,9 +491,22 @@ public final class Tokenizers {
 	}
 
 	/**
+	 * Returns a basic q-gram tokenizer for a variable q. The tokenizer will
+	 * return an empty list if the input is empty or shorter then q.
 	 * 
-	 * Returns a basic q-gram tokenizer for a variable Q.The Q-Gram is extended
-	 * beyond the length of the string with padding. Uses {@code #} as the
+	 * @param q
+	 *            size of the tokens
+	 * @return a q-gram tokenizer
+	 *
+	 */
+	@SuppressWarnings("deprecation")
+	public static Tokenizer qGramWithFilter(int q) {
+		return new QGram(q, true);
+	}
+
+	/**
+	 * Returns a basic q-gram tokenizer for a variable q.The input is padded
+	 * with q-1 special characters before being tokenized. Uses {@code #} as the
 	 * default padding.
 	 * 
 	 * @param q
@@ -553,13 +576,16 @@ public final class Tokenizers {
 	}
 
 	/**
-	 * Returns a tokenizer that splits a string into tokens around whitespace as
-	 * if calling {@code Pattern.compile("\\s+").split(input)}.
+	 * Returns a tokenizer that splits a string into tokens around whitespace.
+	 * Does not return leading or trailing empty tokens.
+	 * <p>
+	 * To create tokenizer that returns leading and trailing empty use
+	 * {@code Tokenizers.pattern("\\s+")}
 	 * 
 	 * @return a white space tokenizer
 	 */
 	public static Tokenizer whitespace() {
-		return pattern(whitespace);
+		return filter(pattern("\\s+"), new IsNotEmpty());
 	}
 
 	private Tokenizers() {

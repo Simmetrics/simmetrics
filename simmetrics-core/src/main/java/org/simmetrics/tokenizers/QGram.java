@@ -41,6 +41,13 @@ import java.util.List;
 public class QGram extends AbstractTokenizer {
 
 	private final int q;
+	private final boolean filter;
+	
+	QGram(int q, boolean filter) {
+		checkArgument(q > 0, "q must be greater then 0");
+		this.q = q;
+		this.filter = filter;
+	}
 
 	/**
 	 * Constructs a q-gram tokenizer with the given q.
@@ -50,8 +57,7 @@ public class QGram extends AbstractTokenizer {
 	 */
 
 	public QGram(int q) {
-		checkArgument(q > 0, "q must be greater then 0");
-		this.q = q;
+		this(q,false);
 	}
 
 	/**
@@ -69,7 +75,7 @@ public class QGram extends AbstractTokenizer {
 			return emptyList();
 		}
 
-		if (input.length() <= q) {
+		if (!filter && input.length() <= q) {
 			return singletonList(input);
 		}
 

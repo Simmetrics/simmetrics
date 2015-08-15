@@ -1,10 +1,5 @@
 /*
- * #%L
- * Simmetrics Core
- * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
- * %%
- * This
+ * #%L Simmetrics Core %% Copyright (C) 2014 - 2015 Simmetrics Authors %% This
  * program is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or (at your option) any later
@@ -16,8 +11,7 @@
  * details.
  * 
  * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
- * #L%
+ * this program. If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
  */
 package org.simmetrics.tokenizers;
 
@@ -29,6 +23,8 @@ import static com.google.common.collect.Lists.asList;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
 import static java.util.Arrays.asList;
+import static java.util.Arrays.copyOfRange;
+import static java.util.Collections.emptyList;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,22 +47,6 @@ import com.google.common.collect.Collections2;
  * immutable.
  */
 public final class Tokenizers {
-
-	private static final class IsNotEmpty implements Predicate<String> {
-		IsNotEmpty() {
-
-		}
-
-		@Override
-		public boolean apply(String input) {
-			return !input.isEmpty();
-		}
-
-		@Override
-		public String toString() {
-			return "IsNotEmpty";
-		}
-	}
 
 	private static class FilteringTokenizer implements Tokenizer {
 
@@ -195,6 +175,36 @@ public final class Tokenizers {
 		@Override
 		public String toString() {
 			return "SplitTokenizer [" + pattern + "]";
+		}
+
+	}
+
+	private static final class Whitespace extends AbstractTokenizer {
+
+		Whitespace() {
+		}
+
+		@Override
+		public String toString() {
+			return "WhitespaceTokenizer";
+		}
+
+		private final Pattern pattern = Pattern.compile("\\s+");
+
+		@Override
+		public List<String> tokenizeToList(final String input) {
+			if (input.isEmpty()) {
+				return emptyList();
+			}
+
+			String[] tokens = pattern.split(input);
+
+			// Remove leading empty token if any
+			if (tokens.length > 0 && tokens[0].isEmpty()) {
+				tokens = copyOfRange(tokens, 1, tokens.length);
+			}
+
+			return asList(tokens);
 		}
 
 	}
@@ -585,7 +595,7 @@ public final class Tokenizers {
 	 * @return a white space tokenizer
 	 */
 	public static Tokenizer whitespace() {
-		return filter(pattern("\\s+"), new IsNotEmpty());
+		return new Whitespace();
 	}
 
 	private Tokenizers() {

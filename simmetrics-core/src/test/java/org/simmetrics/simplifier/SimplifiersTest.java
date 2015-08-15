@@ -26,7 +26,6 @@ import static org.simmetrics.simplifiers.Simplifiers.chain;
 import static org.simmetrics.simplifiers.Simplifiers.removeNonWord;
 import static org.simmetrics.simplifiers.Simplifiers.replaceNonWord;
 import static org.simmetrics.simplifiers.Simplifiers.toLowerCase;
-import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,8 +34,6 @@ import java.util.Collections;
 import org.junit.Test;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.Simplifiers;
-import org.simmetrics.tokenizers.Tokenizer;
-import org.simmetrics.tokenizers.TokenizerTest;
 
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class SimplifiersTest {
@@ -176,23 +173,6 @@ public final class SimplifiersTest {
 					new T("The ##th Hour", "T ## H"), new T("", "") };
 		}
 
-	}
-
-	public static final class Whitespace extends TokenizerTest {
-
-		@Override
-		protected Tokenizer getTokenizer() {
-			return whitespace();
-		}
-
-		@Override
-		public T[] getTests() {
-
-			return new T[] { new T(""), new T(" "),
-					new T("A B C", "A", "B", "C"),
-					new T("A   B  C", "A", "B", "C"), new T("A\nB", "A", "B"),
-					new T("A\tB", "A", "B"), new T("A\t\nB", "A", "B"), };
-		}
 	}
 
 	static Simplifier reverseCapitalized() {

@@ -23,6 +23,7 @@
 package org.simmetrics.tokenizers;
 
 import static java.util.Arrays.asList;
+import static java.util.Arrays.copyOfRange;
 import static java.util.Collections.emptyList;
 
 import java.util.List;
@@ -51,7 +52,14 @@ public final class Whitespace extends AbstractTokenizer {
 			return emptyList();
 		}
 
-		return asList(pattern.split(input));
+		String[] tokens = pattern.split(input);
+
+		// Remove leading empty token if any
+		if (tokens.length > 0 && tokens[0].isEmpty()) {
+			tokens = copyOfRange(tokens, 1, tokens.length);
+		}
+
+		return asList(tokens);
 	}
 
 }

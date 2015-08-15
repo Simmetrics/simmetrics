@@ -56,9 +56,9 @@ import org.simmetrics.tokenizers.Tokenizers;
 /**
  * Utility class for StringMetrics.
  * <p>
- * Consists of well known metrics and methods to apply a StringMetric to arrays
- * and lists of elements. All metrics are setup with sensible defaults, to
- * customize metrics use {@link StringMetricBuilder}.
+ * Consists of well known metrics and methods to create string metrics from list-
+ * or set metrics. All metrics are setup with sensible defaults, to customize
+ * metrics use {@link StringMetricBuilder}.
  * <p>
  * The available metrics are:
  * 
@@ -80,13 +80,12 @@ import org.simmetrics.tokenizers.Tokenizers;
  * <li>SimonWhite
  * <li>Smith-Waterman
  * <li>Smith-Waterman-Gotoh
- * <li>Smith-Waterman-Gotoh Windowed Affine
  * <li>Soundex
  * </ul>
  * 
  * <p>
- * All methods return immutable objects provided the arguments
- * are also immutable.
+ * All methods return immutable objects provided the arguments are also
+ * immutable.
  */
 public final class StringMetrics {
 

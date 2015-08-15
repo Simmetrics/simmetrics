@@ -42,7 +42,7 @@ import java.util.List;
  * The similarity measure should be symmetric such that
  * {@code distance(a,b) == distance(b,a)}.
  * <p>
- * Implementations my not modify the contents of the list. List should be
+ * Implementations may not modify the contents of the list. List should be
  * treated as if wrapped by {@link Collections#unmodifiableList(List)}.
  * 
  * @see <a href="https://en.wikipedia.org/wiki/Metric_(mathematics)">Wikipedia -

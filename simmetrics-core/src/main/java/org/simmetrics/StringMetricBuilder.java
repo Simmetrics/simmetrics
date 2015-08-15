@@ -49,85 +49,8 @@ import com.google.common.base.Predicate;
  * {@link StringMetric}, {@link ListMetric} or {@link SetMetric} can be used to
  * build a string metric. Supports the addition of simplification, tokenization,
  * filtering and caching to a metric.
- * 
- * <h2>Metrics</h2>
- * 
- * A metric is used to measure the similarity between strings. Metrics can work
- * on strings, lists or sets tokens. To compare strings with a metric that works
- * on a collection of tokens a tokenizer is required.
- * 
  * <p>
- * By adding simplifiers, tokenizers and filters and transform the effectiveness
- * of a metric can be improved. The exact combination is generally domain
- * specific. This builder supports these domain specific customizations.
- * 
- * <h2>Simplification</h2>
- * 
- * Simplification increases the effectiveness of a metric by removing noise and
- * reducing the dimensionality of the problem. The process maps a a complex
- * string such as <code>Chilpéric II son of Childeric II</code> to a simpler
- * format <code>chilperic ii son of childeric ii</code>. This allows string from
- * different sources to be compared in the same normal form.
- * 
- * <p>
- * Simplification can be done by any class implementing the {@link Simplifier}
- * interface.
- * 
- * <h2>Tokenization</h2>
- * 
- * Tokenization cuts up a string into tokens e.g.
- * <code>chilperic ii son of childeric ii</code> is tokenized into
- * <code>[chilperic, ii, son, of,
- * childeric, ii]</code>. Tokenization can also be done repeatedly by tokenizing
- * the individual tokens e.g.
- * <code>[ch,hi,il,il,lp,pe,er,ri,ic, ii, so,on, of, ch,hi,il,ld,de,er,ri,ic, ii]</code>
- * <p>
- *
- * <p>
- * The method of tokenization changes the space in which strings are compared.
- * The effectiveness depends on the context. A whitespace tokenizer might be
- * more useful to measure similarity between large bodies of texts whiles a
- * q-gram tokenizer will work more effectively for matching words.
- * 
- * <p>
- * Tokenization can be done by any class implementing the {@link Tokenizer}
- * interface and is required for all metrics that work on collections of tokens
- * rather then whole strings; {@link ListMetric}s and {@link SetMetric}s
- * 
- * <h2>Filtering</h2>
- * 
- * Filtering removes tokens that do not match the predicate. For example
- * filtering <code>[chilperic, ii,
- * son, of, childeric, ii]</code> with a predicate that accepts all strings of
- * length three or more results in: <code>[chilperic, son, childeric]</code>.
- * <p>
- * Filtering can be done repeatedly after a tokenization step.
- * <p>
- * A Filter can be implemented by implementing a the {@link Predicate}
- * interface. By chaining predicates more complicated filters can be build.
- * 
- * <h2>Transformation</h2>
- * 
- * Functions can be used to transform tokens to a simpler or canonical form.
- * This may be used to reduce the possible token space. For example removing the
- * possessive -s from a sentence `[I'll, do, my, work, and, you, do, yours]`
- * results in <code>[I'll, do, my, work, and, you, do, your]</code>.
- * <p>
- * A function can be implemented by implementing a the {@link Function}
- * interface.
- * 
- * <h2>Caching</h2>
- * 
- * Simplification and tokenization can be complex and expensive operations. When
- * comparing one string against a collection of strings these two operations are
- * done repeatedly for a single string - a common use case when searching for a
- * match. With a simple caching mechanism this overhead can be reduced.
- * <p>
- * When a cache is set it applies to the whole simplification or tokenization
- * chain. The default cache has a size of two for use with
- * <code>StringMetrics.compare(StringMetric, String, List<String>)</code> and
- * friends.
- * 
+ * For usage examples see the simmetrics-example module.
  */
 public class StringMetricBuilder {
 

@@ -41,6 +41,9 @@ package org.simmetrics;
  * <p>
  * The similarity measure may satisfy the coincidence axiom such that
  * {@code compare(a, b) = 0 if and only if a.equals(b)}
+ * <p>
+ * Implementations may not modify the arguments. Arguments should be treated as
+ * if they were unmodifiable.
  * 
  * @see <a href="https://en.wikipedia.org/wiki/Metric_(mathematics)">Wikipedia -
  *      Metric</a>

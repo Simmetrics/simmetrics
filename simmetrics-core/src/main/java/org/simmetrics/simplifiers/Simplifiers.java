@@ -86,7 +86,6 @@ public final class Simplifiers {
 				.compile("[\\p{InCombiningDiacriticalMarks}\\p{IsLm}\\p{IsSk}]+");
 
 		RemoveDiacritics() {
-			// TODO Auto-generated constructor stub
 		}
 
 		/**
@@ -220,6 +219,9 @@ public final class Simplifiers {
 
 		for (Simplifier s : simplifiers) {
 			if (s instanceof ChainSimplifier) {
+				// Simplifiers controls the creation of chain simplifiers
+				// all chain simplifiers are flat so we don't have
+				// to flatten recursively
 				final ChainSimplifier c = (ChainSimplifier) s;
 				flattend.addAll(c.getSimplifiers());
 			} else {

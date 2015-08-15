@@ -449,6 +449,9 @@ public final class Tokenizers {
 
 		for (Tokenizer s : simplifiers) {
 			if (s instanceof RecursiveTokenizer) {
+				// Tokenizers controls the creation of recursive tokenizers
+				// all recursive tokenizers are flat so we don't have
+				// to flatten recursively
 				final RecursiveTokenizer c = (RecursiveTokenizer) s;
 				flattend.addAll(c.getTokenizers());
 			} else {
@@ -589,7 +592,7 @@ public final class Tokenizers {
 	 * Returns a tokenizer that splits a string into tokens around whitespace.
 	 * Does not return leading or trailing empty tokens.
 	 * <p>
-	 * To create tokenizer that returns leading and trailing empty use
+	 * To create tokenizer that returns leading and trailing empty tokens use
 	 * {@code Tokenizers.pattern("\\s+")}
 	 * 
 	 * @return a white space tokenizer

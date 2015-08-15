@@ -37,7 +37,6 @@ package org.simmetrics;
  * The similarity measure should be symmetric such that
  * {@code compare(a,b) == compare(b,a)}.
  * 
- *
  */
 
 public interface StringMetric extends Metric<String> {

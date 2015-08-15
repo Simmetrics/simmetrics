@@ -30,7 +30,12 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * Splits a string into tokens around white space.
+ * Splits a string into tokens around white space. Does not return leading or
+ * trailing empty tokens.
+ * <p>
+ * To create tokenizer that returns leading and trailing empty tokens use
+ * {@code Tokenizers.pattern("\\s+")}
+ * 
  * <p>
  * This class is immutable and thread-safe.
  * 

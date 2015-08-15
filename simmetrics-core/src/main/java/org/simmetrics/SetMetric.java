@@ -36,6 +36,9 @@ import java.util.Set;
  * The elements in the set have to implement {@link Object#hashCode()} and
  * {@link Object#equals(Object)}.
  * <p>
+ * The elements in the sets may not be null if metric does not support null
+ * values.
+ * <p>
  * The similarity measure should be consistent with equals such that
  * {@code a.equals(b) => compare(a,b) == 1.0}. 
  * <p>

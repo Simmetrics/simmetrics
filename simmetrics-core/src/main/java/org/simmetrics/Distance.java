@@ -21,10 +21,11 @@
  */
 package org.simmetrics;
 
+
 /**
- * Measures the unnormalized similarity (distance) between two arbitrary
- * objects of the same type . The measurement results in a non-negative value. A
- * value of zero indicates that the objects are similar.
+ * Measures the unnormalized similarity (distance) between two arbitrary objects
+ * of the same type . The measurement results in a non-negative value. A value
+ * of zero indicates that the objects are similar.
  * <p>
  * The distance measure should be consistent with equals such that
  * {@code a.equals(b) => distance(a,b) == 0.0}.
@@ -40,6 +41,9 @@ package org.simmetrics;
  * <p>
  * The distance measure may satisfy the coincidence axiom such that
  * {@code compare(a, b) = 0 if and only if a.equals(b)}
+ * <p>
+ * Implementations may not modify the arguments. Arguments should be treated as
+ * if they were unmodifiable.
  * 
  * @see <a href="https://en.wikipedia.org/wiki/Metric_(mathematics)">Wikipedia -
  *      Metric</a>

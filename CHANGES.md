@@ -3,8 +3,14 @@ Change Log
 
 ## Since 3.2.1-SNAPSHOT ##
  - Fixed bug where EuclidianDistance would return incorrect similarity when one argument was empty
- - Common tokenizers and simplifiers are produced by Tokenizers and Simplifiers utility classes respectively
- - Case, NonDiacritics, WordCharacters, QGram, QGramExtended and WhiteSpace have been deprecated due to having ambigious names. Use equivalent functions in Tokenizers and Simplifiers.
+ - Fixed bug where Tokenizers.whiteSpace and Whitespace would return leading empty tokens
+ - Corrected DamerauLevenshtein.tostring to include all cost parameters
+ - Case, NonDiacritics, WordCharacters simplifiers have been depreciated over having unclear names and to avoid leaking implementation details. Equivalent functions have been added to Simplifiers
+ - Added Simplifiers.replaceAll and Simplifiers.removeAll. These respecively replace and remove parts of a string based on a regex.
+ - QGram, QGramExtended and WhiteSpace have been deprecated due to having ambigious names and to avoid leaking implementation details. 
+ - Added Tokenizers.pattern to create a tokenizer that splits a string based on a regex.
+
+
 
 ## Since 3.2.0 ##
 

@@ -48,7 +48,7 @@ import com.google.common.base.Predicate;
  * Convenience tool to build string metrics. Any class implementing
  * {@link StringMetric}, {@link ListMetric} or {@link SetMetric} can be used to
  * build a string metric. Supports the addition of simplification, tokenization,
- * filtering and caching to a metric.
+ * token-filtering, token-transformation and caching to a metric.
  * <p>
  * For usage examples see the simmetrics-example module.
  */

@@ -69,7 +69,7 @@ public final class StringMetricBuilderExample {
 
 		StringMetric metric = new Levenshtein();
 
-		return metric.compare(a, b); // 1.0000
+		return metric.compare(a, b); // 0.7812
 	}
 
 	/**

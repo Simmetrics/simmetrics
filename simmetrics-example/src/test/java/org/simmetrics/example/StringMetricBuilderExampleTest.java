@@ -30,7 +30,12 @@ import org.simmetrics.example.StringMetricBuilderExample;
 public class StringMetricBuilderExampleTest {
 	
 	private static final float DELTA = 0.0001f;
-
+	
+	@Test
+	public void example00(){
+		assertEquals(0.7812f, StringMetricBuilderExample.example00(), DELTA);
+	}
+	
 	@Test
 	public void example01(){
 		assertEquals(1.0000f, StringMetricBuilderExample.example01(), DELTA);
@@ -59,5 +64,10 @@ public class StringMetricBuilderExampleTest {
 	@Test
 	public void example06(){
 		assertEquals(0.6806f, StringMetricBuilderExample.example06(), DELTA);
+	}
+	
+	@Test
+	public void example07(){
+		assertEquals(0.6806f, StringMetricBuilderExample.example07(), DELTA);
 	}
 }

@@ -9,6 +9,7 @@ Change Log
  - Added Simplifiers.replaceAll and Simplifiers.removeAll. These respecively replace and remove parts of a string based on a regex.
  - QGram, QGramExtended and WhiteSpace have been deprecated due to having ambigious names and to avoid leaking implementation details. 
  - Added Tokenizers.pattern to create a tokenizer that splits a string based on a regex.
+ - StringMetrics.compare and StringMetrics.compareArrays have been depreciated for a lack of a clear use case.
 
 
 

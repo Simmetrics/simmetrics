@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-## Since 3.2.1-SNAPSHOT ##
+## Since 3.2.1 ##
  - Fixed bug where EuclidianDistance would return incorrect similarity when one argument was empty
  - Fixed bug where Tokenizers.whiteSpace and Whitespace would return leading empty tokens
  - Corrected DamerauLevenshtein.tostring to include all cost parameters

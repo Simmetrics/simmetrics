@@ -59,16 +59,15 @@ public class DiceSimilarity<T> implements SetMetric<T> {
 			return 0.0f;
 		}
 
-		final int totalSize = a.size() + b.size();
-		final Set<T> all = new HashSet<>(totalSize);
-		all.addAll(a);
-		all.addAll(b);
+		final int total = a.size() + b.size();
+		final Set<T> union = new HashSet<>(total);
+		union.addAll(a);
+		union.addAll(b);
 
-		final int commonTerms = totalSize - all.size();
+		final int intersection = total - union.size();
 
-		// return Dices coefficient = (2*Common Terms) / (Number of distinct
-		// terms in String1 + Number of distinct terms in String2)
-		return (2.0f * commonTerms) / totalSize;
+		// (2 * |a & b |) / (|a|  + |b|)
+		return (2.0f * intersection) / total;
 	}
 
 	@Override

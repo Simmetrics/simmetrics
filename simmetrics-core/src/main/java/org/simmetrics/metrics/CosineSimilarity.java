@@ -60,11 +60,11 @@ public class CosineSimilarity<T> implements SetMetric<T> {
 
 		// Implementation note: Dot product of two binary vectors is the
 		// intersection of two sets
-		final int commonTerms = (a.size() + b.size()) - all.size();
+		final int intersection = (a.size() + b.size()) - all.size();
 
-		// Implementation note: Magnitude of a binary vectors is sqrt of its
-		// size.
-		return (float) (commonTerms / (sqrt(a.size()) * sqrt(b.size())));
+		// Implementation note: Magnitude of a binary vectors is sqaure root of
+		// its size.
+		return (float) (intersection / (sqrt(a.size()) * sqrt(b.size())));
 	}
 
 	@Override

@@ -36,7 +36,7 @@ import static org.simmetrics.utils.Math.max;
 /**
  * Smith-Waterman algorithm providing a similarity measure between two strings.
  * <p>
- * Implementation uses Osamu Gotoh (1982).
+ * Implementation uses optimizations described in Osamu Gotoh (1982).
  * "An improved algorithm for matching biological sequences". Journal of
  * molecular biology 162: 705". This implementation uses constant space and
  * quadratic time.

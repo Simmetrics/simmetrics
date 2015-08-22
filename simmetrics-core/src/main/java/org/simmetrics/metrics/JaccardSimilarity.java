@@ -59,15 +59,16 @@ public final class JaccardSimilarity<T> implements SetMetric<T> {
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
+		
+		final int total = a.size() + b.size();
+		final Set<T> union = new HashSet<>(total);
+		union.addAll(a);
+		union.addAll(b);
 
-		final Set<T> all = new HashSet<>(a.size() + b.size());
-		all.addAll(a);
-		all.addAll(b);
+		final int intersection = total - union.size();
 
-		final int intersection = (a.size() + b.size()) - all.size();
-
-		// return JaccardSimilarity
-		return intersection / (float) all.size();
+		//  ( |a & b| ) / ( | a or b | )
+		return intersection / (float) union.size();
 	}
 
 	@Override

@@ -52,8 +52,8 @@ public class EuclideanDistance<T> implements ListMetric<T>, ListDistance<T> {
 			return 1.0f;
 		}
 
-		float totalPossible = (float) sqrt((a.size() * a.size()) + (b.size() * b.size()));
-		return (totalPossible - distance(a, b)) / totalPossible;
+		float maxDistance = (float) sqrt((a.size() * a.size()) + (b.size() * b.size()));
+		return (maxDistance - distance(a, b)) / maxDistance;
 	}
 
 	@Override
@@ -62,15 +62,15 @@ public class EuclideanDistance<T> implements ListMetric<T>, ListDistance<T> {
 		all.addAll(a);
 		all.addAll(b);
 
-		float totalDistance = 0.0f;
+		float distance = 0.0f;
 		for (final T token : all) {
 			int frequencyInA = frequency(a, token);
 			int frequencyInB = frequency(b, token);
 
-			totalDistance += ((frequencyInA - frequencyInB) * (frequencyInA - frequencyInB));
+			distance += ((frequencyInA - frequencyInB) * (frequencyInA - frequencyInB));
 		}
 
-		return (float) sqrt(totalDistance);
+		return (float) sqrt(distance);
 	}
 
 	@Override

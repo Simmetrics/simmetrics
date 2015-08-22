@@ -54,14 +54,14 @@ public interface Gap {
 	public float value(int fromIndex, int toIndex);
 
 	/**
-	 * Returns the minimum value a gap can have
+	 * Returns the minimum value a gap can have.
 	 * 
 	 * @return the minimum value a gap can have
 	 */
 	public float max();
 
 	/**
-	 * Returns the maximum value a gap can have
+	 * Returns the maximum value a gap can have.
 	 * 
 	 * @return the maximum value a gap can have
 	 */

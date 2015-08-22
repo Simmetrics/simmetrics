@@ -60,11 +60,13 @@ public final class OverlapCoefficient<T> implements SetMetric<T> {
 			return 0.0f;
 		}
 
-		final Set<T> all = new HashSet<>(a.size() + b.size());
-		all.addAll(a);
-		all.addAll(b);
+		final int total = a.size() + b.size();
+		final Set<T> union = new HashSet<>(total);
+		union.addAll(a);
+		union.addAll(b);
 
-		final int intersection = a.size() + b.size() - all.size();
+		final int intersection = total - union.size();
+		// (|q & r|) / min{|q|, |r|}
 		return intersection / (float) min(a.size(), b.size());
 	}
 

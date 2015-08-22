@@ -56,9 +56,9 @@ import org.simmetrics.tokenizers.Tokenizers;
 /**
  * Utility class for StringMetrics.
  * <p>
- * Consists of well known metrics and methods to create string metrics from list-
- * or set metrics. All metrics are setup with sensible defaults, to customize
- * metrics use {@link StringMetricBuilder}.
+ * Consists of well known metrics and methods to create string metrics from
+ * list- or set metrics. All metrics are setup with sensible defaults, to
+ * customize metrics use {@link StringMetricBuilder}.
  * <p>
  * The available metrics are:
  * 
@@ -288,7 +288,10 @@ public final class StringMetrics {
 	 *            to compare c against
 	 * @return an array with the similarity value for c and each string in the
 	 *         list
+	 * 
+	 * @deprecated trivial with no clear use case
 	 */
+	@Deprecated
 	public static float[] compare(StringMetric metric, final String c,
 			final List<String> strings) {
 
@@ -316,7 +319,10 @@ public final class StringMetrics {
 	 *            to compare c against
 	 * @return an array with the similarity value for c and each string in the
 	 *         list
+	 * 
+	 * @deprecated trivial with no clear use case
 	 */
+	@Deprecated
 	public static float[] compare(StringMetric metric, final String c,
 			final String... strings) {
 
@@ -341,8 +347,10 @@ public final class StringMetrics {
 	 *            array of string to compare
 	 * @throws IllegalArgumentException
 	 *             when a and b are of a different length
-	 * @return a list of similarity values for each pair a[n] b[n].
+	 * @return a list of similarity values for each pair a[n] b[n]
+	 * @deprecated trivial with no clear use case
 	 */
+	@Deprecated
 	public static float[] compareArrays(StringMetric metric, final String[] a,
 			final String[] b) {
 		checkArgument(a.length == b.length, "arrays must have the same length");

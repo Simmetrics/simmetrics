@@ -27,7 +27,6 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricBuilder;
 import org.simmetrics.StringMetrics;
 import org.simmetrics.metrics.CosineSimilarity;
-import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.tokenizers.Tokenizers;
 
 /**
@@ -81,26 +80,6 @@ public final class StringMetricsExample {
 				.build();
 
 		return metric.compare(str1, str2); // 0.7777
-	}
-
-	/**
-	 * A single string can be compared against an array or list of strings.
-	 */
-	public static float[] example04() {
-		
-		String[] names = new String[] { "Childéric", "Childericus", "Clovis I",
-				"Merovech", "Meroveus", "Merovius" };
-		String name = "Chilpéric";
-
-		StringMetric metric = 
-				with(new CosineSimilarity<String>())
-				.simplify(Simplifiers.removeDiacritics())
-				.simplify(Simplifiers.toLowerCase())
-				.tokenize(Tokenizers.qGram(3))
-				.build();
-
-		// [0.5714,0.5039,0.0000,0.0000,0.0000,0.0000]
-		return StringMetrics.compare(metric, name, names);
 	}
 
 }

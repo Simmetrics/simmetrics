@@ -32,6 +32,7 @@ import org.simmetrics.metrics.BlockDistance;
 import org.simmetrics.metrics.CosineSimilarity;
 import org.simmetrics.metrics.Jaro;
 import org.simmetrics.metrics.SimonWhite;
+
 import com.google.common.base.Predicate;
 
 import static org.simmetrics.StringMetricBuilder.with;
@@ -43,8 +44,8 @@ import static org.simmetrics.simplifiers.Simplifiers.toLowerCase;
 import static org.simmetrics.tokenizers.Tokenizers.qGram;
 import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
-@SuppressWarnings({ "javadoc", "static-method" })
-public final class StringMetricsTest {
+@SuppressWarnings("javadoc")
+public class StringMetricsTest {
 
 	public static final class Create {
 
@@ -551,11 +552,13 @@ public final class StringMetricsTest {
 				"Louis Philippe, le Roi Citoyen", "Charles X", "Louis XVIII",
 				"Napoleon II", "Napoleon I" };
 
+		@SuppressWarnings("static-method")
 		@Test
 		public void blockDistance() {
 			assertNotNull(StringMetrics.blockDistance());
 		}
 
+		@SuppressWarnings("deprecation")
 		@Test
 		public void compareArray() {
 			assertArrayEquals(expected,
@@ -563,6 +566,7 @@ public final class StringMetricsTest {
 
 		}
 
+		@SuppressWarnings("deprecation")
 		@Test
 		public void compareArrays() {
 			assertArrayEquals(new float[0], StringMetrics.compareArrays(metric,
@@ -580,12 +584,14 @@ public final class StringMetricsTest {
 
 		}
 
+		@SuppressWarnings("deprecation")
 		@Test(expected = IllegalArgumentException.class)
 		public void compareArraysDifferentLength() {
 			StringMetrics.compareArrays(metric, new String[] { "" },
 					new String[] {});
 		}
 
+		@SuppressWarnings("deprecation")
 		@Test
 		public void compareList() {
 			assertArrayEquals(

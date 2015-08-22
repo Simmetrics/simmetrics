@@ -22,7 +22,6 @@
 package org.simmetrics.example;
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 
@@ -45,14 +44,5 @@ public class StringMetricsExampleTest {
 	public void example03(){
 		assertEquals(0.7270f, StringMetricsExample.example03(), DELTA);
 	}
-	
-	@Test
-	public void example04(){
-		Assert.assertArrayEquals(new float[]{
-				0.5714f,0.5039f,0.0000f,0.0000f,0.0000f,0.0000f
-				
-		}, StringMetricsExample.example04(), DELTA);
-	}
-	
 
 }

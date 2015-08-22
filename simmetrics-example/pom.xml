@@ -3,17 +3,24 @@
 	<parent>
 		<groupId>com.github.mpkorstanje</groupId>
 		<artifactId>simmetrics</artifactId>
-		<version>3.2.0</version>
+		<version>3.2.1</version>
 	</parent>
 	<artifactId>simmetrics-example</artifactId>
-	<name>Example</name>
+	<name>Simmetrics Examples</name>
 	<description>Usage examples for SimMetrics</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.github.mpkorstanje</groupId>
 			<artifactId>simmetrics-core</artifactId>
-			<version>3.2.0</version>
+			<version>3.2.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

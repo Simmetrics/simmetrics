@@ -1,24 +1,25 @@
 /*
- * SimMetrics - SimMetrics is a java library of Similarity or Distance Metrics,
- * e.g. Levenshtein Distance, that provide float based similarity measures
- * between String Data. All metrics return consistent measures rather than
- * unbounded similarity scores.
- * 
- * Copyright (C) 2014 SimMetrics authors
- * 
- * This file is part of SimMetrics. This program is free software: you can
- * redistribute it and/or modify it under the terms of the GNU General Public
- * License as published by the Free Software Foundation, either version 3 of the
+ * #%L
+ * Simmetrics Core
+ * %%
+ * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  * 
- * You should have received a copy of the GNU General Public License along with
- * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * #L%
  */
+
 package org.simmetrics.metrics;
 
 import org.simmetrics.Metric;
@@ -41,7 +42,10 @@ public final class JaroTest {
 			return new T[] { new T(0.9047f, "He0ll0o", "Hel00lo"),
 					new T(0.9047f, "He\0ll\0o", "Hel\0\0lo"),
 					new T(0.8888f, "0000", "000000"),
-					new T(0.8888f, "\0\0\0\0", "\0\0\0\0\0\0"), };
+					new T(0.8888f, "\0\0\0\0", "\0\0\0\0\0\0"), 
+					new T(0.8666f, "H0000", "\0000000"),
+
+			};
 
 		}
 
@@ -69,7 +73,11 @@ public final class JaroTest {
 		protected T[] getStringTests() {
 			return new T[] { new T(0.9444f, "MARTHA", "MARHTA"),
 					new T(0.8222f, "DWAYNE", "DUANE"),
-					new T(0.7666f, "DIXON", "DICKSONX") };
+					new T(0.7666f, "DIXON", "DICKSONX"),
+					//Not from Wikipedia, proves triangle inequality doesn't hold
+					new T(0.5999f, "OZYMANDIAS", "MARCUS") ,
+
+			};
 		}
 
 		@Override

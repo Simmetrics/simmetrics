@@ -1,6 +1,18 @@
 Change Log
 ==========
 
+## Since 3.2.1 ##
+ - Fixed bug where EuclidianDistance would return incorrect similarity when one argument was empty
+ - Fixed bug where Tokenizers.whiteSpace and Whitespace would return leading empty tokens
+ - Corrected DamerauLevenshtein.tostring to include all cost parameters
+ - Case, NonDiacritics, WordCharacters simplifiers have been depreciated over having unclear names and to avoid leaking implementation details. Equivalent functions have been added to Simplifiers
+ - Added Simplifiers.replaceAll and Simplifiers.removeAll. These respecively replace and remove parts of a string based on a regex.
+ - QGram, QGramExtended and WhiteSpace have been deprecated due to having ambigious names and to avoid leaking implementation details. 
+ - Added Tokenizers.pattern to create a tokenizer that splits a string based on a regex.
+ - StringMetrics.compare and StringMetrics.compareArrays have been depreciated for a lack of a clear use case.
+
+
+
 ## Since 3.2.0 ##
 
  - Better handling of null elements in ListDistance and ListMetric
@@ -14,7 +26,7 @@ Change Log
  - Added Damerau-Levenshtein
  - Added weights to Levensthein
  - Minor optimization for Levensthein
- - Fixed bug where Levensthein would return incorrect similarity one argument was empty
+ - Fixed bug where Levensthein would return incorrect similarity when one argument was empty
  - Fixed bug where NeedlemanWunch would return incorrect similarity one argument was empty
  - SmithWaterman.toString and SmithWatermanGotoh.toString now return correct values
  - Jaro now returns correct similarity for strings containing \0

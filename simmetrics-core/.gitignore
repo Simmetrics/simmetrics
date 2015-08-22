@@ -5,3 +5,4 @@
 /bin/
 pom.xml.releaseBackup
 pom.xml.versionsBackup
+/target/

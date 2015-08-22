@@ -1,36 +1,41 @@
 /*
- * SimMetrics - SimMetrics is a java library of Similarity or Distance Metrics,
- * e.g. Levenshtein Distance, that provide float based similarity measures
- * between String Data. All metrics return consistent measures rather than
- * unbounded similarity scores.
- * 
- * Copyright (C) 2014 SimMetrics authors
- * 
- * This file is part of SimMetrics. This program is free software: you can
- * redistribute it and/or modify it under the terms of the GNU General Public
- * License as published by the Free Software Foundation, either version 3 of the
+ * #%L
+ * Simmetrics Core
+ * %%
+ * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  * 
- * You should have received a copy of the GNU General Public License along with
- * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * #L%
  */
+
 package org.simmetrics.tokenizers;
+
+import static org.simmetrics.tokenizers.Tokenizers.qGram;
+import static org.simmetrics.tokenizers.Tokenizers.qGramWithFilter;
+import static org.simmetrics.tokenizers.Tokenizers.qGramWithPadding;
 
 import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings("javadoc")
 public final class QGramTest {
 
-	public static final class QGram1TokenizerTest extends TokenizerTest {
+	public static final class QGram1 extends TokenizerTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return new QGram(1);
+			return Tokenizers.qGram(1);
 
 		}
 
@@ -51,12 +56,46 @@ public final class QGramTest {
 							"3", "4", "5", "6", "7", "8", "9") };
 		}
 	}
-	
-	public static final class QGram2ExtendedTokenizerTest extends TokenizerTest {
+
+	public static final class QGram2WithPadding extends TokenizerTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return new QGramExtended(2);
+			return qGramWithPadding(2,"@");
+		}
+
+		@Override
+		public T[] getTests() {
+
+			return new T[] {
+					new T(""),
+					new T("1", "@1", "1@"),
+					new T("12", "@1", "12", "2@")};
+		}
+	}
+	
+	public static final class QGram2WithTwoSidedPadding extends TokenizerTest {
+
+		@Override
+		protected Tokenizer getTokenizer() {
+			return qGramWithPadding(2,"L","R");
+		}
+
+		@Override
+		public T[] getTests() {
+
+			return new T[] {
+					new T(""),
+					new T("1", "L1", "1R"),
+					new T("12", "L1", "12", "2R")};
+		}
+	}
+	
+	public static final class QGram2WithDefaultPadding extends TokenizerTest {
+
+		@Override
+		protected Tokenizer getTokenizer() {
+			return qGramWithPadding(2);
 		}
 
 		@Override
@@ -77,11 +116,11 @@ public final class QGramTest {
 		}
 	}
 	
-	public static final class QGram2TokenizerTest extends TokenizerTest {
+	public static final class QGram2 extends TokenizerTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return new QGram(2);
+			return qGram(2);
 		}
 
 		@Override
@@ -100,12 +139,28 @@ public final class QGramTest {
 							"12", "23", "34", "45", "56", "67", "78", "89") };
 		}
 	}
-	
-	public static final class QGram3ExtendedTokenizerTest extends TokenizerTest {
+	public static final class QGram2WithFilter extends TokenizerTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return new QGramExtended(3);
+			return qGramWithFilter(2);
+		}
+
+		@Override
+		public T[] getTests() {
+
+			return new T[] {
+					new T(""),
+					new T("1"),
+					new T("12","12")};
+		}
+	}
+	
+	public static final class QGram3WithDefaultPadding extends TokenizerTest {
+
+		@Override
+		protected Tokenizer getTokenizer() {
+			return qGramWithPadding(3);
 		}
 
 		@Override
@@ -127,11 +182,11 @@ public final class QGramTest {
 		}
 	}
 	
-	public static final class QGram3TokenizerTest extends TokenizerTest {
+	public static final class QGram3 extends TokenizerTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return new QGram(3);
+			return qGram(3);
 		}
 
 		@Override

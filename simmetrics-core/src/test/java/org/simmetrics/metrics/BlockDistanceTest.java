@@ -1,27 +1,29 @@
 /*
- * SimMetrics SimMetrics is a java library of Similarity or Distance Metrics,
- * e.g. Levenshtein Distance, that provide float based similarity measures
- * between String Data. All metrics return consistent measures rather than
- * unbounded similarity scores.
- * 
- * Copyright (C) 2014 SimMetrics authors
- * 
- * This file is part of SimMetrics. This program is free software: you can
- * redistribute it and/or modify it under the terms of the GNU General Public
- * License as published by the Free Software Foundation, either version 3 of the
+ * #%L
+ * Simmetrics Core
+ * %%
+ * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  * 
- * You should have received a copy of the GNU General Public License along with
- * SimMetrics. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * #L%
  */
+
 package org.simmetrics.metrics;
 
 import static java.util.Arrays.asList;
+import static org.simmetrics.tokenizers.Tokenizers.qGram;
 
 import java.util.List;
 
@@ -29,7 +31,6 @@ import org.simmetrics.Distance;
 import org.simmetrics.ListDistanceTest;
 import org.simmetrics.ListMetricTest;
 import org.simmetrics.Metric;
-import org.simmetrics.tokenizers.QGram;
 import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings("javadoc")
@@ -44,7 +45,7 @@ public final class BlockDistanceTest {
 
 		@Override
 		protected boolean satisfiesSubadditivity() {
-			return false;
+			return true;
 		}
 
 		@Override
@@ -54,12 +55,14 @@ public final class BlockDistanceTest {
 					new T(2.0000f, "test string1", "test string2"),
 					new T(1.0000f, "test", "test string2"),
 					new T(2.0000f, "", "test string2"),
+					new T(2.0000f, getEmpty(), asList("test","string2")),
 					new T(2.0000f, asList("test", null), asList("test","string2")),
 					new T(2.0000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 					new T(2.0000f, "aaa bbb", "aaa aaa"),
 					new T(1.0000f, "aaa", "aaa aaa"),
 					new T(2.0000f, "a b c d", "a b c e"),
-					new T(4.0000f, "a b c d", "a b e f") };
+					new T(4.0000f, "a b c d", "a b e f"),
+			};
 		}
 	}
 
@@ -72,7 +75,7 @@ public final class BlockDistanceTest {
 
 		@Override
 		protected T[] getListTests() {
-			final Tokenizer q1 = new QGram(1);
+			final Tokenizer q1 = qGram(1);
 			return new T[] { 
 					new T(0.5000f, asList("test", null), asList("test","string2")),
 					new T(1.0000f, "test string1", "test string1"),

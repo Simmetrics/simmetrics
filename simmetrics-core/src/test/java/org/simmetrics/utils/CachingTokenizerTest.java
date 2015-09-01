@@ -29,6 +29,7 @@ import org.simmetrics.utils.CachingTokenizer;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("javadoc")
@@ -67,7 +68,7 @@ public class CachingTokenizerTest extends TokenizerTest {
 		};
 	}
 	@Test
-	public final void tokenizeToListUsesCache() {
+	public final void tokenizeToListShouldUseCache() {
 		for (T t : tests) {
 			tokenizer.tokenizeToList(t.string());
 		}
@@ -78,7 +79,7 @@ public class CachingTokenizerTest extends TokenizerTest {
 
 
 	@Test
-	public final void tokenizeToSetUsesCache() {
+	public final void tokenizeToSetShouldUseCache() {
 		for (T t : tests) {
 			tokenizer.tokenizeToSet(t.string());
 		}
@@ -86,4 +87,5 @@ public class CachingTokenizerTest extends TokenizerTest {
 		 verify(innerTokenizer, times(1)).tokenizeToSet("ABC");
 		 verify(innerTokenizer, times(2)).tokenizeToSet("CCC");
 	}
+	
 }

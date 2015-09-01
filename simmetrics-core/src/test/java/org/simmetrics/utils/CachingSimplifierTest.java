@@ -25,6 +25,7 @@ package org.simmetrics.utils;
 import org.junit.Test;
 import org.simmetrics.simplifier.SimplifierTest;
 import org.simmetrics.simplifiers.Simplifier;
+
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("javadoc")
@@ -49,15 +50,20 @@ public class CachingSimplifierTest extends SimplifierTest {
 	@Override
 	protected final T[] getTests() {
 
-		return new T[] { new T("ABC", "abc"), new T("CCC", "ccc"),
-				new T("ABC", "abc"), new T("EEE", "eee"), new T("ABC", "abc"),
-				new T("CCC", "ccc"), new T("", "")
+		return new T[] { 
+				new T("ABC", "abc"), 
+				new T("CCC", "ccc"),
+				new T("ABC", "abc"), 
+				new T("EEE", "eee"), 
+				new T("ABC", "abc"),
+				new T("CCC", "ccc"), 
+				new T("", "")
 
 		};
 	}
 
 	@Test
-	public final void simplifyUsesCache() {
+	public final void simplifyShouldUseCache() {
 		for (T t : tests) {
 			simplifier.simplify(t.string());
 		}
@@ -65,5 +71,5 @@ public class CachingSimplifierTest extends SimplifierTest {
 		verify(innerSimplifier, times(1)).simplify("ABC");
 		verify(innerSimplifier, times(2)).simplify("CCC");
 	}
-
+	
 }

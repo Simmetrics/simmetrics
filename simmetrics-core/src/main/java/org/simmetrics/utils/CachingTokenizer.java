@@ -145,6 +145,7 @@ public class CachingTokenizer implements TokenizingTokenizer {
 		try {
 			return arrayCache.get(input);
 		} catch (ExecutionException e) {
+			// Can't happen. Tokenizer may not throw checked exceptions
 			throw new IllegalStateException(e);
 		}
 	}
@@ -154,6 +155,7 @@ public class CachingTokenizer implements TokenizingTokenizer {
 		try {
 			return setCache.get(input);
 		} catch (ExecutionException e) {
+			// Can't happen. Tokenizer may not throw checked exceptions
 			throw new IllegalStateException(e);
 		}
 	}

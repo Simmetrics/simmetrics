@@ -89,12 +89,7 @@ public class CachingSimplifier implements SimplifyingSimplifier {
 
 					@Override
 					public String load(String key) throws Exception {
-						Simplifier s = getSimplifier();
-						if (s == null) {
-							throw new NullPointerException(
-									"No simplifier was set");
-						}
-						return s.simplify(key);
+						return getSimplifier().simplify(key);
 					}
 
 				});
@@ -115,6 +110,7 @@ public class CachingSimplifier implements SimplifyingSimplifier {
 		try {
 			return cache.get(input);
 		} catch (ExecutionException e) {
+			// Can't happen. Simplifier may not throw checked exceptions
 			throw new IllegalStateException(e);
 		}
 	}

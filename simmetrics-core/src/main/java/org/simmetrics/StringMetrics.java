@@ -37,6 +37,7 @@ import org.simmetrics.metrics.CosineSimilarity;
 import org.simmetrics.metrics.DamerauLevenshtein;
 import org.simmetrics.metrics.DiceSimilarity;
 import org.simmetrics.metrics.EuclideanDistance;
+import org.simmetrics.metrics.Identity;
 import org.simmetrics.metrics.JaccardSimilarity;
 import org.simmetrics.metrics.Jaro;
 import org.simmetrics.metrics.JaroWinkler;
@@ -251,6 +252,11 @@ public final class StringMetrics {
 		@Override
 		public float compare(String a, String b) {
 			return metric.compare(a, b);
+		}
+		
+		@Override
+		public String toString() {
+			return metric.toString();
 		}
 
 	}
@@ -568,6 +574,15 @@ public final class StringMetrics {
 	public static StringMetric euclideanDistance() {
 		return createForListMetric(new EuclideanDistance<String>(),
 				whitespace());
+	}
+	
+	/**
+	 * Returns an string metric that uses the {@link Identity} metric.
+	 * 
+	 * @return an identity string metric
+	 */
+	public static StringMetric identity(){
+		return create(new Identity<String>());
 	}
 
 	/**

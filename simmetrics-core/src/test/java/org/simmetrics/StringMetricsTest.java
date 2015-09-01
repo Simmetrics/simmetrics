@@ -32,6 +32,7 @@ import org.junit.runner.RunWith;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.BlockDistance;
 import org.simmetrics.metrics.CosineSimilarity;
+import org.simmetrics.metrics.Identity;
 import org.simmetrics.metrics.Jaro;
 import org.simmetrics.metrics.SimonWhite;
 
@@ -46,12 +47,41 @@ import static org.simmetrics.simplifiers.Simplifiers.toLowerCase;
 import static org.simmetrics.tokenizers.Tokenizers.qGram;
 import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
-@SuppressWarnings("javadoc")
+@SuppressWarnings({"javadoc","static-method"})
 @RunWith(Enclosed.class)
 public class StringMetricsTest {
 
 	@RunWith(Enclosed.class)
 	public static final class Create {
+
+		public static final class ForStringMetric {
+
+			@Test
+			public void shouldReturnSame() {
+				StringMetric s = StringMetrics.identity();
+				assertSame(s, StringMetrics.create(s));
+			}
+
+		}
+
+		public static final class ForGenericMetric extends StringMetricTest {
+
+
+			@Override
+			protected Metric<String> getMetric() {
+				return StringMetrics.create(new Identity<String>());
+			}
+
+			@Override
+			protected T[] getStringTests() {
+				return new T[] { 
+						new T(1.000f, "a", "a"),
+						new T(0.000f, "a", "b"),
+						new T(0.000f, "a", "") 
+				};
+			}
+
+		}
 
 		public static final class ForList extends StringMetricTest {
 
@@ -556,7 +586,6 @@ public class StringMetricsTest {
 				"Louis Philippe, le Roi Citoyen", "Charles X", "Louis XVIII",
 				"Napoleon II", "Napoleon I" };
 
-		@SuppressWarnings("static-method")
 		@Test
 		public void blockDistance() {
 			assertNotNull(StringMetrics.blockDistance());
@@ -604,8 +633,7 @@ public class StringMetricsTest {
 							Arrays.asList(names1)), DELTA);
 		}
 	}
-	
-	@SuppressWarnings("static-method")
+
 	public static final class CreateStringMetrics {
 		@Test
 		public void damerauLevenshtein() {

@@ -23,7 +23,6 @@
 
 package org.simmetrics.utils;
 
-import static com.google.common.collect.Multisets.unmodifiableMultiset;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Collections.unmodifiableSet;
 
@@ -37,7 +36,6 @@ import org.simmetrics.tokenizers.Tokenizer;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.google.common.collect.Multiset;
 
 /**
  * Tokenizer that caches tokenized results. Can be used to improve performance
@@ -58,7 +56,7 @@ public class CachingTokenizer implements TokenizingTokenizer {
 
 	private final LoadingCache<String, Set<String>> setCache;
 
-	private final LoadingCache<String, Multiset<String>> multisetCache;
+//	private final LoadingCache<String, Multiset<String>> multisetCache;
 
 	/**
 	 * Creates a caching tokenizer with {@code initialCapacity} and
@@ -98,16 +96,16 @@ public class CachingTokenizer implements TokenizingTokenizer {
 
 				});
 		
-		this.multisetCache = CacheBuilder.newBuilder()
-				.initialCapacity(initialCapacity).maximumSize(maximumSize)
-				.build(new CacheLoader<String, Multiset<String>>() {
-
-					@Override
-					public Multiset<String> load(String key) throws Exception {
-						return unmodifiableMultiset(getTokenizer().tokenizeToMultiset(key));
-					}
-
-				});
+//		this.multisetCache = CacheBuilder.newBuilder()
+//				.initialCapacity(initialCapacity).maximumSize(maximumSize)
+//				.build(new CacheLoader<String, Multiset<String>>() {
+//
+//					@Override
+//					public Multiset<String> load(String key) throws Exception {
+//						return unmodifiableMultiset(getTokenizer().tokenizeToMultiset(key));
+//					}
+//
+//				});
 	}
 
 	/**
@@ -160,14 +158,14 @@ public class CachingTokenizer implements TokenizingTokenizer {
 		}
 	}
 	
-	@Override
-	public Multiset<String> tokenizeToMultiset(String input) {
-		try {
-			return multisetCache.get(input);
-		} catch (ExecutionException e) {
-			throw new IllegalStateException(e);
-		}
-	}
+//	@Override
+//	public Multiset<String> tokenizeToMultiset(String input) {
+//		try {
+//			return multisetCache.get(input);
+//		} catch (ExecutionException e) {
+//			throw new IllegalStateException(e);
+//		}
+//	}
 
 	@Override
 	public String toString() {

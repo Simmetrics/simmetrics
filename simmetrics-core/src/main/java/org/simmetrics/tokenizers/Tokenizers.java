@@ -43,9 +43,6 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Multiset;
-import com.google.common.collect.Multisets;
 
 /**
  * Utilities for tokenizers. Construct simple tokenizers, chain multiple
@@ -82,11 +79,11 @@ public final class Tokenizers {
 
 			}
 
-			@Override
-			Collection<String> tokenizeToFilteredMultiset(String input) {
-				return Collections2.filter(
-						tokenizer.tokenizeToTransformedMultiset(input), predicate);
-			}
+//			@Override
+//			Collection<String> tokenizeToFilteredMultiset(String input) {
+//				return Collections2.filter(
+//						tokenizer.tokenizeToTransformedMultiset(input), predicate);
+//			}
 			
 			@Override
 			Collection<String> tokenizeToFilteredSet(String input) {
@@ -100,11 +97,11 @@ public final class Tokenizers {
 						tokenizer.tokenizeToTransformedList(input), predicate));
 			}
 
-			@Override
-			public Multiset<String> tokenizeToMultiset(String input) {
-				return HashMultiset.create(Collections2.filter(
-						tokenizer.tokenizeToTransformedMultiset(input), predicate));
-			}
+//			@Override
+//			public Multiset<String> tokenizeToMultiset(String input) {
+//				return HashMultiset.create(Collections2.filter(
+//						tokenizer.tokenizeToTransformedMultiset(input), predicate));
+//			}
 			
 			@Override
 			public Set<String> tokenizeToSet(String input) {
@@ -156,10 +153,10 @@ public final class Tokenizers {
 
 		}
 
-		Collection<String> tokenizeToFilteredMultiset(String input) {
-			return Collections2.filter(tokenizer.tokenizeToMultiset(input),
-					predicate);
-		}
+//		Collection<String> tokenizeToFilteredMultiset(String input) {
+//			return Collections2.filter(tokenizer.tokenizeToMultiset(input),
+//					predicate);
+//		}
 		
 		Collection<String> tokenizeToFilteredSet(String input) {
 			return Collections2.filter(tokenizer.tokenizeToSet(input),
@@ -172,11 +169,11 @@ public final class Tokenizers {
 					tokenizer.tokenizeToList(input), predicate));
 		}
 
-		@Override
-		public Multiset<String> tokenizeToMultiset(String input) {
-			return HashMultiset.create(Multisets.filter(
-					tokenizer.tokenizeToMultiset(input), predicate));
-		}
+//		@Override
+//		public Multiset<String> tokenizeToMultiset(String input) {
+//			return HashMultiset.create(Multisets.filter(
+//					tokenizer.tokenizeToMultiset(input), predicate));
+//		}
 		
 		@Override
 		public Set<String> tokenizeToSet(String input) {
@@ -226,29 +223,29 @@ public final class Tokenizers {
 			return tokens;
 		}
 
-		@Override
-		public Multiset<String> tokenizeToMultiset(String input) {
-
-			// tokenizeToList is not reused here on purpose. Removing duplicate
-			// words early means these don't have to be tokenized multiple
-			// times. Increases performance.
-
-			Multiset<String> tokens = HashMultiset.create(input.length());
-			tokens.add(input);
-
-			Multiset<String> newTokens =  HashMultiset.create(input.length());
-			for (Tokenizer t : tokenizers) {
-				for (String token : tokens) {
-					newTokens.addAll(t.tokenizeToList(token));
-				}
-				Multiset<String> swap = tokens;
-				tokens = newTokens;
-				newTokens = swap;
-				newTokens.clear();
-			}
-
-			return tokens;
-		}
+//		@Override
+//		public Multiset<String> tokenizeToMultiset(String input) {
+//
+//			// tokenizeToList is not reused here on purpose. Removing duplicate
+//			// words early means these don't have to be tokenized multiple
+//			// times. Increases performance.
+//
+//			Multiset<String> tokens = HashMultiset.create(input.length());
+//			tokens.add(input);
+//
+//			Multiset<String> newTokens =  HashMultiset.create(input.length());
+//			for (Tokenizer t : tokenizers) {
+//				for (String token : tokens) {
+//					newTokens.addAll(t.tokenizeToList(token));
+//				}
+//				Multiset<String> swap = tokens;
+//				tokens = newTokens;
+//				newTokens = swap;
+//				newTokens.clear();
+//			}
+//
+//			return tokens;
+//		}
 		
 		@Override
 		public Set<String> tokenizeToSet(final String input) {
@@ -328,11 +325,11 @@ public final class Tokenizers {
 						tokenizer.tokenizeToFilteredList(input), function));
 			}
 
-			@Override
-			public Multiset<String> tokenizeToMultiset(String input) {
-				return HashMultiset.create(Collections2.transform(
-						tokenizer.tokenizeToFilteredMultiset(input), function));
-			}
+//			@Override
+//			public Multiset<String> tokenizeToMultiset(String input) {
+//				return HashMultiset.create(Collections2.transform(
+//						tokenizer.tokenizeToFilteredMultiset(input), function));
+//			}
 			@Override
 			public Set<String> tokenizeToSet(String input) {
 				return newHashSet(Collections2.transform(
@@ -344,11 +341,11 @@ public final class Tokenizers {
 						tokenizer.tokenizeToFilteredList(input), function);
 			}
 
-			@Override
-			Collection<String> tokenizeToTransformedMultiset(String input) {
-				return Collections2.transform(
-						tokenizer.tokenizeToFilteredMultiset(input), function);
-			}
+//			@Override
+//			Collection<String> tokenizeToTransformedMultiset(String input) {
+//				return Collections2.transform(
+//						tokenizer.tokenizeToFilteredMultiset(input), function);
+//			}
 			
 			@Override
 			Collection<String> tokenizeToTransformedSet(String input) {
@@ -401,11 +398,11 @@ public final class Tokenizers {
 					tokenizer.tokenizeToList(input), function));
 		}
 
-		@Override
-		public Multiset<String> tokenizeToMultiset(String input) {
-			return HashMultiset.create(Collections2.transform(
-					tokenizer.tokenizeToMultiset(input), function));
-		}
+//		@Override
+//		public Multiset<String> tokenizeToMultiset(String input) {
+//			return HashMultiset.create(Collections2.transform(
+//					tokenizer.tokenizeToMultiset(input), function));
+//		}
 
 		@Override
 		public Set<String> tokenizeToSet(String input) {
@@ -418,10 +415,10 @@ public final class Tokenizers {
 					function);
 		}
 
-		Collection<String> tokenizeToTransformedMultiset(String input) {
-			return Collections2.transform(tokenizer.tokenizeToMultiset(input),
-					function);
-		}
+//		Collection<String> tokenizeToTransformedMultiset(String input) {
+//			return Collections2.transform(tokenizer.tokenizeToMultiset(input),
+//					function);
+//		}
 		
 		Collection<String> tokenizeToTransformedSet(String input) {
 			return Collections2.transform(tokenizer.tokenizeToSet(input),

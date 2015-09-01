@@ -604,41 +604,44 @@ public class StringMetricsTest {
 							Arrays.asList(names1)), DELTA);
 		}
 	}
+	
+	@SuppressWarnings("static-method")
+	public static final class CreateStringMetrics {
+		@Test
+		public void damerauLevenshtein() {
+			assertNotNull(StringMetrics.damerauLevenshtein());
+		}
 
-	@Test
-	public void damerauLevenshtein() {
-		assertNotNull(StringMetrics.damerauLevenshtein());
-	}
+		@Test
+		public void jaro() {
+			assertNotNull(StringMetrics.jaro());
+		}
 
-	@Test
-	public void jaro() {
-		assertNotNull(StringMetrics.jaro());
-	}
+		@Test
+		public void jaroWinkler() {
+			assertNotNull(StringMetrics.jaroWinkler());
+		}
 
-	@Test
-	public void jaroWinkler() {
-		assertNotNull(StringMetrics.jaroWinkler());
-	}
+		@Test
+		public void levenshtein() {
+			assertNotNull(StringMetrics.levenshtein());
+		}
 
-	@Test
-	public void levenshtein() {
-		assertNotNull(StringMetrics.levenshtein());
-	}
+		@Test
+		public void needlemanWunch() {
+			assertNotNull(StringMetrics.needlemanWunch());
 
-	@Test
-	public void needlemanWunch() {
-		assertNotNull(StringMetrics.needlemanWunch());
+		}
 
-	}
+		@Test
+		public void smithWaterman() {
+			assertNotNull(StringMetrics.smithWaterman());
 
-	@Test
-	public void smithWaterman() {
-		assertNotNull(StringMetrics.smithWaterman());
+		}
 
-	}
-
-	@Test
-	public void smithWatermanGotoh() {
-		assertNotNull(StringMetrics.smithWatermanGotoh());
+		@Test
+		public void smithWatermanGotoh() {
+			assertNotNull(StringMetrics.smithWatermanGotoh());
+		}
 	}
 }

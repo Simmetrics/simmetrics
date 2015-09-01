@@ -22,8 +22,6 @@
 
 package org.simmetrics.tokenizers;
 
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
 import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings({"javadoc","deprecation"})
@@ -40,6 +38,7 @@ public class WhitespaceTokenizerTest extends TokenizerTest {
 		return new T[] { 
 				new T(""),
 				new T(" "),
+				new T(" A","A"),
 				new T("A B C", "A", "B", "C"),
 				new T("A   B  C", "A", "B", "C"),
 				new T("A\nB", "A", "B"),

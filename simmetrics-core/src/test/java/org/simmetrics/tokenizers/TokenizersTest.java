@@ -145,7 +145,8 @@ public final class TokenizersTest {
 		}
 	}
 
-	public static final class TokennizerChainTest {
+	@RunWith(Enclosed.class)
+	public static final class TokenizerChainTest {
 
 		public static final class WithChain extends TokenizerTest {
 
@@ -192,31 +193,38 @@ public final class TokenizersTest {
 			}
 		}
 
-		@Test(expected = IllegalArgumentException.class)
-		public void chainWithListContainingNull() {
-			Tokenizers.chain(Arrays.asList(whitespace(), (Tokenizer) null));
-		}
+		public static final class WithIllegalArguments {
 
-		@Test(expected = IllegalArgumentException.class)
-		public void chainWithNull() {
-			Tokenizers.chain((Tokenizer) null);
-		}
+			@Test(expected = IllegalArgumentException.class)
+			public void shouldThrowForListContainingNull() {
+				Tokenizers.chain(Arrays.asList(whitespace(), (Tokenizer) null));
+			}
 
-		@Test(expected = IllegalArgumentException.class)
-		public void chainWithNullInVarArg() {
-			Tokenizers.chain(whitespace(), null, whitespace());
-		}
+			@Test(expected = IllegalArgumentException.class)
+			public void shouldThrowForNull() {
+				Tokenizers.chain((Tokenizer) null);
+			}
 
-		@Test
-		public void chainWithSingle() {
-			Tokenizer t = whitespace();
-			assertSame(t, chain(t));
-		}
+			@Test(expected = IllegalArgumentException.class)
+			public void shouldThrowForNullInVarArg() {
+				Tokenizers.chain(whitespace(), null, whitespace());
+			}
 
-		@Test
-		public void chainWithSingletonList() {
-			Tokenizer t = whitespace();
-			assertSame(t, Tokenizers.chain(Collections.singletonList(t)));
+			public static final class WithSingleArguments {
+
+				@Test
+				public void shouldBeSameForSingle() {
+					Tokenizer t = whitespace();
+					assertSame(t, chain(t));
+				}
+
+				@Test
+				public void shouldBeSameForSingletonList() {
+					Tokenizer t = whitespace();
+					assertSame(t,
+							Tokenizers.chain(Collections.singletonList(t)));
+				}
+			}
 		}
 	}
 

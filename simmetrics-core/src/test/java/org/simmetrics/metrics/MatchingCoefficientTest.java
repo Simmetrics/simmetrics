@@ -24,13 +24,10 @@ package org.simmetrics.metrics;
 
 import static java.util.Arrays.asList;
 
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
 import org.simmetrics.ListMetric;
 import org.simmetrics.ListMetricTest;
 
 @SuppressWarnings("javadoc")
-@RunWith(Enclosed.class)
 public final class MatchingCoefficientTest extends ListMetricTest {
 
 	@Override

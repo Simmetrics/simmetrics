@@ -22,15 +22,12 @@
 
 package org.simmetrics.metrics;
 
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
 import org.simmetrics.ListMetric;
 import org.simmetrics.ListMetricTest;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.MongeElkan;
 
 @SuppressWarnings("javadoc")
-@RunWith(Enclosed.class)
 public final class MongeElkanTest extends ListMetricTest {
 
 	@Override

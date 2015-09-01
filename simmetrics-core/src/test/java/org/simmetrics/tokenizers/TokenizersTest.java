@@ -209,21 +209,20 @@ public final class TokenizersTest {
 			public void shouldThrowForNullInVarArg() {
 				Tokenizers.chain(whitespace(), null, whitespace());
 			}
+		}
 
-			public static final class WithSingleArguments {
+		public static final class WithSingleArguments {
 
-				@Test
-				public void shouldBeSameForSingle() {
-					Tokenizer t = whitespace();
-					assertSame(t, chain(t));
-				}
+			@Test
+			public void shouldBeSameForSingle() {
+				Tokenizer t = whitespace();
+				assertSame(t, chain(t));
+			}
 
-				@Test
-				public void shouldBeSameForSingletonList() {
-					Tokenizer t = whitespace();
-					assertSame(t,
-							Tokenizers.chain(Collections.singletonList(t)));
-				}
+			@Test
+			public void shouldBeSameForSingletonList() {
+				Tokenizer t = whitespace();
+				assertSame(t, Tokenizers.chain(Collections.singletonList(t)));
 			}
 		}
 	}

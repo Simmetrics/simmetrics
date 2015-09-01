@@ -26,6 +26,8 @@ import static java.util.Arrays.asList;
 
 import java.util.List;
 
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 import org.simmetrics.Distance;
 import org.simmetrics.ListDistanceTest;
 import org.simmetrics.ListMetric;
@@ -33,6 +35,7 @@ import org.simmetrics.ListMetricTest;
 import org.simmetrics.metrics.EuclideanDistance;
 
 @SuppressWarnings("javadoc")
+@RunWith(Enclosed.class)
 public final class EuclideanDistanceTest {
 	public final static class DistanceList extends ListDistanceTest {
 

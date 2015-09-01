@@ -22,11 +22,14 @@
 
 package org.simmetrics.metrics;
 
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 import org.simmetrics.Metric;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricTest;
 
 @SuppressWarnings("javadoc")
+@RunWith(Enclosed.class)
 public final class JaroWinklerTest   {
 	/**
 	 * Tests references from <a

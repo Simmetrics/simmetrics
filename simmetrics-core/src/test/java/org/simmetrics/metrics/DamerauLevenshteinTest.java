@@ -23,6 +23,8 @@
 package org.simmetrics.metrics;
 
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 import org.simmetrics.Metric;
 import org.simmetrics.StringDistance;
 import org.simmetrics.StringDistanceTest;
@@ -30,6 +32,7 @@ import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricTest;
 
 @SuppressWarnings({"javadoc","static-method" })
+@RunWith(Enclosed.class)
 public final class DamerauLevenshteinTest {
 
 	@SuppressWarnings("unused")
@@ -55,6 +58,7 @@ public final class DamerauLevenshteinTest {
 		new DamerauLevenshtein(1, 1, -Float.MIN_VALUE);
 	}
 	
+	@RunWith(Enclosed.class)
 	public static final class DistanceString {
 		
 		
@@ -136,7 +140,8 @@ public final class DamerauLevenshteinTest {
 			}
 		}
 	}
-
+	
+	@RunWith(Enclosed.class)
 	public static final class MetricStringTest {
 
 		public static final class UnitCost extends StringMetricTest {

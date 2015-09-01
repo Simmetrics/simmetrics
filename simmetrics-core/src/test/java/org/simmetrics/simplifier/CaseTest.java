@@ -21,10 +21,13 @@
  */
 package org.simmetrics.simplifier;
 
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 import org.simmetrics.simplifiers.Case;
 import org.simmetrics.simplifiers.Simplifier;
 
 @SuppressWarnings({"javadoc","deprecation"})
+@RunWith(Enclosed.class)
 public class CaseTest {
 	
 	public static class CaseUpper extends SimplifierTest {

@@ -22,10 +22,13 @@
 
 package org.simmetrics.metrics.costfunctions;
 
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 import org.simmetrics.metrics.functions.AffineGap;
 import org.simmetrics.metrics.functions.Gap;
 
 @SuppressWarnings("javadoc")
+@RunWith(Enclosed.class)
 public final class AffineGapTest {
 
 	public static final class AffineGap1_1Over3Test extends GapCostTest {

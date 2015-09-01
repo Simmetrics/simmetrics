@@ -27,6 +27,8 @@ import static org.simmetrics.tokenizers.Tokenizers.qGram;
 
 import java.util.List;
 
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 import org.simmetrics.Distance;
 import org.simmetrics.ListDistanceTest;
 import org.simmetrics.ListMetricTest;
@@ -34,6 +36,7 @@ import org.simmetrics.Metric;
 import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings("javadoc")
+@RunWith(Enclosed.class)
 public final class BlockDistanceTest {
 
 	public final static class DistanceList extends ListDistanceTest {

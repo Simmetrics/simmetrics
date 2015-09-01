@@ -22,9 +22,12 @@
 
 package org.simmetrics.tokenizers;
 
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings({"javadoc","deprecation"})
+@RunWith(Enclosed.class)
 public class WhitespaceTokenizerTest extends TokenizerTest {
 
 	@Override

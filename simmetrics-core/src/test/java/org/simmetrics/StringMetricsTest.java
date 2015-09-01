@@ -27,6 +27,8 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.BlockDistance;
 import org.simmetrics.metrics.CosineSimilarity;
@@ -45,8 +47,10 @@ import static org.simmetrics.tokenizers.Tokenizers.qGram;
 import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
 @SuppressWarnings("javadoc")
+@RunWith(Enclosed.class)
 public class StringMetricsTest {
 
+	@RunWith(Enclosed.class)
 	public static final class Create {
 
 		public static final class ForList extends StringMetricTest {

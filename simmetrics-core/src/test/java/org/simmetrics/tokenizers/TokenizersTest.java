@@ -37,6 +37,8 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Tokenizers;
 
@@ -44,6 +46,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 
 @SuppressWarnings({"javadoc","static-method"})
+@RunWith(Enclosed.class)
 public final class TokenizersTest {
 
 	public static final class FilteringFilteringTokenizerTest extends

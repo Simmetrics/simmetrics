@@ -22,12 +22,15 @@
 
 package org.simmetrics.metrics;
 
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 import org.simmetrics.Metric;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricTest;
 import org.simmetrics.metrics.Jaro;
 
 @SuppressWarnings("javadoc")
+@RunWith(Enclosed.class)
 public final class JaroTest {
 
 	public static final class NullCharacters extends StringMetricTest {

@@ -26,9 +26,12 @@ import static org.simmetrics.tokenizers.Tokenizers.qGram;
 import static org.simmetrics.tokenizers.Tokenizers.qGramWithFilter;
 import static org.simmetrics.tokenizers.Tokenizers.qGramWithPadding;
 
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings("javadoc")
+@RunWith(Enclosed.class)
 public final class QGramTest {
 
 	public static final class QGram1 extends TokenizerTest {

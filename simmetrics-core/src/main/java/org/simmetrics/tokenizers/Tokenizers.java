@@ -43,6 +43,8 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 /**
  * Utilities for tokenizers. Construct simple tokenizers, chain multiple
@@ -159,7 +161,7 @@ public final class Tokenizers {
 //		}
 		
 		Collection<String> tokenizeToFilteredSet(String input) {
-			return Collections2.filter(tokenizer.tokenizeToSet(input),
+			return Sets.filter(tokenizer.tokenizeToSet(input),
 					predicate);
 		}
 		
@@ -411,7 +413,7 @@ public final class Tokenizers {
 		}
 		
 		Collection<String> tokenizeToTransformedList(String input) {
-			return Collections2.transform(tokenizer.tokenizeToList(input),
+			return Lists.transform(tokenizer.tokenizeToList(input),
 					function);
 		}
 

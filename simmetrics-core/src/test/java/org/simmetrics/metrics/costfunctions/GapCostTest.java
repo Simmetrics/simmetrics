@@ -52,9 +52,9 @@ public abstract class GapCostTest {
 
 	protected Gap cost;
 
-	public abstract Gap getCost();
+	protected abstract Gap getCost();
 
-	public abstract T[] getTests();
+	protected abstract T[] getTests();
 
 	@Before
 	public void setUp() throws Exception {

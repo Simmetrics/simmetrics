@@ -33,7 +33,7 @@ public class WhitespaceTokenizerTest extends TokenizerTest {
 	}
 
 	@Override
-	public T[] getTests() {
+	protected T[] getTests() {
 
 		return new T[] { 
 				new T(""),

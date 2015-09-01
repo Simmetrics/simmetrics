@@ -48,7 +48,7 @@ public final class OverlapCoefficientTest extends SetMetricTest {
 	}
 
 	@Override
-	public T[] getSetTests() {
+	protected T[] getSetTests() {
 
 		return new T[] {
 				new T(0.5000f, "test string1", "test string2"),

@@ -28,12 +28,12 @@ import org.simmetrics.metrics.functions.LinearGap;
 @SuppressWarnings("javadoc")
 public final class LinearGapTest extends GapCostTest {
 	@Override
-	public Gap getCost() {
+	protected Gap getCost() {
 		return new LinearGap(-0.42f);
 	}
 
 	@Override
-	public T[] getTests() {
+	protected T[] getTests() {
 		final String testString = "hello world AAAAAAA BBB ABCDEF this is a test";
 		return new T[] { new T(-2.1000f, testString, 0, 6),
 				new T(-0.0000f, testString, 3, 4),

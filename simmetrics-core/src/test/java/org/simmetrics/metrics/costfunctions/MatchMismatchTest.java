@@ -29,12 +29,12 @@ import org.simmetrics.metrics.functions.Substitution;
 public class MatchMismatchTest extends SubstitutionTest {
 	
 	@Override
-	public Substitution getCost() {
+	protected Substitution getCost() {
 		return new MatchMismatch(1.0f, -0.25f);
 	}
 
 	@Override
-	public T[] getTests() {
+	protected T[] getTests() {
 		return new T[]{
 				new T(1.000f, "a", 0, "a", 0),
 				new T(-0.25f, "a", 0, "b", 0),

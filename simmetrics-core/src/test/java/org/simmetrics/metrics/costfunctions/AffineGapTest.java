@@ -34,12 +34,12 @@ public final class AffineGapTest {
 	public static final class AffineGap1_1Over3Test extends GapCostTest {
 
 		@Override
-		public Gap getCost() {
+		protected Gap getCost() {
 			return new AffineGap(-1f, -1 / 3f);
 		}
 
 		@Override
-		public T[] getTests() {
+		protected T[] getTests() {
 			final String testString = "hello world AAAAAAA BBB ABCDEF this is a test";
 			return new T[] { new T(-2.6667f, testString, 0, 6),
 					new T(-1.0000f, testString, 3, 4),
@@ -53,12 +53,12 @@ public final class AffineGapTest {
 	public static final class AffineGap5_1Test extends GapCostTest {
 
 		@Override
-		public Gap getCost() {
+		protected Gap getCost() {
 			return new AffineGap(-5.0f, -1.0f);
 		}
 
 		@Override
-		public T[] getTests() {
+		protected T[] getTests() {
 			final String testString = "hello world AAAAAAA BBB ABCDEF this is a test";
 			return new T[] { new T(-10.0000f, testString, 0, 6),
 					new T(-5.0000f, testString, 3, 4),

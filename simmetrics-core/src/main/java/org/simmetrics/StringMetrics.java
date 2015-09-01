@@ -241,6 +241,20 @@ public final class StringMetrics {
 
 	}
 
+	private static final class ForString implements StringMetric {
+		private final Metric<String> metric;
+
+		ForString(Metric<String> metric) {
+			this.metric = metric;
+		}
+
+		@Override
+		public float compare(String a, String b) {
+			return metric.compare(a, b);
+		}
+
+	}
+
 	private static final class ForStringWithSimplifier implements StringMetric {
 
 		private final Metric<String> metric;
@@ -371,6 +385,22 @@ public final class StringMetrics {
 	 */
 	public static StringMetric cosineSimilarity() {
 		return createForSetMetric(new CosineSimilarity<String>(), whitespace());
+	}
+
+	/**
+	 * Either constructs a new string metric or returns the original metric.
+	 * 
+	 * @param metric
+	 *            a metric for strings
+	 * 
+	 * @return a string metric.
+	 */
+	public static StringMetric create(Metric<String> metric) {
+		if (metric instanceof StringMetric) {
+			return (StringMetric) metric;
+		}
+
+		return new ForString(metric);
 	}
 
 	/**

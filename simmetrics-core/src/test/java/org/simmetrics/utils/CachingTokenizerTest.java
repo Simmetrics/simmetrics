@@ -56,7 +56,7 @@ public class CachingTokenizerTest extends TokenizerTest {
 	}
 
 	@Override
-	public final T[] getTests() {
+	protected final T[] getTests() {
 
 		return new T[] { new T("ABC", "ABC")
 				, new T("CCC", "CCC"),

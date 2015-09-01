@@ -59,7 +59,7 @@ public final class HammingDistanceTest {
 		}
 
 		@Test(expected = IllegalArgumentException.class)
-		public void differentSize() {
+		public void shouldThrowForDifferentLength() {
 			getMetric().distance(asList("test", "string1"), asList("test"));
 		}
 
@@ -83,7 +83,7 @@ public final class HammingDistanceTest {
 		}
 
 		@Test(expected = IllegalArgumentException.class)
-		public void differentLength() {
+		public void shouldThrowForDifferentLength() {
 			getMetric().distance("test", "test string2");
 		}
 

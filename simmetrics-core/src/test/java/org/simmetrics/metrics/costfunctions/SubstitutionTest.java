@@ -55,9 +55,9 @@ public abstract class SubstitutionTest {
 
 	protected Substitution cost;
 
-	public abstract Substitution getCost();
+	protected abstract Substitution getCost();
 
-	public abstract T[] getTests();
+	protected abstract T[] getTests();
 
 	@Before
 	public void setUp() throws Exception {

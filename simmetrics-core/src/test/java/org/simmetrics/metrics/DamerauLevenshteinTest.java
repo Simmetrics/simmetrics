@@ -1,23 +1,17 @@
 /*
- * #%L
- * Simmetrics Core
- * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
- * %%
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * #%L Simmetrics Core %% Copyright (C) 2014 - 2015 Simmetrics Authors %% This
+ * program is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
  * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU General Public
- * License along with this program.  If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
- * #L%
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
  */
 
 package org.simmetrics.metrics;
@@ -31,37 +25,39 @@ import org.simmetrics.StringDistanceTest;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricTest;
 
-@SuppressWarnings({"javadoc","static-method" })
+@SuppressWarnings({ "javadoc", "static-method" })
 @RunWith(Enclosed.class)
 public final class DamerauLevenshteinTest {
+	public static final class OutofBounds {
 
-	@SuppressWarnings("unused")
-	@Test(expected=IllegalArgumentException.class)
-	public void insertDeleteCostOnBound(){
-		new DamerauLevenshtein(0, 1, 1);
+		@SuppressWarnings("unused")
+		@Test(expected = IllegalArgumentException.class)
+		public void shouldThrowForDeleteCostOnBound() {
+			new DamerauLevenshtein(0, 1, 1);
+		}
+
+		@SuppressWarnings("unused")
+		@Test(expected = IllegalArgumentException.class)
+		public void shouldThrowForDeleteCostBelowBound() {
+			new DamerauLevenshtein(-1f, 1, 1);
+		}
+
+		@SuppressWarnings("unused")
+		@Test(expected = IllegalArgumentException.class)
+		public void shouldThrowForsubstituteCostBelowBound() {
+			new DamerauLevenshtein(1, -Float.MIN_VALUE, 1);
+		}
+
+		@SuppressWarnings("unused")
+		@Test(expected = IllegalArgumentException.class)
+		public void shouldThrowForTransposeCostBelowBound() {
+			new DamerauLevenshtein(1, 1, -Float.MIN_VALUE);
+		}
 	}
 
-	@SuppressWarnings("unused")
-	@Test(expected=IllegalArgumentException.class)
-	public void insertDeleteCostBelowBound(){
-		new DamerauLevenshtein(-1f, 1, 1);
-	}
-
-	@SuppressWarnings("unused")
-	@Test(expected=IllegalArgumentException.class)
-	public void substituteCostBelowBound(){
-		new DamerauLevenshtein(1, -Float.MIN_VALUE, 1);
-	}
-	@SuppressWarnings("unused")
-	@Test(expected=IllegalArgumentException.class)
-	public void transposeCostBelowBound(){
-		new DamerauLevenshtein(1, 1, -Float.MIN_VALUE);
-	}
-	
 	@RunWith(Enclosed.class)
 	public static final class DistanceString {
-		
-		
+
 		public static final class UnitCost extends StringDistanceTest {
 
 			@Override
@@ -140,7 +136,7 @@ public final class DamerauLevenshteinTest {
 			}
 		}
 	}
-	
+
 	@RunWith(Enclosed.class)
 	public static final class MetricStringTest {
 
@@ -269,8 +265,7 @@ public final class DamerauLevenshteinTest {
 
 			@Override
 			protected T[] getStringTests() {
-				return new T[] {
-						new T(1.0000f, "Subsitute", "Subsytute"),
+				return new T[] { new T(1.0000f, "Subsitute", "Subsytute"),
 						new T(1.0000f, "Subsitute", "Sybsytyte"),
 						new T(0.5000f, "abc", "abcdef"),
 						new T(0.5000f, "def", "abcdef"),
@@ -299,8 +294,7 @@ public final class DamerauLevenshteinTest {
 
 			@Override
 			protected T[] getStringTests() {
-				return new T[] { 
-						new T(0.9778f, "Subsitute", "Subsytute"),
+				return new T[] { new T(0.9778f, "Subsitute", "Subsytute"),
 						new T(0.9333f, "Subsitute", "Sybsytyte"),
 						new T(0.9833f, "test string1", "test string2"),
 						new T(0.3333f, "test", "test string2"),
@@ -314,8 +308,7 @@ public final class DamerauLevenshteinTest {
 						new T(0.9714f, "uxxxxxxyyyyyyw", "uxxxxxyxyyyyyw"),
 						new T(0.8500f, "uxxxxxxaayyyyyyw", "uxxxxxyxyyyyyw"),
 						new T(0.9000f, "wxyu", "wyxu"),
-						new T(0.6000f, "wxaayu", "wyxu"),
-				};
+						new T(0.6000f, "wxaayu", "wyxu"), };
 			}
 		}
 
@@ -359,8 +352,7 @@ public final class DamerauLevenshteinTest {
 
 			@Override
 			protected T[] getStringTests() {
-				return new T[] {
-						new T(0.9750f, "uxyw", "uyxw"),
+				return new T[] { new T(0.9750f, "uxyw", "uyxw"),
 						new T(0.9714f, "uxyvxyw", "uyxvyxw"),
 						new T(0.9888f, "transpose", "tranpsose"),
 

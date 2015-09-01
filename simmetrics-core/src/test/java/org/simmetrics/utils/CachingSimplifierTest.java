@@ -47,7 +47,7 @@ public class CachingSimplifierTest extends SimplifierTest {
 	}
 
 	@Override
-	public final T[] getTests() {
+	protected final T[] getTests() {
 
 		return new T[] { new T("ABC", "abc"), new T("CCC", "ccc"),
 				new T("ABC", "abc"), new T("EEE", "eee"), new T("ABC", "abc"),

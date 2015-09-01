@@ -23,6 +23,7 @@
 
 package org.simmetrics.utils;
 
+import static com.google.common.collect.Multisets.unmodifiableMultiset;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Collections.unmodifiableSet;
 
@@ -36,6 +37,7 @@ import org.simmetrics.tokenizers.Tokenizer;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.google.common.collect.Multiset;
 
 /**
  * Tokenizer that caches tokenized results. Can be used to improve performance
@@ -55,6 +57,8 @@ public class CachingTokenizer implements TokenizingTokenizer {
 	private final LoadingCache<String, List<String>> arrayCache;
 
 	private final LoadingCache<String, Set<String>> setCache;
+
+	private final LoadingCache<String, Multiset<String>> multisetCache;
 
 	/**
 	 * Creates a caching tokenizer with {@code initialCapacity} and
@@ -90,6 +94,17 @@ public class CachingTokenizer implements TokenizingTokenizer {
 					public Set<String> load(String key) throws Exception {
 						return unmodifiableSet(getTokenizer()
 								.tokenizeToSet(key));
+					}
+
+				});
+		
+		this.multisetCache = CacheBuilder.newBuilder()
+				.initialCapacity(initialCapacity).maximumSize(maximumSize)
+				.build(new CacheLoader<String, Multiset<String>>() {
+
+					@Override
+					public Multiset<String> load(String key) throws Exception {
+						return unmodifiableMultiset(getTokenizer().tokenizeToMultiset(key));
 					}
 
 				});
@@ -130,8 +145,6 @@ public class CachingTokenizer implements TokenizingTokenizer {
 	public List<String> tokenizeToList(final String input) {
 
 		try {
-			// Return copy of list to preserve state of cached version. Callers
-			// may modify the list.
 			return arrayCache.get(input);
 		} catch (ExecutionException e) {
 			throw new IllegalStateException(e);
@@ -141,9 +154,16 @@ public class CachingTokenizer implements TokenizingTokenizer {
 	@Override
 	public Set<String> tokenizeToSet(final String input) {
 		try {
-			// Return copy of set to preserve state of cached set. Callers
-			// may modify the set.
 			return setCache.get(input);
+		} catch (ExecutionException e) {
+			throw new IllegalStateException(e);
+		}
+	}
+	
+	@Override
+	public Multiset<String> tokenizeToMultiset(String input) {
+		try {
+			return multisetCache.get(input);
 		} catch (ExecutionException e) {
 			throw new IllegalStateException(e);
 		}
@@ -153,5 +173,7 @@ public class CachingTokenizer implements TokenizingTokenizer {
 	public String toString() {
 		return "CachingTokenizer [" + tokenizer + "]";
 	}
+
+
 
 }

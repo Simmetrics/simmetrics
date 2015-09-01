@@ -43,7 +43,7 @@ public final class QGramTest {
 		}
 
 		@Override
-		public T[] getTests() {
+		protected T[] getTests() {
 
 			return new T[] {
 					new T(""),
@@ -68,7 +68,7 @@ public final class QGramTest {
 		}
 
 		@Override
-		public T[] getTests() {
+		protected T[] getTests() {
 
 			return new T[] {
 					new T(""),
@@ -85,7 +85,7 @@ public final class QGramTest {
 		}
 
 		@Override
-		public T[] getTests() {
+		protected T[] getTests() {
 
 			return new T[] {
 					new T(""),
@@ -102,7 +102,7 @@ public final class QGramTest {
 		}
 
 		@Override
-		public T[] getTests() {
+		protected T[] getTests() {
 
 			return new T[] {
 					new T(""),
@@ -127,7 +127,7 @@ public final class QGramTest {
 		}
 
 		@Override
-		public T[] getTests() {
+		protected T[] getTests() {
 
 			return new T[] {
 					new T(""),
@@ -150,7 +150,7 @@ public final class QGramTest {
 		}
 
 		@Override
-		public T[] getTests() {
+		protected T[] getTests() {
 
 			return new T[] {
 					new T(""),
@@ -167,7 +167,7 @@ public final class QGramTest {
 		}
 
 		@Override
-		public T[] getTests() {
+		protected T[] getTests() {
 
 			return new T[] {
 					
@@ -193,7 +193,7 @@ public final class QGramTest {
 		}
 
 		@Override
-		public T[] getTests() {
+		protected T[] getTests() {
 
 			return new T[] {
 					new T(""),

@@ -1,10 +1,5 @@
 /*
- * #%L
- * Simmetrics Core
- * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
- * %%
- * This
+ * #%L Simmetrics Core %% Copyright (C) 2014 - 2015 Simmetrics Authors %% This
  * program is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or (at your option) any later
@@ -16,8 +11,7 @@
  * details.
  * 
  * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
- * #L%
+ * this program. If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
  */
 package org.simmetrics.simplifier;
 
@@ -243,31 +237,34 @@ public final class SimplifiersTest {
 
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void chainWithListContainingNull() {
-		chain(Arrays.asList(toLowerCase(), (Simplifier) null, removeNonWord()));
-	}
+	public static final class ShouldThrowFor  {
 
-	@Test(expected = IllegalArgumentException.class)
-	public void chainWithNull() {
-		chain((Simplifier) null);
-	}
+		@Test(expected = IllegalArgumentException.class)
+		public void chainWithListContainingNull() {
+			chain(Arrays.asList(toLowerCase(), (Simplifier) null,
+					removeNonWord()));
+		}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void chainWithNullInVarArg() {
-		chain(toLowerCase(), null, removeNonWord());
-	}
+		@Test(expected = IllegalArgumentException.class)
+		public void chainWithNull() {
+			chain((Simplifier) null);
+		}
 
-	@Test
-	public void chainWithSingle() {
-		Simplifier lower = toLowerCase();
-		assertSame(lower, chain(lower));
-	}
+		@Test(expected = IllegalArgumentException.class)
+		public void chainWithNullInVarArg() {
+			chain(toLowerCase(), null, removeNonWord());
+		}
 
-	@Test
-	public void chainWithSingletonList() {
-		Simplifier lower = toLowerCase();
-		assertSame(lower, chain(Collections.singletonList(lower)));
-	}
+		@Test
+		public void chainWithSingle() {
+			Simplifier lower = toLowerCase();
+			assertSame(lower, chain(lower));
+		}
 
+		@Test
+		public void chainWithSingletonList() {
+			Simplifier lower = toLowerCase();
+			assertSame(lower, chain(Collections.singletonList(lower)));
+		}
+	}
 }

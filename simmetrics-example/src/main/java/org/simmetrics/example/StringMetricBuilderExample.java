@@ -140,7 +140,7 @@ public final class StringMetricBuilderExample {
 	public static float example03() {
 
 		String a = "A quirky thing it is. This is a sentence.";
-		String b = "This sentence is similair; a quirky thing it is.";
+		String b = "This sentence is similar; a quirky thing it is.";
 
 		StringMetric metric = 
 				with(new CosineSimilarity<String>()).tokenize(
@@ -167,7 +167,7 @@ public final class StringMetricBuilderExample {
 	public static float example04() {
 
 		String a = "A quirky thing it is. This is a sentence.";
-		String b = "This sentence is similair; a quirky thing it is.";
+		String b = "This sentence is similar; a quirky thing it is.";
 
 		StringMetric metric = 
 				with(new CosineSimilarity<String>())
@@ -190,7 +190,7 @@ public final class StringMetricBuilderExample {
 		Set<String> otherCommonWords = Sets.newHashSet("a");
 
 		String a = "A quirky thing it is. This is a sentence.";
-		String b = "This sentence is similair; a quirky thing it is.";
+		String b = "This sentence is similar; a quirky thing it is.";
 
 		StringMetric metric = 
 				with(new CosineSimilarity<String>())
@@ -224,7 +224,7 @@ public final class StringMetricBuilderExample {
 		};
 
 		String a = "A quirky thing it is. This is a sentence.";
-		String b = "This sentence is similair; a quirky thing it is.";
+		String b = "This sentence is similar; a quirky thing it is.";
 
 		StringMetric metric = 
 				with(new CosineSimilarity<String>())
@@ -247,7 +247,7 @@ public final class StringMetricBuilderExample {
 	public static float example07() {
 
 		String a = "A quirky thing it is. This is a sentence.";
-		String b = "This sentence is similair; a quirky thing it is.";
+		String b = "This sentence is similar; a quirky thing it is.";
 
 		StringMetric metric = 
 				with(new CosineSimilarity<String>())

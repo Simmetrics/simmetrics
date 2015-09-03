@@ -42,7 +42,7 @@ public final class StringMetricsExample {
 	public static float example01() {
 
 		String str1 = "This is a sentence. It is made of words";
-		String str2 = "This sentence is similair. It has almost the same words";
+		String str2 = "This sentence is similar. It has almost the same words";
 
 		StringMetric metric = StringMetrics.jaro();
 
@@ -56,7 +56,7 @@ public final class StringMetricsExample {
 	public static float example02() {
 
 		String str1 = "A quirky thing it is. This is a sentence.";
-		String str2 = "This sentence is similair. A quirky thing it is.";
+		String str2 = "This sentence is similar. A quirky thing it is.";
 
 		StringMetric metric = StringMetrics.cosineSimilarity();
 
@@ -72,7 +72,7 @@ public final class StringMetricsExample {
 	public static float example03() {
 
 		String str1 = "A quirky thing it is. This is a sentence.";
-		String str2 = "This sentence is similair. A quirky thing it is.";
+		String str2 = "This sentence is similar. A quirky thing it is.";
 
 		StringMetric metric = 
 				with(new CosineSimilarity<String>())

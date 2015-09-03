@@ -29,7 +29,6 @@ import org.simmetrics.utils.CachingTokenizer;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("javadoc")

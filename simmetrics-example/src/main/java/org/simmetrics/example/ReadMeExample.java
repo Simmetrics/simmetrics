@@ -39,7 +39,7 @@ public final class ReadMeExample {
 	public static float example01(){
 		
 		String str1 = "This is a sentence. It is made of words";
-		String str2 = "This sentence is similair. It has almost the same words";
+		String str2 = "This sentence is similar. It has almost the same words";
 		
 		StringMetric metric = StringMetrics.cosineSimilarity();
 		
@@ -51,7 +51,7 @@ public final class ReadMeExample {
 	public static float example02(){
 		
 		String str1 = "This is a sentence. It is made of words";
-		String str2 = "This sentence is similair. It has almost the same words";
+		String str2 = "This sentence is similar. It has almost the same words";
 
 		StringMetric metric =
 				with(new CosineSimilarity<String>())

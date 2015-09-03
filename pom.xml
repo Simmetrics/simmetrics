@@ -8,7 +8,7 @@
 
 	<name>SimMetrics</name>
 	<inceptionYear>2014</inceptionYear>
-	<description>Simmetrics is a java library of Similarity or Distance Metrics, e.g. Levenshtein distance, Cosine similarity, that provide float based similarity measures between String data. All metrics return consistent measures rather than unbounded similarity scores.</description>
+	<description>Similarity and distance metrics for Java, e.g. Levenshtein distance and Cosine similarity. All metrics return normalized values rather than unbounded similarity scores.</description>
 	<url>https://github.com/mpkorstanje/simmetrics</url>
 
 	<modules>

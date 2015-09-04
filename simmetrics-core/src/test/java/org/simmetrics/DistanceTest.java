@@ -22,17 +22,18 @@
 
 package org.simmetrics;
 
+import static com.google.common.primitives.Floats.max;
 import static java.lang.String.format;
 import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.simmetrics.utils.Math.max;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.simmetrics.Distance;
+
 
 @SuppressWarnings("javadoc")
 public abstract class DistanceTest<K> {

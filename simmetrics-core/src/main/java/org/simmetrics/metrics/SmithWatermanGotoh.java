@@ -31,7 +31,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-import static org.simmetrics.utils.Math.max;
+import static org.simmetrics.metrics.Math.max;
 
 /**
  * Smith-Waterman algorithm providing a similarity measure between two strings.

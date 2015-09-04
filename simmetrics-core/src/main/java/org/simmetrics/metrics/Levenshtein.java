@@ -24,7 +24,7 @@ package org.simmetrics.metrics;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
-import static org.simmetrics.utils.Math.min;
+import static org.simmetrics.metrics.Math.min;
 
 import org.simmetrics.StringDistance;
 import org.simmetrics.StringMetric;

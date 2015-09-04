@@ -20,12 +20,12 @@
  * #L%
  */
 
-package org.simmetrics.utils;
+package org.simmetrics.metrics;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.simmetrics.utils.Math;
+import org.simmetrics.metrics.Math;
 
 @SuppressWarnings("javadoc")
 public class MathTest {

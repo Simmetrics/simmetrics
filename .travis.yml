@@ -11,7 +11,7 @@ branches:
   - develop
   - release-*
 
-before_script:
+before_install:
  - mvn clean
 
 after_success:

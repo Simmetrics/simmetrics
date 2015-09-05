@@ -48,6 +48,7 @@ import com.google.common.cache.LoadingCache;
  * 
  * @see StringMetricBuilder
  */
+@Deprecated
 public class CachingTokenizer implements TokenizingTokenizer {
 
 	private Tokenizer tokenizer;

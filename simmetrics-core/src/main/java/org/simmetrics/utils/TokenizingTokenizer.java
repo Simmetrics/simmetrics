@@ -32,6 +32,7 @@ import org.simmetrics.tokenizers.Tokenizer;
  * @see StringMetricBuilder
  * 
  */
+@Deprecated
 public interface TokenizingTokenizer extends Tokenizing, Tokenizer {
 	// Empty: because composite interface
 }

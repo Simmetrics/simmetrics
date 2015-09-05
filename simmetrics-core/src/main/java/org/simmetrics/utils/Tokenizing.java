@@ -29,6 +29,7 @@ import org.simmetrics.tokenizers.Tokenizer;
  * Interface for classes that delegate to a {@link Tokenizer}.
  * 
  */
+@Deprecated
 public interface Tokenizing {
 	/**
 	 * Gets the tokenizer. When null no simplifier was set.

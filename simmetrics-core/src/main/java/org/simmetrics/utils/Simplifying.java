@@ -30,6 +30,7 @@ import org.simmetrics.simplifiers.Simplifier;
  * 
  *
  */
+@Deprecated
 public interface Simplifying {
 
 	/**

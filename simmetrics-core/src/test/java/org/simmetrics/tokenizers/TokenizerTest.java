@@ -31,11 +31,16 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings("javadoc")
 public abstract class TokenizerTest {
+
+	@Rule
+	public final ExpectedException thrown = ExpectedException.none();
 
 	protected static class T {
 		private final String string;
@@ -60,11 +65,10 @@ public abstract class TokenizerTest {
 
 	}
 
-
-
 	private static void testTokens(String string, Collection<String> expected,
 			Collection<String> actual) {
-		assertEquals(string + " did not tokenize to " + expected + " but " + actual, expected, actual);
+		assertEquals(string + " did not tokenize to " + expected + " but "
+				+ actual, expected, actual);
 		assertFalse(actual + " contained null", actual.contains(null));
 	}
 
@@ -73,6 +77,14 @@ public abstract class TokenizerTest {
 	protected Tokenizer tokenizer;
 
 	protected abstract T[] getTests();
+
+	protected boolean supportsTokenizeToList() {
+		return true;
+	}
+
+	protected boolean supportsTokenizeToSet() {
+		return true;
+	}
 
 	protected abstract Tokenizer getTokenizer();
 
@@ -97,34 +109,55 @@ public abstract class TokenizerTest {
 	public final void implementsToString() {
 
 		String metricToString = tokenizer.toString();
-		String defaultToString = tokenizer.getClass().getName() + "@" + Integer.toHexString(tokenizer.hashCode());
+		String defaultToString = tokenizer.getClass().getName() + "@"
+				+ Integer.toHexString(tokenizer.hashCode());
 
-		assertFalse(
-				"toString() was not implemented "
-						+ tokenizer.toString(), defaultToString.equals(metricToString));
+		assertFalse("toString() was not implemented " + tokenizer.toString(),
+				defaultToString.equals(metricToString));
 	}
 
 	@Test
-	public final void tokenizeToArrayList() {
+	public final void shouldTokenizeToList() {
+		if (!supportsTokenizeToList()) {
+			thrown.expect(UnsupportedOperationException.class);
+		}
+
 		for (T t : tests) {
-			testTokens(t.string(), t.tokensAsList(), tokenizer.tokenizeToList(t.string()));
+			testTokens(t.string(), t.tokensAsList(),
+					tokenizer.tokenizeToList(t.string()));
 		}
 	}
 
-	@Test(expected = NullPointerException.class)
-	public final void tokenizeToListNullPointerException() {
+	@Test
+	public final void tokenizeToListShouldThrowNullPointerException() {
+		if (supportsTokenizeToList()) {
+			thrown.expect(NullPointerException.class);
+		} else {
+			thrown.expect(UnsupportedOperationException.class);
+		}
+
 		tokenizer.tokenizeToList(null);
 	}
 
 	@Test
-	public final void tokenizeToSet() {
+	public final void shouldTokenizeToSet() {
+		if (!supportsTokenizeToSet()) {
+			thrown.expect(UnsupportedOperationException.class);
+		}
+
 		for (T t : tests) {
-			testTokens(t.string(), t.tokensAsSet(), tokenizer.tokenizeToSet(t.string()));
+			testTokens(t.string(), t.tokensAsSet(),
+					tokenizer.tokenizeToSet(t.string()));
 		}
 	}
 
-	@Test(expected = NullPointerException.class)
-	public final void tokenizeToSetNullPointerException() {
+	@Test
+	public final void tokenizeToSetShouldThrowNullPointerException() {
+		if (supportsTokenizeToSet()) {
+			thrown.expect(NullPointerException.class);
+		} else {
+			thrown.expect(UnsupportedOperationException.class);
+		}
 		tokenizer.tokenizeToSet(null);
 	}
 

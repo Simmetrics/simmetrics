@@ -24,6 +24,9 @@ package org.simmetrics;
 
 import static org.simmetrics.StringMetricBuilder.with;
 
+import java.util.List;
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -33,9 +36,12 @@ import org.simmetrics.SetMetric;
 import org.simmetrics.StringMetric;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.tokenizers.Tokenizer;
+import org.simmetrics.utils.SimplifyingSimplifier;
+import org.simmetrics.utils.TokenizingTokenizer;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
+import com.google.common.cache.Cache;
 
 
 @SuppressWarnings("javadoc")
@@ -61,6 +67,18 @@ public class StringMetricBuilderTest {
 	private Predicate<String> predicate;
 	@Mock
 	private Function<String,String> function;
+	
+	@Mock
+	private Cache<String, List<String>> listCache;
+	@Mock
+	private Cache<String, Set<String>> setCache;
+	
+	@Mock
+	private SimplifyingSimplifier simplifyingSimplifier;
+
+	@Mock
+	private TokenizingTokenizer tokenizingTokenizer;
+	
 	@Test
 	public void testStringMetric01() {
 		with(stringMetric)
@@ -73,7 +91,20 @@ public class StringMetricBuilderTest {
 				.simplify(simplifier)
 				.build();
 	}
-
+	@Test
+	public void testStringMetricWithSimplifier01WithCache() {
+		with(stringMetric)
+				.simplify(simplifier)
+				.simplifierCache()
+				.build();
+	}
+	@Test
+	public void testStringMetricWithSimplifier01WithSimplifyingSimplifier() {
+		with(stringMetric)
+				.simplify(simplifier)
+				.simplifierCache(simplifyingSimplifier)
+				.build();
+	}
 	@Test
 	public void testStringMetricWithSimplifier02() {
 		with(stringMetric)
@@ -92,12 +123,14 @@ public class StringMetricBuilderTest {
 	}
 
 	@Test
-	public void testStringMetricWithSimplifier01WithCache() {
+	public void testStringMetricWithSimplifier02WithSimplifyingSimplifier() {
 		with(stringMetric)
 				.simplify(simplifier)
-				.simplifierCache()
+				.simplify(simplifier)
+				.simplifierCache(simplifyingSimplifier)
 				.build();
 	}
+
 
 	@Test
 	public void testListMetric() {
@@ -166,7 +199,14 @@ public class StringMetricBuilderTest {
 				.tokenize(tokenizer)
 				.build();
 	}
-
+	@Test
+	public void testListMetricWithSimplifier01WithSimplifyingSimplifier() {
+		with(listMetric)
+				.simplify(simplifier)
+				.simplifierCache(simplifyingSimplifier)
+				.tokenize(tokenizer)
+				.build();
+	}
 	@Test
 	public void testListMetricWithSimplifier02WithCache() {
 		with(listMetric)
@@ -176,7 +216,15 @@ public class StringMetricBuilderTest {
 				.tokenize(tokenizer)
 				.build();
 	}
-
+	@Test
+	public void testListMetricWithSimplifier02WithSimplifyingSimplifier() {
+		with(listMetric)
+				.simplify(simplifier)
+				.simplify(simplifier)
+				.simplifierCache(simplifyingSimplifier)
+				.tokenize(tokenizer)
+				.build();
+	}
 	@Test
 	public void testListMetric02() {
 		with(listMetric)
@@ -192,17 +240,46 @@ public class StringMetricBuilderTest {
 				.tokenizerCache()
 				.build();
 	}
-
 	@Test
-	public void testListMetric02WiCache() {
+	public void testListMetric01WithExternalCache() {
+		with(listMetric)
+				.tokenize(tokenizer)
+				.tokenizerCache(listCache)
+				.build();
+	}
+	@Test
+	public void testListMetric01WithTokenizingTokenizer() {
+		with(listMetric)
+				.tokenize(tokenizer)
+				.tokenizerCache(tokenizingTokenizer)
+				.build();
+	}
+	
+	@Test
+	public void testListMetric02WithCache() {
 		with(listMetric)
 				.tokenize(tokenizer)
 				.tokenize(tokenizer)
 				.tokenizerCache()
 				.build();
 	}
-
 	@Test
+	public void testListMetric02WithExternalCache() {
+		with(listMetric)
+				.tokenize(tokenizer)
+				.tokenize(tokenizer)
+				.tokenizerCache(listCache)
+				.build();
+	}
+	
+	@Test	
+	public void testListMetric02WithTokenizingTokenizer() {
+		with(listMetric)
+				.tokenize(tokenizer)
+				.tokenize(tokenizer)
+				.tokenizerCache(tokenizingTokenizer)
+				.build();
+	}
 	public void testSetMetric() {
 		with(setMetric)
 				.tokenize(tokenizer)
@@ -271,11 +348,28 @@ public class StringMetricBuilderTest {
 	}
 
 	@Test
+	public void testSetMetricWithSimplifier01WithSimplifyingSimplifier() {
+		with(setMetric)
+				.simplify(simplifier)
+				.simplifierCache(simplifyingSimplifier)
+				.tokenize(tokenizer)
+				.build();
+	}
+	@Test
 	public void testSetMetricWithSimplifier02WithCache() {
 		with(setMetric)
 				.simplify(simplifier)
 				.simplify(simplifier)
 				.simplifierCache()
+				.tokenize(tokenizer)
+				.build();
+	}
+	@Test
+	public void testSetMetricWithSimplifier02WithCacheSimplifyingSimplifier() {
+		with(setMetric)
+				.simplify(simplifier)
+				.simplify(simplifier)
+				.simplifierCache(simplifyingSimplifier)
 				.tokenize(tokenizer)
 				.build();
 	}
@@ -295,13 +389,44 @@ public class StringMetricBuilderTest {
 				.tokenizerCache()
 				.build();
 	}
-
 	@Test
-	public void testSetMetric02WiCache() {
+	public void testSetMetric01WithExternalCache() {
+		with(setMetric)
+				.tokenize(tokenizer)
+				.tokenizerCache(setCache)
+				.build();
+	}
+	@Test
+	public void testSetMetric01WithTokenizingTokenizer() {
+		with(setMetric)
+				.tokenize(tokenizer)
+				.tokenizerCache(tokenizingTokenizer)
+				.build();
+	}
+	@Test
+	public void testSetMetric02WithCache() {
 		with(setMetric)
 				.tokenize(tokenizer)
 				.tokenize(tokenizer)
 				.tokenizerCache()
 				.build();
 	}
+	
+	@Test
+	public void testSetMetric02WithExternalCache() {
+		with(setMetric)
+				.tokenize(tokenizer)
+				.tokenize(tokenizer)
+				.tokenizerCache(setCache)
+				.build();
+	}
+	@Test
+	public void testSetMetric02WithTokenizingTokenizer() {
+		with(setMetric)
+				.tokenize(tokenizer)
+				.tokenize(tokenizer)
+				.tokenizerCache(tokenizingTokenizer)
+				.build();
+	}
+	
 }

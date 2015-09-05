@@ -34,6 +34,7 @@ import org.simmetrics.simplifiers.Simplifier;
  * 
  *
  */
+@Deprecated
 public interface SimplifyingSimplifier extends Simplifier, Simplifying {
 
 	// Empty: because composite interface

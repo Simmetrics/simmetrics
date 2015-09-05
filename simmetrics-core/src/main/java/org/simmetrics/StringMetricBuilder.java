@@ -38,8 +38,6 @@ import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Tokenizers;
-import org.simmetrics.utils.CachingSimplifier;
-import org.simmetrics.utils.CachingTokenizer;
 import org.simmetrics.utils.SimplifyingSimplifier;
 import org.simmetrics.utils.TokenizingTokenizer;
 
@@ -47,8 +45,6 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.LoadingCache;
-import com.google.monitoring.runtime.instrumentation.common.com.google.common.base.Joiner;
 
 /**
  * Convenience tool to build string metrics. Any class implementing
@@ -398,7 +394,7 @@ public class StringMetricBuilder {
 	private static final class CompositeStringMetricBuilder extends
 			StringMetricBuilder implements StringMetricSimplifierStep {
 
-		private final StringMetric metric;
+		private final Metric<String> metric;
 
 		private static final int CACHE_SIZE = 2;
 
@@ -406,7 +402,7 @@ public class StringMetricBuilder {
 
 		private SimplifyingSimplifier simplifyingSimplifier;
 
-		CompositeStringMetricBuilder(StringMetric metric) {
+		CompositeStringMetricBuilder(Metric<String> metric) {
 			checkNotNull(metric);
 			this.metric = metric;
 		}
@@ -415,7 +411,7 @@ public class StringMetricBuilder {
 		public StringMetric build() {
 
 			if (simplifiers.isEmpty()) {
-				return metric;
+				return create(metric);
 			}
 
 			if (simplifyingSimplifier == null) {

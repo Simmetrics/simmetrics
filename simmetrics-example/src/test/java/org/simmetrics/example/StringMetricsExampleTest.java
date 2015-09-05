@@ -32,7 +32,7 @@ public class StringMetricsExampleTest {
 
 	@Test
 	public void example01(){
-		assertEquals(0.7341f, StringMetricsExample.example01(), DELTA);
+		assertEquals(0.7383f, StringMetricsExample.example01(), DELTA);
 	}
 	
 	@Test
@@ -42,7 +42,7 @@ public class StringMetricsExampleTest {
 	
 	@Test
 	public void example03(){
-		assertEquals(0.7270f, StringMetricsExample.example03(), DELTA);
+		assertEquals(0.7356f, StringMetricsExample.example03(), DELTA);
 	}
 
 }

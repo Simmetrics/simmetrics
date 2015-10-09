@@ -30,9 +30,10 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 
 /**
- * Simon White algorithm providing a similarity measure between two lists. Idea
- * taken from <a href="http://www.catalysoft.com/articles/StrikeAMatch.html">How
- * to Strike a Match</a> by Simon White.
+ * Simon White algorithm providing a similarity measure between two lists.
+ * Implementation based on the ideas as outlined in <a
+ * href="http://www.catalysoft.com/articles/StrikeAMatch.html">How to Strike a
+ * Match</a> by Simon White.
  * 
  * <p>
  * <code>
@@ -77,7 +78,7 @@ public class SimonWhite<T> implements ListMetric<T> {
 
 		// Copy for destructive list difference
 		Multiset<T> bCopy = HashMultiset.create(b);
-
+		
 		// Count elements in the list intersection.
 		// Elements are counted only once in both lists.
 		// E.g. the intersection of [ab,ab,ab] and [ab,ab,ac,ad] is [ab,ab].

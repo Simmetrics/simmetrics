@@ -39,15 +39,16 @@ import org.simmetrics.metrics.functions.Substitution;
  * Smith-Waterman algorithm providing a similarity measure between two strings.
  * 
  * <p>
- * Implementation uses implementation by Smith and Waterman. This implementation
+ * Implementation uses the implementation as described by Smith and Waterman. This implementation
  * uses quadratic space and cubic time.
  * <p>
- * This class is immutable and thread-safe if its substitution and gap functions are.
+ * This class is immutable and thread-safe if its substitution and gap functions
+ * are.
  * 
  * 
  * @see NeedlemanWunch
- * @see SmithWatermanGotoh * @see <a
- *      href="https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm"
+ * @see SmithWatermanGotoh
+ * @see <a href="https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm"
  *      >Wikipedia - Smith-Waterman algorithm</a>
  */
 public class SmithWaterman implements StringMetric {
@@ -171,8 +172,8 @@ public class SmithWaterman implements StringMetric {
 
 	@Override
 	public String toString() {
-		return "SmithWaterman [gap=" + gap + ", substitution="
-				+ substitution + ", windowSize=" + windowSize + "]";
+		return "SmithWaterman [gap=" + gap + ", substitution=" + substitution
+				+ ", windowSize=" + windowSize + "]";
 	}
 
 }

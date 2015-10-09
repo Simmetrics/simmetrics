@@ -39,6 +39,11 @@
 		<url>https://travis-ci.org/mpkorstanje/simmetrics</url>
 	</ciManagement>
 
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/mpkorstanje/simmetrics/issues</url>
+	</issueManagement>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

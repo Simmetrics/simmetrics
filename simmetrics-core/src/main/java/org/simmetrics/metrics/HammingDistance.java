@@ -57,7 +57,7 @@ public final class HammingDistance {
 	 *            type of the token
 	 * 
 	 */
-	public static final class HammingListDistance<T> implements
+	private static final class HammingListDistance<T> implements
 			ListDistance<T> {
 
 		HammingListDistance() {
@@ -115,7 +115,7 @@ public final class HammingDistance {
 	 * This class is immutable and thread-safe.
 	 * 
 	 */
-	public static final class HammingStringDistance implements StringDistance {
+	private static final class HammingStringDistance implements StringDistance {
 
 		HammingStringDistance() {
 			// avoid synthetics
@@ -146,7 +146,7 @@ public final class HammingDistance {
 			}
 
 			int distance = 0;
-			for (int i = 0; i < a.length(); i++) {
+			for (int i = 0, length =  a.length(); i < length; i++) {
 				if (a.charAt(i) != b.charAt(i)) {
 					distance++;
 				}
@@ -161,16 +161,16 @@ public final class HammingDistance {
 	}
 
 	/**
-	 * Constructs a new Hamming distance to compare lists.
+	 * Returns a Hamming distance to compare lists.
 	 * 
-	 * @return a new Hamming distance to compare lists
+	 * @return a Hamming distance to compare lists
 	 */
 	public static <T> ListDistance<T> forList() {
 		return new HammingListDistance<>();
 	}
 
 	/**
-	 * Constructs a new Hamming distance to compare strings.
+	 * Returns a Hamming distance to compare strings.
 	 * 
 	 * @return a new Hamming distance to compare strings
 	 */

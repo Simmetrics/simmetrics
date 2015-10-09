@@ -40,6 +40,8 @@ import org.simmetrics.tokenizers.Tokenizers;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Sets;
 
 /**
@@ -90,8 +92,9 @@ public final class StringMetricBuilderExample {
 		String b = "Chilperic II son of Childeric II";
 
 		StringMetric metric = 
-				with(new Levenshtein()).simplify(
-				Simplifiers.removeDiacritics()).build();
+				with(new Levenshtein())
+				.simplify(Simplifiers.removeDiacritics())
+				.build();
 
 		return metric.compare(a, b); // 1.0000
 	}
@@ -107,7 +110,8 @@ public final class StringMetricBuilderExample {
 		StringMetric metric = 
 				with(new Levenshtein())
 				.simplify(Simplifiers.removeDiacritics())
-				.simplify(Simplifiers.toLowerCase()).build();
+				.simplify(Simplifiers.toLowerCase())
+				.build();
 
 		return metric.compare(a, b); // 1.0000
 	}
@@ -143,8 +147,9 @@ public final class StringMetricBuilderExample {
 		String b = "This sentence is similar; a quirky thing it is.";
 
 		StringMetric metric = 
-				with(new CosineSimilarity<String>()).tokenize(
-				Tokenizers.whitespace()).build();
+				with(new CosineSimilarity<String>())
+				.tokenize(Tokenizers.whitespace())
+				.build();
 
 		return metric.compare(a, b); // 0.7777
 	}
@@ -172,7 +177,8 @@ public final class StringMetricBuilderExample {
 		StringMetric metric = 
 				with(new CosineSimilarity<String>())
 				.tokenize(Tokenizers.whitespace())
-				.tokenize(Tokenizers.qGram(3)).build();
+				.tokenize(Tokenizers.qGram(3))
+				.build();
 
 		return metric.compare(a, b); // 0.8131
 	}
@@ -249,11 +255,24 @@ public final class StringMetricBuilderExample {
 		String a = "A quirky thing it is. This is a sentence.";
 		String b = "This sentence is similar; a quirky thing it is.";
 
+		Cache<String,String> simplifierCache = CacheBuilder
+				.newBuilder()
+				.maximumSize(2)
+				.build();
+		
+		Cache<String,Set<String>> tokenizerCache = CacheBuilder
+				.newBuilder()
+				.maximumSize(2)
+				.build();	
+		
 		StringMetric metric = 
 				with(new CosineSimilarity<String>())
 				.simplify(Simplifiers.toLowerCase())
-				.simplify(Simplifiers.removeNonWord()).simplifierCache()
-				.tokenize(Tokenizers.qGram(3)).tokenizerCache().build();
+				.simplify(Simplifiers.removeNonWord())
+				.simplifierCache(simplifierCache)
+				.tokenize(Tokenizers.qGram(3))
+				.tokenizerCache(tokenizerCache)
+				.build();
 
 		return metric.compare(a, b); // 0.8131
 	}

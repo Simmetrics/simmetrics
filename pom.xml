@@ -18,9 +18,10 @@
 
 	<licenses>
 		<license>
-			<name>GNU General Public License (GPL)</name>
-			<url>http://www.gnu.org/licenses/gpl.txt</url>
+			<name>Apache 2</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 			<distribution>repo</distribution>
+			<comments>A business-friendly OSS license</comments>
 		</license>
 	</licenses>
 
@@ -89,7 +90,7 @@
 							<canUpdateCopyright>true</canUpdateCopyright>
 							<canUpdateDescription>true</canUpdateDescription>
 							<addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
-							<licenseName>gpl_v3</licenseName>
+							<licenseName>apache_v2</licenseName>
 						</configuration>
 					</execution>
 				</executions>

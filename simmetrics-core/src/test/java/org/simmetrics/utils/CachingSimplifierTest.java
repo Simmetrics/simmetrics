@@ -33,6 +33,7 @@ public class CachingSimplifierTest extends SimplifierTest {
 
 	private Simplifier innerSimplifier;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected final Simplifier getSimplifier() {
 

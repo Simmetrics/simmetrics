@@ -43,8 +43,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.cache.Cache;
 
-
-@SuppressWarnings("javadoc")
+@SuppressWarnings({"javadoc","deprecation"})
 public class StringMetricBuilderTest {
 
 	@Before

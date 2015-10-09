@@ -31,7 +31,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
 import static org.mockito.Mockito.*;
 
-@SuppressWarnings("javadoc")
+@SuppressWarnings({ "javadoc", "deprecation" })
 public class CachingTokenizerTest extends TokenizerTest {
 
 	private Tokenizer innerTokenizer;

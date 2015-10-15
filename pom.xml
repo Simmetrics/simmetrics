@@ -9,7 +9,7 @@
 
 	<name>SimMetrics</name>
 	<inceptionYear>2014</inceptionYear>
-	<description>Similarity and distance metrics for Java, e.g. Levenshtein distance and Cosine similarity. All similarity metrics return normalized values rather than unbounded similarity scores. Distance metrics return non-negative unbounded scores.</description>
+	<description>A Java library of similarity and distance metrics e.g. Levenshtein distance and Cosine similarity. All similarity metrics return normalized values rather than unbounded similarity scores. Distance metrics return non-negative unbounded scores.</description>
 	<url>https://github.com/mpkorstanje/simmetrics</url>
 
 	<modules>

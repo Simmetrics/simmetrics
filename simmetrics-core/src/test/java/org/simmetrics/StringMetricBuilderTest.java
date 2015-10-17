@@ -241,7 +241,7 @@ public class StringMetricBuilderTest {
 	public void testListMetric01WithExternalCache() {
 		with(listMetric)
 				.tokenize(tokenizer)
-				.tokenizerCache(listCache)
+				.cacheTokens(listCache)
 				.build();
 	}
 	@Test
@@ -265,7 +265,7 @@ public class StringMetricBuilderTest {
 		with(listMetric)
 				.tokenize(tokenizer)
 				.tokenize(tokenizer)
-				.tokenizerCache(listCache)
+				.cacheTokens(listCache)
 				.build();
 	}
 	
@@ -390,7 +390,7 @@ public class StringMetricBuilderTest {
 	public void testSetMetric01WithExternalCache() {
 		with(setMetric)
 				.tokenize(tokenizer)
-				.tokenizerCache(setCache)
+				.cacheTokens(setCache)
 				.build();
 	}
 	@Test
@@ -414,7 +414,7 @@ public class StringMetricBuilderTest {
 		with(setMetric)
 				.tokenize(tokenizer)
 				.tokenize(tokenizer)
-				.tokenizerCache(setCache)
+				.cacheTokens(setCache)
 				.build();
 	}
 	@Test

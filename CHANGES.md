@@ -2,7 +2,7 @@ Change Log
 ==========
 
 ## Since 3.2.3 ##
- - Changed licence to Apache License Version 2.0
+ - Changed license to Apache License Version 2.0
  - Added the Identity metric
  - Added cacheTokens(Cache) and cacheStrings(Cache) methods to the StringMetricBuilder
  - Deprecated TokenizingTokenizer and SimplifyingSimplifier utilities in favor of cacheTokens(Cache) and cacheStrings(Cache)

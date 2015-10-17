@@ -4,18 +4,17 @@
  * %%
  * Copyright (C) 2014 - 2015 Simmetrics Authors
  * %%
- * This program is free software: you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
+ *      http://www.apache.org/licenses/LICENSE-2.0
  * 
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  * #L%
  */
 
@@ -40,6 +39,8 @@ import org.simmetrics.tokenizers.Tokenizers;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Sets;
 
 /**
@@ -90,8 +91,9 @@ public final class StringMetricBuilderExample {
 		String b = "Chilperic II son of Childeric II";
 
 		StringMetric metric = 
-				with(new Levenshtein()).simplify(
-				Simplifiers.removeDiacritics()).build();
+				with(new Levenshtein())
+				.simplify(Simplifiers.removeDiacritics())
+				.build();
 
 		return metric.compare(a, b); // 1.0000
 	}
@@ -107,7 +109,8 @@ public final class StringMetricBuilderExample {
 		StringMetric metric = 
 				with(new Levenshtein())
 				.simplify(Simplifiers.removeDiacritics())
-				.simplify(Simplifiers.toLowerCase()).build();
+				.simplify(Simplifiers.toLowerCase())
+				.build();
 
 		return metric.compare(a, b); // 1.0000
 	}
@@ -140,11 +143,12 @@ public final class StringMetricBuilderExample {
 	public static float example03() {
 
 		String a = "A quirky thing it is. This is a sentence.";
-		String b = "This sentence is similair; a quirky thing it is.";
+		String b = "This sentence is similar; a quirky thing it is.";
 
 		StringMetric metric = 
-				with(new CosineSimilarity<String>()).tokenize(
-				Tokenizers.whitespace()).build();
+				with(new CosineSimilarity<String>())
+				.tokenize(Tokenizers.whitespace())
+				.build();
 
 		return metric.compare(a, b); // 0.7777
 	}
@@ -167,12 +171,13 @@ public final class StringMetricBuilderExample {
 	public static float example04() {
 
 		String a = "A quirky thing it is. This is a sentence.";
-		String b = "This sentence is similair; a quirky thing it is.";
+		String b = "This sentence is similar; a quirky thing it is.";
 
 		StringMetric metric = 
 				with(new CosineSimilarity<String>())
 				.tokenize(Tokenizers.whitespace())
-				.tokenize(Tokenizers.qGram(3)).build();
+				.tokenize(Tokenizers.qGram(3))
+				.build();
 
 		return metric.compare(a, b); // 0.8131
 	}
@@ -190,7 +195,7 @@ public final class StringMetricBuilderExample {
 		Set<String> otherCommonWords = Sets.newHashSet("a");
 
 		String a = "A quirky thing it is. This is a sentence.";
-		String b = "This sentence is similair; a quirky thing it is.";
+		String b = "This sentence is similar; a quirky thing it is.";
 
 		StringMetric metric = 
 				with(new CosineSimilarity<String>())
@@ -224,7 +229,7 @@ public final class StringMetricBuilderExample {
 		};
 
 		String a = "A quirky thing it is. This is a sentence.";
-		String b = "This sentence is similair; a quirky thing it is.";
+		String b = "This sentence is similar; a quirky thing it is.";
 
 		StringMetric metric = 
 				with(new CosineSimilarity<String>())
@@ -247,13 +252,26 @@ public final class StringMetricBuilderExample {
 	public static float example07() {
 
 		String a = "A quirky thing it is. This is a sentence.";
-		String b = "This sentence is similair; a quirky thing it is.";
+		String b = "This sentence is similar; a quirky thing it is.";
 
+		Cache<String,String> stringCache = CacheBuilder
+				.newBuilder()
+				.maximumSize(2)
+				.build();
+		
+		Cache<String,Set<String>> tokenCache = CacheBuilder
+				.newBuilder()
+				.maximumSize(2)
+				.build();	
+		
 		StringMetric metric = 
 				with(new CosineSimilarity<String>())
 				.simplify(Simplifiers.toLowerCase())
-				.simplify(Simplifiers.removeNonWord()).simplifierCache()
-				.tokenize(Tokenizers.qGram(3)).tokenizerCache().build();
+				.simplify(Simplifiers.removeNonWord())
+				.cacheStrings(stringCache)
+				.tokenize(Tokenizers.qGram(3))
+				.cacheTokens(tokenCache)
+				.build();
 
 		return metric.compare(a, b); // 0.8131
 	}

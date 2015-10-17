@@ -4,7 +4,7 @@
 
 SimMetrics 
 ==========
-SimMetrics is a java library of Similarity or Distance Metrics, e.g. Levenshtein distance, Cosine similarity, that provide float based similarity measures between String data. All metrics return consistent measures rather than unbounded similarity scores. 
+A Java library of similarity and distance metrics e.g. Levenshtein distance and Cosine similarity. All similarity metrics return normalized values rather than unbounded similarity scores. Distance metrics return non-negative unbounded scores.
 
 ## Usage ##
 
@@ -12,7 +12,7 @@ For a quick and easy use [StringMetrics](./simmetrics-core/src/main/java/org/sim
 
 ```java
 	String str1 = "This is a sentence. It is made of words";
-	String str2 = "This sentence is similair. It has almost the same words";
+	String str2 = "This sentence is similar. It has almost the same words";
 
 	StringMetric metric = StringMetrics.cosineSimilarity();
 
@@ -26,7 +26,7 @@ For a terse syntax use `import static org.simmetrics.StringMetricBuilder.with;`
 
 ```java
 	String str1 = "This is a sentence. It is made of words";
-	String str2 = "This sentence is similair. It has almost the same words";
+	String str2 = "This sentence is similar. It has almost the same words";
 
 	StringMetric metric =
 			with(new CosineSimilarity<String>())

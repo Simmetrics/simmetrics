@@ -4,19 +4,17 @@
  * %%
  * Copyright (C) 2014 - 2015 Simmetrics Authors
  * %%
- * This
- * program is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
+ *      http://www.apache.org/licenses/LICENSE-2.0
  * 
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  * #L%
  */
 
@@ -37,6 +35,7 @@ import org.simmetrics.metrics.CosineSimilarity;
 import org.simmetrics.metrics.DamerauLevenshtein;
 import org.simmetrics.metrics.DiceSimilarity;
 import org.simmetrics.metrics.EuclideanDistance;
+import org.simmetrics.metrics.Identity;
 import org.simmetrics.metrics.JaccardSimilarity;
 import org.simmetrics.metrics.Jaro;
 import org.simmetrics.metrics.JaroWinkler;
@@ -241,6 +240,25 @@ public final class StringMetrics {
 
 	}
 
+	private static final class ForString implements StringMetric {
+		private final Metric<String> metric;
+
+		ForString(Metric<String> metric) {
+			this.metric = metric;
+		}
+
+		@Override
+		public float compare(String a, String b) {
+			return metric.compare(a, b);
+		}
+		
+		@Override
+		public String toString() {
+			return metric.toString();
+		}
+
+	}
+
 	private static final class ForStringWithSimplifier implements StringMetric {
 
 		private final Metric<String> metric;
@@ -371,6 +389,22 @@ public final class StringMetrics {
 	 */
 	public static StringMetric cosineSimilarity() {
 		return createForSetMetric(new CosineSimilarity<String>(), whitespace());
+	}
+
+	/**
+	 * Either constructs a new string metric or returns the original metric.
+	 * 
+	 * @param metric
+	 *            a metric for strings
+	 * 
+	 * @return a string metric.
+	 */
+	public static StringMetric create(Metric<String> metric) {
+		if (metric instanceof StringMetric) {
+			return (StringMetric) metric;
+		}
+
+		return new ForString(metric);
 	}
 
 	/**
@@ -538,6 +572,15 @@ public final class StringMetrics {
 	public static StringMetric euclideanDistance() {
 		return createForListMetric(new EuclideanDistance<String>(),
 				whitespace());
+	}
+	
+	/**
+	 * Returns an string metric that uses the {@link Identity} metric.
+	 * 
+	 * @return an identity string metric
+	 */
+	public static StringMetric identity(){
+		return create(new Identity<String>());
 	}
 
 	/**

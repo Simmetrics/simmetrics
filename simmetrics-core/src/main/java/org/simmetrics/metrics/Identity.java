@@ -17,33 +17,31 @@
  * limitations under the License.
  * #L%
  */
-package org.simmetrics.simplifier;
+package org.simmetrics.metrics;
 
-import org.simmetrics.simplifiers.Nysiis;
-import org.simmetrics.simplifiers.Simplifier;
+import static com.google.common.base.Preconditions.checkNotNull;
 
-@SuppressWarnings("javadoc")
-public class NysiisTest extends SimplifierTest {
+import org.simmetrics.Metric;
+
+/**
+ * Identity metric that returns 1.0 when the inputs are equals, and 0.0 when
+ * they're not.
+ * 
+ * @param <T>
+ *            type of token
+ */
+public final class Identity<T> implements Metric<T> {
 
 	@Override
-	protected Simplifier getSimplifier() {
-		return new Nysiis();
+	public float compare(T a, T b) {
+		checkNotNull(a);
+		checkNotNull(b);
+		return a.equals(b) ? 1.0f : 0.0f;
 	}
 
 	@Override
-	protected T[] getTests() {
-		return new T[] { 
-				new T("Tannhauser", "TANASA"),
-				new T("James", "JAN"),
-				new T("", ""),
-				new T("Travis", "TRAV"),
-				new T("Marcus", "MARC"),
-				new T("Ozymandias", "OSYNAN"),
-				new T("Jones", "JAN"),
-				new T("Jenkins", "JANCAN"),
-				new T("Trevor", "TRAFAR"),
-				new T("Marinus", "MARAN"),
-		};
+	public String toString() {
+		return "Identity";
 	}
 
 }

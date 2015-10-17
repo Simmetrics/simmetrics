@@ -18,11 +18,14 @@
  * #L%
  */
 
-package org.simmetrics.utils;
+package org.simmetrics;
 
 import org.junit.Test;
 import org.simmetrics.simplifier.SimplifierTest;
 import org.simmetrics.simplifiers.Simplifier;
+
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 
 import static org.mockito.Mockito.*;
 
@@ -30,8 +33,8 @@ import static org.mockito.Mockito.*;
 public class CachingSimplifierTest extends SimplifierTest {
 
 	private Simplifier innerSimplifier;
+	private Cache<String, String> cache;
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected final Simplifier getSimplifier() {
 
@@ -43,20 +46,18 @@ public class CachingSimplifierTest extends SimplifierTest {
 
 		when(innerSimplifier.simplify("")).thenReturn("");
 
-		return new CachingSimplifier(2, 2, innerSimplifier);
+		cache = CacheBuilder.newBuilder().initialCapacity(2).maximumSize(2)
+				.build();
+
+		return new StringMetricBuilder.CachingSimplifier(cache, innerSimplifier);
 	}
 
 	@Override
 	protected final T[] getTests() {
 
-		return new T[] { 
-				new T("ABC", "abc"), 
-				new T("CCC", "ccc"),
-				new T("ABC", "abc"), 
-				new T("EEE", "eee"), 
-				new T("ABC", "abc"),
-				new T("CCC", "ccc"), 
-				new T("", "")
+		return new T[] { new T("ABC", "abc"), new T("CCC", "ccc"),
+				new T("ABC", "abc"), new T("EEE", "eee"), new T("ABC", "abc"),
+				new T("CCC", "ccc"), new T("", "")
 
 		};
 	}
@@ -70,5 +71,5 @@ public class CachingSimplifierTest extends SimplifierTest {
 		verify(innerSimplifier, times(1)).simplify("ABC");
 		verify(innerSimplifier, times(2)).simplify("CCC");
 	}
-	
+
 }

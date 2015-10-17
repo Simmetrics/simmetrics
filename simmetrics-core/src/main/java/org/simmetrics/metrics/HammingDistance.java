@@ -4,19 +4,17 @@
  * %%
  * Copyright (C) 2014 - 2015 Simmetrics Authors
  * %%
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *      http://www.apache.org/licenses/LICENSE-2.0
  * 
- * You should have received a copy of the GNU General Public
- * License along with this program.  If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  * #L%
  */
 
@@ -57,7 +55,7 @@ public final class HammingDistance {
 	 *            type of the token
 	 * 
 	 */
-	public static final class HammingListDistance<T> implements
+	private static final class HammingListDistance<T> implements
 			ListDistance<T> {
 
 		HammingListDistance() {
@@ -115,7 +113,7 @@ public final class HammingDistance {
 	 * This class is immutable and thread-safe.
 	 * 
 	 */
-	public static final class HammingStringDistance implements StringDistance {
+	private static final class HammingStringDistance implements StringDistance {
 
 		HammingStringDistance() {
 			// avoid synthetics
@@ -146,7 +144,7 @@ public final class HammingDistance {
 			}
 
 			int distance = 0;
-			for (int i = 0; i < a.length(); i++) {
+			for (int i = 0, length =  a.length(); i < length; i++) {
 				if (a.charAt(i) != b.charAt(i)) {
 					distance++;
 				}
@@ -161,16 +159,16 @@ public final class HammingDistance {
 	}
 
 	/**
-	 * Constructs a new Hamming distance to compare lists.
+	 * Returns a Hamming distance to compare lists.
 	 * 
-	 * @return a new Hamming distance to compare lists
+	 * @return a Hamming distance to compare lists
 	 */
 	public static <T> ListDistance<T> forList() {
 		return new HammingListDistance<>();
 	}
 
 	/**
-	 * Constructs a new Hamming distance to compare strings.
+	 * Returns a Hamming distance to compare strings.
 	 * 
 	 * @return a new Hamming distance to compare strings
 	 */

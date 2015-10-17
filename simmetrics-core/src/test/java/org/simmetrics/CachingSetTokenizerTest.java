@@ -18,39 +18,45 @@
  * #L%
  */
 
-package org.simmetrics.utils;
+package org.simmetrics;
+
+import java.util.Set;
 
 import org.junit.Test;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.TokenizerTest;
-import org.simmetrics.utils.CachingTokenizer;
 
-import static com.google.common.collect.Lists.newArrayList;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+
 import static com.google.common.collect.Sets.newHashSet;
 import static org.mockito.Mockito.*;
 
-@SuppressWarnings({ "javadoc", "deprecation" })
-public class CachingTokenizerTest extends TokenizerTest {
+@SuppressWarnings("javadoc")
+public class CachingSetTokenizerTest extends TokenizerTest {
 
 	private Tokenizer innerTokenizer;
+	private Cache<String, Set<String>> cache;
+	
+	@Override
+	protected final boolean supportsTokenizeToList() {
+		return false;
+	}
 
 	@Override
 	protected final Tokenizer getTokenizer() {
 		
 		innerTokenizer = mock(Tokenizer.class);
-		
-		when(innerTokenizer.tokenizeToList("ABC")).thenReturn(newArrayList("ABC"));
-		when(innerTokenizer.tokenizeToList("CCC")).thenReturn(newArrayList("CCC"));
-		when(innerTokenizer.tokenizeToList("EEE")).thenReturn(newArrayList("EEE"));
-		when(innerTokenizer.tokenizeToList("")).thenReturn(newArrayList(""));
-
+	
 		when(innerTokenizer.tokenizeToSet("ABC")).thenReturn(newHashSet("ABC"));
 		when(innerTokenizer.tokenizeToSet("CCC")).thenReturn(newHashSet("CCC"));
 		when(innerTokenizer.tokenizeToSet("EEE")).thenReturn(newHashSet("EEE"));
 		when(innerTokenizer.tokenizeToSet("")).thenReturn(newHashSet(""));
+	
+		cache = CacheBuilder.newBuilder().initialCapacity(2).maximumSize(2).build();
 
 		
-		return new CachingTokenizer(2,2,innerTokenizer);
+		return new StringMetricBuilder.CachingSetTokenizer(cache,innerTokenizer);
 	}
 
 	@Override
@@ -58,22 +64,14 @@ public class CachingTokenizerTest extends TokenizerTest {
 
 		return new T[] { new T("ABC", "ABC")
 				, new T("CCC", "CCC"),
-				new T("ABC", "ABC"), new T("EEE", "EEE"), new T("ABC", "ABC"),
+				new T("ABC", "ABC"), 
+				new T("EEE", "EEE"), 
+				new T("ABC", "ABC"),
 				new T("CCC", "CCC"),
 				new T("","") 
 
 		};
 	}
-	@Test
-	public final void tokenizeToListShouldUseCache() {
-		for (T t : tests) {
-			tokenizer.tokenizeToList(t.string());
-		}
-				
-		 verify(innerTokenizer, times(1)).tokenizeToList("ABC");
-		 verify(innerTokenizer, times(2)).tokenizeToList("CCC");
-	}
-
 
 	@Test
 	public final void tokenizeToSetShouldUseCache() {

@@ -4,19 +4,17 @@
  * %%
  * Copyright (C) 2014 - 2015 Simmetrics Authors
  * %%
- * This
- * program is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
+ *      http://www.apache.org/licenses/LICENSE-2.0
  * 
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  * #L%
  */
 
@@ -27,9 +25,12 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.BlockDistance;
 import org.simmetrics.metrics.CosineSimilarity;
+import org.simmetrics.metrics.Identity;
 import org.simmetrics.metrics.Jaro;
 import org.simmetrics.metrics.SimonWhite;
 
@@ -44,10 +45,41 @@ import static org.simmetrics.simplifiers.Simplifiers.toLowerCase;
 import static org.simmetrics.tokenizers.Tokenizers.qGram;
 import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
-@SuppressWarnings("javadoc")
+@SuppressWarnings({"javadoc","static-method"})
+@RunWith(Enclosed.class)
 public class StringMetricsTest {
 
+	@RunWith(Enclosed.class)
 	public static final class Create {
+
+		public static final class ForStringMetric {
+
+			@Test
+			public void shouldReturnSame() {
+				StringMetric s = StringMetrics.identity();
+				assertSame(s, StringMetrics.create(s));
+			}
+
+		}
+
+		public static final class ForGenericMetric extends StringMetricTest {
+
+
+			@Override
+			protected Metric<String> getMetric() {
+				return StringMetrics.create(new Identity<String>());
+			}
+
+			@Override
+			protected T[] getStringTests() {
+				return new T[] { 
+						new T(1.000f, "a", "a"),
+						new T(0.000f, "a", "b"),
+						new T(0.000f, "a", "") 
+				};
+			}
+
+		}
 
 		public static final class ForList extends StringMetricTest {
 
@@ -552,7 +584,6 @@ public class StringMetricsTest {
 				"Louis Philippe, le Roi Citoyen", "Charles X", "Louis XVIII",
 				"Napoleon II", "Napoleon I" };
 
-		@SuppressWarnings("static-method")
 		@Test
 		public void blockDistance() {
 			assertNotNull(StringMetrics.blockDistance());
@@ -601,40 +632,42 @@ public class StringMetricsTest {
 		}
 	}
 
-	@Test
-	public void damerauLevenshtein() {
-		assertNotNull(StringMetrics.damerauLevenshtein());
-	}
+	public static final class CreateStringMetrics {
+		@Test
+		public void damerauLevenshtein() {
+			assertNotNull(StringMetrics.damerauLevenshtein());
+		}
 
-	@Test
-	public void jaro() {
-		assertNotNull(StringMetrics.jaro());
-	}
+		@Test
+		public void jaro() {
+			assertNotNull(StringMetrics.jaro());
+		}
 
-	@Test
-	public void jaroWinkler() {
-		assertNotNull(StringMetrics.jaroWinkler());
-	}
+		@Test
+		public void jaroWinkler() {
+			assertNotNull(StringMetrics.jaroWinkler());
+		}
 
-	@Test
-	public void levenshtein() {
-		assertNotNull(StringMetrics.levenshtein());
-	}
+		@Test
+		public void levenshtein() {
+			assertNotNull(StringMetrics.levenshtein());
+		}
 
-	@Test
-	public void needlemanWunch() {
-		assertNotNull(StringMetrics.needlemanWunch());
+		@Test
+		public void needlemanWunch() {
+			assertNotNull(StringMetrics.needlemanWunch());
 
-	}
+		}
 
-	@Test
-	public void smithWaterman() {
-		assertNotNull(StringMetrics.smithWaterman());
+		@Test
+		public void smithWaterman() {
+			assertNotNull(StringMetrics.smithWaterman());
 
-	}
+		}
 
-	@Test
-	public void smithWatermanGotoh() {
-		assertNotNull(StringMetrics.smithWatermanGotoh());
+		@Test
+		public void smithWatermanGotoh() {
+			assertNotNull(StringMetrics.smithWatermanGotoh());
+		}
 	}
 }

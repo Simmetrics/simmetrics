@@ -2,7 +2,7 @@ Change Log
 ==========
 
 ## Since 3.2.3 ##
- - Changed licence to Apache License Version 2.0
+ - Changed license to Apache License Version 2.0
  - Added the Identity metric
  - Added cacheTokens(Cache) and cacheStrings(Cache) methods to the StringMetricBuilder
  - Deprecated TokenizingTokenizer and SimplifyingSimplifier utilities in favor of cacheTokens(Cache) and cacheStrings(Cache)
@@ -21,8 +21,6 @@ Change Log
  - QGram, QGramExtended and WhiteSpace have been deprecated due to having ambiguous names and to avoid leaking implementation details. 
  - Added Tokenizers.pattern to create a tokenizer that splits a string based on a regex.
  - StringMetrics.compare and StringMetrics.compareArrays have been depreciated for a lack of a clear use case.
-
-
 
 ## Since 3.2.0 ##
 

@@ -24,7 +24,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-@SuppressWarnings({"javadoc","deprecation"})
+@SuppressWarnings("javadoc")
+@Deprecated
 public class MathTest {
 
 	@Test

@@ -200,7 +200,23 @@ public class StringMetricsTest {
 			}
 
 		}
+		public static final class ForString extends
+		StringMetricTest {
+			
+			@Override
+			protected Metric<String> getMetric() {
+				return create(create(new Identity<String>()));
+			}
 
+			@Override
+			protected T[] getStringTests() {
+				return new T[] {
+						new T(1.0000f, "test", "test"),
+						new T(0.0000f, "", "test"),
+				};
+			}
+		}
+		
 		public static final class ForStringWithSimplifier extends
 				StringMetricTest {
 

@@ -246,6 +246,10 @@ public final class StringMetrics {
 		ForString(Metric<String> metric) {
 			this.metric = metric;
 		}
+		
+		Metric<String> getMetric() {
+			return metric;
+		}
 
 		@Override
 		public float compare(String a, String b) {
@@ -424,7 +428,11 @@ public final class StringMetrics {
 	 */
 	public static StringMetric create(Metric<String> metric,
 			Simplifier simplifier) {
-		if (metric instanceof ForStringWithSimplifier) {
+		if (metric instanceof ForString) {
+			ForString forString = (ForString) metric;
+			return new ForStringWithSimplifier(forString.getMetric(),
+					simplifier);
+		} else if (metric instanceof ForStringWithSimplifier) {
 			ForStringWithSimplifier fsws = (ForStringWithSimplifier) metric;
 			return new ForStringWithSimplifier(fsws.getMetric(), chain(
 					simplifier, fsws.getSimplifier()));
@@ -444,8 +452,8 @@ public final class StringMetrics {
 			ForSetWithSimplifier fl = (ForSetWithSimplifier) metric;
 			return createForSetMetric(fl.getMetric(),
 					chain(simplifier, fl.getSimplifier()), fl.getTokenizer());
-		}
-
+		} 
+		
 		return new ForStringWithSimplifier(metric, simplifier);
 	}
 

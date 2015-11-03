@@ -254,12 +254,12 @@ public final class StringMetricBuilderExample {
 		String a = "A quirky thing it is. This is a sentence.";
 		String b = "This sentence is similar; a quirky thing it is.";
 
-		Cache<String,String> simplifierCache = CacheBuilder
+		Cache<String,String> stringCache = CacheBuilder
 				.newBuilder()
 				.maximumSize(2)
 				.build();
 		
-		Cache<String,Set<String>> tokenizerCache = CacheBuilder
+		Cache<String,Set<String>> tokenCache = CacheBuilder
 				.newBuilder()
 				.maximumSize(2)
 				.build();	
@@ -268,9 +268,9 @@ public final class StringMetricBuilderExample {
 				with(new CosineSimilarity<String>())
 				.simplify(Simplifiers.toLowerCase())
 				.simplify(Simplifiers.removeNonWord())
-				.simplifierCache(simplifierCache)
+				.cacheStrings(stringCache)
 				.tokenize(Tokenizers.qGram(3))
-				.tokenizerCache(tokenizerCache)
+				.cacheTokens(tokenCache)
 				.build();
 
 		return metric.compare(a, b); // 0.8131

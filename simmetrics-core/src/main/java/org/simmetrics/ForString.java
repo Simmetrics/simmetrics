@@ -17,4 +17,8 @@ final class ForString implements StringMetric {
 		return metric.toString();
 	}
 
+	Metric<String> getMetric() {
+		return metric;
+	}
+
 }

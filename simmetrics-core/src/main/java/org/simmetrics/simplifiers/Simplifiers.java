@@ -59,11 +59,12 @@ public final class Simplifiers {
 		@Override
 		public String simplify(String input) {
 			checkNotNull(input);
+			String output = input;
 			for (Simplifier s : simplifiers) {
-				input = s.simplify(input);
+				output = s.simplify(output);
 			}
 
-			return input;
+			return output;
 
 		}
 

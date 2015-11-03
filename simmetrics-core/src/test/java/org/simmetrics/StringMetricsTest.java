@@ -62,7 +62,7 @@ public class StringMetricsTest {
 
 		}
 
-		public static final class ForGenericMetric extends StringMetricTest {
+		public static final class ForString extends StringMetricTest {
 
 
 			@Override
@@ -74,13 +74,27 @@ public class StringMetricsTest {
 			protected T[] getStringTests() {
 				return new T[] { 
 						new T(1.000f, "a", "a"),
-						new T(0.000f, "a", "b"),
 						new T(0.000f, "a", "") 
 				};
 			}
 
 		}
 
+		public static final class ForStringWithSimplifier extends
+				StringMetricTest {
+
+			@Override
+			protected Metric<String> getMetric() {
+				return create(create(new Identity<String>()), replaceNonWord());
+			}
+
+			@Override
+			protected T[] getStringTests() {
+				return new T[] { new T(1.0000f, "test", "test"),
+						new T(0.0000f, "", "test"), };
+			}
+		}
+		
 		public static final class ForList extends StringMetricTest {
 
 			@Override
@@ -200,32 +214,7 @@ public class StringMetricsTest {
 			}
 
 		}
-
-		public static final class ForStringWithSimplifier extends
-				StringMetricTest {
-
-			@Override
-			protected Metric<String> getMetric() {
-				return create(create(new Jaro(), toLowerCase()),
-						replaceNonWord());
-			}
-
-			@Override
-			protected T[] getStringTests() {
-				return new T[] {
-						new T(0.9209f, "test# string1", "test string2"),
-						new T(0.0000f, "", "test string2"),
-						new T(0.7944f, "aaa# bbb ccc ddd", "aaa bbb ccc eee"),
-						new T(0.8134f, "a b# c d", "a b c e"), };
-			}
-
-			@Override
-			protected boolean satisfiesSubadditivity() {
-				return false;
-			}
-
-		}
-
+		
 		public static final class WithSimplifier extends StringMetricTest {
 
 			@Override
@@ -248,6 +237,27 @@ public class StringMetricsTest {
 				return false;
 			}
 
+		}
+		
+
+		public static final class WithSimplifierWithSimplifier extends
+				StringMetricTest {
+
+			@Override
+			protected Metric<String> getMetric() {
+				return create(create(new Identity<String>(), toLowerCase()), replaceNonWord());
+			}
+
+			@Override
+			protected T[] getStringTests() {
+				return new T[] { new T(1.0000f, "Test#", "test "),
+						new T(0.0000f, "", "test"), };
+			}
+			
+			@Override
+			protected boolean satisfiesCoincidence() {
+				return false;
+			}
 		}
 
 	}

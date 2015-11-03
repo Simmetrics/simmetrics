@@ -1,17 +1,26 @@
 Change Log
 ==========
 
+## Since 3.2.3 ##
+ - Changed license to Apache License Version 2.0
+ - Added the Identity metric
+ - Added cacheTokens(Cache) and cacheStrings(Cache) methods to the StringMetricBuilder
+ - Deprecated TokenizingTokenizer and SimplifyingSimplifier utilities in favor of cacheTokens(Cache) and cacheStrings(Cache)
+ - Deprecated all convenience caching methods in StringMetric builder in favor of cacheTokens(Cache) and cacheStrings(Cache)
+ - Deprecated Math utility class
+
+## Since 3.2.2 ##
+ - There has been no release for v3.2.2
+
 ## Since 3.2.1 ##
  - Fixed bug where EuclidianDistance would return incorrect similarity when one argument was empty
  - Fixed bug where Tokenizers.whiteSpace and Whitespace would return leading empty tokens
  - Corrected DamerauLevenshtein.tostring to include all cost parameters
  - Case, NonDiacritics, WordCharacters simplifiers have been depreciated over having unclear names and to avoid leaking implementation details. Equivalent functions have been added to Simplifiers
- - Added Simplifiers.replaceAll and Simplifiers.removeAll. These respecively replace and remove parts of a string based on a regex.
- - QGram, QGramExtended and WhiteSpace have been deprecated due to having ambigious names and to avoid leaking implementation details. 
+ - Added Simplifiers.replaceAll and Simplifiers.removeAll. These respectively replace and remove parts of a string based on a regex.
+ - QGram, QGramExtended and WhiteSpace have been deprecated due to having ambiguous names and to avoid leaking implementation details. 
  - Added Tokenizers.pattern to create a tokenizer that splits a string based on a regex.
  - StringMetrics.compare and StringMetrics.compareArrays have been depreciated for a lack of a clear use case.
-
-
 
 ## Since 3.2.0 ##
 
@@ -45,7 +54,7 @@ Change Log
   - Optimization of Jaro
 
 ## Since 3.0.1 ##
-  - Fixed dependency on snapshot version of core in example moodule.
+  - Fixed dependency on snapshot version of core in example module.
 
 ## Since 3.0.0 ##
 
@@ -59,7 +68,7 @@ Change Log
     - Refactored code
     - Added tests based on Wikipedia references
   - Changed MongeElkan implementation
-    - Added normalization to remove asymetry
+    - Added normalization to remove asymmetry
     - Similarity is now calculated as sqrt(monge-elkan(a,b) * monge-elkan(b,a))
   - Changed Matching Coeficient implementation
     - Original implementation should have been identical to Jaccard but wasn't. Implementation now is Jaccard but for lists rather then sets.
@@ -70,7 +79,7 @@ Change Log
   - Refactored cost functions 
     - Replaced SubstitutionCostFunction and AffineGapPenalty interfaces with Substitution and Gap interface respectively.
     - Gap penalties and mismatched character both apply a negative value.
- - Reduced verbosity of StringBuilder syntax
+ - Reduced  of StringBuilder syntax
  - Added simplifiers from Apache Encoders project	
    - Caverphone1
    - Caverphone2

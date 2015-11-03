@@ -27,11 +27,11 @@ import org.simmetrics.simplifiers.Simplifier;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("javadoc")
+@Deprecated
 public class CachingSimplifierTest extends SimplifierTest {
 
 	private Simplifier innerSimplifier;
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected final Simplifier getSimplifier() {
 

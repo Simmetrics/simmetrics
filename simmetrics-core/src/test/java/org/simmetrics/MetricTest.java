@@ -248,7 +248,7 @@ public abstract class MetricTest<K> {
 	public final void containsEmptyVsNonEmptyTest() {
 		final K empty = getEmpty();
 		for (T<K> t : tests) {
-			if (t.a.equals(empty) ^ !t.b.equals(empty)) {
+			if (t.a.equals(empty) ^ t.b.equals(empty)) {
 				return;
 			}
 		}

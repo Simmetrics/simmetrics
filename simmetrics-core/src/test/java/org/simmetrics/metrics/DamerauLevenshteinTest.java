@@ -330,7 +330,9 @@ public final class DamerauLevenshteinTest {
 
 			@Override
 			protected T[] getStringTests() {
-				return new T[] { new T(1.000f, "uxyw", "uyxw"),
+				return new T[] { 
+						new T(0.000f, "uxyw", ""),
+						new T(1.000f, "uxyw", "uyxw"),
 						new T(1.000f, "uxyvxyw", "uyxvyxw"),
 						new T(1.000f, "transpose", "tranpsose"),
 
@@ -356,7 +358,9 @@ public final class DamerauLevenshteinTest {
 
 			@Override
 			protected T[] getStringTests() {
-				return new T[] { new T(0.9750f, "uxyw", "uyxw"),
+				return new T[] { 
+						new T(0.0000f, "uxyw", ""),
+						new T(0.9750f, "uxyw", "uyxw"),
 						new T(0.9714f, "uxyvxyw", "uyxvyxw"),
 						new T(0.9888f, "transpose", "tranpsose"),
 

@@ -50,6 +50,8 @@ public final class JaroWinklerTest   {
 					new T(0.8133f, "DIXON", "DICKSONX"), 
 					// Not from Wikipedia, proves triangle inequality doens't hold
 					new T(0.5999f, "OZYMANDIAS", "MARCUS") ,
+					// Not from Wikipedia, empty vs non-empty test
+					new T(0.0000f, "MARTHA", ""),
 			};
 		}
 

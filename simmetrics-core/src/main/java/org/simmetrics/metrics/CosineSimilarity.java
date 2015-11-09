@@ -60,7 +60,7 @@ public class CosineSimilarity<T> implements SetMetric<T> {
 		// intersection of two sets
 		final int intersection = (a.size() + b.size()) - all.size();
 
-		// Implementation note: Magnitude of a binary vectors is sqaure root of
+		// Implementation note: Magnitude of a binary vectors is square root of
 		// its size.
 		return (float) (intersection / (sqrt(a.size()) * sqrt(b.size())));
 	}

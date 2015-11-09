@@ -43,6 +43,7 @@ import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Tokenizers;
+import static org.simmetrics.StringMetrics.*;
 
 import com.google.common.base.Predicate;
 

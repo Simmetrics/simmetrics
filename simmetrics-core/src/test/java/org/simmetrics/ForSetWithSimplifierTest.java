@@ -1,6 +1,7 @@
 package org.simmetrics;
 
 import static org.junit.Assert.assertSame;
+import static org.simmetrics.StringMetrics.ForSetWithSimplifier;
 
 import java.util.Set;
 

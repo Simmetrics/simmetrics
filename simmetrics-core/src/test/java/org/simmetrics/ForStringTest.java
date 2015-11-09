@@ -1,7 +1,7 @@
 package org.simmetrics;
 
 import static org.junit.Assert.assertSame;
-
+import static org.simmetrics.StringMetrics.ForString;
 import org.junit.Test;
 import org.simmetrics.metrics.Identity;
 

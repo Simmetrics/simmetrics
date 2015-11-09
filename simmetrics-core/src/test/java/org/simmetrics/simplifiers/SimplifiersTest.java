@@ -32,8 +32,6 @@ import java.util.Collections;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
-import org.simmetrics.simplifiers.Simplifier;
-import org.simmetrics.simplifiers.Simplifiers;
 
 @SuppressWarnings({ "javadoc", "static-method" })
 @RunWith(Enclosed.class)

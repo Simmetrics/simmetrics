@@ -30,7 +30,6 @@ import org.simmetrics.Distance;
 import org.simmetrics.ListDistanceTest;
 import org.simmetrics.ListMetric;
 import org.simmetrics.ListMetricTest;
-import org.simmetrics.metrics.EuclideanDistance;
 
 @SuppressWarnings("javadoc")
 @RunWith(Enclosed.class)

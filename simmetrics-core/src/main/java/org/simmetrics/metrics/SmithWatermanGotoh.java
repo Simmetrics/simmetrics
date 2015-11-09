@@ -21,15 +21,15 @@
 
 package org.simmetrics.metrics;
 
-import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.functions.MatchMismatch;
-import org.simmetrics.metrics.functions.Substitution;
-
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static org.simmetrics.metrics.Math.max;
+
+import org.simmetrics.StringMetric;
+import org.simmetrics.metrics.functions.MatchMismatch;
+import org.simmetrics.metrics.functions.Substitution;
 
 /**
  * Smith-Waterman algorithm providing a similarity measure between two strings.

@@ -5,12 +5,12 @@ import static org.junit.Assert.assertSame;
 import java.util.List;
 
 import org.junit.Test;
+import org.simmetrics.StringMetrics.ForListWithSimplifier;
 import org.simmetrics.metrics.Identity;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Tokenizers;
-import static org.simmetrics.StringMetrics.ForListWithSimplifier;
 
 @SuppressWarnings("javadoc")
 public class ForListWithSimplifierTest extends StringMetricTest{

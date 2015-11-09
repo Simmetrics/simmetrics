@@ -19,9 +19,6 @@
  */
 package org.simmetrics.simplifiers;
 
-import org.simmetrics.simplifiers.DaitchMokotoffSoundex;
-import org.simmetrics.simplifiers.Simplifier;
-
 @SuppressWarnings("javadoc")
 public class DaitchMokotoffSoundexTest extends SimplifierTest {
 

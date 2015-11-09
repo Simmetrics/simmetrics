@@ -20,8 +20,6 @@
 
 package org.simmetrics.tokenizers;
 
-import org.simmetrics.tokenizers.Tokenizer;
-
 @SuppressWarnings("javadoc")
 @Deprecated
 public class WhitespaceTokenizerTest extends TokenizerTest {

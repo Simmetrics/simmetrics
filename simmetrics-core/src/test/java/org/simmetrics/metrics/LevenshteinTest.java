@@ -27,7 +27,6 @@ import org.simmetrics.StringDistance;
 import org.simmetrics.StringDistanceTest;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricTest;
-import org.simmetrics.metrics.Levenshtein;
 
 @SuppressWarnings("javadoc")
 @RunWith(Enclosed.class)

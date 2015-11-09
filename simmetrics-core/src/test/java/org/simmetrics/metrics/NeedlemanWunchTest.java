@@ -24,7 +24,6 @@ import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricTest;
-import org.simmetrics.metrics.NeedlemanWunch;
 import org.simmetrics.metrics.functions.MatchMismatch;
 
 @SuppressWarnings("javadoc")

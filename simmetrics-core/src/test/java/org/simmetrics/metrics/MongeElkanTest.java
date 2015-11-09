@@ -23,7 +23,6 @@ package org.simmetrics.metrics;
 import org.simmetrics.ListMetric;
 import org.simmetrics.ListMetricTest;
 import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.MongeElkan;
 
 @SuppressWarnings("javadoc")
 public final class MongeElkanTest extends ListMetricTest {

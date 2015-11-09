@@ -21,7 +21,9 @@
 package org.simmetrics.tokenizers;
 
 import static java.util.Arrays.asList;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -32,7 +34,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings("javadoc")
 public abstract class TokenizerTest {

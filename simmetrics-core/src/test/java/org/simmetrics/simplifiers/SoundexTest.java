@@ -19,9 +19,6 @@
  */
 package org.simmetrics.simplifiers;
 
-import org.simmetrics.simplifiers.Simplifier;
-import org.simmetrics.simplifiers.Soundex;
-
 @SuppressWarnings("javadoc")
 public class SoundexTest extends SimplifierTest {
 

@@ -20,12 +20,12 @@
 
 package org.simmetrics.metrics;
 
+import static java.lang.Math.sqrt;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import org.simmetrics.SetMetric;
-
-import static java.lang.Math.sqrt;
 
 /**
  * Cosine Similarity algorithm providing a similarity measure between two set

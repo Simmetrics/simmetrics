@@ -28,7 +28,6 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.simmetrics.simplifiers.Simplifier;
 
 @SuppressWarnings("javadoc")
 public abstract class SimplifierTest {

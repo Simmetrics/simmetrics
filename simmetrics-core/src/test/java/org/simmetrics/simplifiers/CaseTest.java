@@ -21,8 +21,6 @@ package org.simmetrics.simplifiers;
 
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
-import org.simmetrics.simplifiers.Case;
-import org.simmetrics.simplifiers.Simplifier;
 
 @SuppressWarnings({"javadoc","deprecation"})
 @RunWith(Enclosed.class)

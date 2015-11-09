@@ -1,9 +1,9 @@
 package org.simmetrics;
 
 import static org.junit.Assert.assertSame;
-import static org.simmetrics.StringMetrics.ForStringWithSimplifier;
 
 import org.junit.Test;
+import org.simmetrics.StringMetrics.ForStringWithSimplifier;
 import org.simmetrics.metrics.Identity;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.Simplifiers;

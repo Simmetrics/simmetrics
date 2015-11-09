@@ -1,11 +1,11 @@
 package org.simmetrics;
 
 import static org.junit.Assert.assertSame;
-import static org.simmetrics.StringMetrics.ForSetWithSimplifier;
 
 import java.util.Set;
 
 import org.junit.Test;
+import org.simmetrics.StringMetrics.ForSetWithSimplifier;
 import org.simmetrics.metrics.Identity;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.Simplifiers;

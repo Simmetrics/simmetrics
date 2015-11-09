@@ -2,7 +2,6 @@ package org.simmetrics.simplifiers;
 
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
-import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.Simplifiers.ChainSimplifier;
 
 import com.google.common.collect.ImmutableList;

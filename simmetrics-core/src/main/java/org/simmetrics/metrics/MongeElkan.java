@@ -26,8 +26,8 @@ import static java.lang.Math.sqrt;
 
 import java.util.List;
 
-import org.simmetrics.StringMetric;
 import org.simmetrics.ListMetric;
+import org.simmetrics.StringMetric;
 
 /**
  * Monge Elkan algorithm providing an matching style similarity measure between

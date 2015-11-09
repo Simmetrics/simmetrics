@@ -19,9 +19,6 @@
  */
 package org.simmetrics.simplifiers;
 
-import org.simmetrics.simplifiers.DoubleMetaphone;
-import org.simmetrics.simplifiers.Simplifier;
-
 @SuppressWarnings("javadoc")
 public class DoubleMetaphoneTest extends SimplifierTest {
 

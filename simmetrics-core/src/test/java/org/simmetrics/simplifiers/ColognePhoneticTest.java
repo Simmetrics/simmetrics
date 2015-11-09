@@ -19,9 +19,6 @@
  */
 package org.simmetrics.simplifiers;
 
-import org.simmetrics.simplifiers.ColognePhonetic;
-import org.simmetrics.simplifiers.Simplifier;
-
 @SuppressWarnings("javadoc")
 public class ColognePhoneticTest extends SimplifierTest {
 

@@ -20,11 +20,14 @@
 
 package org.simmetrics.utils;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.junit.Test;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.SimplifierTest;
-
-import static org.mockito.Mockito.*;
 
 @SuppressWarnings("javadoc")
 @Deprecated

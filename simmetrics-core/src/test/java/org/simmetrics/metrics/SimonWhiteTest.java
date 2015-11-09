@@ -28,8 +28,8 @@ import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
 import org.simmetrics.ListMetric;
 import org.simmetrics.ListMetricTest;
-import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.tokenizers.Tokenizer;
+
 import com.google.common.base.Predicate;
 
 @SuppressWarnings("javadoc")

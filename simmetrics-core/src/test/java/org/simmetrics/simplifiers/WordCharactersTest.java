@@ -19,9 +19,6 @@
  */
 package org.simmetrics.simplifiers;
 
-import org.simmetrics.simplifiers.Simplifier;
-import org.simmetrics.simplifiers.WordCharacters;
-
 @SuppressWarnings({ "javadoc", "deprecation" })
 public class WordCharactersTest extends SimplifierTest {
 

@@ -20,6 +20,7 @@
 
 package org.simmetrics.metrics;
 
+import static java.lang.Math.sqrt;
 import static java.util.Collections.frequency;
 
 import java.util.HashSet;
@@ -28,8 +29,6 @@ import java.util.Set;
 
 import org.simmetrics.ListDistance;
 import org.simmetrics.ListMetric;
-
-import static java.lang.Math.sqrt;
 
 /**
  * Euclidean Distance algorithm providing a similarity measure between two lists

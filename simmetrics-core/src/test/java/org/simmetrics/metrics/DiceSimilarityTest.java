@@ -24,7 +24,6 @@ import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
 import org.simmetrics.SetMetric;
 import org.simmetrics.SetMetricTest;
-import org.simmetrics.metrics.DiceSimilarity;
 import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings("javadoc")

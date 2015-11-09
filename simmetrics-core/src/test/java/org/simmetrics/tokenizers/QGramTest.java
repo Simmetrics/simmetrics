@@ -26,7 +26,6 @@ import static org.simmetrics.tokenizers.Tokenizers.qGramWithPadding;
 
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
-import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings("javadoc")
 @RunWith(Enclosed.class)

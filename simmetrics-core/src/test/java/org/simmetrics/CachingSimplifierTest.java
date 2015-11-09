@@ -20,14 +20,17 @@
 
 package org.simmetrics;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.junit.Test;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.SimplifierTest;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-
-import static org.mockito.Mockito.*;
 
 @SuppressWarnings("javadoc")
 public class CachingSimplifierTest extends SimplifierTest {

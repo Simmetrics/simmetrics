@@ -5,10 +5,10 @@ import static org.junit.Assert.assertSame;
 import java.util.List;
 
 import org.junit.Test;
+import org.simmetrics.StringMetrics.ForList;
 import org.simmetrics.metrics.Identity;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Tokenizers;
-import static org.simmetrics.StringMetrics.ForList;
 
 @SuppressWarnings("javadoc")
 public class ForListTest extends StringMetricTest {

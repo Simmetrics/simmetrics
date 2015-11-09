@@ -20,14 +20,16 @@
 
 package org.simmetrics.utils;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Sets.newHashSet;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.junit.Test;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.TokenizerTest;
-import org.simmetrics.utils.CachingTokenizer;
-
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Sets.newHashSet;
-import static org.mockito.Mockito.*;
 
 @SuppressWarnings("javadoc")
 @Deprecated

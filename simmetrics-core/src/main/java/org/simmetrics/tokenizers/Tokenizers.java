@@ -41,6 +41,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
@@ -197,7 +198,7 @@ public final class Tokenizers {
 
 		RecursiveTokenizer(List<Tokenizer> tokenizers) {
 			checkArgument(!tokenizers.contains(null));
-			this.tokenizers = new ArrayList<>(tokenizers);
+			this.tokenizers = ImmutableList.copyOf(tokenizers);
 		}
 
 		Collection<Tokenizer> getTokenizers() {

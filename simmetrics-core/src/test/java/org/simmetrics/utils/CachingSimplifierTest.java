@@ -21,8 +21,8 @@
 package org.simmetrics.utils;
 
 import org.junit.Test;
-import org.simmetrics.simplifier.SimplifierTest;
 import org.simmetrics.simplifiers.Simplifier;
+import org.simmetrics.simplifiers.SimplifierTest;
 
 import static org.mockito.Mockito.*;
 

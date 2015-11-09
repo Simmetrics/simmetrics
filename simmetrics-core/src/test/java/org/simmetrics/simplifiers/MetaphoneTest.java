@@ -17,32 +17,32 @@
  * limitations under the License.
  * #L%
  */
-package org.simmetrics.simplifier;
+package org.simmetrics.simplifiers;
 
-import org.simmetrics.simplifiers.Caverphone2;
+import org.simmetrics.simplifiers.Metaphone;
 import org.simmetrics.simplifiers.Simplifier;
 
 @SuppressWarnings("javadoc")
-public class CaverPhone2Test extends SimplifierTest {
+public class MetaphoneTest extends SimplifierTest {
 
 	@Override
 	protected Simplifier getSimplifier() {
-		return new Caverphone2();
+		return new Metaphone();
 	}
 
 	@Override
 	protected T[] getTests() {
 		return new T[] { 
-				new T("Tannhauser", "TNSA111111"),
-				new T("James", "YMS1111111"),
-				new T("", "1111111111"),
-				new T("Travis", "TRFS111111"),
-				new T("Marcus", "MKS1111111"),
-				new T("Ozymandias", "ASMNTS1111"),
-				new T("Jones", "YNS1111111"),
-				new T("Jenkins", "YNKNS11111"),
-				new T("Trevor", "TRFA111111"),
-				new T("Marinus", "MRNS111111"),
+				new T("Tannhauser", "TNHS"),
+				new T("James", "JMS"),
+				new T("", ""),
+				new T("Travis", "TRFS"),
+				new T("Marcus", "MRKS"),
+				new T("Ozymandias", "OSMN"),
+				new T("Jones", "JNS"),
+				new T("Jenkins", "JNKN"),
+				new T("Trevor", "TRFR"),
+				new T("Marinus", "MRNS"),
 		};
 	}
 

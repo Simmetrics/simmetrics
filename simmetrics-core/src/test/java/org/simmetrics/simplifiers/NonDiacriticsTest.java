@@ -17,34 +17,26 @@
  * limitations under the License.
  * #L%
  */
-package org.simmetrics.simplifier;
+package org.simmetrics.simplifiers;
 
+import org.simmetrics.simplifiers.NonDiacritics;
 import org.simmetrics.simplifiers.Simplifier;
-import org.simmetrics.simplifiers.Soundex;
 
-@SuppressWarnings("javadoc")
-public class SoundexTest extends SimplifierTest {
+@SuppressWarnings({"javadoc","deprecation"})
+public class NonDiacriticsTest extends SimplifierTest {
 
 	@Override
 	protected Simplifier getSimplifier() {
-		return new Soundex();
+		return new NonDiacritics();
 	}
 
 	@Override
 	protected T[] getTests() {
-		return new T[] { 
-				new T("Tannhauser", "T526"),
-				new T("James", "J520"),
-				new T("", ""),
-				new T("Travis", "T612"),
-				new T("Marcus", "M622"),
-				
-				new T("Ozymandias", "O255"),
-				new T("Jones", "J520"),
-				new T("Jenkins", "J525"),
-				new T("Trevor", "T616"),
-				new T("Marinus", "M652"),
-		};
+		return new T[] {
+				new T("Chilpéric II son of Childeric II",
+						"Chilperic II son of Childeric II"),
+				new T("The 11th Hour", "The 11th Hour"), 
+				new T("", ""), };
 	}
 
 }

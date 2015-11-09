@@ -17,26 +17,23 @@
  * limitations under the License.
  * #L%
  */
-package org.simmetrics.simplifier;
+package org.simmetrics.simplifiers;
 
-import org.simmetrics.simplifiers.NonDiacritics;
 import org.simmetrics.simplifiers.Simplifier;
+import org.simmetrics.simplifiers.WordCharacters;
 
-@SuppressWarnings({"javadoc","deprecation"})
-public class NonDiacriticsTest extends SimplifierTest {
+@SuppressWarnings({ "javadoc", "deprecation" })
+public class WordCharactersTest extends SimplifierTest {
 
 	@Override
 	protected Simplifier getSimplifier() {
-		return new NonDiacritics();
+		return new WordCharacters();
 	}
 
 	@Override
 	protected T[] getTests() {
-		return new T[] {
-				new T("Chilpéric II son of Childeric II",
-						"Chilperic II son of Childeric II"),
-				new T("The 11th Hour", "The 11th Hour"), 
-				new T("", ""), };
+		return new T[] { new T("##", "  "),
+				new T("The ##th Hour", "The   th Hour"), new T("", "") };
 	}
 
 }

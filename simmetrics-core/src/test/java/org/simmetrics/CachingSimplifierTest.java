@@ -21,8 +21,8 @@
 package org.simmetrics;
 
 import org.junit.Test;
-import org.simmetrics.simplifier.SimplifierTest;
 import org.simmetrics.simplifiers.Simplifier;
+import org.simmetrics.simplifiers.SimplifierTest;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;

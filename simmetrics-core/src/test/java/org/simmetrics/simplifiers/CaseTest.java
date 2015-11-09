@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package org.simmetrics.simplifier;
+package org.simmetrics.simplifiers;
 
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;

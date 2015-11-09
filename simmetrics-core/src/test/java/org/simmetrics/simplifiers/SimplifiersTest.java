@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package org.simmetrics.simplifier;
+package org.simmetrics.simplifiers;
 
 import static junit.framework.Assert.assertSame;
 import static org.simmetrics.simplifiers.Simplifiers.chain;

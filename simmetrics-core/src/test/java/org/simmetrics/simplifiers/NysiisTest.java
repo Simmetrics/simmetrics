@@ -17,32 +17,32 @@
  * limitations under the License.
  * #L%
  */
-package org.simmetrics.simplifier;
+package org.simmetrics.simplifiers;
 
-import org.simmetrics.simplifiers.DaitchMokotoffSoundex;
+import org.simmetrics.simplifiers.Nysiis;
 import org.simmetrics.simplifiers.Simplifier;
 
 @SuppressWarnings("javadoc")
-public class DaitchMokotoffSoundexTest extends SimplifierTest {
+public class NysiisTest extends SimplifierTest {
 
 	@Override
 	protected Simplifier getSimplifier() {
-		return new DaitchMokotoffSoundex();
+		return new Nysiis();
 	}
 
 	@Override
 	protected T[] getTests() {
 		return new T[] { 
-				new T("Tannhauser", "365490"),
-				new T("James", "164000"),
-				new T("", "000000"),
-				new T("Travis", "397400"),
-				new T("Marcus", "694400"),
-				new T("Ozymandias", "046634"),
-				new T("Jones", "164000"),
-				new T("Jenkins", "165640"),
-				new T("Trevor", "397900"),
-				new T("Marinus", "696400"),
+				new T("Tannhauser", "TANASA"),
+				new T("James", "JAN"),
+				new T("", ""),
+				new T("Travis", "TRAV"),
+				new T("Marcus", "MARC"),
+				new T("Ozymandias", "OSYNAN"),
+				new T("Jones", "JAN"),
+				new T("Jenkins", "JANCAN"),
+				new T("Trevor", "TRAFAR"),
+				new T("Marinus", "MARAN"),
 		};
 	}
 

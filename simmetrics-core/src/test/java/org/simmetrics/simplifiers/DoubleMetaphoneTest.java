@@ -17,31 +17,31 @@
  * limitations under the License.
  * #L%
  */
-package org.simmetrics.simplifier;
+package org.simmetrics.simplifiers;
 
-import org.simmetrics.simplifiers.MatchRatingApproach;
+import org.simmetrics.simplifiers.DoubleMetaphone;
 import org.simmetrics.simplifiers.Simplifier;
 
 @SuppressWarnings("javadoc")
-public class MatchRatingApproachTest extends SimplifierTest {
+public class DoubleMetaphoneTest extends SimplifierTest {
 
 	@Override
 	protected Simplifier getSimplifier() {
-		return new MatchRatingApproach();
+		return new DoubleMetaphone();
 	}
 
 	@Override
 	protected T[] getTests() {
 		return new T[] { 
-				new T("Tannhauser", "TNHSR"),
+				new T("Tannhauser", "TNSR"),
 				new T("James", "JMS"),
 				new T("", ""),
-				new T("Travis", "TRVS"),
-				new T("Marcus", "MRCS"),
-				new T("Ozymandias", "OZYNDS"),
+				new T("Travis", "TRFS"),
+				new T("Marcus", "MRKS"),
+				new T("Ozymandias", "ASMN"),
 				new T("Jones", "JNS"),
-				new T("Jenkins", "JNKNS"),
-				new T("Trevor", "TRVR"),
+				new T("Jenkins", "JNKN"),
+				new T("Trevor", "TRFR"),
 				new T("Marinus", "MRNS"),
 		};
 	}

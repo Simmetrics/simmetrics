@@ -34,6 +34,8 @@ import java.util.regex.Pattern;
 
 import org.simmetrics.StringMetricBuilder;
 
+import com.google.common.collect.ImmutableList;
+
 /**
  * Utilities for simplifiers. Construct simple simplifiers or chain multiple
  * simplifiers into a single simplifier.
@@ -43,13 +45,13 @@ import org.simmetrics.StringMetricBuilder;
  */
 public final class Simplifiers {
 
-	private static final class ChainSimplifier implements Simplifier {
+	static final class ChainSimplifier implements Simplifier {
 
 		private final List<Simplifier> simplifiers;
 
 		ChainSimplifier(List<Simplifier> simplifiers) {
 			checkArgument(!simplifiers.contains(null));
-			this.simplifiers = new ArrayList<>(simplifiers);
+			this.simplifiers = ImmutableList.copyOf(simplifiers);
 		}
 
 		List<Simplifier> getSimplifiers() {
@@ -72,6 +74,8 @@ public final class Simplifiers {
 		public String toString() {
 			return on(" -> ").join(simplifiers);
 		}
+		
+		
 	}
 
 	/**
@@ -79,7 +83,7 @@ public final class Simplifiers {
 	 * <p>
 	 * This class is thread-safe and immutable.
 	 */
-	private static final class RemoveDiacritics implements Simplifier {
+	static final class RemoveDiacritics implements Simplifier {
 
 		private static final Pattern DIACRITICS_AND_FRIENDS = Pattern
 				.compile("[\\p{InCombiningDiacriticalMarks}\\p{IsLm}\\p{IsSk}]+");
@@ -115,7 +119,7 @@ public final class Simplifiers {
 
 	}
 
-	private static final class ReplaceAll implements Simplifier {
+	static final class ReplaceAll implements Simplifier {
 		private final Pattern pattern;
 
 		private final String repplacement;
@@ -138,7 +142,7 @@ public final class Simplifiers {
 		}
 	}
 
-	private static final class ToLowerCase implements Simplifier {
+	static final class ToLowerCase implements Simplifier {
 
 		private final Locale locale;
 
@@ -157,7 +161,7 @@ public final class Simplifiers {
 		}
 	}
 
-	private static final class ToUpperCase implements Simplifier {
+	static final class ToUpperCase implements Simplifier {
 
 		private final Locale locale;
 

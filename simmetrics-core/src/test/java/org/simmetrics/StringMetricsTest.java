@@ -20,248 +20,191 @@
 
 package org.simmetrics;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
+import static org.simmetrics.StringMetricBuilder.with;
+import static org.simmetrics.simplifiers.SimplifiersMatcher.chain;
+import static org.simmetrics.tokenizers.Tokenizers.qGram;
+import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
-import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.BlockDistance;
-import org.simmetrics.metrics.CosineSimilarity;
 import org.simmetrics.metrics.Identity;
-import org.simmetrics.metrics.Jaro;
 import org.simmetrics.metrics.SimonWhite;
+import org.simmetrics.simplifiers.Simplifier;
+import org.simmetrics.simplifiers.Simplifiers;
+import org.simmetrics.tokenizers.Tokenizer;
+import org.simmetrics.tokenizers.Tokenizers;
 
 import com.google.common.base.Predicate;
-
-import static org.simmetrics.StringMetricBuilder.with;
-import static org.simmetrics.StringMetrics.create;
-import static org.simmetrics.StringMetrics.createForListMetric;
-import static org.simmetrics.StringMetrics.createForSetMetric;
-import static org.simmetrics.simplifiers.Simplifiers.replaceNonWord;
-import static org.simmetrics.simplifiers.Simplifiers.toLowerCase;
-import static org.simmetrics.tokenizers.Tokenizers.qGram;
-import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
 @SuppressWarnings({"javadoc","static-method"})
 @RunWith(Enclosed.class)
 public class StringMetricsTest {
-
-	@RunWith(Enclosed.class)
+	
 	public static final class Create {
+		
+		private final Metric<String> metric = new Identity<>();
+		private final Metric<List<String>> listMetric = new Identity<>();
+		private final Metric<Set<String>> setMetric = new Identity<>();
 
-		public static final class ForStringMetric {
+		private final Simplifier simplifier = Simplifiers.toLowerCase();
+		private final Simplifier simplifier2 = Simplifiers.removeNonWord();
+		private final Tokenizer tokenizer = Tokenizers.whitespace();
 
-			@Test
-			public void shouldReturnSame() {
-				StringMetric s = StringMetrics.identity();
-				assertSame(s, StringMetrics.create(s));
-			}
-
-		}
-
-		public static final class ForString extends StringMetricTest {
-
-
-			@Override
-			protected Metric<String> getMetric() {
-				return StringMetrics.create(new Identity<String>());
-			}
-
-			@Override
-			protected T[] getStringTests() {
-				return new T[] { 
-						new T(1.000f, "a", "a"),
-						new T(0.000f, "a", "") 
-				};
-			}
-
-		}
-
-		public static final class ForStringWithSimplifier extends
-				StringMetricTest {
-
-			@Override
-			protected Metric<String> getMetric() {
-				return create(create(new Identity<String>()), replaceNonWord());
-			}
-
-			@Override
-			protected T[] getStringTests() {
-				return new T[] { new T(1.0000f, "test", "test"),
-						new T(0.0000f, "", "test"), };
-			}
+		@Test
+		public void shouldReturnSame() {
+			StringMetric s = new ForString(metric);
+			assertSame(s, StringMetrics.create(s));
 		}
 		
-		public static final class ForList extends StringMetricTest {
-
-			@Override
-			protected Metric<String> getMetric() {
-				return create(
-						createForListMetric(new BlockDistance<String>(),
-								whitespace()), toLowerCase());
-			}
-
-			@Override
-			protected T[] getStringTests() {
-				return new T[] {
-						new T(1.0000f, "Test String1", "test string1"),
-						new T(0.5000f, "Test String1", "test string2"),
-						new T(0.6666f, "Test", "test string2"),
-						new T(0.0000f, "", "test string2"),
-						new T(0.7500f, "AAA bbb ccc ddd", "aaa bbb ccc eee"),
-						new T(0.5000f, "AAA bbb", "aaa aaa"),
-						new T(0.6666f, "AAA", "aaa aaa"),
-						new T(0.7500f, "A b c d", "a b c e"),
-						new T(0.5000f, "A b c d", "a b e f"), };
-			}
-
-			@Override
-			protected boolean satisfiesCoincidence() {
-				return false;
-			}
-		}
-
-		public static final class ForListWithSimplifier extends
-				StringMetricTest {
-
-			@Override
-			protected Metric<String> getMetric() {
-				return create(
-						createForListMetric(new BlockDistance<String>(),
-								toLowerCase(), whitespace()), replaceNonWord());
-			}
-
-			@Override
-			protected T[] getStringTests() {
-				return new T[] {
-
-				new T(1.0000f, "test string1", "test string1"),
-						new T(0.5000f, "test string#", "test string2"),
-						new T(0.6666f, "test##", "test string2"),
-						new T(0.0000f, "", "test string2"),
-						new T(0.7500f, "AAA# bbb ccc DDDD", "aaa bbb ccc eee"),
-						new T(0.5000f, "aaa BBB#", "aaa aaa"),
-						new T(0.6666f, "aaa", "AAA# aaa"),
-						new T(0.7500f, "a B# c d", "a b c e"),
-						new T(0.5000f, "a B# c d", "a b e f"),
-
-				};
-			}
-
-		}
-
-		public static final class ForSet extends StringMetricTest {
-
-			@Override
-			protected Metric<String> getMetric() {
-				return create(
-						createForSetMetric(new CosineSimilarity<String>(),
-								whitespace()), replaceNonWord());
-			}
-
-			@Override
-			protected T[] getStringTests() {
-				return new T[] {
-						new T(1.0000f, "test string1#", "test string1"),
-						new T(0.5000f, "test string1#", "test string2"),
-						new T(0.7071f, "test#", "test string2"),
-						new T(0.0000f, "", "test string2"),
-						new T(0.7500f, "aaa# bbb ccc ddd", "aaa bbb ccc eee"),
-						new T(0.7071f, "aaa# bbb", "aaa aaa"),
-						new T(1.0000f, "aaa#", "aaa aaa"),
-						new T(0.7500f, "a# b c d", "a b c e"),
-						new T(0.5000f, "a# b c d", "a b e f"), };
-			}
-
-			@Override
-			protected boolean satisfiesCoincidence() {
-				return false;
-			}
-
-		}
-
-		public static final class ForSetWithSimplifier extends StringMetricTest {
-
-			@Override
-			protected Metric<String> getMetric() {
-				return create(
-						createForSetMetric(new CosineSimilarity<String>(),
-								toLowerCase(), whitespace()), replaceNonWord());
-			}
-
-			@Override
-			protected T[] getStringTests() {
-				return new T[] {
-						new T(1.0000f, "test string1#", "test string1"),
-						new T(0.5000f, "test string1#", "test string2"),
-						new T(0.7071f, "test#", "test string2"),
-						new T(0.0000f, "", "test string2"),
-						new T(0.7500f, "AAA# bbb ccc DDDD", "aaa bbb ccc eee"),
-						new T(0.7071f, "aaa# BBB", "aaa aaa"),
-						new T(1.0000f, "aaa#", "AAA aaa"),
-						new T(0.7500f, "a B# c d", "a b c e"),
-						new T(0.5000f, "a B# c d", "a b e f"),
-
-				};
-			}
-
-			@Override
-			protected boolean satisfiesCoincidence() {
-				return false;
-			}
-
+		@Test
+		public void shouldReturnForString() {
+			StringMetric wrapped = StringMetrics.create(metric);
+			assertEquals(ForString.class, wrapped.getClass());
+			ForString forString = (ForString) wrapped;
+			assertSame(metric, forString.getMetric());			
 		}
 		
-		public static final class WithSimplifier extends StringMetricTest {
-
-			@Override
-			protected Metric<String> getMetric() {
-				return create(new Jaro(), toLowerCase());
-			}
-
-			@Override
-			protected T[] getStringTests() {
-				return new T[] {
-						new T(0.9444f, "Test string1", "test string2"),
-						new T(0.7777f, "Test", "test string2"),
-						new T(0.0000f, "", "test string2"),
-						new T(0.8667f, "AAA bbb ccc ddd", "aaa bbb ccc eee"),
-						new T(0.9048f, "a B c d", "a b c e"), };
-			}
-
-			@Override
-			protected boolean satisfiesSubadditivity() {
-				return false;
-			}
-
-		}
-		
-
-		public static final class WithSimplifierWithSimplifier extends
-				StringMetricTest {
-
-			@Override
-			protected Metric<String> getMetric() {
-				return create(create(new Identity<String>(), toLowerCase()), replaceNonWord());
-			}
-
-			@Override
-			protected T[] getStringTests() {
-				return new T[] { new T(1.0000f, "Test#", "test "),
-						new T(0.0000f, "", "test"), };
-			}
+		@Test
+		public void shouldReturnForStringWithSimplifier() {
+			ForString forString = new ForString(metric);
+			StringMetric wrapped = StringMetrics.create(forString, simplifier);
 			
-			@Override
-			protected boolean satisfiesCoincidence() {
-				return false;
-			}
+			assertEquals(ForStringWithSimplifier.class, wrapped.getClass());
+			ForStringWithSimplifier fsws = (ForStringWithSimplifier) wrapped;
+			assertSame(metric, fsws.getMetric());
+			assertSame(simplifier, fsws.getSimplifier());
+		}
+		
+		@Test
+		public void shouldReturnForStringWithChainedSimplifiers() {
+			ForStringWithSimplifier forString = new ForStringWithSimplifier(metric, simplifier);
+			StringMetric wrapped = StringMetrics.create(forString, simplifier2);
+			
+			assertEquals(ForStringWithSimplifier.class, wrapped.getClass());
+			ForStringWithSimplifier fsws = (ForStringWithSimplifier) wrapped;
+			assertSame(metric, fsws.getMetric());
+		}
+		
+		@Test
+		public void shouldReturnForListWithSimplifier() {
+			ForList forList = new ForList(listMetric, tokenizer);
+			StringMetric wrapped = StringMetrics.create(forList, simplifier);
+			
+			assertEquals(ForListWithSimplifier.class, wrapped.getClass());
+			ForListWithSimplifier flws = (ForListWithSimplifier) wrapped;
+			assertSame(listMetric, flws.getMetric());
+			assertEquals(simplifier, flws.getSimplifier());
+			assertSame(tokenizer, flws.getTokenizer());
+		}
+		
+		@Test
+		public void shouldReturnForListWithChainedSimplifiers() {
+			ForListWithSimplifier forList = new ForListWithSimplifier(listMetric, simplifier, tokenizer);
+			StringMetric wrapped = StringMetrics.create(forList, simplifier2);
+			
+			assertEquals(ForListWithSimplifier.class, wrapped.getClass());
+			ForListWithSimplifier flws = (ForListWithSimplifier) wrapped;
+			assertSame(listMetric, flws.getMetric());
+			assertThat(flws.getSimplifier(),chain(simplifier2, simplifier));
+			assertSame(tokenizer, flws.getTokenizer());
+
+		}
+		
+		@Test
+		public void shouldReturnForSetWithSimplifier() {
+			ForSet forSet = new ForSet(setMetric, tokenizer);
+			StringMetric wrapped = StringMetrics.create(forSet, simplifier);
+			
+			assertEquals(ForSetWithSimplifier.class, wrapped.getClass());
+			ForSetWithSimplifier fsws = (ForSetWithSimplifier) wrapped;
+			assertSame(setMetric, fsws.getMetric());
+			assertSame(simplifier, fsws.getSimplifier());
+			assertSame(tokenizer, fsws.getTokenizer());
+
+		}
+		
+		@Test
+		public void shouldReturnForSetWithChainedSimplifiers() {
+			ForSetWithSimplifier forSet = new ForSetWithSimplifier(setMetric, simplifier, tokenizer);
+			StringMetric wrapped = StringMetrics.create(forSet, simplifier2);
+			
+			assertEquals(ForSetWithSimplifier.class, wrapped.getClass());
+			ForSetWithSimplifier fsws = (ForSetWithSimplifier) wrapped;
+			assertSame(setMetric, fsws.getMetric());
+			assertThat(fsws.getSimplifier(),chain(simplifier2, simplifier));
+			assertSame(tokenizer, fsws.getTokenizer());
+		}
+		
+	}
+	
+	public static final class CreateForList {
+	
+		private final Metric<List<String>> metric = new Identity<>();
+		private final Tokenizer tokenizer = Tokenizers.whitespace();
+		private final Simplifier simplifier = Simplifiers.toLowerCase();
+
+		@Test
+		public void shouldReturnForList() {
+			
+			StringMetric wrapped = StringMetrics.createForListMetric(metric, tokenizer);
+			assertEquals(ForList.class, wrapped.getClass());
+			ForList forList = (ForList) wrapped;
+			assertSame(metric, forList.getMetric());			
+			assertSame(tokenizer, forList.getTokenizer());
+		}
+
+		
+		@Test
+		public void shouldReturnForListWithSimplifier() {
+			
+			StringMetric wrapped = StringMetrics.createForListMetric(metric, simplifier, tokenizer);
+			assertEquals(ForListWithSimplifier.class, wrapped.getClass());
+			ForListWithSimplifier forList = (ForListWithSimplifier) wrapped;
+			assertSame(metric, forList.getMetric());			
+			assertSame(tokenizer, forList.getTokenizer());
+			assertSame(simplifier, forList.getSimplifier());
 		}
 
 	}
+	public static final class CreateForSet {
+		
+		private final Metric<Set<String>> metric = new Identity<>();
+		private final Tokenizer tokenizer = Tokenizers.whitespace();
+		private final Simplifier simplifier = Simplifiers.toLowerCase();
 
+		@Test
+		public void shouldReturnForSet() {
+			
+			StringMetric wrapped = StringMetrics.createForSetMetric(metric, tokenizer);
+			assertEquals(ForSet.class, wrapped.getClass());
+			ForSet forSet = (ForSet) wrapped;
+			assertSame(metric, forSet.getMetric());			
+			assertSame(tokenizer, forSet.getTokenizer());
+		}
+
+		
+		@Test
+		public void shouldReturnForSetWithSimplifier() {
+			
+			StringMetric wrapped = StringMetrics.createForSetMetric(metric, simplifier, tokenizer);
+			assertEquals(ForSetWithSimplifier.class, wrapped.getClass());
+			ForSetWithSimplifier forSet = (ForSetWithSimplifier) wrapped;
+			assertSame(metric, forSet.getMetric());			
+			assertSame(tokenizer, forSet.getTokenizer());
+			assertSame(simplifier, forSet.getSimplifier());
+		}
+
+	}
 	public static final class CreateCosineSimilarity extends StringMetricTest {
 
 		@Override
@@ -318,56 +261,6 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateForListMetric extends StringMetricTest {
-
-		@Override
-		protected Metric<String> getMetric() {
-			return createForListMetric(new BlockDistance<String>(),
-					whitespace());
-		}
-
-		@Override
-		protected T[] getStringTests() {
-			return new T[] { new T(1.0000f, "test string1", "test string1"),
-					new T(0.5000f, "test string1", "test string2"),
-					new T(0.6666f, "test", "test string2"),
-					new T(0.0000f, "", "test string2"),
-					new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-					new T(0.5000f, "aaa bbb", "aaa aaa"),
-					new T(0.6666f, "aaa", "aaa aaa"),
-					new T(0.7500f, "a b c d", "a b c e"),
-					new T(0.5000f, "a b c d", "a b e f"), };
-		}
-
-	}
-
-	public static final class CreateForListMetricWithSimplifier extends
-			StringMetricTest {
-
-		@Override
-		protected Metric<String> getMetric() {
-			return StringMetrics.createForListMetric(
-					new BlockDistance<String>(), toLowerCase(), whitespace());
-		}
-
-		@Override
-		protected T[] getStringTests() {
-			return new T[] {
-
-			new T(1.0000f, "test string1", "test string1"),
-					new T(0.5000f, "test string1", "test string2"),
-					new T(0.6666f, "test", "test string2"),
-					new T(0.0000f, "", "test string2"),
-					new T(0.7500f, "AAA bbb ccc DDDD", "aaa bbb ccc eee"),
-					new T(0.5000f, "aaa BBB", "aaa aaa"),
-					new T(0.6666f, "aaa", "AAA aaa"),
-					new T(0.7500f, "a B c d", "a b c e"),
-					new T(0.5000f, "a B c d", "a b e f"),
-
-			};
-		}
-
-	}
 
 	public static final class CreateJaccardSimilarity extends StringMetricTest {
 
@@ -511,67 +404,6 @@ public class StringMetricsTest {
 		protected boolean satisfiesSubadditivity() {
 			return false;
 		}
-
-	}
-
-	public static final class ForSetMetric extends StringMetricTest {
-
-		@Override
-		protected Metric<String> getMetric() {
-			return StringMetrics.createForSetMetric(
-					new CosineSimilarity<String>(), whitespace());
-		}
-
-		@Override
-		protected T[] getStringTests() {
-			return new T[] { new T(1.0000f, "test string1", "test string1"),
-					new T(0.5000f, "test string1", "test string2"),
-					new T(0.7071f, "test", "test string2"),
-					new T(0.0000f, "", "test string2"),
-					new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-					new T(0.7071f, "aaa bbb", "aaa aaa"),
-					new T(1.0000f, "aaa", "aaa aaa"),
-					new T(0.7500f, "a b c d", "a b c e"),
-					new T(0.5000f, "a b c d", "a b e f"), };
-		}
-
-		@Override
-		protected boolean satisfiesCoincidence() {
-			return false;
-		}
-
-	}
-
-	public static final class ForSetMetricWithSimplifier extends
-			StringMetricTest {
-
-		@Override
-		protected Metric<String> getMetric() {
-			return StringMetrics
-					.createForSetMetric(new CosineSimilarity<String>(),
-							toLowerCase(), whitespace());
-		}
-
-		@Override
-		protected T[] getStringTests() {
-			return new T[] { new T(1.0000f, "test string1", "test string1"),
-					new T(0.5000f, "test string1", "test string2"),
-					new T(0.7071f, "test", "test string2"),
-					new T(0.0000f, "", "test string2"),
-					new T(0.7500f, "AAA bbb ccc DDDD", "aaa bbb ccc eee"),
-					new T(0.7071f, "aaa BBB", "aaa aaa"),
-					new T(1.0000f, "aaa", "AAA aaa"),
-					new T(0.7500f, "a B c d", "a b c e"),
-					new T(0.5000f, "a B c d", "a b e f"),
-
-			};
-		}
-
-		@Override
-		protected boolean satisfiesCoincidence() {
-			return false;
-		}
-
 	}
 
 	public static final class Utilities {

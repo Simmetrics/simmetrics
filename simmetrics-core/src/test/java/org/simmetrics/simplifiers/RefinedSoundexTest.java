@@ -17,32 +17,33 @@
  * limitations under the License.
  * #L%
  */
-package org.simmetrics.simplifier;
+package org.simmetrics.simplifiers;
 
-import org.simmetrics.simplifiers.ColognePhonetic;
+import org.simmetrics.simplifiers.RefinedSoundex;
 import org.simmetrics.simplifiers.Simplifier;
 
 @SuppressWarnings("javadoc")
-public class ColognePhoneticTest extends SimplifierTest {
+public class RefinedSoundexTest extends SimplifierTest {
 
 	@Override
 	protected Simplifier getSimplifier() {
-		return new ColognePhonetic();
+		return new RefinedSoundex();
 	}
 
 	@Override
 	protected T[] getTests() {
 		return new T[] { 
-				new T("Tannhauser", "2687"),
-				new T("James", "068"),
+				new T("Tannhauser", "T6080309"),
+				new T("James", "J40803"),
 				new T("", ""),
-				new T("Travis", "2738"),
-				new T("Marcus", "6748"),
-				new T("Ozymandias", "086628"),
-				new T("Jones", "068"),
-				new T("Jenkins", "06468"),
-				new T("Trevor", "2737"),
-				new T("Marinus", "6768"),
+				new T("Travis", "T690203"),
+				new T("Marcus", "M809303"),
+				
+				new T("Ozymandias", "O050808603"),
+				new T("Jones", "J40803"),
+				new T("Jenkins", "J4083083"),
+				new T("Trevor", "T690209"),
+				new T("Marinus", "M8090803"),
 		};
 	}
 

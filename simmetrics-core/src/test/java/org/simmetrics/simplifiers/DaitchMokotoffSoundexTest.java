@@ -17,32 +17,32 @@
  * limitations under the License.
  * #L%
  */
-package org.simmetrics.simplifier;
+package org.simmetrics.simplifiers;
 
-import org.simmetrics.simplifiers.Metaphone;
+import org.simmetrics.simplifiers.DaitchMokotoffSoundex;
 import org.simmetrics.simplifiers.Simplifier;
 
 @SuppressWarnings("javadoc")
-public class MetaphoneTest extends SimplifierTest {
+public class DaitchMokotoffSoundexTest extends SimplifierTest {
 
 	@Override
 	protected Simplifier getSimplifier() {
-		return new Metaphone();
+		return new DaitchMokotoffSoundex();
 	}
 
 	@Override
 	protected T[] getTests() {
 		return new T[] { 
-				new T("Tannhauser", "TNHS"),
-				new T("James", "JMS"),
-				new T("", ""),
-				new T("Travis", "TRFS"),
-				new T("Marcus", "MRKS"),
-				new T("Ozymandias", "OSMN"),
-				new T("Jones", "JNS"),
-				new T("Jenkins", "JNKN"),
-				new T("Trevor", "TRFR"),
-				new T("Marinus", "MRNS"),
+				new T("Tannhauser", "365490"),
+				new T("James", "164000"),
+				new T("", "000000"),
+				new T("Travis", "397400"),
+				new T("Marcus", "694400"),
+				new T("Ozymandias", "046634"),
+				new T("Jones", "164000"),
+				new T("Jenkins", "165640"),
+				new T("Trevor", "397900"),
+				new T("Marinus", "696400"),
 		};
 	}
 

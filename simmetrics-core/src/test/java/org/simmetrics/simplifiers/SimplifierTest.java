@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package org.simmetrics.simplifier;
+package org.simmetrics.simplifiers;
 
 import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;

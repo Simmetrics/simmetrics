@@ -223,280 +223,280 @@ public class StringMetricsTest {
 			return new T[] { new T(0.0f, "To repeat repeat is to repeat", ""),
 					new T(1.0f, "To repeat repeat is to repeat", "To repeat repeat is to repeat") };
 		}
+	}
 
-		public static final class CreateCosineSimilarity extends StringMetricTest {
+	public static final class CreateCosineSimilarity extends StringMetricTest {
 
-			@Override
-			protected Metric<String> getMetric() {
-				return StringMetrics.cosineSimilarity();
-			}
+		@Override
+		protected Metric<String> getMetric() {
+			return StringMetrics.cosineSimilarity();
+		}
 
-			@Override
-			protected T[] getStringTests() {
-				return new T[] { new T(0.5000f, "test string1", "test string2"),
-						new T(0.5000f, "test string1", "test string2"), new T(0.7071f, "test", "test string2"),
-						new T(0.0000f, "", "test string2"),
+		@Override
+		protected T[] getStringTests() {
+			return new T[] { new T(0.5000f, "test string1", "test string2"),
+					new T(0.5000f, "test string1", "test string2"), new T(0.7071f, "test", "test string2"),
+					new T(0.0000f, "", "test string2"),
 
-						new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"), new T(0.7500f, "a b c d", "a b c e"), };
-			}
+					new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"), new T(0.7500f, "a b c d", "a b c e"), };
+		}
+
+	}
+
+	public static final class CreateDiceSimlarity extends StringMetricTest {
+
+		@Override
+		protected Metric<String> getMetric() {
+			return StringMetrics.diceSimilarity();
+		}
+
+		@Override
+		protected T[] getStringTests() {
+			return new T[] { new T(0.5000f, "test string1", "test string2"), new T(0.6666f, "test", "test string2"),
+					new T(0.0000f, "", "test string2"), new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+					new T(0.7500f, "a b c d", "a b c e"), };
+		}
+
+	}
+
+	public static final class CreateEuclideanDistance extends StringMetricTest {
+
+		@Override
+		protected Metric<String> getMetric() {
+			return StringMetrics.euclideanDistance();
+		}
+
+		@Override
+		protected T[] getStringTests() {
+			return new T[] { new T(0.5000f, "test string1", "test string2"), new T(0.5527f, "test", "test string2"),
+					new T(0.2928f, "", "test string2"), new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+					new T(0.7500f, "a b c d", "a b c e"), };
+		}
+
+	}
+
+	public static final class CreateJaccardSimilarity extends StringMetricTest {
+
+		@Override
+		protected Metric<String> getMetric() {
+			return StringMetrics.jaccardSimilarity();
+		}
+
+		@Override
+		protected T[] getStringTests() {
+			return new T[] { new T(0.3333f, "test string1", "test string2"), new T(0.5000f, "test", "test string2"),
+					new T(0.0000f, "", "test string2"), new T(0.6000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+					new T(0.6000f, "a b c d", "a b c e"), };
+		}
+
+	}
+
+	public static final class CreateMatchingCoefficient extends StringMetricTest {
+
+		@Override
+		protected Metric<String> getMetric() {
+			return StringMetrics.matchingCoefficient();
+		}
+
+		@Override
+		protected T[] getStringTests() {
+			return new T[] { new T(0.3333f, "test string1", "test string2"), new T(0.5000f, "test", "test string2"),
+					new T(0.0000f, "", "test string2"), new T(0.6000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+					new T(0.6000f, "a b c d", "a b c e"), };
+		}
+
+	}
+
+	public static final class CreateMongeElkan extends StringMetricTest {
+
+		@Override
+		protected Metric<String> getMetric() {
+			return StringMetrics.mongeElkan();
+		}
+
+		@Override
+		protected T[] getStringTests() {
+			return new T[] { new T(0.9286f, "test string1", "test string2"), new T(0.8660f, "test", "test string2"),
+					new T(0.0000f, "", "test string2"), new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+					new T(0.7500f, "a b c d", "a b c e"), };
+		}
+
+		@Override
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+
+	}
+
+	public static final class CreateOverlapCoefficient extends StringMetricTest {
+		@Override
+		protected Metric<String> getMetric() {
+			return StringMetrics.overlapCoefficient();
+		}
+
+		@Override
+		protected T[] getStringTests() {
+			return new T[] { new T(0.5000f, "test string1", "test string2"), new T(1.0000f, "test", "test string2"),
+					new T(0.0000f, "", "test string2"), new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+					new T(0.7500f, "a b c d", "a b c e"), };
+		}
+
+		@Override
+		protected boolean satisfiesCoincidence() {
+			return false;
+		}
+
+	}
+
+	public static final class CreateQGramsDistance extends StringMetricTest {
+
+		@Override
+		protected Metric<String> getMetric() {
+			return StringMetrics.qGramsDistance();
+		}
+
+		@Override
+		protected T[] getStringTests() {
+			return new T[] { new T(0.7857f, "test string1", "test string2"), new T(0.3999f, "test", "test string2"),
+					new T(0.0000f, "", "test string2"), new T(0.7058f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+					new T(0.6666f, "a b c d", "a b c e"), };
+		}
+
+	}
+
+	public static final class CreateSimonWhite extends StringMetricTest {
+
+		@Override
+		protected Metric<String> getMetric() {
+			return StringMetrics.simonWhite();
+		}
+
+		@Override
+		protected T[] getStringTests() {
+			return new T[] { new T(0.8889f, "test string1", "test string2"), new T(0.5000f, "test", "test string2"),
+					new T(0.0000f, "", "test string2"), new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee") };
+		}
+
+	}
+
+	public static final class CreateSoundex extends StringMetricTest {
+
+		@Override
+		protected Metric<String> getMetric() {
+			return StringMetrics.soundex();
+		}
+
+		@Override
+		protected T[] getStringTests() {
+			return new T[] { new T(0.5000f, "Tannhauser", "Ozymandias"), new T(1.0000f, "James", "Jones"),
+					new T(0.0000f, "", "Jenkins"), new T(0.8833f, "Travis", "Trevor"),
+					new T(0.8666f, "Marcus", "Marinus"), };
+		}
+
+		@Override
+		protected boolean satisfiesCoincidence() {
+			return false;
+		}
+
+		@Override
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+	}
+
+	public static final class Utilities {
+
+		private static final float DELTA = 0.001f;
+
+		private final float[] expected = new float[] { 0.071f, 0.153f, 0.000f, 0.933f, 1.000f };
+
+		private StringMetric metric = with(new SimonWhite<String>()).tokenize(whitespace())
+				.filter(new Predicate<String>() {
+
+					@Override
+					public boolean apply(String input) {
+						return input.length() >= 2;
+					}
+				}).tokenize(qGram(2)).build();
+
+		private final String[] names1 = new String[] { "Louis Philippe, le Roi Citoyen", "Charles X", "Louis XVIII",
+				"Napoleon II", "Napoleon I" };
+
+		@Test
+		public void blockDistance() {
+			assertNotNull(StringMetrics.blockDistance());
+		}
+
+		@SuppressWarnings("deprecation")
+		@Test
+		public void compareArray() {
+			assertArrayEquals(expected, StringMetrics.compare(metric, "Napoleon I", names1), DELTA);
 
 		}
 
-		public static final class CreateDiceSimlarity extends StringMetricTest {
+		@SuppressWarnings("deprecation")
+		@Test
+		public void compareArrays() {
+			assertArrayEquals(new float[0], StringMetrics.compareArrays(metric, new String[] {}, new String[] {}),
+					DELTA);
 
-			@Override
-			protected Metric<String> getMetric() {
-				return StringMetrics.diceSimilarity();
-			}
+			final String[] names2 = new String[] { "Louis XVIII", "Napoléon Ier, le Grand",
+					"Louis XVI le Restaurateur de la Liberté Française", "Napoleon II", "Napoleon I" };
+			final float[] expected2 = new float[] { 0.275f, 0.095f, 0.285f, 1.000f, 1.000f };
 
-			@Override
-			protected T[] getStringTests() {
-				return new T[] { new T(0.5000f, "test string1", "test string2"), new T(0.6666f, "test", "test string2"),
-						new T(0.0000f, "", "test string2"), new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-						new T(0.7500f, "a b c d", "a b c e"), };
-			}
+			assertArrayEquals(expected2, StringMetrics.compareArrays(metric, names1, names2), DELTA);
 
 		}
 
-		public static final class CreateEuclideanDistance extends StringMetricTest {
+		@SuppressWarnings("deprecation")
+		@Test(expected = IllegalArgumentException.class)
+		public void compareArraysDifferentLength() {
+			StringMetrics.compareArrays(metric, new String[] { "" }, new String[] {});
+		}
 
-			@Override
-			protected Metric<String> getMetric() {
-				return StringMetrics.euclideanDistance();
-			}
+		@SuppressWarnings("deprecation")
+		@Test
+		public void compareList() {
+			assertArrayEquals(expected, StringMetrics.compare(metric, "Napoleon I", Arrays.asList(names1)), DELTA);
+		}
+	}
 
-			@Override
-			protected T[] getStringTests() {
-				return new T[] { new T(0.5000f, "test string1", "test string2"), new T(0.5527f, "test", "test string2"),
-						new T(0.2928f, "", "test string2"), new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-						new T(0.7500f, "a b c d", "a b c e"), };
-			}
+	public static final class CreateStringMetrics {
+		@Test
+		public void damerauLevenshtein() {
+			assertNotNull(StringMetrics.damerauLevenshtein());
+		}
+
+		@Test
+		public void jaro() {
+			assertNotNull(StringMetrics.jaro());
+		}
+
+		@Test
+		public void jaroWinkler() {
+			assertNotNull(StringMetrics.jaroWinkler());
+		}
+
+		@Test
+		public void levenshtein() {
+			assertNotNull(StringMetrics.levenshtein());
+		}
+
+		@Test
+		public void needlemanWunch() {
+			assertNotNull(StringMetrics.needlemanWunch());
 
 		}
 
-		public static final class CreateJaccardSimilarity extends StringMetricTest {
-
-			@Override
-			protected Metric<String> getMetric() {
-				return StringMetrics.jaccardSimilarity();
-			}
-
-			@Override
-			protected T[] getStringTests() {
-				return new T[] { new T(0.3333f, "test string1", "test string2"), new T(0.5000f, "test", "test string2"),
-						new T(0.0000f, "", "test string2"), new T(0.6000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-						new T(0.6000f, "a b c d", "a b c e"), };
-			}
+		@Test
+		public void smithWaterman() {
+			assertNotNull(StringMetrics.smithWaterman());
 
 		}
 
-		public static final class CreateMatchingCoefficient extends StringMetricTest {
-
-			@Override
-			protected Metric<String> getMetric() {
-				return StringMetrics.matchingCoefficient();
-			}
-
-			@Override
-			protected T[] getStringTests() {
-				return new T[] { new T(0.3333f, "test string1", "test string2"), new T(0.5000f, "test", "test string2"),
-						new T(0.0000f, "", "test string2"), new T(0.6000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-						new T(0.6000f, "a b c d", "a b c e"), };
-			}
-
-		}
-
-		public static final class CreateMongeElkan extends StringMetricTest {
-
-			@Override
-			protected Metric<String> getMetric() {
-				return StringMetrics.mongeElkan();
-			}
-
-			@Override
-			protected T[] getStringTests() {
-				return new T[] { new T(0.9286f, "test string1", "test string2"), new T(0.8660f, "test", "test string2"),
-						new T(0.0000f, "", "test string2"), new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-						new T(0.7500f, "a b c d", "a b c e"), };
-			}
-
-			@Override
-			protected boolean satisfiesSubadditivity() {
-				return false;
-			}
-
-		}
-
-		public static final class CreateOverlapCoefficient extends StringMetricTest {
-			@Override
-			protected Metric<String> getMetric() {
-				return StringMetrics.overlapCoefficient();
-			}
-
-			@Override
-			protected T[] getStringTests() {
-				return new T[] { new T(0.5000f, "test string1", "test string2"), new T(1.0000f, "test", "test string2"),
-						new T(0.0000f, "", "test string2"), new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-						new T(0.7500f, "a b c d", "a b c e"), };
-			}
-
-			@Override
-			protected boolean satisfiesCoincidence() {
-				return false;
-			}
-
-		}
-
-		public static final class CreateQGramsDistance extends StringMetricTest {
-
-			@Override
-			protected Metric<String> getMetric() {
-				return StringMetrics.qGramsDistance();
-			}
-
-			@Override
-			protected T[] getStringTests() {
-				return new T[] { new T(0.7857f, "test string1", "test string2"), new T(0.3999f, "test", "test string2"),
-						new T(0.0000f, "", "test string2"), new T(0.7058f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-						new T(0.6666f, "a b c d", "a b c e"), };
-			}
-
-		}
-
-		public static final class CreateSimonWhite extends StringMetricTest {
-
-			@Override
-			protected Metric<String> getMetric() {
-				return StringMetrics.simonWhite();
-			}
-
-			@Override
-			protected T[] getStringTests() {
-				return new T[] { new T(0.8889f, "test string1", "test string2"), new T(0.5000f, "test", "test string2"),
-						new T(0.0000f, "", "test string2"), new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee") };
-			}
-
-		}
-
-		public static final class CreateSoundex extends StringMetricTest {
-
-			@Override
-			protected Metric<String> getMetric() {
-				return StringMetrics.soundex();
-			}
-
-			@Override
-			protected T[] getStringTests() {
-				return new T[] { new T(0.5000f, "Tannhauser", "Ozymandias"), new T(1.0000f, "James", "Jones"),
-						new T(0.0000f, "", "Jenkins"), new T(0.8833f, "Travis", "Trevor"),
-						new T(0.8666f, "Marcus", "Marinus"), };
-			}
-
-			@Override
-			protected boolean satisfiesCoincidence() {
-				return false;
-			}
-
-			@Override
-			protected boolean satisfiesSubadditivity() {
-				return false;
-			}
-		}
-
-		public static final class Utilities {
-
-			private static final float DELTA = 0.001f;
-
-			private final float[] expected = new float[] { 0.071f, 0.153f, 0.000f, 0.933f, 1.000f };
-
-			private StringMetric metric = with(new SimonWhite<String>()).tokenize(whitespace())
-					.filter(new Predicate<String>() {
-
-						@Override
-						public boolean apply(String input) {
-							return input.length() >= 2;
-						}
-					}).tokenize(qGram(2)).build();
-
-			private final String[] names1 = new String[] { "Louis Philippe, le Roi Citoyen", "Charles X", "Louis XVIII",
-					"Napoleon II", "Napoleon I" };
-
-			@Test
-			public void blockDistance() {
-				assertNotNull(StringMetrics.blockDistance());
-			}
-
-			@SuppressWarnings("deprecation")
-			@Test
-			public void compareArray() {
-				assertArrayEquals(expected, StringMetrics.compare(metric, "Napoleon I", names1), DELTA);
-
-			}
-
-			@SuppressWarnings("deprecation")
-			@Test
-			public void compareArrays() {
-				assertArrayEquals(new float[0], StringMetrics.compareArrays(metric, new String[] {}, new String[] {}),
-						DELTA);
-
-				final String[] names2 = new String[] { "Louis XVIII", "Napoléon Ier, le Grand",
-						"Louis XVI le Restaurateur de la Liberté Française", "Napoleon II", "Napoleon I" };
-				final float[] expected2 = new float[] { 0.275f, 0.095f, 0.285f, 1.000f, 1.000f };
-
-				assertArrayEquals(expected2, StringMetrics.compareArrays(metric, names1, names2), DELTA);
-
-			}
-
-			@SuppressWarnings("deprecation")
-			@Test(expected = IllegalArgumentException.class)
-			public void compareArraysDifferentLength() {
-				StringMetrics.compareArrays(metric, new String[] { "" }, new String[] {});
-			}
-
-			@SuppressWarnings("deprecation")
-			@Test
-			public void compareList() {
-				assertArrayEquals(expected, StringMetrics.compare(metric, "Napoleon I", Arrays.asList(names1)), DELTA);
-			}
-		}
-
-		public static final class CreateStringMetrics {
-			@Test
-			public void damerauLevenshtein() {
-				assertNotNull(StringMetrics.damerauLevenshtein());
-			}
-
-			@Test
-			public void jaro() {
-				assertNotNull(StringMetrics.jaro());
-			}
-
-			@Test
-			public void jaroWinkler() {
-				assertNotNull(StringMetrics.jaroWinkler());
-			}
-
-			@Test
-			public void levenshtein() {
-				assertNotNull(StringMetrics.levenshtein());
-			}
-
-			@Test
-			public void needlemanWunch() {
-				assertNotNull(StringMetrics.needlemanWunch());
-
-			}
-
-			@Test
-			public void smithWaterman() {
-				assertNotNull(StringMetrics.smithWaterman());
-
-			}
-
-			@Test
-			public void smithWatermanGotoh() {
-				assertNotNull(StringMetrics.smithWatermanGotoh());
-			}
+		@Test
+		public void smithWatermanGotoh() {
+			assertNotNull(StringMetrics.smithWatermanGotoh());
 		}
 	}
 }

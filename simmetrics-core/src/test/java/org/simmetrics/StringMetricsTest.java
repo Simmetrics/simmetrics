@@ -37,6 +37,7 @@ import java.util.Set;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
+import org.simmetrics.StringMetricTest.T;
 import org.simmetrics.metrics.Identity;
 import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.simplifiers.Simplifier;
@@ -206,6 +207,23 @@ public class StringMetricsTest {
 		}
 
 	}
+	
+	public static final class CreateIdentity extends StringMetricTest {
+
+		@Override
+		protected Metric<String> getMetric() {
+			return StringMetrics.identity();
+		}
+
+		@Override
+		protected T[] getStringTests() {
+			return new T[]{
+					new T(0.0f, "To repeat repeat is to repeat", ""),
+					new T(1.0f, "To repeat repeat is to repeat", "To repeat repeat is to repeat")
+		};
+	}
+
+	
 	public static final class CreateCosineSimilarity extends StringMetricTest {
 
 		@Override

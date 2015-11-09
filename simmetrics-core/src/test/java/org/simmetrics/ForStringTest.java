@@ -5,6 +5,7 @@ import static org.junit.Assert.assertSame;
 import org.junit.Test;
 import org.simmetrics.metrics.Identity;
 
+@SuppressWarnings("javadoc")
 public class ForStringTest extends StringMetricTest{
 
 	private final Metric<String> metric = new Identity<>();
@@ -12,7 +13,7 @@ public class ForStringTest extends StringMetricTest{
 	@Override
 	protected ForString getMetric() {
 		return new ForString(metric);
-	};
+	}
 	
 	@Override
 	protected T[] getStringTests() {

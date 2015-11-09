@@ -11,6 +11,7 @@ import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Tokenizers;
 
+@SuppressWarnings("javadoc")
 public class ForSetWithSimplifierTest extends StringMetricTest{
 
 	private final Tokenizer tokenizer = Tokenizers.whitespace();
@@ -20,7 +21,7 @@ public class ForSetWithSimplifierTest extends StringMetricTest{
 	@Override
 	protected ForSetWithSimplifier getMetric() {
 		return new ForSetWithSimplifier(metric, simplifier, tokenizer);
-	};
+	}
 	
 	@Override
 	protected T[] getStringTests() {

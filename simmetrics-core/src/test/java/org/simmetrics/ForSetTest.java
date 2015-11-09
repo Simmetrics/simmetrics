@@ -9,6 +9,7 @@ import org.simmetrics.metrics.Identity;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Tokenizers;
 
+@SuppressWarnings("javadoc")
 public class ForSetTest extends StringMetricTest{
 
 	private final Tokenizer tokenizer = Tokenizers.whitespace();
@@ -17,7 +18,7 @@ public class ForSetTest extends StringMetricTest{
 	@Override
 	protected ForSet getMetric() {
 		return new ForSet(metric, tokenizer);
-	};
+	}
 	
 	@Override
 	protected T[] getStringTests() {

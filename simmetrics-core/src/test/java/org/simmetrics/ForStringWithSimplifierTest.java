@@ -7,6 +7,7 @@ import org.simmetrics.metrics.Identity;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.Simplifiers;
 
+@SuppressWarnings("javadoc")
 public class ForStringWithSimplifierTest extends StringMetricTest{
 
 	private final Metric<String> metric = new Identity<>();
@@ -15,7 +16,7 @@ public class ForStringWithSimplifierTest extends StringMetricTest{
 	@Override
 	protected ForStringWithSimplifier getMetric() {
 		return new ForStringWithSimplifier(metric, simplifier);
-	};
+	}
 	
 	@Override
 	protected T[] getStringTests() {

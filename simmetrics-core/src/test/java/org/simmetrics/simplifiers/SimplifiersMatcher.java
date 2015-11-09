@@ -8,6 +8,7 @@ import org.simmetrics.simplifiers.Simplifiers.ChainSimplifier;
 import com.google.common.collect.ImmutableList;
 import com.google.monitoring.runtime.instrumentation.common.com.google.common.collect.Lists;
 
+@SuppressWarnings("javadoc")
 public abstract class SimplifiersMatcher extends TypeSafeMatcher<Simplifier> {
 	
 	public static SimplifiersMatcher chain(final Simplifier simplifier,

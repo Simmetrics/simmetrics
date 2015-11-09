@@ -34,21 +34,25 @@ import org.simmetrics.StringMetricTest;
 public final class DamerauLevenshteinTest {
 	public static final class OutofBounds {
 
+		@SuppressWarnings("unused")
 		@Test(expected = IllegalArgumentException.class)
 		public void shouldThrowForDeleteCostOnBound() {
 			new DamerauLevenshtein(0, 1, 1);
 		}
 
+		@SuppressWarnings("unused")
 		@Test(expected = IllegalArgumentException.class)
 		public void shouldThrowForDeleteCostBelowBound() {
 			new DamerauLevenshtein(-1f, 1, 1);
 		}
 
+		@SuppressWarnings("unused")
 		@Test(expected = IllegalArgumentException.class)
 		public void shouldThrowForsubstituteCostBelowBound() {
 			new DamerauLevenshtein(1, -Float.MIN_VALUE, 1);
 		}
 
+		@SuppressWarnings("unused")
 		@Test(expected = IllegalArgumentException.class)
 		public void shouldThrowForTransposeCostBelowBound() {
 			new DamerauLevenshtein(1, 1, -Float.MIN_VALUE);

@@ -22,22 +22,22 @@ package org.simmetrics.metrics;
 
 import static java.util.Arrays.asList;
 
-import java.util.List;
-
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.simmetrics.Distance;
-import org.simmetrics.ListDistanceTest;
-import org.simmetrics.ListMetric;
-import org.simmetrics.ListMetricTest;
+import org.simmetrics.MultisetDistanceTest;
+import org.simmetrics.MultisetMetric;
+import org.simmetrics.MultisetMetricTest;
+
+import com.google.common.collect.Multiset;
 
 @SuppressWarnings("javadoc")
 @RunWith(Enclosed.class)
 public final class EuclideanDistanceTest {
-	public final static class DistanceList extends ListDistanceTest {
+	public final static class DistanceList extends MultisetDistanceTest {
 
 		@Override
-		protected Distance<List<String>> getMetric() {
+		protected Distance<Multiset<String>> getMetric() {
 			return new EuclideanDistance<>();
 		}
 
@@ -64,7 +64,7 @@ public final class EuclideanDistanceTest {
 		}
 	}
 
-	public static final class MetricListTest extends ListMetricTest {
+	public static final class MetricListTest extends MultisetMetricTest {
 
 		@Override
 		protected boolean satisfiesSubadditivity() {
@@ -72,7 +72,7 @@ public final class EuclideanDistanceTest {
 		}
 
 		@Override
-		protected ListMetric<String> getMetric() {
+		protected MultisetMetric<String> getMetric() {
 			return new EuclideanDistance<>();
 		}
 

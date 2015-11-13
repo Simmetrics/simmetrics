@@ -45,7 +45,7 @@ public final class StringMetricsExample {
 
 		StringMetric metric = StringMetrics.jaro();
 
-		return metric.compare(str1, str2); // 0.7341
+		return metric.compare(str1, str2); // 0.7383
 	}
 
 	/**
@@ -78,7 +78,7 @@ public final class StringMetricsExample {
 				.tokenize(Tokenizers.qGram(3))
 				.build();
 
-		return metric.compare(str1, str2); // 0.7777
+		return metric.compare(str1, str2); // 0.7473
 	}
 
 }

@@ -20,9 +20,9 @@
 
 package org.simmetrics.metrics;
 
+import static com.google.common.collect.Sets.intersection;
 import static java.lang.Math.min;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import org.simmetrics.SetMetric;
@@ -58,14 +58,8 @@ public final class OverlapCoefficient<T> implements SetMetric<T> {
 			return 0.0f;
 		}
 
-		final int total = a.size() + b.size();
-		final Set<T> union = new HashSet<>(total);
-		union.addAll(a);
-		union.addAll(b);
-
-		final int intersection = total - union.size();
 		// (|q & r|) / min{|q|, |r|}
-		return intersection / (float) min(a.size(), b.size());
+		return intersection(a, b).size() / (float) min(a.size(), b.size());
 	}
 
 	@Override

@@ -20,7 +20,8 @@
 
 package org.simmetrics.metrics;
 
-import java.util.HashSet;
+import static com.google.common.collect.Sets.intersection;
+
 import java.util.Set;
 
 import org.simmetrics.SetMetric;
@@ -58,15 +59,12 @@ public final class JaccardSimilarity<T> implements SetMetric<T> {
 			return 0.0f;
 		}
 		
-		final int total = a.size() + b.size();
-		final Set<T> union = new HashSet<>(total);
-		union.addAll(a);
-		union.addAll(b);
-
-		final int intersection = total - union.size();
-
-		//  ( |a & b| ) / ( | a or b | )
-		return intersection / (float) union.size();
+		final int intersection = intersection(a, b).size();
+				
+		// ( |a & b| ) / ( | a or b | )
+		// Implementation note: The size of the union of two sets is equal to
+		// the size of both lists minus the duplicate elements.
+		return intersection / (float)(a.size() + b.size() - intersection);
 	}
 
 	@Override

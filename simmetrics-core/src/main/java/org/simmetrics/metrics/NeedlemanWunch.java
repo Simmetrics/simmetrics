@@ -24,6 +24,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+import static java.lang.System.arraycopy;
 import static org.simmetrics.metrics.Math.min;
 
 import java.util.Objects;
@@ -123,10 +124,9 @@ public class NeedlemanWunch implements StringMetric {
 				v1[j] = min(v0[j] - gapValue, v1[j - 1] - gapValue, v0[j - 1]
 						- substitution.compare(s, i - 1, t, j - 1));
 			}
-
-			for (int j = 0; j < v0.length; j++) {
-				v0[j] = v1[j];
-			}
+			// Copy rather then swap because when calculating 
+			// v1[j] elements to the left of j are referenced 
+			arraycopy(v1, 0, v0, 0, v0.length);
 		}
 
 		return v1[v1.length - 1];

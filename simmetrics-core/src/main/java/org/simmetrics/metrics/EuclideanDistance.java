@@ -20,15 +20,13 @@
 
 package org.simmetrics.metrics;
 
+import static com.google.common.collect.Multisets.union;
 import static java.lang.Math.sqrt;
-import static java.util.Collections.frequency;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import org.simmetrics.MultisetDistance;
+import org.simmetrics.MultisetMetric;
 
-import org.simmetrics.ListDistance;
-import org.simmetrics.ListMetric;
+import com.google.common.collect.Multiset;
 
 /**
  * Euclidean Distance algorithm providing a similarity measure between two lists
@@ -40,10 +38,10 @@ import org.simmetrics.ListMetric;
  *            type of the token
  * 
  */
-public class EuclideanDistance<T> implements ListMetric<T>, ListDistance<T> {
+public class EuclideanDistance<T> implements MultisetMetric<T>, MultisetDistance<T> {
 
 	@Override
-	public float compare(List<T> a, List<T> b) {
+	public float compare(Multiset<T> a, Multiset<T> b) {
 
 		if (a.isEmpty() && b.isEmpty()) {
 			return 1.0f;
@@ -54,15 +52,13 @@ public class EuclideanDistance<T> implements ListMetric<T>, ListDistance<T> {
 	}
 
 	@Override
-	public float distance(final List<T> a, final List<T> b) {
-		final Set<T> all = new HashSet<>(a.size() + b.size());
-		all.addAll(a);
-		all.addAll(b);
-
+	public float distance(final Multiset<T> a, final Multiset<T> b) {
+		
 		float distance = 0.0f;
-		for (final T token : all) {
-			int frequencyInA = frequency(a, token);
-			int frequencyInB = frequency(b, token);
+		
+		for (T token : union(a, b).elementSet()) {
+			float frequencyInA = a.count(token);
+			float frequencyInB = b.count(token);
 
 			distance += ((frequencyInA - frequencyInB) * (frequencyInA - frequencyInB));
 		}

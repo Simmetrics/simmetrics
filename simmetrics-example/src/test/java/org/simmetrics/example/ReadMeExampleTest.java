@@ -27,15 +27,17 @@ import org.junit.Test;
 public class ReadMeExampleTest {
 	
 	private static final float DELTA = 0.0001f;
-
-	@Test
-	public void example02(){
-		assertEquals(0.5590f, ReadMeExample.example02(), DELTA);
-	}
 	
 	@Test
 	public void example01(){
-		assertEquals(0.4472f, ReadMeExample.example01(), DELTA);
+		assertEquals(0.4767f, ReadMeExample.example01(), DELTA);
 	}
+	
+	@Test
+	public void example02(){
+		assertEquals(0.5720f, ReadMeExample.example02(), DELTA);
+	}
+	
+
 
 }

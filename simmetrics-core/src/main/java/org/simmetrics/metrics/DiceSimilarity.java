@@ -20,7 +20,8 @@
 
 package org.simmetrics.metrics;
 
-import java.util.HashSet;
+import static com.google.common.collect.Sets.intersection;
+
 import java.util.Set;
 
 import org.simmetrics.SetMetric;
@@ -56,16 +57,9 @@ public class DiceSimilarity<T> implements SetMetric<T> {
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
-
-		final int total = a.size() + b.size();
-		final Set<T> union = new HashSet<>(total);
-		union.addAll(a);
-		union.addAll(b);
-
-		final int intersection = total - union.size();
-
+		
 		// (2 * |a & b |) / (|a|  + |b|)
-		return (2.0f * intersection) / total;
+		return (2.0f * intersection(a, b).size()) / (a.size() + b.size());
 	}
 
 	@Override

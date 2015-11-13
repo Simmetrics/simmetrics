@@ -20,35 +20,35 @@
 
 package org.simmetrics.metrics;
 
-import static com.google.common.collect.Multisets.union;
+import static com.google.common.collect.Sets.intersection;
 import static java.lang.Math.sqrt;
 
-import org.simmetrics.MultisetMetric;
+import java.util.Set;
 
-import com.google.common.collect.Multiset;
+import org.simmetrics.SetMetric;
 
 /**
- * Cosine Similarity algorithm providing a similarity measure between two
- * multisets.
+ * Tantimoto coefficient providing a similarity measure between two sets.
+ * Identical to cosine similarity when the latter used with multiset containing
+ * singular entries
  * <p>
  * <code>
  * similarity(a,b) = a·b / (||a|| * ||b||)
  * </code>
- * 
  * <p>
  * This class is immutable and thread-safe.
  * 
- * @see TanimotoCoefficient
+ * @see CosineSimilarity
  * @see <a href="http://en.wikipedia.org/wiki/Cosine_similarity">Wikipedia
  *      Cosine similarity</a>
  * 
  * @param <T>
  *            type of the token
  */
-public class CosineSimilarity<T> implements MultisetMetric<T> {
+public class TanimotoCoefficient<T> implements SetMetric<T> {
 
 	@Override
-	public float compare(Multiset<T> a, Multiset<T> b) {
+	public float compare(Set<T> a, Set<T> b) {
 
 		if (a.isEmpty() && b.isEmpty()) {
 			return 1.0f;
@@ -57,27 +57,16 @@ public class CosineSimilarity<T> implements MultisetMetric<T> {
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
-
-		float dotProduct = 0;
-		float magnitudeA = 0;
-		float magnitudeB = 0;
-
-		for (T entry : union(a, b).elementSet()) {
-			float aCount = a.count(entry);
-			float bCount = b.count(entry);
-
-			dotProduct += aCount * bCount;
-			magnitudeA += aCount * aCount;
-			magnitudeB += bCount * bCount;
-		}
-
-		//  a·b / (||a|| * ||b||)
-		return (float) (dotProduct / (sqrt(magnitudeA) * sqrt(magnitudeB)));
+		
+		// a·b / (||a|| * ||b||)
+		// Dot product of two binary vectors is the intersection of two sets
+		// Magnitude of a binary vectors is square root of its size.
+		return (float) (intersection(a, b).size() / (sqrt(a.size()) * sqrt(b.size())));
 	}
 
 	@Override
 	public String toString() {
-		return "CosineSimilarity";
+		return "TanimotoCoefficient";
 	}
 
 }

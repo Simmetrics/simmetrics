@@ -19,15 +19,13 @@
  */
 package org.simmetrics.metrics;
 
+import static com.google.common.collect.Multisets.union;
 import static java.lang.Math.abs;
-import static java.util.Collections.frequency;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import org.simmetrics.MultisetDistance;
+import org.simmetrics.MultisetMetric;
 
-import org.simmetrics.ListDistance;
-import org.simmetrics.ListMetric;
+import com.google.common.collect.Multiset;
 
 /**
  * Block distance algorithm whereby vector space block distance between tokens
@@ -41,10 +39,10 @@ import org.simmetrics.ListMetric;
  * @param <T>
  *            type of token
  */
-public class BlockDistance<T> implements ListMetric<T>, ListDistance<T> {
+public class BlockDistance<T> implements MultisetMetric<T>, MultisetDistance<T> {
 
 	@Override
-	public float compare(List<T> a, List<T> b) {
+	public float compare(Multiset<T> a, Multiset<T> b) {
 
 		if (a.isEmpty() && b.isEmpty()) {
 			return 1.0f;
@@ -58,19 +56,17 @@ public class BlockDistance<T> implements ListMetric<T>, ListDistance<T> {
 	}
 
 	@Override
-	public float distance(final List<T> a, final List<T> b) {
-		final Set<T> all = new HashSet<>(a.size() + b.size());
-		all.addAll(a);
-		all.addAll(b);
+	public float distance(final Multiset<T> a, final Multiset<T> b) {
+	
+		float distance = 0;
+		
+		for (T token : union(a, b).elementSet()) {
+			float frequencyInA = a.count(token);
+			float frequencyInB = b.count(token);
 
-		int totalDistance = 0;
-		for (T token : all) {
-			int frequencyInA = frequency(a, token);
-			int frequencyInB = frequency(b, token);
-
-			totalDistance += abs(frequencyInA - frequencyInB);
+			distance += abs(frequencyInA - frequencyInB);
 		}
-		return totalDistance;
+		return distance;
 	}
 
 	@Override

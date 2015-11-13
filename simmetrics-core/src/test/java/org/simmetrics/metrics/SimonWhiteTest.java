@@ -26,14 +26,14 @@ import static org.simmetrics.tokenizers.Tokenizers.filter;
 import static org.simmetrics.tokenizers.Tokenizers.qGram;
 import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
-import org.simmetrics.ListMetric;
-import org.simmetrics.ListMetricTest;
+import org.simmetrics.MultisetMetric;
+import org.simmetrics.MultisetMetricTest;
 import org.simmetrics.tokenizers.Tokenizer;
 
 import com.google.common.base.Predicate;
 
 @SuppressWarnings("javadoc")
-public final class SimonWhiteTest extends ListMetricTest {
+public final class SimonWhiteTest extends MultisetMetricTest {
 	
 	@Override
 	protected boolean satisfiesSubadditivity(){
@@ -53,7 +53,7 @@ public final class SimonWhiteTest extends ListMetricTest {
 	}
 
 	@Override
-	protected ListMetric<String> getMetric() {
+	protected MultisetMetric<String> getMetric() {
 		return new SimonWhite<>();
 	}
 

@@ -20,17 +20,11 @@
 
 package org.simmetrics;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
-import static org.simmetrics.StringMetricBuilder.with;
 import static org.simmetrics.simplifiers.SimplifiersMatcher.chain;
-import static org.simmetrics.tokenizers.Tokenizers.qGram;
-import static org.simmetrics.tokenizers.Tokenizers.whitespace;
-
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -44,13 +38,10 @@ import org.simmetrics.StringMetrics.ForSetWithSimplifier;
 import org.simmetrics.StringMetrics.ForString;
 import org.simmetrics.StringMetrics.ForStringWithSimplifier;
 import org.simmetrics.metrics.Identity;
-import org.simmetrics.metrics.SimonWhite;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Tokenizers;
-
-import com.google.common.base.Predicate;
 
 @SuppressWarnings({ "javadoc", "static-method" })
 @RunWith(Enclosed.class)
@@ -405,60 +396,12 @@ public class StringMetricsTest {
 	}
 
 	public static final class Utilities {
-
-		private static final float DELTA = 0.001f;
-
-		private final float[] expected = new float[] { 0.071f, 0.153f, 0.000f, 0.933f, 1.000f };
-
-		private StringMetric metric = with(new SimonWhite<String>()).tokenize(whitespace())
-				.filter(new Predicate<String>() {
-
-					@Override
-					public boolean apply(String input) {
-						return input.length() >= 2;
-					}
-				}).tokenize(qGram(2)).build();
-
-		private final String[] names1 = new String[] { "Louis Philippe, le Roi Citoyen", "Charles X", "Louis XVIII",
-				"Napoleon II", "Napoleon I" };
-
+		//TODO: Test
 		@Test
 		public void blockDistance() {
 			assertNotNull(StringMetrics.blockDistance());
 		}
 
-		@SuppressWarnings("deprecation")
-		@Test
-		public void compareArray() {
-			assertArrayEquals(expected, StringMetrics.compare(metric, "Napoleon I", names1), DELTA);
-
-		}
-
-		@SuppressWarnings("deprecation")
-		@Test
-		public void compareArrays() {
-			assertArrayEquals(new float[0], StringMetrics.compareArrays(metric, new String[] {}, new String[] {}),
-					DELTA);
-
-			final String[] names2 = new String[] { "Louis XVIII", "Napoléon Ier, le Grand",
-					"Louis XVI le Restaurateur de la Liberté Française", "Napoleon II", "Napoleon I" };
-			final float[] expected2 = new float[] { 0.275f, 0.095f, 0.285f, 1.000f, 1.000f };
-
-			assertArrayEquals(expected2, StringMetrics.compareArrays(metric, names1, names2), DELTA);
-
-		}
-
-		@SuppressWarnings("deprecation")
-		@Test(expected = IllegalArgumentException.class)
-		public void compareArraysDifferentLength() {
-			StringMetrics.compareArrays(metric, new String[] { "" }, new String[] {});
-		}
-
-		@SuppressWarnings("deprecation")
-		@Test
-		public void compareList() {
-			assertArrayEquals(expected, StringMetrics.compare(metric, "Napoleon I", Arrays.asList(names1)), DELTA);
-		}
 	}
 
 	public static final class CreateStringMetrics {

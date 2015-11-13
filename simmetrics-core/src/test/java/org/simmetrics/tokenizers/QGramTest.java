@@ -20,10 +20,6 @@
 
 package org.simmetrics.tokenizers;
 
-import static org.simmetrics.tokenizers.Tokenizers.qGram;
-import static org.simmetrics.tokenizers.Tokenizers.qGramWithFilter;
-import static org.simmetrics.tokenizers.Tokenizers.qGramWithPadding;
-
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
@@ -35,7 +31,7 @@ public final class QGramTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return Tokenizers.qGram(1);
+			return new Tokenizers.QGram(1);
 
 		}
 
@@ -61,7 +57,7 @@ public final class QGramTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return qGramWithPadding(2,"@");
+			return new Tokenizers.QGramExtended(2,"@","@");
 		}
 
 		@Override
@@ -78,7 +74,7 @@ public final class QGramTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return qGramWithPadding(2,"L","R");
+			return  new Tokenizers.QGramExtended(2,"L","R");
 		}
 
 		@Override
@@ -95,7 +91,7 @@ public final class QGramTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return qGramWithPadding(2);
+			return  new Tokenizers.QGramExtended(2);
 		}
 
 		@Override
@@ -120,7 +116,7 @@ public final class QGramTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return qGram(2);
+			return  new Tokenizers.QGram(2);
 		}
 
 		@Override
@@ -143,7 +139,7 @@ public final class QGramTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return qGramWithFilter(2);
+			return  new Tokenizers.QGram(2,true);
 		}
 
 		@Override
@@ -160,7 +156,7 @@ public final class QGramTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return qGramWithPadding(3);
+			return  new Tokenizers.QGramExtended(3);
 		}
 
 		@Override
@@ -186,7 +182,7 @@ public final class QGramTest {
 
 		@Override
 		protected Tokenizer getTokenizer() {
-			return qGram(3);
+			return new Tokenizers.QGram(3);
 		}
 
 		@Override

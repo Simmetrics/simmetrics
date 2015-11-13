@@ -41,6 +41,7 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.google.common.collect.Multiset;
 import com.google.common.collect.Sets;
 
 /**
@@ -179,7 +180,7 @@ public final class StringMetricBuilderExample {
 				.tokenize(Tokenizers.qGram(3))
 				.build();
 
-		return metric.compare(a, b); // 0.8131
+		return metric.compare(a, b); // 0.8292
 	}
 
 	/**
@@ -206,7 +207,7 @@ public final class StringMetricBuilderExample {
 				.filter(Predicates.not(in(otherCommonWords)))
 				.tokenize(Tokenizers.qGram(3)).build();
 
-		return metric.compare(a, b); // 0.68061393
+		return metric.compare(a, b); // 0.6902
 	}
 
 	/**
@@ -240,7 +241,7 @@ public final class StringMetricBuilderExample {
 				.tokenize(Tokenizers.qGram(3))
 				.build();
 
-		return metric.compare(a, b); // 0.68061393
+		return metric.compare(a, b); // 0.6902
 	}
 
 	/**
@@ -259,7 +260,7 @@ public final class StringMetricBuilderExample {
 				.maximumSize(2)
 				.build();
 		
-		Cache<String,Set<String>> tokenCache = CacheBuilder
+		Cache<String,Multiset<String>> tokenCache = CacheBuilder
 				.newBuilder()
 				.maximumSize(2)
 				.build();	
@@ -273,7 +274,7 @@ public final class StringMetricBuilderExample {
 				.cacheTokens(tokenCache)
 				.build();
 
-		return metric.compare(a, b); // 0.8131
+		return metric.compare(a, b); // 0.6902
 	}
 
 }

@@ -20,15 +20,16 @@
 
 package org.simmetrics.performance;
 
-import static org.simmetrics.tokenizers.Tokenizers.qGram;
+import static org.simmetrics.StringMetrics.createForListMetric;
+import static org.simmetrics.StringMetrics.createForMultisetMetric;
+import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.simmetrics.ListMetric;
-import org.simmetrics.Metric;
+import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.SimonWhite;
-
 import com.google.caliper.Benchmark;
 import com.google.caliper.Param;
 import com.google.caliper.runner.CaliperMain;
@@ -37,22 +38,23 @@ import com.google.caliper.runner.CaliperMain;
 public final class SimonWhiteCaliper {
 
 	enum Value {
-		Shakespear("This happy breed of men"), Rumi("Sell your cleverness and buy bewilderment.");
+		Shakespear("Ahoy ye sailors!—friends and noblemen— Riding ‘twixt glist’ring waves so bright and blue That one cannot help but stand and marvel At the resplendence of Neptune’s kingdom And the miracle of color correction! A Band of Brothers we are not, but rather, A jambalaya of studs and starlets, Drawn from ev’ry creed and ev’ry hair-type, Selected, as if by algorithm, To inflame the hearts and body issues Of the prize’d target demographic. Anon, we join this ship—this Battleship!— With spirits high and cheekbones higher still, Our sextants fix’d upon the one truly Bankable star aboard this o’erstuffed vessel. He whose sapphire eyes and manly shoulders, Doth evoke the simple ethos of the Heartland; belied only slightly by the Rich Irish brogue that doth cling to ev’ry Consonant like so many barnacles."), 
+		Rumi("For years, copying other people, I tried to know myself. From within, I couldn’t decide what to do. Unable to see, I heard my name being called. Then I walked outside.  The breeze at dawn has secrets to tell you. Don’t go back to sleep. You must ask for what you really want. Don’t go back to sleep. People are going back and forth across the doorsill where the two worlds touch. The door is round and open. Don’t go back to sleep.");
 
-		final List<String> s;
+		final String s;
 
 		Value(String s) {
-			this.s = qGram(2).tokenizeToList(s);
+			this.s =  s;
 		}
 	}
 
 	enum Method {
 
-		latest(new SimonWhite<String>()), v3_0_2(new SimonWhite_V_3_0_2<String>());
+		latest(createForMultisetMetric(new SimonWhite<String>(), whitespace())), v3_0_2(createForListMetric(new SimonWhite_V_3_0_2<String>(), whitespace()));
 
-		final Metric<List<String>> metric;
+		final StringMetric metric;
 
-		private Method(Metric<List<String>> metric) {
+		private Method(StringMetric metric) {
 			this.metric = metric;
 		}
 	}
@@ -68,7 +70,7 @@ public final class SimonWhiteCaliper {
 
 	@Benchmark
 	float compare(int reps) {
-		final Metric<List<String>> m = method.metric;
+		final StringMetric m = method.metric;
 
 		float dummy = 0;
 		for (int i = 0; i < reps; i++) {

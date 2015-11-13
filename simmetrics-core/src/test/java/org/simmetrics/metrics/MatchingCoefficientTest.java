@@ -22,14 +22,14 @@ package org.simmetrics.metrics;
 
 import static java.util.Arrays.asList;
 
-import org.simmetrics.ListMetric;
-import org.simmetrics.ListMetricTest;
+import org.simmetrics.MultisetMetric;
+import org.simmetrics.MultisetMetricTest;
 
 @SuppressWarnings("javadoc")
-public final class MatchingCoefficientTest extends ListMetricTest {
+public final class MatchingCoefficientTest extends MultisetMetricTest {
 
 	@Override
-	protected ListMetric<String> getMetric() {
+	protected MultisetMetric<String> getMetric() {
 		return new MatchingCoefficient<>();
 	}
 

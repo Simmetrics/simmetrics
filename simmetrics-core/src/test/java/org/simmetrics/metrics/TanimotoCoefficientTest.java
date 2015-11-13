@@ -20,31 +20,33 @@
 
 package org.simmetrics.metrics;
 
-import static java.util.Arrays.asList;
+import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
-import org.simmetrics.Metric;
-import org.simmetrics.MultisetMetricTest;
-
-import com.google.common.collect.Multiset;
+import org.simmetrics.SetMetric;
+import org.simmetrics.SetMetricTest;
+import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings("javadoc")
-public final class CosineSimilarityTest extends MultisetMetricTest {
+public final class TanimotoCoefficientTest extends SetMetricTest {
 
 	@Override
-	protected Metric<Multiset<String>> getMetric() {
-		return new CosineSimilarity<>();
+	protected SetMetric<String> getMetric() {
+		return new TanimotoCoefficient<>();
+	}
+	@Override
+	protected Tokenizer getTokenizer() {
+		return whitespace();
 	}
 
 	@Override
-	protected T[] getListTests() {
+	protected T[] getSetTests() {
 		return new T[]{				
 				
 				new T(0.5000f, "test string1", "test string2"),
 				new T(0.5000f, "test string1", "test string2"),
 				new T(0.7071f, "test", "test string2"),
 				new T(0.0000f, "", "test string2"),
-				new T(0.5000f, asList("test", null), asList("test", "string2")),
-
+				
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.7500f, "a b c d", "a b c e"),
 				new T(0.0000f, "Healed", "Sealed"),
@@ -70,7 +72,8 @@ public final class CosineSimilarityTest extends MultisetMetricTest {
 						"Building Web Database Applications with Visual Studio 6"),
 				new T(0.2582f, "Web Database Applications",
 						"Web Application Development With PHP"),
-				new T(0.5962f,
+				new T(
+						0.5000f,
 						"Web Database Applications",
 						"WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
 				new T(0.0000f, "Web Database Applications",
@@ -87,7 +90,8 @@ public final class CosineSimilarityTest extends MultisetMetricTest {
 						"Building Web Database Applications with Visual Studio 6"),
 				new T(0.3162f, "Web Aplications",
 						"Web Application Development With PHP"),
-				new T(0.3651f,
+				new T(
+						0.2041f,
 						"Web Aplications",
 						"WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
 				new T(0.0000f, "Web Aplications",

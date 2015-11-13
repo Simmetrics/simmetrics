@@ -18,19 +18,28 @@
  * #L%
  */
 
+package org.simmetrics.tokenizers;
 
-package org.simmetrics.utils;
+@SuppressWarnings("javadoc")
+public class WhitespaceTest extends TokenizerTest {
 
-import org.simmetrics.StringMetricBuilder;
-import org.simmetrics.tokenizers.Tokenizer;
+	@Override
+	protected Tokenizer getTokenizer() {
+		return new Tokenizers.Whitespace();
+	}
 
-/**
- * A tokenizer that delegates the work to another tokenizer.
- * 
- * @see StringMetricBuilder
- * 
- */
-@Deprecated
-public interface TokenizingTokenizer extends Tokenizing, Tokenizer {
-	// Empty: because composite interface
+	@Override
+	protected T[] getTests() {
+
+		return new T[] { 
+				new T(""),
+				new T(" "),
+				new T(" A","A"),
+				new T("A B C", "A", "B", "C"),
+				new T("A   B  C", "A", "B", "C"),
+				new T("A\nB", "A", "B"),
+				new T("A\tB", "A", "B"), 
+				new T("A\t\nB", "A", "B"),
+		};
+	}
 }

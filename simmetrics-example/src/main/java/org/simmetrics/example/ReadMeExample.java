@@ -41,7 +41,7 @@ public final class ReadMeExample {
 		
 		StringMetric metric = StringMetrics.cosineSimilarity();
 		
-		float result = metric.compare(str1, str2); //0.4472
+		float result = metric.compare(str1, str2); //0.4767
 		
 		return result;
 	}
@@ -58,7 +58,7 @@ public final class ReadMeExample {
 				.tokenize(Tokenizers.whitespace())
 				.build();
 
-		float result = metric.compare(str1, str2); //0.5590
+		float result = metric.compare(str1, str2); //0.5720
 		
 		return result;
 	}

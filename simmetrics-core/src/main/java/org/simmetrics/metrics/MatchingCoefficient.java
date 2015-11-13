@@ -20,11 +20,9 @@
 
 package org.simmetrics.metrics;
 
-import static com.google.common.collect.HashMultiset.create;
+import static com.google.common.collect.Multisets.intersection;
 
-import java.util.List;
-
-import org.simmetrics.ListMetric;
+import org.simmetrics.MultisetMetric;
 
 import com.google.common.collect.Multiset;
 
@@ -47,11 +45,11 @@ import com.google.common.collect.Multiset;
  * <code>b</code>. This is a list <code>c</code> such that each element in has a
  * 1-to-1 relation to an element in both <code>a</code> and <code>b</code>. E.g.
  * the list intersection of <code>[ab,ab,ab,ac]</code> and
- * <code>[ab,ab,ad]</code> is <code>[ab,ab]</code>. *
+ * <code>[ab,ab,ad]</code> is <code>[ab,ab]</code>. 
  * <p>
- * This metric is identical to Jaccard but is insensitive to repeated tokens.
- * The list <code>["a","a","b"]</code> is identical to
- * <code>["a","b","b"]</code>. 
+ * This metric is identical to Jaccard but is sensitive to mutually repeated
+ * tokens. E.g. 'GGGGG' will be identical to 'GG' for Jaccard but not for
+ * Matching coefficient.
  * <p>
  * This class is immutable and thread-safe.
  * 
@@ -59,16 +57,14 @@ import com.google.common.collect.Multiset;
  * @see <a
  *      href="http://en.wikipedia.org/wiki/Simple_matching_coefficient">Wikipedia
  *      - Simple Matching Coefficient</a>
- * 
- * 
- * 
+
  * @param <T>
  *            type of the token
  * 
  */
-public class MatchingCoefficient<T> implements ListMetric<T> {
+public class MatchingCoefficient<T> implements MultisetMetric<T> {
 	@Override
-	public float compare(List<T> a, List<T> b) {
+	public float compare(Multiset<T> a, Multiset<T> b) {
 
 		if (a.isEmpty() && b.isEmpty()) {
 			return 1.0f;
@@ -77,19 +73,10 @@ public class MatchingCoefficient<T> implements ListMetric<T> {
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
-
-		// Count elements in the list intersection.
-		// Elements are counted only once in both lists.
-		// E.g. the intersection of [ab,ab,ab] and [ab,ab,ac,ad] is [ab,ab].
-		// Note: this is not the same as b.retainAll(a).size()
-		int intersection = 0;
-		// Copy for destructive list difference
-		Multiset<T> bCopy = create(b);
-		for (T token : a) {
-			if (bCopy.remove(token)) {
-				intersection++;
-			}
-		}
+	
+		final int intersection = intersection(a, b).size();
+		
+		// ( |a & b| ) / ( | a or b | )
 		// Implementation note: The size of the union of two sets is equal to
 		// the size of both lists minus the duplicate elements.
 		return intersection / (float) (a.size() + b.size() - intersection);

@@ -23,6 +23,7 @@ package org.simmetrics;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.simmetrics.StringMetrics.create;
 import static org.simmetrics.StringMetrics.createForListMetric;
+import static org.simmetrics.StringMetrics.createForMultisetMetric;
 import static org.simmetrics.StringMetrics.createForSetMetric;
 
 import java.util.ArrayList;
@@ -36,23 +37,21 @@ import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Tokenizers;
-import org.simmetrics.utils.SimplifyingSimplifier;
-import org.simmetrics.utils.TokenizingTokenizer;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
+import com.google.common.collect.Multiset;
 
 /**
  * Convenience tool to build string metrics. Any class implementing
- * {@link StringMetric}, {@link ListMetric} or {@link SetMetric} can be used to
- * build a string metric. Supports the addition of simplification, tokenization,
- * token-filtering, token-transformation and caching to a metric.
+ * {@link StringMetric}, {@link ListMetric}, {@link SetMetric} or
+ * {@link MultisetMetric} can be used to build a string metric. Supports the
+ * addition of simplification, tokenization, token-filtering,
+ * token-transformation and caching to a metric.
  * <p>
  * For usage examples see the simmetrics-example module.
  */
-@SuppressWarnings("deprecation")
 public class StringMetricBuilder {
 
 	StringMetricBuilder() {
@@ -95,7 +94,20 @@ public class StringMetricBuilder {
 		return new CompositeSetMetricBuilder(metric);
 
 	}
+	
+	/**
+	 * Starts building a metric with a multiset metric.
+	 * 
+	 * @param metric
+	 *            the metric to use as a base
+	 * @return a builder for fluent chaining
+	 */
+	public static CollectionMetricInitialSimplifierStep<Multiset<String>> with(
+			MultisetMetric<String> metric) {
+		return new CompositeMultisetMetricBuilder(metric);
 
+	}
+	
 	@SuppressWarnings("javadoc")
 	public interface BuildStep {
 		/**
@@ -143,22 +155,6 @@ public class StringMetricBuilder {
 
 		/**
 		 * Sets a cache for simplification chain. The cache will store the
-		 * result of all previous simplification steps. The cache will be
-		 * provided with a simplifier through
-		 * {@link SimplifyingSimplifier#setSimplifier(Simplifier)}.
-		 * 
-		 * @param cache
-		 *            a cache to add
-		 * @return this for fluent chaining
-		 * 
-		 * @deprecated use
-		 *             {@link StringMetricSimplifierStep#cacheStrings(Cache)}
-		 */
-		@Deprecated
-		BuildStep simplifierCache(SimplifyingSimplifier cache);
-
-		/**
-		 * Sets a cache for simplification chain. The cache will store the
 		 * result of all previous simplification steps.
 		 * 
 		 * @param cache
@@ -166,36 +162,6 @@ public class StringMetricBuilder {
 		 * @return this for fluent chaining
 		 */
 		BuildStep cacheStrings(Cache<String, String> cache);
-
-		/**
-		 * Sets a cache for simplification chain. The cache will store the
-		 * result of all simplification steps.
-		 * 
-		 * @param initialCapacity
-		 *            initial cache size
-		 * @param maximumSize
-		 *            maximum cache size
-		 * 
-		 * @return this for fluent chaining
-		 * 
-		 * @deprecated use
-		 *             {@link StringMetricSimplifierStep#cacheStrings(Cache)}
-		 */
-		@Deprecated
-		BuildStep simplifierCache(int initialCapacity, int maximumSize);
-
-		/**
-		 * Sets a cache for simplification chain. The cache will store the
-		 * result of all previous simplification steps. The cache will have a
-		 * size of 2.
-		 * 
-		 * @return this for fluent chaining
-		 * 
-		 * @deprecated use
-		 *             {@link StringMetricSimplifierStep#cacheStrings(Cache)}
-		 */
-		@Deprecated
-		BuildStep simplifierCache();
 
 		/**
 		 * Builds a metric with the given simplifier.
@@ -243,20 +209,6 @@ public class StringMetricBuilder {
 		CollectionMetricSimplifierStep<T> simplify(Simplifier simplifier);
 
 		/**
-		 * Sets a cache for tokenization chain. The cache will store the result
-		 * of all previous tokenization steps. The cache will be provided with a
-		 * tokenizer through {@link TokenizingTokenizer#setTokenizer(Tokenizer)}
-		 * . .
-		 * 
-		 * @param cache
-		 *            a cache to add
-		 * @return this for fluent chaining
-		 */
-		@Deprecated
-		CollectionMetricInitialTokenizerStep<T> simplifierCache(
-				SimplifyingSimplifier cache);
-
-		/**
 		 * Sets a cache for simplification chain. The cache will store the
 		 * result of all previous simplification steps.
 		 * 
@@ -266,38 +218,6 @@ public class StringMetricBuilder {
 		 */
 		CollectionMetricInitialTokenizerStep<T> cacheStrings(
 				Cache<String, String> cache);
-
-		/**
-		 * Sets a cache for simplification chain. The cache will store the
-		 * result of all previous simplification steps.
-		 * 
-		 * @param initialCapacity
-		 *            initial cache size
-		 * @param maximumSize
-		 *            maximum cache size
-		 * 
-		 * @return this for fluent chaining
-		 * 
-		 @deprecated use
-		 *             {@link CollectionMetricInitialTokenizerStep#cacheStrings(Cache)}
-		 * 
-		 * 
-		 */
-		@Deprecated
-		CollectionMetricInitialTokenizerStep<T> simplifierCache(
-				int initialCapacity, int maximumSize);
-
-		/**
-		 * Sets a cache for simplification chain. The cache will store the
-		 * result of all previous simplification steps. The cache will have a
-		 * size of 2.
-		 * 
-		 * @return this for fluent chaining
-		 * @deprecated use
-		 *             {@link CollectionMetricInitialTokenizerStep#cacheStrings(Cache)}
-		 */
-		@Deprecated
-		CollectionMetricInitialTokenizerStep<T> simplifierCache();
 
 		/**
 		 * Adds a tokenization step to the metric.
@@ -360,22 +280,6 @@ public class StringMetricBuilder {
 
 		/**
 		 * Sets a cache for tokenization chain. The cache will store the result
-		 * of all previous tokenization steps. The cache will be provided with a
-		 * tokenizer through {@link TokenizingTokenizer#setTokenizer(Tokenizer)}
-		 * . .
-		 * 
-		 * @param cache
-		 *            a cache to add
-		 * @return this for fluent chaining
-		 * 
-		 * @deprecated use
-		 *             {@link CollectionMetricTokenizerStep#cacheTokens(Cache)}
-		 */
-		@Deprecated
-		BuildStep tokenizerCache(TokenizingTokenizer cache);
-
-		/**
-		 * Sets a cache for tokenization chain. The cache will store the result
 		 * of all previous tokenization steps.
 		 * 
 		 * @param cache
@@ -384,35 +288,6 @@ public class StringMetricBuilder {
 		 * 
 		 */
 		BuildStep cacheTokens(Cache<String, T> cache);
-
-		/**
-		 * Sets a cache for simplification chain. The cache will store the
-		 * result of all previous simplification steps.
-		 * 
-		 * @param initialCapacity
-		 *            initial cache size
-		 * @param maximumSize
-		 *            maximum cache size
-		 * 
-		 * @return this for fluent chaining
-		 * 
-		 * @deprecated use
-		 *             {@link CollectionMetricTokenizerStep#cacheTokens(Cache)}
-		 */
-		@Deprecated
-		BuildStep tokenizerCache(int initialCapacity, int maximumSize);
-
-		/**
-		 * Sets a cache for simplification chain. The cache will store the
-		 * result of all previous simplification steps. The cache will have a
-		 * size of 2.
-		 * 
-		 * @return this for fluent chaining
-		 * @deprecated use
-		 *             {@link CollectionMetricTokenizerStep#cacheTokens(Cache)}
-		 */
-		@Deprecated
-		BuildStep tokenizerCache();
 
 		/**
 		 * Builds a string metric that will use the given simplification,
@@ -430,11 +305,7 @@ public class StringMetricBuilder {
 
 		private final Metric<String> metric;
 
-		private static final int CACHE_SIZE = 2;
-
 		private final List<Simplifier> simplifiers = new ArrayList<>();
-
-		private SimplifyingSimplifier simplifyingSimplifier;
 
 		CompositeStringMetricBuilder(Metric<String> metric) {
 			checkNotNull(metric);
@@ -447,13 +318,7 @@ public class StringMetricBuilder {
 			if (simplifiers.isEmpty()) {
 				return create(metric);
 			}
-
-			if (simplifyingSimplifier == null) {
-				return create(metric, chainSimplifiers());
-			}
-
-			simplifyingSimplifier.setSimplifier(chainSimplifiers());
-			return create(metric, simplifyingSimplifier);
+			return create(metric, chainSimplifiers());
 		}
 
 		private Simplifier chainSimplifiers() {
@@ -463,14 +328,6 @@ public class StringMetricBuilder {
 			return simplifier;
 		}
 
-		@Deprecated
-		@Override
-		public BuildStep simplifierCache(SimplifyingSimplifier cache) {
-			checkNotNull(cache);
-			this.simplifyingSimplifier = cache;
-			return this;
-		}
-
 		@Override
 		public BuildStep cacheStrings(Cache<String, String> cache) {
 			checkNotNull(cache);
@@ -478,21 +335,6 @@ public class StringMetricBuilder {
 					chainSimplifiers());
 			this.simplifiers.add(cachingSimplifier);
 			return this;
-		}
-
-		@Deprecated
-		@Override
-		public BuildStep simplifierCache(int initialCapacity, int maximumSize) {
-			Cache<String, String> cache = CacheBuilder.newBuilder()
-					.initialCapacity(initialCapacity).maximumSize(maximumSize)
-					.build();
-			return cacheStrings(cache);
-		}
-
-		@Deprecated
-		@Override
-		public BuildStep simplifierCache() {
-			return simplifierCache(CACHE_SIZE, CACHE_SIZE);
 		}
 
 		@Override
@@ -509,14 +351,9 @@ public class StringMetricBuilder {
 			CollectionMetricSimplifierStep<T>, CollectionMetricTokenizerStep<T> {
 
 		private final Metric<T> metric;
-
-		private static final int CACHE_SIZE = 2;
-
+		
 		private final List<Simplifier> simplifiers = new ArrayList<>();
 		private final List<Tokenizer> tokenizers = new ArrayList<>();
-
-		private SimplifyingSimplifier stringSimplifingSimplifier;
-		private TokenizingTokenizer tokenizingTokenizer;
 
 		CompositeCollectionMetricBuilder(Metric<T> metric) {
 			checkNotNull(metric);
@@ -527,19 +364,9 @@ public class StringMetricBuilder {
 		public final StringMetric build() {
 
 			Tokenizer tokenizer = chainTokenizers();
-
-			if (tokenizingTokenizer != null) {
-				tokenizingTokenizer.setTokenizer(tokenizer);
-				tokenizer = tokenizingTokenizer;
-			}
-
+			
 			if (simplifiers.isEmpty()) {
 				return build(metric, tokenizer);
-			}
-
-			if (stringSimplifingSimplifier != null) {
-				stringSimplifingSimplifier.setSimplifier(chainSimplifiers());
-				return build(metric, stringSimplifingSimplifier, tokenizer);
 			}
 
 			return build(metric, chainSimplifiers(), tokenizer);
@@ -550,14 +377,6 @@ public class StringMetricBuilder {
 
 		abstract StringMetric build(Metric<T> metric, Tokenizer tokenizer);
 
-		@Deprecated
-		@Override
-		public final BuildStep tokenizerCache(TokenizingTokenizer cache) {
-			checkNotNull(cache);
-			this.tokenizingTokenizer = cache;
-			return this;
-		}
-
 		@Override
 		public final BuildStep cacheTokens(Cache<String, T> cache) {
 			checkNotNull(cache);
@@ -567,31 +386,6 @@ public class StringMetricBuilder {
 
 		protected abstract Tokenizer createCachingTokenizer(
 				Cache<String, T> cache, Tokenizer tokenizer);
-
-		@Deprecated
-		@Override
-		public final BuildStep tokenizerCache(int initialCapacity,
-				int maximumSize) {
-			Cache<String, T> cache = CacheBuilder.newBuilder()
-					.initialCapacity(initialCapacity).maximumSize(maximumSize)
-					.build();
-			return cacheTokens(cache);
-		}
-
-		@Deprecated
-		@Override
-		public final BuildStep tokenizerCache() {
-			return tokenizerCache(CACHE_SIZE, CACHE_SIZE);
-		}
-
-		@Deprecated
-		@Override
-		public final CollectionMetricInitialTokenizerStep<T> simplifierCache(
-				SimplifyingSimplifier cache) {
-			checkNotNull(cache);
-			this.stringSimplifingSimplifier = cache;
-			return this;
-		}
 
 		@Override
 		public final CollectionMetricInitialTokenizerStep<T> cacheStrings(
@@ -604,24 +398,7 @@ public class StringMetricBuilder {
 
 			return this;
 		}
-
-		@Deprecated
-		@Override
-		public final CollectionMetricInitialTokenizerStep<T> simplifierCache(
-				int initialCapacity, int maximumSize) {
-			Cache<String, String> cache = CacheBuilder.newBuilder()
-					.initialCapacity(initialCapacity).maximumSize(maximumSize)
-					.build();
-
-			return cacheStrings(cache);
-		}
-
-		@Deprecated
-		@Override
-		public final CollectionMetricInitialTokenizerStep<T> simplifierCache() {
-			return simplifierCache(CACHE_SIZE, CACHE_SIZE);
-		}
-
+		
 		@Override
 		public final CollectionMetricSimplifierStep<T> simplify(
 				Simplifier simplifier) {
@@ -728,6 +505,31 @@ public class StringMetricBuilder {
 
 	}
 
+	private static final class CompositeMultisetMetricBuilder extends
+			CompositeCollectionMetricBuilder<Multiset<String>> {
+
+		CompositeMultisetMetricBuilder(Metric<Multiset<String>> metric) {
+			super(metric);
+		}
+
+		@Override
+		StringMetric build(Metric<Multiset<String>> metric, Simplifier simplifier,
+				Tokenizer tokenizer) {
+			return createForMultisetMetric(metric, simplifier, tokenizer);
+		}
+
+		@Override
+		StringMetric build(Metric<Multiset<String>> metric, Tokenizer tokenizer) {
+			return createForMultisetMetric(metric, tokenizer);
+		}
+
+		@Override
+		protected Tokenizer createCachingTokenizer(
+				Cache<String, Multiset<String>> cache, Tokenizer tokenizer) {
+			return new CachingMultisetTokenizer(cache, tokenizer);
+		}
+
+	}
 	static final class CachingSimplifier implements Simplifier {
 
 		private final Cache<String, String> cache;
@@ -761,7 +563,49 @@ public class StringMetricBuilder {
 		}
 
 	}
+	static final class CachingMultisetTokenizer implements Tokenizer {
 
+		private final Cache<String, Multiset<String>> cache;
+		final Tokenizer tokenizer;
+
+		CachingMultisetTokenizer(Cache<String, Multiset<String>> cache,
+				Tokenizer tokenizer) {
+			this.cache = cache;
+			this.tokenizer = tokenizer;
+		}
+
+		@Override
+		public List<String> tokenizeToList(final String input) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public Set<String> tokenizeToSet(final String input) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public Multiset<String> tokenizeToMultiset(final String input) {
+			try {
+				return cache.get(input, new Callable<Multiset<String>>() {
+
+					@Override
+					public Multiset<String> call() {
+						return tokenizer.tokenizeToMultiset(input);
+					}
+				});
+			} catch (ExecutionException e) {
+				// Can't happen. Tokenizer may not throw checked exceptions
+				throw new IllegalStateException(e);
+			}
+		}
+
+		@Override
+		public String toString() {
+			return "CachingMultisetTokenizer [" + cache + ", " + tokenizer + "]";
+		}
+	}
+	
 	static final class CachingSetTokenizer implements Tokenizer {
 
 		private final Cache<String, Set<String>> cache;
@@ -777,7 +621,7 @@ public class StringMetricBuilder {
 		public List<String> tokenizeToList(final String input) {
 			throw new UnsupportedOperationException();
 		}
-
+		
 		@Override
 		public Set<String> tokenizeToSet(final String input) {
 			try {
@@ -793,7 +637,12 @@ public class StringMetricBuilder {
 				throw new IllegalStateException(e);
 			}
 		}
-
+		
+		@Override
+		public Multiset<String> tokenizeToMultiset(final String input) {
+			throw new UnsupportedOperationException();
+		}
+		
 		@Override
 		public String toString() {
 			return "CachingSetTokenizer [" + cache + ", " + tokenizer + "]";
@@ -831,7 +680,12 @@ public class StringMetricBuilder {
 		public Set<String> tokenizeToSet(final String input) {
 			throw new UnsupportedOperationException();
 		}
-
+		
+		@Override
+		public Multiset<String> tokenizeToMultiset(final String input) {
+			throw new UnsupportedOperationException();
+		}
+		
 		@Override
 		public String toString() {
 			return "CachingListTokenizer [" + cache + ", " + tokenizer + "]";

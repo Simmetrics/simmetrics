@@ -38,7 +38,7 @@ import org.simmetrics.StringMetric;
  *
  *
  */
-public class Jaro implements StringMetric {
+public final class Jaro implements StringMetric {
 	
 	@Override
 	public float compare(final String a, final String b) {

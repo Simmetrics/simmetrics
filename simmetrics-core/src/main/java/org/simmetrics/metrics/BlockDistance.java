@@ -43,7 +43,7 @@ import com.google.common.collect.Multiset;
  * @param <T>
  *            type of token
  */
-public class BlockDistance<T> implements MultisetMetric<T>, MultisetDistance<T> {
+public final class BlockDistance<T> implements MultisetMetric<T>, MultisetDistance<T> {
 
 	@Override
 	public float compare(Multiset<T> a, Multiset<T> b) {

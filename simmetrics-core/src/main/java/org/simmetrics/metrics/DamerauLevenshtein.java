@@ -44,7 +44,7 @@ import org.simmetrics.StringMetric;
  * @see Levenshtein
  * 
  */
-public class DamerauLevenshtein implements StringMetric, StringDistance {
+public final class DamerauLevenshtein implements StringMetric, StringDistance {
 
 	private final float maxCost;
 	private final float insertDelete;

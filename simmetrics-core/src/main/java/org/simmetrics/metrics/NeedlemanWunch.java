@@ -45,7 +45,7 @@ import org.simmetrics.metrics.functions.Substitution;
  *      href="https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm">Wikipedia
  *      - Needleman-Wunsch algorithm</a>
  */
-public class NeedlemanWunch implements StringMetric {
+public final class NeedlemanWunch implements StringMetric {
 
 	private static final Substitution MATCH_0_MISMATCH_1 = new MatchMismatch(
 			0.0f, -1.0f);

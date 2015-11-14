@@ -52,7 +52,7 @@ import com.google.common.collect.Multiset;
  * @param <T>
  *            type of the token
  */
-public class CosineSimilarity<T> implements MultisetMetric<T> {
+public final class CosineSimilarity<T> implements MultisetMetric<T> {
 
 	@Override
 	public float compare(Multiset<T> a, Multiset<T> b) {

@@ -45,7 +45,7 @@ import org.simmetrics.metrics.functions.Substitution;
  * @see <a href="https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm"
  *      >Wikipedia - Smith-Waterman algorithm</a>
  */
-public class SmithWaterman implements StringMetric {
+public final class SmithWaterman implements StringMetric {
 
 	private final Gap gap;
 	private final Substitution substitution;

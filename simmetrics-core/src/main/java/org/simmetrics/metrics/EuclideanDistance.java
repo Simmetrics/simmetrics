@@ -45,7 +45,7 @@ import com.google.common.collect.Multiset;
  *            type of the token
  * 
  */
-public class EuclideanDistance<T> implements MultisetMetric<T>, MultisetDistance<T> {
+public final class EuclideanDistance<T> implements MultisetMetric<T>, MultisetDistance<T> {
 
 	@Override
 	public float compare(Multiset<T> a, Multiset<T> b) {

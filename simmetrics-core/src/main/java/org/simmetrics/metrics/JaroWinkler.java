@@ -42,7 +42,7 @@ import org.simmetrics.StringMetric;
  * 
  * 
  */
-public class JaroWinkler implements StringMetric {
+public final class JaroWinkler implements StringMetric {
 
 	private final Jaro jaro = new Jaro();
 

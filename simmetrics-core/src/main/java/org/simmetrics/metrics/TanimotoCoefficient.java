@@ -51,7 +51,7 @@ import org.simmetrics.SetMetric;
  * @param <T>
  *            type of the token
  */
-public class TanimotoCoefficient<T> implements SetMetric<T> {
+public final class TanimotoCoefficient<T> implements SetMetric<T> {
 
 	@Override
 	public float compare(Set<T> a, Set<T> b) {

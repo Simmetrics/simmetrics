@@ -63,7 +63,7 @@ import org.simmetrics.SetMetric;
  * @param <T>
  *            type of the token
  */
-public class Dice<T> implements SetMetric<T>, SetDistance<T> {
+public final class Dice<T> implements SetMetric<T>, SetDistance<T> {
 
 	@Override
 	public float compare(Set<T> a, Set<T> b) {

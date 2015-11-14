@@ -47,7 +47,7 @@ import org.simmetrics.metrics.functions.Substitution;
  *      - Smith-Waterman algorithm</a>
  *
  */
-public class SmithWatermanGotoh implements StringMetric {
+public final class SmithWatermanGotoh implements StringMetric {
 
 	private static final Substitution MATCH_1_MISMATCH_MINUS_2 = new MatchMismatch(
 			1.0f, -2.0f);

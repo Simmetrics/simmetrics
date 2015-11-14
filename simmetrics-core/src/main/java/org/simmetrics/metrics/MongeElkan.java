@@ -43,7 +43,7 @@ import org.simmetrics.StringMetric;
  * This class is immutable and thread-safe.
  * 
  */
-public class MongeElkan implements ListMetric<String> {
+public final class MongeElkan implements ListMetric<String> {
 
 	private final StringMetric metric;
 

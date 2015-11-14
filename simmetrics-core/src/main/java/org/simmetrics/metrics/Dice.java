@@ -21,45 +21,48 @@
 package org.simmetrics.metrics;
 
 import static com.google.common.collect.Sets.intersection;
-import static java.lang.Math.min;
 
 import java.util.Set;
 
+import org.simmetrics.SetDistance;
 import org.simmetrics.SetMetric;
 
 /**
- * The overlap coefficient measures the overlap between two sets. The similarity
- * is defined as the size of the intersection divided by the smaller of the size
- * of the two sets
+ * Calculates the Dice similarity coefficient and distance over two sets. The
+ * similarity is defined as twice the shared information (intersection) divided
+ * by sum of cardinalities.
  * <p>
  * <code>
- * similarity(q,r) = ∣q ∩ r∣ / min{∣q∣, ∣r∣}
+ * similarity(a,b) = 2 * ∣a ∩ b∣ / (∣a∣  + ∣b∣)
+ * distance(a,b) = 1 - similarity(a,b)
  * </code>
  * <p>
- * Unlike the generalized overlap coefficient the occurrence (cardinality) of an
- * entry is not taken into account. E.g. {@code [hello, world]} and
- * {@code [hello, world, hello, world]} would be identical when compared with
- * the overlap coefficient but are dissimilar when the generalized version is
+ * The Dice similarity coefficient is identical to SimonWhite, but unlike Simon
+ * White the occurrence (cardinality) of an entry is not taken into account.
+ * E.g. {@code [hello, world]} and {@code [hello, world, hello, world]} would be
+ * identical when compared with Dice but are dissimilar when Simon White is
  * used.
+ * <p>
+ * Similar to the overlap coefficient which divides the intersection by the size
+ * of the smaller of the two sets.
  * <p>
  * Similar to the generalized Jaccard similarity which divides the intersection
  * by the union of two multisets.
  * <p>
- * Similar to the dice coefficient which divides the shared information
- * (intersection) by sum of cardinalities.
- * <p>
  * This class is immutable and thread-safe.
+ * 
+ * @see SimonWhite
+ * @see OverlapCoefficient
+ * @see Jaccard
+ * @see <a
+ *      href="http://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient">Wikipedia
+ *      - Sørensen–Dice coefficient</a>
+ * 
  * 
  * @param <T>
  *            type of the token
- * 
- * @see GeneralizedOverlapCoefficient
- * @see Jaccard
- * @see Dice
- * @see <a href="http://en.wikipedia.org/wiki/Overlap_coefficient">Wikipedia -
- *      Overlap Coefficient</a>
  */
-public final class OverlapCoefficient<T> implements SetMetric<T> {
+public class Dice<T> implements SetMetric<T>, SetDistance<T> {
 
 	@Override
 	public float compare(Set<T> a, Set<T> b) {
@@ -72,13 +75,18 @@ public final class OverlapCoefficient<T> implements SetMetric<T> {
 			return 0.0f;
 		}
 
-		// ∣q ∩ r∣ / min{∣q∣, ∣r∣}
-		return intersection(a, b).size() / (float) min(a.size(), b.size());
+		// 2 * ∣a ∩ b∣ / (∣a∣ + ∣b∣)
+		return (2.0f * intersection(a, b).size()) / (a.size() + b.size());
+	}
+
+	@Override
+	public float distance(Set<T> a, Set<T> b) {
+		return 1.0f - compare(a, b);
 	}
 
 	@Override
 	public String toString() {
-		return "OverlapCoefficient";
+		return "Dice";
 	}
 
 }

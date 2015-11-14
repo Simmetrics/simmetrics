@@ -27,11 +27,11 @@ import org.simmetrics.SetMetricTest;
 import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings("javadoc")
-public final class DiceSimilarityTest extends SetMetricTest {
+public final class DiceTest extends SetMetricTest {
 
 	@Override
 	protected SetMetric<String> getMetric() {
-		return new DiceSimilarity<>();
+		return new Dice<>();
 	}
 
 	@Override

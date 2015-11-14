@@ -4,17 +4,17 @@
  * %%
  * Copyright (C) 2014 - 2015 Simmetrics Authors
  * %%
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
  * 
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  * #L%
  */
 
@@ -22,37 +22,44 @@ package org.simmetrics.metrics;
 
 import static com.google.common.collect.Multisets.intersection;
 
+import org.simmetrics.MultisetDistance;
 import org.simmetrics.MultisetMetric;
 
 import com.google.common.collect.Multiset;
 
 /**
- * Simon White algorithm providing a similarity measure between two multisets.
+ * Calculates the Dice similarity coefficient and distance over two multisets.
+ * Also known as quantitative version of the Dice similarity coefficient. The
+ * similarity is defined as twice the shared information (intersection) divided
+ * by the sum of cardinalities.
+ * <p>
  * Implementation based on the ideas as outlined in <a
  * href="http://www.catalysoft.com/articles/StrikeAMatch.html">How to Strike a
  * Match</a> by Simon White.
- * 
  * <p>
  * <code>
- * similarity(a,b) = 2 * |(a A b)|  / (|a| + |b|)
+ * similarity(a,b) = 2 * ∣a ∩ b∣ / (∣a∣  + ∣b∣)
+ * distance(a,b) = 1 - similarity(a,b)
  * </code>
- * 
  * <p>
- * This metric is similar to Dice's coefficient however Simon White used
- * the multiset intersection rather then the set intersection to prevent
- * duplicates from scoring a perfect match against a list with single elements.
- * E.g. 'hello hello hello' should not be identical to 'hello'.
- * 
+ * The Dice similarity coefficient is identical to SimonWhite, but unlike Simon
+ * White the occurrence (cardinality) of an entry is not taken into account.
+ * E.g. {@code [hello, world]} and {@code [hello, world, hello, world]} would be
+ * identical when compared with Dice but are dissimilar when Simon White is
+ * used.
  * <p>
  * This class is immutable and thread-safe.
  * 
- * @see DiceSimilarity
+ * @see Dice
+ * @see <a
+ *      href="http://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient"
+ *      >Wikipedia - Sørensen–Dice coefficient</a>
  * 
  * @param <T>
  *            type of the token
  * 
  */
-public class SimonWhite<T> implements MultisetMetric<T> {
+public class SimonWhite<T> implements MultisetMetric<T>, MultisetDistance<T> {
 
 	@Override
 	public float compare(Multiset<T> a, Multiset<T> b) {
@@ -64,12 +71,17 @@ public class SimonWhite<T> implements MultisetMetric<T> {
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
-		
-		// (2 * |a & b |) / (|a|  + |b|)
+
+		// 2 * ∣a ∩ b∣ / (∣a∣ + ∣b∣)
 		return (2.0f * intersection(a, b).size()) / (a.size() + b.size());
 
 	}
-
+	
+	@Override
+	public float distance(Multiset<T> a, Multiset<T> b) {
+		return 1.0f - compare(a, b);
+	}
+	
 	@Override
 	public String toString() {
 		return "SimonWhite";

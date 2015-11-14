@@ -238,7 +238,7 @@ public class StringMetricsTest {
 
 		@Override
 		protected Metric<String> getMetric() {
-			return StringMetrics.diceSimilarity();
+			return StringMetrics.dice();
 		}
 
 		@Override

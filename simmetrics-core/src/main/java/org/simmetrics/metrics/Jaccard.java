@@ -46,10 +46,14 @@ import org.simmetrics.SetMetric;
  * Similar to the overlap coefficient which divides the intersection by the size
  * of the smaller of the two sets.
  * <p>
+ * Similar to the dice coefficient which divides the shared information
+ * (intersection) by sum of cardinalities.
+ * <p>
  * This class is immutable and thread-safe.
  * 
  * @see GeneralizedJaccard
  * @see OverlapCoefficient
+ * @see Dice
  * @see <a href="http://en.wikipedia.org/wiki/Jaccard_index">Wikipedia - Jaccard
  *      index</a>
  *

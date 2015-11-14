@@ -32,7 +32,7 @@ import java.util.Set;
 import org.simmetrics.metrics.BlockDistance;
 import org.simmetrics.metrics.CosineSimilarity;
 import org.simmetrics.metrics.DamerauLevenshtein;
-import org.simmetrics.metrics.DiceSimilarity;
+import org.simmetrics.metrics.Dice;
 import org.simmetrics.metrics.EuclideanDistance;
 import org.simmetrics.metrics.Identity;
 import org.simmetrics.metrics.Jaccard;
@@ -66,18 +66,18 @@ import com.google.common.collect.Multiset;
  * <li>Block Distance
  * <li>Cosine Similarity
  * <li>Damerau Levenshtein
- * <li>Dice Similarity
+ * <li>Dice
+ * <li>SimonWhite (Quantitative Dice)
  * <li>Euclidean Distance
- * <li>Jaccard Similarity
+ * <li>Jaccard
+ * <li>Generalized Jaccard
  * <li>Jaro
  * <li>Jaro-Winkler
  * <li>LevenShtein
- * <li>Matching Coefficient
  * <li>Monge-Elkan
  * <li>NeedleMan Wunch
  * <li>Overlap Coefficient
  * <li>q-Grams Distance
- * <li>SimonWhite
  * <li>Smith-Waterman
  * <li>Smith-Waterman-Gotoh
  * <li>Soundex
@@ -112,7 +112,7 @@ public final class StringMetrics {
 	/**
 	 * Returns a string metric that uses a {@link DamerauLevenshtein} metric.
 	 * 
-	 * @return a dice similarity metric
+	 * @return a damerau levenshtein metric
 	 */
 	public static StringMetric damerauLevenshtein() {
 		return new DamerauLevenshtein();
@@ -120,12 +120,12 @@ public final class StringMetrics {
 
 	/**
 	 * Returns a string metric that uses a {@link Tokenizers#whitespace()} and
-	 * the {@link DiceSimilarity} metric.
+	 * the {@link Dice} metric.
 	 * 
-	 * @return a dice similarity metric
+	 * @return a dice metric
 	 */
-	public static StringMetric diceSimilarity() {
-		return createForSetMetric(new DiceSimilarity<String>(), whitespace());
+	public static StringMetric dice() {
+		return createForSetMetric(new Dice<String>(), whitespace());
 	}
 
 	/**

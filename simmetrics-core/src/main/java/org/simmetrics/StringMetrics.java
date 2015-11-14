@@ -35,11 +35,11 @@ import org.simmetrics.metrics.DamerauLevenshtein;
 import org.simmetrics.metrics.DiceSimilarity;
 import org.simmetrics.metrics.EuclideanDistance;
 import org.simmetrics.metrics.Identity;
-import org.simmetrics.metrics.JaccardSimilarity;
+import org.simmetrics.metrics.Jaccard;
 import org.simmetrics.metrics.Jaro;
 import org.simmetrics.metrics.JaroWinkler;
 import org.simmetrics.metrics.Levenshtein;
-import org.simmetrics.metrics.MatchingCoefficient;
+import org.simmetrics.metrics.GeneralizedJaccard;
 import org.simmetrics.metrics.MongeElkan;
 import org.simmetrics.metrics.NeedlemanWunch;
 import org.simmetrics.metrics.OverlapCoefficient;
@@ -149,12 +149,12 @@ public final class StringMetrics {
 
 	/**
 	 * Returns a string metric that uses a {@link Tokenizers#whitespace()} and
-	 * the {@link JaccardSimilarity} metric.
+	 * the {@link Jaccard} metric.
 	 * 
 	 * @return a Jaccard similarity metric
 	 */
-	public static StringMetric jaccardSimilarity() {
-		return createForSetMetric(new JaccardSimilarity<String>(), whitespace());
+	public static StringMetric jaccard() {
+		return createForSetMetric(new Jaccard<String>(), whitespace());
 	}
 
 	/**
@@ -186,12 +186,12 @@ public final class StringMetrics {
 
 	/**
 	 * Returns a string metric that uses a {@link Tokenizers#whitespace()} and
-	 * the {@link MatchingCoefficient} metric.
+	 * the {@link GeneralizedJaccard} metric.
 	 * 
-	 * @return a matching coefficient metric
+	 * @return a generalized jaccard index metric
 	 */
-	public static StringMetric matchingCoefficient() {
-		return createForMultisetMetric(new MatchingCoefficient<String>(), whitespace());
+	public static StringMetric generalizedJaccard() {
+		return createForMultisetMetric(new GeneralizedJaccard<String>(), whitespace());
 	}
 
 	/**

@@ -266,11 +266,11 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateJaccardSimilarity extends StringMetricTest {
+	public static final class CreateJaccard extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
-			return StringMetrics.jaccardSimilarity();
+			return StringMetrics.jaccard();
 		}
 
 		@Override
@@ -282,11 +282,11 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateMatchingCoefficient extends StringMetricTest {
+	public static final class CreateGeneralizedJaccard extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
-			return StringMetrics.matchingCoefficient();
+			return StringMetrics.generalizedJaccard();
 		}
 
 		@Override

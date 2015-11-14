@@ -26,11 +26,11 @@ import org.simmetrics.MultisetMetric;
 import org.simmetrics.MultisetMetricTest;
 
 @SuppressWarnings("javadoc")
-public final class MatchingCoefficientTest extends MultisetMetricTest {
+public final class GeneralizedJaccardTest extends MultisetMetricTest {
 
 	@Override
 	protected MultisetMetric<String> getMetric() {
-		return new MatchingCoefficient<>();
+		return new GeneralizedJaccard<>();
 	}
 
 

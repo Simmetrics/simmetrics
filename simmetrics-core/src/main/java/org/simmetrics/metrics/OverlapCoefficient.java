@@ -41,7 +41,7 @@ import org.simmetrics.SetMetric;
  * @param <T>
  *            type of the token
  * 
- * @see JaccardSimilarity
+ * @see Jaccard
  * @see <a href="http://en.wikipedia.org/wiki/Overlap_coefficient">Wikipedia -
  *      Overlap Coefficient</a>
  */

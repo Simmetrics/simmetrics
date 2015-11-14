@@ -27,11 +27,11 @@ import org.simmetrics.SetMetricTest;
 import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings("javadoc")
-public final class JaccardSimilarityTest extends SetMetricTest {
+public final class JaccardTest extends SetMetricTest {
 
 	@Override
 	protected SetMetric<String> getMetric() {
-		return new JaccardSimilarity<>();
+		return new Jaccard<>();
 	}
 
 	@Override

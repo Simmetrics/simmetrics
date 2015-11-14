@@ -28,13 +28,20 @@ import org.simmetrics.MultisetMetric;
 import com.google.common.collect.Multiset;
 
 /**
- * Cosine Similarity algorithm providing a similarity measure between two
- * multisets.
+ * Calculates the cosine similarity over two multisets. The similarity is
+ * defined as the cosine of the angle between the multisets expressed as sparse
+ * vectors.
  * <p>
  * <code>
  * similarity(a,b) = a·b / (||a|| * ||b||)
  * </code>
  * 
+ * <p>
+ * The cosine similarity is identical to the Tanimoto coefficient, but unlike
+ * Tanimoto the occurrence (cardinality) of an entry is taken into account. E.g.
+ * {@code [hello, world]} and {@code [hello, world, hello, world]} would be
+ * identical when compared with Tanimoto but are dissimilar when the cosine
+ * similarity is used.
  * <p>
  * This class is immutable and thread-safe.
  * 

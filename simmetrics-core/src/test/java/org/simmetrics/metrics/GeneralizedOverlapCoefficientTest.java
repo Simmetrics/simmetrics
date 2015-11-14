@@ -20,14 +20,15 @@
 
 package org.simmetrics.metrics;
 
-import static org.simmetrics.tokenizers.Tokenizers.whitespace;
+import static java.util.Arrays.asList;
 
-import org.simmetrics.SetMetric;
-import org.simmetrics.SetMetricTest;
-import org.simmetrics.tokenizers.Tokenizer;
+import java.util.Arrays;
+
+import org.simmetrics.MultisetMetric;
+import org.simmetrics.MultisetMetricTest;
 
 @SuppressWarnings("javadoc")
-public final class OverlapCoefficientTest extends SetMetricTest {
+public final class GeneralizedOverlapCoefficientTest extends MultisetMetricTest {
 
 	@Override
 	protected boolean satisfiesCoincidence() {
@@ -35,26 +36,22 @@ public final class OverlapCoefficientTest extends SetMetricTest {
 	}
 	
 	@Override
-	protected SetMetric<String> getMetric() {
-		return new OverlapCoefficient<>();
+	protected MultisetMetric<String> getMetric() {
+		return new GeneralizedOverlapCoefficient<>();
 	}
 
 	@Override
-	protected Tokenizer getTokenizer() {
-		return whitespace();
-	}
-
-	@Override
-	protected T[] getSetTests() {
+	protected T[] getListTests() {
 
 		return new T[] {
 				new T(0.5000f, "test string1", "test string2"),
 				new T(1.0000f, "test", "test string2"),
 				new T(0.0000f, "", "test string2"),
+				new T(0.5000f, asList("test",null), asList("test", "string2")),
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.7500f, "a b c d", "a b c e"),
 				new T(1.0000f, "a b c", "a b c e f g"),
-				new T(1.0000f, "a b b c c", "a b c e f g"),
+				new T(0.6000f, "a b b c c", "a b c e f g"),
 				new T(0.0000f, "Healed", "Sealed"),
 				new T(0.0000f, "Healed", "Healthy"),
 				new T(0.0000f, "Healed", "Heard"),

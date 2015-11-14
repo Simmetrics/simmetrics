@@ -40,17 +40,13 @@ import com.google.common.collect.Multiset;
  * {@code [hello, world, hello, world]} would be identical when compared with
  * the overlap coefficient index but are dissimilar when the generalized version
  * is used.
- * 
- * <p>
- * Similar to the generalized Jaccard similarity which divides the intersection by the union
- * of two sets.
  * <p>
  * This class is immutable and thread-safe.
  * 
  * @param <T>
  *            type of the token
  * 
- * @see GeneralizedJaccard
+ * @see OverlapCoefficient
  * @see <a href="http://en.wikipedia.org/wiki/Overlap_coefficient">Wikipedia -
  *      Overlap Coefficient</a>
  */

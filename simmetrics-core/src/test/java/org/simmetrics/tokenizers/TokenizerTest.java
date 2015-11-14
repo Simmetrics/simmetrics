@@ -35,6 +35,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multiset;
+
 @SuppressWarnings("javadoc")
 public abstract class TokenizerTest {
 
@@ -62,6 +65,10 @@ public abstract class TokenizerTest {
 			return new HashSet<>(tokensAsList());
 		}
 
+		public Multiset<String> tokensAsMultiset() {
+			return HashMultiset.create(tokensAsList());
+		}
+
 	}
 
 	private static void testTokens(String string, Collection<String> expected,
@@ -82,6 +89,9 @@ public abstract class TokenizerTest {
 	}
 
 	protected boolean supportsTokenizeToSet() {
+		return true;
+	}
+	protected boolean supportsTokenizeToMultiset() {
 		return true;
 	}
 
@@ -126,7 +136,7 @@ public abstract class TokenizerTest {
 					tokenizer.tokenizeToList(t.string()));
 		}
 	}
-
+	
 	@Test
 	public final void tokenizeToListShouldThrowNullPointerException() {
 		if (supportsTokenizeToList()) {
@@ -159,5 +169,28 @@ public abstract class TokenizerTest {
 		}
 		tokenizer.tokenizeToSet(null);
 	}
+	
+	
+	@Test
+	public final void shouldTokenizeToMutiset() {
+		if (!supportsTokenizeToMultiset()) {
+			thrown.expect(UnsupportedOperationException.class);
+		}
 
+		for (T t : tests) {
+			testTokens(t.string(), t.tokensAsMultiset(),
+					tokenizer.tokenizeToMultiset(t.string()));
+		}
+	}
+	
+	@Test
+	public final void tokenizeToMultisetShouldThrowNullPointerException() {
+		if (supportsTokenizeToMultiset()) {
+			thrown.expect(NullPointerException.class);
+		} else {
+			thrown.expect(UnsupportedOperationException.class);
+		}
+		tokenizer.tokenizeToMultiset(null);
+	}
+	
 }

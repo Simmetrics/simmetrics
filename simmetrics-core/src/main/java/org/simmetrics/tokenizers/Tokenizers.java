@@ -45,6 +45,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList.Builder;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
@@ -156,7 +157,20 @@ public final class Tokenizers {
 			String endPadding) {
 		return new QGramExtended(q, startPadding, endPadding);
 	}
-
+	
+	/**
+	 * Returns a tokenizer that splits a string into tokens around whitespace.
+	 * Does not return leading or trailing empty tokens.
+	 * <p>
+	 * To create tokenizer that returns leading and trailing empty tokens use
+	 * {@code Tokenizers.pattern("\\s+")}
+	 * 
+	 * @return a white space tokenizer
+	 */
+	public static Tokenizer whitespace() {
+		return new Whitespace();
+	}
+	
 	/**
 	 * Constructs a new transforming tokenizer. After tokenization, all tokens
 	 * are transformed by the function.
@@ -181,18 +195,7 @@ public final class Tokenizers {
 		return new Transform(tokenizer, function);
 	}
 
-	/**
-	 * Returns a tokenizer that splits a string into tokens around whitespace.
-	 * Does not return leading or trailing empty tokens.
-	 * <p>
-	 * To create tokenizer that returns leading and trailing empty tokens use
-	 * {@code Tokenizers.pattern("\\s+")}
-	 * 
-	 * @return a white space tokenizer
-	 */
-	public static Tokenizer whitespace() {
-		return new Whitespace();
-	}
+
 
 	/**
 	 * Chains tokenizers together. The output of each tokenizer is tokenized by
@@ -212,7 +215,7 @@ public final class Tokenizers {
 	}
 	
 	private static List<Tokenizer> flatten(List<Tokenizer> simplifiers) {
-		final List<Tokenizer> flattend = new ArrayList<>(simplifiers.size());
+		Builder<Tokenizer> flattend = ImmutableList.builder();
 
 		for (Tokenizer s : simplifiers) {
 			if (s instanceof Recursive) {
@@ -226,7 +229,7 @@ public final class Tokenizers {
 			}
 		}
 
-		return flattend;
+		return flattend.build();
 	}
 
 	/**
@@ -243,13 +246,12 @@ public final class Tokenizers {
 	 * @return a chain of tokenizers
 	 */
 	public static Tokenizer chain(Tokenizer tokenizer, Tokenizer... tokenizers) {
-		checkArgument(tokenizer != null);
+		checkNotNull(tokenizer);
 
 		if (tokenizers.length == 0) {
 			return tokenizer;
 		}
-
-		return chain(asList(tokenizer, tokenizers));
+		return new Recursive(flatten(asList(tokenizer, tokenizers)));
 	}
 
 	/**
@@ -276,14 +278,14 @@ public final class Tokenizers {
 		return new Filter(tokenizer, predicate);
 	}
 	
-	private static class Filter implements Tokenizer {
+	static class Filter implements Tokenizer {
 
-		private static final class TransformerFilter extends
+		static final class TransformFilter extends
 				Filter {
 
 			private final Transform tokenizer;
 
-			TransformerFilter(Transform tokenizer,
+			TransformFilter(Transform tokenizer,
 					Predicate<String> predicate) {
 				super(tokenizer, predicate);
 				this.tokenizer = tokenizer;
@@ -337,9 +339,9 @@ public final class Tokenizers {
 		static Tokenizer createCombined(Filter tokenizer,
 				Predicate<String> predicate) {
 
-			if (tokenizer instanceof TransformerFilter) {
-				TransformerFilter tft = (TransformerFilter) tokenizer;
-				return new TransformerFilter(tft.getTokenizer(),
+			if (tokenizer instanceof TransformFilter) {
+				TransformFilter tft = (TransformFilter) tokenizer;
+				return new TransformFilter(tft.getTokenizer(),
 						and(tft.getPredicate(), predicate));
 			}
 
@@ -349,7 +351,7 @@ public final class Tokenizers {
 
 		static Tokenizer createCombined(Transform tokenizer,
 				Predicate<String> predicate) {
-			return new TransformerFilter(tokenizer, predicate);
+			return new TransformFilter(tokenizer, predicate);
 		}
 
 		protected final Predicate<String> predicate;
@@ -374,7 +376,6 @@ public final class Tokenizers {
 		Collection<String> tokenizeToFilteredList(String input) {
 			return Collections2.filter(tokenizer.tokenizeToList(input),
 					predicate);
-
 		}
 
 		Collection<String> tokenizeToFilteredMultiset(String input) {
@@ -411,12 +412,11 @@ public final class Tokenizers {
 
 	}
 
-	private static final class Recursive implements Tokenizer {
+	static final class Recursive implements Tokenizer {
 
 		private final List<Tokenizer> tokenizers;
 
 		Recursive(List<Tokenizer> tokenizers) {
-			checkArgument(!tokenizers.contains(null));
 			this.tokenizers = ImmutableList.copyOf(tokenizers);
 		}
 
@@ -500,7 +500,7 @@ public final class Tokenizers {
 
 	}
 
-	private static final class Split extends AbstractTokenizer {
+	static final class Split extends AbstractTokenizer {
 
 		private final Pattern pattern;
 
@@ -518,11 +518,15 @@ public final class Tokenizers {
 			return "Split[" + pattern + "]";
 		}
 
+		Pattern getPattern() {
+			return pattern;
+		}
+
 	}
 
-	private static class Transform implements Tokenizer {
+	static class Transform implements Tokenizer {
 		
-		private static final class FilterTransform extends
+		static final class FilterTransform extends
 				Transform {
 
 			private final Filter tokenizer;
@@ -707,10 +711,14 @@ public final class Tokenizers {
 			this(q, false);
 		}
 
-		public int getQ() {
+		int getQ() {
 			return q;
 		}
-
+		
+		boolean isFilter() {
+			return filter;
+		}
+		
 		@Override
 		public List<String> tokenizeToList(final String input) {
 			if (input.isEmpty()) {
@@ -734,7 +742,6 @@ public final class Tokenizers {
 		public String toString() {
 			return "QGram [q=" + q + "]";
 		}
-
 	}
 
 	/**
@@ -803,6 +810,18 @@ public final class Tokenizers {
 			return "QGramExtended [startPadding=" + startPadding
 					+ ", endPadding=" + endPadding + ", q=" + tokenizer.getQ()
 					+ "]";
+		}
+
+		 int getQ() {
+			return tokenizer.getQ();
+		}
+		 
+		String getStartPadding() {
+			return startPadding;
+		}
+		 
+		 String getEndPadding() {
+			return endPadding;
 		}
 
 	}

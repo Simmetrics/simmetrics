@@ -45,6 +45,11 @@ public class CachingSetTokenizerTest extends TokenizerTest {
 	protected final boolean supportsTokenizeToList() {
 		return false;
 	}
+	
+	@Override
+	protected boolean supportsTokenizeToMultiset() {
+		return false;
+	}
 
 	@Override
 	protected final Tokenizer getTokenizer() {

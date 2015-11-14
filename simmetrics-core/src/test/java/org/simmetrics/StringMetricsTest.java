@@ -25,6 +25,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
 import static org.simmetrics.simplifiers.SimplifiersMatcher.chain;
+
 import java.util.List;
 import java.util.Set;
 
@@ -33,6 +34,8 @@ import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.simmetrics.StringMetrics.ForList;
 import org.simmetrics.StringMetrics.ForListWithSimplifier;
+import org.simmetrics.StringMetrics.ForMultiset;
+import org.simmetrics.StringMetrics.ForMultisetWithSimplifier;
 import org.simmetrics.StringMetrics.ForSet;
 import org.simmetrics.StringMetrics.ForSetWithSimplifier;
 import org.simmetrics.StringMetrics.ForString;
@@ -42,6 +45,8 @@ import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Tokenizers;
+
+import com.google.common.collect.Multiset;
 
 @SuppressWarnings({ "javadoc", "static-method" })
 @RunWith(Enclosed.class)
@@ -195,6 +200,35 @@ public class StringMetricsTest {
 			StringMetric wrapped = StringMetrics.createForSetMetric(metric, simplifier, tokenizer);
 			assertEquals(ForSetWithSimplifier.class, wrapped.getClass());
 			ForSetWithSimplifier forSet = (ForSetWithSimplifier) wrapped;
+			assertSame(metric, forSet.getMetric());
+			assertSame(tokenizer, forSet.getTokenizer());
+			assertSame(simplifier, forSet.getSimplifier());
+		}
+
+	}
+	
+	public static final class CreateForMultiset {
+
+		private final Metric<Multiset<String>> metric = new Identity<>();
+		private final Tokenizer tokenizer = Tokenizers.whitespace();
+		private final Simplifier simplifier = Simplifiers.toLowerCase();
+
+		@Test
+		public void shouldReturnForSet() {
+
+			StringMetric wrapped = StringMetrics.createForMultisetMetric(metric, tokenizer);
+			assertEquals(ForMultiset.class, wrapped.getClass());
+			ForMultiset forSet = (ForMultiset) wrapped;
+			assertSame(metric, forSet.getMetric());
+			assertSame(tokenizer, forSet.getTokenizer());
+		}
+
+		@Test
+		public void shouldReturnForSetWithSimplifier() {
+
+			StringMetric wrapped = StringMetrics.createForMultisetMetric(metric, simplifier, tokenizer);
+			assertEquals(ForMultisetWithSimplifier.class, wrapped.getClass());
+			ForMultisetWithSimplifier forSet = (ForMultisetWithSimplifier) wrapped;
 			assertSame(metric, forSet.getMetric());
 			assertSame(tokenizer, forSet.getTokenizer());
 			assertSame(simplifier, forSet.getSimplifier());

@@ -32,12 +32,10 @@ import org.simmetrics.metrics.functions.MatchMismatch;
 import org.simmetrics.metrics.functions.Substitution;
 
 /**
- * Smith-Waterman algorithm providing a similarity measure between two strings.
- * <p>
- * Implementation uses optimizations described in Osamu Gotoh (1982).
- * "An improved algorithm for matching biological sequences". Journal of
- * molecular biology 162: 705". This implementation uses constant space and
- * quadratic time.
+ * Applies the Smith-Waterman algorithm to calculate the similarity between two
+ * strings. This implementation uses optimizations described in Osamu Gotoh
+ * (1982). "An improved algorithm for matching biological sequences". Journal of
+ * molecular biology 162: 705" and uses constant space and quadratic time.
  * 
  * <p>
  * This class is immutable and thread-safe if its substitution functions are.

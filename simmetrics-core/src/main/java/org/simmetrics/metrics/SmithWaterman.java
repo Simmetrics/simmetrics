@@ -4,20 +4,19 @@
  * %%
  * Copyright (C) 2014 - 2015 Simmetrics Authors
  * %%
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
  * 
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  * #L%
  */
-
 
 package org.simmetrics.metrics;
 
@@ -34,15 +33,12 @@ import org.simmetrics.metrics.functions.MatchMismatch;
 import org.simmetrics.metrics.functions.Substitution;
 
 /**
- * Smith-Waterman algorithm providing a similarity measure between two strings.
- * 
- * <p>
- * Implementation uses the implementation as described by Smith and Waterman. This implementation
- * uses quadratic space and cubic time.
+ * Applies the Smith-Waterman to calculate the similarity between two strings.
+ * Implementation uses the implementation as described by Smith and Waterman.
+ * This implementation uses quadratic space and cubic time.
  * <p>
  * This class is immutable and thread-safe if its substitution and gap functions
  * are.
- * 
  * 
  * @see NeedlemanWunch
  * @see SmithWatermanGotoh

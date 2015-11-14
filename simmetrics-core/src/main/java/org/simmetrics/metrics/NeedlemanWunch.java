@@ -4,17 +4,17 @@
  * %%
  * Copyright (C) 2014 - 2015 Simmetrics Authors
  * %%
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
  * 
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  * #L%
  */
 
@@ -34,10 +34,8 @@ import org.simmetrics.metrics.functions.MatchMismatch;
 import org.simmetrics.metrics.functions.Substitution;
 
 /**
- * Needleman-Wunsch algorithm providing a similarity measure between two
- * strings.
- * <p>
- * Implementation uses linear space.
+ * Applies the Needleman-Wunsch algorithm to calculate the similarity measure
+ * between two strings. This implementation uses linear space.
  * <p>
  * This class is immutable and thread-safe if its substitution function is.
  * 
@@ -93,7 +91,8 @@ public class NeedlemanWunch implements StringMetric {
 		float minDistance = max(a.length(), b.length())
 				* min(substitution.min(), gapValue);
 
-		return (-needlemanWunch(a, b) - minDistance) / (maxDistance - minDistance);
+		return (-needlemanWunch(a, b) - minDistance)
+				/ (maxDistance - minDistance);
 
 	}
 
@@ -110,6 +109,10 @@ public class NeedlemanWunch implements StringMetric {
 			return -gapValue * s.length();
 		}
 
+		// We're only interested in the alignment penalty between s and t
+		// and not their actual alignment. This means we don't have to backtrack
+		// through the n-by-m matrix and can safe some space by reusing v0 for
+		// row i-1.
 		final float[] v0 = new float[t.length() + 1];
 		final float[] v1 = new float[t.length() + 1];
 
@@ -124,8 +127,8 @@ public class NeedlemanWunch implements StringMetric {
 				v1[j] = min(v0[j] - gapValue, v1[j - 1] - gapValue, v0[j - 1]
 						- substitution.compare(s, i - 1, t, j - 1));
 			}
-			// Copy rather then swap because when calculating 
-			// v1[j] elements to the left of j are referenced 
+			// Copy rather then swap because when calculating
+			// v1[j] elements to the left of j are referenced
 			arraycopy(v1, 0, v0, 0, v0.length);
 		}
 

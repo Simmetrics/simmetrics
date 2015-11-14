@@ -29,11 +29,18 @@ import org.simmetrics.MultisetMetric;
 import com.google.common.collect.Multiset;
 
 /**
- * Euclidean Distance algorithm providing a similarity measure between two lists
- * using the vector space of combined terms as the dimensions.
+ * Calculates the Euclidean distance and similarity over two multisets.
+ * <p>
+ * <code>
+ * similarity(a,b) = 1 - distance(a,b) / √(∣a∣² + ∣b∣²)
+ * distance(a,b) = ∣∣a - b∣∣  
+ * </code>
+ * <p>
  *
  * <p>
  * This class is immutable and thread-safe.
+ * 
+ * @see <a href="https://en.wikipedia.org/wiki/Euclidean_distance">Wikipedia - Euclidean Distance</a>
  * @param <T>
  *            type of the token
  * 
@@ -48,7 +55,7 @@ public class EuclideanDistance<T> implements MultisetMetric<T>, MultisetDistance
 		}
 
 		float maxDistance = (float) sqrt((a.size() * a.size()) + (b.size() * b.size()));
-		return (maxDistance - distance(a, b)) / maxDistance;
+		return 1.0f - distance(a, b) / maxDistance;
 	}
 
 	@Override

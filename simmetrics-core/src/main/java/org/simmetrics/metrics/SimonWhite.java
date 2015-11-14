@@ -21,10 +21,8 @@
 package org.simmetrics.metrics;
 
 import static com.google.common.collect.Multisets.intersection;
-
 import org.simmetrics.MultisetDistance;
 import org.simmetrics.MultisetMetric;
-
 import com.google.common.collect.Multiset;
 
 /**
@@ -33,16 +31,30 @@ import com.google.common.collect.Multiset;
  * similarity is defined as twice the shared information (intersection) divided
  * by the sum of cardinalities.
  * <p>
- * Implementation based on the ideas as outlined in <a
- * href="http://www.catalysoft.com/articles/StrikeAMatch.html">How to Strike a
- * Match</a> by Simon White.
- * <p>
  * <code>
  * similarity(a,b) = 2 * ∣a ∩ b∣ / (∣a∣  + ∣b∣)
+ * <br>
  * distance(a,b) = 1 - similarity(a,b)
  * </code>
  * <p>
- * The Dice similarity coefficient is identical to SimonWhite, but unlike Simon
+ * 
+ * Implementation based on the ideas as outlined in <a
+ * href="http://www.catalysoft.com/articles/StrikeAMatch.html">How to Strike a
+ * Match</a> by Simon White. To create the described metric use:
+ * <p>
+ * <code><pre>{@code
+ * import static org.simmetrics.StringMetricBuilder.with;
+ *  
+ *  ...
+ *  
+ * with(new SimonWhite<String>())
+ *   .tokenize(Tokenizers.qGram(3))
+ *   .build();
+ * }
+ * </pre>
+ * </code>
+ * <p>
+ * The Dice similarity coefficient is identical to Simon White, but unlike Simon
  * White the occurrence (cardinality) of an entry is not taken into account.
  * E.g. {@code [hello, world]} and {@code [hello, world, hello, world]} would be
  * identical when compared with Dice but are dissimilar when Simon White is
@@ -76,12 +88,12 @@ public class SimonWhite<T> implements MultisetMetric<T>, MultisetDistance<T> {
 		return (2.0f * intersection(a, b).size()) / (a.size() + b.size());
 
 	}
-	
+
 	@Override
 	public float distance(Multiset<T> a, Multiset<T> b) {
 		return 1.0f - compare(a, b);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "SimonWhite";

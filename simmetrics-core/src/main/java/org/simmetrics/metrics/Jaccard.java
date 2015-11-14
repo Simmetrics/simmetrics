@@ -35,6 +35,7 @@ import org.simmetrics.SetMetric;
  * <p>
  * <code>
  * similarity(a,b) = ∣a ∩ b∣ / ∣a ∪ b∣
+ * <br>
  * distance(a,b) = 1 - similarity(a,b)
  * </code>
  * <p>

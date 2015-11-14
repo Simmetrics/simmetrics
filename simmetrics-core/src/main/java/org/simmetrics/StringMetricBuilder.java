@@ -52,9 +52,9 @@ import com.google.common.collect.Multiset;
  * <p>
  * For usage examples see the simmetrics-example module.
  */
-public class StringMetricBuilder {
+public final class StringMetricBuilder {
 
-	StringMetricBuilder() {
+	private StringMetricBuilder() {
 		// Utility class
 	}
 
@@ -94,7 +94,7 @@ public class StringMetricBuilder {
 		return new CompositeSetMetricBuilder(metric);
 
 	}
-	
+
 	/**
 	 * Starts building a metric with a multiset metric.
 	 * 
@@ -107,7 +107,7 @@ public class StringMetricBuilder {
 		return new CompositeMultisetMetricBuilder(metric);
 
 	}
-	
+
 	@SuppressWarnings("javadoc")
 	public interface BuildStep {
 		/**
@@ -300,8 +300,8 @@ public class StringMetricBuilder {
 
 	}
 
-	private static final class CompositeStringMetricBuilder extends
-			StringMetricBuilder implements StringMetricSimplifierStep {
+	private static final class CompositeStringMetricBuilder implements
+			StringMetricSimplifierStep {
 
 		private final Metric<String> metric;
 
@@ -347,11 +347,11 @@ public class StringMetricBuilder {
 	}
 
 	private static abstract class CompositeCollectionMetricBuilder<T extends Collection<String>>
-			extends StringMetricBuilder implements
-			CollectionMetricSimplifierStep<T>, CollectionMetricTokenizerStep<T> {
+			implements CollectionMetricSimplifierStep<T>,
+			CollectionMetricTokenizerStep<T> {
 
 		private final Metric<T> metric;
-		
+
 		private final List<Simplifier> simplifiers = new ArrayList<>();
 		private final List<Tokenizer> tokenizers = new ArrayList<>();
 
@@ -364,7 +364,7 @@ public class StringMetricBuilder {
 		public final StringMetric build() {
 
 			Tokenizer tokenizer = chainTokenizers();
-			
+
 			if (simplifiers.isEmpty()) {
 				return build(metric, tokenizer);
 			}
@@ -398,7 +398,7 @@ public class StringMetricBuilder {
 
 			return this;
 		}
-		
+
 		@Override
 		public final CollectionMetricSimplifierStep<T> simplify(
 				Simplifier simplifier) {
@@ -513,8 +513,8 @@ public class StringMetricBuilder {
 		}
 
 		@Override
-		StringMetric build(Metric<Multiset<String>> metric, Simplifier simplifier,
-				Tokenizer tokenizer) {
+		StringMetric build(Metric<Multiset<String>> metric,
+				Simplifier simplifier, Tokenizer tokenizer) {
 			return createForMultisetMetric(metric, simplifier, tokenizer);
 		}
 
@@ -530,6 +530,7 @@ public class StringMetricBuilder {
 		}
 
 	}
+
 	static final class CachingSimplifier implements Simplifier {
 
 		private final Cache<String, String> cache;
@@ -563,6 +564,7 @@ public class StringMetricBuilder {
 		}
 
 	}
+
 	static final class CachingMultisetTokenizer implements Tokenizer {
 
 		private final Cache<String, Multiset<String>> cache;
@@ -578,12 +580,12 @@ public class StringMetricBuilder {
 		public List<String> tokenizeToList(final String input) {
 			throw new UnsupportedOperationException();
 		}
-		
+
 		@Override
 		public Set<String> tokenizeToSet(final String input) {
 			throw new UnsupportedOperationException();
 		}
-		
+
 		@Override
 		public Multiset<String> tokenizeToMultiset(final String input) {
 			try {
@@ -602,10 +604,11 @@ public class StringMetricBuilder {
 
 		@Override
 		public String toString() {
-			return "CachingMultisetTokenizer [" + cache + ", " + tokenizer + "]";
+			return "CachingMultisetTokenizer [" + cache + ", " + tokenizer
+					+ "]";
 		}
 	}
-	
+
 	static final class CachingSetTokenizer implements Tokenizer {
 
 		private final Cache<String, Set<String>> cache;
@@ -621,7 +624,7 @@ public class StringMetricBuilder {
 		public List<String> tokenizeToList(final String input) {
 			throw new UnsupportedOperationException();
 		}
-		
+
 		@Override
 		public Set<String> tokenizeToSet(final String input) {
 			try {
@@ -637,12 +640,12 @@ public class StringMetricBuilder {
 				throw new IllegalStateException(e);
 			}
 		}
-		
+
 		@Override
 		public Multiset<String> tokenizeToMultiset(final String input) {
 			throw new UnsupportedOperationException();
 		}
-		
+
 		@Override
 		public String toString() {
 			return "CachingSetTokenizer [" + cache + ", " + tokenizer + "]";
@@ -680,12 +683,12 @@ public class StringMetricBuilder {
 		public Set<String> tokenizeToSet(final String input) {
 			throw new UnsupportedOperationException();
 		}
-		
+
 		@Override
 		public Multiset<String> tokenizeToMultiset(final String input) {
 			throw new UnsupportedOperationException();
 		}
-		
+
 		@Override
 		public String toString() {
 			return "CachingListTokenizer [" + cache + ", " + tokenizer + "]";

@@ -58,6 +58,10 @@ public interface SetMetric<T> extends Metric<Set<T>> {
 	 * Measures the similarity between sets a and b. The measurement results in
 	 * a value between 0 and 1 inclusive. A value of zero indicates that the
 	 * sets are dissimilar, a value of 1 indicates they are similar.
+	 * <p>
+	 * Results are undefined if {@code set1} and {@code set2} are sets based on
+	 * different equivalence relations (as {@code HashSet}, {@code TreeSet}, and
+	 * the keySet of an {@code IdentityHashMap} all are).
 	 * 
 	 * @param a
 	 *            set a to compare

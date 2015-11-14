@@ -55,6 +55,10 @@ public interface SetDistance<E> extends Distance<Set<E>> {
 	 * Measures the distance between sets a and b. The measurement results in a
 	 * non-negative value. A value of {@code 0.0} indicates that {@code a} and
 	 * {@code b} are similar.
+	 * <p>
+	 * Results are undefined if {@code a} and {@code b} are sets based on
+	 * different equivalence relations (as {@code HashSet}, {@code TreeSet}, and
+	 * the keySet of an {@code IdentityHashMap} all are).
 	 * 
 	 * @param a
 	 *            set a to compare

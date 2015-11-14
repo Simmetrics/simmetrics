@@ -84,7 +84,7 @@ public abstract class MetricTest<K> {
 	}
 
 	private static <K> void testReflexive(Metric<K> metric, K a, float delta) {
-		assertEquals(1.0f, metric.compare(a, a), delta);
+		assertEquals("metric should be reflexive for " + a, 1.0f, metric.compare(a, a), delta);
 	}
 
 	private static <K> void testSimilarity(Metric<K> metric, K a, K b,

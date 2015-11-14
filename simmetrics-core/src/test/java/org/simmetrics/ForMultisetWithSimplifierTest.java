@@ -21,8 +21,6 @@ package org.simmetrics;
 
 import static org.junit.Assert.assertSame;
 
-import java.util.Set;
-
 import org.junit.Test;
 import org.simmetrics.StringMetrics.ForMultisetWithSimplifier;
 import org.simmetrics.metrics.Identity;

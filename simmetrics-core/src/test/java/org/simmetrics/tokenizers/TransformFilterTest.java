@@ -30,7 +30,6 @@ import org.simmetrics.tokenizers.Tokenizers.Transform.FilterTransform;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 
-import static org.simmetrics.tokenizers.Tokenizers.Transform;
 import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
 @SuppressWarnings("javadoc")

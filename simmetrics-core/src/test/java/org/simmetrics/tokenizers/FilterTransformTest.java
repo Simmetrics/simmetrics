@@ -23,7 +23,6 @@ import static com.google.common.base.Predicates.in;
 import static com.google.common.base.Predicates.not;
 import static java.util.Arrays.asList;
 
-import org.simmetrics.tokenizers.Tokenizers.Filter;
 import org.simmetrics.tokenizers.Tokenizers.Transform;
 import org.simmetrics.tokenizers.Tokenizers.Filter.TransformFilter;
 import org.simmetrics.tokenizers.Tokenizers.Transform.FilterTransform;

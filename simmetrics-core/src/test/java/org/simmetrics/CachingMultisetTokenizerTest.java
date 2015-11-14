@@ -20,13 +20,10 @@
 
 package org.simmetrics;
 
-import static com.google.common.collect.Sets.newHashSet;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.util.Set;
 
 import org.junit.Test;
 import org.simmetrics.tokenizers.Tokenizer;
@@ -34,7 +31,6 @@ import org.simmetrics.tokenizers.TokenizerTest;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableMultiset;
 import com.google.common.collect.Multiset;
 

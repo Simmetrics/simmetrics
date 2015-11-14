@@ -22,8 +22,6 @@ package org.simmetrics.metrics;
 
 import static java.util.Arrays.asList;
 
-import java.util.Arrays;
-
 import org.simmetrics.MultisetMetric;
 import org.simmetrics.MultisetMetricTest;
 

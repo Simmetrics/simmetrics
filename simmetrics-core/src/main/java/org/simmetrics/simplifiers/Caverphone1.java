@@ -38,7 +38,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @see org.apache.commons.codec.language.Caverphone1
  *
  */
-public class Caverphone1 implements Simplifier {
+public final class Caverphone1 implements Simplifier {
 
 	private final org.apache.commons.codec.language.Caverphone1 simplifier = new org.apache.commons.codec.language.Caverphone1();
 

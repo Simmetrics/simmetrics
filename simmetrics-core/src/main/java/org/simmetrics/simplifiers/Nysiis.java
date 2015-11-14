@@ -30,7 +30,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 
  * @see org.apache.commons.codec.language.Nysiis
  */
-public class Nysiis implements Simplifier {
+public final class Nysiis implements Simplifier {
 
 	private final org.apache.commons.codec.language.Nysiis simplifier;
 	

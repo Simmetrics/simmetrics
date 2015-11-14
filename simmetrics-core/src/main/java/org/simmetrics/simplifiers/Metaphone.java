@@ -32,7 +32,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 
  * @see org.apache.commons.codec.language.Metaphone
  */
-public class Metaphone implements Simplifier {
+public final class Metaphone implements Simplifier {
 	private static final int DEFAULT_CODE_LENGTH = 4;
 	private final org.apache.commons.codec.language.Metaphone simplifier;
 

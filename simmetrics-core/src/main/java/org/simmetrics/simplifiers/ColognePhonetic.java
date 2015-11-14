@@ -36,7 +36,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 
  * @see org.apache.commons.codec.language.ColognePhonetic
  */
-public class ColognePhonetic implements Simplifier {
+public final class ColognePhonetic implements Simplifier {
 
 	private final org.apache.commons.codec.language.ColognePhonetic simplifier = new org.apache.commons.codec.language.ColognePhonetic();
 

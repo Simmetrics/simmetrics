@@ -32,7 +32,7 @@ import static org.apache.commons.codec.language.Soundex.US_ENGLISH;
  * 
  * @see org.apache.commons.codec.language.Soundex
  */
-public class Soundex implements Simplifier {
+public final class Soundex implements Simplifier {
 
 	@Override
 	public String toString() {

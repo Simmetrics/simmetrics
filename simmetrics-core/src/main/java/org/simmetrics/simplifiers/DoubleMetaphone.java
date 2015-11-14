@@ -29,7 +29,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 
  * @see org.apache.commons.codec.language.DoubleMetaphone
  */
-public class DoubleMetaphone implements Simplifier {
+public final class DoubleMetaphone implements Simplifier {
 
 	private static final int DEFAULT_CODE_LENGTH = 4;
 	private static final boolean DEFAULT_USE_ALTERNATE = false;

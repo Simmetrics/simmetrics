@@ -31,7 +31,7 @@ import static org.apache.commons.codec.language.RefinedSoundex.US_ENGLISH;
  *
  * @see org.apache.commons.codec.language.RefinedSoundex
  */
-public class RefinedSoundex implements Simplifier {
+public final class RefinedSoundex implements Simplifier {
 
 	@Override
 	public String simplify(String input) {

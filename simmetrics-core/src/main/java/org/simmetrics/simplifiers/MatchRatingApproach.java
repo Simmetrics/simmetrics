@@ -31,7 +31,7 @@ import org.apache.commons.codec.language.MatchRatingApproachEncoder;
  * @see <a href="http://en.wikipedia.org/wiki/Match_rating_approach">Wikipedia - Match Rating Approach</a>
  * @see org.apache.commons.codec.language.MatchRatingApproachEncoder
  */
-public class MatchRatingApproach implements Simplifier {
+public final class MatchRatingApproach implements Simplifier {
 
 	private final MatchRatingApproachEncoder simplifier = new MatchRatingApproachEncoder();
 

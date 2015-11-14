@@ -108,31 +108,36 @@ public class NeedlemanWunch implements StringMetric {
 		if (t.isEmpty()) {
 			return -gapValue * s.length();
 		}
+		
+		final int n = s.length();
+		final int m = t.length();
 
 		// We're only interested in the alignment penalty between s and t
 		// and not their actual alignment. This means we don't have to backtrack
 		// through the n-by-m matrix and can safe some space by reusing v0 for
 		// row i-1.
-		final float[] v0 = new float[t.length() + 1];
-		final float[] v1 = new float[t.length() + 1];
+		final float[] v0 = new float[m + 1];
+		final float[] v1 = new float[m + 1];
 
 		for (int j = 0; j < v0.length; j++) {
 			v0[j] = j;
 		}
 
-		for (int i = 1; i < s.length() + 1; i++) {
+		for (int i = 1; i <= n; i++) {
 			v1[0] = i;
 
-			for (int j = 1; j < v0.length; j++) {
-				v1[j] = min(v0[j] - gapValue, v1[j - 1] - gapValue, v0[j - 1]
-						- substitution.compare(s, i - 1, t, j - 1));
+			for (int j = 1; j <= m; j++) {
+				v1[j] = min(
+						v0[j]     - gapValue, 
+						v1[j - 1] - gapValue, 
+						v0[j - 1] - substitution.compare(s, i - 1, t, j - 1));
 			}
 			// Copy rather then swap because when calculating
 			// v1[j] elements to the left of j are referenced
 			arraycopy(v1, 0, v0, 0, v0.length);
 		}
 
-		return v1[v1.length - 1];
+		return v1[m];
 	}
 
 	@Override

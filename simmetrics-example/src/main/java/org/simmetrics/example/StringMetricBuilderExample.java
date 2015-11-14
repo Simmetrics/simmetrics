@@ -205,7 +205,8 @@ public final class StringMetricBuilderExample {
 				.tokenize(Tokenizers.whitespace())
 				.filter(Predicates.not(in(commonWords)))
 				.filter(Predicates.not(in(otherCommonWords)))
-				.tokenize(Tokenizers.qGram(3)).build();
+				.tokenize(Tokenizers.qGram(3))
+				.build();
 
 		return metric.compare(a, b); // 0.6902
 	}

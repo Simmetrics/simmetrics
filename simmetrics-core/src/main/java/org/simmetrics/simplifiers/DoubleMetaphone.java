@@ -24,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Encodes a string into a double metaphone value. This Implementation is based
  * on the algorithm by <cite>Lawrence Philips</cite>.
- * 
+ * <p>
  * This class is immutable and thread-safe.
  * 
  * @see org.apache.commons.codec.language.DoubleMetaphone

@@ -40,7 +40,7 @@ import com.google.common.collect.Multiset;
  * 
  * Implementation based on the ideas as outlined in <a
  * href="http://www.catalysoft.com/articles/StrikeAMatch.html">How to Strike a
- * Match</a> by Simon White. To create the described metric use:
+ * Match</a> by <cite>Simon White</cite>. To create the described metric use:
  * <p>
  * <code><pre>{@code
  * import static org.simmetrics.StringMetricBuilder.with;

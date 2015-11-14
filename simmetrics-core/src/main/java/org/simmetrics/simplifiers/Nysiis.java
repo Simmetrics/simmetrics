@@ -25,9 +25,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Encodes a string into a NYSIIS value. NYSIIS is an encoding used to relate
  * similar names, but can also be used as a general purpose scheme to find word
  * with similar phonemes.
- * 
+ * <p>
  * This class is thread-safe and immutable.
- * 
  * 
  * @see org.apache.commons.codec.language.Nysiis
  */

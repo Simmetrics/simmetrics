@@ -28,8 +28,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * American Soundex algorithms, yielding greater accuracy in matching especially
  * Slavish and Yiddish surnames with similar pronunciation but differences in
  * spelling.
- * </p>
- * 
+ * <p>
  * This class is immutable and thread-safe.
  * 
  * @see org.apache.commons.codec.language.DaitchMokotoffSoundex

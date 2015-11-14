@@ -25,7 +25,6 @@ import java.util.Locale;
 /**
  * Simplifiers for upper and lower case. Allows a locale to be set for the
  * correct transformation.
- * 
  * <p>
  * This class is immutable and thread-safe.
  * 

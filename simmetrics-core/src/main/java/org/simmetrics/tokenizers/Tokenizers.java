@@ -51,8 +51,8 @@ import com.google.common.collect.Multisets;
 import com.google.common.collect.Sets;
 
 /**
- * Utilities for tokenizers. Construct simple tokenizers, chain multiple
- * tokenizers into a single tokenizers or apply filters and transforms to
+ * Utilities for tokenizers. Construct simple tokenizers, chains multiple
+ * tokenizers into a single tokenizers or applies filters and transforms to
  * tokens.
  * <p>
  * All methods return immutable objects provided the arguments are also

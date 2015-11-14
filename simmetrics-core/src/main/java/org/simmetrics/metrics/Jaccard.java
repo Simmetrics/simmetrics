@@ -28,10 +28,10 @@ import org.simmetrics.SetDistance;
 import org.simmetrics.SetMetric;
 
 /**
- * Calculates the Jaccard distance and similarity coefficient over
- * two multisets. The similarity is defined as the size of the intersection
- * divided by the size of the union of the sample sets. The distance is obtained
- * by subtracting the Jaccard coefficient from 1.
+ * Calculates the Jaccard distance and similarity coefficient over two
+ * multisets. The similarity is defined as the size of the intersection divided
+ * by the size of the union of the sample sets. The distance is obtained by
+ * subtracting the Jaccard coefficient from 1.
  * <p>
  * <code>
  * similarity(a,b) = ∣a ∩ b∣ / ∣a ∪ b∣
@@ -42,11 +42,14 @@ import org.simmetrics.SetMetric;
  * is not taken into account. E.g. {@code [hello, world]} and
  * {@code [hello, world, hello, world]} would be identical when compared with
  * the Jaccard index but are dissimilar when the generalized version is used.
- * 
+ * <p>
+ * Similar to the overlap coefficient which divides the intersection by the size
+ * of the smaller of the two sets.
  * <p>
  * This class is immutable and thread-safe.
  * 
  * @see GeneralizedJaccard
+ * @see OverlapCoefficient
  * @see <a href="http://en.wikipedia.org/wiki/Jaccard_index">Wikipedia - Jaccard
  *      index</a>
  *

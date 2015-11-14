@@ -20,44 +20,45 @@
 
 package org.simmetrics.metrics;
 
-import static com.google.common.collect.Sets.intersection;
+import static com.google.common.collect.Multisets.intersection;
 import static java.lang.Math.min;
 
-import java.util.Set;
-
-import org.simmetrics.SetMetric;
+import org.simmetrics.MultisetMetric;
+import com.google.common.collect.Multiset;
 
 /**
- * The overlap coefficient measures the overlap between two sets. The similarity
- * is defined as the size of the intersection divided by the smaller of the size
- * of the two sets
+ * The generalized overlap coefficient measures the overlap between two
+ * multisets. The similarity is defined as the size of the intersection divided
+ * by the smaller of the size of the two sets
  * <p>
  * <code>
  * similarity(q,r) = ∣q ∩ r∣ / min{∣q∣, ∣r∣}
  * </code>
  * <p>
- * Unlike the generalized overlap coefficient the occurrence (cardinality) of an
- * entry is not taken into account. E.g. {@code [hello, world]} and
+ * Unlike the overlap coefficient the occurrence (cardinality) of an entry is
+ * taken into account. E.g. {@code [hello, world]} and
  * {@code [hello, world, hello, world]} would be identical when compared with
- * the overlap coefficient but are dissimilar when the generalized version is
- * used.
+ * the overlap coefficient index but are dissimilar when the generalized version
+ * is used.
+ * 
  * <p>
- * Similar to the generalized Jaccard similarity which divides the intersection
- * by the union of two multisets.
+ * Similar to the generalized Jaccard similarity which divides the intersection by the union
+ * of two sets.
  * <p>
  * This class is immutable and thread-safe.
  * 
  * @param <T>
  *            type of the token
  * 
- * @see Jaccard
+ * @see GeneralizedJaccard
  * @see <a href="http://en.wikipedia.org/wiki/Overlap_coefficient">Wikipedia -
  *      Overlap Coefficient</a>
  */
-public final class OverlapCoefficient<T> implements SetMetric<T> {
+public final class GeneralizedOverlapCoefficient<T> implements
+		MultisetMetric<T> {
 
 	@Override
-	public float compare(Set<T> a, Set<T> b) {
+	public float compare(Multiset<T> a, Multiset<T> b) {
 
 		if (a.isEmpty() && b.isEmpty()) {
 			return 1.0f;

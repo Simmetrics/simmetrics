@@ -74,7 +74,7 @@ public final class GeneralizedOverlapCoefficient<T> implements
 
 	@Override
 	public String toString() {
-		return "OverlapCoefficient";
+		return "GeneralizedOverlapCoefficient";
 	}
 
 }

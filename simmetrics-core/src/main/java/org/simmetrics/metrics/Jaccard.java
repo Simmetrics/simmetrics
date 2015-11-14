@@ -89,7 +89,7 @@ public final class Jaccard<T> implements SetMetric<T>, SetDistance<T> {
 
 	@Override
 	public String toString() {
-		return "JaccardIndex";
+		return "Jaccard";
 	}
 
 }

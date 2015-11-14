@@ -82,7 +82,7 @@ public class GeneralizedJaccard<T> implements MultisetMetric<T>,
 
 	@Override
 	public String toString() {
-		return "GeneralizedJaccardIndex";
+		return "GeneralizedJaccard";
 	}
 
 }

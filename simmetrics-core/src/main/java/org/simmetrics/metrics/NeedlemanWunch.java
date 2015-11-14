@@ -34,7 +34,7 @@ import org.simmetrics.metrics.functions.MatchMismatch;
 import org.simmetrics.metrics.functions.Substitution;
 
 /**
- * Applies the Needleman-Wunsch algorithm to calculate the similarity measure
+ * Applies the Needleman-Wunsch algorithm to calculate the similarity
  * between two strings. This implementation uses linear space.
  * <p>
  * This class is immutable and thread-safe if its substitution function is.

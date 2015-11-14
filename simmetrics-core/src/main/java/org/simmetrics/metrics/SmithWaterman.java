@@ -33,9 +33,9 @@ import org.simmetrics.metrics.functions.MatchMismatch;
 import org.simmetrics.metrics.functions.Substitution;
 
 /**
- * Applies the Smith-Waterman to calculate the similarity between two strings.
- * Implementation uses the implementation as described by Smith and Waterman.
- * This implementation uses quadratic space and cubic time.
+ * Applies the Smith-Waterman algorithm to calculate the similarity between two
+ * strings. Implementation uses the implementation as described by Smith and
+ * Waterman. This implementation uses quadratic space and cubic time.
  * <p>
  * This class is immutable and thread-safe if its substitution and gap functions
  * are.

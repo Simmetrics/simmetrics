@@ -28,9 +28,13 @@ import org.simmetrics.MultisetMetric;
 import com.google.common.collect.Multiset;
 
 /**
- * Block distance algorithm whereby vector space block distance between tokens
- * is used to determine a similarity. Also known as L1 Distance or City block
- * distance.
+ * Calculates the block distance and similarity over two multisets. Also known
+ * as L1 Distance or City block distance.
+ * <p>
+ * <code>
+ * similarity(a,b) = 1 - distance(a,b) / (∣a∣ + ∣b∣)
+ * distance(a,b) = ∣∣a - b∣∣
+ * </code>
  * <p>
  * This class is immutable and thread-safe.
  * 

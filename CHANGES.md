@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-## Since 3.2.3-SNAPSHOT ##
+## Since 4.0.0 ##
  - Removed deprecated methods and classes
  - Multiset features
     - Added MultisetMetric and MultisetDistance

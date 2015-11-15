@@ -256,13 +256,13 @@ public final class StringMetricBuilderExample {
 		String a = "A quirky thing it is. This is a sentence.";
 		String b = "This sentence is similar; a quirky thing it is.";
 
-		Cache<String,String> stringCache = CacheBuilder
-				.newBuilder()
+		Cache<String,String> stringCache = 
+				CacheBuilder.newBuilder()
 				.maximumSize(2)
 				.build();
 		
-		Cache<String,Multiset<String>> tokenCache = CacheBuilder
-				.newBuilder()
+		Cache<String,Multiset<String>> tokenCache = 
+				CacheBuilder.newBuilder()
 				.maximumSize(2)
 				.build();	
 		

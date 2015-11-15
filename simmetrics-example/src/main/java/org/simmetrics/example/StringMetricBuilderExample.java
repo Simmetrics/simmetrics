@@ -21,14 +21,14 @@
 package org.simmetrics.example;
 
 import static com.google.common.base.Predicates.in;
-import static org.simmetrics.StringMetricBuilder.with;
+import static org.simmetrics.builders.StringMetricBuilder.with;
 
 import java.util.Set;
 
 import org.simmetrics.ListMetric;
 import org.simmetrics.SetMetric;
 import org.simmetrics.StringMetric;
-import org.simmetrics.StringMetricBuilder;
+import org.simmetrics.builders.StringMetricBuilder;
 import org.simmetrics.metrics.CosineSimilarity;
 import org.simmetrics.metrics.Levenshtein;
 import org.simmetrics.simplifiers.Simplifier;

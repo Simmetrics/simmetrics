@@ -18,7 +18,7 @@
  * #L%
  */
 
-package org.simmetrics;
+package org.simmetrics.builders;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -26,6 +26,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
+import org.simmetrics.builders.StringMetricBuilder;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.SimplifierTest;
 

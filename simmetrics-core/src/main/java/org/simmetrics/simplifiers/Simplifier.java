@@ -19,7 +19,7 @@
  */
 package org.simmetrics.simplifiers;
 
-import org.simmetrics.StringMetricBuilder;
+import org.simmetrics.builders.StringMetricBuilder;
 
 /**
  * Transforms a string into a simpler form.

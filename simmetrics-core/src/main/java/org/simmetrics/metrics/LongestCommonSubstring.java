@@ -102,7 +102,7 @@ public final class LongestCommonSubstring implements StringMetric,
 
 	@Override
 	public String toString() {
-		return "LongestCommonSubsequence";
+		return "LongestCommonSubstring";
 	}
 
 }

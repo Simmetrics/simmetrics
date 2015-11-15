@@ -20,8 +20,8 @@
 
 package org.simmetrics.performance;
 
-import static org.simmetrics.StringMetrics.createForListMetric;
-import static org.simmetrics.StringMetrics.createForMultisetMetric;
+import static org.simmetrics.metrics.StringMetrics.createForListMetric;
+import static org.simmetrics.metrics.StringMetrics.createForMultisetMetric;
 import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
 import java.util.ArrayList;
@@ -30,6 +30,7 @@ import java.util.List;
 import org.simmetrics.ListMetric;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.SimonWhite;
+
 import com.google.caliper.Benchmark;
 import com.google.caliper.Param;
 import com.google.caliper.runner.CaliperMain;

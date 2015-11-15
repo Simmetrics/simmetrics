@@ -17,48 +17,60 @@
  * limitations under the License.
  * #L%
  */
-package org.simmetrics;
+package org.simmetrics.metrics;
 
 import static org.junit.Assert.assertSame;
 
-import java.util.Set;
-
 import org.junit.Test;
-import org.simmetrics.StringMetrics.ForSet;
+import org.simmetrics.Metric;
+import org.simmetrics.StringMetricTest;
 import org.simmetrics.metrics.Identity;
+import org.simmetrics.metrics.StringMetrics.ForMultisetWithSimplifier;
+import org.simmetrics.simplifiers.Simplifier;
+import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.Tokenizers;
 
+import com.google.common.collect.Multiset;
+
 @SuppressWarnings("javadoc")
-public class ForSetTest extends StringMetricTest {
+public class ForMultisetWithSimplifierTest extends StringMetricTest{
 
 	private final Tokenizer tokenizer = Tokenizers.whitespace();
-	private final Metric<Set<String>> metric = new Identity<>();
-
+	private final Metric<Multiset<String>> metric = new Identity<>();
+	private final Simplifier simplifier = Simplifiers.toLowerCase();
+	
 	@Override
-	protected ForSet getMetric() {
-		return new ForSet(metric, tokenizer);
+	protected ForMultisetWithSimplifier getMetric() {
+		return new ForMultisetWithSimplifier(metric, simplifier, tokenizer);
 	}
-
+	
 	@Override
 	protected T[] getStringTests() {
-		return new T[] { new T(0.0f, "To repeat repeat is to repeat", ""),
-				new T(1.0f, "To repeat repeat is to repeat", "To repeat is to repeat"),
-				new T(1.0f, "To repeat repeat is to repeat", "To  repeat  is  to  repeat") };
+		return new T[]{
+				new T(0.0f, "To repeat repeat is to repeat", ""),
+				new T(1.0f, "To repeat repeat is to repeat", "to repeat repeat is to repeat"),
+				new T(1.0f, "To repeat repeat is to repeat", "to  repeat  repeat  is  to  repeat")
+		};
 	}
-
+	
 	@Override
 	protected boolean satisfiesCoincidence() {
 		return false;
 	}
 
 	@Test
-	public void shouldReturnTokenizer() {
-		assertSame(tokenizer, getMetric().getTokenizer());
+	public void shouldReturnTokenizer(){
+		assertSame(tokenizer,getMetric().getTokenizer());
 	}
-
+	
 	@Test
-	public void shouldReturnMetric() {
+	public void shouldReturnMetric(){
 		assertSame(metric, getMetric().getMetric());
+	}
+	
+	@Test
+	public void shouldReturnSimplifier(){
+		assertSame(simplifier, getMetric().getSimplifier());
 	}
 }

@@ -19,13 +19,13 @@
  */
 package org.simmetrics.example;
 
-import static org.simmetrics.StringMetricBuilder.with;
+import static org.simmetrics.builders.StringMetricBuilder.with;
 
 import java.util.Locale;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.StringMetrics;
 import org.simmetrics.metrics.CosineSimilarity;
+import org.simmetrics.metrics.StringMetrics;
 import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.tokenizers.Tokenizers;
 

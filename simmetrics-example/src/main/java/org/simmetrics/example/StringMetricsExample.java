@@ -20,12 +20,12 @@
 
 package org.simmetrics.example;
 
-import static org.simmetrics.StringMetricBuilder.with;
+import static org.simmetrics.builders.StringMetricBuilder.with;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.StringMetricBuilder;
-import org.simmetrics.StringMetrics;
+import org.simmetrics.builders.StringMetricBuilder;
 import org.simmetrics.metrics.CosineSimilarity;
+import org.simmetrics.metrics.StringMetrics;
 import org.simmetrics.tokenizers.Tokenizers;
 
 /**

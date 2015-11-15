@@ -18,7 +18,7 @@
  * #L%
  */
 
-package org.simmetrics;
+package org.simmetrics.builders;
 
 import static com.google.common.collect.Sets.newHashSet;
 import static org.mockito.Mockito.mock;
@@ -29,6 +29,7 @@ import static org.mockito.Mockito.when;
 import java.util.Set;
 
 import org.junit.Test;
+import org.simmetrics.builders.StringMetricBuilder;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.TokenizerTest;
 

@@ -17,25 +17,32 @@
  * limitations under the License.
  * #L%
  */
-package org.simmetrics;
+package org.simmetrics.metrics;
 
 import static org.junit.Assert.assertSame;
 
+import java.util.Set;
+
 import org.junit.Test;
-import org.simmetrics.StringMetrics.ForStringWithSimplifier;
+import org.simmetrics.Metric;
+import org.simmetrics.StringMetricTest;
 import org.simmetrics.metrics.Identity;
+import org.simmetrics.metrics.StringMetrics.ForSetWithSimplifier;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.Simplifiers;
+import org.simmetrics.tokenizers.Tokenizer;
+import org.simmetrics.tokenizers.Tokenizers;
 
 @SuppressWarnings("javadoc")
-public class ForStringWithSimplifierTest extends StringMetricTest{
+public class ForSetWithSimplifierTest extends StringMetricTest{
 
-	private final Metric<String> metric = new Identity<>();
+	private final Tokenizer tokenizer = Tokenizers.whitespace();
+	private final Metric<Set<String>> metric = new Identity<>();
 	private final Simplifier simplifier = Simplifiers.toLowerCase();
 	
 	@Override
-	protected ForStringWithSimplifier getMetric() {
-		return new ForStringWithSimplifier(metric, simplifier);
+	protected ForSetWithSimplifier getMetric() {
+		return new ForSetWithSimplifier(metric, simplifier, tokenizer);
 	}
 	
 	@Override
@@ -43,6 +50,7 @@ public class ForStringWithSimplifierTest extends StringMetricTest{
 		return new T[]{
 				new T(0.0f, "To repeat repeat is to repeat", ""),
 				new T(1.0f, "To repeat repeat is to repeat", "to repeat repeat is to repeat"),
+				new T(1.0f, "To repeat repeat is to repeat", "to  repeat  is  to  repeat")
 		};
 	}
 	
@@ -51,6 +59,10 @@ public class ForStringWithSimplifierTest extends StringMetricTest{
 		return false;
 	}
 
+	@Test
+	public void shouldReturnTokenizer(){
+		assertSame(tokenizer,getMetric().getTokenizer());
+	}
 	
 	@Test
 	public void shouldReturnMetric(){

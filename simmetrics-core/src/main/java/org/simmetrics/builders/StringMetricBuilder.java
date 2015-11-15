@@ -18,13 +18,13 @@
  * #L%
  */
 
-package org.simmetrics;
+package org.simmetrics.builders;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.simmetrics.StringMetrics.create;
-import static org.simmetrics.StringMetrics.createForListMetric;
-import static org.simmetrics.StringMetrics.createForMultisetMetric;
-import static org.simmetrics.StringMetrics.createForSetMetric;
+import static org.simmetrics.metrics.StringMetrics.create;
+import static org.simmetrics.metrics.StringMetrics.createForListMetric;
+import static org.simmetrics.metrics.StringMetrics.createForMultisetMetric;
+import static org.simmetrics.metrics.StringMetrics.createForSetMetric;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,6 +33,11 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
+import org.simmetrics.ListMetric;
+import org.simmetrics.Metric;
+import org.simmetrics.MultisetMetric;
+import org.simmetrics.SetMetric;
+import org.simmetrics.StringMetric;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.tokenizers.Tokenizer;

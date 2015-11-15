@@ -18,7 +18,7 @@
  * #L%
  */
 
-package org.simmetrics;
+package org.simmetrics.metrics;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.simmetrics.simplifiers.Simplifiers.chain;
@@ -29,23 +29,9 @@ import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 import java.util.List;
 import java.util.Set;
 
-import org.simmetrics.metrics.BlockDistance;
-import org.simmetrics.metrics.CosineSimilarity;
-import org.simmetrics.metrics.DamerauLevenshtein;
-import org.simmetrics.metrics.Dice;
-import org.simmetrics.metrics.EuclideanDistance;
-import org.simmetrics.metrics.Identity;
-import org.simmetrics.metrics.Jaccard;
-import org.simmetrics.metrics.Jaro;
-import org.simmetrics.metrics.JaroWinkler;
-import org.simmetrics.metrics.Levenshtein;
-import org.simmetrics.metrics.GeneralizedJaccard;
-import org.simmetrics.metrics.MongeElkan;
-import org.simmetrics.metrics.NeedlemanWunch;
-import org.simmetrics.metrics.OverlapCoefficient;
-import org.simmetrics.metrics.SimonWhite;
-import org.simmetrics.metrics.SmithWaterman;
-import org.simmetrics.metrics.SmithWatermanGotoh;
+import org.simmetrics.Metric;
+import org.simmetrics.StringMetric;
+import org.simmetrics.builders.StringMetricBuilder;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.Soundex;
 import org.simmetrics.tokenizers.Tokenizer;
@@ -137,6 +123,16 @@ public final class StringMetrics {
 	public static StringMetric euclideanDistance() {
 		return createForMultisetMetric(new EuclideanDistance<String>(), whitespace());
 	}
+	
+	/**
+	 * Returns a string metric that uses a {@link Tokenizers#whitespace()} and
+	 * the {@link GeneralizedJaccard} metric.
+	 * 
+	 * @return a generalized jaccard index metric
+	 */
+	public static StringMetric generalizedJaccard() {
+		return createForMultisetMetric(new GeneralizedJaccard<String>(), whitespace());
+	}
 
 	/**
 	 * Returns an string metric that uses the {@link Identity} metric.
@@ -182,16 +178,6 @@ public final class StringMetrics {
 	 */
 	public static StringMetric levenshtein() {
 		return new Levenshtein();
-	}
-
-	/**
-	 * Returns a string metric that uses a {@link Tokenizers#whitespace()} and
-	 * the {@link GeneralizedJaccard} metric.
-	 * 
-	 * @return a generalized jaccard index metric
-	 */
-	public static StringMetric generalizedJaccard() {
-		return createForMultisetMetric(new GeneralizedJaccard<String>(), whitespace());
 	}
 
 	/**

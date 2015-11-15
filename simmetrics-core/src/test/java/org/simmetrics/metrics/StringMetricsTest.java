@@ -18,7 +18,7 @@
  * #L%
  */
 
-package org.simmetrics;
+package org.simmetrics.metrics;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -32,15 +32,19 @@ import java.util.Set;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
-import org.simmetrics.StringMetrics.ForList;
-import org.simmetrics.StringMetrics.ForListWithSimplifier;
-import org.simmetrics.StringMetrics.ForMultiset;
-import org.simmetrics.StringMetrics.ForMultisetWithSimplifier;
-import org.simmetrics.StringMetrics.ForSet;
-import org.simmetrics.StringMetrics.ForSetWithSimplifier;
-import org.simmetrics.StringMetrics.ForString;
-import org.simmetrics.StringMetrics.ForStringWithSimplifier;
+import org.simmetrics.Metric;
+import org.simmetrics.StringMetric;
+import org.simmetrics.StringMetricTest;
 import org.simmetrics.metrics.Identity;
+import org.simmetrics.metrics.StringMetrics;
+import org.simmetrics.metrics.StringMetrics.ForList;
+import org.simmetrics.metrics.StringMetrics.ForListWithSimplifier;
+import org.simmetrics.metrics.StringMetrics.ForMultiset;
+import org.simmetrics.metrics.StringMetrics.ForMultisetWithSimplifier;
+import org.simmetrics.metrics.StringMetrics.ForSet;
+import org.simmetrics.metrics.StringMetrics.ForSetWithSimplifier;
+import org.simmetrics.metrics.StringMetrics.ForString;
+import org.simmetrics.metrics.StringMetrics.ForStringWithSimplifier;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.tokenizers.Tokenizer;

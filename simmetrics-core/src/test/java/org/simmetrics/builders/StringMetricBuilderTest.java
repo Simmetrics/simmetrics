@@ -18,9 +18,9 @@
  * #L%
  */
 
-package org.simmetrics;
+package org.simmetrics.builders;
 
-import static org.simmetrics.StringMetricBuilder.with;
+import static org.simmetrics.builders.StringMetricBuilder.with;
 
 import java.util.List;
 import java.util.Set;
@@ -29,6 +29,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.simmetrics.ListMetric;
+import org.simmetrics.MultisetMetric;
+import org.simmetrics.SetMetric;
+import org.simmetrics.StringMetric;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.tokenizers.Tokenizer;
 

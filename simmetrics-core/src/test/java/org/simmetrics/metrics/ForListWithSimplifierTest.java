@@ -17,15 +17,17 @@
  * limitations under the License.
  * #L%
  */
-package org.simmetrics;
+package org.simmetrics.metrics;
 
 import static org.junit.Assert.assertSame;
 
 import java.util.List;
 
 import org.junit.Test;
-import org.simmetrics.StringMetrics.ForListWithSimplifier;
+import org.simmetrics.Metric;
+import org.simmetrics.StringMetricTest;
 import org.simmetrics.metrics.Identity;
+import org.simmetrics.metrics.StringMetrics.ForListWithSimplifier;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.tokenizers.Tokenizer;

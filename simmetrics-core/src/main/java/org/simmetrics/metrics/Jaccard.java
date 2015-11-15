@@ -74,7 +74,13 @@ public final class Jaccard<T> implements SetMetric<T>, SetDistance<T> {
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
-
+		
+		// Smaller set first for performance improvement. 
+		// See: note at Sets.intersection
+		if(a.size() > b.size()){
+			final Set<T> swap = a; a = b; b = swap;
+		}
+		
 		final int intersection = intersection(a, b).size();
 
 		// ∣a ∩ b∣ / ∣a ∪ b∣

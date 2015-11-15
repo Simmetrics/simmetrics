@@ -59,7 +59,13 @@ public final class EuclideanDistance<T> implements MultisetMetric<T>, MultisetDi
 	}
 
 	@Override
-	public float distance(final Multiset<T> a, final Multiset<T> b) {
+	public float distance(Multiset<T> a, Multiset<T> b) {
+		
+		// Lager set first for performance improvement. 
+		// See: MultisetUnionSize benchmark
+		if(a.size() < b.size()){
+			final Multiset<T> swap = a; a = b; b = swap;
+		}
 		
 		float distance = 0.0f;
 		

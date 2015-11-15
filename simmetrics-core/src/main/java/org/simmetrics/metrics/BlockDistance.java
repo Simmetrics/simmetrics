@@ -60,8 +60,14 @@ public final class BlockDistance<T> implements MultisetMetric<T>, MultisetDistan
 	}
 
 	@Override
-	public float distance(final Multiset<T> a, final Multiset<T> b) {
+	public float distance(Multiset<T> a, Multiset<T> b) {
 	
+		// Lager set first for performance improvement. 
+		// See: MultisetUnionSize benchmark
+		if(a.size() < b.size()){
+			final Multiset<T> swap = a; a = b; b = swap;
+		}
+		
 		float distance = 0;
 		
 		for (T token : union(a, b).elementSet()) {

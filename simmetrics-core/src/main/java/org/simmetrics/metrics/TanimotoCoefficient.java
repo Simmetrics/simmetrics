@@ -64,6 +64,12 @@ public final class TanimotoCoefficient<T> implements SetMetric<T> {
 			return 0.0f;
 		}
 		
+		// Smaller set first for performance improvement. 
+		// See: note at Sets.intersection
+		if(a.size() > b.size()){
+			final Set<T> swap = a; a = b; b = swap;
+		}
+		
 		// a·b / (||a|| * ||b||)
 		// Dot product of two binary vectors is the intersection of two sets
 		// Magnitude of a binary vectors is square root of its size.

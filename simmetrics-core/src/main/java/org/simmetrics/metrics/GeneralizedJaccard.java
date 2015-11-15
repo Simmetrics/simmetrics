@@ -67,7 +67,13 @@ public final class GeneralizedJaccard<T> implements MultisetMetric<T>,
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
-
+		
+		// Smaller set first for performance improvement. 
+		// See: MultisetIntersectionSize benchmark
+		if(a.size() > b.size()){
+			final Multiset<T> swap = a; a = b; b = swap;
+		}
+		
 		final int intersection = intersection(a, b).size();
 
 		// ∣a ∩ b∣ / ∣a ∪ b∣

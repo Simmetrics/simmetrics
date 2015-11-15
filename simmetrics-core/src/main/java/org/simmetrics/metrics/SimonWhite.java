@@ -83,7 +83,11 @@ public final class SimonWhite<T> implements MultisetMetric<T>, MultisetDistance<
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
-
+		// Smaller set first for performance improvement.
+		// See: MultisetIntersectionSize benchmark
+		if(a.size() > b.size()){
+			final Multiset<T> swap = a; a = b; b = swap;
+		}
 		// 2 * ∣a ∩ b∣ / (∣a∣ + ∣b∣)
 		return (2.0f * intersection(a, b).size()) / (a.size() + b.size());
 

@@ -25,9 +25,13 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.Multiset;
+
 /**
  * A tokenizer divides an input string into tokens. A tokenizer may not provide
- * {@code null} as a token.
+ * a collection containing null.
+ * <p>
+ * It is recommend that implementations extend {@link AbstractTokenizer}
+ * rather then implement this interface.
  */
 public interface Tokenizer {
 

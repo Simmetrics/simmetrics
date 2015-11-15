@@ -28,7 +28,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -227,8 +226,6 @@ public abstract class DistanceTest<K> {
 		}
 	}
 
-	@Test
-	@Ignore
 	public final void generateDistance() {
 		for (T<K> t : tests) {
 			System.out.println(format("new T<>(%1.4ff, \"%s\", \"%s\"),",

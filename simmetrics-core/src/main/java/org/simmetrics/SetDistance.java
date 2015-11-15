@@ -23,10 +23,9 @@ import java.util.Collections;
 import java.util.Set;
 
 /**
- * Measures the distance between two arbitrary sets containing elements of the
- * same type. The measurement results in a value between 0 and 1 inclusive. A
- * value of zero indicates that the sets are dissimilar, a value of 1 indicates
- * they are similar.
+ * Measures the unnormalized dissimilarity between two arbitrary sets containing
+ * elements of the same type. The measurement results in a non-negative value. A
+ * value of zero indicates that the objects are similar.
  * <p>
  * The elements in the sets have to implement {@link Object#hashCode()} and
  * {@link Object#equals(Object)}.

@@ -29,7 +29,6 @@ import org.simmetrics.Distance;
 import org.simmetrics.Metric;
 import org.simmetrics.MultisetDistanceTest;
 import org.simmetrics.MultisetMetricTest;
-import org.simmetrics.tokenizers.Tokenizer;
 
 import com.google.common.collect.Multiset;
 
@@ -37,7 +36,7 @@ import com.google.common.collect.Multiset;
 @RunWith(Enclosed.class)
 public final class BlockDistanceTest {
 
-	public final static class DistanceList extends MultisetDistanceTest {
+	public final static class DistanceTest extends MultisetDistanceTest {
 
 		@Override
 		protected Distance<Multiset<String>> getMetric() {
@@ -50,7 +49,7 @@ public final class BlockDistanceTest {
 		}
 
 		@Override
-		protected T[] getListTests() {
+		protected T[] getMultisetTests() {
 			return new T[] {
 					new T(0.0000f, "test string1", "test string1"),
 					new T(2.0000f, "test string1", "test string2"),
@@ -63,47 +62,53 @@ public final class BlockDistanceTest {
 					new T(1.0000f, "aaa", "aaa aaa"),
 					new T(2.0000f, "a b c d", "a b c e"),
 					new T(4.0000f, "a b c d", "a b e f"),
+					new T(3.0000f, "a b c", "a b c e f g"),
+					new T(5.0000f, "a b b c c", "a b c e f g"),
 			};
 		}
 	}
 
-	public final static class MetricList extends MultisetMetricTest {
-
-		@Override
-		protected boolean satisfiesSubadditivity() {
-			return false;
-		}
-
-		@Override
-		protected T[] getListTests() {
-			final Tokenizer q1 = qGram(1);
-			return new T[] { 
-					new T(0.5000f, asList("test", null), asList("test","string2")),
-					new T(1.0000f, "test string1", "test string1"),
-					new T(0.5000f, "test string1", "test string2"),
-					new T(0.6666f, "test", "test string2"),
-					new T(0.0000f, "", "test string2"),
-					new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
-					new T(0.5000f, "aaa bbb", "aaa aaa"),
-					new T(0.6666f, "aaa", "aaa aaa"),
-					new T(0.7500f, "a b c d", "a b c e"),
-					new T(0.5000f, "a b c d", "a b e f"),
-
-					new T(q1, 0.8333f, "Healed", "Sealed"),
-					new T(q1, 0.6153f, "Healed", "Healthy"),
-					new T(q1, 0.7272f, "Healed", "Heard"),
-					new T(q1, 0.6666f, "Healed", "Herded"),
-					new T(q1, 0.6000f, "Healed", "Help"),
-					new T(q1, 0.4000f, "Healed", "Sold"),
-					new T(q1, 0.6000f, "Healed", "Help")
-
-			};
-		}
+	public final static class MetricTest extends MultisetMetricTest {
 
 		@Override
 		protected Metric<Multiset<String>> getMetric() {
 			return new BlockDistance<>();
 		}
+		
+		@Override
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+		
+		@Override
+		protected T[] getMultisetTests() {
+			return new T[] { 
+					new T(1.0000f, "test string1", "test string1"),
+					new T(0.5000f, "test string1", "test string2"),
+					new T(0.6666f, "test", "test string2"),
+					new T(0.0000f, "", "test string2"),
+					new T(0.5000f, asList("test", null), asList("test","string2")),
+
+					new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+					new T(0.5000f, "aaa bbb", "aaa aaa"),
+					new T(0.6666f, "aaa", "aaa aaa"),
+					
+					new T(0.7500f, "a b c d", "a b c e"),
+					new T(0.5000f, "a b c d", "a b e f"),
+					new T(0.6666f, "a b c", "a b c e f g"),
+					new T(0.5454f, "a b b c c", "a b c e f g"),
+					
+					new T(qGram(1), 0.8333f, "Healed", "Sealed"),
+					new T(qGram(1), 0.6153f, "Healed", "Healthy"),
+					new T(qGram(1), 0.7272f, "Healed", "Heard"),
+					new T(qGram(1), 0.6666f, "Healed", "Herded"),
+					new T(qGram(1), 0.6000f, "Healed", "Help"),
+					new T(qGram(1), 0.4000f, "Healed", "Sold"),
+					new T(qGram(1), 0.6000f, "Healed", "Help")
+			};
+		}
+
+
 
 	}
 }

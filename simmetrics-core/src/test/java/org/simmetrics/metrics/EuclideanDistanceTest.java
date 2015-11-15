@@ -34,7 +34,8 @@ import com.google.common.collect.Multiset;
 @SuppressWarnings("javadoc")
 @RunWith(Enclosed.class)
 public final class EuclideanDistanceTest {
-	public final static class DistanceList extends MultisetDistanceTest {
+	
+	public final static class DistanceTest extends MultisetDistanceTest {
 
 		@Override
 		protected Distance<Multiset<String>> getMetric() {
@@ -42,29 +43,26 @@ public final class EuclideanDistanceTest {
 		}
 
 		@Override
-		protected T[] getListTests() {
+		protected T[] getMultisetTests() {
 			return new T[] {
 
-					new T(0.0000f, asList("test", "string1"), asList("test",
-							"string1")),
-					new T(1.4142f, asList("test", "string1"), asList("test",
-							"string2")),
-					new T(1.0000f, asList("test"), asList("test", "string2")),
+					new T(0.0000f, "test string1", "test string1"),
+					new T(1.4142f, "test string1", "test string2"),
+					new T(1.0000f, "test", "test string2"),
 					new T(1.4142f, getEmpty(), asList("test", "string2")),
-					new T(1.4142f, asList("test", null), asList("test",
-							"string2")),
-					new T(1.4142f, asList("aaa", "bbb", "ccc", "ddd"), asList(
-							"aaa", "bbb", "ccc", "eee")),
-					new T(1.4142f, asList("aaa", "bbb"), asList("aaa", "aaa")),
-					new T(1.0000f, asList("aaa"), asList("aaa", "aaa")),
-					new T(1.4142f, asList("a", "b", "c", "d"), asList("a", "b",
-							"c", "e")),
-					new T(2.0000f, asList("a", "b", "c", "d"), asList("a", "b",
-							"e", "f")) };
+					new T(1.4142f, asList("test", null), asList("test","string2")),
+					new T(1.4142f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+					new T(1.4142f, "aaa bbb", "aaa aaa"),
+					new T(1.0000f, "aaa", "aaa aaa"),
+					new T(1.4142f, "a b c d", "a b c e"),
+					new T(2.0000f, "a b c d", "a b e f"),
+					new T(1.7321f, "a b c", "a b c e f g"),
+					new T(2.2360f, "a b b c c", "a b c e f g"),
+			};
 		}
 	}
 
-	public static final class MetricListTest extends MultisetMetricTest {
+	public static final class MetricTest extends MultisetMetricTest {
 
 		@Override
 		protected boolean satisfiesSubadditivity() {
@@ -77,15 +75,20 @@ public final class EuclideanDistanceTest {
 		}
 
 		@Override
-		protected T[] getListTests() {
+		protected T[] getMultisetTests() {
 			return new T[] {
-					new T(0.5000f, asList("test", null), asList("test",
-							"string2")),
 					new T(0.5000f, "test string1", "test string2"),
 					new T(0.5527f, "test", "test string2"),
 					new T(0.2928f, "", "test string2"),
+					new T(0.5000f, asList("test", null), asList("test","string2")),
+
 					new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+					
 					new T(0.7500f, "a b c d", "a b c e"),
+					new T(0.6464f, "a b c d", "a b e f"),
+					new T(0.7418f, "a b c", "a b c e f g"),
+					new T(0.7137f, "a b b c c", "a b c e f g"),
+					
 					new T(0.0000f, "Healed", "Sealed"),
 					new T(0.0000f, "Healed", "Healthy"),
 					new T(0.0000f, "Healed", "Heard"),
@@ -93,12 +96,14 @@ public final class EuclideanDistanceTest {
 					new T(0.0000f, "Healed", "Help"),
 					new T(0.0000f, "Healed", "Sold"),
 					new T(0.0000f, "Healed", "Help"),
+					
 					new T(0.5286f, "Sam J Chapman", "Samuel John Chapman"),
 					new T(0.5000f, "Sam Chapman", "S Chapman"),
 					new T(0.5196f, "John Smith", "Samuel John Chapman"),
 					new T(0.2929f, "John Smith", "Sam Chapman"),
 					new T(0.3798f, "John Smith", "Sam J Chapman"),
 					new T(0.2929f, "John Smith", "S Chapman"),
+					
 					new T(0.7374f, "Web Database Applications",
 							"Web Database Applications with PHP & MySQL"),
 					new T(0.7383f, "Web Database Applications",

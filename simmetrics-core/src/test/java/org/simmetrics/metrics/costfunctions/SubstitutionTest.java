@@ -25,7 +25,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.simmetrics.metrics.functions.Substitution;
 
@@ -89,8 +88,6 @@ public abstract class SubstitutionTest {
 		}
 	}
 
-	@Test
-	@Ignore
 	public void generateTest() {
 		for (T t : getTests()) {
 			float actuall = cost.compare(t.string1, t.string1Index, t.string2,

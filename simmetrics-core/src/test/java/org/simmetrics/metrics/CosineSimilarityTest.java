@@ -36,7 +36,7 @@ public final class CosineSimilarityTest extends MultisetMetricTest {
 	}
 
 	@Override
-	protected T[] getListTests() {
+	protected T[] getMultisetTests() {
 		return new T[]{				
 				
 				new T(0.5000f, "test string1", "test string2"),
@@ -46,7 +46,12 @@ public final class CosineSimilarityTest extends MultisetMetricTest {
 				new T(0.5000f, asList("test", null), asList("test", "string2")),
 
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+				
 				new T(0.7500f, "a b c d", "a b c e"),
+				new T(0.5000f, "a b c d", "a b e f"),
+				new T(0.7071f, "a b c", "a b c e f g"),
+				new T(0.6804f, "a b b c c", "a b c e f g"),
+				
 				new T(0.0000f, "Healed", "Sealed"),
 				new T(0.0000f, "Healed", "Healthy"),
 				new T(0.0000f, "Healed", "Heard"),

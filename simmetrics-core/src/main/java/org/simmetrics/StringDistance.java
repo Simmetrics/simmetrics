@@ -20,7 +20,7 @@
 package org.simmetrics;
 
 /**
- * Measures the unnormalized similarity (distance) between two Strings. The
+ * Measures the unnormalized dissimilarity between two Strings. The
  * measurement results in a non-negative value. A value of zero indicates that
  * the objects are similar.
  * <p>

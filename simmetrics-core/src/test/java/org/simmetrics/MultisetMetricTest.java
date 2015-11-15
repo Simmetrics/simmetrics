@@ -110,7 +110,7 @@ public abstract class MultisetMetricTest extends MetricTest<Multiset<String>> {
 		return HashMultiset.create();
 	}
 
-	protected abstract T[] getListTests();
+	protected abstract T[] getMultisetTests();
 
 	public Multiset<String> getNullList() {
 		HashMultiset<String> create = HashMultiset.create();
@@ -120,7 +120,7 @@ public abstract class MultisetMetricTest extends MetricTest<Multiset<String>> {
 
 	@Override
 	protected final MetricTest.T<Multiset<String>>[] getTests() {
-		listTests = getListTests();
+		listTests = getMultisetTests();
 		return transformTest(listTests);
 	}
 

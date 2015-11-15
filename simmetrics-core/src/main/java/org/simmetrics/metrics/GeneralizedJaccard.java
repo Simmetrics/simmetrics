@@ -39,11 +39,13 @@ import com.google.common.collect.Multiset;
  * distance(a,b) = 1 - similarity(a,b)
  * </code>
  * <p>
+ * When <code>∣a ∪ b∣</code> is empty the multisets have no elements in common.
+ * In this case the similarity is 0 by definition.
+ * <p>
  * Unlike the Jaccard index the occurrence (cardinality) of an entry is taken
  * into account. E.g. {@code [hello, world]} and
  * {@code [hello, world, hello, world]} would be identical when compared with
  * the Jaccard index but are dissimilar when the generalized version is used.
- * 
  * <p>
  * This class is immutable and thread-safe.
  * 

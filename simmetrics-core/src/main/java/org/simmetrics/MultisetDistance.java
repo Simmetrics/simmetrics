@@ -23,10 +23,10 @@ import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
 
 /**
- * Measures the distance between two arbitrary multisets containing elements of
- * the same type. The measurement results in a value between 0 and 1 inclusive.
- * A value of zero indicates that the lists are dissimilar, a value of 1
- * indicates they are similar.
+ * Measures the unnormalized dissimilarity between two arbitrary multisets
+ * containing elements of the same type. The measurement results in a value
+ * between 0 and 1 inclusive. A value of zero indicates that the lists are
+ * dissimilar, a value of 1 indicates they are similar.
  * <p>
  * The elements in the multisets have to implement {@link Object#hashCode()} and
  * {@link Object#equals(Object)}.
@@ -43,8 +43,9 @@ import com.google.common.collect.Multisets;
  * The distance measure should be symmetric such that
  * {@code distance(a,b) == distance(b,a)}.
  * <p>
- * Implementations may not modify the contents of the multisets. Multisets should be
- * treated as if wrapped by {@link Multisets#unmodifiableMultiset(Multiset)}.
+ * Implementations may not modify the contents of the multisets. Multisets
+ * should be treated as if wrapped by
+ * {@link Multisets#unmodifiableMultiset(Multiset)}.
  * 
  * @see <a href="https://en.wikipedia.org/wiki/Metric_(mathematics)">Wikipedia -
  *      Metric</a>

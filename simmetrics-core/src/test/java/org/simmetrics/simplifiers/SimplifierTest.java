@@ -26,7 +26,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 @SuppressWarnings("javadoc")
@@ -99,8 +98,6 @@ public abstract class SimplifierTest {
 		simplifier.simplify(null);
 	}
 
-	@Test
-	@Ignore
 	public final void generateSimplified() {
 		System.out.println(simplifier);
 		for (T t : tests) {

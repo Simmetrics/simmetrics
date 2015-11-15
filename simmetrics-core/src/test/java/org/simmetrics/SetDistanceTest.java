@@ -19,74 +19,76 @@
  */
 package org.simmetrics;
 
+import static java.util.Collections.unmodifiableSet;
 import static org.junit.Assert.fail;
 import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 import org.simmetrics.tokenizers.Tokenizer;
 
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Multiset;
-
 @SuppressWarnings("javadoc")
-public abstract class MultisetDistanceTest extends DistanceTest<Multiset<String>> {
+public abstract class SetDistanceTest extends DistanceTest<Set<String>> {
 
 	protected static final class T {
-		protected final Multiset<String> a;
-		protected final Multiset<String> b;
+		protected final Set<String> a;
+		protected final Set<String> b;
 		protected final float similarity;
 
-		public T(float similarity, List<String> a, List<String> b) {
-			this(similarity, HashMultiset.create(a), b);
-		}
-		public T(float similarity, Multiset<String> a, List<String> b) {
+		public T(float similarity, Set<String> a, Set<String> b) {
 			this.a = a;
-			this.b = HashMultiset.create(b);
+			this.b = b;
 			this.similarity = similarity;
 		}
+
 		public T(float similarity, String a, String b) {
 			this(whitespace(), similarity, a, b);
 		}
-
+		public T(float similarity, List<String> a, List<String> b) {
+			this(similarity, new HashSet<>(a), new HashSet<>(b));
+		}
 		public T(Tokenizer t, float similarity, String a, String b) {
-			this(similarity, t.tokenizeToList(a), t.tokenizeToList(b));
+			this(similarity, t.tokenizeToSet(a), t.tokenizeToSet(b));
 		}
 
 	}
 
-	private static DistanceTest.T<Multiset<String>>[] transformTest(T... tests) {
+	private static DistanceTest.T<Set<String>>[] transformTest(T... tests) {
 		@SuppressWarnings("unchecked")
-		DistanceTest.T<Multiset<String>>[] transformed = new DistanceTest.T[tests.length];
+		DistanceTest.T<Set<String>>[] transformed = new DistanceTest.T[tests.length];
 		for (int i = 0; i < tests.length; i++) {
 			T t = tests[i];
-			transformed[i] = new DistanceTest.T<>(t.similarity,t.a, t.b);
+			transformed[i] = new DistanceTest.T<>(t.similarity,
+					unmodifiableSet(t.a), unmodifiableSet(t.b));
 		}
 		return transformed;
 	}
 
 	@Test
-	public final void containsListWithNullVsListWithouthNullTest() {
-		for (T t : getMultisetTests()) {
+	public final void containsSetWithNullVsSetWithouthNullTest() {
+		for (T t : getSetTests()) {
 			if (t.a.contains(null) ^ t.b.contains(null)) {
 				return;
 			}
 		}
 
-		fail("tests did not contain list with null vs list without null test");
+		fail("tests did not contain set with null vs set without null test");
 	}
 
 	@Override
-	protected final Multiset<String> getEmpty() {
-		return HashMultiset.create();
+	protected final Set<String> getEmpty() {
+		return Collections.emptySet();
 	}
 
-	protected abstract T[] getMultisetTests();
+	protected abstract T[] getSetTests();
 
 	@Override
-	protected final org.simmetrics.DistanceTest.T<Multiset<String>>[] getTests() {
-		return transformTest(getMultisetTests());
+	protected final org.simmetrics.DistanceTest.T<Set<String>>[] getTests() {
+		return transformTest(getSetTests());
 	}
 
 }

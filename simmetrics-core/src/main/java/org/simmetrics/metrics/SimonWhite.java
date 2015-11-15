@@ -21,8 +21,10 @@
 package org.simmetrics.metrics;
 
 import static com.google.common.collect.Multisets.intersection;
+
 import org.simmetrics.MultisetDistance;
 import org.simmetrics.MultisetMetric;
+
 import com.google.common.collect.Multiset;
 
 /**
@@ -48,7 +50,7 @@ import com.google.common.collect.Multiset;
  *  ...
  *  
  * with(new SimonWhite<String>())
- *   .tokenize(Tokenizers.qGram(3))
+ *   .tokenize(Tokenizers.qGram(2))
  *   .build();
  * }
  * </pre>
@@ -83,24 +85,27 @@ public final class SimonWhite<T> implements MultisetMetric<T>, MultisetDistance<
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
+
 		// Smaller set first for performance improvement.
 		// See: MultisetIntersectionSize benchmark
 		if(a.size() > b.size()){
 			final Multiset<T> swap = a; a = b; b = swap;
 		}
+
 		// 2 * ∣a ∩ b∣ / (∣a∣ + ∣b∣)
 		return (2.0f * intersection(a, b).size()) / (a.size() + b.size());
 
 	}
-
+	
 	@Override
 	public float distance(Multiset<T> a, Multiset<T> b) {
 		return 1.0f - compare(a, b);
 	}
-
 	@Override
 	public String toString() {
 		return "SimonWhite";
 	}
+
+	
 
 }

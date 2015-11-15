@@ -21,10 +21,10 @@ package org.simmetrics.simplifiers;
 
 import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-
+import static org.simmetrics.matchers.ImplementsToString.implementsToString;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -76,14 +76,8 @@ public abstract class SimplifierTest {
 	}
 
 	@Test
-	public final void implementsToString() {
-
-		String simplifierToString = simplifier.toString();
-		String defaultToString = simplifier.getClass().getName() + "@"
-				+ Integer.toHexString(simplifier.hashCode());
-
-		assertFalse("toString() was not implemented " + simplifier.toString(),
-				defaultToString.equals(simplifierToString));
+	public final void shouldImplementToString() {
+		assertThat(simplifier, implementsToString());
 	}
 
 	@Test

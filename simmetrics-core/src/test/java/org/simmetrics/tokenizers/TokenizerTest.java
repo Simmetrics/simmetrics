@@ -23,8 +23,9 @@ package org.simmetrics.tokenizers;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-
+import static org.simmetrics.matchers.ImplementsToString.implementsToString;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -115,14 +116,8 @@ public abstract class TokenizerTest {
 	}
 
 	@Test
-	public final void implementsToString() {
-
-		String metricToString = tokenizer.toString();
-		String defaultToString = tokenizer.getClass().getName() + "@"
-				+ Integer.toHexString(tokenizer.hashCode());
-
-		assertFalse("toString() was not implemented " + tokenizer.toString(),
-				defaultToString.equals(metricToString));
+	public final void shouldImplementToString() {
+		assertThat(tokenizer, implementsToString());
 	}
 
 	@Test

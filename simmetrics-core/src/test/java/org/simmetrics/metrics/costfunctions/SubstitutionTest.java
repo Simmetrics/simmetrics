@@ -21,8 +21,10 @@
 package org.simmetrics.metrics.costfunctions;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.simmetrics.matchers.ImplementsToString.implementsToString;
+import static org.simmetrics.matchers.ToStringContainsSimpleClassName.toStringContainsSimpleClassName;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -100,12 +102,9 @@ public abstract class SubstitutionTest {
 	}
 
 	@Test
-	public void testToString() {
-		assertFalse(
-				"@ indicates toString() was not implemented " + cost.toString(),
-				cost.toString().contains("@"));
-
-		assertToStringContains(cost, cost.getClass().getSimpleName());
+	public final void shouldImplementToString() {
+		assertThat(cost, implementsToString());
+		assertThat(cost, toStringContainsSimpleClassName());
 	}
 
 	protected static void assertToStringContains(Substitution metric,

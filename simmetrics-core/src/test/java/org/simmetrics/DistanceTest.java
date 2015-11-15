@@ -23,9 +23,11 @@ package org.simmetrics;
 import static com.google.common.primitives.Floats.max;
 import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.simmetrics.matchers.ImplementsToString.implementsToString;
+import static org.simmetrics.matchers.ToStringContainsSimpleClassName.toStringContainsSimpleClassName;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -241,19 +243,9 @@ public abstract class DistanceTest<K> {
 	}
 
 	@Test
-	public final void implementsToString() {
-
-		String metricToString = metric.toString();
-		String defaultToString = metric.getClass().getName() + "@"
-				+ Integer.toHexString(metric.hashCode());
-
-		assertFalse("toString() was not implemented " + metric.toString(),
-				defaultToString.equals(metricToString));
-
-		String metricName = metric.getClass().getSimpleName();
-
-		assertTrue(format("%s must contain %s ", metricToString, metricName),
-				metricToString.contains(metricName));
+	public final void shouldImplementToString() {
+		assertThat(metric, implementsToString());
+		assertThat(metric, toStringContainsSimpleClassName());
 	}
 
 }

@@ -14,13 +14,10 @@
  */
 package org.simmetrics;
 
-import static org.junit.Assert.fail;
 import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
 import java.util.List;
 
-import org.junit.Test;
-import org.simmetrics.CollectionMetricTest.C;
 import org.simmetrics.tokenizers.Tokenizer;
 
 import com.google.common.collect.HashMultiset;

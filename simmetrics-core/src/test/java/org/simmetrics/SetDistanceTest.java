@@ -19,7 +19,6 @@
  */
 package org.simmetrics;
 
-import static org.junit.Assert.fail;
 import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
 import java.util.Collections;
@@ -27,8 +26,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Test;
-import org.simmetrics.CollectionMetricTest.C;
 import org.simmetrics.tokenizers.Tokenizer;
 
 import com.google.monitoring.runtime.instrumentation.common.com.google.common.collect.Sets;

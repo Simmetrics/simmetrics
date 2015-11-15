@@ -28,7 +28,7 @@ import org.simmetrics.StringDistance;
 import org.simmetrics.StringMetric;
 
 /**
- * Levenshtein algorithm providing a similarity measure between two strings.
+ * Calculates the Levenshtein distance and similarity over two strings.
  * <p>
  * Insert/delete and substitute operations can be weighted. When the cost for
  * substitution is zero Levenshtein does not satisfy the coincidence property.
@@ -40,7 +40,7 @@ import org.simmetrics.StringMetric;
  * @see DamerauLevenshtein
  * 
  */
-public class Levenshtein implements StringMetric, StringDistance {
+public final class Levenshtein implements StringMetric, StringDistance {
 
 	private final float maxCost;
 	private final float insertDelete;

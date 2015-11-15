@@ -1,8 +1,24 @@
 Change Log
 ==========
 
+## Since 4.0.0 ##
+ - Removed deprecated methods and classes
+ - Multiset features
+    - Added MultisetMetric and MultisetDistance
+	- Added Tokenizers.tokenizerToMultiset
+	- Added StringMetricBuilder.with(MultisetMetric)
+	- BlockDistance, EuclideanDistance, MatchingCoefficient and SimonWhite implement MultisetMetric and MultisetDistance rather then the list based equivalents
+ - Implementation of CosineSimilarity for sets is better described as the Tanimoto coefficient. CosineSimilarity has been changed from SetMetric to MultisetMetric. It will now take token occurrence into account. Added TanimotoCoefficient which calculates the cosine similarity for sets.
+ - Renamed MatchingCoefficient to GeneralizedJaccard. Implementation of matching coefficient for lists is more accurately described as generalized version of Jaccard. 
+ - Added LongestCommonSubstring metric.
+ - Made all metrics and simplifiers final.
+ - Renamed JaccardSimilarity to Jaccard. 
+ - Renamed DiceSmilarity to Dice
+ - Moved StringMetrics to metrics package.
+ - Moved StringMetricBuilder to builders package.
+
 ## Since 3.2.3 ##
- - Changed licence to Apache License Version 2.0
+ - Changed license to Apache License Version 2.0
  - Added the Identity metric
  - Added cacheTokens(Cache) and cacheStrings(Cache) methods to the StringMetricBuilder
  - Deprecated TokenizingTokenizer and SimplifyingSimplifier utilities in favor of cacheTokens(Cache) and cacheStrings(Cache)
@@ -21,8 +37,6 @@ Change Log
  - QGram, QGramExtended and WhiteSpace have been deprecated due to having ambiguous names and to avoid leaking implementation details. 
  - Added Tokenizers.pattern to create a tokenizer that splits a string based on a regex.
  - StringMetrics.compare and StringMetrics.compareArrays have been depreciated for a lack of a clear use case.
-
-
 
 ## Since 3.2.0 ##
 

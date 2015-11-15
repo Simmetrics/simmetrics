@@ -23,7 +23,6 @@ package org.simmetrics.metrics;
 import org.simmetrics.ListMetric;
 import org.simmetrics.ListMetricTest;
 import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.MongeElkan;
 
 @SuppressWarnings("javadoc")
 public final class MongeElkanTest extends ListMetricTest {
@@ -50,7 +49,7 @@ public final class MongeElkanTest extends ListMetricTest {
 	}
 
 	@Override
-	protected T[] getListTests() {
+	protected T[] getTests() {
 		return new T[] {
 				new T(0.5000f, "test string1", "test string2"),
 				new T(0.7071f, "test", "test string2"),

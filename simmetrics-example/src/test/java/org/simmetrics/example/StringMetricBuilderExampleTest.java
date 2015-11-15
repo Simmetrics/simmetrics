@@ -56,16 +56,16 @@ public class StringMetricBuilderExampleTest {
 	
 	@Test
 	public void example05(){
-		assertEquals(0.6908f, StringMetricBuilderExample.example05(), DELTA);
+		assertEquals(0.6902f, StringMetricBuilderExample.example05(), DELTA);
 	}
 	
 	@Test
 	public void example06(){
-		assertEquals(0.6908f, StringMetricBuilderExample.example06(), DELTA);
+		assertEquals(0.6902f, StringMetricBuilderExample.example06(), DELTA);
 	}
 	
 	@Test
 	public void example07(){
-		assertEquals(0.6908f, StringMetricBuilderExample.example07(), DELTA);
+		assertEquals(0.6902f, StringMetricBuilderExample.example07(), DELTA);
 	}
 }

@@ -27,7 +27,7 @@ import static java.lang.Math.min;
 import org.simmetrics.StringMetric;
 
 /**
- * Jaro-Winkler algorithm providing a similarity measure between two strings.
+ * Calculates the Jaro-Winkler distance (similarity) over two strings.
  * <p>
  * Can be configured with a prefix adjustment scale, max prefix length and boost
  * threshold.
@@ -42,7 +42,7 @@ import org.simmetrics.StringMetric;
  * 
  * 
  */
-public class JaroWinkler implements StringMetric {
+public final class JaroWinkler implements StringMetric {
 
 	private final Jaro jaro = new Jaro();
 

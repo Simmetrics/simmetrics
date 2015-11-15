@@ -22,26 +22,26 @@ package org.simmetrics;
 
 import static com.google.common.primitives.Floats.max;
 import static java.lang.String.format;
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.simmetrics.matchers.ImplementsToString.implementsToString;
+import static org.simmetrics.matchers.ToStringContainsSimpleClassName.toStringContainsSimpleClassName;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.simmetrics.Distance;
 
 
 @SuppressWarnings("javadoc")
 public abstract class DistanceTest<K> {
 
-	protected static final class T<K> {
+	protected static class TestCase<K> {
 		protected final K a;
 		protected final K b;
 		protected final float distance;
 
-		public T(float distance, K a, K b) {
+		public TestCase(float distance, K a, K b) {
 			this.a = a;
 			this.b = b;
 			this.distance = distance;
@@ -121,7 +121,7 @@ public abstract class DistanceTest<K> {
 
 	protected Distance<K> metric;
 
-	protected T<K>[] tests;
+	protected TestCase<K>[] tests;
 
 	protected float getDelta() {
 		return DEFAULT_DELTA;
@@ -131,7 +131,7 @@ public abstract class DistanceTest<K> {
 
 	protected abstract Distance<K> getMetric();
 
-	protected abstract T<K>[] getTests();
+	protected abstract TestCase<K>[] getTests();
 
 	protected boolean satisfiesCoincidence() {
 		return true;
@@ -155,7 +155,7 @@ public abstract class DistanceTest<K> {
 
 	@Test
 	public final void nullPointerException() {
-		for (T<K> t : tests) {
+		for (TestCase<K> t : tests) {
 			testNullPointerException(metric, t.a, t.b);
 		}
 	}
@@ -163,13 +163,13 @@ public abstract class DistanceTest<K> {
 	@Test
 	public final void coincidence() {
 		if (satisfiesCoincidence()) {
-			for (T<K> t : tests) {
+			for (TestCase<K> t : tests) {
 				assertTrue(
 						format("coincidence did not hold for %s and %s", t.a,
 								t.b), testCoincidence(metric, t.a, t.b));
 			}
 		} else {
-			for (T<K> t : tests) {
+			for (TestCase<K> t : tests) {
 				if (!testCoincidence(metric, t.a, t.b)) {
 					return;
 				}
@@ -181,8 +181,8 @@ public abstract class DistanceTest<K> {
 	@Test
 	public final void subadditivity() {
 		if (satisfiesSubadditivity()) {
-			for (T<K> n : tests) {
-				for (T<K> m : tests) {
+			for (TestCase<K> n : tests) {
+				for (TestCase<K> m : tests) {
 					assertTrue(
 							format("triangle ineqaulity must hold for %s, %s, %s",
 									n.a, n.b, m.a),
@@ -194,8 +194,8 @@ public abstract class DistanceTest<K> {
 				}
 			}
 		} else {
-			for (T<K> n : tests) {
-				for (T<K> m : tests) {
+			for (TestCase<K> n : tests) {
+				for (TestCase<K> m : tests) {
 					if (!testSubadditivity(metric, n.a, n.b, m.a)
 							|| !testSubadditivity(metric, n.a, n.b, m.b)) {
 						return;
@@ -208,14 +208,14 @@ public abstract class DistanceTest<K> {
 
 	@Test
 	public final void range() {
-		for (T<K> t : tests) {
+		for (TestCase<K> t : tests) {
 			testRange(metric, t.a, t.b);
 		}
 	}
 
 	@Test
 	public final void reflexive() {
-		for (T<K> t : tests) {
+		for (TestCase<K> t : tests) {
 			testReflexive(metric, t.a, delta);
 			testReflexive(metric, t.b, delta);
 		}
@@ -223,15 +223,13 @@ public abstract class DistanceTest<K> {
 
 	@Test
 	public final void distance() {
-		for (T<K> t : tests) {
+		for (TestCase<K> t : tests) {
 			testDistance(metric, t.a, t.b, t.distance, delta);
 		}
 	}
 
-	@Test
-	@Ignore
 	public final void generateDistance() {
-		for (T<K> t : tests) {
+		for (TestCase<K> t : tests) {
 			System.out.println(format("new T<>(%1.4ff, \"%s\", \"%s\"),",
 					metric.distance(t.a, t.b), t.a, t.b));
 		}
@@ -239,25 +237,15 @@ public abstract class DistanceTest<K> {
 
 	@Test
 	public final void symmetric() {
-		for (T<K> t : tests) {
+		for (TestCase<K> t : tests) {
 			testSymmetric(metric, t.a, t.b, delta);
 		}
 	}
 
 	@Test
-	public final void implementsToString() {
-
-		String metricToString = metric.toString();
-		String defaultToString = metric.getClass().getName() + "@"
-				+ Integer.toHexString(metric.hashCode());
-
-		assertFalse("toString() was not implemented " + metric.toString(),
-				defaultToString.equals(metricToString));
-
-		String metricName = metric.getClass().getSimpleName();
-
-		assertTrue(format("%s must contain %s ", metricToString, metricName),
-				metricToString.contains(metricName));
+	public final void shouldImplementToString() {
+		assertThat(metric, implementsToString());
+		assertThat(metric, toStringContainsSimpleClassName());
 	}
 
 }

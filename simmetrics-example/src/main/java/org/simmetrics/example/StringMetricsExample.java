@@ -20,12 +20,12 @@
 
 package org.simmetrics.example;
 
-import static org.simmetrics.StringMetricBuilder.with;
+import static org.simmetrics.builders.StringMetricBuilder.with;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.StringMetricBuilder;
-import org.simmetrics.StringMetrics;
+import org.simmetrics.builders.StringMetricBuilder;
 import org.simmetrics.metrics.CosineSimilarity;
+import org.simmetrics.metrics.StringMetrics;
 import org.simmetrics.tokenizers.Tokenizers;
 
 /**
@@ -45,7 +45,7 @@ public final class StringMetricsExample {
 
 		StringMetric metric = StringMetrics.jaro();
 
-		return metric.compare(str1, str2); // 0.7341
+		return metric.compare(str1, str2); // 0.7383
 	}
 
 	/**
@@ -78,7 +78,7 @@ public final class StringMetricsExample {
 				.tokenize(Tokenizers.qGram(3))
 				.build();
 
-		return metric.compare(str1, str2); // 0.7777
+		return metric.compare(str1, str2); // 0.7473
 	}
 
 }

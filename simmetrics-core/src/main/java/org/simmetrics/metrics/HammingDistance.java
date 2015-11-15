@@ -33,10 +33,12 @@ import org.simmetrics.StringDistance;
 import com.google.common.base.Objects;
 
 /**
- * Hamming Distance algorithm to calculate distance between lists and strings.
- *
+ * Calculates the Hamming distance distance between lists and strings.
  * <p>
  * This class is immutable and thread-safe.
+ * 
+ * @see <a href="https://en.wikipedia.org/wiki/Hamming_distance">Wikipedia -
+ *      Hamming distance</a>
  * 
  */
 public final class HammingDistance {

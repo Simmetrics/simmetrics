@@ -21,23 +21,21 @@
 
 package org.simmetrics.metrics;
 
-import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.functions.MatchMismatch;
-import org.simmetrics.metrics.functions.Substitution;
-
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static org.simmetrics.metrics.Math.max;
 
+import org.simmetrics.StringMetric;
+import org.simmetrics.metrics.functions.MatchMismatch;
+import org.simmetrics.metrics.functions.Substitution;
+
 /**
- * Smith-Waterman algorithm providing a similarity measure between two strings.
- * <p>
- * Implementation uses optimizations described in Osamu Gotoh (1982).
- * "An improved algorithm for matching biological sequences". Journal of
- * molecular biology 162: 705". This implementation uses constant space and
- * quadratic time.
+ * Applies the Smith-Waterman algorithm to calculate the similarity between two
+ * strings. This implementation uses optimizations described in Osamu Gotoh
+ * (1982). "An improved algorithm for matching biological sequences". Journal of
+ * molecular biology 162: 705" and uses constant space and quadratic time.
  * 
  * <p>
  * This class is immutable and thread-safe if its substitution functions are.
@@ -49,7 +47,7 @@ import static org.simmetrics.metrics.Math.max;
  *      - Smith-Waterman algorithm</a>
  *
  */
-public class SmithWatermanGotoh implements StringMetric {
+public final class SmithWatermanGotoh implements StringMetric {
 
 	private static final Substitution MATCH_1_MISMATCH_MINUS_2 = new MatchMismatch(
 			1.0f, -2.0f);

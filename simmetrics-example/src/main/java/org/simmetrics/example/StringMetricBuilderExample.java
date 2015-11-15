@@ -21,14 +21,14 @@
 package org.simmetrics.example;
 
 import static com.google.common.base.Predicates.in;
-import static org.simmetrics.StringMetricBuilder.with;
+import static org.simmetrics.builders.StringMetricBuilder.with;
 
 import java.util.Set;
 
 import org.simmetrics.ListMetric;
 import org.simmetrics.SetMetric;
 import org.simmetrics.StringMetric;
-import org.simmetrics.StringMetricBuilder;
+import org.simmetrics.builders.StringMetricBuilder;
 import org.simmetrics.metrics.CosineSimilarity;
 import org.simmetrics.metrics.Levenshtein;
 import org.simmetrics.simplifiers.Simplifier;
@@ -41,6 +41,7 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.google.common.collect.Multiset;
 import com.google.common.collect.Sets;
 
 /**
@@ -179,7 +180,7 @@ public final class StringMetricBuilderExample {
 				.tokenize(Tokenizers.qGram(3))
 				.build();
 
-		return metric.compare(a, b); // 0.8131
+		return metric.compare(a, b); // 0.8292
 	}
 
 	/**
@@ -204,9 +205,10 @@ public final class StringMetricBuilderExample {
 				.tokenize(Tokenizers.whitespace())
 				.filter(Predicates.not(in(commonWords)))
 				.filter(Predicates.not(in(otherCommonWords)))
-				.tokenize(Tokenizers.qGram(3)).build();
+				.tokenize(Tokenizers.qGram(3))
+				.build();
 
-		return metric.compare(a, b); // 0.68061393
+		return metric.compare(a, b); // 0.6902
 	}
 
 	/**
@@ -240,7 +242,7 @@ public final class StringMetricBuilderExample {
 				.tokenize(Tokenizers.qGram(3))
 				.build();
 
-		return metric.compare(a, b); // 0.68061393
+		return metric.compare(a, b); // 0.6902
 	}
 
 	/**
@@ -254,13 +256,13 @@ public final class StringMetricBuilderExample {
 		String a = "A quirky thing it is. This is a sentence.";
 		String b = "This sentence is similar; a quirky thing it is.";
 
-		Cache<String,String> stringCache = CacheBuilder
-				.newBuilder()
+		Cache<String,String> stringCache = 
+				CacheBuilder.newBuilder()
 				.maximumSize(2)
 				.build();
 		
-		Cache<String,Set<String>> tokenCache = CacheBuilder
-				.newBuilder()
+		Cache<String,Multiset<String>> tokenCache = 
+				CacheBuilder.newBuilder()
 				.maximumSize(2)
 				.build();	
 		
@@ -273,7 +275,7 @@ public final class StringMetricBuilderExample {
 				.cacheTokens(tokenCache)
 				.build();
 
-		return metric.compare(a, b); // 0.8131
+		return metric.compare(a, b); // 0.6902
 	}
 
 }

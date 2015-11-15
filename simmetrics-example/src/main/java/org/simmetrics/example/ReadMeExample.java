@@ -19,13 +19,13 @@
  */
 package org.simmetrics.example;
 
-import static org.simmetrics.StringMetricBuilder.with;
+import static org.simmetrics.builders.StringMetricBuilder.with;
 
 import java.util.Locale;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.StringMetrics;
 import org.simmetrics.metrics.CosineSimilarity;
+import org.simmetrics.metrics.StringMetrics;
 import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.tokenizers.Tokenizers;
 
@@ -41,7 +41,7 @@ public final class ReadMeExample {
 		
 		StringMetric metric = StringMetrics.cosineSimilarity();
 		
-		float result = metric.compare(str1, str2); //0.4472
+		float result = metric.compare(str1, str2); //0.4767
 		
 		return result;
 	}
@@ -58,7 +58,7 @@ public final class ReadMeExample {
 				.tokenize(Tokenizers.whitespace())
 				.build();
 
-		float result = metric.compare(str1, str2); //0.5590
+		float result = metric.compare(str1, str2); //0.5720
 		
 		return result;
 	}

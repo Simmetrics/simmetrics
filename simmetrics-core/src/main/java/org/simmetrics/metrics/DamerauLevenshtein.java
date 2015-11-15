@@ -29,8 +29,8 @@ import org.simmetrics.StringDistance;
 import org.simmetrics.StringMetric;
 
 /**
- * Damerau-Levenshtein algorithm providing a similarity measure between two
- * strings.
+ * Calculates the Damerau-Levenshtein similarity and distance measure between
+ * two strings.
  * <p>
  * Insert/delete, substitute and transpose operations can be weighted. When the
  * cost for substitution and/or transposition are zero Damerau-Levenshtein does
@@ -44,7 +44,7 @@ import org.simmetrics.StringMetric;
  * @see Levenshtein
  * 
  */
-public class DamerauLevenshtein implements StringMetric, StringDistance {
+public final class DamerauLevenshtein implements StringMetric, StringDistance {
 
 	private final float maxCost;
 	private final float insertDelete;

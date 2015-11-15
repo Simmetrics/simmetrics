@@ -20,35 +20,38 @@
 
 package org.simmetrics.metrics;
 
-import static org.simmetrics.tokenizers.Tokenizers.whitespace;
+import static java.util.Arrays.asList;
 
-import org.simmetrics.SetMetric;
-import org.simmetrics.SetMetricTest;
-import org.simmetrics.tokenizers.Tokenizer;
+import org.simmetrics.Metric;
+import org.simmetrics.MultisetMetricTest;
+
+import com.google.common.collect.Multiset;
 
 @SuppressWarnings("javadoc")
-public final class CosineSimilarityTest extends SetMetricTest {
+public final class CosineSimilarityTest extends MultisetMetricTest {
 
 	@Override
-	protected SetMetric<String> getMetric() {
+	protected Metric<Multiset<String>> getMetric() {
 		return new CosineSimilarity<>();
 	}
-	@Override
-	protected Tokenizer getTokenizer() {
-		return whitespace();
-	}
 
 	@Override
-	protected T[] getSetTests() {
+	protected T[] getTests() {
 		return new T[]{				
 				
 				new T(0.5000f, "test string1", "test string2"),
 				new T(0.5000f, "test string1", "test string2"),
 				new T(0.7071f, "test", "test string2"),
 				new T(0.0000f, "", "test string2"),
-				
+				new T(0.5000f, asList("test", null), asList("test", "string2")),
+
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+				
 				new T(0.7500f, "a b c d", "a b c e"),
+				new T(0.5000f, "a b c d", "a b e f"),
+				new T(0.7071f, "a b c", "a b c e f g"),
+				new T(0.6804f, "a b b c c", "a b c e f g"),
+				
 				new T(0.0000f, "Healed", "Sealed"),
 				new T(0.0000f, "Healed", "Healthy"),
 				new T(0.0000f, "Healed", "Heard"),
@@ -72,8 +75,7 @@ public final class CosineSimilarityTest extends SetMetricTest {
 						"Building Web Database Applications with Visual Studio 6"),
 				new T(0.2582f, "Web Database Applications",
 						"Web Application Development With PHP"),
-				new T(
-						0.5000f,
+				new T(0.5962f,
 						"Web Database Applications",
 						"WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
 				new T(0.0000f, "Web Database Applications",
@@ -90,8 +92,7 @@ public final class CosineSimilarityTest extends SetMetricTest {
 						"Building Web Database Applications with Visual Studio 6"),
 				new T(0.3162f, "Web Aplications",
 						"Web Application Development With PHP"),
-				new T(
-						0.2041f,
+				new T(0.3651f,
 						"Web Aplications",
 						"WebRAD: Building Database Applications on the Web with Visual FoxPro and Web Connection"),
 				new T(0.0000f, "Web Aplications",

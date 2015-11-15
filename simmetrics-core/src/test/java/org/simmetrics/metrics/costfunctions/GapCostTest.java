@@ -20,10 +20,13 @@
 
 package org.simmetrics.metrics.costfunctions;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.simmetrics.matchers.ImplementsToString.implementsToString;
+import static org.simmetrics.matchers.ToStringContainsSimpleClassName.toStringContainsSimpleClassName;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.simmetrics.metrics.functions.Gap;
 
@@ -82,9 +85,6 @@ public abstract class GapCostTest {
 		}
 	}
 
-	
-	@Test
-	@Ignore
 	public void generateTest() {
 		for (T t : getTests()) {
 			float actuall = cost.value(t.index1, t.index2);
@@ -96,12 +96,9 @@ public abstract class GapCostTest {
 	}
 
 	@Test
-	public void implementsToString() {
-		assertFalse(
-				"@ indicates toString() was not implemented " + cost.toString(),
-				cost.toString().contains("@"));
-
-		assertToStringContains(cost, cost.getClass().getSimpleName());
+	public final void shouldImplementToString() {
+		assertThat(cost, implementsToString());
+		assertThat(cost, toStringContainsSimpleClassName());
 	}
 
 	protected static void assertToStringContains(Gap metric,

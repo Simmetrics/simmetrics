@@ -25,7 +25,6 @@ import org.junit.runner.RunWith;
 import org.simmetrics.Metric;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricTest;
-import org.simmetrics.metrics.Jaro;
 
 @SuppressWarnings("javadoc")
 @RunWith(Enclosed.class)
@@ -39,8 +38,10 @@ public final class JaroTest {
 		}
 
 		@Override
-		protected T[] getStringTests() {
-			return new T[] { new T(0.9047f, "He0ll0o", "Hel00lo"),
+		protected T[] getTests() {
+			return new T[] { 
+					new T(0.0000f, "\0\0\0\0", ""),
+					new T(0.9047f, "He0ll0o", "Hel00lo"),
 					new T(0.9047f, "He\0ll\0o", "Hel\0\0lo"),
 					new T(0.8888f, "0000", "000000"),
 					new T(0.8888f, "\0\0\0\0", "\0\0\0\0\0\0"), 
@@ -71,12 +72,14 @@ public final class JaroTest {
 		}
 
 		@Override
-		protected T[] getStringTests() {
+		protected T[] getTests() {
 			return new T[] { new T(0.9444f, "MARTHA", "MARHTA"),
 					new T(0.8222f, "DWAYNE", "DUANE"),
 					new T(0.7666f, "DIXON", "DICKSONX"),
 					//Not from Wikipedia, proves triangle inequality doesn't hold
 					new T(0.5999f, "OZYMANDIAS", "MARCUS") ,
+					// Not from Wikipedia, mandatory empty vs non-empty test
+					new T(0.0000f, "OZYMANDIAS", "") ,
 
 			};
 		}
@@ -102,7 +105,7 @@ public final class JaroTest {
 		}
 
 		@Override
-		protected T[] getStringTests() {
+		protected T[] getTests() {
 			return new T[] {
 					new T(0.9444f, "test string1", "test string2"),
 					new T(0.0000f, "test string1", "Sold"),

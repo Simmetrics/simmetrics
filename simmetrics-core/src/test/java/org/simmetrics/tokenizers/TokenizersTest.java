@@ -4,431 +4,267 @@
  * %%
  * Copyright (C) 2014 - 2015 Simmetrics Authors
  * %%
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
  * 
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  * #L%
  */
 package org.simmetrics.tokenizers;
 
-import static com.google.common.base.Predicates.in;
-import static com.google.common.base.Predicates.not;
+import static com.google.common.base.Predicates.and;
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertSame;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.simmetrics.tokenizers.Tokenizers.chain;
-import static org.simmetrics.tokenizers.Tokenizers.filter;
-import static org.simmetrics.tokenizers.Tokenizers.pattern;
-import static org.simmetrics.tokenizers.Tokenizers.qGram;
-import static org.simmetrics.tokenizers.Tokenizers.transform;
-import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
+import java.util.regex.Pattern;
 
 import org.junit.Test;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
-import org.simmetrics.tokenizers.Tokenizer;
-import org.simmetrics.tokenizers.Tokenizers;
+import org.simmetrics.tokenizers.Tokenizers.Filter;
+import org.simmetrics.tokenizers.Tokenizers.Filter.TransformFilter;
+import org.simmetrics.tokenizers.Tokenizers.QGram;
+import org.simmetrics.tokenizers.Tokenizers.QGramExtended;
+import org.simmetrics.tokenizers.Tokenizers.Recursive;
+import org.simmetrics.tokenizers.Tokenizers.Split;
+import org.simmetrics.tokenizers.Tokenizers.Transform;
+import org.simmetrics.tokenizers.Tokenizers.Transform.FilterTransform;
+import org.simmetrics.tokenizers.Tokenizers.Whitespace;
 
 import com.google.common.base.Function;
+import com.google.common.base.Functions;
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 
-@SuppressWarnings({ "javadoc", "static-method" })
-@RunWith(Enclosed.class)
-public final class TokenizersTest {
+@SuppressWarnings({ "javadoc" })
+public class TokenizersTest {
 
-	public static final class FilteringFilteringTokenizerTest extends
-			TokenizerTest {
+	private final String regex = "\\s+";
+	private final Pattern pattern = Pattern.compile(regex);
+	private final Tokenizer whitespace = Tokenizers.whitespace();
+	private final Function<String, String> identity = Functions.identity();
+	private final Function<String, String> identity2 = Functions.identity();
+	private final Predicate<String> alwaysTrue = Predicates.alwaysTrue();
+	private final Predicate<String> alwaysFalse = Predicates.alwaysFalse();
 
-		@Override
-		protected T[] getTests() {
-			return new T[] {
-					new T("the MOUSE and CAT or DOG are cool", "are", "cool"),
-					new T("", "") };
-		}
+	@Test
+	public void shouldReturnSplitForPattern() {
+		Tokenizer tokenizer = Tokenizers.pattern(pattern);
 
-		@Override
-		protected Tokenizer getTokenizer() {
-			return filter(filter(pattern("\\s+"), theAndOr()),
-					mouseCatDogUpperCase());
-		}
+		assertEquals(Split.class, tokenizer.getClass());
 
+		Split split = (Split) tokenizer;
+		assertEquals(pattern, split.getPattern());
 	}
 
-	public static final class FilteringTokenizerTest extends TokenizerTest {
+	@Test
+	public void shouldReturnSplitForRegex() {
+		Tokenizer tokenizer = Tokenizers.pattern(regex);
 
-		@Override
-		protected T[] getTests() {
-			return new T[] {
-					new T("the mouse and cat or dog", "mouse", "cat", "dog"),
-					new T("", "") };
-		}
+		assertEquals(Split.class, tokenizer.getClass());
 
-		@Override
-		protected Tokenizer getTokenizer() {
-			return Tokenizers.filter(pattern("\\s+"), theAndOr());
-		}
-
+		Split split = (Split) tokenizer;
+		assertEquals(regex, split.getPattern().toString());
 	}
 
-	public static final class FilteringTransformingTokenizerTest extends
-			TokenizerTest {
-		@Override
-		protected T[] getTests() {
-			return new T[] {
-					new T("the mouse and cat or dog", "MOUSE", "CAT", "DOG"),
-					new T("", "") };
-		}
+	@Test
+	public void shouldReturnQGram() {
+		Tokenizer tokenizer = Tokenizers.qGram(3);
 
-		@Override
-		protected Tokenizer getTokenizer() {
-			return Tokenizers.transform(filter(pattern("\\s+"), theAndOr()),
-					toUpperCase());
-		}
+		assertEquals(QGram.class, tokenizer.getClass());
+
+		QGram qGram = (QGram) tokenizer;
+		assertEquals(3, qGram.getQ());
 	}
 
-	public static final class FilteringTransformingTransformingTokenizerTest
-			extends TokenizerTest {
-		@Override
-		protected T[] getTests() {
-			return new T[] {
-					new T("the mouse and cat or dog", "ESUOM", "TAC", "GOD"),
-					new T("", "") };
-		}
+	@Test
+	public void shouldReturnQGramWithFilter() {
+		Tokenizer tokenizer = Tokenizers.qGramWithFilter(3);
 
-		@Override
-		protected Tokenizer getTokenizer() {
-			return transform(
-					transform(filter(pattern("\\s+"), theAndOr()),
-							toUpperCase()), reverseCapitalized());
-		}
+		assertEquals(QGram.class, tokenizer.getClass());
+
+		QGram qGram = (QGram) tokenizer;
+		assertEquals(3, qGram.getQ());
+		assertTrue(qGram.isFilter());
 	}
 
-	public static final class FilterTransformingFilteringTokenizerTest extends
-			TokenizerTest {
-		@Override
-		protected T[] getTests() {
-			return new T[] {
-					new T("the mouse and cat or dog are cool", "ARE", "COOL"),
-					new T("", "") };
-		}
+	@Test
+	public void shouldReturnQGramWithPadding() {
+		Tokenizer tokenizer = Tokenizers.qGramWithPadding(3);
 
-		@Override
-		protected Tokenizer getTokenizer() {
-			return filter(
-					transform(filter(pattern("\\s+"), theAndOr()),
-							toUpperCase()), mouseCatDogUpperCase());
-		}
+		assertEquals(QGramExtended.class, tokenizer.getClass());
+
+		QGramExtended qGram = (QGramExtended) tokenizer;
+		assertEquals(3, qGram.getQ());
+		assertEquals("##", qGram.getStartPadding());
+		assertEquals("##", qGram.getEndPadding());
 	}
 
-	public static final class FilterTransformingFilteringTransformingTokenizerTest
-			extends TokenizerTest {
-		@Override
-		protected T[] getTests() {
-			return new T[] {
-					new T("the mouse and cat or dog are cool", "ERA", "LOOC"),
-					new T("", "") };
-		}
+	@Test
+	public void shouldReturnQGramWithCustomPadding() {
+		Tokenizer tokenizer = Tokenizers.qGramWithPadding(3, "@");
 
-		@Override
-		protected Tokenizer getTokenizer() {
-			return transform(
-					filter(transform(filter(pattern("\\s+"), theAndOr()),
-							toUpperCase()), mouseCatDogUpperCase()),
-					reverseCapitalized());
-		}
+		assertEquals(QGramExtended.class, tokenizer.getClass());
+
+		QGramExtended qGram = (QGramExtended) tokenizer;
+		assertEquals(3, qGram.getQ());
+		assertEquals("@@", qGram.getStartPadding());
+		assertEquals("@@", qGram.getEndPadding());
 	}
 
-	@RunWith(Enclosed.class)
-	public static final class TokenizerChainTest {
+	@Test
+	public void shouldReturnQGramWithCustomStartAndEndPadding() {
+		Tokenizer tokenizer = Tokenizers.qGramWithPadding(3, "^", "$");
 
-		public static final class WithChain extends TokenizerTest {
+		assertEquals(QGramExtended.class, tokenizer.getClass());
 
-			@Override
-			protected T[] getTests() {
-				return new T[] {
-						new T("Mouse", "Mo", "ou", "ou", "us", "ou", "us",
-								"us", "se"), new T("") };
-			}
-
-			@Override
-			protected Tokenizer getTokenizer() {
-				return chain(qGram(5), chain(qGram(4), qGram(3)), qGram(2));
-			}
-		}
-
-		public static final class WithEmpty extends TokenizerTest {
-
-			@Override
-			protected T[] getTests() {
-				return new T[] {
-						new T("the mouse and cat or dog",
-								"the mouse and cat or dog"), new T("", "") };
-			}
-
-			@Override
-			protected Tokenizer getTokenizer() {
-				return chain(new ArrayList<Tokenizer>());
-			}
-		}
-
-		public static final class WithTwo extends TokenizerTest {
-
-			@Override
-			protected T[] getTests() {
-				return new T[] {
-						new T("the mouse and cat or dog", "the", "mou", "ous",
-								"use", "and", "cat", "or", "dog"), new T("") };
-			}
-
-			@Override
-			protected Tokenizer getTokenizer() {
-				return chain(whitespace(), qGram(3));
-			}
-		}
-
-		public static final class WithIllegalArguments {
-
-			@Test(expected = IllegalArgumentException.class)
-			public void shouldThrowForListContainingNull() {
-				Tokenizers.chain(Arrays.asList(whitespace(), (Tokenizer) null));
-			}
-
-			@Test(expected = IllegalArgumentException.class)
-			public void shouldThrowForNull() {
-				Tokenizers.chain((Tokenizer) null);
-			}
-
-			@Test(expected = IllegalArgumentException.class)
-			public void shouldThrowForNullInVarArg() {
-				Tokenizers.chain(whitespace(), null, whitespace());
-			}
-		}
-
-		public static final class WithSingleArguments {
-
-			@Test
-			public void shouldBeSameForSingle() {
-				Tokenizer t = whitespace();
-				assertSame(t, chain(t));
-			}
-
-			@Test
-			public void shouldBeSameForSingletonList() {
-				Tokenizer t = whitespace();
-				assertSame(t, Tokenizers.chain(Collections.singletonList(t)));
-			}
-		}
+		QGramExtended qGram = (QGramExtended) tokenizer;
+		assertEquals(3, qGram.getQ());
+		assertEquals("^^", qGram.getStartPadding());
+		assertEquals("$$", qGram.getEndPadding());
 	}
 
-	public static final class TransformingFilteringFilteringTokenizerTest
-			extends TokenizerTest {
-		@Override
-		protected T[] getTests() {
-			return new T[] {
-					new T("the mouse and cat or dog are cool", "ARE", "COOL"),
-					new T("", "") };
-		}
-
-		@Override
-		protected Tokenizer getTokenizer() {
-			return filter(
-					filter(transform(pattern("\\s+"), toUpperCase()),
-							mouseCatDogUpperCase()), theAndOrUpperCase());
-		}
+	@Test
+	public void shouldReturnWhitespace() {
+		assertEquals(Whitespace.class,
+				Tokenizers.whitespace().getClass());
 	}
 
-	public static final class TransformingFilteringTokenizerTest extends
-			TokenizerTest {
-		@Override
-		protected T[] getTests() {
-			return new T[] {
-					new T("the mouse and cat or dog", "THE", "AND", "OR"),
-					new T("", "") };
-		}
+	@Test
+	public void shouldReturnTransform() {
+		Tokenizer tokenizer = Tokenizers.transform(whitespace, identity);
 
-		@Override
-		protected Tokenizer getTokenizer() {
-			return filter(transform(pattern("\\s+"), toUpperCase()),
-					mouseCatDogUpperCase());
-		}
+		assertEquals(Transform.class, tokenizer.getClass());
+
+		Transform transform = (Transform) tokenizer;
+		assertSame(whitespace, transform.getTokenizer());
+		assertSame(identity, transform.getFunction());
 	}
 
-	public static final class TransformingFilteringTransformingFilteringTokenizerTest
-			extends TokenizerTest {
-		@Override
-		protected T[] getTests() {
-			return new T[] {
-					new T("the Mouse and Cat or Dog", "ESUOM", "TAC", "GOD"),
-					new T("", "") };
-		}
+	@Test
+	public void shouldReturnTransformForTransform() {
+		Transform t = new Transform(whitespace, identity);
+		Tokenizer tokenizer = Tokenizers.transform(t, identity2);
 
-		@Override
-		protected Tokenizer getTokenizer() {
-			return filter(
-					transform(
-							filter(transform(pattern("\\s+"),
-									reverseCapitalized()), theAndOr()),
-							toUpperCase()), mouseCatDogUpperCase());
-		}
+		assertEquals(Transform.class, tokenizer.getClass());
+
+		Transform transform = (Transform) tokenizer;
+		assertSame(whitespace, transform.getTokenizer());
+		assertEquals(Functions.compose(identity2, identity),
+				transform.getFunction());
 	}
 
-	public static final class TransformingFilteringTransformingTokenizerTest
-			extends TokenizerTest {
-		@Override
-		protected T[] getTests() {
-			return new T[] {
-					new T("the Mouse and Cat or Dog", "ESUOM", "TAC", "GOD"),
-					new T("", "") };
-		}
+	@Test
+	public void shouldReturnTransformForFilter() {
+		Tokenizers.Filter filter = new Tokenizers.Filter(whitespace, alwaysTrue);
+		Tokenizer tokenizer = Tokenizers.transform(filter, identity);
 
-		@Override
-		protected Tokenizer getTokenizer() {
-			return transform(
-					filter(transform(pattern("\\s+"), reverseCapitalized()),
-							theAndOr()), toUpperCase());
-		}
+		assertEquals(FilterTransform.class, tokenizer.getClass());
+
+		FilterTransform transform = (FilterTransform) tokenizer;
+		assertSame(filter, transform.getTokenizer());
+		assertSame(identity, transform.getFunction());
 	}
-
-	public static final class TransformingTokenizerTest extends TokenizerTest {
-
-		@Override
-		protected T[] getTests() {
-			return new T[] {
-					new T("the mouse and cat or dog", "THE", "MOUSE", "AND",
-							"CAT", "OR", "DOG"), new T("", "") };
-		}
-
-		@Override
-		protected Tokenizer getTokenizer() {
-			return Tokenizers.transform(pattern("\\s+"), toUpperCase());
-		}
+	
+	@Test
+	public void shouldChainSingletonList() {
+		List<Tokenizer> tokenizers = asList(whitespace);
+		Tokenizer tokenizer = Tokenizers.chain(tokenizers);
+		assertSame(whitespace, tokenizer);
 	}
-
-	public static final class TransformingTransformingTokenizerTest extends
-			TokenizerTest {
-
-		@Override
-		protected T[] getTests() {
-			return new T[] {
-					new T("the Mouse and Cat or Dog", "THE", "ESUOM", "AND",
-							"TAC", "OR", "GOD"), new T("", "") };
-		}
-
-		@Override
-		protected Tokenizer getTokenizer() {
-			return transform(transform(pattern("\\s+"), reverseCapitalized()),
-					toUpperCase());
-		}
+	
+	@Test
+	public void shouldChainPlusOne() {
+		Tokenizer tokenizer = Tokenizers.chain(whitespace);
+		assertSame(whitespace, tokenizer);
 	}
+	
+	@Test
+	public void shouldChainList() {
+		List<Tokenizer> tokenizers = asList(whitespace, whitespace, whitespace);
+		Tokenizer tokenizer = Tokenizers.chain(tokenizers);
 
-	public static final class TransformingTransformingTransformingTokenizerTest
-			extends TokenizerTest {
-
-		@Override
-		protected T[] getTests() {
-			return new T[] {
-					new T("the Mouse and Cat or Dog", "EHT", "MOUSE", "DNA",
-							"CAT", "RO", "DOG"), new T("", "") };
-		}
-
-		@Override
-		protected Tokenizer getTokenizer() {
-			return transform(
-					transform(transform(pattern("\\s+"), reverseCapitalized()),
-							toUpperCase()), reverseCapitalized());
-		}
+		assertEquals(Recursive.class, tokenizer.getClass());
+		Recursive recursive = (Recursive) tokenizer;
+		assertEquals(tokenizers, recursive.getTokenizers());
 	}
+	
+	@Test
+	public void shouldChainArrayPlusOne() {
+		Tokenizer tokenizer = Tokenizers.chain(whitespace, whitespace, whitespace);
 
-	public static final class Whitespace extends TokenizerTest {
-
-		@Override
-		protected Tokenizer getTokenizer() {
-			return Tokenizers.whitespace();
-		}
-
-		@Override
-		protected T[] getTests() {
-
-			return new T[] { new T(""), new T(" "), new T(" A", "A"),
-					new T("A B C", "A", "B", "C"),
-					new T("A   B  C", "A", "B", "C"), new T("A\nB", "A", "B"),
-					new T("A\tB", "A", "B"), new T("A\t\nB", "A", "B"), };
-		}
+		assertEquals(Recursive.class, tokenizer.getClass());
+		Recursive recursive = (Recursive) tokenizer;
+		assertEquals(asList(whitespace, whitespace, whitespace), recursive.getTokenizers());
 	}
+	
+	@Test
+	public void shouldChainRecursiveList() {
+		List<Tokenizer> tokenizers = asList(whitespace,
+				chain(whitespace, whitespace), whitespace);
+		Tokenizer tokenizer = Tokenizers.chain(tokenizers);
 
-	public static final class Pattern extends TokenizerTest {
-
-		@Override
-		protected Tokenizer getTokenizer() {
-			return Tokenizers.pattern(",");
-		}
-
-		@Override
-		protected T[] getTests() {
-
-			return new T[] { new T("", ""), new T(" ", " "),
-					new T(",", "", ""), new T(",,", "", "", ""),
-					new T("A,B,C", "A", "B", "C"),
-					new T("A,,B,,C", "A", "", "B", "", "C"), };
-		}
+		assertEquals(Recursive.class, tokenizer.getClass());
+		Recursive recursive = (Recursive) tokenizer;
+		assertEquals(asList(whitespace, whitespace, whitespace, whitespace),
+				recursive.getTokenizers());
 	}
+	
+	@Test
+	public void shouldChainRecursiveArrayPlusOne() {
+		Tokenizer tokenizer = Tokenizers.chain(whitespace,
+				chain(whitespace, whitespace), whitespace);
 
-	static Predicate<String> mouseCatDogUpperCase() {
-		return not(in(asList("CAT", "MOUSE", "DOG")));
+		assertEquals(Recursive.class, tokenizer.getClass());
+		Recursive recursive = (Recursive) tokenizer;
+		assertEquals(asList(whitespace, whitespace, whitespace, whitespace),
+				recursive.getTokenizers());
 	}
+	
+	@Test
+	public void shouldReturnFilter() {
+		Tokenizer tokenizer = Tokenizers.filter(whitespace, alwaysTrue);
 
-	static Function<String, String> reverseCapitalized() {
-		return new Function<String, String>() {
+		assertEquals(Filter.class, tokenizer.getClass());
 
-			@Override
-			public String apply(String input) {
-				if (input.isEmpty() || !Character.isUpperCase(input.charAt(0))) {
-					return input;
-				}
-
-				return new StringBuilder(input).reverse().toString();
-			}
-
-			@Override
-			public String toString() {
-				return "reverseCapitalized";
-			}
-		};
+		Filter filter = (Filter) tokenizer;
+		assertSame(whitespace, filter.getTokenizer());
+		assertSame(alwaysTrue, filter.getPredicate());
 	}
+	
+	@Test
+	public void shouldReturnFilterForFilter() {
+		Filter t = new Filter(whitespace, alwaysTrue);
+		Tokenizer tokenizer = Tokenizers.filter(t, alwaysFalse);
 
-	static Predicate<String> theAndOr() {
-		return not(in(asList("the", "and", "or")));
+		assertEquals(Filter.class, tokenizer.getClass());
+
+		Filter filter = (Filter) tokenizer;
+		
+		assertSame(whitespace, filter.getTokenizer());
+		assertEquals(and(alwaysTrue, alwaysFalse),filter.getPredicate());
 	}
+		@Test
+	public void shouldReturnFilterForTransform() {
+		Transform t = new Transform(whitespace, identity);
+		Tokenizer tokenizer = Tokenizers.filter(t, alwaysTrue);
 
-	static Predicate<String> theAndOrUpperCase() {
-		return not(in(asList("THE", "AND", "OR")));
-	}
+		assertEquals(TransformFilter.class, tokenizer.getClass());
 
-	static Function<String, String> toUpperCase() {
-		return new Function<String, String>() {
-
-			@Override
-			public String apply(String input) {
-				return input.toUpperCase();
-			}
-
-			@Override
-			public String toString() {
-				return "toUpperCase";
-			}
-		};
-
+		TransformFilter filter = (TransformFilter) tokenizer;
+		
+		assertSame(t, filter.getTokenizer());
+		assertEquals(alwaysTrue,filter.getPredicate());
+		
 	}
 
 }

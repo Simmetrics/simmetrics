@@ -20,12 +20,10 @@
 
 package org.simmetrics.metrics;
 
-import static org.simmetrics.tokenizers.Tokenizers.whitespace;
+import static java.util.Arrays.asList;
 
 import org.simmetrics.SetMetric;
 import org.simmetrics.SetMetricTest;
-import org.simmetrics.metrics.OverlapCoefficient;
-import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings("javadoc")
 public final class OverlapCoefficientTest extends SetMetricTest {
@@ -41,19 +39,22 @@ public final class OverlapCoefficientTest extends SetMetricTest {
 	}
 
 	@Override
-	protected Tokenizer getTokenizer() {
-		return whitespace();
-	}
-
-	@Override
-	protected T[] getSetTests() {
+	protected T[] getTests() {
 
 		return new T[] {
 				new T(0.5000f, "test string1", "test string2"),
 				new T(1.0000f, "test", "test string2"),
 				new T(0.0000f, "", "test string2"),
+				new T(0.5000f, asList("test", null), asList("test","string2")),
+
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+				new T(0.7500f, "aaa bbb ccc ddd aaa bbb ccc ddd", "aaa bbb ccc eee"),
+				
 				new T(0.7500f, "a b c d", "a b c e"),
+				new T(0.5000f, "a b c d", "a b e f"),
+				new T(1.0000f, "a b c", "a b c e f g"),
+				new T(1.0000f, "a b b c c", "a b c e f g"),
+				
 				new T(0.0000f, "Healed", "Sealed"),
 				new T(0.0000f, "Healed", "Healthy"),
 				new T(0.0000f, "Healed", "Heard"),
@@ -61,12 +62,14 @@ public final class OverlapCoefficientTest extends SetMetricTest {
 				new T(0.0000f, "Healed", "Help"),
 				new T(0.0000f, "Healed", "Sold"),
 				new T(0.0000f, "Healed", "Help"),
+				
 				new T(0.3333f, "Sam J Chapman", "Samuel John Chapman"),
 				new T(0.5000f, "Sam Chapman", "S Chapman"),
 				new T(0.5000f, "John Smith", "Samuel John Chapman"),
 				new T(0.0000f, "John Smith", "Sam Chapman"),
 				new T(0.0000f, "John Smith", "Sam J Chapman"),
 				new T(0.0000f, "John Smith", "S Chapman"),
+				
 				new T(1.0000f, "Web Database Applications",
 						"Web Database Applications with PHP & MySQL"),
 				new T(1.0000f, "Web Database Applications",

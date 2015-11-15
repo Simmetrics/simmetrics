@@ -43,13 +43,15 @@ public final class JaroWinklerTest   {
 
 		
 		@Override
-		protected T[] getStringTests()  {
+		protected T[] getTests()  {
 			return new T[] { 
 					new T(0.9611f, "MARTHA", "MARHTA"),
 					new T(0.8400f, "DWAYNE", "DUANE"),
 					new T(0.8133f, "DIXON", "DICKSONX"), 
 					// Not from Wikipedia, proves triangle inequality doens't hold
 					new T(0.5999f, "OZYMANDIAS", "MARCUS") ,
+					// Not from Wikipedia, empty vs non-empty test
+					new T(0.0000f, "MARTHA", ""),
 			};
 		}
 
@@ -73,7 +75,7 @@ public final class JaroWinklerTest   {
 		}
 
 		@Override
-		protected T[] getStringTests() {
+		protected T[] getTests() {
 			return new T[] { 
 					new T(0.9666f, "test string1", "test string2"),
 					new T(0.0000f, "test string1", "Sold"),
@@ -97,7 +99,7 @@ public final class JaroWinklerTest   {
 
 		
 		@Override
-		protected T[] getStringTests()  {
+		protected T[] getTests()  {
 			return new T[] {
 					new T(0.9667f, "test string1", "test string2"),
 					new T(0.8666f, "test", "test string2"),

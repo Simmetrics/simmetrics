@@ -23,13 +23,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Encodes a string into a Caverphone 2.0 value.
- *
+ * <p>
  * This is an algorithm created by the Caversham Project at the University of
  * Otago. It implements the Caverphone 2.0 algorithm.
- * 
  * <p>
  * This class is immutable and thread-safe.
- * </p>
  * 
  * @see <a href="http://en.wikipedia.org/wiki/Caverphone">Wikipedia -
  *      Caverphone</a>
@@ -39,7 +37,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @see org.apache.commons.codec.language.Caverphone2
  *
  */
-public class Caverphone2 implements Simplifier {
+public final class Caverphone2 implements Simplifier {
 
 	private final org.apache.commons.codec.language.Caverphone2 simplifier = new org.apache.commons.codec.language.Caverphone2();
 

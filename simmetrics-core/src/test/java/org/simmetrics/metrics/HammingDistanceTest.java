@@ -42,7 +42,7 @@ public final class HammingDistanceTest {
 			return HammingDistance.forList();
 		}
 		@Override
-		protected T[] getListTests() {
+		protected T[] getTests() {
 			return new T[] {
 					new T(1.0000f, 
 							asList("a", "b", "c", "d"),
@@ -72,7 +72,7 @@ public final class HammingDistanceTest {
 
 
 		@Override
-		protected T[] getStringTests() {
+		protected T[] getTests() {
 			return new T[] { new T(0.0000f, "test 1", "test 1"),
 					new T(1.0000f, "test 1", "test 2"),
 					new T(3.0000f, "aaabbb", "aaaaaa"),

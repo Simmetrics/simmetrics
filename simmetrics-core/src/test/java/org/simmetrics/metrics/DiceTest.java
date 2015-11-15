@@ -41,7 +41,7 @@ public final class DiceTest {
 		}
 
 		@Override
-		protected T[] getSetTests() {
+		protected T[] getTests() {
 			return new T[] {
 					new T(0.5000f, "test string1", "test string2"),
 					new T(0.3333f, "test", "test string2"),

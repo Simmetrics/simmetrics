@@ -43,7 +43,7 @@ public final class GeneralizedJaccardTest  {
 		}
 
 		@Override
-		protected T[] getMultisetTests() {
+		protected T[] getTests() {
 			return new T[]{
 					new T(0.6667f, "test string1", "test string2"),
 					new T(0.5000f, "test", "test string2"),

@@ -49,7 +49,7 @@ public final class BlockDistanceTest {
 		}
 
 		@Override
-		protected T[] getMultisetTests() {
+		protected T[] getTests() {
 			return new T[] {
 					new T(0.0000f, "test string1", "test string1"),
 					new T(2.0000f, "test string1", "test string2"),

@@ -43,7 +43,7 @@ public final class EuclideanDistanceTest {
 		}
 
 		@Override
-		protected T[] getMultisetTests() {
+		protected T[] getTests() {
 			return new T[] {
 
 					new T(0.0000f, "test string1", "test string1"),

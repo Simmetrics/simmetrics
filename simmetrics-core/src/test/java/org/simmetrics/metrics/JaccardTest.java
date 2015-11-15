@@ -44,7 +44,7 @@ public static final class DistanceTest extends SetDistanceTest {
 		}
 
 		@Override
-		protected T[] getSetTests() {
+		protected T[] getTests() {
 			return new T[] {
 					new T(0.6667f, "test string1", "test string2"),
 					new T(0.5000f, "test", "test string2"),

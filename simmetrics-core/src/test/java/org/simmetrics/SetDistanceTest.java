@@ -19,7 +19,6 @@
  */
 package org.simmetrics;
 
-import static java.util.Collections.unmodifiableSet;
 import static org.junit.Assert.fail;
 import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
@@ -29,22 +28,19 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
+import org.simmetrics.CollectionMetricTest.C;
 import org.simmetrics.tokenizers.Tokenizer;
 
+import com.google.monitoring.runtime.instrumentation.common.com.google.common.collect.Sets;
+
 @SuppressWarnings("javadoc")
-public abstract class SetDistanceTest extends DistanceTest<Set<String>> {
+public abstract class SetDistanceTest extends CollectionDistanceTest<String,Set<String>>{
 
-	protected static final class T {
-		protected final Set<String> a;
-		protected final Set<String> b;
-		protected final float similarity;
-
+	protected static final class T  extends C<String,Set<String>>{
+		
 		public T(float similarity, Set<String> a, Set<String> b) {
-			this.a = a;
-			this.b = b;
-			this.similarity = similarity;
+			super(similarity, a,b);
 		}
-
 		public T(float similarity, String a, String b) {
 			this(whitespace(), similarity, a, b);
 		}
@@ -56,39 +52,17 @@ public abstract class SetDistanceTest extends DistanceTest<Set<String>> {
 		}
 
 	}
-
-	private static DistanceTest.T<Set<String>>[] transformTest(T... tests) {
-		@SuppressWarnings("unchecked")
-		DistanceTest.T<Set<String>>[] transformed = new DistanceTest.T[tests.length];
-		for (int i = 0; i < tests.length; i++) {
-			T t = tests[i];
-			transformed[i] = new DistanceTest.T<>(t.similarity,
-					unmodifiableSet(t.a), unmodifiableSet(t.b));
-		}
-		return transformed;
-	}
-
-	@Test
-	public final void containsSetWithNullVsSetWithouthNullTest() {
-		for (T t : getSetTests()) {
-			if (t.a.contains(null) ^ t.b.contains(null)) {
-				return;
-			}
-		}
-
-		fail("tests did not contain set with null vs set without null test");
-	}
-
+	
+	@Override
+	protected abstract T[] getTests();
+	
 	@Override
 	protected final Set<String> getEmpty() {
 		return Collections.emptySet();
 	}
 
-	protected abstract T[] getSetTests();
-
 	@Override
-	protected final org.simmetrics.DistanceTest.T<Set<String>>[] getTests() {
-		return transformTest(getSetTests());
+	public Set<String> getCollectionContainNull() {
+		return Sets.newHashSet((String)null);
 	}
-
 }

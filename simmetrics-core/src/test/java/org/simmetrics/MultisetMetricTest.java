@@ -30,7 +30,7 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 
 @SuppressWarnings("javadoc")
-public abstract class MultisetMetricTest  extends CollectionMetricTest<String,Multiset<String>> {
+public abstract class MultisetMetricTest extends CollectionMetricTest<String,Multiset<String>> {
 
 	protected static final class T  extends C<String,Multiset<String>>{
 	

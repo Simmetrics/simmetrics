@@ -43,7 +43,7 @@ public final class LevenshteinTest {
 			}
 
 			@Override
-			protected T[] getStringTests() {
+			protected T[] getTests() {
 				return new T[] {
 						new T(1.0000f, "test string1", "test string2"),
 						new T(8.0000f, "test", "test string2"),

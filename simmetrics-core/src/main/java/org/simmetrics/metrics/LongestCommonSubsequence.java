@@ -19,6 +19,7 @@
  */
 package org.simmetrics.metrics;
 
+import static java.lang.Math.max;
 import static java.lang.System.arraycopy;
 
 import org.simmetrics.StringDistance;
@@ -29,7 +30,7 @@ import org.simmetrics.StringMetric;
  * and distance between two strings.
  * <p>
  * <code>
- * similarity(a,b) = 1 - distance(a,b) / (∣a∣ + ∣b∣)
+ * similarity(a,b) = ∣lcs(a,b)∣ / max{∣a∣, ∣b∣}
  * <br>
  * distance(a,b) = ∣a∣ + ∣b∣ + 2 * ∣lcs(a,b)∣  
  * </code>
@@ -40,7 +41,7 @@ import org.simmetrics.StringMetric;
  *      href="https://en.wikipedia.org/wiki/Longest_common_subsequence_problem">Wikipedia
  *      - Longest common subsequence problem</a>
  */
-public final class LongestCommonSubstring implements StringMetric,
+public final class LongestCommonSubsequence implements StringMetric,
 		StringDistance {
 
 	@Override
@@ -54,7 +55,7 @@ public final class LongestCommonSubstring implements StringMetric,
 			return 0.0f;
 		}
 
-		return 1.0f - distance(a, b) / (a.length() + b.length());
+		return lcs(a, b) / (float)max(a.length() ,b.length());
 	}
 
 	@Override
@@ -88,7 +89,7 @@ public final class LongestCommonSubstring implements StringMetric,
 				if (a.charAt(i - 1) == b.charAt(j - 1)) {
 					v1[j] = v0[j - 1] + 1;
 				} else {
-					v1[j] = java.lang.Math.max(v1[j - 1], v0[j]);
+					v1[j] = max(v1[j - 1], v0[j]);
 				}
 			}
 

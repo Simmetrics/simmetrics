@@ -29,10 +29,12 @@ import static org.mockito.Mockito.when;
 import java.util.List;
 
 import org.junit.Test;
-import org.simmetrics.builders.StringMetricBuilder;
+
+import static org.simmetrics.builders.StringMetricBuilder.CachingListTokenizer;
+import static org.simmetrics.tokenizers.Tokenizers.whitespace;
+
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.TokenizerTest;
-
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
@@ -40,10 +42,9 @@ import com.google.common.cache.CacheBuilder;
 public class CachingListTokenizerTest extends TokenizerTest {
 
 	private Tokenizer innerTokenizer;
-	private Cache<String, List<String>> cache;
 
 	@Override
-	protected final boolean supportsTokenizeToSet() {
+	protected boolean supportsTokenizeToSet() {
 		return false;
 	}
 	
@@ -53,37 +54,43 @@ public class CachingListTokenizerTest extends TokenizerTest {
 	}
 
 	@Override
-	protected final Tokenizer getTokenizer() {
+	protected Tokenizer getTokenizer() {
 
 		innerTokenizer = mock(Tokenizer.class);
 
-		when(innerTokenizer.tokenizeToList("ABC")).thenReturn(
-				newArrayList("ABC"));
-		when(innerTokenizer.tokenizeToList("CCC")).thenReturn(
-				newArrayList("CCC"));
-		when(innerTokenizer.tokenizeToList("EEE")).thenReturn(
-				newArrayList("EEE"));
-		when(innerTokenizer.tokenizeToList("")).thenReturn(newArrayList(""));
+		when(innerTokenizer.tokenizeToList("ABC"))
+		.thenReturn(newArrayList("ABC"));
+		when(innerTokenizer.tokenizeToList("CCC"))
+		.thenReturn(newArrayList("CCC"));
+		when(innerTokenizer.tokenizeToList("EEE"))
+		.thenReturn(newArrayList("EEE"));
+		when(innerTokenizer.tokenizeToList(""))
+		.thenReturn(newArrayList(""));
 
-		cache = CacheBuilder.newBuilder().initialCapacity(2).maximumSize(2)
+		Cache<String, List<String>> cache = CacheBuilder.newBuilder()
+				.initialCapacity(2)
+				.maximumSize(2)
 				.build();
-
-		return new StringMetricBuilder.CachingListTokenizer(cache,
-				innerTokenizer);
+		
+		return new CachingListTokenizer(cache,innerTokenizer);
 	}
 
 	@Override
-	protected final T[] getTests() {
+	protected T[] getTests() {
 
-		return new T[] { new T("ABC", "ABC"), new T("CCC", "CCC"),
-				new T("ABC", "ABC"), new T("EEE", "EEE"), new T("ABC", "ABC"),
-				new T("CCC", "CCC"), new T("", "")
-
+		return new T[] { 
+				new T("ABC", "ABC"), 
+				new T("CCC", "CCC"),
+				new T("ABC", "ABC"), 
+				new T("EEE", "EEE"), 
+				new T("ABC", "ABC"),
+				new T("CCC", "CCC"), 
+				new T("", "")
 		};
 	}
 
 	@Test
-	public final void tokenizeToListShouldUseCache() {
+	public void tokenizeToListShouldUseCache() {
 		for (T t : tests) {
 			tokenizer.tokenizeToList(t.string());
 		}
@@ -91,4 +98,12 @@ public class CachingListTokenizerTest extends TokenizerTest {
 		verify(innerTokenizer, times(1)).tokenizeToList("ABC");
 		verify(innerTokenizer, times(2)).tokenizeToList("CCC");
 	}
+	
+	@Test(expected=IllegalStateException.class) 
+	public void shouldThrowIllegalStateException(){
+		ExecutionExceptionCache<String, List<String>> cache = new ExecutionExceptionCache<>();
+		new CachingListTokenizer(cache, whitespace()).tokenizeToList("Sheep");
+	}
+	
+	
 }

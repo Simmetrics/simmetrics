@@ -35,8 +35,13 @@ import org.simmetrics.StringMetric;
  * </code>
  * <p>
  * This class is immutable and thread-safe.
+ * 
+ * @see <a
+ *      href="https://en.wikipedia.org/wiki/Longest_common_subsequence_problem">Wikipedia
+ *      - Longest common subsequence problem</a>
  */
-public final class LongestCommonSubsequence implements StringMetric, StringDistance {
+public final class LongestCommonSubstring implements StringMetric,
+		StringDistance {
 
 	@Override
 	public float compare(String a, String b) {

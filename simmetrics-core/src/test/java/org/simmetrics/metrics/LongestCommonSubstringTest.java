@@ -29,12 +29,12 @@ import org.simmetrics.StringMetricTest;
 
 @SuppressWarnings("javadoc")
 @RunWith(Enclosed.class)
-public final class LongestCommonSubsequenceTest   {
+public final class LongestCommonSubstringTest   {
 	
 	public static final class DistanceTest extends StringDistanceTest {
 		@Override
 		protected StringDistance getMetric() {
-			return new LongestCommonSubsequence();
+			return new LongestCommonSubstring();
 		}
 		
 		@Override
@@ -88,7 +88,7 @@ public final class LongestCommonSubsequenceTest   {
 	public static final class MetricTest extends StringMetricTest {
 		@Override
 		protected StringMetric getMetric() {
-			return new LongestCommonSubsequence();
+			return new LongestCommonSubstring();
 		}
 		
 		@Override

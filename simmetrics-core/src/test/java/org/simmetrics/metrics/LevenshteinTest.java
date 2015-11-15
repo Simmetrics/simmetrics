@@ -118,7 +118,7 @@ public final class LevenshteinTest {
 			}
 
 			@Override
-			protected T[] getStringTests() {
+			protected T[] getTests() {
 				return new T[] {
 
 						new T(0.9166f, "test string1", "test string2"),
@@ -197,7 +197,7 @@ public final class LevenshteinTest {
 			}
 
 			@Override
-			protected T[] getStringTests() {
+			protected T[] getTests() {
 				return new T[] { new T(0.9500f, "InsertDelete", "Insert"),
 						new T(0.9500f, "InsertDelete", "Delete"),
 						new T(0.9500f, "DeleteInsert", "Insert"),
@@ -225,7 +225,7 @@ public final class LevenshteinTest {
 			}
 
 			@Override
-			protected T[] getStringTests() {
+			protected T[] getTests() {
 				return new T[] { new T(1.0000f, "Subsitute", "Subsytute"),
 						new T(1.0000f, "Subsitute", "Sybsytyte"),
 						new T(0.5000f, "abc", "abcdef"),
@@ -257,7 +257,7 @@ public final class LevenshteinTest {
 			}
 
 			@Override
-			protected T[] getStringTests() {
+			protected T[] getTests() {
 				return new T[] { new T(0.9889f, "Subsitute", "Subsytute"),
 						new T(0.9667f, "Subsitute", "Sybsytyte"),
 						new T(0.5000f, "abc", "abcdef"),

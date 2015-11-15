@@ -21,52 +21,50 @@
 package org.simmetrics;
 
 import static java.util.Collections.emptySet;
-import static java.util.Collections.unmodifiableSet;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.simmetrics.tokenizers.Tokenizer;
+import org.simmetrics.tokenizers.Tokenizers;
+
+import com.google.monitoring.runtime.instrumentation.common.com.google.common.collect.Sets;
 
 @SuppressWarnings("javadoc")
-public abstract class SetMetricTest extends MetricTest<Set<String>> {
+public abstract class SetMetricTest extends CollectionMetricTest<String,Set<String>>{
 
-	protected static final class T {
-		protected final float similarity;
-		protected final String string1;
-		protected final String string2;
+	protected static final class T  extends C<String,Set<String>>{
+		
+		public T(float similarity, Set<String> a, Set<String> b) {
+			super(similarity, a,b);
+		}
 
-		public T(float similarity, String string1, String string2) {
-			this.string1 = string1;
-			this.string2 = string2;
-			this.similarity = similarity;
+		public T(float similarity, String a, String b) {
+			this(Tokenizers.whitespace(), similarity, a,b);
+		}
+
+		public T(Tokenizer tokenizer, float similarity, String a, String b) {
+			this(similarity, tokenizer.tokenizeToSet(a),tokenizer.tokenizeToSet(b));
+		}
+
+		public T(float similarity, List<String> a, List<String> b) {
+			this(similarity, new HashSet<>(a), new HashSet<>(b));
 		}
 
 	}
 	
 	@Override
-	protected MetricTest.T<Set<String>>[] getTests() {
-		return transformTest(getTokenizer(), getSetTests());
-	}
-
-	protected abstract T[] getSetTests();
-
-	protected abstract Tokenizer getTokenizer();
-
-	private static MetricTest.T<Set<String>>[] transformTest(
-			Tokenizer tokenizer, T... tests) {
-		@SuppressWarnings("unchecked")
-		MetricTest.T<Set<String>>[] transformed = new MetricTest.T[tests.length];
-		for (int i = 0; i < tests.length; i++) {
-			T t = tests[i];
-			transformed[i] = new MetricTest.T<>(t.similarity,
-					unmodifiableSet(tokenizer.tokenizeToSet(t.string1)),
-					unmodifiableSet(tokenizer.tokenizeToSet(t.string2)));
-		}
-		return transformed;
-	}
+	protected abstract T[] getTests();
+	
 
 	@Override
 	protected Set<String> getEmpty() {
 		return emptySet();
+	}
+	
+	@Override
+	public Set<String> getCollectionContainNull() {
+		return Sets.newHashSet((String)null);
 	}
 }

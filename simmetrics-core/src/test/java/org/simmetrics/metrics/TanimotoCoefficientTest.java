@@ -20,11 +20,10 @@
 
 package org.simmetrics.metrics;
 
-import static org.simmetrics.tokenizers.Tokenizers.whitespace;
+import static java.util.Arrays.asList;
 
 import org.simmetrics.SetMetric;
 import org.simmetrics.SetMetricTest;
-import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings("javadoc")
 public final class TanimotoCoefficientTest extends SetMetricTest {
@@ -33,20 +32,17 @@ public final class TanimotoCoefficientTest extends SetMetricTest {
 	protected SetMetric<String> getMetric() {
 		return new TanimotoCoefficient<>();
 	}
-	@Override
-	protected Tokenizer getTokenizer() {
-		return whitespace();
-	}
 
 	@Override
-	protected T[] getSetTests() {
+	protected T[] getTests() {
 		return new T[]{				
 				
 				new T(0.5000f, "test string1", "test string2"),
 				new T(0.5000f, "test string1", "test string2"),
 				new T(0.7071f, "test", "test string2"),
 				new T(0.0000f, "", "test string2"),
-				
+				new T(0.5000f, asList("test", null), asList("test", "string2")),
+
 				new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				new T(0.7500f, "aaa bbb ccc ddd aaa bbb ccc ddd", "aaa bbb ccc eee"),
 				

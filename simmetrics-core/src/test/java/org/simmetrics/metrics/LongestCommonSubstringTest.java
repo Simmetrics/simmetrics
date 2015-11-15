@@ -97,7 +97,7 @@ public final class LongestCommonSubstringTest   {
 		}
 		
 		@Override
-		protected T[] getStringTests() {
+		protected T[] getTests() {
 			return new T[] {
 
 					new T(0.9167f, "test string1", "test string2"),

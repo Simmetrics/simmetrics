@@ -39,7 +39,7 @@ public final class NeedlemanWunchTest {
 
 		
 		@Override
-		protected T[] getStringTests()  {
+		protected T[] getTests()  {
 			return new T[] {
 
 					new T(0.9583f, "test string1", "test string2"),
@@ -118,7 +118,7 @@ public final class NeedlemanWunchTest {
 
 		
 		@Override
-		protected T[] getStringTests()  {
+		protected T[] getTests()  {
 			return new T[] { new T(1.0000f, "test string1", "test string2"),
 					new T(1.0000f, "test", "test string2"),
 					new T(1.0000f, "", "test string2"),
@@ -154,7 +154,7 @@ public final class NeedlemanWunchTest {
 
 		
 		@Override
-		protected T[] getStringTests()  {
+		protected T[] getTests()  {
 			return new T[] {
 					new T(0.9833f, "test string1", "test string2"),
 					new T(0.9333f, "test", "test string2"),

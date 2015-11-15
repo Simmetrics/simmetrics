@@ -21,8 +21,6 @@
 package org.simmetrics.metrics;
 
 import static java.util.Arrays.asList;
-import static org.simmetrics.tokenizers.Tokenizers.whitespace;
-
 import java.util.Set;
 
 import org.junit.experimental.runners.Enclosed;
@@ -31,7 +29,6 @@ import org.simmetrics.Distance;
 import org.simmetrics.SetDistanceTest;
 import org.simmetrics.SetMetric;
 import org.simmetrics.SetMetricTest;
-import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings("javadoc")
 @RunWith(Enclosed.class)
@@ -49,7 +46,7 @@ public final class DiceTest {
 					new T(0.5000f, "test string1", "test string2"),
 					new T(0.3333f, "test", "test string2"),
 					new T(1.0000f, "", "test string2"),
-					new T(1.0000f, asList("test", null), asList("test, string2")),
+					new T(0.5000f, asList("test", null), asList("test", "string2")),
 					new T(0.2500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 					new T(0.2500f, "a b c d", "a b c e"),
 			};
@@ -63,15 +60,12 @@ public final class DiceTest {
 		}
 		
 		@Override
-		protected Tokenizer getTokenizer() {
-			return whitespace();
-		}
-		@Override
-		protected T[] getSetTests() {
+		protected T[] getTests() {
 			return new T[] {
 					new T(0.5000f, "test string1", "test string2"),
 					new T(0.6666f, "test", "test string2"),
 					new T(0.0000f, "", "test string2"),
+					new T(0.5000f, asList("test", null), asList("test", "string2")),
 					new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 					new T(0.7500f, "a b c d", "a b c e"),
 					new T(0.0000f, "Healed", "Sealed"),

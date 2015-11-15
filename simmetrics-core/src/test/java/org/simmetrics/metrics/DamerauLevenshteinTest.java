@@ -157,7 +157,7 @@ public final class DamerauLevenshteinTest {
 			}
 
 			@Override
-			protected T[] getStringTests() {
+			protected T[] getTests() {
 				return new T[] {
 
 						new T(0.9166f, "test string1", "test string2"),
@@ -241,7 +241,7 @@ public final class DamerauLevenshteinTest {
 			}
 
 			@Override
-			protected T[] getStringTests() {
+			protected T[] getTests() {
 				return new T[] { new T(0.9500f, "InsertDelete", "Insert"),
 						new T(0.9500f, "InsertDelete", "Delete"),
 						new T(0.9500f, "DeleteInsert", "Insert"),
@@ -268,7 +268,7 @@ public final class DamerauLevenshteinTest {
 			}
 
 			@Override
-			protected T[] getStringTests() {
+			protected T[] getTests() {
 				return new T[] { new T(1.0000f, "Subsitute", "Subsytute"),
 						new T(1.0000f, "Subsitute", "Sybsytyte"),
 						new T(0.5000f, "abc", "abcdef"),
@@ -297,7 +297,7 @@ public final class DamerauLevenshteinTest {
 			}
 
 			@Override
-			protected T[] getStringTests() {
+			protected T[] getTests() {
 				return new T[] { new T(0.9778f, "Subsitute", "Subsytute"),
 						new T(0.9333f, "Subsitute", "Sybsytyte"),
 						new T(0.9833f, "test string1", "test string2"),
@@ -329,7 +329,7 @@ public final class DamerauLevenshteinTest {
 			}
 
 			@Override
-			protected T[] getStringTests() {
+			protected T[] getTests() {
 				return new T[] { 
 						new T(0.000f, "uxyw", ""),
 						new T(1.000f, "uxyw", "uyxw"),
@@ -357,7 +357,7 @@ public final class DamerauLevenshteinTest {
 			}
 
 			@Override
-			protected T[] getStringTests() {
+			protected T[] getTests() {
 				return new T[] { 
 						new T(0.0000f, "uxyw", ""),
 						new T(0.9750f, "uxyw", "uyxw"),

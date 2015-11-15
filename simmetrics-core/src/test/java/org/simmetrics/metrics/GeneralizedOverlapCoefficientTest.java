@@ -39,7 +39,7 @@ public final class GeneralizedOverlapCoefficientTest extends MultisetMetricTest 
 	}
 
 	@Override
-	protected T[] getMultisetTests() {
+	protected T[] getTests() {
 
 		return new T[] {
 				new T(0.5000f, "test string1", "test string2"),

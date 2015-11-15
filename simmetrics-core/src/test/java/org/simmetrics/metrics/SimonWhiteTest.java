@@ -91,7 +91,7 @@ public final class SimonWhiteTest  {
 		}
 
 		@Override
-		protected T[] getMultisetTests() {
+		protected T[] getTests() {
 			return new T[] {
 					new T(    0.5000f, asList("test", null), asList("test","string2")),
 					new T(q2(),0.8889f, "test string1", "test string2"),

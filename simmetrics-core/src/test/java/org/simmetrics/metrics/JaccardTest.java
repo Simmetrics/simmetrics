@@ -21,7 +21,6 @@
 package org.simmetrics.metrics;
 
 import static java.util.Arrays.asList;
-import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
 import java.util.Set;
 
@@ -31,7 +30,6 @@ import org.simmetrics.Distance;
 import org.simmetrics.SetDistanceTest;
 import org.simmetrics.SetMetric;
 import org.simmetrics.SetMetricTest;
-import org.simmetrics.tokenizers.Tokenizer;
 
 @SuppressWarnings("javadoc")
 @RunWith(Enclosed.class)
@@ -73,17 +71,13 @@ public static final class DistanceTest extends SetDistanceTest {
 		}
 
 		@Override
-		protected Tokenizer getTokenizer() {
-			return whitespace();
-		}
-
-		@Override
-		protected T[] getSetTests() {
+		protected T[] getTests() {
 			return new T[] {
 					new T(0.3333f, "test string1", "test string2"),
 					new T(0.5000f, "test", "test string2"),
 					new T(0.0000f, "", "test string2"),
-					
+					new T(0.3333f, asList("test", null), asList("test", "string2")),
+
 					new T(0.6000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 					new T(0.6000f, "aaa bbb ccc ddd aaa bbb ccc ddd", "aaa bbb ccc eee"),
 					

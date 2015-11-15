@@ -248,7 +248,7 @@ public class StringMetricsTest {
 		}
 
 		@Override
-		protected T[] getStringTests() {
+		protected T[] getTests() {
 			return new T[] { new T(0.0f, "To repeat repeat is to repeat", ""),
 					new T(1.0f, "To repeat repeat is to repeat", "To repeat repeat is to repeat") };
 		}
@@ -262,7 +262,7 @@ public class StringMetricsTest {
 		}
 
 		@Override
-		protected T[] getStringTests() {
+		protected T[] getTests() {
 			return new T[] { new T(0.5000f, "test string1", "test string2"),
 					new T(0.5000f, "test string1", "test string2"), new T(0.7071f, "test", "test string2"),
 					new T(0.0000f, "", "test string2"),
@@ -280,7 +280,7 @@ public class StringMetricsTest {
 		}
 
 		@Override
-		protected T[] getStringTests() {
+		protected T[] getTests() {
 			return new T[] { new T(0.5000f, "test string1", "test string2"), new T(0.6666f, "test", "test string2"),
 					new T(0.0000f, "", "test string2"), new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 					new T(0.7500f, "a b c d", "a b c e"), };
@@ -296,7 +296,7 @@ public class StringMetricsTest {
 		}
 
 		@Override
-		protected T[] getStringTests() {
+		protected T[] getTests() {
 			return new T[] { new T(0.5000f, "test string1", "test string2"), new T(0.5527f, "test", "test string2"),
 					new T(0.2928f, "", "test string2"), new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 					new T(0.7500f, "a b c d", "a b c e"), };
@@ -312,7 +312,7 @@ public class StringMetricsTest {
 		}
 
 		@Override
-		protected T[] getStringTests() {
+		protected T[] getTests() {
 			return new T[] { new T(0.3333f, "test string1", "test string2"), new T(0.5000f, "test", "test string2"),
 					new T(0.0000f, "", "test string2"), new T(0.6000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 					new T(0.6000f, "a b c d", "a b c e"), };
@@ -328,7 +328,7 @@ public class StringMetricsTest {
 		}
 
 		@Override
-		protected T[] getStringTests() {
+		protected T[] getTests() {
 			return new T[] { new T(0.3333f, "test string1", "test string2"), new T(0.5000f, "test", "test string2"),
 					new T(0.0000f, "", "test string2"), new T(0.6000f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 					new T(0.6000f, "a b c d", "a b c e"), };
@@ -344,7 +344,7 @@ public class StringMetricsTest {
 		}
 
 		@Override
-		protected T[] getStringTests() {
+		protected T[] getTests() {
 			return new T[] { new T(0.9286f, "test string1", "test string2"), new T(0.8660f, "test", "test string2"),
 					new T(0.0000f, "", "test string2"), new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 					new T(0.7500f, "a b c d", "a b c e"), };
@@ -364,7 +364,7 @@ public class StringMetricsTest {
 		}
 
 		@Override
-		protected T[] getStringTests() {
+		protected T[] getTests() {
 			return new T[] { new T(0.5000f, "test string1", "test string2"), new T(1.0000f, "test", "test string2"),
 					new T(0.0000f, "", "test string2"), new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 					new T(0.7500f, "a b c d", "a b c e"), };
@@ -385,7 +385,7 @@ public class StringMetricsTest {
 		}
 
 		@Override
-		protected T[] getStringTests() {
+		protected T[] getTests() {
 			return new T[] { new T(0.7857f, "test string1", "test string2"), new T(0.3999f, "test", "test string2"),
 					new T(0.0000f, "", "test string2"), new T(0.7058f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
 					new T(0.6666f, "a b c d", "a b c e"), };
@@ -401,7 +401,7 @@ public class StringMetricsTest {
 		}
 
 		@Override
-		protected T[] getStringTests() {
+		protected T[] getTests() {
 			return new T[] { new T(0.8889f, "test string1", "test string2"), new T(0.5000f, "test", "test string2"),
 					new T(0.0000f, "", "test string2"), new T(0.7500f, "aaa bbb ccc ddd", "aaa bbb ccc eee") };
 		}
@@ -416,7 +416,7 @@ public class StringMetricsTest {
 		}
 
 		@Override
-		protected T[] getStringTests() {
+		protected T[] getTests() {
 			return new T[] { new T(0.5000f, "Tannhauser", "Ozymandias"), new T(1.0000f, "James", "Jones"),
 					new T(0.0000f, "", "Jenkins"), new T(0.8833f, "Travis", "Trevor"),
 					new T(0.8666f, "Marcus", "Marinus"), };

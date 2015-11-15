@@ -33,12 +33,12 @@ import org.junit.Test;
 @SuppressWarnings("javadoc")
 public abstract class MetricTest<K> {
 
-	protected static final class T<K> {
+	protected static class TestCase<K> {
 		protected final K a;
 		protected final K b;
 		protected final float similarity;
 
-		public T(float similarity, K a, K b) {
+		public TestCase(float similarity, K a, K b) {
 			this.a = a;
 			this.b = b;
 			this.similarity = similarity;
@@ -118,7 +118,7 @@ public abstract class MetricTest<K> {
 
 	protected Metric<K> metric;
 
-	private T<K>[] tests;
+	private TestCase<K>[] tests;
 
 	protected float getDelta() {
 		return DEFAULT_DELTA;
@@ -128,7 +128,7 @@ public abstract class MetricTest<K> {
 
 	protected abstract Metric<K> getMetric();
 
-	protected abstract T<K>[] getTests();
+	protected abstract TestCase<K>[] getTests();
 
 	protected boolean satisfiesCoincidence() {
 		return true;
@@ -152,7 +152,7 @@ public abstract class MetricTest<K> {
 
 	@Test
 	public final void nullPointerException() {
-		for (T<K> t : tests) {
+		for (TestCase<K> t : tests) {
 			testNullPointerException(metric, t.a, t.b);
 		}
 	}
@@ -160,13 +160,13 @@ public abstract class MetricTest<K> {
 	@Test
 	public final void coincidence() {
 		if (satisfiesCoincidence()) {
-			for (T<K> t : tests) {
+			for (TestCase<K> t : tests) {
 				assertTrue(
 						format("coincidence did not hold for %s and %s", t.a,
 								t.b), testCoincidence(metric, t.a, t.b));
 			}
 		} else {
-			for (T<K> t : tests) {
+			for (TestCase<K> t : tests) {
 				if (!testCoincidence(metric, t.a, t.b)) {
 					return;
 				}
@@ -178,8 +178,8 @@ public abstract class MetricTest<K> {
 	@Test
 	public final void subadditivity() {
 		if (satisfiesSubadditivity()) {
-			for (T<K> n : tests) {
-				for (T<K> m : tests) {
+			for (TestCase<K> n : tests) {
+				for (TestCase<K> m : tests) {
 					assertTrue(
 							format("triangle ineqaulity must hold for %s, %s, %s",
 									n.a, n.b, m.a),
@@ -192,8 +192,8 @@ public abstract class MetricTest<K> {
 				}
 			}
 		} else {
-			for (T<K> n : tests) {
-				for (T<K> m : tests) {
+			for (TestCase<K> n : tests) {
+				for (TestCase<K> m : tests) {
 					if (!testSubadditivity(metric, n.a, n.b, m.a)
 							|| !testSubadditivity(metric, n.a, n.b, m.b)) {
 						return;
@@ -206,14 +206,14 @@ public abstract class MetricTest<K> {
 
 	@Test
 	public final void range() {
-		for (T<K> t : tests) {
+		for (TestCase<K> t : tests) {
 			testRange(metric, t.a, t.b);
 		}
 	}
 
 	@Test
 	public final void reflexive() {
-		for (T<K> t : tests) {
+		for (TestCase<K> t : tests) {
 			testReflexive(metric, t.a, delta);
 			testReflexive(metric, t.b, delta);
 		}
@@ -221,14 +221,14 @@ public abstract class MetricTest<K> {
 
 	@Test
 	public final void similarity() {
-		for (T<K> t : tests) {
+		for (TestCase<K> t : tests) {
 			testSimilarity(metric, t.a, t.b, t.similarity, delta);
 		}
 	}
 
 
 	public final void generateSimilarity() {
-		for (T<K> t : tests) {
+		for (TestCase<K> t : tests) {
 			System.out.println(format("new T<>(%1.4ff, \"%s\", \"%s\"),",
 					metric.compare(t.a, t.b), t.a, t.b));
 		}
@@ -236,7 +236,7 @@ public abstract class MetricTest<K> {
 
 	@Test
 	public final void symmetric() {
-		for (T<K> t : tests) {
+		for (TestCase<K> t : tests) {
 			testSymmetric(metric, t.a, t.b, delta);
 		}
 	}
@@ -244,7 +244,7 @@ public abstract class MetricTest<K> {
 	@Test
 	public final void containsEmptyVsNonEmptyTest() {
 		final K empty = getEmpty();
-		for (T<K> t : tests) {
+		for (TestCase<K> t : tests) {
 			if (t.a.equals(empty) ^ t.b.equals(empty)) {
 				return;
 			}

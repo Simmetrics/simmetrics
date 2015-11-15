@@ -43,7 +43,7 @@ public final class JaroWinklerTest   {
 
 		
 		@Override
-		protected T[] getStringTests()  {
+		protected T[] getTests()  {
 			return new T[] { 
 					new T(0.9611f, "MARTHA", "MARHTA"),
 					new T(0.8400f, "DWAYNE", "DUANE"),
@@ -75,7 +75,7 @@ public final class JaroWinklerTest   {
 		}
 
 		@Override
-		protected T[] getStringTests() {
+		protected T[] getTests() {
 			return new T[] { 
 					new T(0.9666f, "test string1", "test string2"),
 					new T(0.0000f, "test string1", "Sold"),
@@ -99,7 +99,7 @@ public final class JaroWinklerTest   {
 
 		
 		@Override
-		protected T[] getStringTests()  {
+		protected T[] getTests()  {
 			return new T[] {
 					new T(0.9667f, "test string1", "test string2"),
 					new T(0.8666f, "test", "test string2"),

@@ -38,7 +38,7 @@ public class ForStringTest extends StringMetricTest{
 	}
 	
 	@Override
-	protected T[] getStringTests() {
+	protected T[] getTests() {
 		return new T[]{
 				new T(0.0f, "To repeat repeat is to repeat", ""),
 				new T(1.0f, "To repeat repeat is to repeat", "To repeat repeat is to repeat"),

@@ -44,7 +44,7 @@ public class SmithWatermanTest extends StringMetricTest {
 
 	
 	@Override
-	protected T[] getStringTests()  {
+	protected T[] getTests()  {
 		return new T[] {
 				new T(0.0000f, "", "eee"),
 				new T(0.0000f, "aaa", "eee"),

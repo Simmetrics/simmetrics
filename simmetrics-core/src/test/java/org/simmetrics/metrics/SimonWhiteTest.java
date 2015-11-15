@@ -26,6 +26,8 @@ import static org.simmetrics.tokenizers.Tokenizers.filter;
 import static org.simmetrics.tokenizers.Tokenizers.qGram;
 import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 import org.simmetrics.Distance;
 import org.simmetrics.MultisetDistanceTest;
 import org.simmetrics.MultisetMetric;
@@ -36,6 +38,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Multiset;
 
 @SuppressWarnings("javadoc")
+@RunWith(Enclosed.class)
 public final class SimonWhiteTest  {
 	
 	static class MinimumLenght implements Predicate<String> {

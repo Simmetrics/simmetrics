@@ -22,7 +22,7 @@ For a quick and easy use [StringMetrics](./simmetrics-core/src/main/java/org/sim
 The [StringMetricBuilder](./simmetrics-core/src/main/java/org/simmetrics/builders/StringMetricBuilder.java) is a convenience tool to build string metrics. Any class implementing StringMetric, ListMetric, SetMetric or MultisetMetric can be used to build a string metric. The builder supports simplification, tokenization, token-filtering, token-transformation, and caching.
 For usage see the [examples section](./simmetrics-example/src/main/java/org/simmetrics/example/StringMetricBuilderExample.java).  
 
-For a terse syntax use `import static org.simmetrics.StringMetricBuilder.with;`
+For a terse syntax use `import static org.simmetrics.builders.StringMetricBuilder.with;`
 
 ```java
 	String str1 = "This is a sentence. It is made of words";

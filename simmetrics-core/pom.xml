@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.github.mpkorstanje</groupId>
 		<artifactId>simmetrics</artifactId>
-		<version>4.0.0-SNAPSHOT</version>
+		<version>4.0.0</version>
 	</parent>
 
 	<artifactId>simmetrics-core</artifactId>

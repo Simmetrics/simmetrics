@@ -1,6 +1,22 @@
 Change Log
 ==========
 
+## Since 3.2.3-SNAPSHOT ##
+ - Removed deprecated methods and classes
+ - Multiset features
+    - Added MultisetMetric and MultisetDistance
+	- Added Tokenizers.tokenizerToMultiset
+	- Added StringMetricBuilder.with(MultisetMetric)
+	- BlockDistance, EuclideanDistance, MatchingCoefficient and SimonWhite implement MultisetMetric and MultisetDistance rather then the list based equivalents
+ - Implementation of CosineSimilarity for sets is better described as the Tanimoto coefficient. CosineSimilarity has been changed from SetMetric to MultisetMetric. It will now take token occurrence into account. Added TanimotoCoefficient which calculates the cosine similarity for sets.
+ - Renamed MatchingCoefficient to GeneralizedJaccard. Implementation of matching coefficient for lists is more accurately described as generalized version of Jaccard. 
+ - Added LongestCommonSubstring metric.
+ - Made all metrics and simplifiers final.
+ - Renamed JaccardSimilarity to Jaccard. 
+ - Renamed DiceSmilarity to Dice
+ - Moved StringMetrics to metrics package.
+ - Moved StringMetricBuilder to builders package.
+
 ## Since 3.2.3 ##
  - Changed license to Apache License Version 2.0
  - Added the Identity metric

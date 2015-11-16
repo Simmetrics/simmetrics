@@ -132,7 +132,7 @@ public final class NeedlemanWunch implements StringMetric {
 						v0[j - 1] - substitution.compare(s, i - 1, t, j - 1));
 			}
 			
-			float[] swap = v0; v0 = v1; v1 = swap; 
+			final float[] swap = v0; v0 = v1; v1 = swap;
 
 		}
 		

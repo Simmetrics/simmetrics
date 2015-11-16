@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-## Since 4.0.1-SNAPSHOT ##
+## Since 4.0.1 ##
  - Added LongestCommonSubSequence 
  - Corrected implementation of LongestCommonSubstring
 

@@ -20,8 +20,6 @@
 package org.simmetrics.metrics;
 
 import static java.lang.Math.max;
-import static java.lang.System.arraycopy;
-
 import org.simmetrics.StringDistance;
 import org.simmetrics.StringMetric;
 
@@ -81,8 +79,8 @@ public final class LongestCommonSubsequence implements StringMetric,
 		// We're only interested in the actual longest common subsequence This
 		// means we don't have to backtrack through the n-by-m matrix and can
 		// safe some space by reusing v0 for row i-1.
-		final int[] v0 = new int[m + 1];
-		final int[] v1 = new int[m + 1];
+		int[] v0 = new int[m + 1];
+		int[] v1 = new int[m + 1];
 
 		for (int i = 1; i <= n; i++) {
 			for (int j = 1; j <= m; j++) {
@@ -92,18 +90,16 @@ public final class LongestCommonSubsequence implements StringMetric,
 					v1[j] = max(v1[j - 1], v0[j]);
 				}
 			}
-
-			// Copy rather then swap because when calculating
-			// v1[j] elements to the left of j are referenced
-			arraycopy(v1, 0, v0, 0, v0.length);
+			int[] swap = v0; v0 = v1; v1 = swap; 
 		}
 
-		return v1[m];
+		// Because we swapped the results are in v0.
+		return v0[m];
 	}
 
 	@Override
 	public String toString() {
-		return "LongestCommonSubstring";
+		return "LongestCommonSubsequence";
 	}
 
 }

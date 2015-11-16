@@ -20,8 +20,8 @@
 package org.simmetrics.tokenizers;
 
 import static com.google.common.base.Functions.compose;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertSame;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 import org.simmetrics.tokenizers.Tokenizers.Transform.FilterTransform;

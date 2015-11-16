@@ -19,7 +19,7 @@
  */
 package org.simmetrics.simplifiers;
 
-import static junit.framework.Assert.assertSame;
+import static org.junit.Assert.assertSame;
 import static org.simmetrics.simplifiers.Simplifiers.chain;
 import static org.simmetrics.simplifiers.Simplifiers.removeNonWord;
 import static org.simmetrics.simplifiers.Simplifiers.replaceNonWord;

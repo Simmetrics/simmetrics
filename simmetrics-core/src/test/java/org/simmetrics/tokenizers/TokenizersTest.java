@@ -21,7 +21,7 @@ package org.simmetrics.tokenizers;
 
 import static com.google.common.base.Predicates.and;
 import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.simmetrics.tokenizers.Tokenizers.chain;

@@ -117,7 +117,7 @@ public abstract class CachingTokenizerTest<V> extends TokenizerTest {
 		verify(innerTokenizer, times(2)).tokenizeToList("CCC");
 	}
 	
-	
+	@Test
 	public void tokenizeToListshouldThrowIllegalStateException() {
 		if(!supportsTokenizeToList()){
 			return;
@@ -128,6 +128,7 @@ public abstract class CachingTokenizerTest<V> extends TokenizerTest {
 		getTokenizer(brokenCache, innerTokenizer).tokenizeToList("Sheep");
 	}
 	
+	@Test
 	public void tokenizeToSetshouldThrowIllegalStateException() {
 		if(!supportsTokenizeToSet()){
 			return;
@@ -136,7 +137,8 @@ public abstract class CachingTokenizerTest<V> extends TokenizerTest {
 
 		getTokenizer(brokenCache, innerTokenizer).tokenizeToSet("Sheep");
 	}
-
+	
+	@Test
 	public void tokenizeToMultisetshouldThrowIllegalStateException() {
 		if(!supportsTokenizeToMultiset()){
 			return;

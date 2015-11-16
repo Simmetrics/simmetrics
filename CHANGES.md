@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+## Since 4.0.1-SNAPSHOT ##
+ - Added LongestCommonSubSequence 
+ - Corrected implementation of LongestCommonSubstring
+
 ## Since 4.0.0 ##
  - Removed deprecated methods and classes
  - Multiset features

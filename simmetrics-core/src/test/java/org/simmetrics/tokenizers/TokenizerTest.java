@@ -25,7 +25,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
+import static org.mockito.MockitoAnnotations.initMocks;
 import static org.simmetrics.matchers.ImplementsToString.implementsToString;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -100,6 +102,8 @@ public abstract class TokenizerTest {
 
 	@Before
 	public final void setUp() throws Exception {
+		initMocks(this);
+
 		tokenizer = getTokenizer();
 		tests = getTests();
 	}

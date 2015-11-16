@@ -20,28 +20,14 @@
 
 package org.simmetrics.builders;
 
-import static com.google.common.collect.Sets.newHashSet;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.simmetrics.tokenizers.Tokenizers.whitespace;
-
 import java.util.Set;
-
-import org.junit.Test;
 import org.simmetrics.builders.StringMetricBuilder.CachingSetTokenizer;
 import org.simmetrics.tokenizers.Tokenizer;
-import org.simmetrics.tokenizers.TokenizerTest;
-
 import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 
 @SuppressWarnings("javadoc")
-public class CachingSetTokenizerTest extends TokenizerTest {
+public class CachingSetTokenizerTest extends CachingTokenizerTest<Set<String>> {
 
-	private Tokenizer innerTokenizer;
-	
 	@Override
 	protected final boolean supportsTokenizeToList() {
 		return false;
@@ -53,55 +39,7 @@ public class CachingSetTokenizerTest extends TokenizerTest {
 	}
 
 	@Override
-	protected final Tokenizer getTokenizer() {
-		
-		innerTokenizer = mock(Tokenizer.class);
-	
-		when(innerTokenizer.tokenizeToSet("ABC"))
-		.thenReturn(newHashSet("ABC"));
-		when(innerTokenizer.tokenizeToSet("CCC"))
-		.thenReturn(newHashSet("CCC"));
-		when(innerTokenizer.tokenizeToSet("EEE"))
-		.thenReturn(newHashSet("EEE"));
-		when(innerTokenizer.tokenizeToSet(""))
-		.thenReturn(newHashSet(""));
-	
-		Cache<String, Set<String>> cache = CacheBuilder.newBuilder()
-				.initialCapacity(2)
-				.maximumSize(2)
-				.build();
-
-		return new CachingSetTokenizer(cache,innerTokenizer);
+	public Tokenizer getTokenizer(Cache<String, Set<String>> cache, Tokenizer tokenizer) {
+		return new CachingSetTokenizer(cache,tokenizer);
 	}
-
-	@Override
-	protected final T[] getTests() {
-
-		return new T[] { 
-				new T("ABC", "ABC"), 
-				new T("CCC", "CCC"),
-				new T("ABC", "ABC"), 
-				new T("EEE", "EEE"), 
-				new T("ABC", "ABC"),
-				new T("CCC", "CCC"),
-				new T("","") 
-		};
-	}
-
-	@Test
-	public final void tokenizeToSetShouldUseCache() {
-		for (T t : tests) {
-			tokenizer.tokenizeToSet(t.string());
-		}
-
-		 verify(innerTokenizer, times(1)).tokenizeToSet("ABC");
-		 verify(innerTokenizer, times(2)).tokenizeToSet("CCC");
-	}
-	
-	@Test(expected=IllegalStateException.class) 
-	public void shouldThrowIllegalStateException(){
-		ExecutionExceptionCache<String, Set<String>> cache = new ExecutionExceptionCache<>();
-		new CachingSetTokenizer(cache, whitespace()).tokenizeToSet("Sheep");
-	}
-	
 }

@@ -20,15 +20,22 @@
 
 package org.simmetrics.builders;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.simmetrics.simplifiers.Simplifiers.toLowerCase;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+
 import org.junit.Test;
 import org.simmetrics.builders.StringMetricBuilder.CachingSimplifier;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.SimplifierTest;
+
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
@@ -84,8 +91,9 @@ public class CachingSimplifierTest extends SimplifierTest {
 	}
 	
 	@Test(expected=IllegalStateException.class) 
-	public void shouldThrowIllegalStateException(){
-		ExecutionExceptionCache<String, String> cache = new ExecutionExceptionCache<>();
+	public void shouldThrowIllegalStateException() throws ExecutionException{
+		Cache<String, String> cache = mock(Cache.class);
+		when(cache.get(anyString(), any(Callable.class))).thenThrow(new ExecutionException(new Exception()));
 		new CachingSimplifier(cache, toLowerCase()).simplify("Sheep");
 	}
 }

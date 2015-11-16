@@ -24,12 +24,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
+import static org.simmetrics.simplifiers.Simplifiers.toLowerCase;
 import org.junit.Test;
-import org.simmetrics.builders.StringMetricBuilder;
+import org.simmetrics.builders.StringMetricBuilder.CachingSimplifier;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.SimplifierTest;
-
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
@@ -37,32 +36,40 @@ import com.google.common.cache.CacheBuilder;
 public class CachingSimplifierTest extends SimplifierTest {
 
 	private Simplifier innerSimplifier;
-	private Cache<String, String> cache;
 
 	@Override
 	protected final Simplifier getSimplifier() {
 
 		innerSimplifier = mock(Simplifier.class);
 
-		when(innerSimplifier.simplify("ABC")).thenReturn("abc");
-		when(innerSimplifier.simplify("CCC")).thenReturn("ccc");
-		when(innerSimplifier.simplify("EEE")).thenReturn("eee");
+		when(innerSimplifier.simplify("ABC"))
+		.thenReturn("abc");
+		when(innerSimplifier.simplify("CCC"))
+		.thenReturn("ccc");
+		when(innerSimplifier.simplify("EEE"))
+		.thenReturn("eee");
+		when(innerSimplifier.simplify(""))
+		.thenReturn("");
 
-		when(innerSimplifier.simplify("")).thenReturn("");
-
-		cache = CacheBuilder.newBuilder().initialCapacity(2).maximumSize(2)
+		Cache<String, String> cache = CacheBuilder.newBuilder()
+				.initialCapacity(2)
+				.maximumSize(2)
 				.build();
 
-		return new StringMetricBuilder.CachingSimplifier(cache, innerSimplifier);
+		return new CachingSimplifier(cache, innerSimplifier);
 	}
 
 	@Override
 	protected final T[] getTests() {
 
-		return new T[] { new T("ABC", "abc"), new T("CCC", "ccc"),
-				new T("ABC", "abc"), new T("EEE", "eee"), new T("ABC", "abc"),
-				new T("CCC", "ccc"), new T("", "")
-
+		return new T[] { 
+				new T("ABC", "abc"), 
+				new T("CCC", "ccc"),
+				new T("ABC", "abc"), 
+				new T("EEE", "eee"), 
+				new T("ABC", "abc"),
+				new T("CCC", "ccc"), 
+				new T("", "")
 		};
 	}
 
@@ -75,5 +82,10 @@ public class CachingSimplifierTest extends SimplifierTest {
 		verify(innerSimplifier, times(1)).simplify("ABC");
 		verify(innerSimplifier, times(2)).simplify("CCC");
 	}
-
+	
+	@Test(expected=IllegalStateException.class) 
+	public void shouldThrowIllegalStateException(){
+		ExecutionExceptionCache<String, String> cache = new ExecutionExceptionCache<>();
+		new CachingSimplifier(cache, toLowerCase()).simplify("Sheep");
+	}
 }

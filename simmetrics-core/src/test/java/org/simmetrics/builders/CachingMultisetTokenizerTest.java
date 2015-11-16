@@ -24,12 +24,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
 import org.junit.Test;
-import org.simmetrics.builders.StringMetricBuilder;
+import org.simmetrics.builders.StringMetricBuilder.CachingMultisetTokenizer;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.TokenizerTest;
-
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.ImmutableMultiset;
@@ -39,7 +39,6 @@ import com.google.common.collect.Multiset;
 public class CachingMultisetTokenizerTest extends TokenizerTest {
 
 	private Tokenizer innerTokenizer;
-	private Cache<String, Multiset<String>> cache;
 	
 	@Override
 	protected final boolean supportsTokenizeToList() {
@@ -56,28 +55,34 @@ public class CachingMultisetTokenizerTest extends TokenizerTest {
 		
 		innerTokenizer = mock(Tokenizer.class);
 	
-		when(innerTokenizer.tokenizeToMultiset("ABC")).thenReturn(ImmutableMultiset.of("ABC"));
-		when(innerTokenizer.tokenizeToMultiset("CCC")).thenReturn(ImmutableMultiset.of("CCC"));
-		when(innerTokenizer.tokenizeToMultiset("EEE")).thenReturn(ImmutableMultiset.of("EEE"));
-		when(innerTokenizer.tokenizeToMultiset("")).thenReturn(ImmutableMultiset.of(""));
+		when(innerTokenizer.tokenizeToMultiset("ABC"))
+		.thenReturn(ImmutableMultiset.of("ABC"));
+		when(innerTokenizer.tokenizeToMultiset("CCC"))
+		.thenReturn(ImmutableMultiset.of("CCC"));
+		when(innerTokenizer.tokenizeToMultiset("EEE"))
+		.thenReturn(ImmutableMultiset.of("EEE"));
+		when(innerTokenizer.tokenizeToMultiset(""))
+		.thenReturn(ImmutableMultiset.of(""));
 	
-		cache = CacheBuilder.newBuilder().initialCapacity(2).maximumSize(2).build();
+		Cache<String, Multiset<String>> cache = CacheBuilder.newBuilder()
+				.initialCapacity(2)
+				.maximumSize(2)
+				.build();
 
-		
-		return new StringMetricBuilder.CachingMultisetTokenizer(cache,innerTokenizer);
+		return new CachingMultisetTokenizer(cache,innerTokenizer);
 	}
 
 	@Override
 	protected final T[] getTests() {
 
-		return new T[] { new T("ABC", "ABC")
-				, new T("CCC", "CCC"),
+		return new T[] { 
+				new T("ABC", "ABC"), 
+				new T("CCC", "CCC"),
 				new T("ABC", "ABC"), 
 				new T("EEE", "EEE"), 
 				new T("ABC", "ABC"),
 				new T("CCC", "CCC"),
 				new T("","") 
-
 		};
 	}
 
@@ -89,6 +94,12 @@ public class CachingMultisetTokenizerTest extends TokenizerTest {
 
 		 verify(innerTokenizer, times(1)).tokenizeToMultiset("ABC");
 		 verify(innerTokenizer, times(2)).tokenizeToMultiset("CCC");
+	}
+	
+	@Test(expected=IllegalStateException.class) 
+	public void shouldThrowIllegalStateException(){
+		ExecutionExceptionCache<String, Multiset<String>> cache = new ExecutionExceptionCache<>();
+		new CachingMultisetTokenizer(cache, whitespace()).tokenizeToMultiset("Sheep");
 	}
 	
 }

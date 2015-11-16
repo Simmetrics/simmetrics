@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+## Since 4.0.1 ##
+ - Added LongestCommonSubSequence 
+ - Corrected implementation of LongestCommonSubstring
+
 ## Since 4.0.0 ##
  - Removed deprecated methods and classes
  - Multiset features
@@ -11,6 +15,8 @@ Change Log
  - Implementation of CosineSimilarity for sets is better described as the Tanimoto coefficient. CosineSimilarity has been changed from SetMetric to MultisetMetric. It will now take token occurrence into account. Added TanimotoCoefficient which calculates the cosine similarity for sets.
  - Renamed MatchingCoefficient to GeneralizedJaccard. Implementation of matching coefficient for lists is more accurately described as generalized version of Jaccard. 
  - Added LongestCommonSubstring metric.
+ - Added GeneralizedJaccard
+ - Added GeneralizedOverlapCoefficient
  - Made all metrics and simplifiers final.
  - Renamed JaccardSimilarity to Jaccard. 
  - Renamed DiceSmilarity to Dice

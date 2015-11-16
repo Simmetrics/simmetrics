@@ -25,11 +25,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
 import java.util.Set;
 
 import org.junit.Test;
-import org.simmetrics.builders.StringMetricBuilder;
+import org.simmetrics.builders.StringMetricBuilder.CachingSetTokenizer;
 import org.simmetrics.tokenizers.Tokenizer;
 import org.simmetrics.tokenizers.TokenizerTest;
 
@@ -40,7 +41,6 @@ import com.google.common.cache.CacheBuilder;
 public class CachingSetTokenizerTest extends TokenizerTest {
 
 	private Tokenizer innerTokenizer;
-	private Cache<String, Set<String>> cache;
 	
 	@Override
 	protected final boolean supportsTokenizeToList() {
@@ -57,28 +57,34 @@ public class CachingSetTokenizerTest extends TokenizerTest {
 		
 		innerTokenizer = mock(Tokenizer.class);
 	
-		when(innerTokenizer.tokenizeToSet("ABC")).thenReturn(newHashSet("ABC"));
-		when(innerTokenizer.tokenizeToSet("CCC")).thenReturn(newHashSet("CCC"));
-		when(innerTokenizer.tokenizeToSet("EEE")).thenReturn(newHashSet("EEE"));
-		when(innerTokenizer.tokenizeToSet("")).thenReturn(newHashSet(""));
+		when(innerTokenizer.tokenizeToSet("ABC"))
+		.thenReturn(newHashSet("ABC"));
+		when(innerTokenizer.tokenizeToSet("CCC"))
+		.thenReturn(newHashSet("CCC"));
+		when(innerTokenizer.tokenizeToSet("EEE"))
+		.thenReturn(newHashSet("EEE"));
+		when(innerTokenizer.tokenizeToSet(""))
+		.thenReturn(newHashSet(""));
 	
-		cache = CacheBuilder.newBuilder().initialCapacity(2).maximumSize(2).build();
+		Cache<String, Set<String>> cache = CacheBuilder.newBuilder()
+				.initialCapacity(2)
+				.maximumSize(2)
+				.build();
 
-		
-		return new StringMetricBuilder.CachingSetTokenizer(cache,innerTokenizer);
+		return new CachingSetTokenizer(cache,innerTokenizer);
 	}
 
 	@Override
 	protected final T[] getTests() {
 
-		return new T[] { new T("ABC", "ABC")
-				, new T("CCC", "CCC"),
+		return new T[] { 
+				new T("ABC", "ABC"), 
+				new T("CCC", "CCC"),
 				new T("ABC", "ABC"), 
 				new T("EEE", "EEE"), 
 				new T("ABC", "ABC"),
 				new T("CCC", "CCC"),
 				new T("","") 
-
 		};
 	}
 
@@ -90,6 +96,12 @@ public class CachingSetTokenizerTest extends TokenizerTest {
 
 		 verify(innerTokenizer, times(1)).tokenizeToSet("ABC");
 		 verify(innerTokenizer, times(2)).tokenizeToSet("CCC");
+	}
+	
+	@Test(expected=IllegalStateException.class) 
+	public void shouldThrowIllegalStateException(){
+		ExecutionExceptionCache<String, Set<String>> cache = new ExecutionExceptionCache<>();
+		new CachingSetTokenizer(cache, whitespace()).tokenizeToSet("Sheep");
 	}
 	
 }

@@ -20,12 +20,11 @@
 package org.simmetrics.metrics;
 
 import static java.lang.Math.max;
-
 import org.simmetrics.StringDistance;
 import org.simmetrics.StringMetric;
 
 /**
- * Applies the longest common substring algorithm to calculate the similarity
+ * Applies the longest common subsequence algorithm to calculate the similarity
  * and distance between two strings.
  * <p>
  * <code>
@@ -37,10 +36,10 @@ import org.simmetrics.StringMetric;
  * This class is immutable and thread-safe.
  * 
  * @see <a
- *      href="https://en.wikipedia.org/wiki/Longest_common_substring_problem">Wikipedia
- *      - Longest common substring problem</a>
+ *      href="https://en.wikipedia.org/wiki/Longest_common_subsequence_problem">Wikipedia
+ *      - Longest common subsequence problem</a>
  */
-public final class LongestCommonSubstring implements StringMetric,
+public final class LongestCommonSubsequence implements StringMetric,
 		StringDistance {
 
 	@Override
@@ -54,7 +53,7 @@ public final class LongestCommonSubstring implements StringMetric,
 			return 0.0f;
 		}
 
-		return lcs(a, b) / (float) max(a.length(), b.length());
+		return lcs(a, b) / (float)max(a.length() ,b.length());
 	}
 
 	@Override
@@ -74,36 +73,33 @@ public final class LongestCommonSubstring implements StringMetric,
 
 	private static int lcs(String a, String b) {
 
-		final int m = a.length();
-		final int n = b.length();
+		final int n = a.length();
+		final int m = b.length();
 
-		int[] v0 = new int[n];
-		int[] v1 = new int[n];
+		// We're only interested in the actual longest common subsequence This
+		// means we don't have to backtrack through the n-by-m matrix and can
+		// safe some space by reusing v0 for row i-1.
+		int[] v0 = new int[m + 1];
+		int[] v1 = new int[m + 1];
 
-		int z = 0;
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				if (a.charAt(i) == b.charAt(j)) {
-					if (i == 0 || j == 0) {
-						v1[j] = 1;
-					} else {
-						v1[j] = v0[j - 1] + 1;
-					}
-					if (v1[j] > z) {
-						z = v1[j];
-					}
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= m; j++) {
+				if (a.charAt(i - 1) == b.charAt(j - 1)) {
+					v1[j] = v0[j - 1] + 1;
 				} else {
-					v1[j] = 0;
+					v1[j] = max(v1[j - 1], v0[j]);
 				}
 			}
-			final int[] swap = v0; v0 = v1; v1 = swap;
+			int[] swap = v0; v0 = v1; v1 = swap; 
 		}
-		return z;
+
+		// Because we swapped the results are in v0.
+		return v0[m];
 	}
 
 	@Override
 	public String toString() {
-		return "LongestCommonSubstring";
+		return "LongestCommonSubsequence";
 	}
 
 }

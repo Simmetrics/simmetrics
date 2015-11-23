@@ -1,8 +1,8 @@
 /*
  * #%L
- * SimMetrics Core
+ * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 SimMetrics Authors
+ * Copyright (C) 2014 - 2015 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,10 +21,10 @@
 package org.simmetrics.builders;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.simmetrics.metrics.StringDistances.create;
-import static org.simmetrics.metrics.StringDistances.createForListDistance;
-import static org.simmetrics.metrics.StringDistances.createForMultisetDistance;
-import static org.simmetrics.metrics.StringDistances.createForSetDistance;
+import static org.simmetrics.builders.StringDistances.create;
+import static org.simmetrics.builders.StringDistances.createForListDistance;
+import static org.simmetrics.builders.StringDistances.createForMultisetDistance;
+import static org.simmetrics.builders.StringDistances.createForSetDistance;
 
 import java.util.ArrayList;
 import java.util.Collection;

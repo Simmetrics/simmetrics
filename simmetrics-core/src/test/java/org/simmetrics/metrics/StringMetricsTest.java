@@ -52,7 +52,7 @@ import org.simmetrics.tokenizers.Tokenizers;
 
 import com.google.common.collect.Multiset;
 
-@SuppressWarnings({ "javadoc", "static-method" })
+@SuppressWarnings({ "javadoc", "static-method","deprecation" })
 @RunWith(Enclosed.class)
 public class StringMetricsTest {
 

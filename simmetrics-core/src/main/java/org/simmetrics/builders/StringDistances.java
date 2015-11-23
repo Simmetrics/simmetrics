@@ -18,31 +18,23 @@
  * #L%
  */
 
-package org.simmetrics.metrics;
+package org.simmetrics.builders;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.simmetrics.simplifiers.Simplifiers.chain;
+
 import java.util.List;
 import java.util.Set;
 
 import org.simmetrics.Distance;
 import org.simmetrics.StringDistance;
-import org.simmetrics.builders.StringDistanceBuilder;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.tokenizers.Tokenizer;
+
 import com.google.common.collect.Multiset;
 
+final class StringDistances {
 
-public final class StringDistances {
-
-	/**
-	 * Either constructs a new string distance or returns the original distance.
-	 * 
-	 * @param distance
-	 *            a distance for strings
-	 * 
-	 * @return a string distance.
-	 */
 	public static StringDistance create(Distance<String> distance) {
 		if (distance instanceof StringDistance) {
 			return (StringDistance) distance;
@@ -51,21 +43,6 @@ public final class StringDistances {
 		return new ForString(distance);
 	}
 
-	/**
-	 * Constructs a new composite string distance. The simplifier will be applied
-	 * before the distance distances the strings.
-	 * 
-	 * @param distance
-	 *            a list distance
-	 * @param simplifier
-	 *            a simplifier
-	 * @return a new composite string distance
-	 * 
-	 * @throws NullPointerException
-	 *             when either distance or simplifier are null
-	 * 
-	 * @see StringDistanceBuilder
-	 */
 	public static StringDistance create(Distance<String> distance, Simplifier simplifier) {
 		if (distance instanceof ForString) {
 			ForString forString = (ForString) distance;
@@ -90,128 +67,29 @@ public final class StringDistances {
 		return new ForStringWithSimplifier(distance, simplifier);
 	}
 
-	/**
-	 * Creates a new composite string distance.The tokenizer is used to tokenize
-	 * the simplified strings. The list distance distances the the tokens.
-	 * 
-	 * @param distance
-	 *            a list distance
-	 * @param simplifier
-	 *            a simplifier
-	 * @param tokenizer
-	 *            a tokenizer
-	 * @return a new composite list distance
-	 * 
-	 * @throws NullPointerException
-	 *             when either distance, simplifier or tokenizer are null
-	 * 
-	 * @see StringDistanceBuilder
-	 */
 	public static StringDistance createForListDistance(Distance<List<String>> distance, Simplifier simplifier,
 			Tokenizer tokenizer) {
 		return new ForListWithSimplifier(distance, simplifier, tokenizer);
 	}
 
-	/**
-	 * Creates a new composite string distance. The tokenizer is used to tokenize
-	 * the strings. The list distance distances the the tokens.
-	 * 
-	 * @param distance
-	 *            a list distance
-	 * @param tokenizer
-	 *            a tokenizer
-	 * @return a new composite string distance
-	 * 
-	 * @throws NullPointerException
-	 *             when either distance or tokenizer are null
-	 * 
-	 * @see StringDistanceBuilder
-	 */
 	public static StringDistance createForListDistance(Distance<List<String>> distance, Tokenizer tokenizer) {
 		return new ForList(distance, tokenizer);
 	}
 
-	/**
-	 * Creates a new composite string distance.The tokenizer is used to tokenize
-	 * the simplified strings. The set distance distances the the tokens.
-	 * 
-	 * @param distance
-	 *            a list distance
-	 * @param simplifier
-	 *            a simplifier
-	 * @param tokenizer
-	 *            a tokenizer
-	 * @return a new composite string distance
-	 * 
-	 * @throws NullPointerException
-	 *             when either distance, simplifier or tokenizer are null
-	 * 
-	 * @see StringDistanceBuilder
-	 */
 	public static StringDistance createForSetDistance(Distance<Set<String>> distance, Simplifier simplifier,
 			Tokenizer tokenizer) {
 		return new ForSetWithSimplifier(distance, simplifier, tokenizer);
 	}
 
-	/**
-	 * Creates a new composite string distance. The tokenizer is used to tokenize
-	 * the strings. The set distance distances the the tokens.
-	 * 
-	 * @param distance
-	 *            a set distance
-	 * 
-	 * @param tokenizer
-	 *            a tokenizer
-	 * @return a new composite string distance
-	 * 
-	 * @throws NullPointerException
-	 *             when either distance or tokenizer are null
-	 * 
-	 * @see StringDistanceBuilder
-	 */
 	public static StringDistance createForSetDistance(Distance<Set<String>> distance, Tokenizer tokenizer) {
 		return new ForSet(distance, tokenizer);
 	}
 
-	
-	/**
-	 * Creates a new composite string distance.The tokenizer is used to tokenize
-	 * the simplified strings. The set distance distances the the tokens.
-	 * 
-	 * @param distance
-	 *            a list distance
-	 * @param simplifier
-	 *            a simplifier
-	 * @param tokenizer
-	 *            a tokenizer
-	 * @return a new composite string distance
-	 * 
-	 * @throws NullPointerException
-	 *             when either distance, simplifier or tokenizer are null
-	 * 
-	 * @see StringDistanceBuilder
-	 */
 	public static StringDistance createForMultisetDistance(Distance<Multiset<String>> distance, Simplifier simplifier,
 			Tokenizer tokenizer) {
 		return new ForMultisetWithSimplifier(distance, simplifier, tokenizer);
 	}
 
-	/**
-	 * Creates a new composite string distance. The tokenizer is used to tokenize
-	 * the strings. The set distance distances the the tokens.
-	 * 
-	 * @param distance
-	 *            a set distance
-	 * 
-	 * @param tokenizer
-	 *            a tokenizer
-	 * @return a new composite string distance
-	 * 
-	 * @throws NullPointerException
-	 *             when either distance or tokenizer are null
-	 * 
-	 * @see StringDistanceBuilder
-	 */
 	public static StringDistance createForMultisetDistance(Distance<Multiset<String>> distance, Tokenizer tokenizer) {
 		return new ForMultiset(distance, tokenizer);
 	}

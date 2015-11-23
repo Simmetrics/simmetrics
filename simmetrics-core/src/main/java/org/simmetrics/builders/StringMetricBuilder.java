@@ -21,10 +21,10 @@
 package org.simmetrics.builders;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.simmetrics.metrics.StringMetrics.create;
-import static org.simmetrics.metrics.StringMetrics.createForListMetric;
-import static org.simmetrics.metrics.StringMetrics.createForMultisetMetric;
-import static org.simmetrics.metrics.StringMetrics.createForSetMetric;
+import static org.simmetrics.builders.StringMetrics.create;
+import static org.simmetrics.builders.StringMetrics.createForListMetric;
+import static org.simmetrics.builders.StringMetrics.createForMultisetMetric;
+import static org.simmetrics.builders.StringMetrics.createForSetMetric;
 
 import java.util.ArrayList;
 import java.util.Collection;

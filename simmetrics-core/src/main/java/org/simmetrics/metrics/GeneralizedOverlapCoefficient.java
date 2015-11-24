@@ -20,7 +20,7 @@
 
 package org.simmetrics.metrics;
 
-import static com.google.common.collect.Multisets.intersection;
+import static org.simmetrics.metrics.Math.intersection;
 import static java.lang.Math.min;
 
 import org.simmetrics.MultisetMetric;
@@ -64,12 +64,6 @@ public final class GeneralizedOverlapCoefficient<T> implements
 			return 0.0f;
 		}
 
-		// Smaller set first for performance improvement.
-		// See: MultisetIntersectionSize benchmark
-		if(a.size() > b.size()){
-			final Multiset<T> swap = a; a = b; b = swap;
-		}
-		
 		// ∣q ∩ r∣ / min{∣q∣, ∣r∣}
 		return intersection(a, b).size() / (float) min(a.size(), b.size());
 	}

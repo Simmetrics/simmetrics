@@ -20,7 +20,7 @@
 
 package org.simmetrics.metrics;
 
-import static com.google.common.collect.Multisets.intersection;
+import static org.simmetrics.metrics.Math.intersection;
 
 import org.simmetrics.MultisetDistance;
 import org.simmetrics.MultisetMetric;
@@ -69,13 +69,7 @@ public final class GeneralizedJaccard<T> implements MultisetMetric<T>,
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
-		
-		// Smaller set first for performance improvement. 
-		// See: MultisetIntersectionSize benchmark
-		if(a.size() > b.size()){
-			final Multiset<T> swap = a; a = b; b = swap;
-		}
-		
+
 		final int intersection = intersection(a, b).size();
 
 		// ∣a ∩ b∣ / ∣a ∪ b∣

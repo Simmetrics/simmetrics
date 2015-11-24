@@ -20,7 +20,7 @@
 
 package org.simmetrics.metrics;
 
-import static com.google.common.collect.Sets.intersection;
+import static org.simmetrics.metrics.Math.intersection;
 import static java.lang.Math.min;
 
 import java.util.Set;
@@ -71,13 +71,7 @@ public final class OverlapCoefficient<T> implements SetMetric<T> {
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
-		
-		// Smaller set first for performance improvement. 
-		// See: note at Sets.intersection
-		if(a.size() > b.size()){
-			final Set<T> swap = a; a = b; b = swap;
-		}
-		
+
 		// ∣q ∩ r∣ / min{∣q∣, ∣r∣}
 		return intersection(a, b).size() / (float) min(a.size(), b.size());
 	}

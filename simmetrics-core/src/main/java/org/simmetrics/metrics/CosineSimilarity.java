@@ -22,6 +22,7 @@ package org.simmetrics.metrics;
 
 import static com.google.common.collect.Multisets.union;
 import static java.lang.Math.sqrt;
+import static org.simmetrics.metrics.Math.union;
 
 import org.simmetrics.MultisetMetric;
 
@@ -68,12 +69,6 @@ public final class CosineSimilarity<T> implements MultisetMetric<T> {
 		float dotProduct = 0;
 		float magnitudeA = 0;
 		float magnitudeB = 0;
-		
-		// Lager set first for performance improvement. 
-		// See: MultisetUnionSize benchmark
-		if(a.size() < b.size()){
-			final Multiset<T> swap = a; a = b; b = swap;
-		}
 
 		for (T entry : union(a, b).elementSet()) {
 			float aCount = a.count(entry);

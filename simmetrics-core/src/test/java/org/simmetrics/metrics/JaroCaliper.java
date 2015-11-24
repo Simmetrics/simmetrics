@@ -18,13 +18,16 @@
  * #L%
  */
 
-package org.simmetrics.performance;
+package org.simmetrics.metrics;
 
 import static java.lang.Math.floor;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.util.Arrays.copyOf;
 
+import java.io.PrintWriter;
+
+import org.junit.Test;
 import org.simmetrics.Metric;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.Jaro;
@@ -34,7 +37,7 @@ import com.google.caliper.Param;
 import com.google.caliper.runner.CaliperMain;
 
 @SuppressWarnings("javadoc")
-public final class JaroCaliper {
+public class JaroCaliper {
 
 	enum Value {
 		Shakespear("This happy breed of men"), Rumi(
@@ -84,7 +87,15 @@ public final class JaroCaliper {
 	public static void main(String[] args) {
 		CaliperMain.main(JaroCaliper.class, args);
 	}
-	
+
+	@Test
+	public void dryrun() throws Exception {
+		PrintWriter stdout = new PrintWriter(System.out, true);
+		PrintWriter stderr = new PrintWriter(System.err, true);
+		String[] args = new String[] { "--dry-run", JaroCaliper.class.getName() };
+		CaliperMain.exitlessMain(args, stdout, stderr);
+	}
+
 	private static class JaroV3_0_3 implements StringMetric {
 
 		public JaroV3_0_3() {
@@ -383,7 +394,7 @@ public final class JaroCaliper {
 				int fromIndex, int toIndex) {
 
 			// compare char with range of characters to either side
-			for (int j = Math.max(0, fromIndex); j < Math.min(toIndex,
+			for (int j = max(0, fromIndex); j < min(toIndex,
 					buffer.length()); j++) {
 				// check if found
 				if (buffer.charAt(j) == character) {

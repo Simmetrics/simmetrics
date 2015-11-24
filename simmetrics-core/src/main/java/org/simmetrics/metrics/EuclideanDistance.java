@@ -20,7 +20,7 @@
 
 package org.simmetrics.metrics;
 
-import static com.google.common.collect.Multisets.union;
+import static org.simmetrics.metrics.Math.union;
 import static java.lang.Math.sqrt;
 
 import org.simmetrics.MultisetDistance;
@@ -60,15 +60,9 @@ public final class EuclideanDistance<T> implements MultisetMetric<T>, MultisetDi
 
 	@Override
 	public float distance(Multiset<T> a, Multiset<T> b) {
-		
-		// Lager set first for performance improvement. 
-		// See: MultisetUnionSize benchmark
-		if(a.size() < b.size()){
-			final Multiset<T> swap = a; a = b; b = swap;
-		}
-		
+
 		float distance = 0.0f;
-		
+
 		for (T token : union(a, b).elementSet()) {
 			float frequencyInA = a.count(token);
 			float frequencyInB = b.count(token);

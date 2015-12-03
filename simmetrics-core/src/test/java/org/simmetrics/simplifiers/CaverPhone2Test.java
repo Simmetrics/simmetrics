@@ -20,6 +20,7 @@
 package org.simmetrics.simplifiers;
 
 @SuppressWarnings("javadoc")
+@Deprecated
 public class CaverPhone2Test extends SimplifierTest {
 
 	@Override

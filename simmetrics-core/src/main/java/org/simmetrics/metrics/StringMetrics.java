@@ -255,7 +255,10 @@ public final class StringMetrics {
 	 * {@link JaroWinkler} metric.
 	 * 
 	 * @return a Soundex metric
+	 * 
+	 * @deprecated to be removed due to a lack of a general purpose. 
 	 */
+	@Deprecated
 	public static StringMetric soundex() {
 		return create(new JaroWinkler(), new Soundex());
 	}

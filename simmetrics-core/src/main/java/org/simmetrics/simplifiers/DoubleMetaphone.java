@@ -29,6 +29,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 
  * @see org.apache.commons.codec.language.DoubleMetaphone
  */
+@Deprecated
 public final class DoubleMetaphone implements Simplifier {
 
 	private static final int DEFAULT_CODE_LENGTH = 4;

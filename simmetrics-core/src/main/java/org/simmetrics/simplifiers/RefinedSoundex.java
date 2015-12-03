@@ -31,6 +31,7 @@ import static org.apache.commons.codec.language.RefinedSoundex.US_ENGLISH;
  *
  * @see org.apache.commons.codec.language.RefinedSoundex
  */
+@Deprecated
 public final class RefinedSoundex implements Simplifier {
 
 	@Override

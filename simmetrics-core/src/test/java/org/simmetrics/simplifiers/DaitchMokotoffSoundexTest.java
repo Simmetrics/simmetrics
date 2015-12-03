@@ -20,6 +20,7 @@
 package org.simmetrics.simplifiers;
 
 @SuppressWarnings("javadoc")
+@Deprecated
 public class DaitchMokotoffSoundexTest extends SimplifierTest {
 
 	@Override

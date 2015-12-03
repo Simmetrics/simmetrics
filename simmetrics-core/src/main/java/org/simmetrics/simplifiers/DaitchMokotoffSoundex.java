@@ -37,6 +37,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @see <a href="http://www.avotaynu.com/soundex.htm">Avotaynu - Soundexing and
  *      Genealogy</a>
  */
+@Deprecated
 public final class DaitchMokotoffSoundex implements Simplifier {
 
 	private final org.apache.commons.codec.language.DaitchMokotoffSoundex simplifier;

@@ -407,7 +407,7 @@ public class StringMetricsTest {
 		}
 
 	}
-
+	@Deprecated
 	public static final class CreateSoundex extends StringMetricTest {
 
 		@Override

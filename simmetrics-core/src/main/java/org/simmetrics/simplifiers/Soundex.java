@@ -32,6 +32,7 @@ import static org.apache.commons.codec.language.Soundex.US_ENGLISH;
  * 
  * @see org.apache.commons.codec.language.Soundex
  */
+@Deprecated
 public final class Soundex implements Simplifier {
 
 	@Override

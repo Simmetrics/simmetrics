@@ -46,215 +46,236 @@ import com.google.common.collect.Multiset;
  * list- or set metrics. All metrics are setup with sensible defaults, to
  * customize metrics use {@link StringMetricBuilder}.
  * <p>
- * The available metrics are:
- * 
- * <ul>
- * <li>Block Distance
- * <li>Cosine Similarity
- * <li>Damerau Levenshtein
- * <li>Dice
- * <li>SimonWhite (Quantitative Dice)
- * <li>Euclidean Distance
- * <li>Jaccard
- * <li>Generalized Jaccard
- * <li>Jaro
- * <li>Jaro-Winkler
- * <li>LevenShtein
- * <li>Monge-Elkan
- * <li>NeedleMan Wunch
- * <li>Overlap Coefficient
- * <li>q-Grams Distance
- * <li>Smith-Waterman
- * <li>Smith-Waterman-Gotoh
- * <li>Soundex
- * </ul>
- * 
- * <p>
  * All methods return immutable objects provided the arguments are also
  * immutable.
  */
 public final class StringMetrics {
 
 	/**
-	 * Returns a string metric that uses a {@link Tokenizers#whitespace()} and
-	 * the {@link CosineSimilarity} metric.
+	 * Returns a cosine similarity metric over tokens in a string. The tokens
+	 * are created by splitting the string on whitespace.
 	 * 
 	 * @return a cosine similarity metric
+	 * 
+	 * @see CosineSimilarity
 	 */
 	public static StringMetric cosineSimilarity() {
 		return createForMultisetMetric(new CosineSimilarity<String>(), whitespace());
 	}
 	
 	/**
-	 * Returns a string metric that uses a {@link Tokenizers#whitespace()} and
-	 * the {@link BlockDistance} metric.
+	 * Returns a block distance similarity metric over tokens in a string. The tokens 
+	 * are created by splitting the string on whitespace.
 	 * 
 	 * @return a block distance metric
+	 * 
+	 * @see BlockDistance
 	 */
 	public static StringMetric blockDistance() {
 		return createForMultisetMetric(new BlockDistance<String>(), whitespace());
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link DamerauLevenshtein} metric.
+	 * Returns a Damerau-Levenshtein similarity metric over tokens in a string. The
+	 * tokens are created by splitting the string on whitespace.
 	 * 
-	 * @return a damerau levenshtein metric
+	 * @return a Damerau-Levenshtein metric
+	 * 
+	 * @see DamerauLevenshtein
 	 */
 	public static StringMetric damerauLevenshtein() {
 		return new DamerauLevenshtein();
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link Tokenizers#whitespace()} and
-	 * the {@link Dice} metric.
+	 * Returns a Dice similarity metric over tokens in a string. The
+	 * tokens are created by splitting the string on whitespace.
 	 * 
 	 * @return a dice metric
+	 * 
+	 * @see Dice
 	 */
 	public static StringMetric dice() {
 		return createForSetMetric(new Dice<String>(), whitespace());
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link Tokenizers#whitespace()} and
-	 * the {@link EuclideanDistance} metric.
+	 * Returns an Euclidean distance similarity metric over tokens in a string. The
+	 * tokens are created by splitting the string on whitespace.
 	 * 
 	 * @return a Euclidean distance similarity metric
+	 * 
+	 * @see EuclideanDistance
 	 */
 	public static StringMetric euclideanDistance() {
 		return createForMultisetMetric(new EuclideanDistance<String>(), whitespace());
 	}
 	
 	/**
-	 * Returns a string metric that uses a {@link Tokenizers#whitespace()} and
-	 * the {@link GeneralizedJaccard} metric.
+	 * Returns a generalized Jaccard similarity metric over tokens in a string. The
+	 * tokens are created by splitting the string on whitespace.
 	 * 
-	 * @return a generalized jaccard index metric
+	 * @return a generalized Jaccard index metric
+	 * 
+	 * @see GeneralizedJaccard
 	 */
 	public static StringMetric generalizedJaccard() {
 		return createForMultisetMetric(new GeneralizedJaccard<String>(), whitespace());
 	}
 
 	/**
-	 * Returns an string metric that uses the {@link Identity} metric.
+	 * Returns an identity similarity metric. The metric returns 1.0 when the inputs are
+	 * equals, and 0.0 when they're not.
 	 * 
 	 * @return an identity string metric
+	 * 
+	 * @see Identity
 	 */
 	public static StringMetric identity() {
 		return create(new Identity<String>());
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link Tokenizers#whitespace()} and
-	 * the {@link Jaccard} metric.
+	 * Returns a Jaccard similarity metric over tokens in a string. The
+	 * tokens are created by splitting the string on whitespace.
 	 * 
 	 * @return a Jaccard similarity metric
+	 * 
+	 * @see Jaccard
 	 */
 	public static StringMetric jaccard() {
 		return createForSetMetric(new Jaccard<String>(), whitespace());
 	}
 
 	/**
-	 * Returns a string metric that uses the {@link Jaro} metric.
+	 * Returns a Jaro similarity metric.
 	 * 
-	 * @return a Jaro metric
+	 * @return a Jaro similarity metric
+	 * 
+	 * @see Jaro
 	 */
 	public static StringMetric jaro() {
 		return new Jaro();
 	}
 
 	/**
-	 * Returns a string metric that uses the {@link JaroWinkler} metric.
+	 * Returns a Jaro-Winkler similarity metric.
 	 * 
-	 * @return a Jaro-Winkler metric
+	 * @return a Jaro-Winkler similarity metric
+	 * 
+	 * @see JaroWinkler
 	 */
 	public static StringMetric jaroWinkler() {
 		return new JaroWinkler();
 	}
 
 	/**
-	 * Returns a string metric that uses the {@link Levenshtein} metric.
+	 * Returns a Levenshtein similarity metric.
 	 * 
-	 * @return a Levenshtein metric
+	 * @return a Levenshtein similarity metric
+	 * 
+	 * @see Levenshtein
 	 */
 	public static StringMetric levenshtein() {
 		return new Levenshtein();
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link Tokenizers#whitespace()} and
-	 * the {@link MongeElkan} metric with an internal {@link SmithWatermanGotoh}
-	 * metric.
+	 * Returns a normalized Monge-Elkan metric over tokens in a string. The tokens are
+	 * created by splitting the string on whitespace. The metric applies
+	 * Smith-Waterman-Gotoh internally.
 	 * 
-	 * @return a Monge-Elkan metric
+	 * @return a normalized Monge-Elkan metric
+	 * 
+	 * @see MongeElkan
 	 */
 	public static StringMetric mongeElkan() {
 		return createForListMetric(new MongeElkan(new SmithWatermanGotoh()), whitespace());
 	}
 
 	/**
-	 * Returns a string metric that uses the {@link NeedlemanWunch} metric.
+	 * Returns a Needleman-Wunch similarity metric.
 	 * 
-	 * @return a Needleman-Wunch metric
+	 * @return a Needleman-Wunch similarity metric
+	 * 
+	 * @see NeedlemanWunch
 	 */
 	public static StringMetric needlemanWunch() {
 		return new NeedlemanWunch();
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link Tokenizers#whitespace()} and
-	 * the {@link OverlapCoefficient} metric.
+	 * Returns an overlap coefficient similarity metric over tokens in a string. The
+	 * tokens are created by splitting the string on whitespace.
 	 * 
-	 * @return a overlap coefficient metric
+	 * @return an overlap coefficient metric
+	 * 
+	 * @see OverlapCoefficient
 	 */
 	public static StringMetric overlapCoefficient() {
 		return createForSetMetric(new OverlapCoefficient<String>(), whitespace());
 	}
 
 	/**
-	 * Returns a string metric that uses a
-	 * {@link Tokenizers#qGramWithPadding(int)} for {@code q=3} and the
-	 * {@link BlockDistance} metric.
+	 * Returns a q-grams distance similarity metric. Q-grams distance applies a
+	 * block distance similarity similarity metric over all tri-grams in a string.
 	 * 
-	 * @return a q-grams distance metric
+	 * @return a q-grams distance similarity metric
+	 * 
+	 * @see BlockDistance
 	 */
 	public static StringMetric qGramsDistance() {
 		return createForMultisetMetric(new BlockDistance<String>(), Tokenizers.qGramWithPadding(3));
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link Tokenizers#whitespace()}
-	 * followed by a {@link Tokenizers#qGramWithPadding(int)} for {@code q=2}
-	 * and the {@link SimonWhite} metric.
+	 * Returns a Simon White similarity metric. Simon White applies the
+	 * quantitative version Dice similarity over tokens in a string. The tokens
+	 * are created by splitting the string on whitespace and taking bi-grams of
+	 * the created tokens.
+	 * <p>
+	 * Implementation based on the ideas as outlined in <a
+	 * href="http://www.catalysoft.com/articles/StrikeAMatch.html">How to Strike
+	 * a Match</a> by <cite>Simon White</cite>.
 	 * 
-	 * @return a Simon White metric
+	 * @return a Simon White similarity metric
+	 * 
+	 * @see SimonWhite
 	 */
 	public static StringMetric simonWhite() {
 		return createForMultisetMetric(new SimonWhite<String>(), chain(whitespace(), qGram(2)));
 	}
 
 	/**
-	 * Returns a string metric that uses the {@link SmithWaterman} metric.
+	 * Returns a Smith-Waterman similarity metric.
 	 * 
-	 * @return a Smith-Waterman metric
+	 * @return a Smith-Waterman similarity metric
+	 * 
+	 * @see SmithWaterman
 	 */
 	public static StringMetric smithWaterman() {
 		return new SmithWaterman();
 	}
 
 	/**
-	 * Returns a string metric that uses the {@link SmithWatermanGotoh} metric.
+	 * Returns a Smith-Waterman-Gotoh similarity metric.
 	 * 
-	 * @return a Smith-Waterman-Gotoh metric
+	 * @return a Smith-Waterman-Gotoh similarity metric
+	 * 
+	 * @see SmithWatermanGotoh
 	 */
 	public static StringMetric smithWatermanGotoh() {
 		return new SmithWatermanGotoh();
 	}
 
 	/**
-	 * Returns a string metric that uses a {@link Soundex} and
-	 * {@link JaroWinkler} metric.
+	 * Returns a soundex similarity metric. The metric applies the Jaro-Winkler
+	 * similarity metric over soundex strings.
 	 * 
-	 * @return a Soundex metric
+	 * @return a soundex similarity metric
+	 * 
+	 * @see Soundex
+	 * @see JaroWinkler
 	 */
 	public static StringMetric soundex() {
 		return create(new JaroWinkler(), new Soundex());

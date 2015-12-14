@@ -9,7 +9,7 @@ Change Log
  - Removed deprecated methods and classes
  - Multiset features
     - Added MultisetMetric and MultisetDistance
-	- Added Tokenizers.tokenizerToMultiset
+	- Added Tokenizers.tokenizeToMultiset
 	- Added StringMetricBuilder.with(MultisetMetric)
 	- BlockDistance, EuclideanDistance, MatchingCoefficient and SimonWhite implement MultisetMetric and MultisetDistance rather then the list based equivalents
  - Implementation of CosineSimilarity for sets is better described as the Tanimoto coefficient. CosineSimilarity has been changed from SetMetric to MultisetMetric. It will now take token occurrence into account. Added TanimotoCoefficient which calculates the cosine similarity for sets.

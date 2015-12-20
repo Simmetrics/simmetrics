@@ -88,7 +88,7 @@ public final class Jaccard<T> implements SetMetric<T>, SetDistance<T> {
 
 		// ∣a ∩ b∣ / ∣a ∪ b∣
 		// Implementation note: The size of the union of two sets is equal to
-		// the size of both lists minus the duplicate elements.
+		// the size of both sets minus the duplicate elements.
 		return intersection / (float) (a.size() + b.size() - intersection);
 	}
 

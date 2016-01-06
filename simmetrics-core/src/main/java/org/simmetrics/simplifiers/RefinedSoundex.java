@@ -30,6 +30,8 @@ import static org.apache.commons.codec.language.RefinedSoundex.US_ENGLISH;
  * This class is immutable and thread-safe.
  *
  * @see org.apache.commons.codec.language.RefinedSoundex
+ * 
+ * @deprecated will be removed due to a lack of a good use case
  */
 @Deprecated
 public final class RefinedSoundex implements Simplifier {

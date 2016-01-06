@@ -31,6 +31,8 @@ import static org.apache.commons.codec.language.Soundex.US_ENGLISH;
  * This class is thread-safe and immutable.
  * 
  * @see org.apache.commons.codec.language.Soundex
+ * 
+ * @deprecated will be removed due to a lack of a good use case
  */
 @Deprecated
 public final class Soundex implements Simplifier {

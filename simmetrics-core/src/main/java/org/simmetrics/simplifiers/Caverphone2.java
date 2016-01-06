@@ -36,6 +36,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *      2.0 specification</a>
  * @see org.apache.commons.codec.language.Caverphone2
  *
+ * @deprecated will be removed due to a lack of a good use case
  */
 @Deprecated
 public final class Caverphone2 implements Simplifier {

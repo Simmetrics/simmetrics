@@ -256,7 +256,7 @@ public final class StringMetrics {
 	 * 
 	 * @return a Soundex metric
 	 * 
-	 * @deprecated to be removed due to a lack of a general purpose. 
+	 * @deprecated will be removed due to a lack of a good use case 
 	 */
 	@Deprecated
 	public static StringMetric soundex() {

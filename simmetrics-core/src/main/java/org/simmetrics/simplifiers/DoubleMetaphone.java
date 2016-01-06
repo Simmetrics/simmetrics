@@ -28,6 +28,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * This class is immutable and thread-safe.
  * 
  * @see org.apache.commons.codec.language.DoubleMetaphone
+ * 
+ * @deprecated will be removed due to a lack of a good use case
  */
 @Deprecated
 public final class DoubleMetaphone implements Simplifier {

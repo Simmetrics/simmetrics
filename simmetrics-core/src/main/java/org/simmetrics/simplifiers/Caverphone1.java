@@ -36,6 +36,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *      href="http://caversham.otago.ac.nz/files/working/ctp150804.pdf">Caverphone
  *      2.0 specification</a>
  * @see org.apache.commons.codec.language.Caverphone1
+ * 
+ * @deprecated will be removed due to a lack of a good use case
  *
  */
 @Deprecated

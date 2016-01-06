@@ -36,6 +36,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *      Wikipedia - Daitch-Mokotoff Soundex</a>
  * @see <a href="http://www.avotaynu.com/soundex.htm">Avotaynu - Soundexing and
  *      Genealogy</a>
+ *      
+ * @deprecated will be removed due to a lack of a good use case
  */
 @Deprecated
 public final class DaitchMokotoffSoundex implements Simplifier {

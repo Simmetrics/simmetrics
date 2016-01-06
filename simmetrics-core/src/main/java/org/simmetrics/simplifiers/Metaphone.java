@@ -31,6 +31,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * This class is thread-safe and immutable.
  * 
  * @see org.apache.commons.codec.language.Metaphone
+ * 
+ * @deprecated will be removed due to a lack of a good use case
  */
 @Deprecated
 public final class Metaphone implements Simplifier {

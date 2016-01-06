@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,8 +36,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *      href="http://caversham.otago.ac.nz/files/working/ctp150804.pdf">Caverphone
  *      2.0 specification</a>
  * @see org.apache.commons.codec.language.Caverphone1
+ * 
+ * @deprecated will be removed due to a lack of a good use case
  *
  */
+@Deprecated
 public final class Caverphone1 implements Simplifier {
 
 	private final org.apache.commons.codec.language.Caverphone1 simplifier = new org.apache.commons.codec.language.Caverphone1();

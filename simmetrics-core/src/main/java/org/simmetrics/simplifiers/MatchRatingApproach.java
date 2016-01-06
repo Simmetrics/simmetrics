@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,10 @@ import org.apache.commons.codec.language.MatchRatingApproachEncoder;
  *
  * @see <a href="http://en.wikipedia.org/wiki/Match_rating_approach">Wikipedia - Match Rating Approach</a>
  * @see org.apache.commons.codec.language.MatchRatingApproachEncoder
+ * 
+ * @deprecated will be removed due to a lack of a good use case
  */
+@Deprecated
 public final class MatchRatingApproach implements Simplifier {
 
 	private final MatchRatingApproachEncoder simplifier = new MatchRatingApproachEncoder();

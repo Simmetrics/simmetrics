@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *      Wikipedia - Daitch-Mokotoff Soundex</a>
  * @see <a href="http://www.avotaynu.com/soundex.htm">Avotaynu - Soundexing and
  *      Genealogy</a>
+ *      
+ * @deprecated will be removed due to a lack of a good use case
  */
+@Deprecated
 public final class DaitchMokotoffSoundex implements Simplifier {
 
 	private final org.apache.commons.codec.language.DaitchMokotoffSoundex simplifier;

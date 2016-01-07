@@ -23,6 +23,8 @@ package org.simmetrics.metrics;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.simmetrics.Metric;
+import org.simmetrics.StringDistance;
+import org.simmetrics.StringDistanceTest;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricTest;
 
@@ -163,6 +165,37 @@ public final class JaroTest {
 							"Structural Assessment: The Role of Large and Full-Scale Testing"),
 					new T(0.4931f, "Web Aplications",
 							"How to Find a Scholarship Online"), };
+		}
+	}
+	
+public static final class DistanceTest extends StringDistanceTest {
+		
+		@Override
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+		
+		@Override
+		protected StringDistance getMetric() {
+			return new Jaro();
+		}
+
+		
+		@Override
+		protected T[] getTests()  {
+			return new T[] {
+					new T(0.0556f, "test string1", "test string2"),
+					new T(0.2222f, "test", "test string2"),
+					new T(1.0000f, "", "test string2"),
+					new T(0.1333f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+					new T(0.0952f, "a b c d", "a b c e"),
+					new T(0.1111f, "Healed", "Sealed"),
+					new T(0.2540f, "Healed", "Healthy"),
+					new T(0.1778f, "Healed", "Heard"),
+					new T(0.3056f, "Healed", "Herded"),
+					new T(0.2500f, "Healed", "Help"),
+					new T(0.3889f, "Healed", "Sold"),
+					new T(0.2500f, "Healed", "Help"), };
 		}
 	}
 }

@@ -54,19 +54,19 @@ import org.simmetrics.tokenizers.Tokenizers;
 
 import com.google.common.collect.Multiset;
 
-@SuppressWarnings({ "javadoc", "static-method","deprecation" })
+@SuppressWarnings({ "javadoc", "deprecation" })
 @RunWith(Enclosed.class)
 public class StringMetricsTest {
 
-	public static final class Create {
+	public static class Create {
 
-		private final Metric<String> metric = new Identity<>();
-		private final Metric<List<String>> listMetric = new Identity<>();
-		private final Metric<Set<String>> setMetric = new Identity<>();
+		private Metric<String> metric = new Identity<>();
+		private Metric<List<String>> listMetric = new Identity<>();
+		private Metric<Set<String>> setMetric = new Identity<>();
 
-		private final Simplifier simplifier = Simplifiers.toLowerCase();
-		private final Simplifier simplifier2 = Simplifiers.removeNonWord();
-		private final Tokenizer tokenizer = Tokenizers.whitespace();
+		private Simplifier simplifier = Simplifiers.toLowerCase();
+		private Simplifier simplifier2 = Simplifiers.removeNonWord();
+		private Tokenizer tokenizer = Tokenizers.whitespace();
 
 		@Test
 		public void shouldReturnSame() {
@@ -155,11 +155,11 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateForList {
+	public static class CreateForList {
 
-		private final Metric<List<String>> metric = new Identity<>();
-		private final Tokenizer tokenizer = Tokenizers.whitespace();
-		private final Simplifier simplifier = Simplifiers.toLowerCase();
+		private Metric<List<String>> metric = new Identity<>();
+		private Tokenizer tokenizer = Tokenizers.whitespace();
+		private Simplifier simplifier = Simplifiers.toLowerCase();
 
 		@Test
 		public void shouldReturnForList() {
@@ -184,11 +184,11 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateForSet {
+	public static class CreateForSet {
 
-		private final Metric<Set<String>> metric = new Identity<>();
-		private final Tokenizer tokenizer = Tokenizers.whitespace();
-		private final Simplifier simplifier = Simplifiers.toLowerCase();
+		private Metric<Set<String>> metric = new Identity<>();
+		private Tokenizer tokenizer = Tokenizers.whitespace();
+		private Simplifier simplifier = Simplifiers.toLowerCase();
 
 		@Test
 		public void shouldReturnForSet() {
@@ -213,11 +213,11 @@ public class StringMetricsTest {
 
 	}
 	
-	public static final class CreateForMultiset {
+	public static class CreateForMultiset {
 
-		private final Metric<Multiset<String>> metric = new Identity<>();
-		private final Tokenizer tokenizer = Tokenizers.whitespace();
-		private final Simplifier simplifier = Simplifiers.toLowerCase();
+		private Metric<Multiset<String>> metric = new Identity<>();
+		private Tokenizer tokenizer = Tokenizers.whitespace();
+		private Simplifier simplifier = Simplifiers.toLowerCase();
 
 		@Test
 		public void shouldReturnForSet() {
@@ -242,7 +242,7 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateIdentity extends StringMetricTest {
+	public static class CreateIdentity extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
@@ -256,7 +256,7 @@ public class StringMetricsTest {
 		}
 	}
 
-	public static final class CreateCosineSimilarity extends StringMetricTest {
+	public static class CreateCosineSimilarity extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
@@ -279,7 +279,7 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateDiceSimlarity extends StringMetricTest {
+	public static class CreateDiceSimlarity extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
@@ -300,7 +300,7 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateEuclideanMetric extends StringMetricTest {
+	public static class CreateEuclideanMetric extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
@@ -321,7 +321,7 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateJaccard extends StringMetricTest {
+	public static class CreateJaccard extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
@@ -342,7 +342,7 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateGeneralizedJaccard extends StringMetricTest {
+	public static class CreateGeneralizedJaccard extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
@@ -363,7 +363,7 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateMongeElkan extends StringMetricTest {
+	public static class CreateMongeElkan extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
@@ -389,7 +389,7 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateOverlapCoefficient extends StringMetricTest {
+	public static class CreateOverlapCoefficient extends StringMetricTest {
 		@Override
 		protected Metric<String> getMetric() {
 			return StringMetrics.overlapCoefficient();
@@ -414,7 +414,7 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateQGramsMetric extends StringMetricTest {
+	public static class CreateQGramsMetric extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
@@ -435,7 +435,7 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateSimonWhite extends StringMetricTest {
+	public static class CreateSimonWhite extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
@@ -455,7 +455,7 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateSoundex extends StringMetricTest {
+	public static class CreateSoundex extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
@@ -485,7 +485,7 @@ public class StringMetricsTest {
 		}
 	}
 
-	public static final class Utilities {
+	public static class Utilities {
 		//TODO: Test
 		@Test
 		public void blockMetric() {
@@ -494,7 +494,7 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateStringMetrics {
+	public static class CreateStringMetrics {
 		@Test
 		public void damerauLevenshtein() {
 			assertNotNull(StringMetrics.damerauLevenshtein());
@@ -531,11 +531,21 @@ public class StringMetricsTest {
 		public void smithWatermanGotoh() {
 			assertNotNull(StringMetrics.smithWatermanGotoh());
 		}
+		
+		@Test
+		public void longestCommonSubsequence() {
+			assertNotNull(StringMetrics.longestCommonSubsequence());
+		}
+		
+		@Test
+		public void longestCommonSubstring() {
+			assertNotNull(StringMetrics.longestCommonSubstring());
+		}
 	}
 	
 
 
-	public static final class ForListTest extends StringMetricTest {
+	public static class ForListTest extends StringMetricTest {
 		
 		@Override
 		protected boolean toStringIncludesSimpleClassName() {
@@ -558,7 +568,7 @@ public class StringMetricsTest {
 		}
 	}
 	
-	public static final class ForListWithSimplifierTest extends StringMetricTest {
+	public static class ForListWithSimplifierTest extends StringMetricTest {
 		
 		@Override
 		protected boolean toStringIncludesSimpleClassName() {
@@ -586,7 +596,7 @@ public class StringMetricsTest {
 		}
 	}
 	
-	public static final class ForSetTest extends StringMetricTest {
+	public static class ForSetTest extends StringMetricTest {
 		
 		@Override
 		protected boolean toStringIncludesSimpleClassName() {
@@ -609,7 +619,7 @@ public class StringMetricsTest {
 		}
 	}
 	
-	public static final class ForSetWithSimplifierTest extends StringMetricTest {
+	public static class ForSetWithSimplifierTest extends StringMetricTest {
 		
 		@Override
 		protected boolean satisfiesCoincidence() {
@@ -637,7 +647,7 @@ public class StringMetricsTest {
 		}
 	}
 	
-	public static final class ForMultisetTest extends StringMetricTest {
+	public static class ForMultisetTest extends StringMetricTest {
 		
 		@Override
 		protected boolean toStringIncludesSimpleClassName() {
@@ -660,7 +670,7 @@ public class StringMetricsTest {
 		}
 	}
 	
-	public static final class ForMultisetWithSimplifierTest extends StringMetricTest {
+	public static class ForMultisetWithSimplifierTest extends StringMetricTest {
 		
 		@Override
 		protected boolean satisfiesCoincidence() {
@@ -688,7 +698,7 @@ public class StringMetricsTest {
 		}
 	}
 	
-	public static final class ForStringTest extends StringMetricTest {
+	public static class ForStringTest extends StringMetricTest {
 		
 		@Override
 		protected boolean toStringIncludesSimpleClassName() {
@@ -711,7 +721,7 @@ public class StringMetricsTest {
 		}
 	}
 	
-	public static final class ForStringWithSimplifierTest extends StringMetricTest {
+	public static class ForStringWithSimplifierTest extends StringMetricTest {
 		
 		@Override
 		protected boolean satisfiesCoincidence() {

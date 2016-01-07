@@ -112,7 +112,7 @@ public final class StringDistances {
 			
 			@Override
 			public float distance(String a, String b) {
-				return metric.compare(a, b);
+				return metric.distance(a, b);
 			}
 			
 			@Override
@@ -157,7 +157,17 @@ public final class StringDistances {
 	public static StringDistance levenshtein() {
 		return new Levenshtein();
 	}
-
+	
+	/**
+	 * Returns a string distance metric that uses a {@link Tokenizers#whitespace()} and
+	 * the {@link OverlapCoefficient} distance metric.
+	 * 
+	 * @return a overlap coefficient metric
+	 */
+	public static StringDistance overlapCoefficient() {
+		return with(new OverlapCoefficient<String>()).tokenize(whitespace()).build();
+	}
+	
 	/**
 	 * Returns a string distance metric that uses a
 	 * {@link Tokenizers#qGramWithPadding(int)} for {@code q=3} and the

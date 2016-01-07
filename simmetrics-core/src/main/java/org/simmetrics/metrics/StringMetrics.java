@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -148,6 +148,11 @@ public final class StringMetrics {
 			@Override
 			public float compare(String a, String b) {
 				return metric.compare(a, b);
+			}
+			
+			@Override
+			public String toString() {
+				return metric.toString();
 			}
 		};
 	}
@@ -785,5 +790,7 @@ public final class StringMetrics {
 	private StringMetrics() {
 		// Utility class.
 	}
+
+
 
 }

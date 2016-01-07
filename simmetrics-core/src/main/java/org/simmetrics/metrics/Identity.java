@@ -30,6 +30,7 @@ import org.simmetrics.Metric;
  * <p>
  * <code>
  * similarity(a,b) = equals(a,b) ? 1.0f : 0.0f
+ * <br>
  * distance(a,b) = equals(a,b) ? 0.0f : 1.0f
  * </code>
  * <p>

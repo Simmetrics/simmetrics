@@ -31,6 +31,7 @@ import org.simmetrics.StringMetric;
  * <p>
  * <code>
  * similarity(a,b) = jaro(a,b)
+ * <br>
  * distance(a,b) = 1 - similarity(a,b)
  * </code>
  * <p>

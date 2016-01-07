@@ -32,6 +32,7 @@ import org.simmetrics.StringMetric;
  * <p>
  * <code>
  * similarity(a,b) = jaro-winkler(a,b)
+ * <br>
  * distance(a,b) = 1 - similarity(a,b)
  * </code>
  * <p>

@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+## Since 4.0.2-SNAPSHOT ##
+ - Added StringDistanceBuilder
+ - Added StringDistances utility class
+
 ## Since 4.0.1 ##
  - Added LongestCommonSubsequence 
  - Corrected implementation of LongestCommonSubstring

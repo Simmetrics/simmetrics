@@ -24,10 +24,16 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Strings.commonPrefix;
 import static java.lang.Math.min;
 
+import org.simmetrics.StringDistance;
 import org.simmetrics.StringMetric;
 
 /**
  * Calculates the Jaro-Winkler distance (similarity) over two strings.
+ * <p>
+ * <code>
+ * similarity(a,b) = jaro-winkler(a,b)
+ * distance(a,b) = 1 - similarity(a,b)
+ * </code>
  * <p>
  * Can be configured with a prefix adjustment scale, max prefix length and boost
  * threshold.
@@ -42,7 +48,7 @@ import org.simmetrics.StringMetric;
  * 
  * 
  */
-public final class JaroWinkler implements StringMetric {
+public final class JaroWinkler implements StringMetric, StringDistance {
 
 	private final Jaro jaro = new Jaro();
 
@@ -96,6 +102,11 @@ public final class JaroWinkler implements StringMetric {
 		this.maxPrefixLength = maxPrefixLength;
 	}
 
+	@Override
+	public float distance(String a, String b) {
+		return 1.0f - compare(a, b);
+	}
+	
 	@Override
 	public float compare(final String a, final String b) {
 		final float jaroScore = jaro.compare(a, b);

@@ -23,6 +23,7 @@ package org.simmetrics.metrics;
 import static com.google.common.collect.Multisets.union;
 import static java.lang.Math.sqrt;
 
+import org.simmetrics.MultisetDistance;
 import org.simmetrics.MultisetMetric;
 
 import com.google.common.collect.Multiset;
@@ -34,6 +35,7 @@ import com.google.common.collect.Multiset;
  * <p>
  * <code>
  * similarity(a,b) = a·b / (||a|| * ||b||)
+ * distance(a,b) = 1 - similarity(a,b)
  * </code>
  * 
  * <p>
@@ -52,7 +54,7 @@ import com.google.common.collect.Multiset;
  * @param <T>
  *            type of the token
  */
-public final class CosineSimilarity<T> implements MultisetMetric<T> {
+public final class CosineSimilarity<T> implements MultisetMetric<T>, MultisetDistance<T> {
 
 	@Override
 	public float compare(Multiset<T> a, Multiset<T> b) {
@@ -87,10 +89,16 @@ public final class CosineSimilarity<T> implements MultisetMetric<T> {
 		//  a·b / (||a|| * ||b||)
 		return (float) (dotProduct / (sqrt(magnitudeA) * sqrt(magnitudeB)));
 	}
-
+	@Override
+	public float distance(Multiset<T> a, Multiset<T> b) {
+		return 1.0f - compare(a, b);
+	}
+	
 	@Override
 	public String toString() {
 		return "CosineSimilarity";
 	}
+
+
 
 }

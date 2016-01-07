@@ -21,7 +21,6 @@
 package org.simmetrics.builders;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
 import static org.simmetrics.simplifiers.Simplifiers.toLowerCase;
@@ -35,7 +34,6 @@ import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.simmetrics.Distance;
-import org.simmetrics.ListDistanceTest;
 import org.simmetrics.StringDistance;
 import org.simmetrics.StringDistanceTest;
 import org.simmetrics.metrics.Identity;

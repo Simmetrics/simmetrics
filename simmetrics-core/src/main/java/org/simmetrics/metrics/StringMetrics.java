@@ -278,6 +278,24 @@ public final class StringMetrics {
 	}
 
 	/**
+	 * Returns a string metric that uses the {@link LongestCommonSubsequence} metric.
+	 * 
+	 * @return a longest common subsequence metric
+	 */
+	public static StringMetric longestCommonSubsequence(){
+		return new LongestCommonSubsequence();
+	}
+	
+	/**
+	 * Returns a string metric that uses the {@link LongestCommonSubstring} metric.
+	 * 
+	 * @return a longest common substring metric
+	 */
+	public static StringMetric longestCommonSubstring(){
+		return new LongestCommonSubstring();
+	}
+	
+	/**
 	 * Either constructs a new string metric or returns the original metric.
 	 * 
 	 * @param metric

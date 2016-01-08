@@ -21,27 +21,51 @@ package org.simmetrics.example;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+import org.simmetrics.example.StringDistanceBuilderExample;
 
 
 @SuppressWarnings("javadoc")
-public class ReadMeExampleTest {
+public class StringDistanceBuilderExampleTest {
 	
 	private static final float DELTA = 0.0001f;
 	
 	@Test
+	public void example00(){
+		assertEquals(7.0000f, StringDistanceBuilderExample.example00(), DELTA);
+	}
+	
+	@Test
 	public void example01(){
-		assertEquals(0.4767f, ReadMeExample.example01(), DELTA);
+		assertEquals(0.0000f, StringDistanceBuilderExample.example01(), DELTA);
 	}
 	
 	@Test
 	public void example02(){
-		assertEquals(0.5720f, ReadMeExample.example02(), DELTA);
+		assertEquals(0.0000f, StringDistanceBuilderExample.example02(), DELTA);
 	}
 	
 	@Test
 	public void example03(){
-		assertEquals(3.0000f, ReadMeExample.example03(), DELTA);
+		assertEquals(2.0000f, StringDistanceBuilderExample.example03(), DELTA);
 	}
-
-
+	
+	@Test
+	public void example04(){
+		assertEquals(2.8284f, StringDistanceBuilderExample.example04(), DELTA);
+	}
+	
+	@Test
+	public void example05(){
+		assertEquals(4.6904f, StringDistanceBuilderExample.example05(), DELTA);
+	}
+	
+	@Test
+	public void example06(){
+		assertEquals(4.6904f, StringDistanceBuilderExample.example06(), DELTA);
+	}
+	
+	@Test
+	public void example07(){
+		assertEquals(4.6904f, StringDistanceBuilderExample.example07(), DELTA);
+	}
 }

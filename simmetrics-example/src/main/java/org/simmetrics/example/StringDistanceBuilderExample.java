@@ -21,12 +21,12 @@
 package org.simmetrics.example;
 
 import static com.google.common.base.Predicates.in;
-import static org.simmetrics.builders.StringMetricBuilder.with;
+import static org.simmetrics.builders.StringDistanceBuilder.with;
 
 import java.util.Set;
 
-import org.simmetrics.StringMetric;
-import org.simmetrics.metrics.CosineSimilarity;
+import org.simmetrics.StringDistance;
+import org.simmetrics.metrics.EuclideanDistance;
 import org.simmetrics.metrics.Levenshtein;
 import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.tokenizers.Tokenizers;
@@ -40,10 +40,10 @@ import com.google.common.collect.Multiset;
 import com.google.common.collect.Sets;
 
 /**
- * The string metric builder can be used to compose metrics.
+ * The string distance builder can be used to compose distance metrics.
  */
 @SuppressWarnings("javadoc")
-public final class StringMetricBuilderExample {
+public final class StringDistanceBuilderExample {
 
 	/**
 	 * Simply comparing strings through a metric may not be very effective. By
@@ -51,7 +51,7 @@ public final class StringMetricBuilderExample {
 	 * effectiveness of a metric can be improved.
 	 * 
 	 * The exact combination is generally domain specific. The
-	 * StringMetricBuilder supports these domain specific customizations. Some
+	 * StringDistanceBuilder supports these domain specific customizations. Some
 	 * example usages are shown below
 	 */
 	public static float example00() {
@@ -59,9 +59,9 @@ public final class StringMetricBuilderExample {
 		String a = "Chilpéric II son of Childeric II";
 		String b = "chilperic ii son of childeric ii";
 
-		StringMetric metric = new Levenshtein();
+		StringDistance metric = new Levenshtein();
 
-		return metric.compare(a, b); // 0.7812
+		return metric.distance(a, b); // 7.0000
 	}
 
 	/**
@@ -81,12 +81,12 @@ public final class StringMetricBuilderExample {
 		String a = "Chilpéric II son of Childeric II";
 		String b = "Chilperic II son of Childeric II";
 
-		StringMetric metric = 
+		StringDistance metric = 
 				with(new Levenshtein())
 				.simplify(Simplifiers.removeDiacritics())
 				.build();
 
-		return metric.compare(a, b); // 1.0000
+		return metric.distance(a, b); // 0.0000
 	}
 
 	/**
@@ -97,19 +97,19 @@ public final class StringMetricBuilderExample {
 		String a = "Chilpéric II son of Childeric II";
 		String b = "chilperic ii son of childeric ii";
 
-		StringMetric metric = 
+		StringDistance metric = 
 				with(new Levenshtein())
 				.simplify(Simplifiers.removeDiacritics())
 				.simplify(Simplifiers.toLowerCase())
 				.build();
 
-		return metric.compare(a, b); // 1.0000
+		return metric.distance(a, b); // 0.0000
 	}
 
 	/**
 	 * Tokenization
 	 * 
-	 * A metric can be used to measure the similarity between strings. However
+	 * A metric can be used to measure the distance between strings. However
 	 * not all metrics can operate on strings directly. Some operate on lists,
 	 * sets or multisets. To compare strings with a metric that works on a
 	 * collection a tokenizer is required. Tokenization cuts up a string into
@@ -138,12 +138,12 @@ public final class StringMetricBuilderExample {
 		String a = "A quirky thing it is. This is a sentence.";
 		String b = "This sentence is similar; a quirky thing it is.";
 
-		StringMetric metric = 
-				with(new CosineSimilarity<String>())
+		StringDistance metric = 
+				with(new EuclideanDistance<String>())
 				.tokenize(Tokenizers.whitespace())
 				.build();
 
-		return metric.compare(a, b); // 0.7777
+		return metric.distance(a, b); // 2.0000
 	}
 
 	/**
@@ -166,13 +166,13 @@ public final class StringMetricBuilderExample {
 		String a = "A quirky thing it is. This is a sentence.";
 		String b = "This sentence is similar; a quirky thing it is.";
 
-		StringMetric metric = 
-				with(new CosineSimilarity<String>())
+		StringDistance metric = 
+				with(new EuclideanDistance<String>())
 				.tokenize(Tokenizers.whitespace())
 				.tokenize(Tokenizers.qGram(3))
 				.build();
 
-		return metric.compare(a, b); // 0.8292
+		return metric.distance(a, b); // 2.8284
 	}
 
 	/**
@@ -190,8 +190,8 @@ public final class StringMetricBuilderExample {
 		String a = "A quirky thing it is. This is a sentence.";
 		String b = "This sentence is similar; a quirky thing it is.";
 
-		StringMetric metric = 
-				with(new CosineSimilarity<String>())
+		StringDistance metric = 
+				with(new EuclideanDistance<String>())
 				.simplify(Simplifiers.toLowerCase())
 				.simplify(Simplifiers.removeNonWord())
 				.tokenize(Tokenizers.whitespace())
@@ -200,7 +200,7 @@ public final class StringMetricBuilderExample {
 				.tokenize(Tokenizers.qGram(3))
 				.build();
 
-		return metric.compare(a, b); // 0.6902
+		return metric.distance(a, b); // 4.6904
 	}
 
 	/**
@@ -225,8 +225,8 @@ public final class StringMetricBuilderExample {
 		String a = "A quirky thing it is. This is a sentence.";
 		String b = "This sentence is similar; a quirky thing it is.";
 
-		StringMetric metric = 
-				with(new CosineSimilarity<String>())
+		StringDistance metric = 
+				with(new EuclideanDistance<String>())
 				.simplify(Simplifiers.toLowerCase())
 				.simplify(Simplifiers.removeNonWord())
 				.tokenize(Tokenizers.whitespace())
@@ -234,7 +234,7 @@ public final class StringMetricBuilderExample {
 				.tokenize(Tokenizers.qGram(3))
 				.build();
 
-		return metric.compare(a, b); // 0.6902
+		return metric.distance(a, b); // 4.6904
 	}
 
 	/**
@@ -258,8 +258,8 @@ public final class StringMetricBuilderExample {
 				.maximumSize(2)
 				.build();	
 		
-		StringMetric metric = 
-				with(new CosineSimilarity<String>())
+		StringDistance metric = 
+				with(new EuclideanDistance<String>())
 				.simplify(Simplifiers.toLowerCase())
 				.simplify(Simplifiers.removeNonWord())
 				.cacheStrings(stringCache)
@@ -267,7 +267,7 @@ public final class StringMetricBuilderExample {
 				.cacheTokens(tokenCache)
 				.build();
 
-		return metric.compare(a, b); // 0.6902
+		return metric.distance(a, b); // 4.6904
 	}
 
 }

@@ -1,6 +1,6 @@
 /*
  * #%L
- * Simmetrics Examples
+ * Simmetrics Core
  * %%
  * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
@@ -17,31 +17,27 @@
  * limitations under the License.
  * #L%
  */
-package org.simmetrics.example;
-import static org.junit.Assert.assertEquals;
+package org.simmetrics.performance;
 
 import org.junit.Test;
-
+import org.simmetrics.performance.SimonWhiteCaliper.Method;
+import org.simmetrics.performance.SimonWhiteCaliper.Value;
 
 @SuppressWarnings("javadoc")
-public class ReadMeExampleTest {
-	
-	private static final float DELTA = 0.0001f;
-	
-	@Test
-	public void example01(){
-		assertEquals(0.4767f, ReadMeExample.example01(), DELTA);
-	}
-	
-	@Test
-	public void example02(){
-		assertEquals(0.5720f, ReadMeExample.example02(), DELTA);
-	}
-	
-	@Test
-	public void example03(){
-		assertEquals(3.0000f, ReadMeExample.example03(), DELTA);
-	}
+public class SimonWhiteCaliperTest {
 
-
+	@Test
+	public void smokeTest() {
+		for (Value a : Value.values()) {
+			for (Value b : Value.values()) {
+				for (Method m : Method.values()) {
+					SimonWhiteCaliper test = new SimonWhiteCaliper();
+					test.a = a;
+					test.b = b;
+					test.method = m;
+					test.compare(1);
+				}
+			}
+		}
+	}
 }

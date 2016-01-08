@@ -52,7 +52,11 @@ public class ForStringWithSimplifierTest extends StringMetricTest{
 	protected boolean satisfiesCoincidence() {
 		return false;
 	}
-
+	
+	@Override
+	protected boolean toStringIncludesSimpleClassName() {
+		return false;
+	}
 	
 	@Test
 	public void shouldReturnMetric(){

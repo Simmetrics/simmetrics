@@ -53,7 +53,12 @@ public class ForMultisetTest extends StringMetricTest {
 	protected boolean satisfiesCoincidence() {
 		return false;
 	}
-
+	
+	@Override
+	protected boolean toStringIncludesSimpleClassName() {
+		return false;
+	}
+	
 	@Test
 	public void shouldReturnTokenizer() {
 		assertSame(tokenizer, getMetric().getTokenizer());

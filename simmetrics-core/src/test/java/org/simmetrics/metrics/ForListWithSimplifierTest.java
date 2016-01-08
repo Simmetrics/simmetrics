@@ -59,6 +59,11 @@ public class ForListWithSimplifierTest extends StringMetricTest{
 		return false;
 	}
 
+	@Override
+	protected boolean toStringIncludesSimpleClassName() {
+		return false;
+	}
+	
 	@Test
 	public void shouldReturnTokenizer(){
 		assertSame(tokenizer,getMetric().getTokenizer());

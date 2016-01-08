@@ -60,13 +60,13 @@ public class StringMetricsTest {
 
 	public static class Create {
 
-		private final Metric<String> metric = new Identity<>();
-		private final Metric<List<String>> listMetric = new Identity<>();
-		private final Metric<Set<String>> setMetric = new Identity<>();
+		private Metric<String> metric = new Identity<>();
+		private Metric<List<String>> listMetric = new Identity<>();
+		private Metric<Set<String>> setMetric = new Identity<>();
 
-		private final Simplifier simplifier = Simplifiers.toLowerCase();
-		private final Simplifier simplifier2 = Simplifiers.removeNonWord();
-		private final Tokenizer tokenizer = Tokenizers.whitespace();
+		private Simplifier simplifier = Simplifiers.toLowerCase();
+		private Simplifier simplifier2 = Simplifiers.removeNonWord();
+		private Tokenizer tokenizer = Tokenizers.whitespace();
 
 		@Test
 		public void shouldReturnSame() {
@@ -454,8 +454,13 @@ public class StringMetricsTest {
 		}
 
 	}
+<<<<<<< HEAD
+	@Deprecated
+	public static final class CreateSoundex extends StringMetricTest {
+=======
 
 	public static class CreateSoundex extends StringMetricTest {
+>>>>>>> refs/heads/feature-string-distance-builder
 
 		@Override
 		protected Metric<String> getMetric() {
@@ -488,7 +493,7 @@ public class StringMetricsTest {
 	public static class Utilities {
 		//TODO: Test
 		@Test
-		public void blockDistance() {
+		public void blockMetric() {
 			assertNotNull(StringMetrics.blockDistance());
 		}
 

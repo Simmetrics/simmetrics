@@ -20,7 +20,7 @@
 
 package org.simmetrics.builders;
 
-import static org.simmetrics.builders.StringMetricBuilder.with;
+import static org.simmetrics.builders.StringDistanceBuilder.with;
 
 import java.util.List;
 import java.util.Set;
@@ -32,14 +32,14 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-import org.simmetrics.ListMetric;
-import org.simmetrics.MultisetMetric;
-import org.simmetrics.SetMetric;
-import org.simmetrics.StringMetric;
-import org.simmetrics.builders.StringMetricBuilder.CachingSimplifier;
-import org.simmetrics.builders.StringMetricBuilder.CachingListTokenizer;
-import org.simmetrics.builders.StringMetricBuilder.CachingMultisetTokenizer;
-import org.simmetrics.builders.StringMetricBuilder.CachingSetTokenizer;
+import org.simmetrics.ListDistance;
+import org.simmetrics.MultisetDistance;
+import org.simmetrics.SetDistance;
+import org.simmetrics.StringDistance;
+import org.simmetrics.builders.StringDistanceBuilder.CachingSimplifier;
+import org.simmetrics.builders.StringDistanceBuilder.CachingListTokenizer;
+import org.simmetrics.builders.StringDistanceBuilder.CachingMultisetTokenizer;
+import org.simmetrics.builders.StringDistanceBuilder.CachingSetTokenizer;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.tokenizers.Tokenizer;
 
@@ -50,21 +50,21 @@ import com.google.common.collect.Multiset;
 
 @SuppressWarnings({"javadoc"})
 @RunWith(Enclosed.class)
-public class StringMetricBuilderTest {
+public class StringDistanceBuilderTest {
 	
-	public static class StringMetricBuilderChainTest {
-
+	public static class StringDistanceBuilderChainTest {
+	
 		@Rule
 		public final MockitoRule mockitoRule = MockitoJUnit.rule();
 	
 		@Mock
-		private StringMetric stringMetric;
+		private StringDistance stringDistance;
 		@Mock
-		private ListMetric<String> listMetric;
+		private ListDistance<String> listDistance;
 		@Mock
-		private SetMetric<String> setMetric;
+		private SetDistance<String> setDistance;
 		@Mock
-		private MultisetMetric<String> multisetMetric;	
+		private MultisetDistance<String> multisetDistance;	
 		@Mock
 		private Simplifier simplifier;
 		@Mock
@@ -84,35 +84,35 @@ public class StringMetricBuilderTest {
 		private Cache<String, Multiset<String>> multisetCache;
 		
 		@Test
-		public void testStringMetric01() {
-			with(stringMetric)
+		public void testStringDistance01() {
+			with(stringDistance)
 					.build();
 		}
 	
 		@Test
-		public void testStringMetricWithSimplifier01() {
-			with(stringMetric)
+		public void testStringDistanceWithSimplifier01() {
+			with(stringDistance)
 					.simplify(simplifier)
 					.build();
 		}
 		
 		@Test
-		public void testStringMetricWithSimplifier02() {
-			with(stringMetric)
+		public void testStringDistanceWithSimplifier02() {
+			with(stringDistance)
 					.simplify(simplifier)
 					.simplify(simplifier)
 					.build();
 		}
 		@Test
-		public void testStringMetricWithSimplifier01WithCache() {
-			with(stringMetric)
+		public void testStringDistanceWithSimplifier01WithCache() {
+			with(stringDistance)
 					.simplify(simplifier)
 					.cacheStrings(stringCache)
 					.build();
 		}
 		@Test
-		public void testStringMetricWithSimplifer02WithCache() {
-			with(stringMetric)
+		public void testStringDistanceWithSimplifer02WithCache() {
+			with(stringDistance)
 					.simplify(simplifier)
 					.simplify(simplifier)
 					.cacheStrings(stringCache)
@@ -120,22 +120,22 @@ public class StringMetricBuilderTest {
 		}
 		
 		@Test
-		public void testListMetric() {
-			with(listMetric)
+		public void testListDistance() {
+			with(listDistance)
 					.tokenize(tokenizer)
 					.build();
 		}
 	
 		@Test
-		public void testListMetricWithFilter() {
-			with(listMetric)
+		public void testListDistanceWithFilter() {
+			with(listDistance)
 					.tokenize(tokenizer)
 					.filter(predicate)
 					.build();
 		}
 		@Test
-		public void testListMetricWithTransform() {
-			with(listMetric)
+		public void testListDistanceWithTransform() {
+			with(listDistance)
 					.tokenize(tokenizer)
 					.transform(function)
 					.build();
@@ -143,8 +143,8 @@ public class StringMetricBuilderTest {
 		
 		
 		@Test
-		public void testListMetricWithFilterAndTransform01() {
-			with(listMetric)
+		public void testListDistanceWithFilterAndTransform01() {
+			with(listDistance)
 					.tokenize(tokenizer)
 					.filter(predicate)
 					.transform(function)
@@ -152,8 +152,8 @@ public class StringMetricBuilderTest {
 		}
 	
 		@Test
-		public void testListMetricWithFilterAndTransform02() {
-			with(listMetric)
+		public void testListDistanceWithFilterAndTransform02() {
+			with(listDistance)
 					.tokenize(tokenizer)
 					.transform(function)
 					.filter(predicate)
@@ -161,16 +161,16 @@ public class StringMetricBuilderTest {
 		}
 	
 		@Test
-		public void testListMetricWithSimplifier01() {
-			with(listMetric)
+		public void testListDistanceWithSimplifier01() {
+			with(listDistance)
 					.simplify(simplifier)
 					.tokenize(tokenizer)
 					.build();
 		}
 	
 		@Test
-		public void testListMetricWithSimplifier02() {
-			with(listMetric)
+		public void testListDistanceWithSimplifier02() {
+			with(listDistance)
 					.simplify(simplifier)
 					.simplify(simplifier)
 					.tokenize(tokenizer)
@@ -178,8 +178,8 @@ public class StringMetricBuilderTest {
 		}
 		
 		@Test
-		public void testListMetricWithSimplifier01WithCache() {
-			with(listMetric)
+		public void testListDistanceWithSimplifier01WithCache() {
+			with(listDistance)
 					.simplify(simplifier)
 					.cacheStrings(stringCache)
 					.tokenize(tokenizer)
@@ -187,8 +187,8 @@ public class StringMetricBuilderTest {
 		}
 	
 		@Test
-		public void testListMetricWithSimplifier02WithCache() {
-			with(listMetric)
+		public void testListDistanceWithSimplifier02WithCache() {
+			with(listDistance)
 					.simplify(simplifier)
 					.simplify(simplifier)
 					.cacheStrings(stringCache)
@@ -197,47 +197,47 @@ public class StringMetricBuilderTest {
 		}
 		
 		@Test
-		public void testListMetric02() {
-			with(listMetric)
+		public void testListDistance02() {
+			with(listDistance)
 					.tokenize(tokenizer)
 					.tokenize(tokenizer)
 					.build();
 		}
 		
 		@Test
-		public void testListMetric01WithCache() {
-			with(listMetric)
+		public void testListDistance01WithCache() {
+			with(listDistance)
 					.tokenize(tokenizer)
 					.cacheTokens(listCache)
 					.build();
 		}
 		
 		@Test
-		public void testListMetric02WithCache() {
-			with(listMetric)
+		public void testListDistance02WithCache() {
+			with(listDistance)
 					.tokenize(tokenizer)
 					.tokenize(tokenizer)
 					.cacheTokens(listCache)
 					.build();
 		}
 		
-		public void testSetMetric() {
-			with(setMetric)
+		public void testSetDistance() {
+			with(setDistance)
 					.tokenize(tokenizer)
 					.build();
 		}
 	
 		@Test
-		public void testSetMetricWithFilter() {
-			with(setMetric)
+		public void testSetDistanceWithFilter() {
+			with(setDistance)
 					.tokenize(tokenizer)
 					.filter(predicate)
 					.build();
 		}
 		
 		@Test
-		public void testSetMetricWithTransform() {
-			with(setMetric)
+		public void testSetDistanceWithTransform() {
+			with(setDistance)
 					.tokenize(tokenizer)
 					.transform(function)
 					.build();
@@ -245,8 +245,8 @@ public class StringMetricBuilderTest {
 		
 		
 		@Test
-		public void testSetMetricWithFilterAndTransform01() {
-			with(setMetric)
+		public void testSetDistanceWithFilterAndTransform01() {
+			with(setDistance)
 					.tokenize(tokenizer)
 					.filter(predicate)
 					.transform(function)
@@ -254,8 +254,8 @@ public class StringMetricBuilderTest {
 		}
 	
 		@Test
-		public void testSetMetricWithFilterAndTransform02() {
-			with(setMetric)
+		public void testSetDistanceWithFilterAndTransform02() {
+			with(setDistance)
 					.tokenize(tokenizer)
 					.transform(function)
 					.filter(predicate)
@@ -263,16 +263,16 @@ public class StringMetricBuilderTest {
 		}
 	
 		@Test
-		public void testSetMetricWithSimplifier01() {
-			with(setMetric)
+		public void testSetDistanceWithSimplifier01() {
+			with(setDistance)
 					.simplify(simplifier)
 					.tokenize(tokenizer)
 					.build();
 		}
 	
 		@Test
-		public void testSetMetricWithSimplifier02() {
-			with(setMetric)
+		public void testSetDistanceWithSimplifier02() {
+			with(setDistance)
 					.simplify(simplifier)
 					.simplify(simplifier)
 					.tokenize(tokenizer)
@@ -280,8 +280,8 @@ public class StringMetricBuilderTest {
 		}
 	
 		@Test
-		public void testSetMetricWithSimplifier01WithCache() {
-			with(setMetric)
+		public void testSetDistanceWithSimplifier01WithCache() {
+			with(setDistance)
 					.simplify(simplifier)
 					.cacheStrings(stringCache)
 					.tokenize(tokenizer)
@@ -289,8 +289,8 @@ public class StringMetricBuilderTest {
 		}
 	
 		@Test
-		public void testSetMetricWithSimplifier02WithCache() {
-			with(setMetric)
+		public void testSetDistanceWithSimplifier02WithCache() {
+			with(setDistance)
 					.simplify(simplifier)
 					.simplify(simplifier)
 					.cacheStrings(stringCache)
@@ -298,47 +298,47 @@ public class StringMetricBuilderTest {
 					.build();
 		}
 		@Test
-		public void testSetMetric02() {
-			with(setMetric)
+		public void testSetDistance02() {
+			with(setDistance)
 					.tokenize(tokenizer)
 					.tokenize(tokenizer)
 					.build();
 		}
 	
 		@Test
-		public void testSetMetric01WithCache() {
-			with(setMetric)
+		public void testSetDistance01WithCache() {
+			with(setDistance)
 					.tokenize(tokenizer)
 					.cacheTokens(setCache)
 					.build();
 		}
 		
 		@Test
-		public void testSetMetric02WithCache() {
-			with(setMetric)
+		public void testSetDistance02WithCache() {
+			with(setDistance)
 					.tokenize(tokenizer)
 					.tokenize(tokenizer)
 					.cacheTokens(setCache)
 					.build();
 		}
 		
-		public void testMultisetMetric() {
-			with(multisetMetric)
+		public void testMultisetDistance() {
+			with(multisetDistance)
 					.tokenize(tokenizer)
 					.build();
 		}
 	
 		@Test
-		public void testMultisetMetricWithFilter() {
-			with(multisetMetric)
+		public void testMultisetDistanceWithFilter() {
+			with(multisetDistance)
 					.tokenize(tokenizer)
 					.filter(predicate)
 					.build();
 		}
 		
 		@Test
-		public void testMultisetMetricWithTransform() {
-			with(multisetMetric)
+		public void testMultisetDistanceWithTransform() {
+			with(multisetDistance)
 					.tokenize(tokenizer)
 					.transform(function)
 					.build();
@@ -346,8 +346,8 @@ public class StringMetricBuilderTest {
 		
 		
 		@Test
-		public void testMultisetMetricWithFilterAndTransform01() {
-			with(multisetMetric)
+		public void testMultisetDistanceWithFilterAndTransform01() {
+			with(multisetDistance)
 					.tokenize(tokenizer)
 					.filter(predicate)
 					.transform(function)
@@ -355,8 +355,8 @@ public class StringMetricBuilderTest {
 		}
 	
 		@Test
-		public void testMultisetMetricWithFilterAndTransform02() {
-			with(multisetMetric)
+		public void testMultisetDistanceWithFilterAndTransform02() {
+			with(multisetDistance)
 					.tokenize(tokenizer)
 					.transform(function)
 					.filter(predicate)
@@ -364,24 +364,24 @@ public class StringMetricBuilderTest {
 		}
 	
 		@Test
-		public void testMultisetMetricWithSimplifier01() {
-			with(multisetMetric)
+		public void testMultisetDistanceWithSimplifier01() {
+			with(multisetDistance)
 					.simplify(simplifier)
 					.tokenize(tokenizer)
 					.build();
 		}
 	
 		@Test
-		public void testMultisetMetricWithSimplifier02() {
-			with(multisetMetric)
+		public void testMultisetDistanceWithSimplifier02() {
+			with(multisetDistance)
 					.simplify(simplifier)
 					.simplify(simplifier)
 					.tokenize(tokenizer)
 					.build();
 		}
 		@Test
-		public void testMultisetMetricWithSimplifier01WithCache() {
-			with(multisetMetric)
+		public void testMultisetDistanceWithSimplifier01WithCache() {
+			with(multisetDistance)
 					.simplify(simplifier)
 					.cacheStrings(stringCache)
 					.tokenize(tokenizer)
@@ -389,8 +389,8 @@ public class StringMetricBuilderTest {
 		}
 	
 		@Test
-		public void testMultisetMetricWithSimplifier02WithCache() {
-			with(multisetMetric)
+		public void testMultisetDistanceWithSimplifier02WithCache() {
+			with(multisetDistance)
 					.simplify(simplifier)
 					.simplify(simplifier)
 					.cacheStrings(stringCache)
@@ -398,30 +398,31 @@ public class StringMetricBuilderTest {
 					.build();
 		}
 		@Test
-		public void testMultisetMetric02() {
-			with(multisetMetric)
+		public void testMultisetDistance02() {
+			with(multisetDistance)
 					.tokenize(tokenizer)
 					.tokenize(tokenizer)
 					.build();
 		}
 	
 		@Test
-		public void testMultisetMetric01WithCache() {
-			with(multisetMetric)
+		public void testMultisetDistance01WithCache() {
+			with(multisetDistance)
 					.tokenize(tokenizer)
 					.cacheTokens(multisetCache)
 					.build();
 		}
 		
 		@Test
-		public void testMultisetMetric02WithCache() {
-			with(multisetMetric)
+		public void testMultisetDistance02WithCache() {
+			with(multisetDistance)
 					.tokenize(tokenizer)
 					.tokenize(tokenizer)
 					.cacheTokens(multisetCache)
 					.build();
 		}
 	}
+	
 	public static class CachingListTokenizerTest extends CachingTokenizerTest<List<String>> {
 
 		@Override

@@ -22,30 +22,31 @@ package org.simmetrics.example;
 
 import static org.simmetrics.builders.StringMetricBuilder.with;
 
+import org.simmetrics.StringDistance;
 import org.simmetrics.StringMetric;
-import org.simmetrics.builders.StringMetricBuilder;
-import org.simmetrics.metrics.CosineSimilarity;
-import org.simmetrics.metrics.StringMetrics;
+import org.simmetrics.builders.StringDistanceBuilder;
+import org.simmetrics.metrics.EuclideanDistance;
+import org.simmetrics.metrics.StringDistances;
 import org.simmetrics.tokenizers.Tokenizers;
 
 /**
- * The {@link StringMetrics} utility class contains a predefined list of well
+ * The {@link StringDistance} utility class contains a predefined list of well
  * known metrics.
  */
 @SuppressWarnings("javadoc")
-public final class StringMetricsExample {
+public final class StringDistanceExample {
 
 	/**
-	 * Two strings can be compared using a predefined string metric.
+	 * Two strings can be compared using a string distance metric.
 	 */
 	public static float example01() {
 
 		String str1 = "This is a sentence. It is made of words";
 		String str2 = "This sentence is similar. It has almost the same words";
 
-		StringMetric metric = StringMetrics.jaro();
+		StringDistance metric = StringDistances.levenshtein();
 
-		return metric.compare(str1, str2); // 0.7383
+		return metric.distance(str1, str2); // 30.0000
 	}
 
 	/**
@@ -57,16 +58,16 @@ public final class StringMetricsExample {
 		String str1 = "A quirky thing it is. This is a sentence.";
 		String str2 = "This sentence is similar. A quirky thing it is.";
 
-		StringMetric metric = StringMetrics.cosineSimilarity();
+		StringDistance metric = StringDistances.qGramsDistance();
 
-		return metric.compare(str1, str2); // 0.7777
+		return metric.distance(str1, str2); // 28.0000
 	}
 
 	/**
-	 * Using the {@link StringMetricBuilder} string metrics can be
+	 * Using the {@link StringDistanceBuilder} string distance metrics can be
 	 * customized. Instead of a whitespace tokenizer a q-gram tokenizer is used.
 	 *
-	 * For more examples see {@link StringMetricBuilderExample}.
+	 * For more examples see {@link StringDistanceBuilderExample}.
 	 */
 	public static float example03() {
 
@@ -74,11 +75,11 @@ public final class StringMetricsExample {
 		String str2 = "This sentence is similar. A quirky thing it is.";
 
 		StringMetric metric = 
-				with(new CosineSimilarity<String>())
+				with(new EuclideanDistance<String>())
 				.tokenize(Tokenizers.qGram(3))
 				.build();
 
-		return metric.compare(str1, str2); // 0.7473
+		return metric.compare(str1, str2); // 0.9177
 	}
 
 }

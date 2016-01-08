@@ -22,6 +22,7 @@ package org.simmetrics;
 
 import static com.google.common.primitives.Floats.max;
 import static java.lang.String.format;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -140,6 +141,10 @@ public abstract class DistanceTest<K> {
 	protected boolean satisfiesSubadditivity() {
 		return true;
 	}
+	
+	protected boolean toStringIncludesSimpleClassName(){
+		return true;
+	}
 
 	@Before
 	public final void setUp() throws Exception {
@@ -245,7 +250,15 @@ public abstract class DistanceTest<K> {
 	@Test
 	public final void shouldImplementToString() {
 		assertThat(metric, implementsToString());
-		assertThat(metric, toStringContainsSimpleClassName());
+	}
+	
+	@Test
+	public final void shouldContainSimpleClassNameToString() {
+		if(toStringIncludesSimpleClassName()){
+			assertThat(metric, toStringContainsSimpleClassName());
+		} else {
+			assertThat(metric, not(toStringContainsSimpleClassName()));	
+		}
 	}
 
 }

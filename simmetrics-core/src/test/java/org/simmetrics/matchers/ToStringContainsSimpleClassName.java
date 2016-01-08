@@ -21,34 +21,28 @@ package org.simmetrics.matchers;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 @SuppressWarnings("javadoc")
-public class ToStringContainsSimpleClassName<T> extends TypeSafeMatcher<T>{
+public class ToStringContainsSimpleClassName<T> extends TypeSafeDiagnosingMatcher<T>{
 
 	@Override
 	public void describeTo(Description arg0) {
-		arg0.appendText("toString contains simple class name");
+		arg0.appendText(".toString() contains simple class name");
+	}
+
+	public static <T> Matcher<T> toStringContainsSimpleClassName(){
+		return new ToStringContainsSimpleClassName<>();
 	}
 
 	@Override
-	protected boolean matchesSafely(T item) {
-		return item.toString().contains(item.getClass().getSimpleName());
-	}
-	
-	@Override
-	protected void describeMismatchSafely(T item,
-			Description mismatchDescription) {
-		super.describeMismatchSafely(item, mismatchDescription);
-		mismatchDescription.appendValue(item.getClass());
-		mismatchDescription.appendText(".toString(): ");
-		mismatchDescription.appendValue(item.toString());
-		mismatchDescription.appendText(" to contain: ");
+	protected boolean matchesSafely(T item, Description mismatchDescription) {
+		mismatchDescription.appendText("was ");
 		mismatchDescription.appendValue(item.getClass().getSimpleName());
-	}
-	
-	public static <T> Matcher<T> toStringContainsSimpleClassName(){
-		return new ToStringContainsSimpleClassName<>();
+		mismatchDescription.appendText(".toString()=");
+		mismatchDescription.appendValue(item.toString());
+		
+		return item.toString().contains(item.getClass().getSimpleName());
 	}
 
 }

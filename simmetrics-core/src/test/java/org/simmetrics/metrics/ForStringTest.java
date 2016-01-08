@@ -45,6 +45,11 @@ public class ForStringTest extends StringMetricTest{
 		};
 	}
 	
+	@Override
+	protected boolean toStringIncludesSimpleClassName() {
+		return false;
+	}
+		
 	@Test
 	public void shouldReturnMetric(){
 		assertSame(metric, getMetric().getMetric());

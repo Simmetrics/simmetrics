@@ -37,3 +37,22 @@ For a terse syntax use `import static org.simmetrics.builders.StringMetricBuilde
 
 	float result = metric.compare(str1, str2); //0.5720
 ```
+
+The [StringDistanceBuilder](./simmetrics-core/src/main/java/org/simmetrics/builders/StringDistanceBuilder.java) is a convenience tool to build string metrics. Any class implementing StringMetric, ListMetric, SetMetric or MultisetMetric can be used to build a string metric. The builder supports simplification, tokenization, token-filtering, token-transformation, and caching.
+For usage see the [examples section](./simmetrics-example/src/main/java/org/simmetrics/example/StringDistanceBuilderExample.java).  
+
+For a terse syntax use `import static org.simmetrics.builders.StringDistanceBuilder.with;`
+
+```java
+	String str1 = "This is a sentence. It is made of words";
+	String str2 = "This sentence is similar. It has almost the same words";
+
+	StringDistance metric =
+			with(new EuclideanDistance<String>())
+			.simplify(Simplifiers.toLowerCase(Locale.ENGLISH))
+			.simplify(Simplifiers.replaceNonWord())
+			.tokenize(Tokenizers.whitespace())
+			.build();
+
+	float result = metric.distance(str1, str2); //3.0000
+```

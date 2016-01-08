@@ -21,37 +21,33 @@ package org.simmetrics.matchers;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 @SuppressWarnings("javadoc")
-public class ImplementsToString<T> extends TypeSafeMatcher<T>{
+public class ImplementsToString<T> extends TypeSafeDiagnosingMatcher<T>{
 
 	@Override
-	public void describeTo(Description arg0) {
-		arg0.appendText("implements toString");
-	}
-
-	@Override
-	protected boolean matchesSafely(T item) {
-	
-		String itemToString = item.toString();
-		String defaultToString = item.getClass().getName() + "@"
-				+ Integer.toHexString(item.hashCode());
-
-		return !defaultToString.equals(itemToString);
-	}
-	
-	@Override
-	protected void describeMismatchSafely(T item,
-			Description mismatchDescription) {
-		super.describeMismatchSafely(item, mismatchDescription);
-		mismatchDescription.appendValue(item.getClass().getName());
-		mismatchDescription.appendText(".toString() returned: ");
-		mismatchDescription.appendValue(item.toString());
+	public void describeTo(Description description) {
+		description.appendText("implements toString");
 	}
 	
 	public static <T> Matcher<T> implementsToString(){
 		return new ImplementsToString<>();
+	}
+
+	@Override
+	protected boolean matchesSafely(T item, Description mismatchDescription) {
+		mismatchDescription.appendText("was ");
+		mismatchDescription.appendValue(item.getClass().getSimpleName());
+		mismatchDescription.appendText(".toString()=");
+		mismatchDescription.appendValue(item.toString());
+		
+		String defaultToString = 
+				item.getClass().getName() 
+				+ "@"
+				+ Integer.toHexString(item.hashCode());
+
+		return !defaultToString.equals(item.toString());
 	}
 
 }

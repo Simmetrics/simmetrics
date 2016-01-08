@@ -33,6 +33,7 @@ import com.google.common.collect.Multiset;
  * <p>
  * <code>
  * similarity(a,b) = 1 - distance(a,b) / (∣a∣ + ∣b∣)
+ * <br>
  * distance(a,b) = ∣∣a - b∣∣₁
  * </code>
  * <p>

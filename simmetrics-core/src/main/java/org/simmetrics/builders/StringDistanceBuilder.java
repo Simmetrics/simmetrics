@@ -21,10 +21,10 @@
 package org.simmetrics.builders;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.simmetrics.builders.StringMetrics.create;
-import static org.simmetrics.builders.StringMetrics.createForListMetric;
-import static org.simmetrics.builders.StringMetrics.createForMultisetMetric;
-import static org.simmetrics.builders.StringMetrics.createForSetMetric;
+import static org.simmetrics.builders.StringDistances.create;
+import static org.simmetrics.builders.StringDistances.createForListDistance;
+import static org.simmetrics.builders.StringDistances.createForMultisetDistance;
+import static org.simmetrics.builders.StringDistances.createForSetDistance;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,11 +33,11 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
-import org.simmetrics.ListMetric;
-import org.simmetrics.Metric;
-import org.simmetrics.MultisetMetric;
-import org.simmetrics.SetMetric;
-import org.simmetrics.StringMetric;
+import org.simmetrics.ListDistance;
+import org.simmetrics.Distance;
+import org.simmetrics.MultisetDistance;
+import org.simmetrics.SetDistance;
+import org.simmetrics.StringDistance;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.tokenizers.Tokenizer;
@@ -49,114 +49,114 @@ import com.google.common.cache.Cache;
 import com.google.common.collect.Multiset;
 
 /**
- * Convenience tool to build string metrics. Any class implementing
- * {@link StringMetric}, {@link ListMetric}, {@link SetMetric} or
- * {@link MultisetMetric} can be used to build a string metric. Supports the
+ * Convenience tool to build string distances. Any class implementing
+ * {@link StringDistance}, {@link ListDistance}, {@link SetDistance} or
+ * {@link MultisetDistance} can be used to build a string distance. Supports the
  * addition of simplification, tokenization, token-filtering,
- * token-transformation and caching to a metric.
+ * token-transformation and caching to a distance.
  * <p>
  * For usage examples see the simmetrics-example module.
  */
-public final class StringMetricBuilder {
+public final class StringDistanceBuilder {
 
-	private StringMetricBuilder() {
+	private StringDistanceBuilder() {
 		// Utility class
 	}
 
 	/**
-	 * Starts building a metric with a string metric.
+	 * Starts building a distance with a string distance.
 	 * 
-	 * @param metric
-	 *            the metric to use as a base
+	 * @param distance
+	 *            the distance to use as a base
 	 * @return a builder for fluent chaining
 	 */
-	public static StringMetricInitialSimplifierStep with(StringMetric metric) {
-		return new CompositeStringMetricBuilder(metric);
+	public static StringDistanceInitialSimplifierStep with(StringDistance distance) {
+		return new CompositeStringDistanceBuilder(distance);
 	}
 
 	/**
-	 * Starts building a metric with a list metric.
+	 * Starts building a distance with a list distance.
 	 * 
-	 * @param metric
-	 *            the metric to use as a base
+	 * @param distance
+	 *            the distance to use as a base
 	 * @return a builder for fluent chaining
 	 */
-	public static CollectionMetricInitialSimplifierStep<List<String>> with(
-			ListMetric<String> metric) {
-		return new CompositeListMetricBuilder(metric);
-
-	}
-
-	/**
-	 * Starts building a metric with a set metric.
-	 * 
-	 * @param metric
-	 *            the metric to use as a base
-	 * @return a builder for fluent chaining
-	 */
-	public static CollectionMetricInitialSimplifierStep<Set<String>> with(
-			SetMetric<String> metric) {
-		return new CompositeSetMetricBuilder(metric);
+	public static CollectionDistanceInitialSimplifierStep<List<String>> with(
+			ListDistance<String> distance) {
+		return new CompositeListDistanceBuilder(distance);
 
 	}
 
 	/**
-	 * Starts building a metric with a multiset metric.
+	 * Starts building a distance with a set distance.
 	 * 
-	 * @param metric
-	 *            the metric to use as a base
+	 * @param distance
+	 *            the distance to use as a base
 	 * @return a builder for fluent chaining
 	 */
-	public static CollectionMetricInitialSimplifierStep<Multiset<String>> with(
-			MultisetMetric<String> metric) {
-		return new CompositeMultisetMetricBuilder(metric);
+	public static CollectionDistanceInitialSimplifierStep<Set<String>> with(
+			SetDistance<String> distance) {
+		return new CompositeSetDistanceBuilder(distance);
+
+	}
+
+	/**
+	 * Starts building a distance with a multiset distance.
+	 * 
+	 * @param distance
+	 *            the distance to use as a base
+	 * @return a builder for fluent chaining
+	 */
+	public static CollectionDistanceInitialSimplifierStep<Multiset<String>> with(
+			MultisetDistance<String> distance) {
+		return new CompositeMultisetDistanceBuilder(distance);
 
 	}
 
 	@SuppressWarnings("javadoc")
 	public interface BuildStep {
 		/**
-		 * Builds a metric with the given steps.
+		 * Builds a distance with the given steps.
 		 * 
-		 * @return a metric
+		 * @return a distance
 		 */
-		StringMetric build();
+		StringDistance build();
 
 	}
 
 	@SuppressWarnings("javadoc")
-	public interface StringMetricInitialSimplifierStep extends BuildStep {
+	public interface StringDistanceInitialSimplifierStep extends BuildStep {
 		/**
-		 * Adds a simplifier to the metric.
+		 * Adds a simplifier to the distance.
 		 * 
 		 * @param simplifier
 		 *            a simplifier to add
 		 * @return this for fluent chaining
 		 */
-		StringMetricSimplifierStep simplify(Simplifier simplifier);
+		StringDistanceSimplifierStep simplify(Simplifier simplifier);
 
 		/**
-		 * Builds a metric with the given simplifier.
+		 * Builds a distance with the given simplifier.
 		 * 
-		 * @return a metric
+		 * @return a distance
 		 */
 		@Override
-		StringMetric build();
+		StringDistance build();
 
 	}
 
 	@SuppressWarnings("javadoc")
-	public interface StringMetricSimplifierStep extends
-			StringMetricInitialSimplifierStep {
+	public interface StringDistanceSimplifierStep extends
+			StringDistanceInitialSimplifierStep {
 		/**
-		 * Adds a simplifier to the metric.
+		 * Adds a simplifier to the distance.
 		 * 
 		 * @param simplifier
 		 *            a simplifier to add
 		 * @return this for fluent chaining
 		 */
 		@Override
-		StringMetricSimplifierStep simplify(Simplifier simplifier);
+		StringDistanceSimplifierStep simplify(Simplifier simplifier);
 
 		/**
 		 * Sets a cache for simplification chain. The cache will store the
@@ -169,49 +169,49 @@ public final class StringMetricBuilder {
 		BuildStep cacheStrings(Cache<String, String> cache);
 
 		/**
-		 * Builds a metric with the given simplifier.
+		 * Builds a distance with the given simplifier.
 		 * 
-		 * @return a metric
+		 * @return a distance
 		 */
 		@Override
-		StringMetric build();
+		StringDistance build();
 
 	}
 
 	@SuppressWarnings("javadoc")
-	public interface CollectionMetricInitialSimplifierStep<T extends Collection<String>> {
+	public interface CollectionDistanceInitialSimplifierStep<T extends Collection<String>> {
 		/**
-		 * Adds a simplifier to the metric.
+		 * Adds a simplifier to the distance.
 		 * 
 		 * @param simplifier
 		 *            a simplifier to add
 		 * @return this for fluent chaining
 		 */
-		CollectionMetricSimplifierStep<T> simplify(Simplifier simplifier);
+		CollectionDistanceSimplifierStep<T> simplify(Simplifier simplifier);
 
 		/**
-		 * Adds a tokenization step to the metric.
+		 * Adds a tokenization step to the distance.
 		 * 
 		 * @param tokenizer
 		 *            a tokenizer to add
 		 * @return this for fluent chaining
 		 */
-		CollectionMetricTokenizerStep<T> tokenize(Tokenizer tokenizer);
+		CollectionDistanceTokenizerStep<T> tokenize(Tokenizer tokenizer);
 
 	}
 
 	@SuppressWarnings("javadoc")
-	public interface CollectionMetricSimplifierStep<T extends Collection<String>>
-			extends CollectionMetricInitialSimplifierStep<T> {
+	public interface CollectionDistanceSimplifierStep<T extends Collection<String>>
+			extends CollectionDistanceInitialSimplifierStep<T> {
 		/**
-		 * Adds a simplifier to the metric.
+		 * Adds a simplifier to the distance.
 		 * 
 		 * @param simplifier
 		 *            a simplifier to add
 		 * @return this for fluent chaining
 		 */
 		@Override
-		CollectionMetricSimplifierStep<T> simplify(Simplifier simplifier);
+		CollectionDistanceSimplifierStep<T> simplify(Simplifier simplifier);
 
 		/**
 		 * Sets a cache for simplification chain. The cache will store the
@@ -221,66 +221,66 @@ public final class StringMetricBuilder {
 		 *            a cache to add
 		 * @return this for fluent chaining
 		 */
-		CollectionMetricInitialTokenizerStep<T> cacheStrings(
+		CollectionDistanceInitialTokenizerStep<T> cacheStrings(
 				Cache<String, String> cache);
 
 		/**
-		 * Adds a tokenization step to the metric.
+		 * Adds a tokenization step to the distance.
 		 * 
 		 * @param tokenizer
 		 *            a tokenizer to add
 		 * @return this for fluent chaining
 		 */
 		@Override
-		CollectionMetricTokenizerStep<T> tokenize(Tokenizer tokenizer);
+		CollectionDistanceTokenizerStep<T> tokenize(Tokenizer tokenizer);
 
 	}
 
 	@SuppressWarnings("javadoc")
-	public interface CollectionMetricInitialTokenizerStep<T extends Collection<String>> {
+	public interface CollectionDistanceInitialTokenizerStep<T extends Collection<String>> {
 		/**
-		 * Adds a tokenization step to the metric.
+		 * Adds a tokenization step to the distance.
 		 * 
 		 * @param tokenizer
 		 *            a tokenizer to add
 		 * @return a builder for fluent chaining
 		 */
-		CollectionMetricTokenizerStep<T> tokenize(Tokenizer tokenizer);
+		CollectionDistanceTokenizerStep<T> tokenize(Tokenizer tokenizer);
 
 	}
 
 	@SuppressWarnings("javadoc")
-	public interface CollectionMetricTokenizerStep<T extends Collection<String>>
-			extends BuildStep, CollectionMetricInitialTokenizerStep<T> {
+	public interface CollectionDistanceTokenizerStep<T extends Collection<String>>
+			extends BuildStep, CollectionDistanceInitialTokenizerStep<T> {
 		/**
-		 * Adds a tokenization step to the metric.
+		 * Adds a tokenization step to the distance.
 		 * 
 		 * @param tokenizer
 		 *            a tokenizer to add
 		 * @return a builder for fluent chaining
 		 */
 		@Override
-		CollectionMetricTokenizerStep<T> tokenize(Tokenizer tokenizer);
+		CollectionDistanceTokenizerStep<T> tokenize(Tokenizer tokenizer);
 
 		/**
-		 * Adds a filter step to the metric. All tokens that match the predicate
+		 * Adds a filter step to the distance. All tokens that match the predicate
 		 * are kept.
 		 * 
 		 * @param predicate
 		 *            a predicate for tokens to keep
 		 * @return this for fluent chaining
 		 */
-		CollectionMetricTokenizerStep<T> filter(Predicate<String> predicate);
+		CollectionDistanceTokenizerStep<T> filter(Predicate<String> predicate);
 
 		/**
-		 * Adds a transform step to the metric. All tokens are transformed by
+		 * Adds a transform step to the distance. All tokens are transformed by
 		 * the function. The function may not return null.
 		 * 
 		 * @param function
 		 *            a function to transform tokens
 		 * @return this for fluent chaining
 		 */
-		CollectionMetricTokenizerStep<T> transform(
+		CollectionDistanceTokenizerStep<T> transform(
 				Function<String, String> function);
 
 		/**
@@ -295,35 +295,35 @@ public final class StringMetricBuilder {
 		BuildStep cacheTokens(Cache<String, T> cache);
 
 		/**
-		 * Builds a string metric that will use the given simplification,
+		 * Builds a string distance that will use the given simplification,
 		 * tokenization and filtering steps.
 		 * 
-		 * @return a string metric.
+		 * @return a string distance.
 		 */
 		@Override
-		StringMetric build();
+		StringDistance build();
 
 	}
 
-	private static final class CompositeStringMetricBuilder implements
-			StringMetricSimplifierStep {
+	private static final class CompositeStringDistanceBuilder implements
+			StringDistanceSimplifierStep {
 
-		private final Metric<String> metric;
+		private final Distance<String> distance;
 
 		private final List<Simplifier> simplifiers = new ArrayList<>();
 
-		CompositeStringMetricBuilder(Metric<String> metric) {
-			checkNotNull(metric);
-			this.metric = metric;
+		CompositeStringDistanceBuilder(Distance<String> distance) {
+			checkNotNull(distance);
+			this.distance = distance;
 		}
 
 		@Override
-		public StringMetric build() {
+		public StringDistance build() {
 
 			if (simplifiers.isEmpty()) {
-				return create(metric);
+				return create(distance);
 			}
-			return create(metric, chainSimplifiers());
+			return create(distance, chainSimplifiers());
 		}
 
 		private Simplifier chainSimplifiers() {
@@ -343,7 +343,7 @@ public final class StringMetricBuilder {
 		}
 
 		@Override
-		public StringMetricSimplifierStep simplify(Simplifier simplifier) {
+		public StringDistanceSimplifierStep simplify(Simplifier simplifier) {
 			checkNotNull(simplifier);
 			this.simplifiers.add(simplifier);
 			return this;
@@ -351,36 +351,36 @@ public final class StringMetricBuilder {
 
 	}
 
-	private static abstract class CompositeCollectionMetricBuilder<T extends Collection<String>>
-			implements CollectionMetricSimplifierStep<T>,
-			CollectionMetricTokenizerStep<T> {
+	private static abstract class CompositeCollectionDistanceBuilder<T extends Collection<String>>
+			implements CollectionDistanceSimplifierStep<T>,
+			CollectionDistanceTokenizerStep<T> {
 
-		private final Metric<T> metric;
+		private final Distance<T> distance;
 
 		private final List<Simplifier> simplifiers = new ArrayList<>();
 		private final List<Tokenizer> tokenizers = new ArrayList<>();
 
-		CompositeCollectionMetricBuilder(Metric<T> metric) {
-			checkNotNull(metric);
-			this.metric = metric;
+		CompositeCollectionDistanceBuilder(Distance<T> distance) {
+			checkNotNull(distance);
+			this.distance = distance;
 		}
 
 		@Override
-		public final StringMetric build() {
+		public final StringDistance build() {
 
 			Tokenizer tokenizer = chainTokenizers();
 
 			if (simplifiers.isEmpty()) {
-				return build(metric, tokenizer);
+				return build(distance, tokenizer);
 			}
 
-			return build(metric, chainSimplifiers(), tokenizer);
+			return build(distance, chainSimplifiers(), tokenizer);
 		}
 
-		abstract StringMetric build(Metric<T> metric, Simplifier simplifier,
+		abstract StringDistance build(Distance<T> distance, Simplifier simplifier,
 				Tokenizer tokenizer);
 
-		abstract StringMetric build(Metric<T> metric, Tokenizer tokenizer);
+		abstract StringDistance build(Distance<T> distance, Tokenizer tokenizer);
 
 		@Override
 		public final BuildStep cacheTokens(Cache<String, T> cache) {
@@ -393,7 +393,7 @@ public final class StringMetricBuilder {
 				Cache<String, T> cache, Tokenizer tokenizer);
 
 		@Override
-		public final CollectionMetricInitialTokenizerStep<T> cacheStrings(
+		public final CollectionDistanceInitialTokenizerStep<T> cacheStrings(
 				Cache<String, String> cache) {
 			checkNotNull(cache);
 
@@ -405,7 +405,7 @@ public final class StringMetricBuilder {
 		}
 
 		@Override
-		public final CollectionMetricSimplifierStep<T> simplify(
+		public final CollectionDistanceSimplifierStep<T> simplify(
 				Simplifier simplifier) {
 			checkNotNull(simplifier);
 			simplifiers.add(simplifier);
@@ -413,7 +413,7 @@ public final class StringMetricBuilder {
 		}
 
 		@Override
-		public final CollectionMetricTokenizerStep<T> tokenize(
+		public final CollectionDistanceTokenizerStep<T> tokenize(
 				Tokenizer tokenizer) {
 			checkNotNull(tokenizer);
 			tokenizers.add(tokenizer);
@@ -421,7 +421,7 @@ public final class StringMetricBuilder {
 		}
 
 		@Override
-		public final CollectionMetricTokenizerStep<T> filter(
+		public final CollectionDistanceTokenizerStep<T> filter(
 				Predicate<String> predicate) {
 			checkNotNull(predicate);
 
@@ -434,7 +434,7 @@ public final class StringMetricBuilder {
 		}
 
 		@Override
-		public final CollectionMetricTokenizerStep<T> transform(
+		public final CollectionDistanceTokenizerStep<T> transform(
 				Function<String, String> function) {
 			checkNotNull(function);
 			final Tokenizer transform = Tokenizers.transform(chainTokenizers(),
@@ -458,22 +458,22 @@ public final class StringMetricBuilder {
 
 	}
 
-	private static final class CompositeListMetricBuilder extends
-			CompositeCollectionMetricBuilder<List<String>> {
+	private static final class CompositeListDistanceBuilder extends
+			CompositeCollectionDistanceBuilder<List<String>> {
 
-		CompositeListMetricBuilder(Metric<List<String>> metric) {
-			super(metric);
+		CompositeListDistanceBuilder(Distance<List<String>> distance) {
+			super(distance);
 		}
 
 		@Override
-		StringMetric build(Metric<List<String>> metric, Simplifier simplifier,
+		StringDistance build(Distance<List<String>> distance, Simplifier simplifier,
 				Tokenizer tokenizer) {
-			return createForListMetric(metric, simplifier, tokenizer);
+			return createForListDistance(distance, simplifier, tokenizer);
 		}
 
 		@Override
-		StringMetric build(Metric<List<String>> metric, Tokenizer tokenizer) {
-			return createForListMetric(metric, tokenizer);
+		StringDistance build(Distance<List<String>> distance, Tokenizer tokenizer) {
+			return createForListDistance(distance, tokenizer);
 		}
 
 		@Override
@@ -484,22 +484,22 @@ public final class StringMetricBuilder {
 
 	}
 
-	private static final class CompositeSetMetricBuilder extends
-			CompositeCollectionMetricBuilder<Set<String>> {
+	private static final class CompositeSetDistanceBuilder extends
+			CompositeCollectionDistanceBuilder<Set<String>> {
 
-		CompositeSetMetricBuilder(Metric<Set<String>> metric) {
-			super(metric);
+		CompositeSetDistanceBuilder(Distance<Set<String>> distance) {
+			super(distance);
 		}
 
 		@Override
-		StringMetric build(Metric<Set<String>> metric, Simplifier simplifier,
+		StringDistance build(Distance<Set<String>> distance, Simplifier simplifier,
 				Tokenizer tokenizer) {
-			return createForSetMetric(metric, simplifier, tokenizer);
+			return createForSetDistance(distance, simplifier, tokenizer);
 		}
 
 		@Override
-		StringMetric build(Metric<Set<String>> metric, Tokenizer tokenizer) {
-			return createForSetMetric(metric, tokenizer);
+		StringDistance build(Distance<Set<String>> distance, Tokenizer tokenizer) {
+			return createForSetDistance(distance, tokenizer);
 		}
 
 		@Override
@@ -510,22 +510,22 @@ public final class StringMetricBuilder {
 
 	}
 
-	private static final class CompositeMultisetMetricBuilder extends
-			CompositeCollectionMetricBuilder<Multiset<String>> {
+	private static final class CompositeMultisetDistanceBuilder extends
+			CompositeCollectionDistanceBuilder<Multiset<String>> {
 
-		CompositeMultisetMetricBuilder(Metric<Multiset<String>> metric) {
-			super(metric);
+		CompositeMultisetDistanceBuilder(Distance<Multiset<String>> distance) {
+			super(distance);
 		}
 
 		@Override
-		StringMetric build(Metric<Multiset<String>> metric,
+		StringDistance build(Distance<Multiset<String>> distance,
 				Simplifier simplifier, Tokenizer tokenizer) {
-			return createForMultisetMetric(metric, simplifier, tokenizer);
+			return createForMultisetDistance(distance, simplifier, tokenizer);
 		}
 
 		@Override
-		StringMetric build(Metric<Multiset<String>> metric, Tokenizer tokenizer) {
-			return createForMultisetMetric(metric, tokenizer);
+		StringDistance build(Distance<Multiset<String>> distance, Tokenizer tokenizer) {
+			return createForMultisetDistance(distance, tokenizer);
 		}
 
 		@Override

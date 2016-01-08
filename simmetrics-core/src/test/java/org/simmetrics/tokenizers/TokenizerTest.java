@@ -25,7 +25,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-import static org.mockito.MockitoAnnotations.initMocks;
 import static org.simmetrics.matchers.ImplementsToString.implementsToString;
 
 import java.util.Collection;
@@ -37,6 +36,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
@@ -44,6 +45,9 @@ import com.google.common.collect.Multiset;
 @SuppressWarnings("javadoc")
 public abstract class TokenizerTest {
 
+	@Rule
+	public final MockitoRule mockitoRule = MockitoJUnit.rule();
+	
 	@Rule
 	public final ExpectedException thrown = ExpectedException.none();
 
@@ -102,8 +106,6 @@ public abstract class TokenizerTest {
 
 	@Before
 	public final void setUp() throws Exception {
-		initMocks(this);
-
 		tokenizer = getTokenizer();
 		tests = getTests();
 	}

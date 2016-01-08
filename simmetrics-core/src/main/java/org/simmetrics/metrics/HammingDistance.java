@@ -26,7 +26,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 import java.util.Iterator;
 import java.util.List;
 
-import org.simmetrics.Distance;
 import org.simmetrics.ListDistance;
 import org.simmetrics.StringDistance;
 
@@ -174,7 +173,7 @@ public final class HammingDistance {
 	 * 
 	 * @return a new Hamming distance to compare strings
 	 */
-	public static Distance<String> forString() {
+	public static StringDistance forString() {
 		return new HammingStringDistance();
 	}
 }

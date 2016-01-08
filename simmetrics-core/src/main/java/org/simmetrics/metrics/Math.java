@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,12 @@
 
 
 package org.simmetrics.metrics;
+
+import java.util.Set;
+
+import com.google.common.collect.Multiset;
+import com.google.common.collect.Multisets;
+import com.google.common.collect.Sets;
 
 final class Math {
 
@@ -62,5 +68,35 @@ final class Math {
 	static int min(final int a, final int b, final int c, final int d) {
 		return java.lang.Math.min(
 				java.lang.Math.min(java.lang.Math.min(a, b), c), d);
+	}
+
+	static <T> Multiset<T> union(Multiset<T> a, Multiset<T> b) {
+		// Lager set first for performance improvement.
+		// See: MathCaliper
+		if (a.size() < b.size()) {
+			return Multisets.union(b, a);
+		}
+
+		return Multisets.union(a, b);
+	}
+
+	static <T> Multiset<T> intersection(Multiset<T> a, Multiset<T> b) {
+		// Smaller set first for performance improvement.
+		// See: MathCaliper
+		if (a.size() < b.size()) {
+			return Multisets.intersection(a, b);
+		}
+
+		return Multisets.intersection(b, a);
+	}
+
+	static <T> Set<T> intersection(Set<T> a, Set<T> b) {
+		// Smaller set first for performance improvement.
+		// See: MathCaliper and note at Sets.intersection
+		if (a.size() < b.size()) {
+			return Sets.intersection(a, b);
+		}
+
+		return Sets.intersection(b, a);
 	}
 }

@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Examples
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,6 +38,10 @@ public class ReadMeExampleTest {
 		assertEquals(0.5720f, ReadMeExample.example02(), DELTA);
 	}
 	
+	@Test
+	public void example03(){
+		assertEquals(3.0000f, ReadMeExample.example03(), DELTA);
+	}
 
 
 }

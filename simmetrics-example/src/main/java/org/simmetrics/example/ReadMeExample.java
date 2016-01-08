@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Examples
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,12 +19,15 @@
  */
 package org.simmetrics.example;
 
-import static org.simmetrics.builders.StringMetricBuilder.with;
 
 import java.util.Locale;
 
+import org.simmetrics.StringDistance;
 import org.simmetrics.StringMetric;
+import org.simmetrics.builders.StringDistanceBuilder;
+import org.simmetrics.builders.StringMetricBuilder;
 import org.simmetrics.metrics.CosineSimilarity;
+import org.simmetrics.metrics.EuclideanDistance;
 import org.simmetrics.metrics.StringMetrics;
 import org.simmetrics.simplifiers.Simplifiers;
 import org.simmetrics.tokenizers.Tokenizers;
@@ -52,13 +55,30 @@ public final class ReadMeExample {
 		String str2 = "This sentence is similar. It has almost the same words";
 
 		StringMetric metric =
-				with(new CosineSimilarity<String>())
+				StringMetricBuilder.with(new CosineSimilarity<String>())
 				.simplify(Simplifiers.toLowerCase(Locale.ENGLISH))
 				.simplify(Simplifiers.replaceNonWord())
 				.tokenize(Tokenizers.whitespace())
 				.build();
 
 		float result = metric.compare(str1, str2); //0.5720
+		
+		return result;
+	}
+	
+	public static float example03(){
+		
+		String str1 = "This is a sentence. It is made of words";
+		String str2 = "This sentence is similar. It has almost the same words";
+
+		StringDistance metric =
+				StringDistanceBuilder.with(new EuclideanDistance<String>())
+				.simplify(Simplifiers.toLowerCase(Locale.ENGLISH))
+				.simplify(Simplifiers.replaceNonWord())
+				.tokenize(Tokenizers.whitespace())
+				.build();
+
+		float result = metric.distance(str1, str2); //3.0000
 		
 		return result;
 	}

@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,7 +58,12 @@ public class ForMultisetWithSimplifierTest extends StringMetricTest{
 	protected boolean satisfiesCoincidence() {
 		return false;
 	}
-
+	
+	@Override
+	protected boolean toStringIncludesSimpleClassName() {
+		return false;
+	}
+	
 	@Test
 	public void shouldReturnTokenizer(){
 		assertSame(tokenizer,getMetric().getTokenizer());

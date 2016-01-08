@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Examples
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,9 +40,7 @@ import com.google.common.collect.Multiset;
 import com.google.common.collect.Sets;
 
 /**
- * The string metric builder can be used to compose metrics.
- * 
- * 
+ * The similarity metric builder can be used to compose metrics.
  */
 @SuppressWarnings("javadoc")
 public final class StringMetricBuilderExample {

@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -88,7 +88,7 @@ public final class Jaccard<T> implements SetMetric<T>, SetDistance<T> {
 
 		// ∣a ∩ b∣ / ∣a ∪ b∣
 		// Implementation note: The size of the union of two sets is equal to
-		// the size of both lists minus the duplicate elements.
+		// the size of both sets minus the duplicate elements.
 		return intersection / (float) (a.size() + b.size() - intersection);
 	}
 

@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,20 +20,26 @@
 
 package org.simmetrics.builders;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.simmetrics.simplifiers.Simplifiers.toLowerCase;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+
 import org.junit.Test;
-import org.simmetrics.builders.StringMetricBuilder.CachingSimplifier;
 import org.simmetrics.simplifiers.Simplifier;
 import org.simmetrics.simplifiers.SimplifierTest;
+
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
 @SuppressWarnings("javadoc")
-public class CachingSimplifierTest extends SimplifierTest {
+public abstract class CachingSimplifierTest extends SimplifierTest {
 
 	private Simplifier innerSimplifier;
 
@@ -56,8 +62,10 @@ public class CachingSimplifierTest extends SimplifierTest {
 				.maximumSize(2)
 				.build();
 
-		return new CachingSimplifier(cache, innerSimplifier);
+		return getCachingSimplifier(cache, innerSimplifier);
 	}
+	
+	protected abstract Simplifier getCachingSimplifier(Cache<String,String> cache, Simplifier innerSimplifier);
 
 	@Override
 	protected final T[] getTests() {
@@ -84,8 +92,9 @@ public class CachingSimplifierTest extends SimplifierTest {
 	}
 	
 	@Test(expected=IllegalStateException.class) 
-	public void shouldThrowIllegalStateException(){
-		ExecutionExceptionCache<String, String> cache = new ExecutionExceptionCache<>();
-		new CachingSimplifier(cache, toLowerCase()).simplify("Sheep");
+	public void shouldThrowIllegalStateException() throws ExecutionException{
+		Cache<String, String> cache = mock(Cache.class);
+		when(cache.get(anyString(), any(Callable.class))).thenThrow(new ExecutionException(new Exception()));
+		getCachingSimplifier(cache, toLowerCase()).simplify("Sheep");
 	}
 }

@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,8 @@
 
 package org.simmetrics.performance;
 
-import static org.simmetrics.metrics.StringMetrics.createForListMetric;
-import static org.simmetrics.metrics.StringMetrics.createForMultisetMetric;
 import static org.simmetrics.tokenizers.Tokenizers.whitespace;
-
+import static org.simmetrics.builders.StringMetricBuilder.with;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +49,8 @@ public final class SimonWhiteCaliper {
 
 	enum Method {
 
-		latest(createForMultisetMetric(new SimonWhite<String>(), whitespace())), v3_0_2(createForListMetric(new SimonWhite_V_3_0_2<String>(), whitespace()));
+		latest(with(new SimonWhite<String>()).tokenize(whitespace()).build()), 
+		v3_0_2(with(new SimonWhite_V_3_0_2<String>()).tokenize(whitespace()).build());
 
 		final StringMetric metric;
 

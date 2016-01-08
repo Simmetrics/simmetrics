@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -20,7 +20,7 @@
 
 package org.simmetrics.metrics;
 
-import static com.google.common.collect.Multisets.intersection;
+import static org.simmetrics.metrics.Math.intersection;
 
 import org.simmetrics.MultisetDistance;
 import org.simmetrics.MultisetMetric;
@@ -84,12 +84,6 @@ public final class SimonWhite<T> implements MultisetMetric<T>, MultisetDistance<
 
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
-		}
-
-		// Smaller set first for performance improvement.
-		// See: MultisetIntersectionSize benchmark
-		if(a.size() > b.size()){
-			final Multiset<T> swap = a; a = b; b = swap;
 		}
 
 		// 2 * ∣a ∩ b∣ / (∣a∣ + ∣b∣)

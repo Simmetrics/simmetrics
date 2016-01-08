@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Examples
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,14 +29,14 @@ import org.simmetrics.metrics.StringMetrics;
 import org.simmetrics.tokenizers.Tokenizers;
 
 /**
- * The {@link StringMetrics} utility class contains a predefined list of well
+ * The StringMetrics utility class contains a predefined list of well
  * known metrics.
  */
 @SuppressWarnings("javadoc")
 public final class StringMetricsExample {
 
 	/**
-	 * Two strings can be compared using a predefined string metric.
+	 * Two strings can be compared using a predefined similarity metric.
 	 */
 	public static float example01() {
 
@@ -63,8 +63,8 @@ public final class StringMetricsExample {
 	}
 
 	/**
-	 * Using the string {@link StringMetricBuilder} metrics can be
-	 * customized. Instead of a whitespace tokenizer a qgram tokenizer is used.
+	 * Using the {@link StringMetricBuilder} similarity metrics can be
+	 * customized. Instead of a whitespace tokenizer a q-gram tokenizer is used.
 	 *
 	 * For more examples see {@link StringMetricBuilderExample}.
 	 */

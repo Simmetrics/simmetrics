@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,11 +22,14 @@ package org.simmetrics;
 
 import static com.google.common.primitives.Floats.max;
 import static java.lang.String.format;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.simmetrics.matchers.ImplementsToString.implementsToString;
+import static org.simmetrics.matchers.ToStringContainsSimpleClassName.toStringContainsSimpleClassName;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -137,7 +140,11 @@ public abstract class MetricTest<K> {
 	protected boolean satisfiesSubadditivity() {
 		return true;
 	}
-
+	
+	protected boolean toStringIncludesSimpleClassName(){
+		return true;
+	}
+	
 	@Before
 	public final void setUp() throws Exception {
 		this.delta = getDelta();
@@ -256,6 +263,15 @@ public abstract class MetricTest<K> {
 	@Test
 	public final void shouldImplementToString() {
 		assertThat(metric, implementsToString());
+	}
+	
+	@Test
+	public final void shouldContainSimpleClassNameToString() {
+		if(toStringIncludesSimpleClassName()){
+			assertThat(metric, toStringContainsSimpleClassName());
+		} else {
+			assertThat(metric, not(toStringContainsSimpleClassName()));	
+		}
 	}
 
 }

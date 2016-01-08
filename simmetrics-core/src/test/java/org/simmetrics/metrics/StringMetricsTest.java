@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
+import static org.simmetrics.simplifiers.Simplifiers.toLowerCase;
 import static org.simmetrics.simplifiers.SimplifiersMatcher.chain;
+import static org.simmetrics.tokenizers.Tokenizers.whitespace;
 
 import java.util.List;
 import java.util.Set;
@@ -52,11 +54,11 @@ import org.simmetrics.tokenizers.Tokenizers;
 
 import com.google.common.collect.Multiset;
 
-@SuppressWarnings({ "javadoc", "static-method" })
+@SuppressWarnings({ "javadoc", "deprecation" })
 @RunWith(Enclosed.class)
 public class StringMetricsTest {
 
-	public static final class Create {
+	public static class Create {
 
 		private final Metric<String> metric = new Identity<>();
 		private final Metric<List<String>> listMetric = new Identity<>();
@@ -153,11 +155,11 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateForList {
+	public static class CreateForList {
 
-		private final Metric<List<String>> metric = new Identity<>();
-		private final Tokenizer tokenizer = Tokenizers.whitespace();
-		private final Simplifier simplifier = Simplifiers.toLowerCase();
+		private Metric<List<String>> metric = new Identity<>();
+		private Tokenizer tokenizer = Tokenizers.whitespace();
+		private Simplifier simplifier = Simplifiers.toLowerCase();
 
 		@Test
 		public void shouldReturnForList() {
@@ -182,11 +184,11 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateForSet {
+	public static class CreateForSet {
 
-		private final Metric<Set<String>> metric = new Identity<>();
-		private final Tokenizer tokenizer = Tokenizers.whitespace();
-		private final Simplifier simplifier = Simplifiers.toLowerCase();
+		private Metric<Set<String>> metric = new Identity<>();
+		private Tokenizer tokenizer = Tokenizers.whitespace();
+		private Simplifier simplifier = Simplifiers.toLowerCase();
 
 		@Test
 		public void shouldReturnForSet() {
@@ -211,11 +213,11 @@ public class StringMetricsTest {
 
 	}
 	
-	public static final class CreateForMultiset {
+	public static class CreateForMultiset {
 
-		private final Metric<Multiset<String>> metric = new Identity<>();
-		private final Tokenizer tokenizer = Tokenizers.whitespace();
-		private final Simplifier simplifier = Simplifiers.toLowerCase();
+		private Metric<Multiset<String>> metric = new Identity<>();
+		private Tokenizer tokenizer = Tokenizers.whitespace();
+		private Simplifier simplifier = Simplifiers.toLowerCase();
 
 		@Test
 		public void shouldReturnForSet() {
@@ -240,7 +242,7 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateIdentity extends StringMetricTest {
+	public static class CreateIdentity extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
@@ -254,13 +256,18 @@ public class StringMetricsTest {
 		}
 	}
 
-	public static final class CreateCosineSimilarity extends StringMetricTest {
+	public static class CreateCosineSimilarity extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
 			return StringMetrics.cosineSimilarity();
 		}
-
+		
+		@Override
+		protected boolean toStringIncludesSimpleClassName() {
+			return false;
+		}
+		
 		@Override
 		protected T[] getTests() {
 			return new T[] { new T(0.5000f, "test string1", "test string2"),
@@ -272,13 +279,18 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateDiceSimlarity extends StringMetricTest {
+	public static class CreateDiceSimlarity extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
 			return StringMetrics.dice();
 		}
-
+		
+		@Override
+		protected boolean toStringIncludesSimpleClassName() {
+			return false;
+		}
+		
 		@Override
 		protected T[] getTests() {
 			return new T[] { new T(0.5000f, "test string1", "test string2"), new T(0.6666f, "test", "test string2"),
@@ -288,13 +300,18 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateEuclideanDistance extends StringMetricTest {
+	public static class CreateEuclideanMetric extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
 			return StringMetrics.euclideanDistance();
 		}
-
+		
+		@Override
+		protected boolean toStringIncludesSimpleClassName() {
+			return false;
+		}
+		
 		@Override
 		protected T[] getTests() {
 			return new T[] { new T(0.5000f, "test string1", "test string2"), new T(0.5527f, "test", "test string2"),
@@ -304,13 +321,18 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateJaccard extends StringMetricTest {
+	public static class CreateJaccard extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
 			return StringMetrics.jaccard();
 		}
-
+		
+		@Override
+		protected boolean toStringIncludesSimpleClassName() {
+			return false;
+		}
+		
 		@Override
 		protected T[] getTests() {
 			return new T[] { new T(0.3333f, "test string1", "test string2"), new T(0.5000f, "test", "test string2"),
@@ -320,13 +342,18 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateGeneralizedJaccard extends StringMetricTest {
+	public static class CreateGeneralizedJaccard extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
 			return StringMetrics.generalizedJaccard();
 		}
-
+		
+		@Override
+		protected boolean toStringIncludesSimpleClassName() {
+			return false;
+		}
+		
 		@Override
 		protected T[] getTests() {
 			return new T[] { new T(0.3333f, "test string1", "test string2"), new T(0.5000f, "test", "test string2"),
@@ -336,13 +363,18 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateMongeElkan extends StringMetricTest {
+	public static class CreateMongeElkan extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
 			return StringMetrics.mongeElkan();
 		}
-
+		
+		@Override
+		protected boolean toStringIncludesSimpleClassName() {
+			return false;
+		}
+		
 		@Override
 		protected T[] getTests() {
 			return new T[] { new T(0.9286f, "test string1", "test string2"), new T(0.8660f, "test", "test string2"),
@@ -357,12 +389,17 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateOverlapCoefficient extends StringMetricTest {
+	public static class CreateOverlapCoefficient extends StringMetricTest {
 		@Override
 		protected Metric<String> getMetric() {
 			return StringMetrics.overlapCoefficient();
 		}
-
+		
+		@Override
+		protected boolean toStringIncludesSimpleClassName() {
+			return false;
+		}
+		
 		@Override
 		protected T[] getTests() {
 			return new T[] { new T(0.5000f, "test string1", "test string2"), new T(1.0000f, "test", "test string2"),
@@ -377,13 +414,18 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateQGramsDistance extends StringMetricTest {
+	public static class CreateQGramsMetric extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
 			return StringMetrics.qGramsDistance();
 		}
-
+		
+		@Override
+		protected boolean toStringIncludesSimpleClassName() {
+			return false;
+		}
+		
 		@Override
 		protected T[] getTests() {
 			return new T[] { new T(0.7857f, "test string1", "test string2"), new T(0.3999f, "test", "test string2"),
@@ -393,13 +435,18 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateSimonWhite extends StringMetricTest {
+	public static class CreateSimonWhite extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
 			return StringMetrics.simonWhite();
 		}
-
+		
+		@Override
+		protected boolean toStringIncludesSimpleClassName() {
+			return false;
+		}
+		
 		@Override
 		protected T[] getTests() {
 			return new T[] { new T(0.8889f, "test string1", "test string2"), new T(0.5000f, "test", "test string2"),
@@ -408,13 +455,18 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateSoundex extends StringMetricTest {
+	public static class CreateSoundex extends StringMetricTest {
 
 		@Override
 		protected Metric<String> getMetric() {
 			return StringMetrics.soundex();
 		}
-
+		
+		@Override
+		protected boolean toStringIncludesSimpleClassName() {
+			return false;
+		}
+		
 		@Override
 		protected T[] getTests() {
 			return new T[] { new T(0.5000f, "Tannhauser", "Ozymandias"), new T(1.0000f, "James", "Jones"),
@@ -433,7 +485,7 @@ public class StringMetricsTest {
 		}
 	}
 
-	public static final class Utilities {
+	public static class Utilities {
 		//TODO: Test
 		@Test
 		public void blockDistance() {
@@ -442,7 +494,7 @@ public class StringMetricsTest {
 
 	}
 
-	public static final class CreateStringMetrics {
+	public static class CreateStringMetrics {
 		@Test
 		public void damerauLevenshtein() {
 			assertNotNull(StringMetrics.damerauLevenshtein());
@@ -478,6 +530,222 @@ public class StringMetricsTest {
 		@Test
 		public void smithWatermanGotoh() {
 			assertNotNull(StringMetrics.smithWatermanGotoh());
+		}
+		
+		@Test
+		public void longestCommonSubsequence() {
+			assertNotNull(StringMetrics.longestCommonSubsequence());
+		}
+		
+		@Test
+		public void longestCommonSubstring() {
+			assertNotNull(StringMetrics.longestCommonSubstring());
+		}
+	}
+	
+
+
+	public static class ForListTest extends StringMetricTest {
+		
+		@Override
+		protected boolean toStringIncludesSimpleClassName() {
+			return false;
+		}
+		
+		@Override
+		protected StringMetric getMetric() {
+			Metric<List<String>> identity = new Identity<>();
+			return new StringMetrics.ForList(identity, whitespace());
+		}
+		
+		@Override
+		protected T[] getTests() {
+			return new T[]{
+					new T(1.0f, "a b c","a b c"),
+					new T(0.0f, "a b c","a b c d"),
+					new T(0.0f, "","a b c")
+			};
+		}
+	}
+	
+	public static class ForListWithSimplifierTest extends StringMetricTest {
+		
+		@Override
+		protected boolean toStringIncludesSimpleClassName() {
+			return false;
+		}
+
+		@Override
+		protected boolean satisfiesCoincidence() {
+			return false;
+		}
+		
+		@Override
+		protected StringMetric getMetric() {
+			Metric<List<String>> identity = new Identity<>();
+			return new StringMetrics.ForListWithSimplifier(identity, toLowerCase(), whitespace());
+		}
+		
+		@Override
+		protected T[] getTests() {
+			return new T[]{
+					new T(1.0f, "A B C","a b c"),
+					new T(0.0f, "a b c","a b c d"),
+					new T(0.0f, "","a b c")
+			};
+		}
+	}
+	
+	public static class ForSetTest extends StringMetricTest {
+		
+		@Override
+		protected boolean toStringIncludesSimpleClassName() {
+			return false;
+		}
+		
+		@Override
+		protected StringMetric getMetric() {
+			Metric<Set<String>> identity = new Identity<>();
+			return new StringMetrics.ForSet(identity, whitespace());
+		}
+		
+		@Override
+		protected T[] getTests() {
+			return new T[]{
+					new T(1.0f, "a b c","a b c"),
+					new T(0.0f, "a b c","a b c d"),
+					new T(0.0f, "","a b c")
+			};
+		}
+	}
+	
+	public static class ForSetWithSimplifierTest extends StringMetricTest {
+		
+		@Override
+		protected boolean satisfiesCoincidence() {
+			return false;
+		}
+		
+		@Override
+		protected boolean toStringIncludesSimpleClassName() {
+			return false;
+		}
+		
+		@Override
+		protected StringMetric getMetric() {
+			Metric<Set<String>> identity = new Identity<>();
+			return new StringMetrics.ForSetWithSimplifier(identity, toLowerCase(), whitespace());
+		}
+		
+		@Override
+		protected T[] getTests() {
+			return new T[]{
+					new T(1.0f, "A B C","a b c"),
+					new T(0.0f, "a b c","a b c d"),
+					new T(0.0f, "","a b c")
+			};
+		}
+	}
+	
+	public static class ForMultisetTest extends StringMetricTest {
+		
+		@Override
+		protected boolean toStringIncludesSimpleClassName() {
+			return false;
+		}
+		
+		@Override
+		protected StringMetric getMetric() {
+			Metric<Multiset<String>> identity = new Identity<>();
+			return new StringMetrics.ForMultiset(identity, whitespace());
+		}
+		
+		@Override
+		protected T[] getTests() {
+			return new T[]{
+					new T(1.0f, "a b c","a b c"),
+					new T(0.0f, "a b c","a b c d"),
+					new T(0.0f, "","a b c")
+			};
+		}
+	}
+	
+	public static class ForMultisetWithSimplifierTest extends StringMetricTest {
+		
+		@Override
+		protected boolean satisfiesCoincidence() {
+			return false;
+		}
+		
+		@Override
+		protected boolean toStringIncludesSimpleClassName() {
+			return false;
+		}
+		
+		@Override
+		protected StringMetric getMetric() {
+			Metric<Multiset<String>> identity = new Identity<>();
+			return new StringMetrics.ForMultisetWithSimplifier(identity, toLowerCase(), whitespace());
+		}
+		
+		@Override
+		protected T[] getTests() {
+			return new T[]{
+					new T(1.0f, "A B C","a b c"),
+					new T(0.0f, "a b c","a b c d"),
+					new T(0.0f, "","a b c")
+			};
+		}
+	}
+	
+	public static class ForStringTest extends StringMetricTest {
+		
+		@Override
+		protected boolean toStringIncludesSimpleClassName() {
+			return false;
+		}
+		
+		@Override
+		protected StringMetric getMetric() {
+			Metric<String> identity = new Identity<>();
+			return new ForString(identity);
+		}
+		
+		@Override
+		protected T[] getTests() {
+			return new T[]{
+					new T(1.0f, "a b c","a b c"),
+					new T(0.0f, "a b c","a b c d"),
+					new T(0.0f, "","a b c")
+			};
+		}
+	}
+	
+	public static class ForStringWithSimplifierTest extends StringMetricTest {
+		
+		@Override
+		protected boolean satisfiesCoincidence() {
+			return false;
+		}
+		
+		@Override
+		protected boolean toStringIncludesSimpleClassName() {
+			return false;
+		}
+		
+		@Override
+		protected StringMetric getMetric() {
+			Metric<String> identity = new Identity<>();
+			return new StringMetrics.ForStringWithSimplifier(identity, toLowerCase());
+		}
+		
+		@Override
+		protected T[] getTests() {
+			return new T[]{
+					new T(1.0f, "A B C","a b c"),
+					new T(0.0f, "a b c","a b c d"),
+					new T(0.0f, "","a b c")
+			};
 		}
 	}
 }

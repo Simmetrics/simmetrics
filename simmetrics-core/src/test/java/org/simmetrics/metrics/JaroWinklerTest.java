@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@ package org.simmetrics.metrics;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.simmetrics.Metric;
+import org.simmetrics.StringDistance;
+import org.simmetrics.StringDistanceTest;
 import org.simmetrics.StringMetric;
 import org.simmetrics.StringMetricTest;
 
@@ -155,6 +157,37 @@ public final class JaroWinklerTest   {
 							"Structural Assessment: The Role of Large and Full-Scale Testing"),
 					new T(0.4931f, "Web Aplications",
 							"How to Find a Scholarship Online"), };
+		}
+	}
+	
+	public static final class DistanceTest extends StringDistanceTest {
+		
+		@Override
+		protected boolean satisfiesSubadditivity() {
+			return false;
+		}
+		
+		@Override
+		protected StringDistance getMetric() {
+			return new JaroWinkler();
+		}
+
+		
+		@Override
+		protected T[] getTests()  {
+			return new T[] {
+					new T(0.0333f, "test string1", "test string2"),
+					new T(0.1333f, "test", "test string2"),
+					new T(1.0000f, "", "test string2"),
+					new T(0.0800f, "aaa bbb ccc ddd", "aaa bbb ccc eee"),
+					new T(0.0571f, "a b c d", "a b c e"),
+					new T(0.1111f, "Healed", "Sealed"),
+					new T(0.1524f, "Healed", "Healthy"),
+					new T(0.1244f, "Healed", "Heard"),
+					new T(0.2444f, "Healed", "Herded"),
+					new T(0.2000f, "Healed", "Help"),
+					new T(0.3889f, "Healed", "Sold"),
+					new T(0.2000f, "Healed", "Help"), };
 		}
 	}
 }

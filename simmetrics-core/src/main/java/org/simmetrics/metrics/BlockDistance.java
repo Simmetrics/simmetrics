@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@
  */
 package org.simmetrics.metrics;
 
-import static com.google.common.collect.Multisets.union;
 import static java.lang.Math.abs;
+import static org.simmetrics.metrics.Math.union;
 
 import org.simmetrics.MultisetDistance;
 import org.simmetrics.MultisetMetric;
@@ -33,6 +33,7 @@ import com.google.common.collect.Multiset;
  * <p>
  * <code>
  * similarity(a,b) = 1 - distance(a,b) / (∣a∣ + ∣b∣)
+ * <br>
  * distance(a,b) = ∣∣a - b∣∣₁
  * </code>
  * <p>
@@ -61,15 +62,9 @@ public final class BlockDistance<T> implements MultisetMetric<T>, MultisetDistan
 
 	@Override
 	public float distance(Multiset<T> a, Multiset<T> b) {
-	
-		// Lager set first for performance improvement. 
-		// See: MultisetUnionSize benchmark
-		if(a.size() < b.size()){
-			final Multiset<T> swap = a; a = b; b = swap;
-		}
-		
+
 		float distance = 0;
-		
+
 		for (T token : union(a, b).elementSet()) {
 			float frequencyInA = a.count(token);
 			float frequencyInB = b.count(token);

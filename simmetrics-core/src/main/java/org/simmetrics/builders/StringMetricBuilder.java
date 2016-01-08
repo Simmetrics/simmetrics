@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,10 +21,10 @@
 package org.simmetrics.builders;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.simmetrics.metrics.StringMetrics.create;
-import static org.simmetrics.metrics.StringMetrics.createForListMetric;
-import static org.simmetrics.metrics.StringMetrics.createForMultisetMetric;
-import static org.simmetrics.metrics.StringMetrics.createForSetMetric;
+import static org.simmetrics.builders.StringMetrics.create;
+import static org.simmetrics.builders.StringMetrics.createForListMetric;
+import static org.simmetrics.builders.StringMetrics.createForMultisetMetric;
+import static org.simmetrics.builders.StringMetrics.createForSetMetric;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,9 +49,9 @@ import com.google.common.cache.Cache;
 import com.google.common.collect.Multiset;
 
 /**
- * Convenience tool to build string metrics. Any class implementing
+ * Convenience tool to build string similarity metrics. Any class implementing
  * {@link StringMetric}, {@link ListMetric}, {@link SetMetric} or
- * {@link MultisetMetric} can be used to build a string metric. Supports the
+ * {@link MultisetMetric} can be used to build a string similarity metric. Supports the
  * addition of simplification, tokenization, token-filtering,
  * token-transformation and caching to a metric.
  * <p>
@@ -64,7 +64,7 @@ public final class StringMetricBuilder {
 	}
 
 	/**
-	 * Starts building a metric with a string metric.
+	 * Starts building a metric with a string similarity metric.
 	 * 
 	 * @param metric
 	 *            the metric to use as a base
@@ -295,10 +295,10 @@ public final class StringMetricBuilder {
 		BuildStep cacheTokens(Cache<String, T> cache);
 
 		/**
-		 * Builds a string metric that will use the given simplification,
+		 * Builds a similarity metric that will use the given simplification,
 		 * tokenization and filtering steps.
 		 * 
-		 * @return a string metric.
+		 * @return a string similarity metric.
 		 */
 		@Override
 		StringMetric build();

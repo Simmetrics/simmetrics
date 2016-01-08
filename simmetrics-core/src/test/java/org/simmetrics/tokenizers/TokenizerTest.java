@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.simmetrics.matchers.ImplementsToString.implementsToString;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -35,6 +36,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
@@ -42,6 +45,9 @@ import com.google.common.collect.Multiset;
 @SuppressWarnings("javadoc")
 public abstract class TokenizerTest {
 
+	@Rule
+	public final MockitoRule mockitoRule = MockitoJUnit.rule();
+	
 	@Rule
 	public final ExpectedException thrown = ExpectedException.none();
 

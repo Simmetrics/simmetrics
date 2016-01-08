@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,10 +23,17 @@ package org.simmetrics.metrics;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
+import org.simmetrics.StringDistance;
 import org.simmetrics.StringMetric;
 
 /**
  * Calculates the Jaro distance (similarity) over two strings.
+ * <p>
+ * <code>
+ * similarity(a,b) = jaro(a,b)
+ * <br>
+ * distance(a,b) = 1 - similarity(a,b)
+ * </code>
  * <p>
  * This class is immutable and thread-safe.
  * 
@@ -38,7 +45,12 @@ import org.simmetrics.StringMetric;
  *
  *
  */
-public final class Jaro implements StringMetric {
+public final class Jaro implements StringMetric, StringDistance {
+	
+	@Override
+	public float distance(String a, String b) {
+		return 1.0f - compare(a, b);
+	}
 	
 	@Override
 	public float compare(final String a, final String b) {

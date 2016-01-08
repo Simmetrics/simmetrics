@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -20,20 +20,22 @@
 
 package org.simmetrics.metrics;
 
-import static com.google.common.collect.Sets.intersection;
+import static org.simmetrics.metrics.Math.intersection;
 import static java.lang.Math.min;
 
 import java.util.Set;
 
+import org.simmetrics.SetDistance;
 import org.simmetrics.SetMetric;
 
 /**
  * The overlap coefficient measures the overlap between two sets. The similarity
  * is defined as the size of the intersection divided by the smaller of the size
- * of the two sets
+ * of the two sets.
  * <p>
  * <code>
- * similarity(q,r) = ∣q ∩ r∣ / min{∣q∣, ∣r∣}
+ * similarity(q,r) = ∣q ∩ r∣ / min{∣q∣, ∣r∣} <br>
+ * distance(q,r) = 1 - similarity(q,r)
  * </code>
  * <p>
  * Unlike the generalized overlap coefficient the occurrence (cardinality) of an
@@ -59,8 +61,13 @@ import org.simmetrics.SetMetric;
  * @see <a href="http://en.wikipedia.org/wiki/Overlap_coefficient">Wikipedia -
  *      Overlap Coefficient</a>
  */
-public final class OverlapCoefficient<T> implements SetMetric<T> {
+public final class OverlapCoefficient<T> implements SetMetric<T>, SetDistance<T> {
 
+	@Override
+	public float distance(Set<T> a, Set<T> b) {
+		return 1 - compare(a, b);
+	}
+	
 	@Override
 	public float compare(Set<T> a, Set<T> b) {
 
@@ -71,13 +78,7 @@ public final class OverlapCoefficient<T> implements SetMetric<T> {
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
 		}
-		
-		// Smaller set first for performance improvement. 
-		// See: note at Sets.intersection
-		if(a.size() > b.size()){
-			final Set<T> swap = a; a = b; b = swap;
-		}
-		
+
 		// ∣q ∩ r∣ / min{∣q∣, ∣r∣}
 		return intersection(a, b).size() / (float) min(a.size(), b.size());
 	}

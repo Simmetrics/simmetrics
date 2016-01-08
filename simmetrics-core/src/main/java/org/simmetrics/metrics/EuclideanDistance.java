@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 
 package org.simmetrics.metrics;
 
-import static com.google.common.collect.Multisets.union;
+import static org.simmetrics.metrics.Math.union;
 import static java.lang.Math.sqrt;
 
 import org.simmetrics.MultisetDistance;
@@ -33,6 +33,7 @@ import com.google.common.collect.Multiset;
  * <p>
  * <code>
  * similarity(a,b) = 1 - distance(a,b) / √(∣a∣² + ∣b∣²)
+ * <br>
  * distance(a,b) = ∣∣a - b∣∣  
  * </code>
  * <p>
@@ -60,15 +61,9 @@ public final class EuclideanDistance<T> implements MultisetMetric<T>, MultisetDi
 
 	@Override
 	public float distance(Multiset<T> a, Multiset<T> b) {
-		
-		// Lager set first for performance improvement. 
-		// See: MultisetUnionSize benchmark
-		if(a.size() < b.size()){
-			final Multiset<T> swap = a; a = b; b = swap;
-		}
-		
+
 		float distance = 0.0f;
-		
+
 		for (T token : union(a, b).elementSet()) {
 			float frequencyInA = a.count(token);
 			float frequencyInB = b.count(token);

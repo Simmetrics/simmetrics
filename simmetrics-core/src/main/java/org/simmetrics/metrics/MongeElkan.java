@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,8 +30,8 @@ import org.simmetrics.ListMetric;
 import org.simmetrics.StringMetric;
 
 /**
- * Calculates the normalized Monge Elkan distance (similarity) over two strings.
- * The normalized Monge Elkan distance is used because the the unnormalized
+ * Calculates the normalized Monge-Elkan distance (similarity) over two strings.
+ * The normalized Monge-Elkan distance is used because the the unnormalized
  * distance is not symmetric.
  * <p>
  * <code>
@@ -48,7 +48,7 @@ public final class MongeElkan implements ListMetric<String> {
 	private final StringMetric metric;
 
 	/**
-	 * Constructs a MongeElkan metric with metric.
+	 * Constructs a Monge-Elkan metric with metric.
 	 * 
 	 * @param metric
 	 *            metric to use

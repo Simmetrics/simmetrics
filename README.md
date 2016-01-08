@@ -8,7 +8,7 @@ A Java library of similarity and distance metrics e.g. Levenshtein distance and 
 
 ## Usage ##
 
-For a quick and easy use [StringMetrics](./simmetrics-core/src/main/java/org/simmetrics/metrics/StringMetrics.java) contains a collection of well known string metrics.
+For a quick and easy use [StringMetrics](./simmetrics-core/src/main/java/org/simmetrics/metrics/StringMetrics.java) and [StringDistances](./simmetrics-core/src/main/java/org/simmetrics/metrics/StringDistances.java) contain a collection of well known similarity and distance metrics.
 
 ```java
 	String str1 = "This is a sentence. It is made of words";
@@ -19,8 +19,8 @@ For a quick and easy use [StringMetrics](./simmetrics-core/src/main/java/org/sim
 	float result = metric.compare(str1, str2); //0.4767
 ```
 
-The [StringMetricBuilder](./simmetrics-core/src/main/java/org/simmetrics/builders/StringMetricBuilder.java) is a convenience tool to build string metrics. Any class implementing StringMetric, ListMetric, SetMetric or MultisetMetric can be used to build a string metric. The builder supports simplification, tokenization, token-filtering, token-transformation, and caching.
-For usage see the [examples section](./simmetrics-example/src/main/java/org/simmetrics/example/StringMetricBuilderExample.java).  
+The [StringMetricBuilder](./simmetrics-core/src/main/java/org/simmetrics/builders/StringMetricBuilder.java) and [StringDistanceBuilder](./simmetrics-core/src/main/java/org/simmetrics/builders/StringDistanceBuilder.java) are convenience tools to build string similarity and distance metrics. Any class implementing Metric or Distance respectively can be used to build a metric. The builders support simplification, tokenization, token-filtering, token-transformation, and caching.
+For usage see the [examples section](./simmetrics-example/src/main/java/org/simmetrics/example/).
 
 For a terse syntax use `import static org.simmetrics.builders.StringMetricBuilder.with;`
 

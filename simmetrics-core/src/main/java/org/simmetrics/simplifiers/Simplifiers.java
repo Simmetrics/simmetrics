@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,8 +40,8 @@ import com.google.common.collect.ImmutableList;
  * Utilities for simplifiers. Construct simple simplifiers or chain multiple
  * simplifiers into a single simplifier.
  * <p>
- * All methods return immutable objects provided the arguments
- * are also immutable.
+ * All methods return thread-safe and immutable objects provided the arguments
+ * are also thread-safe and immutable.
  */
 public final class Simplifiers {
 
@@ -272,8 +272,6 @@ public final class Simplifiers {
 	 * After which any characters matching the regex
 	 * <code>\p{InCombiningDiacriticalMarks}\p{IsLm}\p{IsSk}]+</code> are
 	 * removed. The resulting string will be in canonical decomposition form.
-	 * <p>
-	 * The returned simplifier is thread-safe and immutable.
 	 * 
 	 * @return a simplifier that removes diacritics
 	 * 
@@ -286,8 +284,6 @@ public final class Simplifiers {
 	/**
 	 * Returns a simplifier that removes all non-word {@code [^0-9a-zA-Z]}
 	 * characters.
-	 * <p>
-	 * The returned simplifier is thread-safe and immutable.
 	 * 
 	 * @return a simplifier that removes all non-word characters
 	 * 
@@ -301,7 +297,6 @@ public final class Simplifiers {
 	 * Returns a simplifier that removes all consecutive non-word characters
 	 * {@code [^0-9a-zA-Z]+} and replaces them with the {@code replacement}.
 	 * <p>
-	 * The returned simplifier is thread-safe and immutable.
 	 * 
 	 * @see #removeAll(Pattern)
 	 * 
@@ -353,8 +348,6 @@ public final class Simplifiers {
 	/**
 	 * Returns a simplifier that replaces all individual non-word characters
 	 * {@code [^0-9a-zA-Z]} with a space.
-	 * <p>
-	 * The returned simplifier is thread-safe and immutable.
 	 * 
 	 * @return a simplifier that replaces all non-word characters
 	 */
@@ -365,8 +358,6 @@ public final class Simplifiers {
 	/**
 	 * Returns a simplifier that replaces all individual non-word characters
 	 * {@code [^0-9a-zA-Z]} with the {@code replacement}.
-	 * <p>
-	 * The simplifier class is thread-safe and immutable.
 	 * 
 	 * @param replacement
 	 *            replaces the non word characters
@@ -382,8 +373,6 @@ public final class Simplifiers {
 	 * lower case equivalent.
 	 * <P>
 	 * Uses the default locale to apply the transform.
-	 * <p>
-	 * The returned simplifier is thread-safe and immutable.
 	 * 
 	 * @return a simplifier that transforms all upper case characters into their
 	 *         lower case equivalent
@@ -395,8 +384,6 @@ public final class Simplifiers {
 	/**
 	 * Returns a simplifier that transforms all upper case characters into their
 	 * lower case equivalent.
-	 * <p>
-	 * The returned simplifier is thread-safe and immutable.
 	 * 
 	 * @param l
 	 *            locale in which the transform is applied
@@ -413,8 +400,6 @@ public final class Simplifiers {
 	 * upper case equivalent.
 	 * <P>
 	 * Uses the default locale to apply the transform.
-	 * <p>
-	 * The returned simplifier is thread-safe and immutable.
 	 * 
 	 * @return a simplifier that transforms all lower case characters into their
 	 *         upper case equivalent
@@ -426,8 +411,6 @@ public final class Simplifiers {
 	/**
 	 * Returns a simplifier that transforms all lower case characters into their
 	 * upper case equivalent.
-	 * <p>
-	 * The returned simplifier is thread-safe and immutable.
 	 * 
 	 * @param l
 	 *            locale in which the transform is applied

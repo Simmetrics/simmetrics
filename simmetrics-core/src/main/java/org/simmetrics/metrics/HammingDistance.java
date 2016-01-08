@@ -2,7 +2,7 @@
  * #%L
  * Simmetrics Core
  * %%
- * Copyright (C) 2014 - 2015 Simmetrics Authors
+ * Copyright (C) 2014 - 2016 Simmetrics Authors
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 import java.util.Iterator;
 import java.util.List;
 
-import org.simmetrics.Distance;
 import org.simmetrics.ListDistance;
 import org.simmetrics.StringDistance;
 
@@ -174,7 +173,7 @@ public final class HammingDistance {
 	 * 
 	 * @return a new Hamming distance to compare strings
 	 */
-	public static Distance<String> forString() {
+	public static StringDistance forString() {
 		return new HammingStringDistance();
 	}
 }

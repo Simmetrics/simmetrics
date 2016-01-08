@@ -40,7 +40,7 @@ import com.google.common.collect.Multiset;
 import com.google.common.collect.Sets;
 
 /**
- * The string distance builder can be used to compose distance metrics.
+ * The string distance metric builder can be used to compose distance metrics.
  */
 @SuppressWarnings("javadoc")
 public final class StringDistanceBuilderExample {

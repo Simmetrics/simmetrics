@@ -49,9 +49,9 @@ import com.google.common.cache.Cache;
 import com.google.common.collect.Multiset;
 
 /**
- * Convenience tool to build string distances. Any class implementing
+ * Convenience tool to build distance metrics. Any class implementing
  * {@link StringDistance}, {@link ListDistance}, {@link SetDistance} or
- * {@link MultisetDistance} can be used to build a string distance. Supports the
+ * {@link MultisetDistance} can be used to build a string distance metric. Supports the
  * addition of simplification, tokenization, token-filtering,
  * token-transformation and caching to a distance.
  * <p>
@@ -64,7 +64,7 @@ public final class StringDistanceBuilder {
 	}
 
 	/**
-	 * Starts building a distance with a string distance.
+	 * Starts building a distance metric with a string distance metric.
 	 * 
 	 * @param distance
 	 *            the distance to use as a base
@@ -295,10 +295,10 @@ public final class StringDistanceBuilder {
 		BuildStep cacheTokens(Cache<String, T> cache);
 
 		/**
-		 * Builds a string distance that will use the given simplification,
+		 * Builds a string distance metric that will use the given simplification,
 		 * tokenization and filtering steps.
 		 * 
-		 * @return a string distance.
+		 * @return a string distance metric
 		 */
 		@Override
 		StringDistance build();

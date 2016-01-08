@@ -40,7 +40,7 @@ import com.google.common.collect.Multiset;
 import com.google.common.collect.Sets;
 
 /**
- * The string metric builder can be used to compose metrics.
+ * The similarity metric builder can be used to compose metrics.
  */
 @SuppressWarnings("javadoc")
 public final class StringMetricBuilderExample {

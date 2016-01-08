@@ -30,8 +30,8 @@ import org.simmetrics.metrics.StringDistances;
 import org.simmetrics.tokenizers.Tokenizers;
 
 /**
- * The {@link StringDistance} utility class contains a predefined list of well
- * known metrics.
+ * The StringDistance utility class contains a predefined list of well
+ * known distance metrics.
  */
 @SuppressWarnings("javadoc")
 public final class StringDistanceExample {

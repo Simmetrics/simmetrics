@@ -32,8 +32,7 @@ import org.simmetrics.tokenizers.Tokenizers;
 /**
  * Utility class for string distance metrics.
  * <p>
- * Consists of well known metrics and methods to create string distance metrics from
- * list- or set distance metrics. All distance metrics are setup with sensible
+ * Consists of well known metrics. All distance metrics are setup with sensible
  * defaults, to customize metrics use {@link StringDistanceBuilder}.
  * <p>
  * All methods return immutable objects provided the arguments are also
@@ -42,10 +41,10 @@ import org.simmetrics.tokenizers.Tokenizers;
 public final class StringDistances {
 	
 	/**
-	 * Returns a string metric that uses a {@link Tokenizers#whitespace()} and
+	 * Returns a distance metric that uses a {@link Tokenizers#whitespace()} and
 	 * the {@link CosineSimilarity} metric.
 	 * 
-	 * @return a cosine similarity metric
+	 * @return a cosine distance metric
 	 */
 	public static StringDistance cosineSimilarity() {
 		return with(new CosineSimilarity<String>()).tokenize(whitespace()).build();
@@ -103,7 +102,7 @@ public final class StringDistances {
 	/**
 	 * Returns an string distance metric that uses the {@link Identity} metric.
 	 * 
-	 * @return an identity string metric
+	 * @return an identity distance metric
 	 */
 	public static StringDistance identity() {
 		return new StringDistance() {

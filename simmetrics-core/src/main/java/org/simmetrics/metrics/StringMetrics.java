@@ -40,9 +40,9 @@ import org.simmetrics.tokenizers.Tokenizer;
 import com.google.common.collect.Multiset;
 
 /**
- * Utility class for string metrics.
+ * Utility class for similarity metrics.
  * <p>
- * Consists of well known metrics and methods to create string metrics from
+ * Consists of well known similarity metrics and methods to create similarity metrics from
  * list- or set metrics. All metrics are setup with sensible defaults, to
  * customize metrics use {@link StringMetricBuilder}.
  * <p>
@@ -127,7 +127,7 @@ public final class StringMetrics {
 	 * Returns an identity similarity metric. The metric returns 1.0 when the inputs are
 	 * equals, and 0.0 when they're not.
 	 * 
-	 * @return an identity string metric
+	 * @return an identity similarity metric
 	 * 
 	 * @see Identity
 	 */
@@ -298,7 +298,7 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Returns a string metric that uses the {@link LongestCommonSubsequence} metric.
+	 * Returns a similarity metric that uses the {@link LongestCommonSubsequence} metric.
 	 * 
 	 * @return a longest common subsequence metric
 	 */
@@ -307,7 +307,7 @@ public final class StringMetrics {
 	}
 	
 	/**
-	 * Returns a string metric that uses the {@link LongestCommonSubstring} metric.
+	 * Returns a similarity metric that uses the {@link LongestCommonSubstring} metric.
 	 * 
 	 * @return a longest common substring metric
 	 */
@@ -316,12 +316,12 @@ public final class StringMetrics {
 	}
 	
 	/**
-	 * Either constructs a new string metric or returns the original metric.
+	 * Either constructs a new similarity metric or returns the original metric.
 	 * 
 	 * @param metric
 	 *            a metric for strings
 	 * 
-	 * @return a string metric.
+	 * @return a similarity metric.
 	 * 
 	 * @deprecated Use {@link StringMetricBuilder} in favor of directly
 	 *             constructing a metric.
@@ -336,14 +336,14 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Constructs a new composite string metric. The simplifier will be applied
+	 * Constructs a new composite similarity metric. The simplifier will be applied
 	 * before the metric compares the strings.
 	 * 
 	 * @param metric
 	 *            a list metric
 	 * @param simplifier
 	 *            a simplifier
-	 * @return a new composite string metric
+	 * @return a new composite similarity metric
 	 * 
 	 * @throws NullPointerException
 	 *             when either metric or simplifier are null
@@ -386,7 +386,7 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Creates a new composite string metric.The tokenizer is used to tokenize
+	 * Creates a new composite similarity metric.The tokenizer is used to tokenize
 	 * the simplified strings. The list metric compares the the tokens.
 	 * 
 	 * @param metric
@@ -412,14 +412,14 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Creates a new composite string metric. The tokenizer is used to tokenize
+	 * Creates a new composite similarity metric. The tokenizer is used to tokenize
 	 * the strings. The list metric compares the the tokens.
 	 * 
 	 * @param metric
 	 *            a list metric
 	 * @param tokenizer
 	 *            a tokenizer
-	 * @return a new composite string metric
+	 * @return a new composite similarity metric
 	 * 
 	 * @throws NullPointerException
 	 *             when either metric or tokenizer are null
@@ -436,7 +436,7 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Creates a new composite string metric.The tokenizer is used to tokenize
+	 * Creates a new composite similarity metric.The tokenizer is used to tokenize
 	 * the simplified strings. The set metric compares the the tokens.
 	 * 
 	 * @param metric
@@ -445,7 +445,7 @@ public final class StringMetrics {
 	 *            a simplifier
 	 * @param tokenizer
 	 *            a tokenizer
-	 * @return a new composite string metric
+	 * @return a new composite similarity metric
 	 * 
 	 * @throws NullPointerException
 	 *             when either metric, simplifier or tokenizer are null
@@ -462,7 +462,7 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Creates a new composite string metric. The tokenizer is used to tokenize
+	 * Creates a new composite similarity metric. The tokenizer is used to tokenize
 	 * the strings. The set metric compares the the tokens.
 	 * 
 	 * @param metric
@@ -470,7 +470,7 @@ public final class StringMetrics {
 	 * 
 	 * @param tokenizer
 	 *            a tokenizer
-	 * @return a new composite string metric
+	 * @return a new composite similarity metric
 	 * 
 	 * @throws NullPointerException
 	 *             when either metric or tokenizer are null
@@ -487,7 +487,7 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Creates a new composite string metric.The tokenizer is used to tokenize
+	 * Creates a new composite similarity metric.The tokenizer is used to tokenize
 	 * the simplified strings. The set metric compares the the tokens.
 	 * 
 	 * @param metric
@@ -496,7 +496,7 @@ public final class StringMetrics {
 	 *            a simplifier
 	 * @param tokenizer
 	 *            a tokenizer
-	 * @return a new composite string metric
+	 * @return a new composite similarity metric
 	 * 
 	 * @throws NullPointerException
 	 *             when either metric, simplifier or tokenizer are null
@@ -514,7 +514,7 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Creates a new composite string metric. The tokenizer is used to tokenize
+	 * Creates a new composite similarity metric. The tokenizer is used to tokenize
 	 * the strings. The set metric compares the the tokens.
 	 * 
 	 * @param metric
@@ -522,7 +522,7 @@ public final class StringMetrics {
 	 * 
 	 * @param tokenizer
 	 *            a tokenizer
-	 * @return a new composite string metric
+	 * @return a new composite similarity metric
 	 * 
 	 * @throws NullPointerException
 	 *             when either metric or tokenizer are null

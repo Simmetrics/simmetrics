@@ -125,7 +125,7 @@ public final class StringDistances {
 	 * Returns a string distance metric that uses a {@link Tokenizers#whitespace()} and
 	 * the {@link Jaccard} metric.
 	 * 
-	 * @return a Jaccard similarity metric
+	 * @return a Jaccard distance metric
 	 */
 	public static StringDistance jaccard() {
 		return with(new Jaccard<String>()).tokenize(whitespace()).build();

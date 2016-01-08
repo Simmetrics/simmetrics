@@ -49,7 +49,7 @@ import com.google.common.cache.Cache;
 import com.google.common.collect.Multiset;
 
 /**
- * Convenience tool to build distance metrics. Any class implementing
+ * Convenience tool to build string distance metrics. Any class implementing
  * {@link StringDistance}, {@link ListDistance}, {@link SetDistance} or
  * {@link MultisetDistance} can be used to build a string distance metric. Supports the
  * addition of simplification, tokenization, token-filtering,

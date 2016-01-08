@@ -49,9 +49,9 @@ import com.google.common.cache.Cache;
 import com.google.common.collect.Multiset;
 
 /**
- * Convenience tool to build similarity metrics. Any class implementing
+ * Convenience tool to build string similarity metrics. Any class implementing
  * {@link StringMetric}, {@link ListMetric}, {@link SetMetric} or
- * {@link MultisetMetric} can be used to build a similarity metric. Supports the
+ * {@link MultisetMetric} can be used to build a string similarity metric. Supports the
  * addition of simplification, tokenization, token-filtering,
  * token-transformation and caching to a metric.
  * <p>
@@ -64,7 +64,7 @@ public final class StringMetricBuilder {
 	}
 
 	/**
-	 * Starts building a metric with a similarity metric.
+	 * Starts building a metric with a string similarity metric.
 	 * 
 	 * @param metric
 	 *            the metric to use as a base
@@ -298,7 +298,7 @@ public final class StringMetricBuilder {
 		 * Builds a similarity metric that will use the given simplification,
 		 * tokenization and filtering steps.
 		 * 
-		 * @return a similarity metric.
+		 * @return a string similarity metric.
 		 */
 		@Override
 		StringMetric build();

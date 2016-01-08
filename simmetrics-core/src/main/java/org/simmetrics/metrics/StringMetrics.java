@@ -40,11 +40,11 @@ import org.simmetrics.tokenizers.Tokenizer;
 import com.google.common.collect.Multiset;
 
 /**
- * Utility class for similarity metrics.
+ * Utility class for string similarity metrics.
  * <p>
- * Consists of well known similarity metrics and methods to create similarity metrics from
- * list- or set metrics. All metrics are setup with sensible defaults, to
- * customize metrics use {@link StringMetricBuilder}.
+ * Consists of well known string similarity metrics and methods to create string
+ * similarity metrics from list- or set metrics. All metrics are setup with
+ * sensible defaults, to customize metrics use {@link StringMetricBuilder}.
  * <p>
  * All methods return immutable objects provided the arguments are also
  * immutable.
@@ -60,12 +60,14 @@ public final class StringMetrics {
 	 * @see CosineSimilarity
 	 */
 	public static StringMetric cosineSimilarity() {
-		return with(new CosineSimilarity<String>()).tokenize(whitespace()).build();
+		return with(new CosineSimilarity<String>())
+			.tokenize(whitespace())
+			.build();
 	}
 
 	/**
-	 * Returns a block distance similarity metric over tokens in a string. The tokens 
-	 * are created by splitting the string on whitespace.
+	 * Returns a block distance similarity metric over tokens in a string. The
+	 * tokens are created by splitting the string on whitespace.
 	 * 
 	 * @return a block distance metric
 	 * 
@@ -76,8 +78,8 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Returns a Damerau-Levenshtein similarity metric over tokens in a string. The
-	 * tokens are created by splitting the string on whitespace.
+	 * Returns a Damerau-Levenshtein similarity metric over tokens in a string.
+	 * The tokens are created by splitting the string on whitespace.
 	 * 
 	 * @return a Damerau-Levenshtein metric
 	 * 
@@ -88,8 +90,8 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Returns a Dice similarity metric over tokens in a string. The
-	 * tokens are created by splitting the string on whitespace.
+	 * Returns a Dice similarity metric over tokens in a string. The tokens are
+	 * created by splitting the string on whitespace.
 	 * 
 	 * @return a dice metric
 	 * 
@@ -100,32 +102,34 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Returns an Euclidean distance similarity metric over tokens in a string. The
-	 * tokens are created by splitting the string on whitespace.
+	 * Returns an Euclidean distance similarity metric over tokens in a string.
+	 * The tokens are created by splitting the string on whitespace.
 	 * 
 	 * @return a Euclidean distance similarity metric
 	 * 
 	 * @see EuclideanDistance
 	 */
 	public static StringMetric euclideanDistance() {
-		return with(new EuclideanDistance<String>()).tokenize(whitespace()).build();
+		return with(new EuclideanDistance<String>()).tokenize(whitespace())
+				.build();
 	}
 
 	/**
-	 * Returns a generalized Jaccard similarity metric over tokens in a string. The
-	 * tokens are created by splitting the string on whitespace.
+	 * Returns a generalized Jaccard similarity metric over tokens in a string.
+	 * The tokens are created by splitting the string on whitespace.
 	 * 
 	 * @return a generalized Jaccard index metric
 	 * 
 	 * @see GeneralizedJaccard
 	 */
 	public static StringMetric generalizedJaccard() {
-		return with(new GeneralizedJaccard<String>()).tokenize(whitespace()).build();
+		return with(new GeneralizedJaccard<String>()).tokenize(whitespace())
+				.build();
 	}
 
 	/**
-	 * Returns an identity similarity metric. The metric returns 1.0 when the inputs are
-	 * equals, and 0.0 when they're not.
+	 * Returns an identity string similarity metric. The metric returns 1.0 when
+	 * the inputs are equals, and 0.0 when they're not.
 	 * 
 	 * @return an identity similarity metric
 	 * 
@@ -133,14 +137,14 @@ public final class StringMetrics {
 	 */
 	public static StringMetric identity() {
 		return new StringMetric() {
-			
+
 			private final Identity<String> metric = new Identity<>();
-			
+
 			@Override
 			public float compare(String a, String b) {
 				return metric.compare(a, b);
 			}
-			
+
 			@Override
 			public String toString() {
 				return metric.toString();
@@ -161,9 +165,9 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Returns a Jaro similarity metric.
+	 * Returns a Jaro string similarity metric.
 	 * 
-	 * @return a Jaro similarity metric
+	 * @return a Jaro string similarity metric
 	 * 
 	 * @see Jaro
 	 */
@@ -172,9 +176,9 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Returns a Jaro-Winkler similarity metric.
+	 * Returns a Jaro-Winkler string similarity metric.
 	 * 
-	 * @return a Jaro-Winkler similarity metric
+	 * @return a Jaro-Winkler string similarity metric
 	 * 
 	 * @see JaroWinkler
 	 */
@@ -183,9 +187,9 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Returns a Levenshtein similarity metric.
+	 * Returns a Levenshtein string similarity metric.
 	 * 
-	 * @return a Levenshtein similarity metric
+	 * @return a Levenshtein string similarity metric
 	 * 
 	 * @see Levenshtein
 	 */
@@ -194,22 +198,23 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Returns a normalized Monge-Elkan metric over tokens in a string. The tokens are
-	 * created by splitting the string on whitespace. The metric applies
-	 * Smith-Waterman-Gotoh internally.
+	 * Returns a normalized Monge-Elkan metric over tokens in a string. The
+	 * tokens are created by splitting the string on whitespace. The metric
+	 * applies Smith-Waterman-Gotoh internally.
 	 * 
 	 * @return a normalized Monge-Elkan metric
 	 * 
 	 * @see MongeElkan
 	 */
 	public static StringMetric mongeElkan() {
-		return with(new MongeElkan(new SmithWatermanGotoh())).tokenize(whitespace()).build();
+		return with(new MongeElkan(new SmithWatermanGotoh())).tokenize(
+				whitespace()).build();
 	}
 
 	/**
-	 * Returns a Needleman-Wunch similarity metric.
+	 * Returns a Needleman-Wunch string similarity metric.
 	 * 
-	 * @return a Needleman-Wunch similarity metric
+	 * @return a Needleman-Wunch string similarity metric
 	 * 
 	 * @see NeedlemanWunch
 	 */
@@ -218,27 +223,30 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Returns an overlap coefficient similarity metric over tokens in a string. The
-	 * tokens are created by splitting the string on whitespace.
+	 * Returns an overlap coefficient similarity metric over tokens in a string.
+	 * The tokens are created by splitting the string on whitespace.
 	 * 
 	 * @return an overlap coefficient metric
 	 * 
 	 * @see OverlapCoefficient
 	 */
 	public static StringMetric overlapCoefficient() {
-		return with(new OverlapCoefficient<String>()).tokenize(whitespace()).build();
+		return with(new OverlapCoefficient<String>()).tokenize(whitespace())
+				.build();
 	}
 
 	/**
 	 * Returns a q-grams distance similarity metric. Q-grams distance applies a
-	 * block distance similarity similarity metric over all tri-grams in a string.
+	 * block distance similarity similarity metric over all tri-grams in a
+	 * string.
 	 * 
 	 * @return a q-grams distance similarity metric
 	 * 
 	 * @see BlockDistance
 	 */
 	public static StringMetric qGramsDistance() {
-		return with(new BlockDistance<String>()).tokenize(qGramWithPadding(3)).build();
+		return with(new BlockDistance<String>()).tokenize(qGramWithPadding(3))
+				.build();
 	}
 
 	/**
@@ -256,16 +264,14 @@ public final class StringMetrics {
 	 * @see SimonWhite
 	 */
 	public static StringMetric simonWhite() {
-		return with(new SimonWhite<String>())
-				.tokenize(whitespace())
-				.tokenize(qGram(2))
-				.build();
+		return with(new SimonWhite<String>()).tokenize(whitespace())
+				.tokenize(qGram(2)).build();
 	}
 
 	/**
-	 * Returns a Smith-Waterman similarity metric.
+	 * Returns a Smith-Waterman string similarity metric.
 	 * 
-	 * @return a Smith-Waterman similarity metric
+	 * @return a Smith-Waterman string similarity metric
 	 * 
 	 * @see SmithWaterman
 	 */
@@ -274,9 +280,9 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Returns a Smith-Waterman-Gotoh similarity metric.
+	 * Returns a Smith-Waterman-Gotoh string similarity metric.
 	 * 
-	 * @return a Smith-Waterman-Gotoh similarity metric
+	 * @return a Smith-Waterman-Gotoh string similarity metric
 	 * 
 	 * @see SmithWatermanGotoh
 	 */
@@ -292,31 +298,37 @@ public final class StringMetrics {
 	 * 
 	 * @see Soundex
 	 * @see JaroWinkler
+	 * 
+	 * @deprecated will be removed due to a lack of a good use case
 	 */
+	@Deprecated
 	public static StringMetric soundex() {
 		return with(new JaroWinkler()).simplify(new Soundex()).build();
 	}
 
 	/**
-	 * Returns a similarity metric that uses the {@link LongestCommonSubsequence} metric.
+	 * Returns a string similarity metric that uses the
+	 * {@link LongestCommonSubsequence} metric.
 	 * 
 	 * @return a longest common subsequence metric
 	 */
-	public static StringMetric longestCommonSubsequence(){
+	public static StringMetric longestCommonSubsequence() {
 		return new LongestCommonSubsequence();
 	}
-	
+
 	/**
-	 * Returns a similarity metric that uses the {@link LongestCommonSubstring} metric.
+	 * Returns a similarity metric that uses the {@link LongestCommonSubstring}
+	 * metric.
 	 * 
 	 * @return a longest common substring metric
 	 */
-	public static StringMetric longestCommonSubstring(){
+	public static StringMetric longestCommonSubstring() {
 		return new LongestCommonSubstring();
 	}
-	
+
 	/**
-	 * Either constructs a new similarity metric or returns the original metric.
+	 * Either constructs a new string similarity metric or returns the original
+	 * metric.
 	 * 
 	 * @param metric
 	 *            a metric for strings
@@ -336,8 +348,8 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Constructs a new composite similarity metric. The simplifier will be applied
-	 * before the metric compares the strings.
+	 * Constructs a new composite string similarity metric. The simplifier will
+	 * be applied before the metric compares the strings.
 	 * 
 	 * @param metric
 	 *            a list metric
@@ -386,8 +398,8 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Creates a new composite similarity metric.The tokenizer is used to tokenize
-	 * the simplified strings. The list metric compares the the tokens.
+	 * Creates a new composite string similarity metric.The tokenizer is used to
+	 * tokenize the simplified strings. The list metric compares the the tokens.
 	 * 
 	 * @param metric
 	 *            a list metric
@@ -412,8 +424,8 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Creates a new composite similarity metric. The tokenizer is used to tokenize
-	 * the strings. The list metric compares the the tokens.
+	 * Creates a new composite string similarity metric. The tokenizer is used
+	 * to tokenize the strings. The list metric compares the the tokens.
 	 * 
 	 * @param metric
 	 *            a list metric
@@ -436,8 +448,8 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Creates a new composite similarity metric.The tokenizer is used to tokenize
-	 * the simplified strings. The set metric compares the the tokens.
+	 * Creates a new composite string similarity metric.The tokenizer is used to
+	 * tokenize the simplified strings. The set metric compares the the tokens.
 	 * 
 	 * @param metric
 	 *            a list metric
@@ -462,8 +474,8 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Creates a new composite similarity metric. The tokenizer is used to tokenize
-	 * the strings. The set metric compares the the tokens.
+	 * Creates a new composite string similarity metric. The tokenizer is used
+	 * to tokenize the strings. The set metric compares the the tokens.
 	 * 
 	 * @param metric
 	 *            a set metric
@@ -487,8 +499,8 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Creates a new composite similarity metric.The tokenizer is used to tokenize
-	 * the simplified strings. The set metric compares the the tokens.
+	 * Creates a new composite string similarity metric.The tokenizer is used to
+	 * tokenize the simplified strings. The set metric compares the the tokens.
 	 * 
 	 * @param metric
 	 *            a list metric
@@ -514,8 +526,8 @@ public final class StringMetrics {
 	}
 
 	/**
-	 * Creates a new composite similarity metric. The tokenizer is used to tokenize
-	 * the strings. The set metric compares the the tokens.
+	 * Creates a new composite string similarity metric. The tokenizer is used
+	 * to tokenize the strings. The set metric compares the the tokens.
 	 * 
 	 * @param metric
 	 *            a set metric
@@ -828,7 +840,5 @@ public final class StringMetrics {
 	private StringMetrics() {
 		// Utility class.
 	}
-
-
 
 }

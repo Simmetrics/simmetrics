@@ -5,6 +5,7 @@ Change Log
  - Deprecated Soundex and friends. The inclusion of Soundex and friends lacks a strong enough general usecase to warrant inclusion and justify the dependency on apache-encoders. Users of this functionality can trivially implement it by wrapping the specific encoder.   
  - Added StringDistanceBuilder
  - Added StringDistances utility class
+ - Updated dependency to Guava 19.0
 
 ## Since 4.0.1 ##
  - Added LongestCommonSubsequence 

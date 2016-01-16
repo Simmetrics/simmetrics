@@ -20,7 +20,7 @@
 
 package org.simmetrics.metrics;
 
-import static com.google.common.collect.Sets.intersection;
+import static org.simmetrics.metrics.Math.intersection;
 
 import java.util.Set;
 
@@ -76,12 +76,6 @@ public final class Jaccard<T> implements SetMetric<T>, SetDistance<T> {
 
 		if (a.isEmpty() || b.isEmpty()) {
 			return 0.0f;
-		}
-		
-		// Smaller set first for performance improvement. 
-		// See: note at Sets.intersection
-		if(a.size() > b.size()){
-			final Set<T> swap = a; a = b; b = swap;
 		}
 		
 		final int intersection = intersection(a, b).size();

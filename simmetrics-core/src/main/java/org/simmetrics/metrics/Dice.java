@@ -20,7 +20,7 @@
 
 package org.simmetrics.metrics;
 
-import static com.google.common.collect.Sets.intersection;
+import static org.simmetrics.metrics.Math.intersection;
 
 import java.util.Set;
 

@@ -62,6 +62,7 @@ public class SimplifiersTest {
 		public void shouldCopyListOfSimplifier() {
 			List<Simplifier> simplifiersList = asList(toLowerCase());
 			ChainSimplifier simplifier = new ChainSimplifier(simplifiersList);
+			assertThat(simplifier.getSimplifiers(), is(sameInstance(simplifier.getSimplifiers())));
 			assertThat(simplifier.getSimplifiers(), is(not(sameInstance(simplifiersList))));
 		}
 

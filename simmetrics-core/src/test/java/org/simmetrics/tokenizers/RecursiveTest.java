@@ -58,6 +58,7 @@ public class RecursiveTest extends TokenizerTest {
 	public void shouldCopyListOfTokenizers() {
 		List<Tokenizer> tokenizerList = asList(whitespace());
 		Recursive tokenizer = new Recursive(tokenizerList);
+		assertThat(tokenizer.getTokenizers(), is(sameInstance(tokenizer.getTokenizers())));
 		assertThat(tokenizer.getTokenizers(), is(not(sameInstance(tokenizerList))));
 	}
 	

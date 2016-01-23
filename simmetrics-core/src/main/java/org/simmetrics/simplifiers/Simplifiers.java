@@ -37,11 +37,11 @@ import org.simmetrics.builders.StringMetricBuilder;
 import com.google.common.collect.ImmutableList;
 
 /**
- * Utilities for simplifiers. Construct simple simplifiers or chain multiple
- * simplifiers into a single simplifier.
+ * Construct simple simplifiers or chain multiple simplifiers into a single
+ * simplifier.
  * <p>
- * All methods return thread-safe and immutable objects provided the arguments
- * are also thread-safe and immutable.
+ * The created simplifiers are immutable and thread-safe provided all their
+ * components are also immutable and thread-safe.
  */
 public final class Simplifiers {
 

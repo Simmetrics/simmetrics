@@ -51,9 +51,12 @@ import com.google.common.collect.Multiset;
 /**
  * Convenience tool to build string similarity metrics. Any class implementing
  * {@link StringMetric}, {@link ListMetric}, {@link SetMetric} or
- * {@link MultisetMetric} can be used to build a string similarity metric. Supports the
- * addition of simplification, tokenization, token-filtering,
+ * {@link MultisetMetric} can be used to build a string similarity metric.
+ * Supports the addition of simplification, tokenization, token-filtering,
  * token-transformation and caching to a metric.
+ * <p>
+ * The created similarity metrics are immutable and thread-safe provided all
+ * their components are also immutable and thread-safe.
  * <p>
  * For usage examples see the simmetrics-example module.
  */

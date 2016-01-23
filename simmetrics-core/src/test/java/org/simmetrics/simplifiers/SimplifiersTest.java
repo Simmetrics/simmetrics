@@ -19,7 +19,12 @@
  */
 package org.simmetrics.simplifiers;
 
+import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
 import static org.simmetrics.simplifiers.Simplifiers.chain;
 import static org.simmetrics.simplifiers.Simplifiers.removeNonWord;
 import static org.simmetrics.simplifiers.Simplifiers.replaceNonWord;
@@ -28,14 +33,16 @@ import static org.simmetrics.simplifiers.Simplifiers.toLowerCase;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
+import org.simmetrics.simplifiers.Simplifiers.ChainSimplifier;
 
 @SuppressWarnings({ "javadoc", "static-method" })
 @RunWith(Enclosed.class)
-public final class SimplifiersTest {
+public class SimplifiersTest {
 
 	public static final class WithChainSimplifier extends SimplifierTest {
 
@@ -50,6 +57,12 @@ public final class SimplifiersTest {
 			return new T[] { new T("a", "A SHEEP GOAT"),
 					new T("A cat", "PEEHS TAC A GOAT"),
 					new T("", " SHEEP GOAT") };
+		}
+		
+		public void shouldCopyListOfSimplifier() {
+			List<Simplifier> simplifiersList = asList(toLowerCase());
+			ChainSimplifier simplifier = new ChainSimplifier(simplifiersList);
+			assertThat(simplifier.getSimplifiers(), is(not(sameInstance(simplifiersList))));
 		}
 
 	}

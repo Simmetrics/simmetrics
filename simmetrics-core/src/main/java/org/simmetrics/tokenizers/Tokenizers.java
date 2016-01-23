@@ -52,12 +52,12 @@ import com.google.common.collect.Multisets;
 import com.google.common.collect.Sets;
 
 /**
- * Utilities for tokenizers. Construct simple tokenizers, chains multiple
- * tokenizers into a single tokenizers or applies filters and transforms to
+ * Construct simple tokenizers, chains multiple tokenizers into a single
+ * tokenizer or creates a tokenizers that apply filters and transforms to
  * tokens.
  * <p>
- * All methods return immutable objects provided the arguments are also
- * immutable.
+ * The created tokenizers are immutable and thread-safe provided all their
+ * components are also immutable and thread-safe.
  */
 public final class Tokenizers {
 
@@ -420,7 +420,7 @@ public final class Tokenizers {
 			this.tokenizers = ImmutableList.copyOf(tokenizers);
 		}
 
-		Collection<Tokenizer> getTokenizers() {
+		List<Tokenizer> getTokenizers() {
 			return tokenizers;
 		}
 

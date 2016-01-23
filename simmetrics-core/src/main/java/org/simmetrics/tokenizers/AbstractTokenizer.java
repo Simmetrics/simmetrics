@@ -28,7 +28,7 @@ import com.google.common.collect.Multiset;
 
 /**
  * Convenience tokenizer. Provides default implementation to tokenize to set and
- * multiset.
+ * multiset by calling {@link Tokenizer#tokenizeToList(String)}.
  */
 public abstract class AbstractTokenizer implements Tokenizer {
 

@@ -23,16 +23,14 @@ package org.simmetrics.example;
 import static org.simmetrics.builders.StringMetricBuilder.with;
 
 import org.simmetrics.StringMetric;
-import org.simmetrics.builders.StringMetricBuilder;
 import org.simmetrics.metrics.CosineSimilarity;
 import org.simmetrics.metrics.StringMetrics;
 import org.simmetrics.tokenizers.Tokenizers;
 
 /**
  * The StringMetrics utility class contains a predefined list of well
- * known metrics.
+ * known similarity metrics for strings.
  */
-@SuppressWarnings("javadoc")
 public final class StringMetricsExample {
 
 	/**
@@ -49,8 +47,10 @@ public final class StringMetricsExample {
 	}
 
 	/**
-	 * A tokenizer is included when the metric is a string or list metric. In
-	 * the case of cosine similarity, it is a whitespace tokenizer.
+	 * A tokenizer is included when the metric is a set or list metric. For the
+	 * cosine similarity, it is a whitespace tokenizer.
+	 * 
+	 * Note that most predefined metrics are setup with a whitespace tokenizer.
 	 */
 	public static float example02() {
 
@@ -63,10 +63,10 @@ public final class StringMetricsExample {
 	}
 
 	/**
-	 * Using the {@link StringMetricBuilder} similarity metrics can be
-	 * customized. Instead of a whitespace tokenizer a q-gram tokenizer is used.
+	 * Using the string metric builder similarity metrics can be customized.
+	 * Instead of a whitespace tokenizer a q-gram tokenizer is used.
 	 *
-	 * For more examples see {@link StringMetricBuilderExample}.
+	 * For more examples see StringMetricBuilderExample.
 	 */
 	public static float example03() {
 

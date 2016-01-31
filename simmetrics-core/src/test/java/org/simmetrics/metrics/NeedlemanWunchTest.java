@@ -28,7 +28,7 @@ import org.simmetrics.metrics.functions.MatchMismatch;
 
 @SuppressWarnings("javadoc")
 @RunWith(Enclosed.class)
-public final class NeedlemanWunchTest {
+public class NeedlemanWunchTest {
 
 	public static final class Default extends StringMetricTest {
 

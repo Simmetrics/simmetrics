@@ -46,8 +46,8 @@ import com.google.common.collect.Multiset;
  * similarity metrics from list- or set metrics. All metrics are setup with
  * sensible defaults, to customize metrics use {@link StringMetricBuilder}.
  * <p>
- * All methods return immutable objects provided the arguments are also
- * immutable.
+ * The created similarity metrics are immutable and thread-safe provided all their
+ * components are also immutable and thread-safe.
  */
 public final class StringMetrics {
 

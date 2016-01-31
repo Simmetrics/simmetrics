@@ -51,9 +51,12 @@ import com.google.common.collect.Multiset;
 /**
  * Convenience tool to build string distance metrics. Any class implementing
  * {@link StringDistance}, {@link ListDistance}, {@link SetDistance} or
- * {@link MultisetDistance} can be used to build a string distance metric. Supports the
- * addition of simplification, tokenization, token-filtering,
+ * {@link MultisetDistance} can be used to build a string distance metric.
+ * Supports the addition of simplification, tokenization, token-filtering,
  * token-transformation and caching to a distance.
+ * <p>
+ * The created distance metrics are immutable and thread-safe provided all their components
+ * are also immutable and thread-safe.
  * <p>
  * For usage examples see the simmetrics-example module.
  */
@@ -81,8 +84,7 @@ public final class StringDistanceBuilder {
 	 *            the distance to use as a base
 	 * @return a builder for fluent chaining
 	 */
-	public static CollectionDistanceInitialSimplifierStep<List<String>> with(
-			ListDistance<String> distance) {
+	public static CollectionDistanceInitialSimplifierStep<List<String>> with(ListDistance<String> distance) {
 		return new CompositeListDistanceBuilder(distance);
 
 	}
@@ -94,8 +96,7 @@ public final class StringDistanceBuilder {
 	 *            the distance to use as a base
 	 * @return a builder for fluent chaining
 	 */
-	public static CollectionDistanceInitialSimplifierStep<Set<String>> with(
-			SetDistance<String> distance) {
+	public static CollectionDistanceInitialSimplifierStep<Set<String>> with(SetDistance<String> distance) {
 		return new CompositeSetDistanceBuilder(distance);
 
 	}
@@ -107,8 +108,7 @@ public final class StringDistanceBuilder {
 	 *            the distance to use as a base
 	 * @return a builder for fluent chaining
 	 */
-	public static CollectionDistanceInitialSimplifierStep<Multiset<String>> with(
-			MultisetDistance<String> distance) {
+	public static CollectionDistanceInitialSimplifierStep<Multiset<String>> with(MultisetDistance<String> distance) {
 		return new CompositeMultisetDistanceBuilder(distance);
 
 	}
@@ -146,8 +146,7 @@ public final class StringDistanceBuilder {
 	}
 
 	@SuppressWarnings("javadoc")
-	public interface StringDistanceSimplifierStep extends
-			StringDistanceInitialSimplifierStep {
+	public interface StringDistanceSimplifierStep extends StringDistanceInitialSimplifierStep {
 		/**
 		 * Adds a simplifier to the distance.
 		 * 
@@ -221,8 +220,7 @@ public final class StringDistanceBuilder {
 		 *            a cache to add
 		 * @return this for fluent chaining
 		 */
-		CollectionDistanceInitialTokenizerStep<T> cacheStrings(
-				Cache<String, String> cache);
+		CollectionDistanceInitialTokenizerStep<T> cacheStrings(Cache<String, String> cache);
 
 		/**
 		 * Adds a tokenization step to the distance.
@@ -263,8 +261,8 @@ public final class StringDistanceBuilder {
 		CollectionDistanceTokenizerStep<T> tokenize(Tokenizer tokenizer);
 
 		/**
-		 * Adds a filter step to the distance. All tokens that match the predicate
-		 * are kept.
+		 * Adds a filter step to the distance. All tokens that match the
+		 * predicate are kept.
 		 * 
 		 * @param predicate
 		 *            a predicate for tokens to keep
@@ -280,8 +278,7 @@ public final class StringDistanceBuilder {
 		 *            a function to transform tokens
 		 * @return this for fluent chaining
 		 */
-		CollectionDistanceTokenizerStep<T> transform(
-				Function<String, String> function);
+		CollectionDistanceTokenizerStep<T> transform(Function<String, String> function);
 
 		/**
 		 * Sets a cache for tokenization chain. The cache will store the result
@@ -295,8 +292,8 @@ public final class StringDistanceBuilder {
 		BuildStep cacheTokens(Cache<String, T> cache);
 
 		/**
-		 * Builds a string distance metric that will use the given simplification,
-		 * tokenization and filtering steps.
+		 * Builds a string distance metric that will use the given
+		 * simplification, tokenization and filtering steps.
 		 * 
 		 * @return a string distance metric
 		 */
@@ -305,8 +302,7 @@ public final class StringDistanceBuilder {
 
 	}
 
-	private static final class CompositeStringDistanceBuilder implements
-			StringDistanceSimplifierStep {
+	private static final class CompositeStringDistanceBuilder implements StringDistanceSimplifierStep {
 
 		private final Distance<String> distance;
 
@@ -336,8 +332,7 @@ public final class StringDistanceBuilder {
 		@Override
 		public BuildStep cacheStrings(Cache<String, String> cache) {
 			checkNotNull(cache);
-			CachingSimplifier cachingSimplifier = new CachingSimplifier(cache,
-					chainSimplifiers());
+			CachingSimplifier cachingSimplifier = new CachingSimplifier(cache, chainSimplifiers());
 			this.simplifiers.add(cachingSimplifier);
 			return this;
 		}
@@ -352,8 +347,7 @@ public final class StringDistanceBuilder {
 	}
 
 	private static abstract class CompositeCollectionDistanceBuilder<T extends Collection<String>>
-			implements CollectionDistanceSimplifierStep<T>,
-			CollectionDistanceTokenizerStep<T> {
+			implements CollectionDistanceSimplifierStep<T>, CollectionDistanceTokenizerStep<T> {
 
 		private final Distance<T> distance;
 
@@ -377,8 +371,7 @@ public final class StringDistanceBuilder {
 			return build(distance, chainSimplifiers(), tokenizer);
 		}
 
-		abstract StringDistance build(Distance<T> distance, Simplifier simplifier,
-				Tokenizer tokenizer);
+		abstract StringDistance build(Distance<T> distance, Simplifier simplifier, Tokenizer tokenizer);
 
 		abstract StringDistance build(Distance<T> distance, Tokenizer tokenizer);
 
@@ -389,44 +382,37 @@ public final class StringDistanceBuilder {
 			return this;
 		}
 
-		protected abstract Tokenizer createCachingTokenizer(
-				Cache<String, T> cache, Tokenizer tokenizer);
+		protected abstract Tokenizer createCachingTokenizer(Cache<String, T> cache, Tokenizer tokenizer);
 
 		@Override
-		public final CollectionDistanceInitialTokenizerStep<T> cacheStrings(
-				Cache<String, String> cache) {
+		public final CollectionDistanceInitialTokenizerStep<T> cacheStrings(Cache<String, String> cache) {
 			checkNotNull(cache);
 
-			CachingSimplifier cachingSimplifier = new CachingSimplifier(cache,
-					chainSimplifiers());
+			CachingSimplifier cachingSimplifier = new CachingSimplifier(cache, chainSimplifiers());
 			this.simplifiers.add(cachingSimplifier);
 
 			return this;
 		}
 
 		@Override
-		public final CollectionDistanceSimplifierStep<T> simplify(
-				Simplifier simplifier) {
+		public final CollectionDistanceSimplifierStep<T> simplify(Simplifier simplifier) {
 			checkNotNull(simplifier);
 			simplifiers.add(simplifier);
 			return this;
 		}
 
 		@Override
-		public final CollectionDistanceTokenizerStep<T> tokenize(
-				Tokenizer tokenizer) {
+		public final CollectionDistanceTokenizerStep<T> tokenize(Tokenizer tokenizer) {
 			checkNotNull(tokenizer);
 			tokenizers.add(tokenizer);
 			return this;
 		}
 
 		@Override
-		public final CollectionDistanceTokenizerStep<T> filter(
-				Predicate<String> predicate) {
+		public final CollectionDistanceTokenizerStep<T> filter(Predicate<String> predicate) {
 			checkNotNull(predicate);
 
-			final Tokenizer filter = Tokenizers.filter(chainTokenizers(),
-					predicate);
+			final Tokenizer filter = Tokenizers.filter(chainTokenizers(), predicate);
 
 			tokenizers.add(filter);
 
@@ -434,11 +420,9 @@ public final class StringDistanceBuilder {
 		}
 
 		@Override
-		public final CollectionDistanceTokenizerStep<T> transform(
-				Function<String, String> function) {
+		public final CollectionDistanceTokenizerStep<T> transform(Function<String, String> function) {
 			checkNotNull(function);
-			final Tokenizer transform = Tokenizers.transform(chainTokenizers(),
-					function);
+			final Tokenizer transform = Tokenizers.transform(chainTokenizers(), function);
 			tokenizers.add(transform);
 
 			return this;
@@ -458,16 +442,14 @@ public final class StringDistanceBuilder {
 
 	}
 
-	private static final class CompositeListDistanceBuilder extends
-			CompositeCollectionDistanceBuilder<List<String>> {
+	private static final class CompositeListDistanceBuilder extends CompositeCollectionDistanceBuilder<List<String>> {
 
 		CompositeListDistanceBuilder(Distance<List<String>> distance) {
 			super(distance);
 		}
 
 		@Override
-		StringDistance build(Distance<List<String>> distance, Simplifier simplifier,
-				Tokenizer tokenizer) {
+		StringDistance build(Distance<List<String>> distance, Simplifier simplifier, Tokenizer tokenizer) {
 			return createForListDistance(distance, simplifier, tokenizer);
 		}
 
@@ -477,23 +459,20 @@ public final class StringDistanceBuilder {
 		}
 
 		@Override
-		protected Tokenizer createCachingTokenizer(
-				Cache<String, List<String>> cache, Tokenizer tokenizer) {
+		protected Tokenizer createCachingTokenizer(Cache<String, List<String>> cache, Tokenizer tokenizer) {
 			return new CachingListTokenizer(cache, tokenizer);
 		}
 
 	}
 
-	private static final class CompositeSetDistanceBuilder extends
-			CompositeCollectionDistanceBuilder<Set<String>> {
+	private static final class CompositeSetDistanceBuilder extends CompositeCollectionDistanceBuilder<Set<String>> {
 
 		CompositeSetDistanceBuilder(Distance<Set<String>> distance) {
 			super(distance);
 		}
 
 		@Override
-		StringDistance build(Distance<Set<String>> distance, Simplifier simplifier,
-				Tokenizer tokenizer) {
+		StringDistance build(Distance<Set<String>> distance, Simplifier simplifier, Tokenizer tokenizer) {
 			return createForSetDistance(distance, simplifier, tokenizer);
 		}
 
@@ -503,23 +482,21 @@ public final class StringDistanceBuilder {
 		}
 
 		@Override
-		protected Tokenizer createCachingTokenizer(
-				Cache<String, Set<String>> cache, Tokenizer tokenizer) {
+		protected Tokenizer createCachingTokenizer(Cache<String, Set<String>> cache, Tokenizer tokenizer) {
 			return new CachingSetTokenizer(cache, tokenizer);
 		}
 
 	}
 
-	private static final class CompositeMultisetDistanceBuilder extends
-			CompositeCollectionDistanceBuilder<Multiset<String>> {
+	private static final class CompositeMultisetDistanceBuilder
+			extends CompositeCollectionDistanceBuilder<Multiset<String>> {
 
 		CompositeMultisetDistanceBuilder(Distance<Multiset<String>> distance) {
 			super(distance);
 		}
 
 		@Override
-		StringDistance build(Distance<Multiset<String>> distance,
-				Simplifier simplifier, Tokenizer tokenizer) {
+		StringDistance build(Distance<Multiset<String>> distance, Simplifier simplifier, Tokenizer tokenizer) {
 			return createForMultisetDistance(distance, simplifier, tokenizer);
 		}
 
@@ -529,8 +506,7 @@ public final class StringDistanceBuilder {
 		}
 
 		@Override
-		protected Tokenizer createCachingTokenizer(
-				Cache<String, Multiset<String>> cache, Tokenizer tokenizer) {
+		protected Tokenizer createCachingTokenizer(Cache<String, Multiset<String>> cache, Tokenizer tokenizer) {
 			return new CachingMultisetTokenizer(cache, tokenizer);
 		}
 
@@ -575,8 +551,7 @@ public final class StringDistanceBuilder {
 		private final Cache<String, Multiset<String>> cache;
 		final Tokenizer tokenizer;
 
-		CachingMultisetTokenizer(Cache<String, Multiset<String>> cache,
-				Tokenizer tokenizer) {
+		CachingMultisetTokenizer(Cache<String, Multiset<String>> cache, Tokenizer tokenizer) {
 			this.cache = cache;
 			this.tokenizer = tokenizer;
 		}
@@ -609,8 +584,7 @@ public final class StringDistanceBuilder {
 
 		@Override
 		public String toString() {
-			return "CachingMultisetTokenizer [" + cache + ", " + tokenizer
-					+ "]";
+			return "CachingMultisetTokenizer [" + cache + ", " + tokenizer + "]";
 		}
 	}
 
@@ -619,8 +593,7 @@ public final class StringDistanceBuilder {
 		private final Cache<String, Set<String>> cache;
 		final Tokenizer tokenizer;
 
-		CachingSetTokenizer(Cache<String, Set<String>> cache,
-				Tokenizer tokenizer) {
+		CachingSetTokenizer(Cache<String, Set<String>> cache, Tokenizer tokenizer) {
 			this.cache = cache;
 			this.tokenizer = tokenizer;
 		}
@@ -662,8 +635,7 @@ public final class StringDistanceBuilder {
 		private final Cache<String, List<String>> cache;
 		final Tokenizer tokenizer;
 
-		CachingListTokenizer(Cache<String, List<String>> cache,
-				Tokenizer tokenizer) {
+		CachingListTokenizer(Cache<String, List<String>> cache, Tokenizer tokenizer) {
 			this.cache = cache;
 			this.tokenizer = tokenizer;
 		}

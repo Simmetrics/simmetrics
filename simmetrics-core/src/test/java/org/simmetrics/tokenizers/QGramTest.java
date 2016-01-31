@@ -25,7 +25,7 @@ import org.junit.runner.RunWith;
 
 @SuppressWarnings("javadoc")
 @RunWith(Enclosed.class)
-public final class QGramTest {
+public class QGramTest {
 
 	public static final class QGram1 extends TokenizerTest {
 

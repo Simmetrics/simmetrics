@@ -37,8 +37,6 @@ import com.google.common.collect.Multiset;
  * distance(a,b) = ∣∣a - b∣∣  
  * </code>
  * <p>
- *
- * <p>
  * This class is immutable and thread-safe.
  * 
  * @see <a href="https://en.wikipedia.org/wiki/Euclidean_distance">Wikipedia - Euclidean Distance</a>

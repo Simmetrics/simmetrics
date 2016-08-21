@@ -89,8 +89,11 @@ public final class Tokenizers {
 
 	/**
 	 * Returns a q-gram tokenizer for a variable {@code q}. The tokenizer will
-	 * return an empty collection if the input is empty. A collection with the original
-	 * input is returned for tokens shorter then {@code q}.
+	 * return an empty collection if the input is empty. A collection with the
+	 * original input is returned for tokens shorter then {@code q}.
+	 * <p>
+	 * The tokenizer takes care to split the string on code points, not
+	 * separating valid surrogate pairs.
 	 * 
 	 * @param q
 	 *            size of the tokens
@@ -103,8 +106,11 @@ public final class Tokenizers {
 
 	/**
 	 * Returns a q-gram tokenizer for a variable {@code q}.The tokenizer will
-	 * return an empty collection if the input is empty or shorter then {@code q}.
-	 * 
+	 * return an empty collection if the input is empty or shorter then
+	 * {@code q}.
+	 * <p>
+	 * The tokenizer takes care to split the string on code points, not
+	 * separating valid surrogate pairs.
 	 * @param q
 	 *            size of the tokens
 	 * @return a q-gram tokenizer
@@ -118,6 +124,9 @@ public final class Tokenizers {
 	 * Returns a q-gram tokenizer for a variable {@code q}. The input is padded
 	 * with {@code q-1} special characters before being tokenized. Uses
 	 * {@code #} as the default padding.
+	 * <p>
+	 * The tokenizer takes care to split the string on code points, not
+	 * separating valid surrogate pairs.
 	 * 
 	 * @param q
 	 *            size of the tokens
@@ -130,6 +139,9 @@ public final class Tokenizers {
 	/**
 	 * Returns a q-gram tokenizer for a variable {@code q}. The q-gram is
 	 * extended beyond the length of the string with padding.
+	 * <p>
+	 * The tokenizer takes care to split the string on code points, not
+	 * separating valid surrogate pairs.
 	 * 
 	 * @param q
 	 *            size of the tokens
@@ -144,6 +156,9 @@ public final class Tokenizers {
 	/**
 	 * Returns a q-gram tokenizer for a variable {@code q}.The q-gram is
 	 * extended beyond the length of the string with padding.
+	 * <p>
+	 * The tokenizer takes care to split the string on code points, not
+	 * separating valid surrogate pairs.
 	 * 
 	 * @param q
 	 *            size of the tokens
@@ -693,6 +708,9 @@ public final class Tokenizers {
 	 * length. E.g. for {@code q=2} the string {@code "HelloWorld"} is tokenized
 	 * into {@code [He, el, ll, lo, oW, Wo, or, rl, ld]}.
 	 * <p>
+	 * The tokenizer takes care to split the string on code points, not
+	 * separating valid surrogate pairs.
+	 * 
 	 * This class is immutable and thread-safe.
 	 *
 	 */
@@ -725,14 +743,37 @@ public final class Tokenizers {
 				return emptyList();
 			}
 
-			if (!filter && input.length() <= q) {
+			// Minor optimization. Because characters are either equal to or
+			// smaller then codepoints a string must contain at least q
+			// characters.
+			if (filter && input.length() < q) {
+				return new ArrayList<>();
+			} else if (input.length() < q) {
 				return singletonList(input);
 			}
 
-			final List<String> ret = new ArrayList<>(input.length());
+			// To create a q-gram set of tokens we move a q-codepoints-wide
+			// sliding windows across the string. So the final index of the left
+			// side of the window lies q code points to the left of end of the
+			// string
+			final int lastQGramStart;
+			try {
+				lastQGramStart = input.offsetByCodePoints(input.length(), -q);
+			} catch (IndexOutOfBoundsException e) {
+				// When the window doesn't fit act according to the filter
+				// setting.
+				if (filter) {
+					return new ArrayList<>();
+				} else {
+					return singletonList(input);
+				}
+			}
 
-			for (int i = 0; i < input.length() - q + 1; i++) {
-				ret.add(input.substring(i, i + q));
+			final List<String> ret = new ArrayList<>(input.length());
+			for (int qGramStart = 0; 
+					 qGramStart <= lastQGramStart; 
+					 qGramStart = input.offsetByCodePoints(qGramStart,1)) {
+				ret.add(input.substring(qGramStart, input.offsetByCodePoints(qGramStart, q)));
 			}
 
 			return ret;

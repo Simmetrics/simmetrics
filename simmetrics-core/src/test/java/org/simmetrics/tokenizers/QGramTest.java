@@ -42,14 +42,19 @@ public class QGramTest {
 					new T(""),
 					new T("1", "1"),
 					new T("12", "1", "2"),
-
 					new T("123456789",
 					// Expected output
 							"1", "2", "3", "4", "5", "6", "7", "8", "9"),
 					new T("123456789123456789",
 							// Expected output
 							"1", "2", "3", "4", "5", "6", "7", "8", "9", "1", "2",
-							"3", "4", "5", "6", "7", "8", "9") };
+							"3", "4", "5", "6", "7", "8", "9"),
+					new T("Héllo", 
+							// Diacritics are their own code point
+							"H", "e", "́", "l", "l", "o"),		
+					// Linear-A surrogate pairs, pairs should be kept together					
+					new T("𐘀𐘁𐘂","𐘀","𐘁","𐘂" )
+			};
 		}
 	}
 
@@ -132,7 +137,13 @@ public class QGramTest {
 					new T("123456789123456789",
 							// Expected output
 							"12", "23", "34", "45", "56", "67", "78", "89", "91",
-							"12", "23", "34", "45", "56", "67", "78", "89") };
+							"12", "23", "34", "45", "56", "67", "78", "89"), 
+					new T("Héllo", 
+							// Diacritics are their own code point
+							"He", "é", "́l", "ll", "lo"),		
+					// Linear-A surrogate pairs, pairs should be kept together					
+					new T("𐘀𐘁𐘂","𐘀𐘁","𐘁𐘂" )		
+			};
 		}
 	}
 	public static final class QGram2WithFilter extends TokenizerTest {
@@ -195,6 +206,11 @@ public class QGramTest {
 					new T("123", "123"),
 					new T("12345678", "123", "234", "345", "456", "567", "678"),
 					new T("123123", "123", "231", "312", "123"),
+					new T("Héllo", 
+							// Diacritics are their own code point
+							"Hé", "él", "́ll", "llo"),		
+					// Linear-A surrogate pairs, pairs should be kept together					
+					new T("𐘀𐘁𐘂","𐘀𐘁𐘂")	
 
 			};
 		}

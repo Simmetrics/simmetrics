@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+## Since 4.1.1 ##
+ - Fixed bug where the QGram tokenizer would split surrogate pairs. The tokenizer will now split a string on code point boundaries rather then characters.
+ - Added a normalizing simplifier that normalizes a string into a composed or decomposed form. See: [java.text.Normalizer](http://docs.oracle.com/javase/7/docs/api/java/text/Normalizer.html).
+
 ## Since 4.1.0 ##
  - Deprecated Soundex and friends. The inclusion of Soundex and friends lacks a strong enough general usecase to justify the dependency on apache-encoders. Users of this functionality can trivially implement it by wrapping the specific encoder themselves.
  - Added StringDistanceBuilder

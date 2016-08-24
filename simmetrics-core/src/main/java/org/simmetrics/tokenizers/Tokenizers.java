@@ -92,7 +92,7 @@ public final class Tokenizers {
 	 * return an empty collection if the input is empty. A collection with the
 	 * original input is returned for tokens shorter then {@code q}.
 	 * <p>
-	 * The tokenizer takes care to split the string on code points, not
+	 * The tokenizer takes care to split the string on Unicode code points, not
 	 * separating valid surrogate pairs.
 	 * 
 	 * @param q
@@ -109,7 +109,7 @@ public final class Tokenizers {
 	 * return an empty collection if the input is empty or shorter then
 	 * {@code q}.
 	 * <p>
-	 * The tokenizer takes care to split the string on code points, not
+	 * The tokenizer takes care to split the string on Unicode code points, not
 	 * separating valid surrogate pairs.
 	 * @param q
 	 *            size of the tokens
@@ -125,7 +125,7 @@ public final class Tokenizers {
 	 * with {@code q-1} special characters before being tokenized. Uses
 	 * {@code #} as the default padding.
 	 * <p>
-	 * The tokenizer takes care to split the string on code points, not
+	 * The tokenizer takes care to split the string on Unicode code points, not
 	 * separating valid surrogate pairs.
 	 * 
 	 * @param q
@@ -140,7 +140,7 @@ public final class Tokenizers {
 	 * Returns a q-gram tokenizer for a variable {@code q}. The q-gram is
 	 * extended beyond the length of the string with padding.
 	 * <p>
-	 * The tokenizer takes care to split the string on code points, not
+	 * The tokenizer takes care to split the string on Unicode code points, not
 	 * separating valid surrogate pairs.
 	 * 
 	 * @param q
@@ -157,7 +157,7 @@ public final class Tokenizers {
 	 * Returns a q-gram tokenizer for a variable {@code q}.The q-gram is
 	 * extended beyond the length of the string with padding.
 	 * <p>
-	 * The tokenizer takes care to split the string on code points, not
+	 * The tokenizer takes care to split the string on Unicode code points, not
 	 * separating valid surrogate pairs.
 	 * 
 	 * @param q
@@ -708,9 +708,9 @@ public final class Tokenizers {
 	 * length. E.g. for {@code q=2} the string {@code "HelloWorld"} is tokenized
 	 * into {@code [He, el, ll, lo, oW, Wo, or, rl, ld]}.
 	 * <p>
-	 * The tokenizer takes care to split the string on code points, not
+	 * The tokenizer takes care to split the string on Unicode code points, not
 	 * separating valid surrogate pairs.
-	 * 
+	 * <p>
 	 * This class is immutable and thread-safe.
 	 *
 	 */
@@ -792,6 +792,9 @@ public final class Tokenizers {
 	 * length. E.g. for {@code q=2} and padding {@code #} the string
 	 * {@code "HelloWorld"} is tokenized into
 	 * {@code [#H, He, el, ll, lo, oW, Wo, or, rl, ld, d#]}.
+	 * <p>
+	 * The tokenizer takes care to split the string on Unicode code points, not
+	 * separating valid surrogate pairs.
 	 * <p>
 	 * This class is immutable and thread-safe.
 	 * 

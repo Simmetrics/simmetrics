@@ -20,10 +20,18 @@
 package org.simmetrics.tokenizers;
 
 import org.junit.Test;
+import org.simmetrics.tokenizers.Tokenizers.Recursive;
+
 import static java.util.Arrays.asList;
 import static org.simmetrics.tokenizers.Tokenizers.qGram;
 import static org.simmetrics.tokenizers.Tokenizers.whitespace;
-import static org.simmetrics.tokenizers.Tokenizers.Recursive;
+
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("javadoc")
 public class RecursiveTest extends TokenizerTest {
@@ -42,10 +50,17 @@ public class RecursiveTest extends TokenizerTest {
 		return new Recursive(asList(qGram(5), qGram(4), qGram(3), qGram(2)));
 	}
 	
-	@SuppressWarnings("unused")
 	@Test(expected = NullPointerException.class)
 	public void shouldThrowForListContainingNull() {
 		new Recursive(asList(whitespace(), (Tokenizer) null));
 	}
+	
+	public void shouldCopyListOfTokenizers() {
+		List<Tokenizer> tokenizerList = asList(whitespace());
+		Recursive tokenizer = new Recursive(tokenizerList);
+		assertThat(tokenizer.getTokenizers(), is(sameInstance(tokenizer.getTokenizers())));
+		assertThat(tokenizer.getTokenizers(), is(not(sameInstance(tokenizerList))));
+	}
+	
 
 }

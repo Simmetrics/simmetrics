@@ -20,24 +20,21 @@
 
 package org.simmetrics.example;
 
-import static org.simmetrics.builders.StringMetricBuilder.with;
+import static org.simmetrics.builders.StringDistanceBuilder.with;
 
 import org.simmetrics.StringDistance;
-import org.simmetrics.StringMetric;
-import org.simmetrics.builders.StringDistanceBuilder;
 import org.simmetrics.metrics.EuclideanDistance;
 import org.simmetrics.metrics.StringDistances;
 import org.simmetrics.tokenizers.Tokenizers;
 
 /**
- * The StringDistance utility class contains a predefined list of well
- * known distance metrics.
+ * The StringDistances utility class contains a predefined list of well
+ * known distance metrics for strings.
  */
-@SuppressWarnings("javadoc")
 public final class StringDistanceExample {
 
 	/**
-	 * Two strings can be compared using a string distance metric.
+	 * Two strings can be compared using a predefined distance metric.
 	 */
 	public static float example01() {
 
@@ -50,36 +47,38 @@ public final class StringDistanceExample {
 	}
 
 	/**
-	 * A tokenizer is included when the metric is a string or list metric. In
-	 * the case of cosine similarity, it is a whitespace tokenizer.
+	 * A tokenizer is included when the metric is a set or list metric. For the
+	 * euclidean distance, it is a whitespace tokenizer.
+	 * 
+	 * Note that most predefined metrics are setup with a whitespace tokenizer.
 	 */
 	public static float example02() {
 
 		String str1 = "A quirky thing it is. This is a sentence.";
 		String str2 = "This sentence is similar. A quirky thing it is.";
 
-		StringDistance metric = StringDistances.qGramsDistance();
+		StringDistance metric = StringDistances.euclideanDistance();
 
-		return metric.distance(str1, str2); // 28.0000
+		return metric.distance(str1, str2); // 2.0000
 	}
 
 	/**
-	 * Using the {@link StringDistanceBuilder} string distance metrics can be
-	 * customized. Instead of a whitespace tokenizer a q-gram tokenizer is used.
+	 * Using the string distance builder distance metrics can be customized.
+	 * Instead of a whitespace tokenizer a q-gram tokenizer is used.
 	 *
-	 * For more examples see {@link StringDistanceBuilderExample}.
+	 * For more examples see StringDistanceBuilderExample.
 	 */
 	public static float example03() {
 
 		String str1 = "A quirky thing it is. This is a sentence.";
 		String str2 = "This sentence is similar. A quirky thing it is.";
 
-		StringMetric metric = 
+		StringDistance metric = 
 				with(new EuclideanDistance<String>())
 				.tokenize(Tokenizers.qGram(3))
 				.build();
 
-		return metric.compare(str1, str2); // 0.9177
+		return metric.distance(str1, str2); // 4.8989
 	}
 
 }

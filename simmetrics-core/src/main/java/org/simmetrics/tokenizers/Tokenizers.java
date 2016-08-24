@@ -52,12 +52,12 @@ import com.google.common.collect.Multisets;
 import com.google.common.collect.Sets;
 
 /**
- * Utilities for tokenizers. Construct simple tokenizers, chains multiple
- * tokenizers into a single tokenizers or applies filters and transforms to
+ * Construct simple tokenizers, chains multiple tokenizers into a single
+ * tokenizer or creates a tokenizers that apply filters and transforms to
  * tokens.
  * <p>
- * All methods return immutable objects provided the arguments are also
- * immutable.
+ * The created tokenizers are immutable and thread-safe provided all their
+ * components are also immutable and thread-safe.
  */
 public final class Tokenizers {
 
@@ -89,8 +89,11 @@ public final class Tokenizers {
 
 	/**
 	 * Returns a q-gram tokenizer for a variable {@code q}. The tokenizer will
-	 * return an empty collection if the input is empty. A collection with the original
-	 * input is returned for tokens shorter then {@code q}.
+	 * return an empty collection if the input is empty. A collection with the
+	 * original input is returned for tokens shorter then {@code q}.
+	 * <p>
+	 * The tokenizer takes care to split the string on Unicode code points, not
+	 * separating valid surrogate pairs.
 	 * 
 	 * @param q
 	 *            size of the tokens
@@ -103,8 +106,11 @@ public final class Tokenizers {
 
 	/**
 	 * Returns a q-gram tokenizer for a variable {@code q}.The tokenizer will
-	 * return an empty collection if the input is empty or shorter then {@code q}.
-	 * 
+	 * return an empty collection if the input is empty or shorter then
+	 * {@code q}.
+	 * <p>
+	 * The tokenizer takes care to split the string on Unicode code points, not
+	 * separating valid surrogate pairs.
 	 * @param q
 	 *            size of the tokens
 	 * @return a q-gram tokenizer
@@ -118,6 +124,9 @@ public final class Tokenizers {
 	 * Returns a q-gram tokenizer for a variable {@code q}. The input is padded
 	 * with {@code q-1} special characters before being tokenized. Uses
 	 * {@code #} as the default padding.
+	 * <p>
+	 * The tokenizer takes care to split the string on Unicode code points, not
+	 * separating valid surrogate pairs.
 	 * 
 	 * @param q
 	 *            size of the tokens
@@ -130,6 +139,9 @@ public final class Tokenizers {
 	/**
 	 * Returns a q-gram tokenizer for a variable {@code q}. The q-gram is
 	 * extended beyond the length of the string with padding.
+	 * <p>
+	 * The tokenizer takes care to split the string on Unicode code points, not
+	 * separating valid surrogate pairs.
 	 * 
 	 * @param q
 	 *            size of the tokens
@@ -144,6 +156,9 @@ public final class Tokenizers {
 	/**
 	 * Returns a q-gram tokenizer for a variable {@code q}.The q-gram is
 	 * extended beyond the length of the string with padding.
+	 * <p>
+	 * The tokenizer takes care to split the string on Unicode code points, not
+	 * separating valid surrogate pairs.
 	 * 
 	 * @param q
 	 *            size of the tokens
@@ -420,7 +435,7 @@ public final class Tokenizers {
 			this.tokenizers = ImmutableList.copyOf(tokenizers);
 		}
 
-		Collection<Tokenizer> getTokenizers() {
+		List<Tokenizer> getTokenizers() {
 			return tokenizers;
 		}
 
@@ -693,6 +708,9 @@ public final class Tokenizers {
 	 * length. E.g. for {@code q=2} the string {@code "HelloWorld"} is tokenized
 	 * into {@code [He, el, ll, lo, oW, Wo, or, rl, ld]}.
 	 * <p>
+	 * The tokenizer takes care to split the string on Unicode code points, not
+	 * separating valid surrogate pairs.
+	 * <p>
 	 * This class is immutable and thread-safe.
 	 *
 	 */
@@ -725,14 +743,36 @@ public final class Tokenizers {
 				return emptyList();
 			}
 
-			if (!filter && input.length() <= q) {
+			// Minor optimization. Because characters are either equal to or
+			// smaller then codepoints a string must contain at least q
+			// characters.
+			if (filter && input.length() < q) {
+				return new ArrayList<>();
+			} else if (input.length() < q) {
+				return singletonList(input);
+			}
+
+			// To create a q-gram set of tokens we move a q-codepoints-wide
+			// sliding windows across the string. So the final index of the left
+			// side of the window lies q code points to the left of end of the
+			// string
+			final int lastQGramStart;
+			try {
+				lastQGramStart = input.offsetByCodePoints(input.length(), -q);
+			} catch (IndexOutOfBoundsException e) {
+				// When the window doesn't fit act according to the filter
+				// setting.
+				if (filter) {
+					return new ArrayList<>();
+				}
 				return singletonList(input);
 			}
 
 			final List<String> ret = new ArrayList<>(input.length());
-
-			for (int i = 0; i < input.length() - q + 1; i++) {
-				ret.add(input.substring(i, i + q));
+			for (int qGramStart = 0; 
+					 qGramStart <= lastQGramStart; 
+					 qGramStart = input.offsetByCodePoints(qGramStart,1)) {
+				ret.add(input.substring(qGramStart, input.offsetByCodePoints(qGramStart, q)));
 			}
 
 			return ret;
@@ -752,6 +792,9 @@ public final class Tokenizers {
 	 * length. E.g. for {@code q=2} and padding {@code #} the string
 	 * {@code "HelloWorld"} is tokenized into
 	 * {@code [#H, He, el, ll, lo, oW, Wo, or, rl, ld, d#]}.
+	 * <p>
+	 * The tokenizer takes care to split the string on Unicode code points, not
+	 * separating valid surrogate pairs.
 	 * <p>
 	 * This class is immutable and thread-safe.
 	 * 

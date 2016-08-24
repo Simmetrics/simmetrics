@@ -43,5 +43,9 @@ public class ReadMeExampleTest {
 		assertEquals(3.0000f, ReadMeExample.example03(), DELTA);
 	}
 
+	@Test
+	public void example04(){
+		assertEquals(0.4285f, ReadMeExample.example04(), DELTA);
+	}
 
 }

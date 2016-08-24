@@ -40,9 +40,9 @@ import com.google.common.collect.Multiset;
 import com.google.common.collect.Sets;
 
 /**
- * The similarity metric builder can be used to compose metrics.
+ * The string metric builder can be used to compose similarity metrics for
+ * strings.
  */
-@SuppressWarnings("javadoc")
 public final class StringMetricBuilderExample {
 
 	/**
@@ -69,8 +69,8 @@ public final class StringMetricBuilderExample {
 	 * 
 	 * Simplification increases the effectiveness of a metric by removing noise
 	 * and reducing the dimensionality of the problem. The process maps a a
-	 * complex string such as to a simpler format. This allows string from
-	 * different sources to be compared in the same form.
+	 * complex string to a simpler format. This allows string from different
+	 * sources to be compared in the same form.
 	 *
 	 * The Simplifiers utility class contains a collection of common, useful
 	 * simplifiers. For a custom simplifier you can implement the Simplifier

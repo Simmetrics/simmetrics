@@ -35,12 +35,12 @@ public class StringDistanceExampleTest {
 	
 	@Test
 	public void example02(){
-		assertEquals(28.0000f, StringDistanceExample.example02(), DELTA);
+		assertEquals(2.0000f, StringDistanceExample.example02(), DELTA);
 	}
 	
 	@Test
 	public void example03(){
-		assertEquals(0.9177f, StringDistanceExample.example03(), DELTA);
+		assertEquals(4.8989f, StringDistanceExample.example03(), DELTA);
 	}
 
 }

@@ -80,8 +80,7 @@ public abstract class TokenizerTest {
 
 	private static void testTokens(String string, Collection<String> expected,
 			Collection<String> actual) {
-		assertEquals(string + " did not tokenize to " + expected + " but "
-				+ actual, expected, actual);
+		assertEquals(string + " did not tokenize correctly", expected, actual);
 		assertFalse(actual + " contained null", actual.contains(null));
 	}
 

@@ -19,10 +19,8 @@
  */
 
 package org.simmetrics.metrics;
-
-import static com.google.common.collect.Multisets.union;
-import static java.lang.Math.sqrt;
 import static org.simmetrics.metrics.Math.union;
+import static java.lang.Math.sqrt;
 
 import org.simmetrics.MultisetDistance;
 import org.simmetrics.MultisetMetric;

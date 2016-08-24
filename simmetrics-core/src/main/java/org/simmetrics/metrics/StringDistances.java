@@ -35,8 +35,7 @@ import org.simmetrics.tokenizers.Tokenizers;
  * Consists of well known metrics. All distance metrics are setup with sensible
  * defaults, to customize metrics use {@link StringDistanceBuilder}.
  * <p>
- * All methods return immutable objects provided the arguments are also
- * immutable.
+ * The created distance metrics are immutable and thread-safe.
  */
 public final class StringDistances {
 	

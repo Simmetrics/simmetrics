@@ -32,7 +32,7 @@ import org.simmetrics.SetMetricTest;
 
 @SuppressWarnings("javadoc")
 @RunWith(Enclosed.class)
-public final class DiceTest {
+public class DiceTest {
 	
 	public static final class DistanceTest extends SetDistanceTest {
 		@Override

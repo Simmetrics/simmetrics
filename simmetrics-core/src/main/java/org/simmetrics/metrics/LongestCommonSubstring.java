@@ -31,7 +31,7 @@ import org.simmetrics.StringMetric;
  * <code>
  * similarity(a,b) = ∣lcs(a,b)∣ / max{∣a∣, ∣b∣}
  * <br>
- * distance(a,b) = ∣a∣ + ∣b∣ + 2 * ∣lcs(a,b)∣  
+ * distance(a,b) = ∣a∣ + ∣b∣ - 2 * ∣lcs(a,b)∣  
  * </code>
  * <p>
  * This class is immutable and thread-safe.

@@ -19,6 +19,9 @@
  */
 package org.simmetrics.simplifiers;
 
+import static java.text.Normalizer.normalize;
+import static java.text.Normalizer.Form.NFC;
+import static java.text.Normalizer.Form.NFD;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -26,6 +29,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
 import static org.simmetrics.simplifiers.Simplifiers.chain;
+import static org.simmetrics.simplifiers.Simplifiers.normalize;
 import static org.simmetrics.simplifiers.Simplifiers.removeNonWord;
 import static org.simmetrics.simplifiers.Simplifiers.replaceNonWord;
 import static org.simmetrics.simplifiers.Simplifiers.toLowerCase;
@@ -44,6 +48,22 @@ import org.simmetrics.simplifiers.Simplifiers.ChainSimplifier;
 @RunWith(Enclosed.class)
 public class SimplifiersTest {
 
+	public static final class Normalize extends SimplifierTest {
+
+		@Override
+		protected Simplifier getSimplifier() {
+			return normalize(NFC);
+		}
+
+		@Override
+		protected T[] getTests() {
+			return new T[] { 
+					new T("", ""),
+					new T(normalize("é", NFD), normalize("é", NFC))
+			};
+		}
+	}
+	
 	public static final class WithChainSimplifier extends SimplifierTest {
 
 		@Override
@@ -157,6 +177,8 @@ public class SimplifiersTest {
 		}
 
 	}
+	
+	
 
 	public static final class ReplaceRegex extends SimplifierTest {
 

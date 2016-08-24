@@ -24,8 +24,10 @@ import static com.google.common.base.Joiner.on;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Lists.asList;
+import static java.util.Arrays.asList;
 
 import java.text.Normalizer;
+import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -78,6 +80,37 @@ public final class Simplifiers {
 		
 	}
 
+	
+	/**
+	 * A simplifier that normalizes a string into a composed or decomposed form.
+	 * <p>
+	 * This class is thread-safe and immutable.
+	 * 
+	 * @see Normalizer
+	 */
+	static final class Normalize implements Simplifier {
+
+		private final  Form form;
+
+		public Normalize(Form form) {
+			this.form = form;
+		}
+
+		@Override
+		public String simplify(String input) {
+			return Normalizer.normalize(input, form);
+		}
+
+		@Override
+		public String toString() {
+			return "Normalize[" + form + "]";
+		}
+
+		Form getForm() {
+			return form;
+		}
+	}
+	
 	/**
 	 * A simplifier that removes diacritics.
 	 * <p>
@@ -234,7 +267,21 @@ public final class Simplifiers {
 
 		return flattend;
 	}
-
+	/**
+	 * Returns a simplifier that normalizes the input into a composed or 
+	 * decomposed form
+	 * 
+	 * @see Normalizer
+	 * 
+	 * @param form
+	 *            the form to normalize to
+	 * 
+	 * @return a simplifier that remove parts from the input
+	 */
+	public static Simplifier normalize(Form form) {
+		return new Normalize(form);
+	}
+	
 	/**
 	 * Returns a simplifier that removes every subsequence of the input that
 	 * matches the regex.

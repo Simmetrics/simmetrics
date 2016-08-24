@@ -40,13 +40,13 @@ For a terse syntax use `import static org.simmetrics.builders.StringMetricBuilde
 
 Metrics that operate on lists, sets, or multisets are generic can be used to compare collections of arbitrary elements. The elements in the collection must implement equals and hashcode.
 
-```
-		Set<Integer> scores1 = new HashSet<>(asList(1, 1, 2, 3, 5, 8, 11, 19));
-		Set<Integer> scores2 = new HashSet<>(asList(1, 2, 4, 8, 16, 32, 64));
+```java
+	Set<Integer> scores1 = new HashSet<>(asList(1, 1, 2, 3, 5, 8, 11, 19));
+	Set<Integer> scores2 = new HashSet<>(asList(1, 2, 4, 8, 16, 32, 64));
 
-		SetMetric<Integer> metric = new OverlapCoefficient<>();
+	SetMetric<Integer> metric = new OverlapCoefficient<>();
 
-		float result = metric.compare(scores1, scores2); // 0.4285
+	float result = metric.compare(scores1, scores2); // 0.4285
 ```
 
 ## Unicode ##

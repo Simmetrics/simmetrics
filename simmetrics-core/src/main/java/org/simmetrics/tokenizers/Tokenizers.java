@@ -764,9 +764,8 @@ public final class Tokenizers {
 				// setting.
 				if (filter) {
 					return new ArrayList<>();
-				} else {
-					return singletonList(input);
 				}
+				return singletonList(input);
 			}
 
 			final List<String> ret = new ArrayList<>(input.length());

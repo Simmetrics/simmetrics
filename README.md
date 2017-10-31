@@ -11,12 +11,12 @@ A Java library of similarity and distance metrics e.g. Levenshtein distance and 
 For a quick and easy use [StringMetrics](./simmetrics-core/src/main/java/org/simmetrics/metrics/StringMetrics.java) and [StringDistances](./simmetrics-core/src/main/java/org/simmetrics/metrics/StringDistances.java) contain a collection of well known similarity and distance metrics.
 
 ```java
-	String str1 = "This is a sentence. It is made of words";
-	String str2 = "This sentence is similar. It has almost the same words";
-	
-	StringMetric metric = StringMetrics.cosineSimilarity();
-	
-	float result = metric.compare(str1, str2); //0.4767
+String str1 = "This is a sentence. It is made of words";
+String str2 = "This sentence is similar. It has almost the same words";
+
+StringMetric metric = StringMetrics.cosineSimilarity();
+
+float result = metric.compare(str1, str2); //0.4767
 ```
 
 The [StringMetricBuilder](./simmetrics-core/src/main/java/org/simmetrics/builders/StringMetricBuilder.java) and [StringDistanceBuilder](./simmetrics-core/src/main/java/org/simmetrics/builders/StringDistanceBuilder.java) are convenience tools to build string similarity and distance metrics. Any class implementing Metric or Distance respectively can be used to build a metric. The builders support simplification, tokenization, token-filtering, token-transformation, and caching.
@@ -25,28 +25,28 @@ For usage see the [examples section](./simmetrics-example/src/main/java/org/simm
 For a terse syntax use `import static org.simmetrics.builders.StringMetricBuilder.with;`
 
 ```java
-	String str1 = "This is a sentence. It is made of words";
-	String str2 = "This sentence is similar. It has almost the same words";
+String str1 = "This is a sentence. It is made of words";
+String str2 = "This sentence is similar. It has almost the same words";
 
-	StringMetric metric =
-			with(new CosineSimilarity<String>())
-			.simplify(Simplifiers.toLowerCase(Locale.ENGLISH))
-			.simplify(Simplifiers.replaceNonWord())
-			.tokenize(Tokenizers.whitespace())
-			.build();
+StringMetric metric =
+		with(new CosineSimilarity<String>())
+		.simplify(Simplifiers.toLowerCase(Locale.ENGLISH))
+		.simplify(Simplifiers.replaceNonWord())
+		.tokenize(Tokenizers.whitespace())
+		.build();
 
-	float result = metric.compare(str1, str2); //0.5720
+float result = metric.compare(str1, str2); //0.5720
 ```
 
 Metrics that operate on lists, sets, or multisets are generic can be used to compare collections of arbitrary elements. The elements in the collection must implement equals and hashcode.
 
 ```java
-	Set<Integer> scores1 = new HashSet<>(asList(1, 1, 2, 3, 5, 8, 11, 19));
-	Set<Integer> scores2 = new HashSet<>(asList(1, 2, 4, 8, 16, 32, 64));
+Set<Integer> scores1 = new HashSet<>(asList(1, 1, 2, 3, 5, 8, 11, 19));
+Set<Integer> scores2 = new HashSet<>(asList(1, 2, 4, 8, 16, 32, 64));
 
-	SetMetric<Integer> metric = new OverlapCoefficient<>();
+SetMetric<Integer> metric = new OverlapCoefficient<>();
 
-	float result = metric.compare(scores1, scores2); // 0.4285
+float result = metric.compare(scores1, scores2); // 0.4285
 ```
 
 ## Unicode ##

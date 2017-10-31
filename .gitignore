@@ -4,6 +4,10 @@
 /.settings/
 /target/
 /bin/
+/.idea/
+simmetrics.iml
+simmetrics-core/simmetrics-core.iml
+simmetrics-example/simmetrics-example.iml
 pom.xml.releaseBackup
 pom.xml.versionBackup
 release.properties

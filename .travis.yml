@@ -11,8 +11,8 @@ branches:
   - release-*
 
 before_install:
- - mvn clean
+ - mvn -T 1C clean
 
 after_success:
-  - mvn clean cobertura:cobertura coveralls:report -P coveralls.io
+  - mvn -T 1C clean cobertura:cobertura coveralls:report -P coveralls.io
 

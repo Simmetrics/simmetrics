@@ -53,7 +53,7 @@ public final class EuclideanDistance<T> implements MultisetMetric<T>, MultisetDi
 			return 1.0f;
 		}
 
-		float maxDistance = (float) sqrt((a.size() * a.size()) + (b.size() * b.size()));
+		float maxDistance = (float) sqrt(((double) a.size() * a.size()) + ((double) b.size() * b.size()));
 		return 1.0f - distance(a, b) / maxDistance;
 	}
 

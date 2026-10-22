@@ -21,7 +21,9 @@
 package org.simmetrics.metrics;
 
 import static java.util.Arrays.asList;
+import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.simmetrics.Distance;
@@ -30,10 +32,43 @@ import org.simmetrics.MultisetMetric;
 import org.simmetrics.MultisetMetricTest;
 
 import com.google.common.collect.Multiset;
+import com.google.common.collect.HashMultiset;
 
 @SuppressWarnings("javadoc")
 @RunWith(Enclosed.class)
 public final class EuclideanDistanceTest {
+
+	public static final class LargeMultisetTest {
+
+		@Test
+		public void identicalMultisets() {
+			Multiset<String> a = HashMultiset.create();
+			a.add("a", 32768);
+			Multiset<String> b = HashMultiset.create(a);
+
+			assertEquals(1.0f, new EuclideanDistance<String>().compare(a, b), 0.0f);
+		}
+
+		@Test
+		public void disjointMultisets() {
+			Multiset<String> a = HashMultiset.create();
+			a.add("a", 46341);
+			Multiset<String> b = HashMultiset.create();
+			b.add("b", 46341);
+
+			assertEquals(0.0f, new EuclideanDistance<String>().compare(a, b), 0.0001f);
+		}
+
+		@Test
+		public void differentFrequencies() {
+			Multiset<String> a = HashMultiset.create();
+			a.add("a", 50000);
+			Multiset<String> b = HashMultiset.create();
+			b.add("a", 40000);
+
+			assertEquals(0.8438262f, new EuclideanDistance<String>().compare(a, b), 0.0001f);
+		}
+	}
 	
 	public final static class DistanceTest extends MultisetDistanceTest {
 
